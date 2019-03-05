@@ -18,7 +18,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.1
  */
-class KunenaAdminModelBlockips extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelBlockips extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.

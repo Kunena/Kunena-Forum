@@ -200,7 +200,7 @@ class KunenaViewTopics extends KunenaView
 				$id          = $topic->first_post_id;
 				$page        = 'first';
 				$description = $topic->first_post_message;
-				$date        = new \Joomla\CMS\Date\Date($topic->first_post_time);
+				$date        = new Joomla\CMS\Date\Date($topic->first_post_time);
 				$userid      = $topic->first_post_userid;
 				$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 			}
@@ -218,7 +218,7 @@ class KunenaViewTopics extends KunenaView
 					$description = $topic->last_post_message;
 				}
 
-				$date     = new \Joomla\CMS\Date\Date($topic->last_post_time);
+				$date     = new Joomla\CMS\Date\Date($topic->last_post_time);
 				$userid   = $topic->last_post_userid;
 				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
@@ -259,7 +259,7 @@ class KunenaViewTopics extends KunenaView
 				$description = $message->message;
 			}
 
-			$date     = new \Joomla\CMS\Date\Date($message->time);
+			$date     = new Joomla\CMS\Date\Date($message->time);
 			$userid   = $message->userid;
 			$username = KunenaFactory::getUser($userid)->getName($message->name);
 
@@ -309,7 +309,7 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		// Assign values to feed item
-		$item              = new \Joomla\CMS\Document\Feed\FeedItem;
+		$item              = new Joomla\CMS\Document\Feed\FeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;

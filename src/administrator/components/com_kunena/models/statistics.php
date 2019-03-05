@@ -19,7 +19,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.0
  */
-class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -137,8 +137,8 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 
 		if ($start || $stop)
 		{
-			$start = $start ? new \Joomla\CMS\Date\Date($start) : null;
-			$stop  = $stop ? new \Joomla\CMS\Date\Date($stop . ' +1 day') : null;
+			$start = $start ? new Joomla\CMS\Date\Date($start) : null;
+			$stop  = $stop ? new Joomla\CMS\Date\Date($stop . ' +1 day') : null;
 			$finder->filterByTime($start, $stop);
 		}
 
@@ -299,8 +299,8 @@ class KunenaAdminModelStatistics extends \Joomla\CMS\MVC\Model\ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$now   = new \Joomla\CMS\Date\Date;
-		$month = new \Joomla\CMS\Date\Date('-1 month');
+		$now   = new Joomla\CMS\Date\Date;
+		$month = new Joomla\CMS\Date\Date('-1 month');
 
 		$filter_active = '';
 

@@ -73,7 +73,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 			$itemid = KunenaRoute::fixMissingItemID();
 
-			if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}") . '?format=feed&type=rss';
 			}

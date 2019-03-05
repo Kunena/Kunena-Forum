@@ -21,7 +21,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The application object.
 	 *
-	 * @var    \Joomla\CMS\Application\BaseApplication|JSite|JAdministrator
+	 * @var    Joomla\CMS\Application\BaseApplication|JSite|JAdministrator
 	 * @since Kunena
 	 */
 	protected $app;
@@ -29,7 +29,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The input object.
 	 *
-	 * @var    \Joomla\Input\Input
+	 * @var    Joomla\Input\Input
 	 * @since Kunena
 	 */
 	protected $input;
@@ -37,7 +37,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Options object.
 	 *
-	 * @var    \Joomla\Registry\Registry
+	 * @var    Joomla\Registry\Registry
 	 * @since  K4.0
 	 */
 	protected $options = null;
@@ -45,15 +45,15 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \Joomla\Input\Input                     $input   The input object.
-	 * @param   \Joomla\CMS\Application\BaseApplication $app     The application object.
-	 * @param   \Joomla\Registry\Registry|array         $options Array \Joomla\Registry\Registry object with the
+	 * @param   Joomla\Input\Input                     $input   The input object.
+	 * @param   Joomla\CMS\Application\BaseApplication $app     The application object.
+	 * @param   Joomla\Registry\Registry|array         $options Array Joomla\Registry\Registry object with the
 	 *                                                           options to load.
 	 *
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function __construct(\Joomla\Input\Input $input = null, $app = null, $options = null)
+	public function __construct(Joomla\Input\Input $input = null, $app = null, $options = null)
 	{
 		// Setup dependencies.
 		$this->app   = isset($app) ? $app : $this->loadApplication();
@@ -68,7 +68,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Load the application object.
 	 *
-	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
+	 * @return  Joomla\CMS\Application\BaseApplication  The application object.
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -80,7 +80,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Load the input object.
 	 *
-	 * @return  \Joomla\Input\Input  The input object.
+	 * @return  Joomla\Input\Input  The input object.
 	 * @since Kunena
 	 */
 	protected function loadInput()
@@ -91,14 +91,14 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the options.
 	 *
-	 * @return  \Joomla\Registry\Registry  Object with the options.
+	 * @return  Joomla\Registry\Registry  Object with the options.
 	 *
 	 * @since   K4.0
 	 */
 	public function getOptions()
 	{
-		// Always return a \Joomla\Registry\Registry instance
-		if (!($this->options instanceof \Joomla\Registry\Registry))
+		// Always return a Joomla\Registry\Registry instance
+		if (!($this->options instanceof Joomla\Registry\Registry))
 		{
 			$this->resetOptions();
 		}
@@ -109,7 +109,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Set the options.
 	 *
-	 * @param   mixed $options Array / \Joomla\Registry\Registry object with the options to load.
+	 * @param   mixed $options Array / Joomla\Registry\Registry object with the options to load.
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
@@ -117,19 +117,19 @@ abstract class KunenaControllerBase implements Serializable
 	 */
 	public function setOptions($options = null)
 	{
-		// Received \Joomla\Registry\Registry
-		if ($options instanceof \Joomla\Registry\Registry)
+		// Received Joomla\Registry\Registry
+		if ($options instanceof Joomla\Registry\Registry)
 		{
 			$this->options = $options;
 		}
 		// Received array
 		elseif (is_array($options))
 		{
-			$this->options = new \Joomla\Registry\Registry($options);
+			$this->options = new Joomla\Registry\Registry($options);
 		}
 		else
 		{
-			$this->options = new \Joomla\Registry\Registry;
+			$this->options = new Joomla\Registry\Registry;
 		}
 
 		return $this;
@@ -161,7 +161,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the application object.
 	 *
-	 * @return  \Joomla\CMS\Application\BaseApplication  The application object.
+	 * @return  Joomla\CMS\Application\BaseApplication  The application object.
 	 * @since Kunena
 	 */
 	public function getApplication()
@@ -172,7 +172,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the input object.
 	 *
-	 * @return  \Joomla\Input\Input  The input object.
+	 * @return  Joomla\Input\Input  The input object.
 	 * @since Kunena
 	 */
 	public function getInput()
@@ -209,7 +209,7 @@ abstract class KunenaControllerBase implements Serializable
 		// Unserialize the input and options.
 		list($this->input, $this->options) = unserialize($input);
 
-		if (!($this->input instanceof \Joomla\Input\Input))
+		if (!($this->input instanceof Joomla\Input\Input))
 		{
 			throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', get_class($this), gettype($this->input)));
 		}

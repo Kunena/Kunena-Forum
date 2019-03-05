@@ -196,11 +196,11 @@ $user = Factory::getUser();
 											   id="title-><?php echo $item->extension_id; ?>">
 												<?php echo $item->name; ?>
 											</a>
-											<?php echo \Joomla\CMS\HTML\HTMLHelper::_(
+											<?php echo Joomla\CMS\HTML\HTMLHelper::_(
 												'bootstrap.renderModal',
 												'plugin' . $item->extension_id . 'Modal',
 												array(
-													'url'         => \Joomla\CMS\Router\Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
+													'url'         => Joomla\CMS\Router\Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
 													'title'       => $item->name,
 													'height'      => '400',
 													'width'       => '800px',
@@ -211,13 +211,13 @@ $user = Factory::getUser();
 													'keyboard'    => false,
 													'footer'      => '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#closeBtn\').click();">'
-														. \Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+														. Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
 														. '<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#saveBtn\').click();">'
-														. \Joomla\CMS\Language\Text::_("JSAVE") . '</button>'
+														. Joomla\CMS\Language\Text::_("JSAVE") . '</button>'
 														. '<button type="button" class="btn btn-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
-														. \Joomla\CMS\Language\Text::_("JAPPLY") . '</button>',
+														. Joomla\CMS\Language\Text::_("JAPPLY") . '</button>',
 												)
 											); ?>
 										<?php else : ?>

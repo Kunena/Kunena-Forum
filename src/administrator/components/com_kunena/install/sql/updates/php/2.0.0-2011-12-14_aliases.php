@@ -54,7 +54,7 @@ function kunena_200_2011_12_14_aliases($parent)
 
 		// Create SEF names
 		$aliasUtf[$category->id] = kStringURLSafe($category->name);
-		$aliasLit[$category->id] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($category->name);
+		$aliasLit[$category->id] = Joomla\CMS\Filter\OutputFilter::stringURLSafe($category->name);
 	}
 
 	// Sort aliases by category id (oldest ID accepts also sefcat format..

@@ -78,7 +78,7 @@ class KunenaAdminControllerLogs extends KunenaController
 		}
 
 		$days      = $this->app->input->getInt('clean_days', 0);
-		$timestamp = new \Joomla\CMS\Date\Date('now -' . $days . ' days');
+		$timestamp = new Joomla\CMS\Date\Date('now -' . $days . ' days');
 
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)

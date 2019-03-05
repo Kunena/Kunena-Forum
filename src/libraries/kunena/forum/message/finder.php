@@ -124,13 +124,13 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
+	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 * @since Kunena
 	 */
-	public function filterByTime(\Joomla\CMS\Date\Date $starting = null, \Joomla\CMS\Date\Date $ending = null)
+	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
 	{
 		if ($starting && $ending)
 		{

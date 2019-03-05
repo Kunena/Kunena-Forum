@@ -17,7 +17,7 @@ use Joomla\CMS\Log\Log;
  * @subpackage     Kunena.finder
  * @since          2.5
  */
-class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * Finder after save message method
@@ -41,7 +41,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		Log::add('onKunenaAfterSave table: ' . $table_content, Log::INFO);
 		Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
 		Factory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
@@ -69,7 +69,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		Log::add('onKunenaBeforeSave table: ' . $table_content, Log::INFO);
 		Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
 		Factory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
@@ -94,7 +94,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		Log::add('onKunenaAfterDelete table: ' . $table_content, Log::INFO);
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		Factory::getApplication()->triggerEvent('onFinderAfterDelete', array($context, $table));
@@ -118,7 +118,7 @@ class plgKunenaFinder extends \Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		Log::add('onKunenaBeforeDelete table: ' . $table_content, Log::INFO);
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		Factory::getApplication()->triggerEvent('onFinderBeforeDelete', array($context, $table));

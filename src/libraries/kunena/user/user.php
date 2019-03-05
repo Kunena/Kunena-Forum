@@ -215,7 +215,7 @@ class KunenaUser extends CMSObject
 	 * @param   string $type   The user table name to be used.
 	 * @param   string $prefix The user table prefix to be used.
 	 *
-	 * @return    \Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
+	 * @return    Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
@@ -230,7 +230,7 @@ class KunenaUser extends CMSObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -418,7 +418,7 @@ class KunenaUser extends CMSObject
 		}
 		else
 		{
-			$usersConfig = \Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler');
+			$usersConfig = Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler');
 
 			if ($usersConfig)
 			{
@@ -744,7 +744,7 @@ class KunenaUser extends CMSObject
 
 			if ($this->userid)
 			{
-				$user     = \Joomla\CMS\User\User::getInstance($this->userid);
+				$user     = Joomla\CMS\User\User::getInstance($this->userid);
 				$timezone = $user->getParam('timezone', $timezone);
 			}
 
@@ -1306,12 +1306,12 @@ class KunenaUser extends CMSObject
 
 		$view->personalText = $this->getPersonalText();
 
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', $layout->getLayout());
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaSidebar', array($this->userid));
 
@@ -1786,8 +1786,8 @@ class KunenaUser extends CMSObject
 			return true;
 		}
 
-		$expiration = new \Joomla\CMS\Date\Date($this->banned);
-		$now        = new \Joomla\CMS\Date\Date;
+		$expiration = new Joomla\CMS\Date\Date($this->banned);
+		$now        = new Joomla\CMS\Date\Date;
 
 		if ($expiration->toUnix() > $now->toUnix())
 		{
@@ -1801,8 +1801,8 @@ class KunenaUser extends CMSObject
 	 */
 	public function bannedDate()
 	{
-		$ban = new \Joomla\CMS\Date\Date($this->banned);
-		$now = new \Joomla\CMS\Date\Date;
+		$ban = new Joomla\CMS\Date\Date($this->banned);
+		$now = new Joomla\CMS\Date\Date;
 
 		return $ban->toUnix() > $now->toUnix();
 	}
@@ -1817,7 +1817,7 @@ class KunenaUser extends CMSObject
 	public function GetUserGroup($userid)
 	{
 		jimport('joomla.access.access');
-		$groups = \Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
+		$groups = Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
 
 		$groupid_list = implode(',', $groups);
 

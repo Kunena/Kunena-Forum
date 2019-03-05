@@ -372,13 +372,13 @@ class KunenaAdminModelTrash extends KunenaModel
 	}
 
 	/**
-	 * @return \Joomla\CMS\Pagination\Pagination
+	 * @return Joomla\CMS\Pagination\Pagination
 	 * @since Kunena
 	 */
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');
-		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'),
+		$navigation = new Joomla\CMS\Pagination\Pagination($this->getState('list.total'),
 			$this->getState('list.start'), $this->getState('list.limit')
 		);
 

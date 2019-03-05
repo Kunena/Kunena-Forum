@@ -491,7 +491,7 @@ class KunenaViewCommon extends KunenaView
 			return ' ';
 		}
 
-		$this->parameters = new \Joomla\Registry\Registry;
+		$this->parameters = new Joomla\Registry\Registry;
 		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
 		$this->parameters->set('menutype', $basemenu->menutype);
 		$this->parameters->set('startLevel', $basemenu->level + 1);

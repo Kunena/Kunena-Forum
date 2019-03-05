@@ -18,7 +18,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.1
  */
-class KunenaAdminModelIcons extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelIcons extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.

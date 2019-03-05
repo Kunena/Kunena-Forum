@@ -55,11 +55,11 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		}
 		elseif ($time == 0)
 		{
-			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
+			$time = new Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
 		}
 		else
 		{
-			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
+			$time = new Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)

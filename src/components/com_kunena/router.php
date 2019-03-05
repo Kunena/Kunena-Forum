@@ -289,7 +289,7 @@ function KunenaParseRoute($segments)
 		return array();
 	}
 
-	$profiler = \Joomla\CMS\Profiler\Profiler::getInstance('Application');
+	$profiler = Joomla\CMS\Profiler\Profiler::getInstance('Application');
 	KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
 	$starttime = microtime(true);
 

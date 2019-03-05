@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
  * Class plgKunenaEasyblog
  * @since Kunena
  */
-class plgKunenaEasyblog extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaEasyblog constructor.
@@ -41,7 +41,7 @@ class plgKunenaEasyblog extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyblog'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyblog'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

@@ -638,7 +638,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string $path path
 	 *
-	 * @return \Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -739,13 +739,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * easier to read and gain some context awareness.
 	 *
 	 * @param   string              $path    path
-	 * @param   \Joomla\Input\Input $input   input
+	 * @param   Joomla\Input\Input $input   input
 	 * @param   mixed               $options options
 	 *
 	 * @return KunenaControllerDisplay|KunenaLayout
 	 * @since Kunena
 	 */
-	public function subRequest($path, \Joomla\Input\Input $input = null, $options = null)
+	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

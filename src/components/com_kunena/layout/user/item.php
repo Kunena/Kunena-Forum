@@ -74,7 +74,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			$tab           = new stdClass;
 			$tab->title    = Text::_('COM_KUNENA_USERPOSTS');
-			$tab->content  = $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
+			$tab->content  = $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 			$tab->active   = true;
 			$tabs['posts'] = $tab;
 		}
@@ -96,7 +96,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'limitstart'       => 0,
 					'filter_order_Dir' => 'desc',
 				);
-				$tab->content .= $this->subRequest('Category/Subscriptions', new \Joomla\Input\Input($params), $params);
+				$tab->content .= $this->subRequest('Category/Subscriptions', new Joomla\Input\Input($params), $params);
 			}
 
 			if ($this->config->topic_subscriptions != 'disabled')
@@ -114,7 +114,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'limitstart'       => 0,
 					'filter_order_Dir' => 'desc',
 				);
-				$tab->content .= $this->subRequest('Topic/List/User', new \Joomla\Input\Input($params), $params);
+				$tab->content .= $this->subRequest('Topic/List/User', new Joomla\Input\Input($params), $params);
 			}
 
 			$tab->active = false;
@@ -143,7 +143,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			$tab               = new stdClass;
 			$tab->title        = Text::_('COM_KUNENA_FAVORITES');
-			$tab->content      = $this->subRequest('Topic/List/User', new \Joomla\Input\Input($params), $params);
+			$tab->content      = $this->subRequest('Topic/List/User', new Joomla\Input\Input($params), $params);
 			$tab->active       = false;
 			$tabs['favorites'] = $tab;
 		}
@@ -167,7 +167,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
 			);
-			$tab->content .= $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
+			$tab->content .= $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 
 			$params       = array(
 				'embedded'            => 1,
@@ -182,7 +182,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
 			);
-			$tab->content .= $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
+			$tab->content .= $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 
 			$tab->active      = false;
 			$tabs['thankyou'] = $tab;
@@ -205,7 +205,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			);
 			$tab                = new stdClass;
 			$tab->title         = Text::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
-			$tab->content       = $this->subRequest('Message/List/Recent', new \Joomla\Input\Input($params), $params);
+			$tab->content       = $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 			$tab->active        = false;
 			$tabs['unapproved'] = $tab;
 		}
@@ -218,7 +218,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			);
 			$tab                 = new stdClass;
 			$tab->title          = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
-			$tab->content        = $this->subRequest('User/Attachments', new \Joomla\Input\Input($params), $params);
+			$tab->content        = $this->subRequest('User/Attachments', new Joomla\Input\Input($params), $params);
 			$tab->active         = false;
 			$tabs['attachments'] = $tab;
 		}
@@ -250,7 +250,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tabs['banuser'] = $tab;
 		}
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabs', array($tabs));
 

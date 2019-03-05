@@ -22,13 +22,13 @@ class KunenaView extends HtmlView
 {
 	/**
 	 * @since Kunena
-	 * @var \Joomla\CMS\Document\Document|null
+	 * @var Joomla\CMS\Document\Document|null
 	 */
 	public $document = null;
 
 	/**
 	 * @since Kunena
-	 * @var \Joomla\CMS\Application\CMSApplication|null
+	 * @var Joomla\CMS\Application\CMSApplication|null
 	 */
 	public $app = null;
 

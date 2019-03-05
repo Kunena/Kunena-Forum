@@ -45,7 +45,7 @@ class KunenaLogEntry
 		KunenaUser $user = null
 	)
 	{
-		$now = new \Joomla\CMS\Date\Date;
+		$now = new Joomla\CMS\Date\Date;
 
 		$this->data = array(
 			'type'        => (int) $type,

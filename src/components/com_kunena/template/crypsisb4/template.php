@@ -196,7 +196,7 @@ EOF;
 	 * @param          $filename
 	 * @param   string $group group
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document
 	 * @since Kunena
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
@@ -204,7 +204,7 @@ EOF;
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
 		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addStyleSheet(\Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+		return Factory::getDocument()->addStyleSheet(Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

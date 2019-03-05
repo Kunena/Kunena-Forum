@@ -46,14 +46,14 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on registration or last visit date.
 	 *
-	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
+	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
 	 * @param   bool                  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 * @since Kunena
 	 */
-	public function filterByTime(\Joomla\CMS\Date\Date $starting = null, \Joomla\CMS\Date\Date $ending = null, $register = true)
+	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null, $register = true)
 	{
 		$name = $register ? 'registerDate' : 'lastvisitDate';
 

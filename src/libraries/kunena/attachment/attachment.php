@@ -395,7 +395,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
 
-		if (\Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+		if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
 		{
 			$url = preg_replace('/.html/', '', $url);
 		}

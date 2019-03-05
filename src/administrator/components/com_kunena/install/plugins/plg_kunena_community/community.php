@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
  * Class plgKunenaCommunity
  * @since Kunena
  */
-class plgKunenaCommunity extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaCommunity constructor.
@@ -41,7 +41,7 @@ class plgKunenaCommunity extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

@@ -130,7 +130,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->pagination   = $this->get('AdminNavigation');
 
 		// Get the toolbar object instance
-		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
+		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		JToolbarHelper::spacer();

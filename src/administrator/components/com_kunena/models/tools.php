@@ -679,7 +679,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function _getJoomlaLanguagesInstalled()
 	{
-		$languages  = \Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
+		$languages  = Joomla\CMS\Language\LanguageHelper::getKnownLanguages();
 		$table_lang = '[table]';
 		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
 
@@ -749,7 +749,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (!empty($xmlfiles))
 		{
-			$installer = \Joomla\CMS\Installer\Installer::getInstance();
+			$installer = Joomla\CMS\Installer\Installer::getInstance();
 
 			foreach ($xmlfiles as $file)
 			{
@@ -780,11 +780,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		foreach ($plugins_list as $name => $desc)
 		{
-			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('kunena', $name);
+			$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('kunena', $name);
 
 			if ($plugin)
 			{
-				$pluginParams = new \Joomla\Registry\Registry($plugin->params);
+				$pluginParams = new Joomla\Registry\Registry($plugin->params);
 				$params       = $pluginParams->toArray();
 
 				if (!empty($params))

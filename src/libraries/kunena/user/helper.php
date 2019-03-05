@@ -159,7 +159,7 @@ abstract class KunenaUserHelper
 		}
 
 		// Find the user id
-		if ($identifier instanceof \Joomla\CMS\User\User)
+		if ($identifier instanceof Joomla\CMS\User\User)
 		{
 			$id = (int) $identifier->id;
 		}
@@ -171,7 +171,7 @@ abstract class KunenaUserHelper
 		else
 		{
 			// Slow, don't use usernames!
-			$id = (int) \Joomla\CMS\User\UserHelper::getUserId((string) $identifier);
+			$id = (int) Joomla\CMS\User\UserHelper::getUserId((string) $identifier);
 		}
 
 		// Always return fresh user if id is anonymous/not found
@@ -354,7 +354,7 @@ abstract class KunenaUserHelper
 
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
-				$filter = \Joomla\CMS\Access\Access::getUsersByGroup(8);
+				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
 				$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
 			}
 

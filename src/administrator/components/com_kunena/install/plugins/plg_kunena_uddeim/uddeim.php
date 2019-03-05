@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
  * Class PlgKunenaUddeIM
  * @since Kunena
  */
-class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
+class PlgKunenaUddeIM extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * @param   object $subject subject
@@ -39,7 +39,7 @@ class PlgKunenaUddeIM extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'uddeim'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'uddeim'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

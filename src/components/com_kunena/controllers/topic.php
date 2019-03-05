@@ -434,17 +434,17 @@ class KunenaControllerTopic extends KunenaController
 
 		if ($this->me->canDoCaptcha())
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('captcha'))
 			{
-				$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
-				$params = new \Joomla\Registry\Registry($plugin[0]->params);
+				$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('captcha');
+				$params = new Joomla\Registry\Registry($plugin[0]->params);
 
 				$captcha_pubkey  = $params->get('public_key');
 				$captcha_privkey = $params->get('private_key');
 
 				if (!empty($captcha_pubkey) && !empty($captcha_privkey))
 				{
-					\Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
+					Joomla\CMS\Plugin\PluginHelper::importPlugin('captcha');
 
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
@@ -589,7 +589,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
-			$text = trim(\Joomla\CMS\Filter\OutputFilter::cleanText($text));
+			$text = trim(Joomla\CMS\Filter\OutputFilter::cleanText($text));
 		}
 
 		if (!$text)
@@ -688,7 +688,7 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive       = new \Joomla\CMS\Date\Date($fields['poll_time_to_live']);
+					$polltimetolive       = new Joomla\CMS\Date\Date($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -875,7 +875,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
-			$text = trim(\Joomla\CMS\Filter\OutputFilter::cleanText($text));
+			$text = trim(Joomla\CMS\Filter\OutputFilter::cleanText($text));
 		}
 
 		if (!$text && $this->config->userdeletetmessage == 1)
@@ -987,7 +987,7 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!empty($fields['poll_time_to_live']))
 				{
-					$polltimetolive       = new \Joomla\CMS\Date\Date($fields['poll_time_to_live']);
+					$polltimetolive       = new Joomla\CMS\Date\Date($fields['poll_time_to_live']);
 					$poll->polltimetolive = $polltimetolive->toSql();
 				}
 
@@ -1965,7 +1965,7 @@ class KunenaControllerTopic extends KunenaController
 				switch ($mode)
 				{
 					case 'newer':
-						$ids = new \Joomla\CMS\Date\Date($object->time);
+						$ids = new Joomla\CMS\Date\Date($object->time);
 						break;
 					case 'selected':
 					default:
@@ -2054,7 +2054,7 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		if (!$this->config->getEmail() || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($this->config->getEmail()))
+		if (!$this->config->getEmail() || !Joomla\CMS\Mail\MailHelper::isEmailAddress($this->config->getEmail()))
 		{
 			// Error: email address is invalid
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_INVALID'), 'error');
@@ -2130,7 +2130,7 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($emailToList))
 			{
-				$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
+				$mailsender  = Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->board_title . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
@@ -2145,7 +2145,7 @@ class KunenaControllerTopic extends KunenaController
 				jimport('joomla.environment.uri');
 				$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
-				$mail = \Joomla\CMS\Mail\Mail::getInstance();
+				$mail = Joomla\CMS\Mail\Mail::getInstance();
 				$mail->setSender(array($this->config->getEmail(), $mailsender));
 				$mail->setSubject($mailsubject);
 				$mail->addReplyTo($this->me->email, $this->me->username);

@@ -111,7 +111,7 @@ abstract class KunenaForum
 	 */
 	public static function enabled($checkAdmin = true)
 	{
-		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
+		if (!Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
 		{
 			return false;
 		}
@@ -448,13 +448,13 @@ abstract class KunenaForum
 
 		// @var KunenaView $view
 
-		if ($params instanceof \Joomla\Registry\Registry)
+		if ($params instanceof Joomla\Registry\Registry)
 		{
 			// Do nothing
 		}
 		else
 		{
-			$params = new \Joomla\Registry\Registry($params);
+			$params = new Joomla\Registry\Registry($params);
 		}
 
 		$params->set('layout', $layout);

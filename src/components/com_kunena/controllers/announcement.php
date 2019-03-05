@@ -251,7 +251,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$now                    = new \Joomla\CMS\Date\Date;
+		$now                    = new Joomla\CMS\Date\Date;
 		$fields                 = array();
 		$fields['title']        = $this->app->input->getString('title', '', 'post', 'raw');
 		$fields['description']  = $this->app->input->getString('description', '', 'post', 'raw');

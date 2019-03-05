@@ -84,12 +84,12 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @param   string $layout layout
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public static function getUri($layout = null)
 	{
-		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{

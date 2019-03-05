@@ -79,7 +79,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * to queue the item to be indexed later.
 	 *
 	 * @param   string                  $context The context of the content passed to the plugin.
-	 * @param   \Joomla\CMS\Table\Table $row     A \Joomla\CMS\Table\Table object
+	 * @param   Joomla\CMS\Table\Table $row     A Joomla\CMS\Table\Table object
 	 * @param   boolean                 $isNew   If the content is just about to be created
 	 *
 	 * @return  boolean  True on success.
@@ -105,7 +105,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Method to determine if the access level of an item changed.
 	 *
 	 * @param   string                  $context The context of the content passed to the plugin.
-	 * @param   \Joomla\CMS\Table\Table $row     A \Joomla\CMS\Table\Table object
+	 * @param   Joomla\CMS\Table\Table $row     A Joomla\CMS\Table\Table object
 	 * @param   boolean                 $isNew   If the content has just been created
 	 *
 	 * @return  boolean  True on success.
@@ -159,7 +159,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * delete the finderresults before those objects are deleted.
 	 *
 	 * @param   string                  $context The context of the action being performed.
-	 * @param   \Joomla\CMS\Table\Table $table   A \Joomla\CMS\Table\Table object containing the record to be deleted
+	 * @param   Joomla\CMS\Table\Table $table   A Joomla\CMS\Table\Table object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -199,7 +199,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Method to remove the link information for items that have been deleted.
 	 *
 	 * @param   string                  $context The context of the action being performed.
-	 * @param   \Joomla\CMS\Table\Table $table   A \Joomla\CMS\Table\Table object containing the record to be deleted
+	 * @param   Joomla\CMS\Table\Table $table   A Joomla\CMS\Table\Table object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -291,7 +291,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	protected function index(FinderIndexerResult $item)
 	{
 		// Check if the extension is enabled
-		if (\Joomla\CMS\Component\ComponentHelper::isEnabled($this->extension) == false)
+		if (Joomla\CMS\Component\ComponentHelper::isEnabled($this->extension) == false)
 		{
 			return;
 		}
@@ -621,14 +621,14 @@ class plgFinderKunena extends FinderIndexerAdapter
 		$user     = Factory::getUser(0);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof \Joomla\CMS\User\User))
+		if (!($user instanceof Joomla\CMS\User\User))
 		{
-			$user = \Joomla\CMS\User\User::getInstance();
+			$user = Joomla\CMS\User\User::getInstance();
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
-		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
+		$groups_r     = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
+		$groups       = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
 
 		$catlist = array();
 

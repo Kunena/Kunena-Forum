@@ -21,7 +21,7 @@ jimport('joomla.html.pagination');
  *
  * @since  2.0
  */
-class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
+class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * @param   array $config config
@@ -38,7 +38,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 * @see   Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array $data     data
 	 * @param   bool  $loadData loadData
@@ -157,7 +157,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	public function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
-		$ftp = \Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;
 	}
@@ -180,7 +180,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 
 		// Create the pagination object.
 		$limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
-		$page  = new \Joomla\CMS\Pagination\Pagination($this->getTotal(), $this->getStart(), $limit);
+		$page  = new Joomla\CMS\Pagination\Pagination($this->getTotal(), $this->getStart(), $limit);
 
 		// Add the object to the internal cache.
 		$this->cache[$store] = $page;
@@ -296,7 +296,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @see   Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 * @since Kunena
 	 * @return array|mixed
 	 * @throws Exception

@@ -71,7 +71,7 @@ class KunenaBbcode extends NBBC_BBCode
 		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
 	}
 
@@ -328,10 +328,10 @@ class KunenaBbcode extends NBBC_BBCode
 	 */
 	public function canCloakEmail(&$params)
 	{
-		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
+		if (Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
-			$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
-			$params = new \Joomla\Registry\Registry($plugin->params);
+			$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('content', 'emailcloak');
+			$params = new Joomla\Registry\Registry($plugin->params);
 
 			if ($params->get('mode', 1))
 			{
@@ -1164,12 +1164,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		if (is_numeric($ItemID) && $config->ebay_api_key && ini_get('allow_url_fopen'))
 		{
-			$options = new \Joomla\Registry\Registry;
+			$options = new Joomla\Registry\Registry;
 
-			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new \Joomla\CMS\Http\Http($options, $transport);
+			$http = new Joomla\CMS\Http\Http($options, $transport);
 
 			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', null, '10');
 
@@ -1516,7 +1516,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		$document = Factory::getDocument();
 		$title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
-		$hidden   = ($document instanceof \Joomla\CMS\Document\HtmlDocument);
+		$hidden   = ($document instanceof Joomla\CMS\Document\HtmlDocument);
 
 		$layout = KunenaLayout::factory('BBCode/Spoiler');
 
@@ -1703,7 +1703,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$document = Factory::getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof \Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
@@ -1871,7 +1871,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			// Get credentials to check if the user has right to see the article
 			$params   = $site->getParams('com_content');
-			$registry = new \Joomla\Registry\Registry;
+			$registry = new Joomla\Registry\Registry;
 			$registry->loadString($article->attribs);
 			$article->params = clone $params;
 			$article->params->merge($registry);
@@ -1957,7 +1957,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 				// Identify the source of the event to be Kunena itself
 				// this is important to avoid recursive event behaviour with our own plugins
 				$params->set('ksource', 'kunena');
-				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+				Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 				Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$article, &$params, 0));
 				$article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
@@ -2909,12 +2909,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			$url = 'https://api.twitter.com/oauth2/token';
 
-			$options = new \Joomla\Registry\Registry;
+			$options = new Joomla\Registry\Registry;
 
-			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new \Joomla\CMS\Http\Http($options, $transport);
+			$http = new Joomla\CMS\Http\Http($options, $transport);
 
 			$headers = array(
 				'Authorization' => "Basic " . $b64_bearer_token_credentials,
@@ -2947,12 +2947,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			$url = 'https://api.twitter.com/1.1/statuses/show.json?id=' . $tweetid;
 
-			$options = new \Joomla\Registry\Registry;
+			$options = new Joomla\Registry\Registry;
 
-			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
 
 			// Create a 'stream' transport.
-			$http = new \Joomla\CMS\Http\Http($options, $transport);
+			$http = new Joomla\CMS\Http\Http($options, $transport);
 
 			$headers = array(
 				'Authorization' => "Bearer " . $this->token,

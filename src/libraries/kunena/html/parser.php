@@ -133,7 +133,7 @@ abstract class KunenaHtmlParser
 		$event_target  = (array) $config->get('jcontentevent_target', array());
 
 		$name   = '';
-		$plugin = \Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
+		$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
 
 		foreach ($plugin as $key => $value)
 		{
@@ -146,10 +146,10 @@ abstract class KunenaHtmlParser
 			$row->text =& $content;
 
 			// Run events
-			$params = new \Joomla\Registry\Registry;
+			$params = new Joomla\Registry\Registry;
 			$params->set('ksource', 'kunena');
 
-			\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+			Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 			Factory::getApplication()->triggerEvent('onContentPrepare', array($name, &$row, &$params, 0));
 			$content = $row->text;
 		}
@@ -250,7 +250,7 @@ abstract class KunenaHtmlParser
 		$txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
 		$txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
 
-		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
+		if (Joomla\CMS\Plugin\PluginHelper::isEnabled('content', 'emailcloak'))
 		{
 			$pattern     = "/[^@\s]*@[^@\s]*\.[^@\s]*/";
 			$replacement = ' ';

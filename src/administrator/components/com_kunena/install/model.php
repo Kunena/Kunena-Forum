@@ -31,7 +31,7 @@ define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE . '/media/kunena');
  *
  * @since   1.6
  */
-class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
+class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
 	 * Flag to indicate model state initialization.
@@ -571,7 +571,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function loadPlugin($group, $element)
 	{
-		$plugin = \Joomla\CMS\Table\Table::getInstance('extension');
+		$plugin = Joomla\CMS\Table\Table::getInstance('extension');
 		$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element));
 
 		return $plugin;
@@ -626,7 +626,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// Only install module if it can be used in current Joomla version (manifest exists)
 		if ($success && is_file("{$dest}/mod_{$name}.xml"))
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$success   = $installer->install($dest);
 			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		}
@@ -692,7 +692,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
 		if ($success && is_file("{$dest}/{$name}.xml"))
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$success   = $installer->install($dest);
 
 			if ($success)
@@ -737,7 +737,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($moduleid)
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$installer->uninstall('module', $moduleid);
 		}
 	}
@@ -756,7 +756,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($pluginid)
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$installer->uninstall('plugin', $pluginid);
 		}
 	}
@@ -774,7 +774,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($libraryid)
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$installer->uninstall('library', $libraryid);
 		}
 	}
@@ -792,7 +792,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($mediaid)
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Joomla\CMS\Installer\Installer;
 			$installer->uninstall('file', $mediaid);
 		}
 	}
@@ -891,7 +891,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$this->setAttachmentStatus();
 		$this->addStatus(Text::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true);
 
-		$cache = \Joomla\CMS\Cache\Cache::getInstance();
+		$cache = Joomla\CMS\Cache\Cache::getInstance();
 		$cache->clean('kunena');
 		$action = $this->getAction();
 
@@ -1225,7 +1225,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
-		/** @var \Joomla\CMS\Cache\Cache | \Joomla\CMS\Cache\CacheController $cache */
+		/** @var Joomla\CMS\Cache\Cache | Joomla\CMS\Cache\CacheController $cache */
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 
@@ -3031,7 +3031,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		$config = KunenaFactory::getConfig();
 
-		$component_id = \Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena')->id;
+		$component_id = Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena')->id;
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
@@ -3046,7 +3046,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 		}
 
-		$table = \Joomla\CMS\Table\Table::getInstance('MenuType');
+		$table = Joomla\CMS\Table\Table::getInstance('MenuType');
 		$data  = array(
 			'menutype'    => 'kunenamenu',
 			'title'       => Text::_('COM_KUNENA_MENU_TITLE'),
@@ -3064,7 +3064,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			throw new KunenaInstallerException($table->getError());
 		}
 
-		$table = \Joomla\CMS\Table\Table::getInstance('menu');
+		$table = Joomla\CMS\Table\Table::getInstance('menu');
 		$table->load(array('menutype' => 'kunenamenu', 'link' => $menu ['link']));
 		$paramdata = array('menu-anchor_title'     => '',
 		                   'menu-anchor_css'       => '',
@@ -3079,7 +3079,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		                   'robots'                => '',
 		                   'secure'                => 0, );
 
-		$gparams = new \Joomla\Registry\Registry($paramdata);
+		$gparams = new Joomla\Registry\Registry($paramdata);
 
 		$params = clone $gparams;
 		$params->loadArray($menu['params']);
@@ -3117,7 +3117,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$params = clone $gparams;
 			$params->loadArray($menuitem['params']);
-			$table = \Joomla\CMS\Table\Table::getInstance('menu');
+			$table = Joomla\CMS\Table\Table::getInstance('menu');
 			$table->load(array('menutype' => 'kunenamenu', 'link' => $menuitem ['link']));
 			$data = array(
 				'menutype'     => 'kunenamenu',
@@ -3156,14 +3156,14 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		// Finally create alias
-		$defaultmenu = \Joomla\CMS\Menu\AbstractMenu::getInstance('site')->getDefault();
+		$defaultmenu = Joomla\CMS\Menu\AbstractMenu::getInstance('site')->getDefault();
 
 		if (!$defaultmenu)
 		{
 			return true;
 		}
 
-		$table = \Joomla\CMS\Table\Table::getInstance('menu');
+		$table = Joomla\CMS\Table\Table::getInstance('menu');
 		$table->load(array('menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM')));
 
 		if (!$table->id)
@@ -3208,7 +3208,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function deleteMenu()
 	{
-		$table = \Joomla\CMS\Table\Table::getInstance('MenuType');
+		$table = Joomla\CMS\Table\Table::getInstance('MenuType');
 		$table->load(array('menutype' => 'kunenamenu'));
 
 		if ($table->id)
@@ -3221,7 +3221,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		/** @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache */
+		/** @var Joomla\CMS\Cache\Cache|Joomla\CMS\Cache\CacheController $cache */
 		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
 	}

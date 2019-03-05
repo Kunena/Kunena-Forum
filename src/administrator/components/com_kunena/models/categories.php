@@ -45,12 +45,12 @@ class KunenaAdminModelCategories extends KunenaModel
 	protected $_admincategory = false;
 
 	/**
-	 * @return \Joomla\CMS\Pagination\Pagination
+	 * @return Joomla\CMS\Pagination\Pagination
 	 * @since Kunena
 	 */
 	public function getAdminNavigation()
 	{
-		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}
@@ -260,7 +260,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 */
 	public function saveorder($pks = null, $order = null)
 	{
-		$table      = \Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
+		$table      = Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
 		$conditions = array();
 
 		if (empty($pks))

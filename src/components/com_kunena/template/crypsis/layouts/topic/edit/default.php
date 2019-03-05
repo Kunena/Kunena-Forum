@@ -487,5 +487,5 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 <?php
 if ($this->config->showhistory && $this->topic->exists())
 {
-	echo $this->subRequest('Topic/Form/History', new \Joomla\Input\Input(array('id' => $this->topic->id)));
+	echo $this->subRequest('Topic/Form/History', new Joomla\Input\Input(array('id' => $this->topic->id)));
 }

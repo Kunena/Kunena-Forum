@@ -35,7 +35,7 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @param   \Joomla\Registry\Registry $params The module options.
+	 * @param   Joomla\Registry\Registry $params The module options.
 	 *
 	 * @return    array
 	 * @throws Exception
@@ -176,7 +176,7 @@ abstract class KunenaMenuHelper
 	/**
 	 * Get base menu item.
 	 *
-	 * @param   \Joomla\Registry\Registry &$params The module options.
+	 * @param   Joomla\Registry\Registry &$params The module options.
 	 *
 	 * @return  object
 	 *
@@ -207,7 +207,7 @@ abstract class KunenaMenuHelper
 	/**
 	 * Get active menu item.
 	 *
-	 * @param   \Joomla\Registry\Registry &$params The module options.
+	 * @param   Joomla\Registry\Registry &$params The module options.
 	 *
 	 * @return  object
 	 *

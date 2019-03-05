@@ -1413,7 +1413,7 @@ class KunenaConfig extends CMSObject
 		// Perform custom validation of config data before we let anybody access it.
 		$this->check();
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		$plugins = array();
 		Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
@@ -1424,7 +1424,7 @@ class KunenaConfig extends CMSObject
 			{
 				$this->bind($registry->toArray());
 			}
-			elseif ($name && $registry instanceof \Joomla\Registry\Registry)
+			elseif ($name && $registry instanceof Joomla\Registry\Registry)
 			{
 				$this->plugins[$name] = $registry;
 			}
@@ -1503,13 +1503,13 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @param   string $name Name of the plugin
 	 *
-	 * @return \Joomla\Registry\Registry
+	 * @return Joomla\Registry\Registry
 	 *
 	 * @since Kunena
 	 */
 	public function getPlugin($name)
 	{
-		return isset($this->plugins[$name]) ? $this->plugins[$name] : new \Joomla\Registry\Registry;
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new Joomla\Registry\Registry;
 	}
 
 	/**

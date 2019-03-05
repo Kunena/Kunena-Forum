@@ -119,7 +119,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   string $type   Polls table name to be used.
 	 * @param   string $prefix Polls table prefix to be used.
 	 *
-	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
+	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
@@ -134,7 +134,7 @@ class KunenaForumTopicPoll extends CMSObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -215,7 +215,7 @@ class KunenaForumTopicPoll extends CMSObject
 			return;
 		}
 
-		$filter     = \Joomla\CMS\Filter\InputFilter::getInstance();
+		$filter     = Joomla\CMS\Filter\InputFilter::getInstance();
 		$newOptions = array();
 
 		foreach ($options as $key => &$value)

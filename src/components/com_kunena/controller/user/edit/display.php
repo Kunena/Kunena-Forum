@@ -27,7 +27,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Edit';
 
 	/**
-	 * @var \Joomla\CMS\User\User
+	 * @var Joomla\CMS\User\User
 	 * @since Kunena
 	 */
 	public $user;

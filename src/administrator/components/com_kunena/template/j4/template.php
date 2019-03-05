@@ -56,13 +56,13 @@ class KunenaAdminTemplate4
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   \Joomla\CMS\Pagination\PaginationObject $item The current pagination object
+	 * @param   Joomla\CMS\Pagination\PaginationObject $item The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *
 	 * @since   3.0
 	 */
-	public function paginationItem(\Joomla\CMS\Pagination\PaginationObject $item)
+	public function paginationItem(Joomla\CMS\Pagination\PaginationObject $item)
 	{
 		// Special cases for "Start", "Prev", "Next", "End".
 		switch ($item->text)

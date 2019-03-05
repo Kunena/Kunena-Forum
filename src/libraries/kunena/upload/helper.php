@@ -46,7 +46,7 @@ class KunenaUploadHelper
 
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
-		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 
 		// Make the filename safe
 		jimport('joomla.filesystem.file');

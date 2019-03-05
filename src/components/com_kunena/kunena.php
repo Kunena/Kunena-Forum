@@ -93,7 +93,7 @@ $subview = $input->getWord('layout', 'default');
 $task    = $input->getCmd('task', 'display');
 
 // Import plugins and event listeners.
-\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 // Get HMVC controller and if exists, execute it.
 $controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);

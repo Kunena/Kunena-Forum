@@ -24,7 +24,7 @@ jimport('joomla.application.component.modeladmin');
  * @subpackage  com_plugins
  * @since       1.6
  */
-class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
+class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
 	 * @var        string    The help screen key for the module.
@@ -158,7 +158,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 			$this->_cache[$pk] = ArrayHelper::toObject($properties, 'JObject');
 
 			// Convert the params field to an array.
-			$registry = new \Joomla\Registry\Registry;
+			$registry = new Joomla\Registry\Registry;
 			$registry->loadString($table->params);
 			$this->_cache[$pk]->params = $registry->toArray();
 
@@ -185,12 +185,12 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	 * @param   string $prefix A prefix for the table class name. Optional.
 	 * @param   array  $config Configuration array for model. Optional.
 	 *
-	 * @return  \Joomla\CMS\Table\Table    A database object
+	 * @return  Joomla\CMS\Table\Table    A database object
 	 * @since Kunena
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{
-		return \Joomla\CMS\Table\Table::getInstance($type, $prefix, $config);
+		return Joomla\CMS\Table\Table::getInstance($type, $prefix, $config);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	public function save($data)
 	{
 		// Load the extension plugin group.
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('extension');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('extension');
 
 		// Setup type
 		$data['type'] = 'plugin';
@@ -268,7 +268,7 @@ class KunenaAdminModelPlugin extends \Joomla\CMS\MVC\Model\AdminModel
 	{
 		// Get the dispatcher and load the users plugins.
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
 		$results = Factory::getApplication()->triggerEvent('onContentPrepareData', array($context, $data));

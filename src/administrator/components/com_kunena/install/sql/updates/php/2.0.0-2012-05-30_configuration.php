@@ -104,7 +104,7 @@ function kunena_200_2012_05_30_configuration($parent)
 
 			if ($plugin)
 			{
-				$params            = new \Joomla\Registry\Registry($plugin->params);
+				$params            = new Joomla\Registry\Registry($plugin->params);
 				$plugin->params    = $params;
 				$plugins[$cfgname] = $plugin;
 			}

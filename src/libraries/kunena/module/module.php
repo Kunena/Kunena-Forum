@@ -33,14 +33,14 @@ abstract class KunenaModule
 	protected $module = null;
 
 	/**
-	 * @var \Joomla\Registry\Registry
+	 * @var Joomla\Registry\Registry
 	 * @since Kunena
 	 */
 	protected $params = null;
 
 	/**
 	 * @param   stdClass                  $module module
-	 * @param   \Joomla\Registry\Registry $params params
+	 * @param   Joomla\Registry\Registry $params params
 	 *
 	 * @since Kunena
 	 */
@@ -70,7 +70,7 @@ abstract class KunenaModule
 		// Use caching also for registered users if enabled.
 		if ($this->params->get('owncache', 0))
 		{
-			// @var $cache \Joomla\CMS\Cache\CacheControllerOutput
+			// @var $cache Joomla\CMS\Cache\CacheControllerOutput
 
 			$cache = Factory::getCache('com_kunena', 'output');
 

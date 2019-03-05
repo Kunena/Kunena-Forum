@@ -857,7 +857,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   int      $display    display
 	 * @param   string   $prefix     prefix
 	 *
-	 * @return \Joomla\CMS\Pagination\Pagination|KunenaPagination
+	 * @return Joomla\CMS\Pagination\Pagination|KunenaPagination
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -884,7 +884,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed  $category category
 	 * @param   string $action   action
 	 *
-	 * @return \Joomla\CMS\Uri\Uri|null
+	 * @return Joomla\CMS\Uri\Uri|null
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -1479,7 +1479,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Move topic or parts of it into another category or topic.
 	 *
 	 * @param   object $target       Target KunenaForumCategory or KunenaForumTopic
-	 * @param   mixed  $ids          false, array of message Ids or \Joomla\CMS\Date\Date
+	 * @param   mixed  $ids          false, array of message Ids or Joomla\CMS\Date\Date
 	 * @param   bool   $shadow       Leave visible shadow topic.
 	 * @param   string $subject      New subject
 	 * @param   bool   $subjectall   Change subject from every message
@@ -1499,7 +1499,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
 		// Cleanup input
-		if (!($ids instanceof \Joomla\CMS\Date\Date))
+		if (!($ids instanceof Joomla\CMS\Date\Date))
 		{
 			if (!is_array($ids))
 			{
@@ -1525,7 +1525,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query = new KunenaDatabaseQuery;
 			$query->select('COUNT(*)')->from('#__kunena_messages')->where("thread={$this->id}");
 
-			if ($ids instanceof \Joomla\CMS\Date\Date)
+			if ($ids instanceof Joomla\CMS\Date\Date)
 			{
 				// All older messages will remain (including unapproved, deleted)
 				$query->where("time<{$ids->toUnix()}");
@@ -1687,7 +1687,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query->set("subject={$this->_db->quote($subject)}");
 		}
 
-		if ($ids instanceof \Joomla\CMS\Date\Date)
+		if ($ids instanceof Joomla\CMS\Date\Date)
 		{
 			// Move all newer messages (includes unapproved, deleted messages)
 			$query->where("time>={$ids->toUnix()}");

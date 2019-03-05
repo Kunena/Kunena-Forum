@@ -89,7 +89,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 			return false;
 		}
 
-		$parameters = new \Joomla\Registry\Registry;
+		$parameters = new Joomla\Registry\Registry;
 		$template   = KunenaFactory::getTemplate();
 		$parameters->set('showAllChildren', $template->params->get('menu_showall', 0));
 		$parameters->set('menutype', $basemenu->menutype);

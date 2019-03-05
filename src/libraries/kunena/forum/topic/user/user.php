@@ -73,7 +73,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   string $type   Topics table name to be used.
 	 * @param   string $prefix Topics table prefix to be used.
 	 *
-	 * @return boolean|\Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
+	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
@@ -88,7 +88,7 @@ class KunenaForumTopicUser extends CMSObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**

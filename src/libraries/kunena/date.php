@@ -18,7 +18,7 @@ jimport('joomla.utilities.date');
  * Class KunenaDate
  * @since Kunena
  */
-class KunenaDate extends \Joomla\CMS\Date\Date
+class KunenaDate extends Joomla\CMS\Date\Date
 {
 	/**
 	 * @param   string $date date
@@ -180,7 +180,7 @@ class KunenaDate extends \Joomla\CMS\Date\Date
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;
 		$output = '';
-		$diff   = $this->diff(new \Joomla\CMS\Date\Date);
+		$diff   = $this->diff(new Joomla\CMS\Date\Date);
 
 		foreach ($diff as $name => $count)
 		{

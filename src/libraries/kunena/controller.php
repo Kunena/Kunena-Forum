@@ -21,10 +21,10 @@ jimport('joomla.application.component.helper');
  * Class KunenaController
  * @since Kunena
  */
-class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
+class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
-	 * @var \Joomla\CMS\Application\CMSApplication|null
+	 * @var Joomla\CMS\Application\CMSApplication|null
 	 * @since Kunena
 	 */
 	public $app = null;
@@ -158,7 +158,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * If response is in HTML, we just redirect and enqueue message if there's an exception.
 	 * NOTE: legacy display task is a special case and reverts to original Joomla behavior.
 	 *
-	 * If response is in JSON, we return JSON response, which follows \Joomla\CMS\Response\JsonResponse with some extra
+	 * If response is in JSON, we return JSON response, which follows Joomla\CMS\Response\JsonResponse with some extra
 	 * data:
 	 *
 	 * Default:   {code, location=null, success, message, messages, data={step, location, html}}
@@ -329,9 +329,9 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @param   boolean    $cachable  If true, the view output will be cached
 	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see
-	 *                                {@link \Joomla\CMS\Filter\InputFilter::clean()}.
+	 *                                {@link Joomla\CMS\Filter\InputFilter::clean()}.
 	 *
-	 * @return  \Joomla\CMS\MVC\Controller\BaseController  A \Joomla\CMS\MVC\Controller\BaseController object to
+	 * @return  Joomla\CMS\MVC\Controller\BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
 	 * @since Kunena
 	 * @throws Exception
@@ -439,7 +439,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 			// Render the view.
 			if ($vFormat == 'html')
 			{
-				\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+				Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('start', $view));
 				$view->displayAll();
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('end', $view));

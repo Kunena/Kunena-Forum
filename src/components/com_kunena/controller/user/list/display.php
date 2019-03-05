@@ -100,7 +100,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)
 		{
-			$filter = \Joomla\CMS\Access\Access::getUsersByGroup(8);
+			$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
 		}
 		else
 		{

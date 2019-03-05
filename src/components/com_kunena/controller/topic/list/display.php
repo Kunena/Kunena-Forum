@@ -112,11 +112,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'list');
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		KunenaHtmlParser::prepareContent($content, 'topic_list_default');
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic.list', &$this->topic, &$params, 0));
 	}

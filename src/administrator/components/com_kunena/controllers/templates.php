@@ -815,13 +815,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		// Set FTP credentials, if given
-		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
+		Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		$ftp  = Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (count($params))
 		{
-			$registry = new \Joomla\Registry\Registry;
+			$registry = new Joomla\Registry\Registry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');
 			$return = KunenaFile::write($file, $txt);

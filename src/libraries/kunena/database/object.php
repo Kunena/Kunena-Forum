@@ -87,7 +87,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * This method optionally takes an array of properties to ignore or allow when binding.
 	 *
-	 * @param   array   $src     An associative array or object to bind to the \Joomla\CMS\Table\Table instance.
+	 * @param   array   $src     An associative array or object to bind to the Joomla\CMS\Table\Table instance.
 	 * @param   array   $fields  An optional array list of properties to ignore / include only while binding.
 	 * @param   boolean $include True to include only listed fields, false to ignore listed fields.
 	 *
@@ -162,7 +162,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 
 		// Include the Kunena plugins for the on save events.
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
 		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
@@ -216,12 +216,12 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  \Joomla\CMS\Table\Table|KunenaTable  The table object.
+	 * @return  Joomla\CMS\Table\Table|KunenaTable  The table object.
 	 * @since Kunena
 	 */
 	protected function getTable()
 	{
-		return \Joomla\CMS\Table\Table::getInstance($this->_table, 'Table');
+		return Joomla\CMS\Table\Table::getInstance($this->_table, 'Table');
 	}
 
 	/**
@@ -292,7 +292,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 
 		// Include the Kunena plugins for the on save events.
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.
 		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));

@@ -127,16 +127,16 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Return \Joomla\CMS\Uri\Uri object pointing to the Announcement layout.
+	 * return Joomla\CMS\Uri\Uri object pointing to the Announcement layout.
 	 *
 	 * @param   string $layout layout
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getUri($layout = 'default')
 	{
-		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{
@@ -170,16 +170,16 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Return \Joomla\CMS\Uri\Uri object pointing to the Announcement task.
+	 * return Joomla\CMS\Uri\Uri object pointing to the Announcement task.
 	 *
 	 * @param   string $task task
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getTaskUri($task = null)
 	{
-		$uri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($task)
 		{

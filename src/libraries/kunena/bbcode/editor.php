@@ -167,7 +167,7 @@ class KunenaBbcodeEditor
 
 		// Hook to manipulate the Editor XML like adding buttons
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', array($this));
 
 		$js = "bbcodeSettings = {

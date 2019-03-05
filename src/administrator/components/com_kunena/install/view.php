@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
  * The HTML Kunena configuration view.
  * @since Kunena
  */
-class KunenaViewInstall extends \Joomla\CMS\MVC\View\HtmlView
+class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 {
 	/**
 	 * @var null

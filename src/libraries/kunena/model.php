@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
  *
  * @since  2.0
  */
-class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
+class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 {
 	/**
 	 * @since Kunena
@@ -38,19 +38,19 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @since Kunena
-	 * @var string \Joomla\Registry\Registry
+	 * @var string Joomla\Registry\Registry
 	 */
 	public $params = null;
 
 	/**
 	 * @since Kunena
-	 * @var \Joomla\Input\Input
+	 * @var Joomla\Input\Input
 	 */
 	protected $input = null;
 
 	/**
 	 * @since Kunena
-	 * @var \Joomla\CMS\Filter\InputFilter
+	 * @var Joomla\CMS\Filter\InputFilter
 	 */
 	protected $filter = null;
 
@@ -68,7 +68,7 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @param   array               $config config
-	 * @param   \Joomla\Input\Input $input  input
+	 * @param   Joomla\Input\Input $input  input
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -97,16 +97,16 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->embedded = true;
 			$this->setState('embedded', true);
-			$this->filter = \Joomla\CMS\Filter\InputFilter::getInstance();
+			$this->filter = Joomla\CMS\Filter\InputFilter::getInstance();
 		}
 
-		if ($params instanceof \Joomla\Registry\Registry)
+		if ($params instanceof Joomla\Registry\Registry)
 		{
 			$this->params = $params;
 		}
 		else
 		{
-			$this->params = new \Joomla\Registry\Registry($params);
+			$this->params = new Joomla\Registry\Registry($params);
 		}
 	}
 
@@ -141,7 +141,7 @@ class KunenaModel extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return \Joomla\Registry\Registry
+	 * @return Joomla\Registry\Registry
 	 * @since Kunena
 	 */
 	protected function getParameters()

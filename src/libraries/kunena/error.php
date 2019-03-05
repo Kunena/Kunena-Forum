@@ -303,7 +303,7 @@ abstract class KunenaError
 			{
 				header('Content-type: application/json');
 
-				// Emulate \Joomla\CMS\Response\JsonResponse.
+				// Emulate Joomla\CMS\Response\JsonResponse.
 				$response           = new StdClass;
 				$response->success  = false;
 				$response->message  = '500 ' . $errorMsg;

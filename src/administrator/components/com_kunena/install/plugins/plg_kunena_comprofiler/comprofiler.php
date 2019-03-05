@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
  * Class plgKunenaComprofiler
  * @since Kunena
  */
-class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * @var string
@@ -50,7 +50,7 @@ class plgKunenaComprofiler extends \Joomla\CMS\Plugin\CMSPlugin
 		// Do not load if CommunityBuilder is not installed
 		if ((!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

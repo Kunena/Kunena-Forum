@@ -292,7 +292,7 @@ class KunenaAccessJoomla
 		}
 
 		// Get all asset rules
-		$rules = \Joomla\CMS\Access\Access::getAssetRules($asset, true);
+		$rules = Joomla\CMS\Access\Access::getAssetRules($asset, true);
 		$data  = $rules->getData();
 
 		// Get all action rules for the asset
@@ -402,7 +402,7 @@ class KunenaAccessJoomla
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
 		$category->params = new Registry($category->params);
-		$groups = (array) \Joomla\CMS\Access\Access::getGroupsByUser($userid, true);
+		$groups = (array) Joomla\CMS\Access\Access::getGroupsByUser($userid, true);
 		$post   = array_intersect($groups, (array) $category->params->get('access_post', array(2, 6, 8)));
 		$reply  = array_intersect($groups, (array) $category->params->get('access_reply', array(2, 6, 8)));
 
@@ -430,14 +430,14 @@ class KunenaAccessJoomla
 		$user = Factory::getUser($userid);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof \Joomla\CMS\User\User))
+		if (!($user instanceof Joomla\CMS\User\User))
 		{
-			$user = \Joomla\CMS\User\User::getInstance();
+			$user = Joomla\CMS\User\User::getInstance();
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
-		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
+		$groups_r     = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
+		$groups       = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
 
 		$catlist = array();
 

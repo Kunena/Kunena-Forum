@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
  * Class plgSystemKunena
  * @since Kunena
  */
-class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
+class plgSystemKunena extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * @param   object $subject Subject
@@ -40,7 +40,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		jimport('joomla.application.component.helper');
 
 		// Check if Kunena component is installed/enabled
-		if (!\Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
+		if (!Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
 		{
 			return;
 		}
@@ -63,7 +63,7 @@ class plgSystemKunena extends \Joomla\CMS\Plugin\CMSPlugin
 		{
 			if ($app->scope == 'com_kunena')
 			{
-				if (!\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+				if (!Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 				{
 					$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
@@ -168,7 +168,7 @@ EOF;
 		}
 
 		// Generate component name
-		$name    = strtolower(\Joomla\CMS\Filter\InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
+		$name    = strtolower(Joomla\CMS\Filter\InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
 		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
 
 		if ($element != 'com_kunena')
@@ -207,7 +207,7 @@ EOF;
 	 * @since  Kunena 2.0
 	 *
 	 * @param   string $text   String to run events on
-	 * @param   object $params \Joomla\Registry\Registry object holding eventual parameters
+	 * @param   object $params Joomla\Registry\Registry object holding eventual parameters
 	 * @param   int    $page   An integer holding page number
 	 *
 	 * @return object KunenaForumMessage
@@ -216,7 +216,7 @@ EOF;
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		$row       = new stdClass;
 		$row->text = &$text;

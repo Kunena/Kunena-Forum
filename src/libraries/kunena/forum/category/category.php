@@ -202,7 +202,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$this->setProperties($properties);
 		}
 
-		$registry = new \Joomla\Registry\Registry;
+		$registry = new Joomla\Registry\Registry;
 
 		if (!empty($this->params))
 		{
@@ -658,7 +658,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed    $category Fake category (or null).
 	 * @param   int|null $action   Limitstart.
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getUri($category = null, $action = null)
@@ -1119,9 +1119,9 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$result = parent::bind($src, $fields, $include);
 
-		if (!($this->params instanceof \Joomla\Registry\Registry))
+		if (!($this->params instanceof Joomla\Registry\Registry))
 		{
-			$registry = new \Joomla\Registry\Registry;
+			$registry = new Joomla\Registry\Registry;
 
 			if (is_array($this->params))
 			{
@@ -1155,7 +1155,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			$this->_alias = $this->get('alias', '');
 		}
 
-		$registry = new \Joomla\Registry\Registry;
+		$registry = new Joomla\Registry\Registry;
 
 		if ($this->params)
 		{

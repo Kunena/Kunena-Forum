@@ -114,14 +114,14 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on first or last post.
 	 *
-	 * @param   \Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   \Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
+	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
 	 * @param   bool                  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
 	 * @since Kunena
 	 */
-	public function filterByTime(\Joomla\CMS\Date\Date $starting = null, \Joomla\CMS\Date\Date $ending = null, $lastPost = true)
+	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null, $lastPost = true)
 	{
 		$name = $lastPost ? 'last' : 'first';
 
@@ -237,7 +237,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 			{
 				$list[] = (int) $user->userid;
 			}
-			elseif ($user instanceof \Joomla\CMS\User\User)
+			elseif ($user instanceof Joomla\CMS\User\User)
 			{
 				$list[] = (int) $user->id;
 			}

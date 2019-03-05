@@ -55,7 +55,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+			$this->moreUri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
 				. '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
@@ -74,11 +74,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		}
 		elseif ($time == 0)
 		{
-			$time = new \Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
+			$time = new Joomla\CMS\Date\Date(KunenaFactory::getSession()->lasttime);
 		}
 		else
 		{
-			$time = new \Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
+			$time = new Joomla\CMS\Date\Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
 		$userid = $this->state->get('user');
@@ -250,7 +250,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			default:
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 
-				$app  = \Joomla\CMS\Factory::getApplication();
+				$app  = Joomla\CMS\Factory::getApplication();
 				$view = $app->input->get('view');
 
 				if ($view == 'user')

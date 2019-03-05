@@ -39,7 +39,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $content;
 
 	/**
-	 * @var \Joomla\CMS\Pathway\Pathway
+	 * @var Joomla\CMS\Pathway\Pathway
 	 * @since Kunena
 	 */
 	protected $breadcrumb;
@@ -57,13 +57,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $template;
 
 	/**
-	 * @var \Joomla\CMS\Document\HtmlDocument
+	 * @var Joomla\CMS\Document\HtmlDocument
 	 * @since Kunena
 	 */
 	protected $document;
 
 	/**
-	 * @return \Joomla\CMS\Layout\BaseLayout
+	 * @return Joomla\CMS\Layout\BaseLayout
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -417,7 +417,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$credits .= '</div>';
 
-		if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+		if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$credits = '';
 		}

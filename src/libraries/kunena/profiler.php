@@ -15,7 +15,7 @@ jimport('joomla.error.profiler');
  * Class KunenaProfiler
  * @since Kunena
  */
-class KunenaProfiler extends \Joomla\CMS\Profiler\Profiler
+class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 {
 	/**
 	 * @since Kunena

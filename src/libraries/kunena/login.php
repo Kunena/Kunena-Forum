@@ -35,7 +35,7 @@ class KunenaLogin
 	 */
 	public function __construct()
 	{
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		$classes = Factory::getApplication()->triggerEvent('onKunenaGetLogin');
 
@@ -280,7 +280,7 @@ class KunenaLogin
 
 	/**
 	 * Return the parameters of the plugin
-	 * 
+	 *
 	 * @return JRegistry
 	 * @since Kunena 5.1
 	 */

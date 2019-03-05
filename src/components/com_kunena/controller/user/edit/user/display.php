@@ -49,7 +49,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	{
 		parent::before();
 
-		$userParams = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$userParams = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
 
 		// Check if user is allowed to change his name.
 		$this->changeUsername = $userParams->get('change_login_name', 1);
@@ -59,13 +59,13 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 		{
 			Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
-			\Joomla\CMS\Form\Form::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
-			\Joomla\CMS\Form\Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
+			Joomla\CMS\Form\Form::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
+			Joomla\CMS\Form\Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
 
-			\Joomla\CMS\Plugin\PluginHelper::importPlugin('user');
+			Joomla\CMS\Plugin\PluginHelper::importPlugin('user');
 
-			$registry     = new \Joomla\Registry\Registry($this->user->params);
-			$form         = \Joomla\CMS\Form\Form::getInstance('com_users.profile', 'frontend');
+			$registry     = new Joomla\Registry\Registry($this->user->params);
+			$form         = Joomla\CMS\Form\Form::getInstance('com_users.profile', 'frontend');
 			$data         = new StdClass;
 			$data->params = $registry->toArray();
 			Factory::getApplication()->triggerEvent('onContentPrepareForm', array($form, $data));

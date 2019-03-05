@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Date\Date;
-use \Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Table;
 
 jimport('joomla.utilities.date');
 
@@ -69,7 +69,7 @@ class KunenaUserBan extends CMSObject
 	protected static $_now = null;
 
 	/**
-	 * @var \Joomla\CMS\User\User|null
+	 * @var Joomla\CMS\User\User|null
 	 * @since Kunena
 	 */
 	protected static $_my = null;

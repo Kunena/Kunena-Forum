@@ -123,7 +123,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		$this->actions = $this->getActions();
 
-		$this->pagination = new \Joomla\CMS\Pagination\Pagination($total, $limitstart, $limit);
+		$this->pagination = new Joomla\CMS\Pagination\Pagination($total, $limitstart, $limit);
 
 		$this->headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}

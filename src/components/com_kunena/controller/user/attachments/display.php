@@ -76,7 +76,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 

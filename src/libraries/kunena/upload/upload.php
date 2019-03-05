@@ -564,7 +564,7 @@ class KunenaUpload
 	 */
 	public function ajaxResponse($content)
 	{
-		// TODO: Joomla 3.1+ uses \Joomla\CMS\Response\JsonResponse (we just emulate it for now).
+		// TODO: Joomla 3.1+ uses Joomla\CMS\Response\JsonResponse (we just emulate it for now).
 		$response           = new StdClass;
 		$response->success  = true;
 		$response->message  = null;
@@ -614,7 +614,7 @@ class KunenaUpload
 	/**
 	 * Upload file by passing it by HTML input
 	 *
-	 * @param   array  $fileInput   The file object returned by \Joomla\CMS\Input\Input
+	 * @param   array  $fileInput   The file object returned by Joomla\CMS\Input\Input
 	 * @param   string $destination The path of destination of file uploaded
 	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *

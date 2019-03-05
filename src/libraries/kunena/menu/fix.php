@@ -256,7 +256,7 @@ abstract class KunenaMenuFix
 		{
 			$item = self::$items[$itemid];
 			KunenaRouteLegacy::convertMenuItem($item);
-			$table = \Joomla\CMS\Table\Table::getInstance('menu');
+			$table = Joomla\CMS\Table\Table::getInstance('menu');
 			$table->load($item->id);
 			$data = array(
 				'link'   => $item->link,
@@ -288,7 +288,7 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		$table  = \Joomla\CMS\Table\Table::getInstance('menu');
+		$table  = Joomla\CMS\Table\Table::getInstance('menu');
 		$result = $table->delete($itemid);
 		KunenaMenuHelper::cleanCache();
 

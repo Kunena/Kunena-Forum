@@ -25,13 +25,13 @@ JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla');
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 
 // Give access to all Kunena tables.
-\Joomla\CMS\Table\Table::addIncludePath(KPATH_FRAMEWORK . '/tables');
+Joomla\CMS\Table\Table::addIncludePath(KPATH_FRAMEWORK . '/tables');
 
 // Give access to all Kunena JHtml functions.
 Joomla\CMS\HTML\HTMLHelper::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 
 // Give access to all Kunena form fields.
-\Joomla\CMS\Form\Form::addFieldPath(KPATH_FRAMEWORK . '/form/fields');
+Joomla\CMS\Form\Form::addFieldPath(KPATH_FRAMEWORK . '/form/fields');
 
 // Register classes where the names have been changed to fit the autoloader rules.
 JLoader::register('KunenaAccess', KPATH_FRAMEWORK . '/access.php');

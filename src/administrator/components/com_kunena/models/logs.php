@@ -19,7 +19,7 @@ jimport('joomla.application.component.model');
  *
  * @since 5.0
  */
-class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -199,8 +199,8 @@ class KunenaAdminModelLogs extends \Joomla\CMS\MVC\Model\ListModel
 
 		if ($start || $stop)
 		{
-			$start = $start ? new \Joomla\CMS\Date\Date($start) : null;
-			$stop  = $stop ? new \Joomla\CMS\Date\Date($stop . ' +1 day') : null;
+			$start = $start ? new Joomla\CMS\Date\Date($start) : null;
+			$stop  = $stop ? new Joomla\CMS\Date\Date($stop . ' +1 day') : null;
 			$finder->filterByTime($start, $stop);
 		}
 

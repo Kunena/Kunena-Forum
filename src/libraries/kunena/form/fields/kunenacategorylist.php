@@ -16,10 +16,10 @@ use Joomla\CMS\Language\Text;
 jimport('joomla.form.formfield');
 
 /**
- * Class \Joomla\CMS\Form\FormField|KunenaCategoryList
+ * Class Joomla\CMS\Form\FormField|KunenaCategoryList
  * @since Kunena
  */
-class JFormFieldKunenaCategoryList extends \Joomla\CMS\Form\FormField
+class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField
 {
 	/**
 	 * @var string

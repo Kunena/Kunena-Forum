@@ -19,7 +19,7 @@ jimport('joomla.application.component.modellist');
  * Class KunenaAdminModelPlugins
  * @since Kunena
  */
-class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * Constructor.
@@ -84,7 +84,7 @@ class KunenaAdminModelPlugins extends \Joomla\CMS\MVC\Model\ListModel
 		$this->setState('filter.active', !empty($filter_active));
 
 		// Load the parameters.
-		$params = \Joomla\CMS\Component\ComponentHelper::getParams('com_plugins');
+		$params = Joomla\CMS\Component\ComponentHelper::getParams('com_plugins');
 		$this->setState('params', $params);
 
 		// List state information.

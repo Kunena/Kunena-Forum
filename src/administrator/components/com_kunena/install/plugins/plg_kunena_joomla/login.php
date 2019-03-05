@@ -86,7 +86,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRememberMe()
 	{
-		return (bool) \Joomla\CMS\Plugin\PluginHelper::isEnabled('system', 'remember');
+		return (bool) Joomla\CMS\Plugin\PluginHelper::isEnabled('system', 'remember');
 	}
 
 	/**
@@ -131,7 +131,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$usersConfig = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
@@ -188,7 +188,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * Return the parameters of the plugin
-	 * 
+	 *
 	 * @return JRegistry
 	 * @since Kunena 5.1
 	 */

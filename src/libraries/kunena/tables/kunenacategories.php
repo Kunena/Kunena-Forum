@@ -323,18 +323,18 @@ class TableKunenaCategories extends KunenaTable
 
 		if (isset($array['params']) && !is_string($array['params']))
 		{
-			if ($array['params'] instanceof \Joomla\Registry\Registry)
+			if ($array['params'] instanceof Joomla\Registry\Registry)
 			{
 				$registry = $array['params'];
 			}
 			elseif (is_array($array['params']))
 			{
-				$registry = new \Joomla\Registry\Registry;
+				$registry = new Joomla\Registry\Registry;
 				$registry->loadArray($array['params']);
 			}
 			else
 			{
-				$registry = new \Joomla\Registry\Registry;
+				$registry = new Joomla\Registry\Registry;
 			}
 
 			$array['params'] = (string) $registry;
@@ -369,7 +369,7 @@ class TableKunenaCategories extends KunenaTable
 			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
-		if ($this->params instanceof \Joomla\Registry\Registry)
+		if ($this->params instanceof Joomla\Registry\Registry)
 		{
 			$this->params = $this->params->toString();
 		}

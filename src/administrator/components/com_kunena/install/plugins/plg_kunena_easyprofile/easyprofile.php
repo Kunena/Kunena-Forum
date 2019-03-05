@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
  * Class plgKunenaEasyprofile
  * @since Kunena
  */
-class plgKunenaEasyprofile extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * plgKunenaEasyprofile constructor.
@@ -40,7 +40,7 @@ class plgKunenaEasyprofile extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyprofile'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyprofile'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

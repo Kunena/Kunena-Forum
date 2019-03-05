@@ -266,7 +266,7 @@ class KunenaTemplate extends CMSObject
 
 		$this->name = $name;
 
-		$this->params = new \Joomla\Registry\Registry;
+		$this->params = new Joomla\Registry\Registry;
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
@@ -962,7 +962,7 @@ HTML;
 	 * @param   string $content content
 	 * @param   string $type    type
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -987,7 +987,7 @@ HTML;
 	 * @param array    $options
 	 * @param array    $attribs
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1032,7 +1032,7 @@ HTML;
 	 * @param   mixed  $options Scrip options as array or string
 	 * @param   bool   $merge   Whether merge with existing (true) or replace (false)
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document
 	 *
 	 * @throws Exception
 	 * @since   3.5

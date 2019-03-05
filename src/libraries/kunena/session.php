@@ -126,7 +126,7 @@ class KunenaSession extends CMSObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype['name'], $tabletype['prefix']);
+		return Joomla\CMS\Table\Table::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
 	/**
@@ -234,7 +234,7 @@ class KunenaSession extends CMSObject
 			$this->setError($table->getError());
 		}
 
-		// Set the id for the \Joomla\CMS\User\User object in case we created a new user.
+		// Set the id for the Joomla\CMS\User\User object in case we created a new user.
 		if (empty($this->userid))
 		{
 			$this->userid = $table->get('userid');

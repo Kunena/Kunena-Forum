@@ -19,7 +19,7 @@ use Joomla\CMS\Session\Session;
  *
  * @since  1.6
  */
-class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
+class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
 	 * @var null
@@ -34,7 +34,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	protected $steps = null;
 
 	/**
-	 * @var bool|\Joomla\CMS\MVC\Model\BaseDatabaseModel|null
+	 * @var bool|Joomla\CMS\MVC\Model\BaseDatabaseModel|null
 	 * @since Kunena
 	 */
 	protected $model = null;
@@ -58,7 +58,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @param   bool $cachable  cachable
 	 * @param   bool $urlparams urlparams
 	 *
-	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
+	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -210,8 +210,8 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 			jimport('joomla.filesystem.folder');
 			jimport('joomla.filesystem.file');
 
-			$installer = new \Joomla\CMS\Installer\Installer;
-			$component = \Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena');
+			$installer = new Joomla\CMS\Installer\Installer;
+			$component = Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
 			if (JFolder::exists(KPATH_MEDIA))
@@ -259,7 +259,7 @@ class KunenaControllerInstall extends \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public static function error($type, $errstr)
 	{
-		$model = \Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
+		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
 		echo json_encode(array('success' => false, 'html' => $errstr));
 	}

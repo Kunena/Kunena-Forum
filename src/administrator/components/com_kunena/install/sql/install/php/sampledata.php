@@ -47,7 +47,7 @@ function installSampleData()
 	jimport('joomla.utilities.date');
 
 	$db       = Factory::getDBO();
-	$posttime = new \Joomla\CMS\Date\Date;
+	$posttime = new Joomla\CMS\Date\Date;
 	$my       = Factory::getUser();
 	$queries  = array();
 

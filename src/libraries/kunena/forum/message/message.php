@@ -284,7 +284,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory $category Fake category if needed. Used for aliases.
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -455,7 +455,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 				return false;
 			}
-			elseif (!\Joomla\CMS\Mail\MailHelper::isEmailAddress($config->getEmail()))
+			elseif (!Joomla\CMS\Mail\MailHelper::isEmailAddress($config->getEmail()))
 			{
 				KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
 
@@ -470,7 +470,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 			foreach ($emailToList as $emailTo)
 			{
-				if (!$emailTo->email || !\Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
+				if (!$emailTo->email || !Joomla\CMS\Mail\MailHelper::isEmailAddress($emailTo->email))
 				{
 					continue;
 				}
@@ -479,12 +479,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				$sentusers[]                         = $emailTo->id;
 			}
 
-			$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
-			$mailsubject = \Joomla\CMS\Mail\MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+			$mailsender  = Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
+			$mailsubject = Joomla\CMS\Mail\MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 			$subject     = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
-			$mail = \Joomla\CMS\Factory::getMailer();
+			$mail = Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 
@@ -554,7 +554,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory $category category
 	 *
-	 * @return \Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
 	 */
 	public function getPermaUri($category = null)
@@ -572,7 +572,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   \Joomla\CMS\Mail\Mail $mail         mail
+	 * @param   Joomla\CMS\Mail\Mail $mail         mail
 	 * @param   int                   $subscription subscription
 	 * @param   string                $subject      subject
 	 * @param   string                $url          url
@@ -949,7 +949,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		// Activity integration
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 
 		if ($postDelta < 0)
@@ -1382,7 +1382,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$this->name = trim($this->name);
 
 			// Unregistered or anonymous users: Do not allow existing username
-			$nicktaken = \Joomla\CMS\User\UserHelper::getUserId($this->name);
+			$nicktaken = Joomla\CMS\User\UserHelper::getUserId($this->name);
 
 			if (empty($this->name) || $nicktaken)
 			{
@@ -1400,7 +1400,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if ($this->email)
 		{
 			// Email address must be valid
-			if (!\Joomla\CMS\Mail\MailHelper::isEmailAddress($this->email))
+			if (!Joomla\CMS\Mail\MailHelper::isEmailAddress($this->email))
 			{
 				$this->setError(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID'));
 

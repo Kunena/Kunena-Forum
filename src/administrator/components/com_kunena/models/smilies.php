@@ -20,7 +20,7 @@ jimport('joomla.application.component.modellist');
  *
  * @since  3.0
  */
-class KunenaAdminModelSmilies extends \Joomla\CMS\MVC\Model\ListModel
+class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
 	 * @param   array $config config

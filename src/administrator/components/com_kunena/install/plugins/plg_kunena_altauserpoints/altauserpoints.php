@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
  *
  * @since  5.0
  */
-class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
 	 * Constructor of plgKunenaAltaUserPoints class
@@ -40,7 +40,7 @@ class plgKunenaAltaUserPoints extends \Joomla\CMS\Plugin\CMSPlugin
 
 		if (!file_exists($aup))
 		{
-			if (\Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'altauserpoints'))
+			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'altauserpoints'))
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);

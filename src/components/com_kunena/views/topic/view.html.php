@@ -162,12 +162,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
@@ -386,12 +386,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
@@ -453,12 +453,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 		$this->_prepareDocument('edit');
@@ -509,14 +509,14 @@ class KunenaViewTopic extends KunenaView
 		if (!isset($profiles [$key]))
 		{
 			// Run events
-			$params = new \Joomla\Registry\Registry;
+			$params = new Joomla\Registry\Registry;
 
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
 			$params->set('kunena_layout', $this->state->get('layout'));
 
-			\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+			Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 			Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
@@ -693,7 +693,7 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
@@ -773,7 +773,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
@@ -1079,12 +1079,12 @@ class KunenaViewTopic extends KunenaView
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new \Joomla\Registry\Registry;
+		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
 
@@ -1114,7 +1114,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
-			$uri  = new \Joomla\CMS\Uri\Uri('index.php');
+			$uri  = new Joomla\CMS\Uri\Uri('index.php');
 			$uri->setQuery($vars);
 
 			// Make sure we do not return into a task.

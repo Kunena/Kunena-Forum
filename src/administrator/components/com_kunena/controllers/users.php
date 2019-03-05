@@ -507,7 +507,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				continue;
 			}
 
-			$instance = \Joomla\CMS\User\User::getInstance($user->userid);
+			$instance = Joomla\CMS\User\User::getInstance($user->userid);
 
 			if ($instance->authorise('core.admin'))
 			{
@@ -585,7 +585,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		else
 		{
 			jimport('joomla.utilities.date');
-			$now = new \Joomla\CMS\Date\Date;
+			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
 		}
@@ -646,7 +646,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		else
 		{
 			jimport('joomla.utilities.date');
-			$now = new \Joomla\CMS\Date\Date;
+			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
 		}
@@ -833,7 +833,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		else
 		{
 			jimport('joomla.utilities.date');
-			$now = new \Joomla\CMS\Date\Date;
+			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
 		}
@@ -894,7 +894,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		else
 		{
 			jimport('joomla.utilities.date');
-			$now = new \Joomla\CMS\Date\Date;
+			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
 		}

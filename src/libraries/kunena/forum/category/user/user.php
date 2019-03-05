@@ -71,7 +71,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   string $type   The categories table name to be used
 	 * @param   string $prefix The categories table prefix to be used
 	 *
-	 * @return \Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
+	 * @return Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
 	 * @since Kunena
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
@@ -86,7 +86,7 @@ class KunenaForumCategoryUser extends CMSObject
 		}
 
 		// Create the user table object
-		return \Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**

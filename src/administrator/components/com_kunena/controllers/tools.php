@@ -930,7 +930,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$error = $login->loginUser($username, $password, 0, null);
 
-		$user = Factory::getUser(\Joomla\CMS\User\UserHelper::getUserId($username));
+		$user = Factory::getUser(Joomla\CMS\User\UserHelper::getUserId($username));
 
 		$isroot = $user->authorise('core.admin');
 

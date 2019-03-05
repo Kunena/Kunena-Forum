@@ -31,7 +31,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool  $cachable   cachable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
+	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -227,7 +227,7 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
 
-		\Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
+		Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
 
 		Factory::getApplication()->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
 
@@ -788,7 +788,7 @@ class KunenaControllerUser extends KunenaController
 		// We only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
 
-		if (\Joomla\CMS\Component\ComponentHelper::getParams('com_users')->get('change_login_name', 1))
+		if (Joomla\CMS\Component\ComponentHelper::getParams('com_users')->get('change_login_name', 1))
 		{
 			$allow[] = 'username';
 		}

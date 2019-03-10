@@ -1451,10 +1451,10 @@ class KunenaConfig extends CMSObject
 	{
 		// Add anything that requires validation
 
-		// Need to have at least two per page of these
-		$this->messages_per_page        = max($this->messages_per_page, 2);
-		$this->messages_per_page_search = max($this->messages_per_page_search, 2);
-		$this->threads_per_page         = max($this->threads_per_page, 2);
+		// Need to have at least one per page of these
+		$this->messages_per_page        = max($this->messages_per_page, 1);
+		$this->messages_per_page_search = max($this->messages_per_page_search, 1);
+		$this->threads_per_page         = max($this->threads_per_page, 1);
 	}
 
 	/**

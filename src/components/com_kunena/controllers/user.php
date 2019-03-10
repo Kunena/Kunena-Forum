@@ -1021,7 +1021,7 @@ class KunenaControllerUser extends KunenaController
 		$user->flickr           = str_replace(' ', '', trim($input->$method->get('flickr', '', 'string')));
 		$user->bebo             = str_replace(' ', '', trim($input->$method->get('bebo', '', 'string')));
 		$user->instagram        = str_replace(' ', '', trim($input->$method->get('instagram', '', 'string')));
-		$user->qqsocial         = str_replace(' ', '', trim($input->$method->get('qqsocial<s', '', 'string')));
+		$user->qqsocial         = str_replace(' ', '', trim($input->$method->get('qqsocial', '', 'string')));
 		$user->qzone            = str_replace(' ', '', trim($input->$method->get('qzone', '', 'string')));
 		$user->weibo            = str_replace(' ', '', trim($input->$method->get('weibo', '', 'string')));
 		$user->wechat           = str_replace(' ', '', trim($input->$method->get('wechat', '', 'string')));

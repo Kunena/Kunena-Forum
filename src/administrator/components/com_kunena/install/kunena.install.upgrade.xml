@@ -843,7 +843,7 @@
             <query mode="silenterror">UPDATE `#__kunena_announcement` SET lasttime='1000-01-01 00:00:00' WHERE lasttime='0000-00-00 00:00:00'</query>
         </version>
          <version version="5.1.11-DEV"
-                 versiondate="2019-01-03"
+                 versiondate="2019-10-03"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `qq` `qqsocial` varchar(50);
             </query>             

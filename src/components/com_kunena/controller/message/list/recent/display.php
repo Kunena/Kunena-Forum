@@ -236,7 +236,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				break;
 			case 'deleted':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				$actions          = array('undelete', 'delete', 'permdelete');
+				$actions          = array('undelete', 'delete', 'move', 'permdelete');
 				break;
 			case 'mythanks':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');

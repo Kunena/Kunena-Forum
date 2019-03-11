@@ -1169,7 +1169,7 @@ class KunenaAdminControllerUsers extends KunenaController
 		$user->flickr           = str_replace(' ', '', trim($app->input->getString('flickr', '')));
 		$user->bebo             = str_replace(' ', '', trim($app->input->getString('bebo', '')));
 		$user->instagram        = str_replace(' ', '', trim($app->input->getString('instagram', '')));
-		$user->qq               = str_replace(' ', '', trim($app->input->getString('qq', '')));
+		$user->qqsocial         = str_replace(' ', '', trim($app->input->getString('qqsocial', '')));
 		$user->qzone            = str_replace(' ', '', trim($app->input->getString('qzone', '')));
 		$user->weibo            = str_replace(' ', '', trim($app->input->getString('weibo', '')));
 		$user->wechat           = str_replace(' ', '', trim($app->input->getString('wechat', '')));

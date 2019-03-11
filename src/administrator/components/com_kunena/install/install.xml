@@ -935,7 +935,7 @@
         <field name="instagram"
                type="varchar(50)"
                null="1"/>
-        <field name="qq"
+        <field name="qqsocial"
                type="varchar(50)"
                null="1"/>
         <field name="blogspot"

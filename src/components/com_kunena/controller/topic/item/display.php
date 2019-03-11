@@ -597,7 +597,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($total > 1 && $page > 1)
 			{
-				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 140);
+				$small = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 130);
 
 				if (empty($small))
 				{

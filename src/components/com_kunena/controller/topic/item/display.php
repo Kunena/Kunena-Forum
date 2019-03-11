@@ -604,7 +604,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 					$small = $headerText;
 				}
 
-				$this->setDescription(Text::_('COM_KUNENA_PAGES') . " {$page}" . ": " . $small);
+				$this->setDescription($small . " - " . Text::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{

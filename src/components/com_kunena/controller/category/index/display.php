@@ -279,8 +279,17 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		foreach ($subcategories as $category)
 		{
+			$registry = new Registry;
+
+			if (!empty($registry->params))
+			{
+				$registry->loadString($category->params);
+			}
+
+			$params = $registry->loadString($category->params);
+
 			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 2)
+			if ($catid || $params->get('display.index.parent', 3) > 2)
 			{
 				$this->categories[$category->parent_id][] = $category;
 			}

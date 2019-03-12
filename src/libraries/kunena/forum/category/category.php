@@ -930,14 +930,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 */
 	public function getParent()
 	{
-		$parent = KunenaForumCategoryHelper::get(intval($this->parent_id));
-
-		if (!$parent->exists())
-		{
-			return false;
-		}
-
-		return $parent;
+		return KunenaForumCategoryHelper::get(intval($this->parent_id));
 	}
 
 	/**

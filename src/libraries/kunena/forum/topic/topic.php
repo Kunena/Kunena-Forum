@@ -894,11 +894,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		$Itemid   = KunenaRoute::getCategoryItemid($category);
 
-		if (!$this->exists() || !$category->exists())
-		{
-			return;
-		}
-
 		if ($action instanceof KunenaForumMessage)
 		{
 			$message = $action;

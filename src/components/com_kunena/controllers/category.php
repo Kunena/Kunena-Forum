@@ -191,7 +191,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys($this->app->input->get('categories', array(), 'post', 'array'));
+			: array_keys($this->app->input->get('categories', array(), 'post'));
 		$catids = ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
@@ -208,7 +208,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			{
 				$success = $category->subscribe(0, $userid);
 
-				if ($success && $userid==$me->userid)
+				if ($success && $userid == $me->userid)
 				{
 					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name));
 				}

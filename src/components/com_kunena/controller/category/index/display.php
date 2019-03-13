@@ -370,7 +370,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 				else
 				{
-					$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+					$topic_ordering = KunenaConfig::getInstance()->default_sort == 'asc' ? false : true;
 				}
 
 				// Fix last post position when user can see unapproved or deleted posts.
@@ -444,7 +444,14 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
+			$registry = new Registry;
+
+			if (!empty($registry->params))
+			{
+				$registry->loadString($menu_item->params);
+			}
+
+			$params             = $registry->loadString($menu_item->params);
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
@@ -483,7 +490,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . KunenaConfig::getInstance()->board_title;
 				$this->setDescription($description);
 			}
 

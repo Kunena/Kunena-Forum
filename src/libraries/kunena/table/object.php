@@ -54,7 +54,7 @@ abstract class KunenaTableObject
 	 * Array of primary key fields in the table.
 	 * Always override this variable in your own class!
 	 *
-	 * @var    string
+	 * @var    array
 	 * @since  K4.0
 	 */
 	protected static $tbl_keys = array();

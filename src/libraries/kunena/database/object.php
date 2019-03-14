@@ -331,9 +331,10 @@ abstract class KunenaDatabaseObject extends CMSObject
 	{
 		$return = $this->_exists;
 
-		if ($exists !== null)
+		// Load properties from database.
+		if (!empty($this->id))
 		{
-			$this->_exists = (bool) $exists;
+			$this->_exists = true;
 		}
 
 		return $return;

@@ -61,9 +61,9 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 				|| $this->topicButtons->get('favorite')
 			) : ?>
 				<div class="btn-group">
-					<a class="btn btn-default"
+					<a class="btn btn-default border"
 					   data-toggle="dropdown"><?php echo KunenaIcons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?></a>
-					<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+					<a class="btn btn-default border dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><?php echo $this->topicButtons->get('reply') ?></li>
 						<li><?php echo $this->topicButtons->get('subscribe') ?></li>

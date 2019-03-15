@@ -144,7 +144,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 											echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 										endif; ?>
 										<button type="submit" name="kcheckgo"
-										        class="btn btn-default"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+										        class="btn btn-default border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 									<?php endif; ?>
 								</label>
 							</div>

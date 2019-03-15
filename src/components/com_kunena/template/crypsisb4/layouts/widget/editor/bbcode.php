@@ -23,11 +23,11 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <div class="form-group">
 	<label class="control-label col-lg-4"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
-	<div class="controls">
+	<div class="controls tabs">
 		<ul id="tabs_kunena_editor" class="nav nav-tabs">
-			<li class="active"><a href="#write"
+			<li class="nav-item active"><a href="#write"
 			                      data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
-			<li><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
+			<li class="nav-item"><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
 		<textarea class="form-control" name="message" id="editor" rows="12" tabindex="7" required="required"
 		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)

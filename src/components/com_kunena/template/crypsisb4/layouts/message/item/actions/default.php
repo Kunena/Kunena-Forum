@@ -23,7 +23,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		<div class="kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2) : ?>
 				<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-				   class="btn btn-default Kreplyclick"
+				   class="btn btn-default border Kreplyclick"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
 				   rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
@@ -70,16 +70,16 @@ endif; ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-				   class="btn btn-default Kreplyclick"
+				   class="btn btn-default border Kreplyclick"
 				   data-toggle="modal" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
-				<button class="btn btn-default" data-toggle="dropdown">
+				<button class="btn btn-default border" data-toggle="dropdown">
 					<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
-				<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<button class="btn btn-default border dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -94,10 +94,10 @@ endif; ?>
 
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
-					<button class="btn btn-default" data-toggle="dropdown">
+					<button class="btn btn-default border" data-toggle="dropdown">
 						<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
-					<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<button class="btn btn-default border dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">

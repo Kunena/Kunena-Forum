@@ -24,7 +24,7 @@ $right   = isset($this->pullright) ? ' float-right' : '';
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
-$normal  = !empty($this->normal) ? 'btn-small' : 'btn btn-default';
+$normal  = !empty($this->normal) ? 'btn-small' : 'btn btn-default border';
 $icon    = $this->icon;
 ?>
 

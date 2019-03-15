@@ -380,6 +380,8 @@ class KunenaControllerTopic extends KunenaController
 			'poll_options'      => Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => Factory::getApplication()->input->getString('poll_time_to_live', 0),
 			'subscribe'         => Factory::getApplication()->input->getInt('subscribeMe', 0),
+			'rating'            => 0,
+			'params'            => '',
 		);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
@@ -781,6 +783,7 @@ class KunenaControllerTopic extends KunenaController
 			'poll_options'      => Factory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => Factory::getApplication()->input->getString('poll_time_to_live', 0),
 			'subscribe'         => Factory::getApplication()->input->getInt('subscribeMe', 0),
+			'params'            => '',
 		);
 
 		if (!Session::checkToken('post'))

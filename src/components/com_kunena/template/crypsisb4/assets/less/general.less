@@ -986,7 +986,7 @@ div.pagination a.disabled:hover {
   height: 30px;
   position: absolute;
   right: 0;
-  top: 5px;
+  top: 0;
   border-radius: 1px;
   i {
     margin-top: -3px;
@@ -1321,4 +1321,13 @@ div.moderators {
 
 #editor {
   resize: vertical;
+}
+
+form:not(.form-no-margin) .control-group .controls {
+  margin-left: 0;
+}
+
+.knav-usercollapse {
+  position: absolute;
+  right: 10px;
 }

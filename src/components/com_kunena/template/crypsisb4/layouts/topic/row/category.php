@@ -19,7 +19,7 @@ $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $config          = KunenaConfig::getInstance();
-$cols            = empty($this->checkbox) ? 5 : 6;
+$cols            = empty($this->checkbox) ? 6 : 7;
 $txt             = '';
 
 if ($this->topic->ordering)

@@ -117,16 +117,16 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 		</thead>
 		<tfoot>
 		<tr>
-			<td class="center hidden-xs-down">
+			<td colspan="1" class="center hidden-xs-down">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<?php echo KunenaIcons::arrowup(); ?>
 				</a>
 			</td>
 			<?php if (empty($this->actions)) : ?>
-			<td colspan="<?php echo $colspan; ?>" class="hidden-xs-down">
+			<td colspan="11" class="hidden-xs-down">
 				<?php else : ?>
-			<td colspan="<?php echo $colspan; ?>">
+			<td colspan="12">
 				<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 					<div class="form-group">
@@ -157,7 +157,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 		<tbody class="topic-list">
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
-				<td colspan="4" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
+				<td colspan="12" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 			</tr>
 		<?php else : ?>
 			<?php $counter = 2; ?>

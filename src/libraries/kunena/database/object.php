@@ -335,6 +335,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 		if (!empty($this->id))
 		{
 			$this->_exists = true;
+
+			return true;
 		}
 
 		return $return;

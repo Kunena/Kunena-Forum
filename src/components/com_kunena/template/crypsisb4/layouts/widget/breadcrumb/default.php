@@ -17,7 +17,7 @@ $position = 2;
 if ($item) : ?>
 	<nav role="navigation" aria-label="breadcrumbs">
 		<ol class="mod-kunena-breadcrumbs breadcrumb" itemtype="https://schema.org/BreadcrumbList" itemscope="">
-			<li class="mod-kunena-breadcrumbs__item breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+			<li class="mod-kunena-breadcrumbs__item breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 				<?php echo KunenaIcons::home(); ?>
 				<a itemprop="item" href="<?php echo $item->link; ?>"><span itemprop="name"><?php echo $this->escape($item->name); ?></span></a>
 				<meta itemprop="position" content="1"/>

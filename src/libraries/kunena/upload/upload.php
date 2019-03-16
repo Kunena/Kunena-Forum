@@ -12,6 +12,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 defined('_JEXEC') or die;
 
@@ -133,7 +134,7 @@ class KunenaUpload
 			$folder = $this->getFolder();
 
 			// Create target directory if it does not exist.
-			if (!KunenaFolder::exists($folder) && !KunenaFolder::create($folder))
+			if (!Folder::exists($folder) && !Folder::create($folder))
 			{
 				throw new RuntimeException(Text::_('Failed to create upload directory.'), 500);
 			}

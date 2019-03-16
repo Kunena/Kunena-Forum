@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Kunena Backend Templates Controller
@@ -234,10 +235,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 								File::move($dest . $template->directory . '/assets/css/custom.css', $tmp_kunena . $template->sourcedir . '/assets/css/custom.css');
 							}
 
-							KunenaFolder::delete($dest . $template->directory);
+							Folder::delete($dest . $template->directory);
 						}
 
-						$success = KunenaFolder::move($tmp_kunena . $template->sourcedir, $dest . $template->directory);
+						$success = Folder::move($tmp_kunena . $template->sourcedir, $dest . $template->directory);
 
 						if ($success !== true)
 						{
@@ -252,7 +253,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 					// Delete the tmp install directory
 					if (is_dir($tmp_kunena))
 					{
-						KunenaFolder::delete($tmp_kunena);
+						Folder::delete($tmp_kunena);
 					}
 
 					// Clear all cache, just in case.
@@ -327,7 +328,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		// Delete the template directory
 		if (is_dir($tpl))
 		{
-			$retval = KunenaFolder::delete($tpl);
+			$retval = Folder::delete($tpl);
 
 			// Clear all cache, just in case.
 			KunenaCacheHelper::clearAll();

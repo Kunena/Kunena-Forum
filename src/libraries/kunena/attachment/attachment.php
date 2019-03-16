@@ -754,7 +754,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		// Create target directory if it does not exist.
-		if (!KunenaFolder::exists(JPATH_ROOT . "/{$this->folder}") && !KunenaFolder::create(JPATH_ROOT . "/{$this->folder}"))
+		if (!Folder::exists(JPATH_ROOT . "/{$this->folder}") && !Folder::create(JPATH_ROOT . "/{$this->folder}"))
 		{
 			throw new RuntimeException(Text::_('Failed to create attachment directory.'));
 		}

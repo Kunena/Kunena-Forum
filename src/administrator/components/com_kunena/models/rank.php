@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 
 jimport('joomla.application.component.modellist');
 
@@ -36,7 +37,7 @@ class KunenaAdminModelRank extends KunenaModel
 		$selected = $this->getRank();
 
 		$rankpath = $template->getRankPath();
-		$files1   = (array) KunenaFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files1   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
 		$files1   = (array) array_flip($files1);
 
 		foreach ($files1 as $key => &$path)
@@ -45,7 +46,7 @@ class KunenaAdminModelRank extends KunenaModel
 		}
 
 		$rankpath = 'media/kunena/ranks/';
-		$files2   = (array) KunenaFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
 		$files2   = (array) array_flip($files2);
 
 		foreach ($files2 as $key => &$path)

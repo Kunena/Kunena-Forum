@@ -20,6 +20,7 @@ use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Kunena User Controller
@@ -1065,7 +1066,7 @@ class KunenaControllerUser extends KunenaController
 			// Delete old uploaded avatars:
 			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
 			{
-				$deletelist = KunenaFolder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+				$deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
 
 				foreach ($deletelist as $delete)
 				{

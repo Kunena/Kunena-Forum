@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Helper class for image manipulation.
@@ -38,7 +39,7 @@ class KunenaImageHelper
 		try
 		{
 			// Create target directory if it does not exist.
-			if (!KunenaFolder::exists($folder) && !KunenaFolder::create($folder))
+			if (!Folder::exists($folder) && !Folder::create($folder))
 			{
 				return false;
 			}

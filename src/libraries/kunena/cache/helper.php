@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
@@ -96,10 +97,10 @@ abstract class KunenaCacheHelper
 
 		if (is_dir($cacheDir))
 		{
-			KunenaFolder::delete($cacheDir);
+			Folder::delete($cacheDir);
 		}
 
-		KunenaFolder::create($cacheDir);
+		Folder::create($cacheDir);
 	}
 
 	/**
@@ -114,10 +115,10 @@ abstract class KunenaCacheHelper
 
 		if (is_dir($cacheDir))
 		{
-			KunenaFolder::delete($cacheDir);
+			Folder::delete($cacheDir);
 		}
 
-		KunenaFolder::create($cacheDir);
+		Folder::create($cacheDir);
 	}
 
 	/**

@@ -10,15 +10,12 @@
  **/
 defined('_JEXEC') or die;
 
-jimport('joomla.filesystem.file');
-
 /**
  * Class KunenaFile
  *
- * @see   JFile
  * @since Kunena
  */
-class KunenaFile extends JFile
+class KunenaFile
 {
 	/**
 	 * @param   string $file file

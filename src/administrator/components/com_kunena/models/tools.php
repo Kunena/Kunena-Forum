@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\Folder;
 
 jimport('joomla.application.component.model');
 require_once __DIR__ . '/cpanel.php';
@@ -327,7 +328,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		else
 		{
-			$this->mbstring = '[u]mbstring:[/u] ❌ [color=#FF0000]Not installed[/color]';
+			$this->mbstring = '[u]mbstring:[/u] â�Œ [color=#FF0000]Not installed[/color]';
 		}
 
 		if (extension_loaded('gd'))
@@ -337,7 +338,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		}
 		else
 		{
-			$this->gd_support = '[u]GD:[/u] ❌ [color=#FF0000]Not installed[/color]';
+			$this->gd_support = '[u]GD:[/u] â�Œ [color=#FF0000]Not installed[/color]';
 		}
 
 		$this->maxExecTime       = ini_get('max_execution_time');
@@ -608,7 +609,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' â�Œ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -618,7 +619,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' â�Œ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -628,7 +629,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (empty($collation))
 		{
-			$collation = '✔ The collation of your table fields are correct';
+			$collation = 'âœ” The collation of your table fields are correct';
 		}
 
 		return $collation;
@@ -742,7 +743,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		elseif (is_dir($path))
 		{
 			// Get an array of all the XML files from the directory
-			$xmlfiles = KunenaFolder::files($path, '\.xml$', 1, true);
+			$xmlfiles = Folder::files($path, '\.xml$', 1, true);
 		}
 
 		$version = null;

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * KunenaLayoutTopicEditEditor
@@ -46,7 +47,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				continue;
 			}
 
-			$files     = KunenaFolder::files($path, ".php");
+			$files     = Folder::files($path, ".php");
 			$options   = array();
 			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 

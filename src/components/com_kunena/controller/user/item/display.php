@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class ComponentKunenaControllerUserItemDisplay
@@ -169,13 +170,13 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'profile', 'property');
 
-		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
+		if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
 		{
 			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
 		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
 		{
-			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+			if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
 				$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * The Kunena Installer Controller
@@ -214,19 +215,19 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			$component = Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
-			if (JFolder::exists(KPATH_MEDIA))
+			if (Folder::exists(KPATH_MEDIA))
 			{
-				JFolder::delete(KPATH_MEDIA);
+				Folder::delete(KPATH_MEDIA);
 			}
 
-			if (JFolder::exists(JPATH_ROOT . '/plugins/kunena'))
+			if (Folder::exists(JPATH_ROOT . '/plugins/kunena'))
 			{
-				JFolder::delete(JPATH_ROOT . '/plugins/kunena');
+				Folder::delete(JPATH_ROOT . '/plugins/kunena');
 			}
 
-			if (JFile::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
+			if (File::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
 			{
-				JFile::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
+				File::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
 			}
 
 			$this->setRedirect('index.php?option=com_installer');

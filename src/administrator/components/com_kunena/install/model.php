@@ -15,9 +15,9 @@ use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.filesystem.folder');
-jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.path');
 jimport('joomla.filesystem.archive');
 
@@ -176,7 +176,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		// Put back file that was removed during installation.
 		$contents = '';
-		JFile::write(KPATH_ADMIN . '/install.php', $contents);
+		File::write(KPATH_ADMIN . '/install.php', $contents);
 
 		// Uninstall all plugins.
 		$this->uninstallPlugin('kunena', 'altauserpoints');
@@ -469,9 +469,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$success = true;
 
-			if (!JFolder::exists($dest))
+			if (!Folder::exists($dest))
 			{
-				$success = JFolder::create($dest);
+				$success = Folder::create($dest);
 			}
 
 			if ($success)
@@ -536,18 +536,18 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 				// Those files need to be removed to bring language up to date!
 				jimport('joomla.filesystem.folder');
-				$files = JFolder::files($installdir, '\.ini$');
+				$files = Folder::files($installdir, '\.ini$');
 
 				foreach ($files as $filename)
 				{
 					if (is_file(JPATH_SITE . "/language/{$tag}/{$filename}"))
 					{
-						JFile::delete(JPATH_SITE . "/language/{$tag}/{$filename}");
+						File::delete(JPATH_SITE . "/language/{$tag}/{$filename}");
 					}
 
 					if (is_file(JPATH_ADMINISTRATOR . "/language/{$tag}/{$filename}"))
 					{
-						JFile::delete(JPATH_ADMINISTRATOR . "/language/{$tag}/{$filename}");
+						File::delete(JPATH_ADMINISTRATOR . "/language/{$tag}/{$filename}");
 					}
 				}
 			}
@@ -594,13 +594,13 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (is_dir($dest))
 		{
-			JFolder::delete($dest);
+			Folder::delete($dest);
 		}
 
 		if (is_dir(KUNENA_INSTALLER_ADMINPATH . '/' . $path))
 		{
 			// Copy path
-			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH . '/' . $path, $dest);
+			$success = Folder::copy(KUNENA_INSTALLER_ADMINPATH . '/' . $path, $dest);
 		}
 		elseif (is_file(KUNENA_INSTALLER_ADMINPATH . '/' . $path))
 		{
@@ -610,17 +610,17 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($success)
 		{
-			$success = JFolder::create($dest . '/language/en-GB');
+			$success = Folder::create($dest . '/language/en-GB');
 		}
 
 		if ($success && is_file(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.ini"))
 		{
-			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
+			$success = File::copy(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
 
 		if ($success && is_file(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.sys.ini"))
 		{
-			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
+			$success = File::copy(KUNENA_INSTALLER_SITEPATH . "/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
 		}
 
 		// Only install module if it can be used in current Joomla version (manifest exists)
@@ -635,7 +635,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		}
 
-		JFolder::delete($dest);
+		Folder::delete($dest);
 
 		return $success;
 	}
@@ -660,13 +660,13 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if (is_dir($dest))
 		{
-			JFolder::delete($dest);
+			Folder::delete($dest);
 		}
 
 		if (is_dir(KUNENA_INSTALLER_PATH . '/' . $path))
 		{
 			// Copy path
-			$success = JFolder::copy(KUNENA_INSTALLER_PATH . '/' . $path, $dest);
+			$success = Folder::copy(KUNENA_INSTALLER_PATH . '/' . $path, $dest);
 		}
 		elseif (is_file(KUNENA_INSTALLER_PATH . '/' . $path))
 		{
@@ -676,17 +676,17 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		if ($success)
 		{
-			$success = JFolder::create($dest . '/language/en-GB');
+			$success = Folder::create($dest . '/language/en-GB');
 		}
 
 		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.ini"))
 		{
-			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
+			$success = File::copy(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
 
 		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini"))
 		{
-			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
+			$success = File::copy(KUNENA_INSTALLER_ADMINPATH . "/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
 		}
 
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
@@ -719,7 +719,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($group) . ' - ' . ucfirst($name)), $success);
 		}
 
-		JFolder::delete($dest);
+		Folder::delete($dest);
 
 		return $success;
 	}
@@ -830,13 +830,13 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::files($path, '.', false, true, $ignore) as $file)
+			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
 			{
-				if (JFile::exists($file))
+				if (File::exists($file))
 				{
-					JFile::delete($file);
+					File::delete($file);
 				}
 			}
 		}
@@ -852,13 +852,13 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder)
+			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
 			{
-				if (JFolder::exists($folder))
+				if (Folder::exists($folder))
 				{
-					JFolder::delete($folder);
+					Folder::delete($folder);
 				}
 			}
 		}
@@ -966,7 +966,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if (is_dir($dir))
 			{
-				JFolder::copy($dir, KUNENA_INSTALLER_MEDIAPATH, false, true);
+				Folder::copy($dir, KUNENA_INSTALLER_MEDIAPATH, false, true);
 			}
 
 			$this->setStep($this->getStep() + 1);
@@ -1232,7 +1232,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev())
 		{
-			JFile::delete(KPATH_ADMIN . '/install.php');
+			File::delete(KPATH_ADMIN . '/install.php');
 		}
 
 		// Set Crypsis as default template when do update
@@ -1735,7 +1735,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			foreach ($dirs as $dir)
 			{
-				if (!JFile::exists(JPATH_ROOT . "/$dir/$avatar"))
+				if (!File::exists(JPATH_ROOT . "/$dir/$avatar"))
 				{
 					continue;
 				}
@@ -1757,14 +1757,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 					$newfile  = "users/avatar{$userid}.{$ext}";
 					$destpath = (KUNENA_INSTALLER_MEDIAPATH . "/avatars/{$newfile}");
 
-					if (JFile::exists($destpath))
+					if (File::exists($destpath))
 					{
 						$success = true;
 					}
 					else
 					{
 						@chmod($file, 0644);
-						$success = JFile::copy($file, $destpath);
+						$success = File::copy($file, $destpath);
 					}
 
 					if ($success)
@@ -1846,9 +1846,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$srcpath = JPATH_ROOT . '/images/fbfiles/avatars/gallery';
 		$dstpath = KUNENA_INSTALLER_MEDIAPATH . '/avatars/gallery';
 
-		if (JFolder::exists($srcpath))
+		if (Folder::exists($srcpath))
 		{
-			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath))
+			if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath))
 			{
 				$this->addStatus("Could not copy avatar galleries from $srcpath to $dstpath", true);
 			}
@@ -1881,9 +1881,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$srcpath = JPATH_ROOT . '/images/fbfiles/category_images';
 		$dstpath = KUNENA_INSTALLER_MEDIAPATH . '/category_images';
 
-		if (JFolder::exists($srcpath))
+		if (Folder::exists($srcpath))
 		{
-			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath))
+			if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath))
 			{
 				$this->addStatus("Could not copy category images from $srcpath to $dstpath", true);
 			}
@@ -1981,10 +1981,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		$destpath = KUNENA_INSTALLER_MEDIAPATH . '/attachments/legacy';
 
-		if (!JFolder::exists($destpath . '/images'))
+		if (!Folder::exists($destpath . '/images'))
 		{
 
-			if (!JFolder::create($destpath . '/images'))
+			if (!Folder::create($destpath . '/images'))
 			{
 				$this->addStatus("Could not create directory for legacy attachments in {$destpath}/images", true);
 
@@ -1992,9 +1992,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		if (!JFolder::exists($destpath . '/files'))
+		if (!Folder::exists($destpath . '/files'))
 		{
-			if (!JFolder::create($destpath . '/files'))
+			if (!Folder::create($destpath . '/files'))
 			{
 				$this->addStatus("Could not create directory for legacy attachments in {$destpath}/files", true);
 
@@ -2039,7 +2039,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 
 			$file = '';
-			if (JFile::exists(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}"))
+			if (File::exists(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}"))
 			{
 				$file = JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}";
 			}
@@ -2047,7 +2047,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			{
 				foreach ($dirs as $dir)
 				{
-					if (JFile::exists(JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}"))
+					if (File::exists(JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}"))
 					{
 						$file = JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}";
 						break;
@@ -2063,14 +2063,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 				$file     = JPath::clean($file, '/');
 				$destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
 
-				if (JFile::exists($destfile))
+				if (File::exists($destfile))
 				{
 					$success = true;
 				}
 				else
 				{
 					@chmod($file, 0644);
-					$success = JFile::copy($file, $destfile);
+					$success = File::copy($file, $destfile);
 				}
 
 				if ($success)

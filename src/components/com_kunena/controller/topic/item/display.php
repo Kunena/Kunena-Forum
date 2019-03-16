@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
@@ -482,7 +483,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($attach)
 			{
-				if (JFile::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename))
+				if (File::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename))
 				{
 					if ($attach->image)
 					{
@@ -631,13 +632,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	{
 		$image = '';
 
-		if (JFile::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
+		if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
 		{
 			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
 		}
 		elseif ($this->topic->getAuthor()->avatar == null)
 		{
-			if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+			if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 			{
 				$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			}

@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class ComponentKunenaControllerTopicListUserDisplay
@@ -298,7 +299,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 	{
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
-		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+		if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
@@ -315,7 +316,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
-		if (JFile::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+		if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
 		{
 			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');

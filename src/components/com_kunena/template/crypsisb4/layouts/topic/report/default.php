@@ -56,7 +56,7 @@ use Joomla\CMS\Language\Text;
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
 				       value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true">
 					<?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>

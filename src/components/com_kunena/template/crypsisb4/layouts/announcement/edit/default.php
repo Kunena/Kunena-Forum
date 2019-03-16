@@ -110,7 +110,7 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
 				       value="<?php echo Text::_('COM_KUNENA_SAVE'); ?>"/>
-				<input onclick="window.history.back();" name="cancel" class="btn btn-default" type="button"
+				<input onclick="window.history.back();" name="cancel" class="btn btn-default border" type="button"
 				       value="<?php echo Text::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>

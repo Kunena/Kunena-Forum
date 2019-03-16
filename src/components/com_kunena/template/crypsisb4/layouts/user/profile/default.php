@@ -85,9 +85,9 @@ if ($show)
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">
-		<span class="heading btn btn-default btn-xs heading-less"
+		<span class="heading btn btn-default border btn-xs heading-less"
 		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-default btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+		<span class="heading btn btn-default border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1) : ?>

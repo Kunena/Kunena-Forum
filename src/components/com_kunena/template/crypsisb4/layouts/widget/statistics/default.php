@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 <div class="kfrontend">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-sm" data-toggle="collapse"
+			<div class="btn btn-default border btn-sm" data-toggle="collapse"
 			     data-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>

@@ -234,7 +234,7 @@ $labels          = $this->ktemplate->params->get('labels');
 					<input type="submit" class="btn btn-primary"
 					       value="<?php echo Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
 					<a href="javascript:window.history.back();"
-					   class="btn btn-default"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
+					   class="btn btn-default border"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
 				</div>
 			</div>
 		</div>

@@ -44,7 +44,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="map-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -64,7 +64,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="code-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -94,7 +94,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -112,7 +112,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="link-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -145,7 +145,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="videosettings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -162,7 +162,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit" class="btn btn-primary modal-submit"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -219,7 +219,7 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-footer">
 				<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				<button id="clearpoll" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_CLEAR_MODAL') ?></button>
 			</div>
 		</div>
@@ -246,7 +246,7 @@ $this->getBBcodesEnabled();
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+				<button class="btn btn-default border" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>

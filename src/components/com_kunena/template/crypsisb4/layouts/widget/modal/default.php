@@ -38,10 +38,10 @@ $form        = $this->form;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" type="submit" id="btn_statustext">
+				<button class="btn btn-primary border" type="submit" id="btn_statustext">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
-				<button class="btn btn-default" type="button" data-dismiss="modal">
+				<button class="btn btn-default border" type="button" data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 			</div>

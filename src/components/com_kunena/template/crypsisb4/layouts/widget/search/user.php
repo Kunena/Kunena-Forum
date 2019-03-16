@@ -32,7 +32,7 @@ $state = $this->state;
 		<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"
 		       value="<?php echo $this->escape($state); ?>"
 		       placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
-		<button type="submit" class="btn btn-default">
+		<button type="submit" class="btn btn-default border">
 			<?php echo KunenaIcons::search(); ?>
 		</button>
 	</div>

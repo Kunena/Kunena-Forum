@@ -207,30 +207,30 @@ if ($this->config->showuserstats)
 							<?php if ($private)
 								:
 								?>
-								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-sm', 'glyphicon glyphicon-comment'); ?>
+								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default border btn-sm', 'glyphicon glyphicon-comment'); ?>
 							<?php endif; ?>
 							<?php
 							if (KunenaUser::getInstance()->getEmail($profile))
 								:
 								?>
-								<a class="btn btn-default btn-sm" href="mailto:<?php echo $profile->email; ?>"
+								<a class="btn btn-default border btn-sm" href="mailto:<?php echo $profile->email; ?>"
 								   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php
 							if (!empty($websiteName) && !empty($websiteURL))
 							:
 							?>
-							<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+							<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
 							   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></a>
 							<?php elseif (empty($websiteName) && !empty($websiteURL))
 							:
 							?>
-							<a class="btn btn-default btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+							<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
 							   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe(); ?></a>
 							<?php elseif (!empty($websiteName) && empty($websiteURL))
 							:
 							?>
-							<button class="btn btn-default btn-sm"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></button>
+							<button class="btn btn-default border btn-sm"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

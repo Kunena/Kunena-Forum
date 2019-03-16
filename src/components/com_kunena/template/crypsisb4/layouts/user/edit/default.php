@@ -23,7 +23,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default float-right'
+		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default border float-right'
 	); ?>
 </h2>
 
@@ -70,7 +70,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 			<button class="btn btn-primary validate" type="submit">
 				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
 			</button>
-			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
+			<button class="btn btn-default border" type="button" name="cancel" onclick="window.history.back();"
 			        title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
 			</button>

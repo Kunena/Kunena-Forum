@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 $k = 0;
 ?>
 <div class="float-right">
-	<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#history">X</div>
+	<div class="btn btn-default border btn-small" data-toggle="collapse" data-target="#history">X</div>
 </div>
 <h3>
 	<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY') ?>:

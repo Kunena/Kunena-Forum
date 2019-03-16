@@ -140,7 +140,7 @@ $this->addStyleSheet('assets/css/rating.css');
 												'kchecktarget'
 											);
 											?>
-											<button class="btn btn-default" name="kcheckgo"
+											<button class="btn btn-default border" name="kcheckgo"
 											        type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 										<?php endif; ?>
 									<?php endif; ?>

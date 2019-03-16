@@ -103,7 +103,7 @@ use Joomla\CMS\Language\Text;
 <?php endif;
 
 if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
-	<a class="btn btn-default"
+	<a class="btn btn-default border"
 	   href="<?php echo Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
 	   data-toggle="modal" id="2fa_settings"><?php echo Text::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
 <?php endif;

@@ -119,7 +119,7 @@ $attachments = $this->attachments;
 											<p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
+											<button type="button" class="btn btn-default border"
 											        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
 											<button type="button"
 											        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
@@ -141,7 +141,7 @@ $attachments = $this->attachments;
 			->set('display', true); ?>
 	</div>
 	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator()) : ?>
-		<a href="#modaldeleteall" class="btn btn-default float-right"
+		<a href="#modaldeleteall" class="btn btn-default border float-right"
 		   data-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
 		<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="modaldeleteLabel">
@@ -157,7 +157,7 @@ $attachments = $this->attachments;
 						<p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default"
+						<button type="button" class="btn btn-default border"
 						        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
 						<button type="button" class="btn btn-primary"
 						        onclick="adminform.submit();"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>

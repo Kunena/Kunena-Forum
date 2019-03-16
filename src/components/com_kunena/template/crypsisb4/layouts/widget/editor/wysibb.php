@@ -151,7 +151,7 @@ $settings         = $templatesettings->get('wysibb');
 			<div class="modal-footer">
 				<button id="map-modal-submit"
 				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -175,7 +175,7 @@ if (!empty($codeTypes)) : ?>
 				<div class="modal-footer">
 					<button id="code-modal-submit"
 					        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-					<button class="btn btn-default" data-dismiss="modal"
+					<button class="btn btn-default border" data-dismiss="modal"
 					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
@@ -204,7 +204,7 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-footer">
 				<button id="picture-modal-submit"
 				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -229,7 +229,7 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-footer">
 				<button id="link-modal-submit"
 				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -279,7 +279,7 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-footer">
 				<button id="videosettings-modal-submit"
 				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -303,7 +303,7 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit"
 				        class="btn btn-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -368,7 +368,7 @@ if (!empty($codeTypes)) : ?>
 				<div class="modal-footer">
 					<button id="poll-settings-modal-submit"
 					        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-					<button class="btn btn-default" data-dismiss="modal"
+					<button class="btn btn-default border" data-dismiss="modal"
 					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
@@ -394,7 +394,7 @@ if (!empty($codeTypes)) : ?>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal"
+				<button class="btn btn-default border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>

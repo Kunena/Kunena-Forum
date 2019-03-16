@@ -152,11 +152,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<p><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal"
+					<button class="btn btn-default border" data-dismiss="modal"
 					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
-					<button class="btn btn-primary"
+					<button class="btn btn-primary border"
 					        id="modal_confirm_erase"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>
-					<button class="btn btn-primary"
+					<button class="btn btn-primary border"
 					        id="modal_confirm_erase_keep_old"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE_KEEP'); ?></button>
 				</div>
 			</div>

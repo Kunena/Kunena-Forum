@@ -19,6 +19,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Leafo\ScssPhp\Compiler;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 jimport('joomla.html.parameter');
 
@@ -909,7 +910,7 @@ HTML;
 
 		if (is_dir($path))
 		{
-			KunenaFolder::delete($path);
+			Folder::delete($path);
 		}
 	}
 
@@ -1741,7 +1742,7 @@ HTML;
 
 		if (!is_dir($cacheDir))
 		{
-			KunenaFolder::create($cacheDir);
+			Folder::create($cacheDir);
 		}
 
 		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
@@ -1759,7 +1760,7 @@ HTML;
 
 		if (!is_dir($outputDir))
 		{
-			KunenaFolder::create($outputDir);
+			Folder::create($outputDir);
 		}
 
 		$outputFile = "{$outputDir}/{$outputFile}";
@@ -1801,7 +1802,7 @@ HTML;
 
 		if (!is_dir($cacheDir))
 		{
-			KunenaFolder::create($cacheDir);
+			Folder::create($cacheDir);
 		}
 
 		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
@@ -1819,7 +1820,7 @@ HTML;
 
 		if (!is_dir($outputDir))
 		{
-			KunenaFolder::create($outputDir);
+			Folder::create($outputDir);
 		}
 
 		$outputFile = "{$outputDir}/{$outputFile}";

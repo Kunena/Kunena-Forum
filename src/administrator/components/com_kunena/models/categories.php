@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Filesystem\Folder;
 
 jimport('joomla.application.component.model');
 jimport('joomla.html.pagination');
@@ -145,7 +146,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists['display_children'] = HTMLHelper::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
 		$topicicons     = array();
-		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
+		$topiciconslist = Folder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 
 		foreach ($topiciconslist as $icon)
 		{

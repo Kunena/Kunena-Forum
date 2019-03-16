@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Kunena Template Helper Class
@@ -74,7 +75,7 @@ abstract class KunenaTemplateHelper
 			return array('' => $data);
 		}
 
-		$templateDirs = KunenaFolder::folders($templateBaseDir);
+		$templateDirs = Folder::folders($templateBaseDir);
 		$rows         = array();
 
 		// Check that the directory contains an xml file

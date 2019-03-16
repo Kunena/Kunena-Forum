@@ -141,21 +141,21 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if (is_file($filename))
 		{
-			KunenaFile::delete($filename);
+			File::delete($filename);
 		}
 
 		$filename = $path . '/raw/' . $this->filename;
 
 		if (is_file($filename))
 		{
-			KunenaFile::delete($filename);
+			File::delete($filename);
 		}
 
 		$filename = $path . '/thumb/' . $this->filename;
 
 		if (is_file($filename))
 		{
-			KunenaFile::delete($filename);
+			File::delete($filename);
 		}
 	}
 
@@ -775,7 +775,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 				@chmod($source, 0644);
 			}
 
-			$success = KunenaFile::copy($source, $destination);
+			$success = File::copy($source, $destination);
 
 			if (!$success)
 			{

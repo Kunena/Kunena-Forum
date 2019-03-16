@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Kunena Attachment Helper Class
@@ -346,7 +347,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		// Lets find out if we need to rename the filename.
-		$basename  = preg_replace('/[[:space:]]/', '', KunenaFile::makeSafe($basename));
+		$basename  = preg_replace('/[[:space:]]/', '', File::makeSafe($basename));
 		$extension = trim($extension, '.');
 
 		if (empty($basename))

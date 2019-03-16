@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class KunenaForumMessage
@@ -836,7 +837,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		foreach ($attachments as $attachment)
 		{
 			$file = Uri::root() . $attachment->filename;
-			KunenaFile::delete($file);
+			File::delete($file);
 
 			if (!$attachment->delete())
 			{

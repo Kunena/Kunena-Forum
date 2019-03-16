@@ -18,6 +18,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Plugin\PluginHelper;
 use Leafo\ScssPhp\Compiler;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Filesystem\File;
 
 jimport('joomla.html.parameter');
 
@@ -1778,8 +1779,8 @@ HTML;
 		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
 		{
 			$cache = serialize($newCache);
-			KunenaFile::write($cacheFile, $cache);
-			KunenaFile::write($outputFile, $newCache['compiled']);
+			File::write($cacheFile, $cache);
+			File::write($outputFile, $newCache['compiled']);
 		}
 	}
 
@@ -1839,8 +1840,8 @@ HTML;
 		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
 		{
 			$cache = serialize($newCache);
-			KunenaFile::write($cacheFile, $cache);
-			KunenaFile::write($outputFile, $newCache['compiled']);
+			File::write($cacheFile, $cache);
+			File::write($outputFile, $newCache['compiled']);
 		}
 	}
 

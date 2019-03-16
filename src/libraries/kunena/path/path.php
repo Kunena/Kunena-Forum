@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 
 jimport('joomla.filesystem.path');
 
@@ -108,7 +109,7 @@ class KunenaPath extends JPath
 
 			// Create the test file
 			$content = 'test';
-			$success = KunenaFile::write($test, $content, false);
+			$success = File::write($test, $content, false);
 
 			if (!$success)
 			{
@@ -118,7 +119,7 @@ class KunenaPath extends JPath
 			self::$owner = fileowner($test);
 
 			// Delete the test file
-			KunenaFile::delete($test);
+			File::delete($test);
 		}
 
 		// Test ownership

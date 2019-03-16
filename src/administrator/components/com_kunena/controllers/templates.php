@@ -180,7 +180,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			$success = KunenaFile::upload($file ['tmp_name'], $tmp . $file ['name'], false, true);
+			$success = File::upload($file ['tmp_name'], $tmp . $file ['name'], false, true);
 
 			if ($success)
 			{
@@ -218,20 +218,20 @@ class KunenaAdminControllerTemplates extends KunenaController
 							{
 								if (is_file($tmp_kunena . $template->sourcedir . '/params.ini'))
 								{
-									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/params.ini');
+									File::delete($tmp_kunena . $template->sourcedir . '/params.ini');
 								}
 
-								KunenaFile::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
+								File::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))
 							{
-								KunenaFile::move($dest . $template->directory . '/assets/less/custom.less', $tmp_kunena . $template->sourcedir . '/assets/less/custom.less');
+								File::move($dest . $template->directory . '/assets/less/custom.less', $tmp_kunena . $template->sourcedir . '/assets/less/custom.less');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/css/custom.css'))
 							{
-								KunenaFile::move($dest . $template->directory . '/assets/css/custom.css', $tmp_kunena . $template->sourcedir . '/assets/css/custom.css');
+								File::move($dest . $template->directory . '/assets/css/custom.css', $tmp_kunena . $template->sourcedir . '/assets/css/custom.css');
 							}
 
 							KunenaFolder::delete($dest . $template->directory);
@@ -385,7 +385,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
-		if (KunenaFile::getExt($filename) !== 'less')
+		if (File::getExt($filename) !== 'less')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'), 'warning');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
@@ -450,7 +450,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
-		$return = KunenaFile::write($file, $filecontent);
+		$return = File::write($file, $filecontent);
 
 		if ($return)
 		{
@@ -500,7 +500,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
-		$return = KunenaFile::write($file, $filecontent);
+		$return = File::write($file, $filecontent);
 
 		if ($return)
 		{
@@ -532,7 +532,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
-		if (KunenaFile::getExt($filename) !== 'css')
+		if (File::getExt($filename) !== 'css')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
@@ -577,7 +577,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
-		$return = KunenaFile::write($file, $filecontent);
+		$return = File::write($file, $filecontent);
 
 		if ($return)
 		{
@@ -622,7 +622,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
-		$return = KunenaFile::write($file, $filecontent);
+		$return = File::write($file, $filecontent);
 
 		if ($return)
 		{
@@ -825,7 +825,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$registry = new Joomla\Registry\Registry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');
-			$return = KunenaFile::write($file, $txt);
+			$return = File::write($file, $txt);
 
 			if (!$return)
 			{
@@ -891,7 +891,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 			if ($result)
 			{
-				KunenaFile::write($file, '');
+				File::write($file, '');
 			}
 		}
 

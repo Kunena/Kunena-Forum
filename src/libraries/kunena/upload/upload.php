@@ -732,7 +732,7 @@ class KunenaUpload
 
 		KunenaImage::correctImageOrientation($file->tmp_name);
 
-		if (!KunenaFile::copy($file->tmp_name, $file->destination))
+		if (!File::copy($file->tmp_name, $file->destination))
 		{
 			throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
 		}

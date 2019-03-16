@@ -19,6 +19,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Kunena User Controller
@@ -411,7 +412,7 @@ class KunenaControllerUser extends KunenaController
 			// Delete avatar from file system
 			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
 			{
-				KunenaFile::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
+				File::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
 				$avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
 
@@ -1070,14 +1071,14 @@ class KunenaControllerUser extends KunenaController
 				{
 					if (is_file($delete . '/' . $user->avatar))
 					{
-						KunenaFile::delete($delete . '/' . $user->avatar);
+						File::delete($delete . '/' . $user->avatar);
 					}
 				}
 			}
 
 			if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar))
 			{
-				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
+				File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
 			}
 		}
 	}
@@ -1126,7 +1127,7 @@ class KunenaControllerUser extends KunenaController
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
 
-				KunenaFile::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
+				File::copy($uploadFile, KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
 				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 

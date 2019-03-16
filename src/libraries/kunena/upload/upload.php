@@ -11,6 +11,7 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
 
 defined('_JEXEC') or die;
 
@@ -625,7 +626,7 @@ class KunenaUpload
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
 		$file       = new stdClass;
-		$file->ext  = JFile::getExt($fileInput['name']);
+		$file->ext  = File::getExt($fileInput['name']);
 		$file->ext  = strtolower($file->ext);
 		$file->size = $fileInput['size'];
 		$config     = KunenaFactory::getConfig();
@@ -637,7 +638,7 @@ class KunenaUpload
 		else
 		{
 			$pathInfo       = pathinfo($fileInput['tmp_name']);
-			$file->tmp_name = $pathInfo['dirname'] . '/' . JFile::makeSafe($pathInfo['basename']);
+			$file->tmp_name = $pathInfo['dirname'] . '/' . File::makeSafe($pathInfo['basename']);
 		}
 
 		$file->error       = $fileInput['error'];

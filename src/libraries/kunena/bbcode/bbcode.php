@@ -16,6 +16,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
@@ -400,7 +402,7 @@ class KunenaBbcode extends NBBC_BBCode
 			(?:
 				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
 				|
-				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’]
+				[^\s`!()\[\]{};:\'"\.,<>?Â«Â»â€œâ€�â€˜â€™]
 			)
 		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -422,7 +424,7 @@ class KunenaBbcode extends NBBC_BBCode
 				}
 
 				// Never start URL from the middle of text (except for punctuation).
-				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
+				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?Â«Â»â€œâ€�â€˜â€™]$#u', $search[$index - 1]);
 				$invalid |= !$this->IsValidURL($url, true);
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
@@ -2892,7 +2894,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$consumer_key    = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
-		if (JFile::exists(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json'))
+		if (File::exists(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json'))
 		{
 			$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
 
@@ -3058,9 +3060,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 					}
 				}
 
-				if (!JFolder::exists(JPATH_CACHE . '/kunena_tweet'))
+				if (!Folder::exists(JPATH_CACHE . '/kunena_tweet'))
 				{
-					JFolder::create(JPATH_CACHE . '/kunena_tweet');
+					Folder::create(JPATH_CACHE . '/kunena_tweet');
 				}
 
 				$tweet_data->error = false;

@@ -11,11 +11,11 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-jimport('joomla.filesystem.file');
+use Joomla\CMS\Filesystem\File;
 
 $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
 
-if (!JFile::exists($file))
+if (!File::exists($file))
 {
 	return;
 }

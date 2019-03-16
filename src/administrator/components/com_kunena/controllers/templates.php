@@ -17,6 +17,7 @@ use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Kunena Backend Templates Controller
@@ -886,7 +887,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (file_exists($file))
 		{
-			$result = JFile::delete($file);
+			$result = File::delete($file);
 
 			if ($result)
 			{

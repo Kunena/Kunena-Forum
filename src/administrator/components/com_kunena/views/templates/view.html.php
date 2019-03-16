@@ -12,6 +12,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Templates view for Kunena backend
@@ -91,7 +93,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!JFile::exists($this->templatefile))
+		if (!File::exists($this->templatefile))
 		{
 			$ourFileHandle = @fopen($this->templatefile, 'w');
 
@@ -142,7 +144,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		}
 
 		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
-		$this->files = JFolder::files($this->dir, '\.less$', false, false);
+		$this->files = Folder::files($this->dir, '\.less$', false, false);
 
 		$this->display();
 	}
@@ -211,8 +213,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		}
 
 		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
-		jimport('joomla.filesystem.folder');
-		$this->files = JFolder::files($this->dir, '\.css$', false, false);
+		$this->files = Folder::files($this->dir, '\.css$', false, false);
 		$this->display();
 	}
 

@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Class KunenaAttachment
@@ -608,7 +610,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
 
-		if (!JFolder::exists($uploadBasePath))
+		if (!Folder::exists($uploadBasePath))
 		{
 			mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
 		}
@@ -617,10 +619,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$fileInput['name'] = preg_replace('/[[:space:]]/', '', $fileInput['name']);
 
-		$fileNameWithoutExt = JFile::stripExt($fileInput['name']);
+		$fileNameWithoutExt = File::stripExt($fileInput['name']);
 		$fileNameWithoutExt = strtolower($fileNameWithoutExt);
 
-		$fileExt = JFile::getExt($fileInput['name']);
+		$fileExt = File::getExt($fileInput['name']);
 		$fileExt = strtolower($fileExt);
 
 		$fileNameWithExt = $fileInput['name'];

@@ -40,7 +40,7 @@ class Pkg_KunenaInstallerScript
 			'0'   => '5.7' // Preferred version
 		),
 		'Joomla!' => array(
-			'4.0'  => '4.0.0-alpha7-dev',
+			'4.0'  => '4.0.0-alpha8-dev',
 			'3.10' => '3.10.0',
 			'3.9'  => '3.9.3',
 			'0'    => '3.9.3', // Preferred version

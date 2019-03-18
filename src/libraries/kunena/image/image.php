@@ -33,6 +33,8 @@ class KunenaImage extends \Joomla\Image\Image
 	 * @param   mixed $src_w     src w
 	 * @param   mixed $src_h     src h
 	 *
+	 * @deprecated 5.1
+	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
@@ -193,6 +195,8 @@ class KunenaImage extends \Joomla\Image\Image
 	 * @param   integer $scaleMethod   Which method to use for scaling
 	 *
 	 * @return  KunenaImage
+	 *
+	 * @deprecated 5.1
 	 *
 	 * @throws Exception
 	 * @since   11.3

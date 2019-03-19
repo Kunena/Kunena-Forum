@@ -651,9 +651,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 			else
 			{
-				$info = getimagesize($uploadBasePath . $fileNameWithExt);
-
-				$type = $info['mime'];
+				throw new RuntimeException("Fileinfo extension not loaded.");
 			}
 
 			if (stripos($type, 'image/') !== false)

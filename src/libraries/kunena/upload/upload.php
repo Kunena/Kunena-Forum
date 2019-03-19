@@ -710,9 +710,9 @@ class KunenaUpload
 			}
 			else
 			{
-				$info = getimagesize($file->tmp_name);
-				$type = $info['mime'];
+				throw new RuntimeException("Fileinfo extension not loaded.");
 			}
+			
 
 			if (!$file->isAvatar && stripos($type, 'image/') !== false)
 			{

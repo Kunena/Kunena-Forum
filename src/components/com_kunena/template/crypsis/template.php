@@ -98,8 +98,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.7.2/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.7.2/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.8.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.8.0/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		// Load template colors settings

@@ -2,17 +2,18 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Site
- * @subpackage  Controllers
+ * @package         Kunena.Site
+ * @subpackage      Controllers
  *
  * @copyright   (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Menu\AbstractMenu;
 
 /**
  * Kunena Home Controller
@@ -28,12 +29,12 @@ class KunenaControllerHome extends KunenaController
 	public $home = 1;
 
 	/**
-	 * @param   bool $cachable  cachable
-	 * @param   bool $urlparams urlparams
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return \Joomla\CMS\MVC\Controller\BaseController|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -101,15 +102,15 @@ class KunenaControllerHome extends KunenaController
 	}
 
 	/**
-	 * @param       $menu
-	 * @param       $active
-	 * @param   array $visited visited
+	 * @param   AbstractMenu  $menu     Joomla menu.
+	 * @param   object        $active   Active menu item.
+	 * @param   array         $visited  Already visited menu items.
 	 *
 	 * @return null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
-	protected function _getDefaultMenuItem($menu, $active, $visited = array())
+	protected function _getDefaultMenuItem(AbstractMenu $menu, $active, $visited = array())
 	{
 		KunenaFactory::loadLanguage('com_kunena.controllers');
 

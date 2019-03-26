@@ -51,7 +51,7 @@ class KunenaAdminViewUsers extends KunenaView
 
 		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
 		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.7.2/js/all.js', array(), array('defer' => true));
+			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.8.1/js/all.js', array(), array('defer' => true));
 		}
 
 		$this->display();

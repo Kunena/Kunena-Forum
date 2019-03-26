@@ -1,16 +1,18 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Application
+ * @package         Kunena.Site
+ * @subpackage      Controller.Application
  *
  * @copyright   (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        https://www.kunena.org
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\BaseLayout;
+use Joomla\CMS\Menu\AbstractMenu;
 
 /**
  * Class ComponentKunenaControllerApplicationHomeDefaultDisplay
@@ -23,8 +25,8 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function exists()
 	{
@@ -34,10 +36,10 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return BaseLayout|KunenaLayout
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function execute()
@@ -70,7 +72,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 						$default = clone $home;
 					}
 
-					$default->query['view'] = 'category';
+					$default->query['view']   = 'category';
 					$default->query['layout'] = 'list';
 				}
 			}
@@ -116,15 +118,15 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Get default menu item to be shown up.
 	 *
-	 * @param   Joomla\CMS\Menu\SiteMenu $menu    Joomla menu.
-	 * @param   object     $active   Active menu item.
-	 * @param   array      $visited  Already visited menu items.
+	 * @param   AbstractMenu  $menu     Joomla menu.
+	 * @param   object        $active   Active menu item.
+	 * @param   array         $visited  Already visited menu items.
 	 *
 	 * @return object|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
-	protected function getDefaultMenuItem(Joomla\CMS\Menu\SiteMenu $menu, $active, $visited = array())
+	protected function getDefaultMenuItem(AbstractMenu $menu, $active, $visited = array())
 	{
 		KunenaFactory::loadLanguage('com_kunena.controllers');
 
@@ -161,7 +163,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there.
 			$visited[$item->id] = 1;
-			$item = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
+			$item               = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
 		}
 
 		return $item;

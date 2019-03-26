@@ -25,16 +25,8 @@ class KunenaFile
 	 */
 	public static function getMime($file)
 	{
-		// Check if file is an image.
-		$info = @getimagesize($file);
-
-		if ($info)
+		if (function_exists('finfo_open'))
 		{
-			$type = $info['mime'];
-		}
-		elseif (function_exists('finfo_open'))
-		{
-			// We have fileinfo.
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$type  = finfo_file($finfo, $file);
 			finfo_close($finfo);

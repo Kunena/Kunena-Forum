@@ -22,7 +22,7 @@ In addition we recommend the following PHP settings:
     safe_mode               = off
     allow_url_fopen		   = on
     upload_max_filesize    >= 3M
-    GD, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
+    GD Library (>=2.0), fileinfo, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
 
 *Kunena* requires the following Joomla settings:
 

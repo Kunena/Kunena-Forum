@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -42,7 +43,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		$access         = KunenaAccess::getInstance();
 		$start          = $this->state->get('list.start');
 		$limit          = $this->state->get('list.limit');
-		$params         = $this->app->getParams('com_kunena');
+		$params         = ComponentHelper::getParams('com_kunena');
 		$Itemid         = $this->input->getInt('Itemid');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 

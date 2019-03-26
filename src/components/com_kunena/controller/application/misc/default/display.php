@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
@@ -36,8 +37,8 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * Return custom display layout.
 	 *
 	 * @return KunenaLayout
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function display()
 	{
@@ -134,7 +135,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		parent::before();
 
-		$params       = $this->app->getParams('com_kunena');
+		$params       = ComponentHelper::getParams('com_kunena');
 		$this->header = $params->get('page_title');
 		$Itemid       = $this->input->getInt('Itemid');
 

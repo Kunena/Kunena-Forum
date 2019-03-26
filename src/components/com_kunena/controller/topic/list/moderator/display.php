@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 
@@ -37,7 +38,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
-		$params = $this->app->getParams('com_kunena');
+		$params = ComponentHelper::getParams('com_kunena');
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');

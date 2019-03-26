@@ -9,71 +9,76 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\Registry\Registry;
+use Joomla\Input\Input;
 
 /**
  * Model for Kunena
  *
  * @since  2.0
  */
-class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
+class KunenaModel extends BaseDatabaseModel
 {
 	/**
-	 * @since Kunena
 	 * @var  string JSite|JAdministrator
+	 * @since Kunena
 	 */
 	public $app = null;
 
 	/**
-	 * @since Kunena
 	 * @var KunenaUser
+	 * @since Kunena
 	 */
 	public $me = null;
 
 	/**
-	 * @since Kunena
 	 * @var KunenaConfig
+	 * @since Kunena
 	 */
 	public $config = null;
 
 	/**
+	 * @var string Registry
 	 * @since Kunena
-	 * @var string Joomla\Registry\Registry
 	 */
 	public $params = null;
 
 	/**
+	 * @var Input
 	 * @since Kunena
-	 * @var Joomla\Input\Input
 	 */
 	protected $input = null;
 
 	/**
+	 * @var InputFilter
 	 * @since Kunena
-	 * @var Joomla\CMS\Filter\InputFilter
 	 */
 	protected $filter = null;
 
 	/**
-	 * @since Kunena
 	 * @var JObject
+	 * @since Kunena
 	 */
 	protected $state = null;
 
 	/**
-	 * @since Kunena
 	 * @var boolean
+	 * @since Kunena
 	 */
 	protected $embedded = false;
 
 	/**
-	 * @param   array               $config config
-	 * @param   Joomla\Input\Input $input  input
+	 * @param   array  $config  config
+	 * @param   Input  $input   input
 	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function __construct($config = array(), Joomla\Input\Input $input = null)
+	public function __construct($config = array(), Input $input = null)
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -85,8 +90,8 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   array $params   params
-	 * @param   bool  $embedded embedded
+	 * @param   array  $params    params
+	 * @param   bool   $embedded  embedded
 	 *
 	 * @return void
 	 * @since Kunena
@@ -97,16 +102,16 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			$this->embedded = true;
 			$this->setState('embedded', true);
-			$this->filter = Joomla\CMS\Filter\InputFilter::getInstance();
+			$this->filter = InputFilter::getInstance();
 		}
 
-		if ($params instanceof Joomla\Registry\Registry)
+		if ($params instanceof Registry)
 		{
 			$this->params = $params;
 		}
 		else
 		{
-			$this->params = new Joomla\Registry\Registry($params);
+			$this->params = new Registry($params);
 		}
 	}
 
@@ -130,7 +135,7 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * @param   mixed $var The output to escape.
+	 * @param   mixed  $var  The output to escape.
 	 *
 	 * @return mixed The escaped value.
 	 * @since Kunena
@@ -148,17 +153,17 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		if (!$this->params)
 		{
-			$this->params = $this->app->getParams('com_kunena');
+			$this->params = ComponentHelper::getParams('com_kunena');
 		}
 
 		return $this->params;
 	}
 
 	/**
-	 * @param   string $key     key
-	 * @param   string $request request
-	 * @param   null   $default default
-	 * @param   string $type    type
+	 * @param   string  $key      key
+	 * @param   string  $request  request
+	 * @param   null    $default  default
+	 * @param   string  $type     type
 	 *
 	 * @return mixed|object
 	 * @since Kunena
@@ -176,10 +181,10 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   null   $default default
-	 * @param   string $hash    hash
-	 * @param   string $type    type
+	 * @param   string  $name     name
+	 * @param   null    $default  default
+	 * @param   string  $hash     hash
+	 * @param   string  $type     type
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -203,9 +208,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   bool   $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   bool    $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -216,9 +221,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   string $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   string  $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -229,9 +234,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   float  $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   float   $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -242,9 +247,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   int    $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   int     $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -255,9 +260,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   string $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   string  $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -268,9 +273,9 @@ class KunenaModel extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   string $default default
-	 * @param   string $hash    hash
+	 * @param   string  $name     name
+	 * @param   string  $default  default
+	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
 	 * @since Kunena

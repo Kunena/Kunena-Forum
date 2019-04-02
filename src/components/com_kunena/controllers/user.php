@@ -948,13 +948,9 @@ class KunenaControllerUser extends KunenaController
 		$user     = new Joomla\CMS\User\User($this->user->id);
 
 		// Bind the form fields to the user table and save.
-		try
+		if (!$user->bind($post) || !$user->save(true))
 		{
-			$user->bind($post) && $user->save(true);
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			Factory::getApplication()->enqueueMessage($user->getError(), 'error');
 
 			return false;
 		}

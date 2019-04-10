@@ -156,7 +156,7 @@ if (!$config->plain_email) :
 							                                  src="<?php echo Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
 							                                  alt="Please enable images to view this content"
 							                                  title="Forum"
-							                                  width="560" style="
+							                                  width="128" style="
 			width: 100%;
 			max-width: 560px;
 			color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;"/></a>
@@ -168,11 +168,11 @@ if (!$config->plain_email) :
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
 							<div>
-								<p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
-								<p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
+								<p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . ": " . $subject; ?></p>
+								<p><?php echo Text::_('COM_KUNENA_CATEGORY') . ": " . $this->message->getCategory()->name; ?></p>
+								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . ": " . $author->getName('???', false); ?></p>
 
-								<p>URL :
+								<p>URL:
 									<a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
 								</p>
 							</div>

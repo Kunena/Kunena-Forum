@@ -60,7 +60,7 @@ foreach ($this->sections as $section) :
 
 		<h1 class="btn-link">
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-			<small class="hidden-xs nowrap">
+			<small class="hidden-xs nowrap" id="ksection-count">
 				<?php echo KunenaForumCategory::getInstance()->totalCount($section->getTopics()); ?>
 			</small>
 		</h1>
@@ -108,7 +108,7 @@ foreach ($this->sections as $section) :
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-										<small class="nowrap">
+										<small class="nowrap" id="kcategory-count">
 											<?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
@@ -150,10 +150,10 @@ foreach ($this->sections as $section) :
 													<?php $totaltopics = KunenaForumCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
 
 													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
-														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
+														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted" id="ksubcategory-count"> ('
 															. $totaltopics . ')</small>';
 													else : ?>
-														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted"> ('
+														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs muted" id="ksubcategory-count"> ('
 															. $totaltopics . ')</small>';
 													endif;
 
@@ -218,10 +218,10 @@ foreach ($this->sections as $section) :
 									<div class="container-fluid">
 										<div class="row-fluid">
 											<?php if ($avatar) : ?>
-											<div class="col-md-3">
+											<div class="col-md-3" id="kavatar-index">
 												<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9" id="kpost-index">
 												<?php else : ?>
 												<div class="col-md-12">
 													<?php endif; ?>

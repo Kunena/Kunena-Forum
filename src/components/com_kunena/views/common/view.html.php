@@ -579,7 +579,8 @@ class KunenaViewCommon extends KunenaView
 			// $cache->store($contents, $cachekey, $cachegroup);
 		}
 
-		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillLoginBoxInfo'), $contents);
+		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillLoginBoxInfo'), $contents);
+
 		echo $contents;
 	}
 

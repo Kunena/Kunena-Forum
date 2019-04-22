@@ -210,13 +210,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->userTopic  = $this->topic->getUserTopic();
 		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && KunenaConfig::getInstance()->quickreply;
 
-		$subject = KunenaHtmlParser::parseBBCode($this->topic->displayField('subject'));
+		$this->headerText = KunenaHtmlParser::parseBBCode($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
-		$data->{'headline'}             = $subject;
+		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
 		$data->author                   = array();
 		$tmp                            = new CMSObject;

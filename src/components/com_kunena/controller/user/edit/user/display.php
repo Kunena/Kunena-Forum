@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -59,8 +60,17 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 		{
 			Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
-			Joomla\CMS\Form\Form::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
-			Joomla\CMS\Form\Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
+			if (version_compare(JVERSION, '4.0', '<'))
+			{
+				Form::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
+				Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
+			}
+			else
+			{
+				Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
+				Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
+			}
+
 
 			Joomla\CMS\Plugin\PluginHelper::importPlugin('user');
 

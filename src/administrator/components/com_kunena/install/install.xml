@@ -386,7 +386,7 @@
                null="6"/>
         <field name="params"
                type="text"
-               null="0"/>
+               null="1"/>
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
@@ -797,7 +797,7 @@
                default="0"/>
         <field name="params"
                type="text"
-               null="0"/>
+               null="1"/>
         <key name="user_topic_id"
              unique="1"
              columns="user_id,topic_id"/>

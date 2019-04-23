@@ -846,7 +846,7 @@
                  versiondate="2019-10-03"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `qq` `qqsocial` varchar(50);
-            </query>             
+            </query>
         </version>
         <version version="6.0.0-ALPHA1"
                  versiondate="2018-25-11"
@@ -861,6 +861,14 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `github` varchar(50) NULL
                 AFTER `google`;
             </query>
+        </version>
+        <version version="6.0.0-ALPHA2"
+                 versiondate="2019-04-23"
+                 versionname="Internal">
+                <query mode="silenterror">ALTER TABLE `#__kunena_topics` MODIFY COLUMN `params` text NULL;
+                </query>
+                <query mode="silenterror">ALTER TABLE `#__kunena_user_topics` MODIFY COLUMN `params` text NULL;
+                </query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

@@ -123,7 +123,7 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 			$this->addScript('assets/js/localstorage.js');
 		}
 
-		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb5/assets/less/custom.less';
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb4/assets/less/custom.less';
 
 		if (file_exists($filenameless) && 0 != filesize($filenameless))
 		{
@@ -131,7 +131,7 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 			$this->addStyleSheet('kunena-custom.css');
 		}
 
-		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb5/assets/css/custom.css';
+		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb4/assets/css/custom.css';
 
 		if (file_exists($filename))
 		{
@@ -143,16 +143,14 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			/** @noinspection PhpDeprecationInspection */
-			$doc->addScript('https://use.fontawesome.com/releases/v5.2.0/js/all.js', array(), array('defer' => true));
-			$doc->addScript('https://use.fontawesome.com/releases/v5.2.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.8.1/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.8.1/js/v4-shims.js', array(), array('defer' => true));
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
 
 		if ($icons)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 

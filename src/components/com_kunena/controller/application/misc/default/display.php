@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
@@ -135,7 +134,8 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		parent::before();
 
-		$params       = ComponentHelper::getParams('com_kunena');
+		$config       = Factory::getApplication('site');
+		$params       = $config->getParams('com_kunena');
 		$this->header = $params->get('page_title');
 		$Itemid       = $this->input->getInt('Itemid');
 
@@ -185,7 +185,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
-				return $cache->call(array('KunenaHtmlParser', 'parseBBCode'), $body);
+				return $cache->get(array('KunenaHtmlParser', 'parseBBCode'), array($body));
 			};
 		}
 	}

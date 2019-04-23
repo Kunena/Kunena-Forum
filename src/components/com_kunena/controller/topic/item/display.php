@@ -211,7 +211,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->userTopic  = $this->topic->getUserTopic();
 		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && KunenaConfig::getInstance()->quickreply;
 
-		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
+		$this->headerText = KunenaHtmlParser::parseBBCode($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";

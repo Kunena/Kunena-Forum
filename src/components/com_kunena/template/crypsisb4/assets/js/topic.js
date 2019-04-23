@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright     Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -70,14 +70,14 @@ jQuery(document).ready(function ($) {
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();
-		if (id_item_selected !== 0) {
+		if (id_item_selected == 0) {
 			$('#kmod_subject').hide();
 		}
 		else {
 			$('#kmod_subject').show();
 		}
 
-		if (id_item_selected === -1) {
+		if (id_item_selected == -1) {
 			$('#kmod_targetid').show();
 		}
 		else {

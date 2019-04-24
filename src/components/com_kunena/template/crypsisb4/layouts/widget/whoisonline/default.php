@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 		<?php endif; ?>
 	</h2>
 
-	<div class="card collapse in" id="kwho">
+	<div class="shadow-lg rounded collapse in" id="kwho">
 		<div class="card-body">
 			<div class="container">
 				<div class="row">

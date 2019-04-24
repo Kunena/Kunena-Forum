@@ -15,18 +15,21 @@ $this->getBBcodesEnabled();
 
 // Kunena bbcode editor
 ?>
-<div class="form-group">
-	<label class="control-label col-lg-4"><?php echo (JText::_('COM_KUNENA_MESSAGE')); ?></label>
-	<div class="controls" id="kbbcode-preview-real">
-		<ul id="tabs_kunena_editor" class="nav nav-tabs">
-			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
-			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
-		</ul>
-		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
-	</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="md-form form-group">
+			<div class="form-group shadow-textarea" id="kbbcode-preview-real">
+				<ul id="tabs_kunena_editor" class="nav nav-tabs">
+					<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
+					<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
+				</ul>
+				<textarea class="md-textarea form-control z-depth-1" name="message" id="kbbcode-message" rows="12" tabindex="7" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+			</div>
 
-	<!-- Hidden preview placeholder -->
-	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
+			<!-- Hidden preview placeholder -->
+			<div class="controls" id="kbbcode-preview" style="display: none;"></div>
+		</div>
+	</div>
 </div>
 
 <!-- Bootstrap modal to be used with bbcode editor -->

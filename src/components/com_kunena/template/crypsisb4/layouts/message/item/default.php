@@ -48,8 +48,7 @@ $list = array();
 		<span class="visible-xs"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 	</small>
 
-	<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $this->message->getState(); ?>">
-		<div class="kmessage">
+	<div class="shadow-none p-4 mb-5 rounded">
 			<div class="mykmsg-header">
 				<?php
 				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
@@ -63,7 +62,6 @@ $list = array();
 					echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 				endif; ?>
 			</div>
-		</div>
 		<?php if ($signature) : ?>
 			<div class="ksig">
 				<hr>

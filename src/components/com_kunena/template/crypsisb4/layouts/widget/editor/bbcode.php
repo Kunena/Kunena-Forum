@@ -21,29 +21,31 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 $this->getBBcodesEnabled();
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
-<div class="form-group">
-	<label class="control-label col-lg-4"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
-	<div class="controls tabs">
-		<ul id="tabs_kunena_editor" class="nav nav-tabs">
-			<li class="nav-item active"><a href="#write"
-			                      data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
-			<li class="nav-item"><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
-		</ul>
-		<textarea class="form-control" name="message" id="editor" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
-			{
-				echo $this->message->getCategory()->topictemplate;
-			}
-			else
-			{
-				echo $this->escape($this->message->message);
-			} ?></textarea>
+<div class="row">
+	<div class="col-md-12">
+		<div class="md-form form-group">
+			<div class="controls tabs shadow-textarea">
+				<ul id="tabs_kunena_editor" class="nav nav-tabs">
+					<li class="nav-link active"><a href="#write"
+					                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
+					<li class="nav-link"><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
+				</ul>
+				<textarea class="md-textarea form-control" name="message" id="editor" rows="12" tabindex="7" required="required"
+				          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+					{
+						echo $this->message->getCategory()->topictemplate;
+					}
+					else
+					{
+						echo $this->escape($this->message->message);
+					} ?></textarea>
+				</div>
+
+				<!-- Hidden preview placeholder -->
+				<div class="controls" id="kbbcode-preview" style="display: none;"></div>
+		</div>
 	</div>
-
-	<!-- Hidden preview placeholder -->
-	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
-
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      style="display: none;">

@@ -64,9 +64,9 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show card"
+		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show shadow-lg rounded"
 		     id="section<?php echo $section->id; ?>">
-			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table shadow-lg p-3 mb-5 rounded">
 				<?php if (!empty($section->description)) : ?>
 					<thead>
 					<tr>

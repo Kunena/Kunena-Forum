@@ -34,7 +34,7 @@ use Joomla\CMS\Language\Text;
 			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
 	</h2>
-	<div class="card collapse in" id="kstats">
+	<div class="shadow-lg rounded collapse in" id="kstats">
 		<div class="card-body">
 			<div class="container">
 				<div class="row">

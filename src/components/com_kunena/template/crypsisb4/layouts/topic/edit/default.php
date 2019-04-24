@@ -363,8 +363,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<?php echo Text::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?>
 			</h2>
 			<div class="shadow-lg p-3 mb-5 rounded">
-				<div class="form-group row krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
-					<label for="inputReason" class="col-sm-2 col-form-label"></label>
+				<div class="form-group row krow<?php echo 1 + $this->k ^= 1; ?> p-3 mb-5" id="kpost-attachments">
 					<div class="controls">
 						<div id="kattach_form">
 							<span class="label label-info"><?php echo Text::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>

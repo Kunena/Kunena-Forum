@@ -63,6 +63,29 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
+		$categories        = KunenaForumCategoryHelper::getCategories();
+		$arrayanynomousbox = array();
+		$arraypollcatid    = array();
+
+		foreach ($categories as $category)
+		{
+			if (!$category->isSection() && $category->allow_anonymous)
+			{
+				$arrayanynomousbox[$category->id] = $category->post_anonymous;
+			}
+
+			if ($this->config->pollenabled)
+			{
+				if (!$category->isSection() && $category->allow_polls)
+				{
+					$arraypollcatid[$category->id] = 1;
+				}
+			}
+		}
+
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+
 		$doc = Factory::getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 

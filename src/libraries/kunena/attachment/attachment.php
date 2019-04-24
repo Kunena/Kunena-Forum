@@ -30,7 +30,9 @@ use Joomla\CMS\Filesystem\Folder;
  * @property string $filename
  * @property string $filename_real
  * @property string $caption
+ * @property string $comment
  * @property int    $inline
+ * @property string $typeAlias
  *
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
@@ -180,6 +182,33 @@ class KunenaAttachment extends KunenaDatabaseObject
 				return $this->width;
 			case 'height':
 				return $this->height;
+			case 'filename':
+				return $this->filename;
+			case 'folder':
+				return $this->folder;
+			case 'userid':
+				return $this->userid;
+			case 'mesid':
+				return $this->mesid;
+			case 'protected':
+				return $this->protected;
+			case 'hash':
+				return $this->hash;
+			case 'size':
+				return $this->size;
+			case 'filetype':
+				return $this->filetype;
+			case 'filename_real':
+				return $this->filename_real;
+			case 'comment':
+				return $this->comment;
+			case 'inline':
+				return $this->inline;
+			case 'typeAlias':
+				return $this->typeAlias;
+			case 'caption':
+				return $this->caption;
+
 		}
 
 		throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));

@@ -28,7 +28,7 @@ $this->addScript('assets/js/poll.js');
 	</h2>
 <?php endif; ?>
 
-<div class="collapse in" id="poll-results" <?php echo $this->show_title ? '' : 'style="display:none;"'; ?>>
+<div class="" id="poll-results" <?php echo $this->show_title ? '' : 'style="display:none;"'; ?>>
 	<table class="table table-striped table-bordered table-condensed">
 
 		<?php

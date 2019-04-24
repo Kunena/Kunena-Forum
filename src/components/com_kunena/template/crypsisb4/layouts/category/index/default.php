@@ -47,7 +47,7 @@ foreach ($this->sections as $section) :
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
-	<div class="kfrontend">
+	<div class="kfrontend shadow-lg rounded mt-4">
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 0) : ?>
 				<button class="btn btn-default border btn-sm" type="button"

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light rounded border"
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border"
      itemscope="" itemtype="https://schema.org/SiteNavigationElement">
 		<button class="navbar-toggler" aria-expanded="false" aria-controls="knav-collapse" aria-label="Toggle navigation" type="button" data-target=".knav-collapse" data-toggle="collapse">
 			<span class="navbar-toggler-icon"></span>

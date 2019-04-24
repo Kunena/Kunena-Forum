@@ -53,7 +53,7 @@ if ($topic->locked)
 ?>
 <div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
-		<div class="alert alert-info">
+		<div class="alert alert-info shadow-lg rounded">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>
 			<?php echo $this->category->displayField('headerdesc'); ?>
 		</div>

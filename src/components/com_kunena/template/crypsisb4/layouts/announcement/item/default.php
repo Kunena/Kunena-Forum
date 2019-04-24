@@ -34,7 +34,7 @@ $actions      = $this->getActions();
 	<br>
 <?php endif; ?>
 
-<div class="well well-small">
+<div class="shadow-lg rounded">
 	<div><?php echo $announcement->displayField('sdescription'); ?></div>
 	<div><?php echo $announcement->displayField('description'); ?></div>
 </div>

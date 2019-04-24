@@ -18,7 +18,6 @@ $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $category        = $this->topic->getCategory();
-$cols            = empty($this->checkbox) ? 6 : 7;
 $category        = $this->topic->getCategory();
 $config          = KunenaConfig::getInstance();
 $txt             = '';
@@ -46,20 +45,23 @@ if ($this->topic->moved_id > 0)
 }
 
 if (!empty($this->spacing)) : ?>
-	<tr>
-		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+	<tr class="kcontenttablespacer">
+		<th scope="row">&nbsp;</th>
 	</tr>
 <?php endif; ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
-<td colspan="1"  class="hidden-xs-down center topic-item-unread">
-<?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, true); ?>
-<?php else : ?>
-	<td colspan="1" class="hidden-xs-down center">
-		<?php echo $this->getTopicLink($topic, null, KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, false); ?>
-		<?php endif; ?>
-	<td colspan="<?php echo $cols ?>">
+		<th scope="row" class="hidden-xs-down center topic-item-unread">
+			<?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, true); ?>
+		</th>
+	<?php else : ?>
+		<th scope="row" class="center hidden-xs-down">
+			<?php echo $this->getTopicLink($topic, null, KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, false); ?>
+		</th>
+	<?php endif; ?>
+
+	<td>
 		<div>
 			<?php
 			if ($this->ktemplate->params->get('labels') != 0)
@@ -148,36 +150,36 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 
-	<td colspan="2" class="hidden-xs-down">
+	<td class="hidden-xs-down">
 		<div class="replies"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>:<span
 					class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>:<span
 					class="viewsnum"><?php echo $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
-	<td colspan="3" class="hidden-xs-down">
+	<td class="hidden-xs-down">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
-				<div class="col-lg-3">
-					<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
-				</div>
-				<div class="col-lg-9">
-					<?php else : ?>
-					<div class="col-lg-12">
-						<?php endif; ?>
-						<span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
-							<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
-					</span>
-						<br>
-						<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+					<div class="col-lg-3">
+						<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
 					</div>
+					<div class="col-lg-9">
+				<?php else : ?>
+					<div class="col-lg-12">
+				<?php endif; ?>
+					<span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
+						<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+					</span>
+					<br>
+					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-		<td colspan="1" class="center">
+		<td class="center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]"
 				       value="1"/>

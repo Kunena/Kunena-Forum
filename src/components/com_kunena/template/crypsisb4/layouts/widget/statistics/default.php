@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<div class="kfrontend">
+<div class="kfrontend shadow-lg rounded mt-4">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-default border btn-sm" data-toggle="collapse"
@@ -34,7 +34,7 @@ use Joomla\CMS\Language\Text;
 			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
 	</h2>
-	<div class="shadow-lg rounded collapse in" id="kstats">
+	<div class="shadow-lg rounded " id="kstats">
 		<div class="card-body">
 			<div class="container">
 				<div class="row">

@@ -15,7 +15,7 @@ $topic  = KunenaForumTopicHelper::get($this->id);
 $config = KunenaFactory::getConfig();
 ?>
 
-<div class="kfrontend">
+<div class="kfrontend shadow-lg rounded mt-4">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-default border btn-sm" data-toggle="collapse"
@@ -27,7 +27,7 @@ $config = KunenaFactory::getConfig();
 		<?php echo Text::_('COM_KUNENA_WRITEACCESS'); ?>
 	</h3>
 
-	<div class="row-fluid collapse in" id="writeaccess">
+	<div class="row-fluid " id="writeaccess">
 		<div class="card card-block bg-faded p-2">
 			<ul class="unstyled col-lg-6">
 				<li>

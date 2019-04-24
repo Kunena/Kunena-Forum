@@ -22,7 +22,7 @@ $k = 0;
 	<?php echo $this->escape($this->topic->subject) ?>
 </h3>
 
-<div id="history" class="collapse in">
+<div id="history" class="collapse">
 	<p>
 		<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . Text::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
 	</p>

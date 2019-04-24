@@ -29,7 +29,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 }
 ?>
 <div class="row">
-	<div colspan="12">
+	<div class="col-md-12">
 		<?php if ($social == 1 && $me->socialshare != 0) : ?>
 			<div><?php echo $this->subLayout('Widget/Social')->set('me', $me)->set('ktemplate', $this->ktemplate); ?></div>
 		<?php endif; ?>
@@ -88,47 +88,35 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 	<?php if($view == 'user'): ?>
 		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
 	<?php endif; ?>
-	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
 		<thead>
 		<tr>
-			<td colspan="1" class="center hidden-xs-down">
+			<th scope="col" class="center hidden-xs-down">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom" rel="nofollow">
 					<?php echo KunenaIcons::arrowdown(); ?>
 				</a>
-			</td>
-			<td colspan="<?php echo $cols ?>" id="recent-list">
-				<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
-			</td>
-			<td colspan="2" class="hidden-xs-down">
-				<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
-			</td>
-			<td colspan="3" class="hidden-xs-down">
-				<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
-			</td>
+			</th>
+			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+
 			<?php if (!empty($this->actions)) : ?>
-				<td colspan="1" class="center">
-					<label>
-						<input class="kcheckall" type="checkbox" name="toggle" value=""/>
-					</label>
-				</td>
+				<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
 			<?php endif; ?>
 		</tr>
 		</thead>
 		<tfoot>
 		<tr>
-			<td colspan="1" class="center hidden-xs-down">
+			<th scope="col" class="center hidden-xs-down">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
+					<span class="dropdown-divider"></span>
 					<?php echo KunenaIcons::arrowup(); ?>
 				</a>
-			</td>
-			<?php if (empty($this->actions)) : ?>
-			<td colspan="11" class="hidden-xs-down">
-				<?php else : ?>
-			<td colspan="12">
-				<?php endif; ?>
-				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
+			</th>
+			<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
+				<th scope="col" class="hidden-xs-down">
 					<div class="form-group">
 						<div class="input-group" role="group">
 							<div class="input-group-btn">
@@ -150,14 +138,17 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 							</div>
 						</div>
 					</div>
-				<?php endif; ?>
-			</td>
+				</th>
+			<?php endif; ?>
+			<th scope="col"></th>
+			<th scope="col"></th>
+			<th scope="col"></th>
 		</tr>
 		</tfoot>
 		<tbody class="topic-list">
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
-				<td colspan="12" class="center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
+				<th scope="col"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></th>
 			</tr>
 		<?php else : ?>
 			<?php $counter = 2; ?>

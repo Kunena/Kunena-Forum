@@ -22,7 +22,7 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if ($this->category->headerdesc) : ?>
 	<div class="clearfix"></div>
 	<br>
-	<h1 class="alert alert-info">
+	<h1 class="alert alert-info shadow-lg rounded">
 		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
 	</h1>
@@ -64,27 +64,18 @@ $this->addStyleSheet('assets/css/rating.css');
 		<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 			<thead>
 			<tr>
-				<td class="center hidden-xs-down" colspan="1">
+				<th scope="col" class="center hidden-xs-down">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
-				</td>
-				<td colspan="<?php echo $cols ?>">
-					<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
-				</td>
-				<td colspan="2" class="hidden-xs-down">
-					<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
-				</td>
-				<td colspan="3" class="hidden-xs-down">
-					<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
-				</td>
+				</th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+
 				<?php if (!empty($this->topicActions)) : ?>
-					<td class="col-lg-1 center">
-						<label>
-							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
-						</label>
-					</td>
+					<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
 				<?php endif; ?>
 			</tr>
 			</thead>
@@ -108,14 +99,14 @@ $this->addStyleSheet('assets/css/rating.css');
 			<tfoot>
 			<?php if ($this->topics) : ?>
 				<tr>
-					<td colspan="1" class="center hidden-xs-down">
+					<th scope="col" class="center hidden-xs-down">
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
 							<span class="dropdown-divider"></span>
 							<?php echo KunenaIcons::arrowup(); ?>
 						</a>
-					</td>
-					<td colspan="11" class="hidden-xs-down">
+					</th>
+					<th scope="col" class="hidden-xs-down">
 						<div class="form-group">
 							<div class="input-group" role="group">
 								<div class="input-group-btn">
@@ -147,7 +138,7 @@ $this->addStyleSheet('assets/css/rating.css');
 								</div>
 							</div>
 						</div>
-					</td>
+					</th>
 				</tr>
 			<?php endif; ?>
 			</tfoot>

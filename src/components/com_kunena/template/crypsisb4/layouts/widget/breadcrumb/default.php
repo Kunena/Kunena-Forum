@@ -15,7 +15,7 @@ $item    = array_shift($pathway);
 $position = 2;
 
 if ($item) : ?>
-	<nav role="navigation" aria-label="breadcrumbs">
+	<nav role="navigation" aria-label="breadcrumbs" class="pt-4">
 		<ol class="mod-kunena-breadcrumbs breadcrumb" itemtype="https://schema.org/BreadcrumbList" itemscope="">
 			<li class="mod-kunena-breadcrumbs__item breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 				<?php echo KunenaIcons::home(); ?>

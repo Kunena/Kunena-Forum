@@ -20,7 +20,7 @@ $this->addScript('assets/js/poll.js');
 		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 
-	<div class="collapse in" id="poll-vote">
+	<div class="" id="poll-vote">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post">
 			<input type="hidden" name="task" value="vote"/>
 			<input type="hidden" name="catid" value="<?php echo $this->topic->category_id; ?>"/>

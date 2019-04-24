@@ -55,7 +55,7 @@ $this->addScript('assets/js/search.js');
 		<?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
 	</h1>
 
-	<div class="collapse in" id="search">
+	<div class="" id="search">
 		<div class="well">
 			<div class="row">
 				<fieldset class="col-lg-6">
@@ -110,7 +110,7 @@ $this->addScript('assets/js/search.js');
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
 
-		<div class="collapse in" id="search-options">
+		<div class="" id="search-options">
 			<div class="well">
 				<div class="row">
 					<fieldset class="col-lg-4">

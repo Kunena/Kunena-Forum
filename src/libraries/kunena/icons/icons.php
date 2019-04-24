@@ -1214,7 +1214,7 @@ class KunenaIcons
 
 		if ($categoryicon == ' ')
 		{
-			$categoryicon = null;
+			$categoryicon = $caticon;
 		}
 
 		if ($new)

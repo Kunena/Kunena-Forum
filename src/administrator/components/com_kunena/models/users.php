@@ -315,14 +315,15 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 		if ($filter !== '')
 		{
 			$now = new Joomla\CMS\Date\Date;
+			$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 			if ($filter)
 			{
-				$query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");
+				$query->where("ku.banned={$nullDate} OR ku.banned>{$db->quote($now->toSql())}");
 			}
 			else
 			{
-				$query->where("ku.banned IS NULL OR (ku.banned>{$db->quote($db->getNullDate())} AND ku.banned<{$db->quote($now->toSql())})");
+				$query->where("ku.banned IS NULL OR (ku.banned>{$nullDate} AND ku.banned<{$db->quote($now->toSql())})");
 			}
 		}
 

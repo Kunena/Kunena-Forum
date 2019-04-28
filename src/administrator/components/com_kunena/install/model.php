@@ -1605,36 +1605,6 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$this->addStatus(Text::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true);
 		}
 
-		$db     = Factory::getDBO();
-		$query  = "ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `created` datetime NOT NULL default
-                '1000-01-01 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
-		$query  = "ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_up` datetime NOT NULL default
-                '1000-01-01 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
-		$query  = "ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_down` datetime NOT NULL default
-                '1000-01-01 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
-		$query  = "ALTER TABLE `#__kunena_categories` MODIFY COLUMN `checked_out_time` datetime NOT NULL default
-                '1000-01-01 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
-		$query  = "ALTER TABLE `#__kunena_polls_users` MODIFY COLUMN `lasttime` datetime NOT NULL default
-                '1000-01-01 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
-		$query  = "UPDATE `#__kunena_categories` SET checked_out_time='1000-01-01 00:00:00' WHERE checked_out_time='0000-00-00 00:00:00'";
-		$db->setQuery($query);
-		$db->execute();
-
 		return true;
 	}
 

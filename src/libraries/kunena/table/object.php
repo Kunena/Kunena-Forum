@@ -934,9 +934,10 @@ abstract class KunenaTableObject
 
 		// Check the row in by primary key.
 		$query = static::$db->getQuery(true);
+		$nullDate = static::$db->getNullDate() ?  static::$db->quote(static::$db->getNullDate()) : 'NULL';
 		$query->update(static::$tbl);
 		$query->set(static::$db->quoteName('checked_out') . ' = 0');
-		$query->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote(static::$db->getNullDate()));
+		$query->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate);
 		$query->where(static::$tbl_key . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery($query);
 

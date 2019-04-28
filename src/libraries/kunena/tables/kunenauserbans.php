@@ -141,11 +141,12 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 		}
 
 		$now = new Joomla\CMS\Date\Date;
+		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
 
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl} 
       WHERE userid = {$this->_db->quote($userid)} 
-      " . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . " 
+      " . ($mode == self::ACTIVE ? "AND (expiration = {$nullDate} OR expiration > {$this->_db->quote($now->toSql())})" : '') . " 
       ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 
@@ -217,11 +218,12 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 		}
 
 		$now = new Joomla\CMS\Date\Date;
+		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
 
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
-			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$nullDate} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 

@@ -208,7 +208,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 				return $this->typeAlias;
 			case 'caption':
 				return $this->caption;
-
 		}
 
 		throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));

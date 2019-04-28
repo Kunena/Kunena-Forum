@@ -1781,7 +1781,9 @@ class KunenaUser extends CMSObject
 			return false;
 		}
 
-		if ($this->blocked || $this->banned == $this->_db->getNullDate())
+		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
+
+		if ($this->blocked || $this->banned == $nullDate)
 		{
 			return true;
 		}

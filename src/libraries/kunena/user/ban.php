@@ -282,7 +282,9 @@ class KunenaUserBan extends CMSObject
 	 */
 	public function isLifetime()
 	{
-		return $this->expiration == $this->_db->getNullDate();
+		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
+
+		return $this->expiration == $nullDate;
 	}
 
 	/**
@@ -358,12 +360,13 @@ class KunenaUserBan extends CMSObject
 		$c   = __CLASS__;
 		$db  = Factory::getDBO();
 		$now = new Date;
+		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 		$query = $db->getQuery(true);
 		$query->select('b.*')
 			->from($db->quoteName('#__kunena_users_banned') . ' AS b')
 			->innerJoin($db->quoteName('#__users') . ' AS u ON u.id=b.userid')
-			->where('b.expiration = ' . $db->quote($db->getNullDate()) . ' OR b.expiration > ' . $db->quote($now->toSql()))
+			->where('b.expiration = ' . $nullDate . ' OR b.expiration > ' . $db->quote($now->toSql()))
 			->order('b.created_time DESC');
 		$db->setQuery($query, $start, $limit);
 
@@ -625,9 +628,11 @@ class KunenaUserBan extends CMSObject
 			return;
 		}
 
-		if (!$expiration || $expiration == $this->_db->getNullDate())
+		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
+
+		if (!$expiration || $expiration == $nullDate)
 		{
-			$this->expiration = $this->_db->getNullDate();
+			$this->expiration = $nullDate;
 		}
 		else
 		{

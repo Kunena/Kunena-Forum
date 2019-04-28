@@ -47,8 +47,7 @@
                null="0"/>
         <field name="created"
                type="datetime"
-               null="1"
-               default="NULL"/>
+               null="1"/>
         <field name="published"
                type="tinyint(1)"
                null="0"
@@ -56,11 +55,11 @@
         <field name="publish_up"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="publish_down"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="ordering"
                type="tinyint(4)"
                null="0"
@@ -201,7 +200,7 @@
         <field name="checked_out_time"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="review"
                type="tinyint(4)"
                null="0"
@@ -530,7 +529,7 @@
         <field name="polltimetolive"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
@@ -571,7 +570,7 @@
         <field name="lasttime"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="lastvote"
                type="int(11)"
                null="1"/>
@@ -625,7 +624,7 @@
         <field name="time"
                type="DATETIME"
                null="1"
-               default="NULL"/>
+               />
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
@@ -697,7 +696,7 @@
         <field name="time"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <key name="postid"
              unique="1"
              columns="postid,userid"/>
@@ -843,7 +842,7 @@
         <field name="banned"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="ordering"
                type="int(11)"
                null="1"
@@ -882,7 +881,8 @@
                null="0"
                default="0"/>
         <field name="birthdate"
-               type="date"/>
+               type="date"
+               null="1"/>
         <field name="location"
                type="varchar(50)"
                null="1"/>
@@ -1044,14 +1044,14 @@
         <field name="expiration"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="created_by"
                type="int(11)"
                null="0"/>
         <field name="created_time"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="reason_private"
                type="text"
                null="1"/>
@@ -1064,7 +1064,7 @@
         <field name="modified_time"
                type="datetime"
                null="1"
-               default="NULL"/>
+               />
         <field name="comments"
                type="text"
                null="1"/>

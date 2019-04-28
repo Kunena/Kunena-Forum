@@ -253,17 +253,33 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		$now                    = new Joomla\CMS\Date\Date;
 		$fields                 = array();
-		$fields['title']        = $this->app->input->getString('title', '', 'post', 'raw');
-		$fields['description']  = $this->app->input->getString('description', '', 'post', 'raw');
-		$fields['sdescription'] = $this->app->input->getString('sdescription', '', 'post', 'raw');
-		$fields['created']      = $this->app->input->getString('created', $now->toSql());
-		$fields['publish_up']   = $this->app->input->getString('publish_up', $now->toSql());
-		$fields['publish_down'] = $this->app->input->getString('publish_down', $now->toSql());
+		$fields['title']        = $this->app->input->getString('title', '');
+		$fields['description']  = $this->app->input->getString('description', '');
+		$fields['sdescription'] = $this->app->input->getString('sdescription', '');
+		$fields['created']      = $this->app->input->getString('created');
+		$fields['publish_up']   = $this->app->input->getString('publish_up');
+		$fields['publish_down'] = $this->app->input->getString('publish_down');
 		$fields['published']    = $this->app->input->getInt('published', 1);
 		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
 		$id           = $this->app->input->getInt('id');
 		$announcement = KunenaForumAnnouncementHelper::get($id);
+
+		if ($fields['created'] == NULL)
+		{
+			$fields['created'] = $now->toSql();
+		}
+
+		if ($fields['publish_up'] == NULL)
+		{
+			$fields['publish_up'] = $now->toSql();
+		}
+
+		if ($fields['publish_down'] == NULL)
+		{
+			$fields['publish_down'] = $now->toSql();
+		}
+
 		$announcement->bind($fields);
 
 		try

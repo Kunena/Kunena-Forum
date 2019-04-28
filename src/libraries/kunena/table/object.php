@@ -946,7 +946,7 @@ abstract class KunenaTableObject
 
 		// Set table values in the object.
 		$this->checked_out      = 0;
-		$this->checked_out_time = '';
+		$this->checked_out_time = NULL;
 
 		return true;
 	}

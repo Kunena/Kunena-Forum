@@ -104,7 +104,7 @@ jQuery(document).ready(function ($) {
 				},
 				{
 					share: "googleplus",
-					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLE_LABEL')
 				},
 				{
 					share: "linkedin",

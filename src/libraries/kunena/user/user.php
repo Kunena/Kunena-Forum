@@ -2139,7 +2139,7 @@ class KunenaUser extends CMSObject
 						'digg'               => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
 						'skype'              => array('url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
 						'yim'                => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
-						'google'             => array('url' => 'https://plus.google.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '0'),
+						'google'             => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'),
 						'github'             => array('url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'),
 						'microsoft'          => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
 						'icq'                => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),

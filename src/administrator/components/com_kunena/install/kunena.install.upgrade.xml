@@ -849,14 +849,14 @@
             </query>
         </version>
         <version version="6.0.0-ALPHA1"
-                 versiondate="2018-25-11"
+                 versiondate="2018-11-25"
                  versionname="Internal">
                  <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `vimeo` varchar(50) NULL
                 AFTER `whatsapp`;
                  </query>
          </version>
         <version version="6.0.0-ALPHA1"
-                 versiondate="2018-19-12"
+                 versiondate="2018-12-19"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `github` varchar(50) NULL
                 AFTER `google`;

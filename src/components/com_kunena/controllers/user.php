@@ -422,10 +422,13 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
 		}
 
+		$now = new Joomla\CMS\Date\Date;
+		$birthdate =  $now->format('Y-m-d');
+
 		if (!empty($DelProfileInfo))
 		{
 			$user->personalText     = '';
-			$user->birthdate        = '1000-01-01';
+			$user->birthdate        = $birthdate;
 			$user->location         = '';
 			$user->gender           = 0;
 			$user->icq              = '';
@@ -1001,6 +1004,12 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $date->format('Y-m-d');
 		}
 
+		if ($birthdate == NULL)
+		{
+			$now = new Joomla\CMS\Date\Date;
+			$birthdate =  $now->format('Y-m-d');
+		}
+
 		$user->birthdate        = $birthdate;
 		$user->location         = trim($input->$method->get('location', '', 'string'));
 		$user->gender           = $input->$method->get('gender', 0, 'int');
@@ -1270,12 +1279,12 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$this->user->ordering     = $this->app->input->getInt('messageordering', '');
-		$this->user->hideEmail    = $this->app->input->getInt('hidemail', '');
-		$this->user->showOnline   = $this->app->input->getInt('showonline', '');
-		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', '');
-		$this->user->userListtime = $this->app->input->getInt('userlisttime', '');
-		$this->user->socialshare  = $this->app->input->getInt('socialshare', '');
+		$this->user->ordering     = $this->app->input->getInt('messageordering', 0);
+		$this->user->hideEmail    = $this->app->input->getInt('hidemail', 1);
+		$this->user->showOnline   = $this->app->input->getInt('showonline', 1);
+		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', -1);
+		$this->user->userListtime = $this->app->input->getInt('userlisttime', -2);
+		$this->user->socialshare  = $this->app->input->getInt('socialshare', 1);
 	}
 
 	public function delfile()

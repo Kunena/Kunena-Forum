@@ -23,16 +23,16 @@ Text::script('COM_KUNENA_CLEARED');
 		:
 		?>
 		<tr>
-			<td class="col-lg-3">
+			<td class="col-md-7">
 				<?php echo $field->label; ?>
 			</td>
-			<td>
+			<td class="col-md-5">
 				<?php echo $field->field; ?>
 			</td>
 		</tr>
 	<?php endforeach ?>
 	<tr>
-		<td class="col-lg-3"><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></td>
+		<td class="col-md-3"><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></td>
 		<td>
 			<button type="button" class="btn btn-default border btn-small" onClick="window.localStorage.clear()"
 			        data-loading-text="Loading..."><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>

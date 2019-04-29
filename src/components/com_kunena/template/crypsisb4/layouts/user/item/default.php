@@ -55,7 +55,7 @@ echo $this->subLayout('User/Item/Summary')
 		<?php foreach ($tabs as $name => $tab)
 			:
 			?>
-			<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
+			<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
 				<div>
 					<?php echo $tab->content; ?>
 				</div>

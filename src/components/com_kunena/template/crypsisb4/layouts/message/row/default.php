@@ -138,7 +138,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
 				<div class="col-lg-3">
-					<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
+					<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
 				</div>
 				<div class="col-lg-9">
 					<?php else : ?>

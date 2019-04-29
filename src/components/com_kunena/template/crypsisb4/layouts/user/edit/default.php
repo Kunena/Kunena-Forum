@@ -55,7 +55,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				?>
 				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
-				<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="edit<?php echo $name; ?>">
+				<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="edit<?php echo $name; ?>">
 					<div class="row">
 						<?php echo $tab->content; ?>
 					</div>

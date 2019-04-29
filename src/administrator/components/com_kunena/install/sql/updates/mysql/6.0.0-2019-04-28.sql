@@ -2,7 +2,7 @@ ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `created` datetime NULL DEFAU
 ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_up` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_down` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__kunena_categories` MODIFY COLUMN `checked_out_time` datetime NULL DEFAULT NULL;
-ALTER TABLE `#__kunena_categories` MODIFY COLUMN `type` int(11) NOT NULL DEFAULT NULL;
+ALTER TABLE `#__kunena_categories` MODIFY COLUMN `ordering` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `#__kunena_polls` MODIFY COLUMN `polltimetolive` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__kunena_polls_users` MODIFY COLUMN `lasttime` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__kunena_rate` MODIFY COLUMN `time` datetime NULL DEFAULT NULL;

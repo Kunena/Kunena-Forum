@@ -441,7 +441,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<div class="form-group row" id="kanynomous-check">
 					<div class="controls">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="kanonymous" name="kanonymous"
+							<input type="checkbox" class="custom-control-input" id="kanonymous" name="anonymous"
 							       value="1" <?php if ($this->post_anonymous)
 							{
 								echo 'checked="checked"';

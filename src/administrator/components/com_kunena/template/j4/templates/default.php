@@ -79,19 +79,12 @@ HTMLHelper::_('dropdown.init');
 							</span>
 								</td>
 								<td class="center">
-									<?php if ($row->published == 1)
-										:
-										?>
-										<i class="icon-star"
-										   alt="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
-									<?php else
-
-										:
-										?>
+									<?php if ($row->published == 1) : ?>
+										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span class="icon-featured"></span></a>
+									<?php else : ?>
 										<a href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-											<i class="icon-star-empty"
-											   alt="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
+											<span class="icon-featured pl-2" title="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></span>
 										</a>
 									<?php endif; ?>
 								</td>

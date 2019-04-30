@@ -82,3 +82,8 @@
 	content: "\25cf";
 	font-size: 1.5em;
 }
+
+.tbody-icon .icon-featured {
+	border-color: green !important;
+	color: green !important;
+}

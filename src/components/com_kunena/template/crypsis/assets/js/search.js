@@ -44,7 +44,8 @@ jQuery(document).ready(function ($) {
 
 	if (jQuery.fn.datepicker !== undefined) {
 		jQuery('#searchatdate .input-append.date').datepicker({
-			orientation: "top auto"
+			orientation: "top auto",
+			language: "kunena"
 		});
 	}
 });

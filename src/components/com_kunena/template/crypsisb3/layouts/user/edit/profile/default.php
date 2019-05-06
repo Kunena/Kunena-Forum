@@ -13,9 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
-$this->addScript('assets/js/locales/bootstrap-datepicker.kunena.js');
+echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/profile.js');
 ?>
 <h3>

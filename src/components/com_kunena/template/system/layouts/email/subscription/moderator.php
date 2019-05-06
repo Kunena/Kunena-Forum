@@ -173,7 +173,7 @@ if (!$config->plain_email) :
 								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
 								<p>URL :
-									<a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
+									<a href="<?php echo $this->messageLink . '?utm_source=' . $config->board_title . '&utm_medium=Email&utm_campaign=Subscription'; ?>"><b><?php echo $this->messageLink; ?></b></a>
 								</p>
 							</div>
 
@@ -202,7 +202,7 @@ if (!$config->plain_email) :
 										    style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
 										    bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-										                         href="<?php echo $this->messageLink; ?>">
+										                         href="<?php echo $this->messageLink . '?utm_source=' . $config->board_title . '&utm_medium=Email&utm_campaign=Subscription'; ?>">
 												<?php echo Text::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>

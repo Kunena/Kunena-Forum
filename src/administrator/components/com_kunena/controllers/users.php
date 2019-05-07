@@ -1023,7 +1023,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			{
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName('#__kunena_user_categories'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
-				$db->setQuery($query);
+				$db->setQuery((string) $query);
 
 				try
 				{
@@ -1070,7 +1070,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			{
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName('#__kunena_user_topics'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
-				$db->setQuery($query);
+				$db->setQuery((string) $query);
 
 				try
 				{

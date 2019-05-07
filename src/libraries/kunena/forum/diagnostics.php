@@ -104,7 +104,7 @@ abstract class KunenaForumDiagnostics
 
 			self::$fieldsFunction($query);
 			$db = Factory::getDbo();
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			return (array) $db->loadAssocList();
 		}
@@ -126,7 +126,7 @@ abstract class KunenaForumDiagnostics
 		{
 			$query = self::$queryFunction();
 			$db    = Factory::getDbo();
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			return (bool) $db->execute();
 		}
@@ -166,7 +166,7 @@ abstract class KunenaForumDiagnostics
 		{
 			$query = self::$queryFunction();
 			$db    = Factory::getDbo();
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			return (bool) $db->execute();
 		}

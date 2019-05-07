@@ -199,7 +199,7 @@ class TableKunenaMessages extends KunenaTable
 			' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
 		);
 		$query->where($this->_db->quoteName('m.id') . '=' . $this->$k);
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -320,7 +320,7 @@ class TableKunenaMessages extends KunenaTable
 				->values($this->$k . ', ' . $this->_db->quote($this->message));
 		}
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{

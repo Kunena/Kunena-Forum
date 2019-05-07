@@ -139,7 +139,7 @@ class KunenaAdminControllerRanks extends KunenaController
 				->insert("{$db->qn('#__kunena_ranks')}")
 				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -159,7 +159,7 @@ class KunenaAdminControllerRanks extends KunenaController
 				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}")
 				->where("rank_id={$db->quote($rankid)}");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -250,7 +250,7 @@ class KunenaAdminControllerRanks extends KunenaController
 				->from("{$db->qn('#__kunena_ranks')}")
 				->where("rank_id IN ($cids)");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{

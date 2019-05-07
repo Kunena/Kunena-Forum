@@ -434,7 +434,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$query->update('#__kunena_messages')->set("hold={$this->hold}")
 			->where("thread={$this->id}")->where("hold={$this->_hold}");
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -465,7 +465,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 					LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
 					WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
 					GROUP BY m.thread";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -487,7 +487,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 						FROM #__kunena_messages AS m
 						WHERE m.thread={$this->_db->quote($this->id)}
 						GROUP BY m.thread";
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 
 				try
 				{
@@ -764,7 +764,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			foreach ($queries as $query)
 			{
-				$db->setQuery($query);
+				$db->setQuery((string) $query);
 
 				try
 				{
@@ -1871,7 +1871,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -1901,7 +1901,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$query = "UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -1915,7 +1915,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{

@@ -1136,7 +1136,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			$db    = Factory::getDBO();
 			$query = "SELECT code, location FROM #__kunena_smileys";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$smileys = $db->loadObjectList();
 
 			$template = KunenaFactory::getTemplate();
@@ -1866,7 +1866,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			LEFT JOIN #__categories AS cc ON cc.id = a.catid
 			LEFT JOIN #__users AS u ON u.id = a.created_by
 			WHERE a.id=' . $db->quote($articleid);
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 		$article = $db->loadObject();
 
 		if ($article)

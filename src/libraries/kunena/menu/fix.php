@@ -103,7 +103,7 @@ abstract class KunenaMenuFix
 		$query->order('m.lft');
 
 		// Set the query
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

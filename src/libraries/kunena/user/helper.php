@@ -229,7 +229,7 @@ abstract class KunenaUserHelper
 				->from($db->quoteName('#__users') . 'AS u')
 				->leftJoin($db->quoteName('#__kunena_users') . ' AS ku ON u.id = ku.userid')
 				->where('u.id IN (' . $userlist . ')');
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -316,7 +316,7 @@ abstract class KunenaUserHelper
 			$query->select('COUNT(*), MAX(id)')
 				->from($db->quoteName('#__users'))
 				->where($where);
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -423,7 +423,7 @@ abstract class KunenaUserHelper
 			$query->where("user_id IN ({$userList})");
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 		$results = (array) $db->loadObjectList();
 		$list    = array();
 
@@ -481,7 +481,7 @@ abstract class KunenaUserHelper
 				$query->where('time > ' . $time);
 			}
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -536,7 +536,7 @@ abstract class KunenaUserHelper
 				$query->where('time > ' . $time);
 			}
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -621,7 +621,7 @@ abstract class KunenaUserHelper
 				FROM #__kunena_user_topics
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -655,7 +655,7 @@ abstract class KunenaUserHelper
 				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -688,7 +688,7 @@ abstract class KunenaUserHelper
 			LEFT JOIN #__kunena_user_topics AS ut ON ut.user_id=u.userid
 			SET u.posts = 0
 			WHERE ut.user_id IS NULL";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

@@ -515,7 +515,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					->where("user_id IN ({$sentusers})")
 					->where('subscribed=1');
 
-				$db->setQuery($query);
+				$db->setQuery((string) $query);
 
 				try
 				{
@@ -858,7 +858,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$db->execute();
 
 			try

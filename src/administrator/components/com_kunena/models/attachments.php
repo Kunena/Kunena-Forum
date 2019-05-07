@@ -245,7 +245,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 			$query->where('(a.filename LIKE ' . $post . ')');
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		return $query;
 	}

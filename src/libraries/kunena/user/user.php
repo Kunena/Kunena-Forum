@@ -1348,7 +1348,7 @@ class KunenaUser extends CMSObject
 			$query = $this->_db->getQuery(true);
 			$query->select('*');
 			$query->from($this->_db->quoteName('#__kunena_ranks'));
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -1831,7 +1831,7 @@ class KunenaUser extends CMSObject
 				->from('#__usergroups')
 				->where($db->quoteName('id') . '=' . (int) $groupid_list);
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$groupNames = $db->loadResult();
 			$groupNames .= '<br/>';
 		}

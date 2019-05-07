@@ -185,7 +185,7 @@ class KunenaForumTopicPoll extends CMSObject
 				FROM #__kunena_polls_options
 				WHERE pollid={$this->_db->Quote($this->id)}
 				ORDER BY id";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -243,7 +243,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = "SELECT COUNT(*)
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)}";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -304,7 +304,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = "SELECT MAX(lasttime)
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -406,7 +406,7 @@ class KunenaForumTopicPoll extends CMSObject
 			// No votes
 			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote,lasttime)
 				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)},{$this->_db->Quote($votes->lasttime)});";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -427,7 +427,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = "UPDATE #__kunena_polls_users
 				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)},lasttime={$this->_db->Quote($votes->lasttime)}
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($votes->userid)};";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -477,7 +477,7 @@ class KunenaForumTopicPoll extends CMSObject
 		$query = "SELECT lastvote
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -507,7 +507,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = "SELECT SUM(votes)
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -544,7 +544,7 @@ class KunenaForumTopicPoll extends CMSObject
 		$delta = intval($delta);
 		$query = "UPDATE #__kunena_polls_options SET votes=votes+{$delta} WHERE id={$this->_db->Quote($option)}";
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -608,7 +608,7 @@ class KunenaForumTopicPoll extends CMSObject
 		// Delete options
 		$db    = Factory::getDBO();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -621,7 +621,7 @@ class KunenaForumTopicPoll extends CMSObject
 
 		// Delete votes
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($this->id)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -717,7 +717,7 @@ class KunenaForumTopicPoll extends CMSObject
 			if (empty($this->newOptions[$key]))
 			{
 				$query = "DELETE FROM #__kunena_polls_options WHERE id={$this->_db->Quote($key)}";
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 
 				try
 				{
@@ -750,7 +750,7 @@ class KunenaForumTopicPoll extends CMSObject
 				// Option doesn't exist: create it
 				$query = "INSERT INTO #__kunena_polls_options (text, pollid, votes)
 					VALUES({$this->_db->quote($value)}, {$this->_db->Quote($this->id)}, 0)";
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 
 				try
 				{
@@ -767,7 +767,7 @@ class KunenaForumTopicPoll extends CMSObject
 				$query = "UPDATE #__kunena_polls_options
 					SET text={$this->_db->quote($value)}
 					WHERE id={$this->_db->Quote($key)}";
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 
 				try
 				{

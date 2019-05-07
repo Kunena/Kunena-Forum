@@ -1393,7 +1393,7 @@ class KunenaConfig extends CMSObject
 		$query->select('*');
 		$query->from($db->quoteName('#__kunena_configuration'));
 		$query->where($db->quoteName('id') . '=1');
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

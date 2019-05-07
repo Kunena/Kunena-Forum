@@ -448,7 +448,7 @@ class KunenaTableMap
 				$query->insert($this->_db->quoteName($this->_tbl));
 				$query->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)));
 				$query->values($values);
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 				$this->_db->execute();
 			}
 
@@ -459,7 +459,7 @@ class KunenaTableMap
 				$query->delete($this->_db->quoteName($this->_tbl));
 				$query->where($this->_db->quoteName($this->_tbl_key) . '=' . (int) $id);
 				$query->where($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 				$this->_db->execute();
 			}
 		}
@@ -539,7 +539,7 @@ class KunenaTableMap
 			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		$mapName          = $this->_tbl_mapped;
 		$this->{$mapName} = (array) $this->_db->loadColumn();
@@ -609,7 +609,7 @@ class KunenaTableMap
 			$query->where($key . ' = ' . $this->_db->quote($value));
 		}
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		// Delete items.
 		$this->_db->execute();

@@ -378,7 +378,7 @@ class KunenaAccessJoomla
 			$query->where("user_id IN ({$inUsers})");
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		$result = (array) $db->loadColumn();
 

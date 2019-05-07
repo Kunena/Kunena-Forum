@@ -724,7 +724,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$db    = Factory::getDbo();
 			$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)}";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$this->_aliases = (array) $db->loadObjectList('alias');
 		}
 
@@ -748,7 +748,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$db    = Factory::getDbo();
 		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -1380,7 +1380,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -1672,7 +1672,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$db    = Factory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

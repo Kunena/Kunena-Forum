@@ -29,7 +29,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 		$db    = Factory::getDbo();
 		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $db->quote($alias);
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 		$result = $db->loadObject();
 
 		if ($result)
@@ -53,7 +53,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 		$db    = Factory::getDbo();
 		$query = 'DELETE FROM #__kunena_aliases WHERE alias = ' . $db->quote($alias);
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		$response['msg'] = 1;
 

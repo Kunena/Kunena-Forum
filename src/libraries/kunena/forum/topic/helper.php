@@ -196,7 +196,7 @@ abstract class KunenaForumTopicHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -365,7 +365,7 @@ abstract class KunenaForumTopicHelper
 			$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -492,7 +492,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -540,7 +540,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -624,7 +624,7 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_message = '',
 				tt.last_post_guest_name = ''
 			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -646,7 +646,7 @@ abstract class KunenaForumTopicHelper
 			) AS c ON tt.id=c.thread
 			SET tt.hold = c.hold
 			WHERE tt.moved_id=0 {$topics}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -687,7 +687,7 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_message = tmax.message,
 				tt.last_post_guest_name = mmax.name
 			WHERE moved_id=0 {$topics}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

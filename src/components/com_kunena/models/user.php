@@ -92,7 +92,7 @@ class KunenaModelUser extends KunenaModel
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName('user_id'))->from($db->quoteName('#__user_usergroup_map'))->where($db->quoteName('group_id') . ' = 8');
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$superadmins = (array) $db->loadColumn();
 
 			if (!$superadmins)
@@ -207,7 +207,7 @@ class KunenaModelUser extends KunenaModel
 				->from($db->quoteName('#__users', 'u'))
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}");
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{

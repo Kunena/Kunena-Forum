@@ -67,7 +67,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 				->from($db->quoteName('#__updates'))
 				->where($db->quoteName('extension_id') . ' > 0')
 				->where($db->quoteName('detailsurl') . ' LIKE ' . $db->quote($updateSite));
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$list = (array) $db->loadObjectList();
 
 			if ($list)
@@ -95,7 +95,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 					->from($db->quoteName('#__update_sites'))
 					->where($db->quoteName('enabled') . ' = 0')
 					->where($db->quoteName('location') . ' LIKE ' . $db->quote($updateSite));
-				$db->setQuery($query);
+				$db->setQuery((string) $query);
 				$updateInfo = !$db->loadResult();
 			}
 		}
@@ -150,7 +150,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 				->update($db->quoteName('#__update_sites'))
 				->set($db->quoteName('enabled') . '=1')
 				->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$db->execute();
 
 			$this->app->setUserState('pkg_kunena.updateCheck', $now + 60 * 60 * 6);

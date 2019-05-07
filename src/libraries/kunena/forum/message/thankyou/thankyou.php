@@ -111,7 +111,7 @@ class KunenaForumMessageThankyou extends CMSObject
 		$time  = Factory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -154,7 +154,7 @@ class KunenaForumMessageThankyou extends CMSObject
 		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -206,11 +206,11 @@ class KunenaForumMessageThankyou extends CMSObject
 
 		$db    = Factory::getDBO();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 		$db->execute();
 
 		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

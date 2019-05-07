@@ -109,7 +109,7 @@ class KunenaVersion
 	{
 		$db    = Factory::getDBO();
 		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		if ($db->loadResult())
 		{

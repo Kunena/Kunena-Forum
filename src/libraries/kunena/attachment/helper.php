@@ -140,7 +140,7 @@ abstract class KunenaAttachmentHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -223,7 +223,7 @@ abstract class KunenaAttachmentHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -579,7 +579,7 @@ abstract class KunenaAttachmentHelper
 		$ids = implode(',', array_keys($results));
 		unset($results);
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -703,7 +703,7 @@ abstract class KunenaAttachmentHelper
 		$query
 			->select('COUNT(*)')
 			->from($db->quoteName('#__kunena_attachments'));
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

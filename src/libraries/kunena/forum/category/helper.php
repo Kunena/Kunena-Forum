@@ -78,7 +78,7 @@ abstract class KunenaForumCategoryHelper
 
 		$db    = Factory::getDBO();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -176,7 +176,7 @@ abstract class KunenaForumCategoryHelper
 		$user  = KunenaUserHelper::get($user);
 		$db    = Factory::getDBO();
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -334,7 +334,7 @@ abstract class KunenaForumCategoryHelper
 
 		// Get total count
 		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -428,7 +428,7 @@ abstract class KunenaForumCategoryHelper
 				AND (uc.allreadtime IS NULL OR t.last_post_time>uc.allreadtime)
 				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -865,7 +865,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_topic_id=r.last_topic_id,
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -889,7 +889,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_id=0,
 				c.last_post_time=0
 			WHERE tt.id IS NULL";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -936,7 +936,7 @@ abstract class KunenaForumCategoryHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -970,7 +970,7 @@ abstract class KunenaForumCategoryHelper
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')->from($db->quoteName('#__kunena_categories'))->where($db->quoteName('alias') . " = " . $db->quote($alias));
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

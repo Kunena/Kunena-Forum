@@ -99,7 +99,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = "SELECT *
 				FROM #__kunena_thankyou
 				WHERE postid IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -155,7 +155,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$query .= " WHERE " . implode(" AND ", $where);
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -307,7 +307,7 @@ abstract class KunenaForumMessageThankyouHelper
 			LEFT JOIN #__kunena_thankyou AS t ON t.targetuserid = u.userid
 			SET u.thankyou = 0
 			WHERE t.targetuserid IS NULL";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -342,7 +342,7 @@ abstract class KunenaForumMessageThankyouHelper
 			FROM #__kunena_thankyou
 			GROUP BY targetuserid
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

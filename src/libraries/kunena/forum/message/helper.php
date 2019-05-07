@@ -97,7 +97,7 @@ abstract class KunenaForumMessageHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -607,7 +607,7 @@ abstract class KunenaForumMessageHelper
 		$query = "UPDATE #__kunena_messages AS m
 			INNER JOIN #__kunena_topics AS tt ON tt.id=m.thread
 			SET m.catid=tt.category_id {$where}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -644,7 +644,7 @@ abstract class KunenaForumMessageHelper
 		FROM #__kunena_messages AS m
 		INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 		WHERE m.thread IN ({$idlist}) AND m.hold=0";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

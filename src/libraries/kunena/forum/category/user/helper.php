@@ -138,7 +138,7 @@ abstract class KunenaForumCategoryUserHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_categories WHERE user_id={$db->quote($user->userid)} AND category_id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -207,7 +207,7 @@ abstract class KunenaForumCategoryUserHelper
 				->set("allreadtime={$db->quote($time)}")
 				->where("user_id={$db->quote($user->userid)}")
 				->where("category_id IN ({$idlist})");
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$db->execute();
 		}
 
@@ -218,7 +218,7 @@ abstract class KunenaForumCategoryUserHelper
 				->insert('#__kunena_user_categories')
 				->columns('user_id, category_id, allreadtime')
 				->values($insertList);
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 			$db->execute();
 		}
 	}

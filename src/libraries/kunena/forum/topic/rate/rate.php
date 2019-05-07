@@ -190,7 +190,7 @@ class KunenaForumTopicRate extends CMSObject
 			->set("userid={$this->_db->quote($user->userid)}")
 			->set("rate={$this->_db->quote($this->stars)}")
 			->set("time={$this->_db->quote($time->toSQL())}");
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{

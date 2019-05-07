@@ -103,7 +103,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 			}
 
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			$row = $this->_db->loadAssoc();
 
@@ -342,26 +342,26 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				->values(implode(',', $values));
 
 			// Set the query and execute the insert.
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			if (!$this->_db->execute())
 			{
 				return false;
 			}
-			
-			
+
+
 			// Update the primary key if it exists.
 			$id = $this->_db->insertid();
-			
+
 			$this->_db->transactionCommit();
 		}
-		catch (Exception $e) 
+		catch (Exception $e)
 		{
 			// catch any database errors.
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 
@@ -434,7 +434,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 			}
 
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			$this->_db->execute();
 
@@ -446,7 +446,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);
-			
+
 			return false;
 		}
 

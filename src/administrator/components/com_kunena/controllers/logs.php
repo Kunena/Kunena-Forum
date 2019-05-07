@@ -85,7 +85,7 @@ class KunenaAdminControllerLogs extends KunenaController
 			->delete('#__kunena_logs')
 			->where('time < ' . $timestamp->toUnix());
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

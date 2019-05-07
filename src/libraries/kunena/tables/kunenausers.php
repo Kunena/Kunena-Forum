@@ -497,7 +497,7 @@ class TableKunenaUsers extends KunenaTable
 			FROM #__users AS u
 			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
 			WHERE u.id = {$this->$k}";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{

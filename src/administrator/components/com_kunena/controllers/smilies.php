@@ -134,7 +134,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			$query  = $db->getQuery(true)
 				->insert("{$db->qn('#__kunena_smileys')}")->set("code={$db->quote($smiley_code)}, location={$db->quote($smiley_location)}, emoticonbar={$db->quote($smiley_emoticonbar)}");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -153,7 +153,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 				->update("{$db->qn('#__kunena_smileys')}")->set("code={$db->quote($smiley_code)}, location={$db->quote($smiley_location)}, emoticonbar={$db->quote($smiley_emoticonbar)}")
 				->where("id = {$db->quote($smileyid)}");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -241,7 +241,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 			$query  = $db->getQuery(true)
 				->delete()->from("{$db->qn('#__kunena_smileys')}")->where("id IN ($cids)");
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{

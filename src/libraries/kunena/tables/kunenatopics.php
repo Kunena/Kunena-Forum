@@ -207,7 +207,7 @@ class TableKunenaTopics extends KunenaTable
 		$query->select('*');
 		$query->from($this->_db->quoteName('#__kunena_topics'));
 		$query->where($this->_db->quoteName('id') . '=' . $this->$k);
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{

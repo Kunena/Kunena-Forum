@@ -108,7 +108,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 
 		if ($ordering == 'name' || (!empty($search) && stripos($search, 'id:') !== 0))
 		{
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 			$result = $this->_db->loadObjectList();
 			$this->translate($result);
 
@@ -286,7 +286,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 			$query->where('a.extension_id = ' . (int) substr($search, 3));
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		return $query;
 	}

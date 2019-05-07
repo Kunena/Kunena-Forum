@@ -112,7 +112,7 @@ class KunenaAccessCommunity
 			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
 				FROM #__community_groups
 				ORDER BY categoryid, name";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -183,7 +183,7 @@ class KunenaAccessCommunity
 			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
 				FROM #__community_groups_category
 				ORDER BY parent, name";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -224,7 +224,7 @@ class KunenaAccessCommunity
 			FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote(COMMUNITY_GROUP_ADMIN)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -263,7 +263,7 @@ class KunenaAccessCommunity
 			$query = "SELECT c.id FROM #__kunena_categories AS c
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -307,7 +307,7 @@ class KunenaAccessCommunity
 		$query = "SELECT c.id FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

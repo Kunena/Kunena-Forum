@@ -269,7 +269,7 @@ class KunenaAdminControllerTools extends KunenaController
 				->leftJoin("{$db->qn('#__users')} AS b ON a.userid=b.id")
 				->where('b.username IS NULL');
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -325,7 +325,7 @@ class KunenaAdminControllerTools extends KunenaController
 				->set("m.name = u.{$queryName}")
 				->where('m.userid = u.id');
 
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -408,7 +408,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('MAX(thread)')->from('#__kunena_messages');
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			// Topic count
 			$state->maxId = (int) $db->loadResult();
@@ -763,7 +763,7 @@ class KunenaAdminControllerTools extends KunenaController
 				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
 				->where("subject LIKE {$db->quote($re_string.'%')}");
 			
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -830,7 +830,7 @@ class KunenaAdminControllerTools extends KunenaController
 		$query  = $db->getQuery(true)
 			->update("{$db->qn('#__kunena_messages')}")->set('ip=NULL')->where($where);
 		
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -851,7 +851,7 @@ class KunenaAdminControllerTools extends KunenaController
 		{
 			$db    = Factory::getDbo();
 			$query = "UPDATE #__kunena_users SET ip = NULL;";
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{

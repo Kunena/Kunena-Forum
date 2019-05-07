@@ -155,7 +155,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 				$query->order('a.id ' . $direction);
 		}
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		return $query;
 	}

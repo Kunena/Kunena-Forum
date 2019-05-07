@@ -139,7 +139,7 @@ abstract class KunenaForumTopicUserHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -206,7 +206,7 @@ abstract class KunenaForumTopicUserHelper
 
 		$query->select($db->quoteName($value));
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -240,7 +240,7 @@ abstract class KunenaForumTopicUserHelper
 		// Update database
 		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -306,7 +306,7 @@ abstract class KunenaForumTopicUserHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -344,7 +344,7 @@ abstract class KunenaForumTopicUserHelper
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -425,7 +425,7 @@ abstract class KunenaForumTopicUserHelper
 					WHERE m.userid>0 AND m.moved=0 {$where}
 					GROUP BY m.userid, m.thread
 				ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -445,7 +445,7 @@ abstract class KunenaForumTopicUserHelper
 			LEFT JOIN #__kunena_messages AS m ON ut.last_post_id=m.id AND m.hold=0
 			SET posts=0, last_post_id=0
 			WHERE m.id IS NULL {$where2}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -462,7 +462,7 @@ abstract class KunenaForumTopicUserHelper
 
 		// Delete entries that have default values
 		$query = "DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

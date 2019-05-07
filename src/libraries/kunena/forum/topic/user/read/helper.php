@@ -144,7 +144,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -186,7 +186,7 @@ abstract class KunenaForumTopicUserReadHelper
 		// Update database
 		$db    = Factory::getDBO();
 		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -249,7 +249,7 @@ abstract class KunenaForumTopicUserReadHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery($query);
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -287,7 +287,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db     = Factory::getDBO();
 		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -326,7 +326,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query = "UPDATE #__kunena_user_read AS ur
 			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
 			SET ur.category_id=t.category_id";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -355,7 +355,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$db        = Factory::getDBO();
 		$timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
 		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

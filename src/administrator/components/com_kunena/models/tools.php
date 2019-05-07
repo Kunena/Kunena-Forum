@@ -475,7 +475,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		// Get Joomla! frontend assigned template
 		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 
-		$db->setQuery($query);
+		$db->setQuery((string) $query);
 
 		try
 		{

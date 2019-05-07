@@ -1238,9 +1238,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		// Set Crypsis as default template when do update
 		$config = KunenaFactory::getConfig();
 
-		if ($config->template == 'blue_eagle')
+		if (version_compare(JVERSION, '4.0', '<'))
 		{
 			$config->template = 'crypsis';
+			$config->save();
+		}
+		else
+		{
+			$config->template = 'crypsisb4';
 			$config->save();
 		}
 

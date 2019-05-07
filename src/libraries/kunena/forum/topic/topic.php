@@ -1531,7 +1531,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query->where("id NOT IN ({$ids})");
 			}
 
-			$this->_db->setQuery($query);
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -1693,7 +1693,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query->where("id IN ({$ids})");
 		}
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -1706,7 +1706,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
 		$query = "SET @ktime:=0";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -1718,7 +1718,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
-		$this->_db->setQuery($query);
+		$this->_db->setQuery((string) $query);
 
 		try
 		{
@@ -1744,7 +1744,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				// Note: Do not remove poll from shadow: information could still be used to show icon etc
 
 				$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
-				$this->_db->setQuery($query);
+				$this->_db->setQuery((string) $query);
 
 				try
 				{

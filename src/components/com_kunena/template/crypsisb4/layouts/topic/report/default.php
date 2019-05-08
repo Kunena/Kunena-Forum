@@ -33,7 +33,7 @@ use Joomla\CMS\Language\Text;
 
 	<?php echo HTMLHelper::_('form.token'); ?>
 
-	<div class="well well-small">
+	<div class="card card-body">
 		<div class="control-group">
 			<label class="control-label" for="kreport-reason">
 				<?php echo Text::_('COM_KUNENA_REPORT_REASON'); ?>

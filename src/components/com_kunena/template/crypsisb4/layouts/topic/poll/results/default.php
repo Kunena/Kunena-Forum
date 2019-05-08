@@ -40,7 +40,7 @@ $this->addScript('assets/js/poll.js');
 				<td>
 					<?php echo KunenaHtmlParser::parseText($option->text); ?>
 				</td>
-				<td class="col-lg-8">
+				<td class="col-md-8">
 					<div class="progress progress-striped">
 						<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentage; ?>"
 						     aria-valuemin="0" aria-valuemax="100"

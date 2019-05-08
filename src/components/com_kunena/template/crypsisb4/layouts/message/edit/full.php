@@ -53,7 +53,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 }
 ?>
 
-<div class="kreply col-lg-12 card" id="kreply<?php echo $message->displayField('id'); ?>_form"
+<div class="kreply col-md-12 card" id="kreply<?php echo $message->displayField('id'); ?>_form"
      style="display: inline-block;">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
 	      enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
@@ -86,7 +86,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				:
 				?>
 				<div class="form-group">
-					<label class="col-lg-12 control-label">
+					<label class="col-md-12 control-label">
 						<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
 					</label>
 					<input type="text" name="authorname" class="form-control" maxlength="35"
@@ -101,7 +101,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 					<?php echo $config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 					<input type="text" id="email" name="email"
 					       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
-					       class="inputbox col-lg-12 form-control" maxlength="35" value="" required/>
+					       class="inputbox col-md-12 form-control" maxlength="35" value="" required/>
 				</div>
 			<?php endif; ?>
 
@@ -119,7 +119,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				       value="<?php echo $message->displayField('subject'); ?>"/>
 			</div>
 			<div class="form-group">
-				<label class="col-lg-12 control-label">
+				<label class="col-md-12 control-label">
 					<?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
 				<?php if ($editor == 1)
@@ -128,7 +128,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				}
 				else
 				{
-					echo '<textarea class="col-lg-12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="col-md-12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
 			</div>
 

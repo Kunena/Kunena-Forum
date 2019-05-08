@@ -38,13 +38,13 @@ use Joomla\CMS\Language\Text;
 		<div class="card-body">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-1">
+					<div class="col-md-1">
 						<ul class="list-unstyled">
 							<li class="btn-link text-center"><?php echo KunenaIcons::stats(); ?></li>
 						</ul>
 					</div>
 
-					<div class="col-lg-3">
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -65,7 +65,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-lg-3">
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
@@ -86,7 +86,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-lg-3">
+					<div class="col-md-3">
 						<ul class="list-unstyled">
 							<li>
 								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:

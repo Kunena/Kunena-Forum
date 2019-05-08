@@ -24,7 +24,7 @@ $this->addScript('assets/js/profile.js');
 	<tbody>
 	<?php if ($this->config->personal) : ?>
 		<tr>
-			<td class="col-lg-3">
+			<td class="col-md-3">
 				<label for="personaltext">
 					<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
 				</label>

@@ -40,28 +40,20 @@ echo $this->subLayout('User/Item/Summary')
 
 <div class="tabs">
 	<ul class="nav nav-tabs">
-
-		<?php foreach ($tabs as $name => $tab)
-			:
-			?>
+		<?php foreach ($tabs as $name => $tab) : ?>
 			<li class="nav-item">
 				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
 		<?php endforeach; ?>
-
 	</ul>
 	<div class="tab-content">
-
-		<?php foreach ($tabs as $name => $tab)
-			:
-			?>
+		<?php foreach ($tabs as $name => $tab) : ?>
 			<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
 				<div>
 					<?php echo $tab->content; ?>
 				</div>
 			</div>
 		<?php endforeach; ?>
-
 	</div>
 </div>
 

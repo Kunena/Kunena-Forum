@@ -41,7 +41,7 @@ use Joomla\CMS\Language\Text;
 			<div class="container">
 				<div class="row">
 
-					<div class="col-lg-1">
+					<div class="col-md-1">
 						<ul class="list-unstyled">
 							<li class="btn-link">
 								<?php echo KunenaIcons::members(); ?>
@@ -49,7 +49,7 @@ use Joomla\CMS\Language\Text;
 						</ul>
 					</div>
 
-					<div class="col-lg-11">
+					<div class="col-md-11">
 						<ul class="list-unstyled">
 							<span>
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>

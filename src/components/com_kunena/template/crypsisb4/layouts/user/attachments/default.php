@@ -30,34 +30,34 @@ $attachments = $this->attachments;
 	<table class="table table-bordered table-striped table-hover">
 		<thead>
 		<tr>
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				#
 			</th>
 			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				<label>
 					<input type="checkbox" name="checkall-toggle" value="cid"
 					       title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
 				</label>
 			</th>
 			<?php endif; ?>
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_FILETYPE'); ?>
 			</th>
-			<th class="col-lg-2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
 			</th>
-			<th class="col-lg-2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_FILESIZE'); ?>
 			</th>
-			<th class="col-lg-2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
 			</th>
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
 			</th>
 			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_DELETE'); ?>
 			</th>
 			<?php endif; ?>

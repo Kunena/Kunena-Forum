@@ -19,6 +19,6 @@ if (!$modules)
 
 ?>
 <!-- Module position: <?php echo $this->position; ?> -->
-<div class="well well-small">
+<div class="card card-body">
 	<?php echo $modules; ?>
 </div>

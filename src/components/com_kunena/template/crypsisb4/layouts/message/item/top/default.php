@@ -120,7 +120,7 @@ else
 
 				:
 				?>
-				<li class="col-lg-3 text-center">
+				<li class="col-md-3 text-center">
 					<div class="thumbnail">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 						<?php echo $attachment->getLayout()->render('textlink'); ?>

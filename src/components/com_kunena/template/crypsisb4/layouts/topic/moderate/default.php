@@ -141,7 +141,7 @@ $labels          = $this->ktemplate->params->get('labels');
 								<div class="clearfix"></div>
 							</h3>
 
-							<div class="well well-small khistory">
+							<div class="card card-body khistory">
 								<?php echo $this->message->displayField('message'); ?>
 							</div>
 

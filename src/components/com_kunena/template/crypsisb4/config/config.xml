@@ -103,7 +103,7 @@
         <field name="avatarType" type="list" default="img-rounded" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE"
                description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
             <option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
-            <option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
+            <option value="rounded-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
             <option value="img-thumbnail">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
             <option value="none">COM_KUNENA_TEMPLATE_NONE</option>
         </field>

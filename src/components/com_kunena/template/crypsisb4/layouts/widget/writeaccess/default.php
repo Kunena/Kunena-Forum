@@ -29,7 +29,7 @@ $config = KunenaFactory::getConfig();
 
 	<div class="row-fluid " id="writeaccess">
 		<div class="card card-block bg-faded p-2">
-			<ul class="unstyled col-lg-6">
+			<ul class="unstyled col-md-6">
 				<li>
 					<?php
 					if ($topic->getCategory()->isAuthorised('topic.create'))

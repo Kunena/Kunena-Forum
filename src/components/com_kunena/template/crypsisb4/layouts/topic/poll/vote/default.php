@@ -27,7 +27,7 @@ $this->addScript('assets/js/poll.js');
 			<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
-			<div class="well">
+			<div class="card card-body">
 				<ul class="unstyled">
 
 					<?php foreach ($this->poll->getOptions() as $key => $poll_option)

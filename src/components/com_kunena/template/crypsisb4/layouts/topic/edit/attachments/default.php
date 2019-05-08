@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 	<?php foreach ($this->attachments as $attachment)
 		:
 		?>
-		<li class="col-lg-6">
+		<li class="col-md-6">
 			<div class="thumbnail">
 				<input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
 				       value="<?php echo $attachment->getFilename() ?>"/>

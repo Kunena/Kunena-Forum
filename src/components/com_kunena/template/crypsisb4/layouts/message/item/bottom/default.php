@@ -101,7 +101,7 @@ else
 			<h5> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 			<ul class="thumbnails">
 				<?php foreach ($attachments as $attachment) : ?>
-					<li class="col-lg-3 center">
+					<li class="col-md-3 center">
 						<div class="thumbnail">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 							<?php echo $attachment->getLayout()->render('textlink'); ?>

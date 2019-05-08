@@ -155,16 +155,15 @@ if (!empty($this->spacing)) : ?>
 		</td>
 
 		<td class="hidden-xs-down">
-			<div class="container-fluid">
-				<div class="row-fluid">
-					<?php if ($config->avataroncat) : ?>
-						<div class="col-lg-3">
-							<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
-						</div>
-						<div class="col-lg-9">
-					<?php else : ?>
-						<div class="col-lg-12">
-					<?php endif; ?>
+			<div class="row">
+				<?php if ($config->avataroncat) : ?>
+					<div class="col-xs-6 col-md-3">
+						<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
+					</div>
+					<div class="col-xs-6 col-md-9">
+				<?php else : ?>
+					<div class="col-md-12">
+				<?php endif; ?>
 						<span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
 							<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 						</span>

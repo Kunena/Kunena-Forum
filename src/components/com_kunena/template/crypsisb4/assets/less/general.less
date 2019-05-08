@@ -547,10 +547,6 @@ div.navbar > div > div.visible-sm.hidden-md > ul {
   margin: 3px 0;
 }
 
-table .well {
-  margin-bottom: 0;
-}
-
 .filter-state {
   font-size: 150%;
 }
@@ -699,15 +695,6 @@ div.kmsg > li {
   }
 }
 
-#credits .dl-horizontal dt {
-  text-align: left !important;
-  margin-left: 10px;
-}
-
-#credits .dl-horizontal dd {
-  margin-left: 160px !important;
-}
-
 #credits dd,
 #credits dt {
   padding: 5px 0;
@@ -717,8 +704,8 @@ div.kmsg > li {
   font-weight: normal !important;
 }
 
-#credits .dl-horizontal dt:nth-child(odd),
-#credits .dl-horizontal dd:nth-child(even) {
+#credits .row dt:nth-child(odd),
+#credits .row dd:nth-child(even) {
   background-color: #f9f9f9;
 }
 
@@ -821,11 +808,6 @@ input[type=radio]:checked + label {
 
 input[type=radio] {
   display: none;
-}
-
-div#kwho .well,
-div#kstats .well {
-  padding-left: 25px;
 }
 
 #editavatar input[type=radio],
@@ -951,6 +933,10 @@ div.pagination a.disabled:hover {
   line-height: 22px;
 }
 
+.kunena-search .search {
+  padding: 0;
+}
+
 .search input {
   position: absolute;
   width: 0;
@@ -1067,11 +1053,6 @@ ul.inline > li > a > I {
   min-height: 180px;
   border: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-#modified_reason {
-  margin-top: -60px;
-  padding-bottom: 50px;
 }
 
 #kbbcode-poll-options .polloption {
@@ -1239,11 +1220,6 @@ div.moderators {
   width: auto !important;
 }
 
-#modified_reason {
-  margin-top: -60px;
-  padding-bottom: 50px;
-}
-
 .kmsgimage {
   display: inline-block;
 }
@@ -1292,7 +1268,7 @@ div.moderators {
   max-width: 250px;
 }
 
-#whoisonlinelist .img-circle {
+#whoisonlinelist .rounded-circle {
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -1340,4 +1316,10 @@ form:not(.form-no-margin) .control-group .controls {
     width: auto;
   }
   width: 100%;
+}
+
+#kcat-avatar {
+  .fa-3x {
+    font-size: 2em;
+  }
 }

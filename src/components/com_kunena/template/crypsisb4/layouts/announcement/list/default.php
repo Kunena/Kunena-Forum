@@ -23,12 +23,12 @@ HTMLHelper::_('behavior.core');
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="row">
-		<div class="col-lg-7">
+		<div class="col-md-7">
 			<h2>
 				<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 			</h2>
 		</div>
-		<div class="col-lg-5">
+		<div class="col-md-5">
 			<?php if (!empty($options))
 				:
 				?>
@@ -52,38 +52,38 @@ HTMLHelper::_('behavior.core');
 	<table class="table table-striped table-bordered">
 		<thead>
 		<tr>
-			<th class="col-lg-1">
+			<th class="col-md-1">
 				<?php echo Text::_('COM_KUNENA_ANN_DATE'); ?>
 			</th>
-			<th class="col-lg-5">
+			<th class="col-md-5">
 				<?php echo Text::_('COM_KUNENA_ANN_TITLE'); ?>
 			</th>
 
 			<?php if ($options)
 				:
 				?>
-				<th class="col-lg-1 center">
+				<th class="col-md-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 				</th>
-				<th class="col-lg-1 center">
+				<th class="col-md-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_EDIT'); ?>
 				</th>
-				<th class="col-lg-1 center">
+				<th class="col-md-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
-				<th class="col-lg-1">
+				<th class="col-md-1">
 					<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 			<?php endif; ?>
 
-			<th class="col-lg-1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
 			</th>
 
 			<?php if ($options)
 				:
 				?>
-				<th class="col-lg-1 center">
+				<th class="col-md-1 center">
 					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
 				</th>
 			<?php endif; ?>

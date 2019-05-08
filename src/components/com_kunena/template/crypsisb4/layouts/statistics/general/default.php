@@ -16,9 +16,7 @@ use Joomla\CMS\Language\Text;
 	<h1>
 		<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 	</h1>
-	<?php foreach ($this->top as $top)
-		:
-		?>
+	<?php foreach ($this->top as $top) : ?>
 		<h3>
 			<?php echo $top[0]->title; ?>
 		</h3>
@@ -26,24 +24,22 @@ use Joomla\CMS\Language\Text;
 		<table class="table table-striped table-bordered">
 			<thead>
 			<tr>
-				<th class="col-lg-1 center">#</th>
-				<th class="col-lg-5"><?php echo $top[0]->titleName; ?></th>
-				<th class="col-lg-6"><?php echo $top[0]->titleCount; ?></th>
+				<th colspan="1" class="center">#</th>
+				<th colspan="5"><?php echo $top[0]->titleName; ?></th>
+				<th colspan="6"><?php echo $top[0]->titleCount; ?></th>
 			</tr>
 			</thead>
 			<tbody>
 
-			<?php foreach ($top as $id => $item)
-				:
-				?>
+			<?php foreach ($top as $id => $item) : ?>
 				<tr>
-					<td class="center">
+					<td class="center" colspan="1">
 						<?php echo $id + 1; ?>
 					</td>
-					<td>
+					<td colspan="5">
 						<?php echo $item->link; ?>
 					</td>
-					<td>
+					<td colspan="6">
 						<div class="progress">
 							<div class="progress-bar" role="progressbar"
 							     style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
@@ -56,14 +52,13 @@ use Joomla\CMS\Language\Text;
 		</table>
 	<?php endforeach; ?>
 	<?php
-	if ($this->config->showgenstats)
-		:
-		?>
-		<h3>
+	if ($this->config->showgenstats) : ?>
+	<div class="card">
+		<h3 class="card-header">
 			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 		</h3>
 
-		<div class="well well-small">
+		<div class="card-body">
 			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
 			<b>
 
@@ -110,6 +105,7 @@ use Joomla\CMS\Language\Text;
 			<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
 			<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
 		</div>
+	</div>
 	<?php endif; ?>
 
 </div>

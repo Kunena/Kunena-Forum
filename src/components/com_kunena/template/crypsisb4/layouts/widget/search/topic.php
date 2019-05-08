@@ -29,7 +29,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group">
 			<label for="example-search-input"></label>
-			<input name="searchword" class="form-control" id="mod-search-searchword88" type="search" maxlength="64"
+			<input name="searchword" class="form-control" id="mod-search-searchword" type="search" maxlength="64"
 			       placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
 			<span class="input-group-append">
 				<button class="btn btn-light border" type="submit">

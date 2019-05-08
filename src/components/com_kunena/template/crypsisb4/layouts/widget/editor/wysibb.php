@@ -332,7 +332,7 @@ if (!empty($codeTypes)) : ?>
 						<br>
 						<label class="kpoll-term-lbl"
 						       for="kpoll-time-to-live"><?php echo Text::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-						<div id="datepoll-container" class="col-lg-5">
+						<div id="datepoll-container" class="col-md-5">
 							<div class="input-append date">
 								<input type="text" class="form-control" name="poll_time_to_live"
 								       data-date-format="mm/dd/yyyy"

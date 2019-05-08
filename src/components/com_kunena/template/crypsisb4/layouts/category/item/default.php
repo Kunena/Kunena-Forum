@@ -32,7 +32,7 @@ $this->addStyleSheet('assets/css/rating.css');
 
 	<?php if (!empty($this->topics)) : ?>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-md-12">
 				<h2 class="float-right">
 					<?php echo $this->subLayout('Widget/Search')
 						->set('catid', $this->category->id)

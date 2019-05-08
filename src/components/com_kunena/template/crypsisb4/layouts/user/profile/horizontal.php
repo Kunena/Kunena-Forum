@@ -32,7 +32,7 @@ if ($show)
 }
 ?>
 
-<div class="col-lg-2">
+<div class="col-md-2">
 	<ul class="unstyled center profilebox">
 		<li>
 			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
@@ -73,7 +73,7 @@ if ($show)
 		<?php endif; ?>
 	</ul>
 </div>
-<div class="col-lg-2">
+<div class="col-md-2">
 	<br>
 	<ul class="profilebox center">
 		<?php if (!empty($rankTitle))
@@ -101,7 +101,7 @@ if ($show)
 		<?php endif; ?>
 	</ul>
 </div>
-<div class="col-lg-2">
+<div class="col-md-2">
 	<br>
 	<?php if ($user->posts >= 1)
 		:
@@ -143,7 +143,7 @@ if ($show)
 		</li>
 	<?php endif; ?>
 </div>
-<div class="col-lg-3">
+<div class="col-md-3">
 	<br>
 	<li>
 		<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>

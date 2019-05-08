@@ -101,7 +101,7 @@ echo $this->subLayout('Widget/Datepicker');
 				<?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
 			</label>
 			<div class="controls" id="ann-publish">
-				<?php echo $this->displayInput('published', 'class="form-control col-lg-2"'); ?>
+				<?php echo $this->displayInput('published', 'class="form-control col-md-2"'); ?>
 			</div>
 		</div>
 

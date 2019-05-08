@@ -21,12 +21,12 @@ use Joomla\CMS\Language\Text;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
+echo $this->subLayout('Widget/Datepicker');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
-echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/search.js');
 
 ?>
@@ -55,20 +55,20 @@ $this->addScript('assets/js/search.js');
 	</h1>
 
 	<div class="" id="search">
-		<div class="well">
+		<div class="card card-body">
 			<div class="row">
-				<fieldset class="col-lg-6">
+				<fieldset class="col-md-6">
 					<legend>
 						<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
 					</legend>
-					<div class="col-lg-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<input type="text" name="query" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
 							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
 						</div>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<?php $this->displayModeList('mode'); ?>
 						</div>
@@ -78,7 +78,7 @@ $this->addScript('assets/js/search.js');
 				<?php if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
 					:
 					?>
-					<fieldset class="col-lg-6">
+					<fieldset class="col-md-6">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
 						</legend>
@@ -110,9 +110,9 @@ $this->addScript('assets/js/search.js');
 		</h2>
 
 		<div class="" id="search-options">
-			<div class="well">
+			<div class="card card-body">
 				<div class="row">
-					<fieldset class="col-lg-4">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
@@ -122,7 +122,7 @@ $this->addScript('assets/js/search.js');
 						</div>
 					</fieldset>
 
-					<fieldset class="col-lg-4">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
@@ -132,17 +132,14 @@ $this->addScript('assets/js/search.js');
 						</div>
 					</fieldset>
 
-					<fieldset class="ool-md-4">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>
-						<div class="col-lg-6">
-							<div class="form-group" id="searchatdate">
+						<div class="control-group">
+							<div class="controls" id="searchatdate">
 								<div class="input-group date">
-									<input class="form-control" type="text" name="searchatdate"
-									       data-date-format="mm/dd/yyyy"
-									       value="">
-									<span class="input-group-addon"><?php echo KunenaIcons::calendar(); ?></span>
+									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'searchatdate'); ?>
 								</div>
 							</div>
 						</div>
@@ -150,16 +147,16 @@ $this->addScript('assets/js/search.js');
 				</div>
 
 				<div class="row">
-					<div class="col-lg-6">
+					<div class="col-md-6">
 						<fieldset class="form-group">
 							<legend>
 								<?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
-							<div class="col-lg-6">
+							<div class="col-md-6">
 								<input type="text" name="limitstart" class="form-control"
 								       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-md-6">
 								<?php $this->displayLimitlist('limit'); ?>
 							</div>
 						</fieldset>
@@ -207,7 +204,7 @@ $this->addScript('assets/js/search.js');
 						<?php endif; ?>
 					</div>
 
-					<fieldset class="col-lg-6">
+					<fieldset class="col-md-6">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
 						</legend>

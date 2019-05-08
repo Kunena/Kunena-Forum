@@ -103,10 +103,10 @@ foreach ($this->sections as $section) :
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>"
 						    id="category<?php echo $category->id; ?>">
-							<td colspan="1">
+							<td colspan="1" id="kcat-icon">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
 							</td>
-							<td colspan="7">
+							<td colspan="6">
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
@@ -216,25 +216,24 @@ foreach ($this->sections as $section) :
 								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 								?>
 
-								<td colspan="4" class="hidden-xs-down">
-									<div class="container-fluid">
-										<div class="row-fluid">
-											<?php if ($avatar) : ?>
-											<div class="col-lg-3">
+								<td colspan="5" class="hidden-xs-down">
+									<div class="row">
+										<?php if ($avatar) : ?>
+											<div class="col-xs-6 col-md-3" id="kcat-avatar">
 												<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
 											</div>
-											<div class="col-lg-9">
-												<?php else : ?>
-												<div class="col-lg-12">
-													<?php endif; ?>
-													<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
-													<br>
-													<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
-													<br>
-													<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
-												</div>
+											<div class="col-xs-6 col-md-9" id="kcat-last">
+										<?php else : ?>
+											<div class="col-md-12" id="kcat-last">
+										<?php endif; ?>
+												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+												<br>
+												<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+												<br>
+												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
 										</div>
+									</div>
 								</td>
 							<?php else : ?>
 								<td>

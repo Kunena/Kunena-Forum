@@ -24,7 +24,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 
 ?>
 <div id="kunena_search_results" class="row">
-	<div class="col-lg-2 center">
+	<div class="col-md-2 center">
 		<ul class="unstyled center profilebox">
 			<li>
 				<strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong>
@@ -33,7 +33,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		</ul>
 	</div>
 
-	<div class="col-lg-10">
+	<div class="col-md-10">
 		<small class="text-muted float-right hidden-phone"
 		       style="margin-top:-5px;"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
 				:

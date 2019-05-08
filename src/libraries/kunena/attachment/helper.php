@@ -209,7 +209,12 @@ abstract class KunenaAttachmentHelper
 		{
 			$id = intval($id);
 
-			if (!$id || isset(self::$_messages [$id]))
+			if (!empty(self::$_messages[$id]))
+			{
+				unset($ids[$i]);
+			}
+
+			if (!$id)
 			{
 				unset($ids[$i]);
 			}
@@ -301,8 +306,6 @@ abstract class KunenaAttachmentHelper
 			{
 				foreach (self::$_messages [$id] as $instance)
 				{
-					// @var KunenaAttachment $instance
-
 					if ($instance->isAuthorised($authorise))
 					{
 						$list [$instance->id] = $instance;

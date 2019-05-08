@@ -101,6 +101,84 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected $shortname;
 
 	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $folder;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $userid;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $mesid;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $protected;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $hash;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $size;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $filetype;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $filename;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $filename_real;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $comment;
+
+	/**
+	 * @var boolean
+	 * @since Kunena
+	 */
+	public $inline;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $typeAlias;
+
+	/**
+	 * @var string
+	 * @since Kunena
+	 */
+	public $caption;
+
+	/**
 	 * @param   mixed $identifier identifier
 	 * @param   bool  $reload     reload
 	 *
@@ -759,7 +837,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Hash, size and MIME are set during saving, so let's deal with all other variables.
 		$this->userid    = is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
 		$this->folder    = is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
-		$this->protected = is_null($this->protected) ? (bool) KunenaConfig::getInstance()->attachment_protection : $this->protected;
 
 		if (!$this->filename_real)
 		{

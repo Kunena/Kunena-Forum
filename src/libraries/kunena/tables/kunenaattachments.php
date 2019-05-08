@@ -113,7 +113,7 @@ class TableKunenaAttachments extends KunenaTable
 		$user    = KunenaUserHelper::get($this->userid);
 		$message = KunenaForumMessageHelper::get($this->mesid);
 
-		if ($this->userid != 0 && !$user->exists())
+		if ($user->userid != 0 && !$user->exists())
 		{
 			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_USER_INVALID', (int) $user->userid));
 		}

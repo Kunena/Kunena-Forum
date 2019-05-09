@@ -139,7 +139,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 							if (isset($this->actions['move']))
 								:
 								$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-								echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+								echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
 							<input type="submit" name="kcheckgo" class="btn"
 							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>

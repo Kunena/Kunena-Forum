@@ -69,12 +69,14 @@ $list = array();
 			</div>
 		<?php endif ?>
 	</div>
-<?php if ($this->config->reportmsg && $this->me->exists()) :
-	echo KunenaLayout::factory('Widget/Button')
+<?php if ($this->config->reportmsg && $this->me->exists()) : ?>
+	<div class="report pb-5">
+	    <?php echo KunenaLayout::factory('Widget/Button')
 		->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
 		                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-		                      'modal' => 'modal', 'pullright' => 'pullright', ));
-	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
+		                      'modal' => 'modal', 'pullright' => 'pullright', ));?>
+	</div>
+	<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
 		     aria-hidden="true" data-backdrop="false" style="display: none;">
 			<div class="modal-dialog" role="document">
@@ -86,12 +88,14 @@ $list = array();
 				</div>
 			</div>
 		</div>
+		<div class="clearfix"></div>
+
 	<?php endif; ?>
 <?php endif; ?>
 <?php if (!empty($attachments)) : ?>
-	<div class="kattach">
-		<h5> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-		<ul class="thumbnails">
+	<div class="cart">
+		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<ul class="card-body" style="list-style:none;">
 			<?php foreach ($attachments as $attachment) : ?>
 				<?php if ($attachment->isAudio()) :
 					echo $attachment->getLayout()->render('audio'); ?>

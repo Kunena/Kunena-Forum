@@ -8,10 +8,10 @@
  **/
 
 jQuery(document).ready(function ($) {
-	let pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 
 	if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && $('#poll_exist_edit').length === 0) {
-		let catid = $('#kcategory_poll').val();
+		var catid = $('#kcategory_poll').val();
 
 		if (pollcategoriesid[catid] !== undefined) {
 			$('.pollbutton').show();

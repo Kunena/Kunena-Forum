@@ -227,7 +227,11 @@ abstract class KunenaAttachmentHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
+		$query  = $db->getQuery(true);
+		$query->clear()
+			->select('*')
+			->from($db->quoteName('#__kunena_attachments'))
+			->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try

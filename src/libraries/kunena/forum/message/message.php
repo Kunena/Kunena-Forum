@@ -730,18 +730,21 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		// Save new attachments and update message text
 		$message = $this->message;
+		$app = Factory::getApplication();
 
 		foreach ($this->_attachments_add as $tmpid => $attachment)
 		{
 			if ($attachment->exists() && $attachment->mesid)
 			{
-				// Attachment exists and already belongs to a message => update.
-				if (!$attachment->save())
+				try
 				{
-					$this->setError($attachment->getError());
+					$attachment->save();
+				}
+				catch (\Exception $e)
+				{
+					$app->enqueueMessage($e->getMessage(), 'error');
 					continue;
 				}
-
 				continue;
 			}
 
@@ -749,22 +752,36 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 			if ($attachment->IsImage())
 			{
-				$exception = $attachment->tryAuthorise('createimage', null, false);
+				try
+				{
+					$attachment->tryAuthorise('createimage', null, false);
+				}
+				catch (\Exception $e)
+				{
+					$app->enqueueMessage($e->getMessage(), 'error');
+					continue;
+				}
 			}
 			else
 			{
-				$exception = $attachment->tryAuthorise('createfile', null, false);
+				try
+				{
+					$attachment->tryAuthorise('createfile', null, false);
+				}
+				catch (\Exception $e)
+				{
+					$app->enqueueMessage($e->getMessage(), 'error');
+					continue;
+				}
 			}
 
-			if ($exception)
+			try
 			{
-				$this->setError($exception->getMessage());
-				continue;
+				$attachment->save();
 			}
-
-			if (!$attachment->save())
+			catch (\Exception $e)
 			{
-				$this->setError($attachment->getError());
+				$app->enqueueMessage($e->getMessage(), 'error');
 				continue;
 			}
 

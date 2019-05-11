@@ -1,3 +1,11 @@
+2014-08-22 / v1.4.6 / theyak
+	* All code has been reformatted to make it easier to debug
+	* Fixed bug with BBCODE_VERBATIM which would not parse correctly if end tag was not lower case
+	* Remove PCRE_EXTENDED mode which would crash PHP.
+	* Cleaned up some notices
+	* Fix bug in Internal_RebuildSmileys debug statement
+	* Add ability to set maximum number of smileys
+	* Add allow_params rule to prevent params on some tags, e.g., [b], [i], [u]
 
 2010-09-17 / v1.4.5 / Phantom Inker (inker2576@yahoo.com)
 	* SECURITY FIX:  Fixed a bug that would allow arbitrary HTML

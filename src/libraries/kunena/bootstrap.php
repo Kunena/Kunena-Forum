@@ -61,4 +61,9 @@ JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/p
 JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/user.php');
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
 JLoader::register('KunenaForumTopicRate', KPATH_FRAMEWORK . '/forum/topic/rate/rate.php');
-JLoader::register('KunenaIcons', KPATH_FRAMEWORK . '/icons/icons.php');
+JLoader::register('Nbbc\BBCode', KPATH_FRAMEWORK . '/external/nbbc/src/BBCode.php');
+JLoader::register('Nbbc\BBCodeLexer', KPATH_FRAMEWORK . '/external/nbbc/src/BBCodeLexer.php');
+JLoader::register('Nbbc\BBCodeLibrary', KPATH_FRAMEWORK . '/external/nbbc/src/BBCodeLibrary.php');
+JLoader::register('Nbbc\Debugger', KPATH_FRAMEWORK . '/external/nbbc/src/Debugger.php');
+JLoader::register('Nbbc\EmailAddressValidator', KPATH_FRAMEWORK . '/external/nbbc/src/EmailAddressValidator.php');
+JLoader::register('Nbbc\Profiler', KPATH_FRAMEWORK . '/external/nbbc/src/Profiler.php');

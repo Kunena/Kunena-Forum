@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 
-require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
+require_once KPATH_FRAMEWORK . '/external/nbbc/src/bbcode.php';
 jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:
@@ -28,9 +28,9 @@ jimport('joomla.utilities.string');
 /**
  * Class KunenaBbcode
  *
- * @since   2.0
+ * @since   6.0
  */
-class KunenaBbcode extends NBBC_BBCode
+class KunenaBbcode extends Nbbc\BBCode
 {
 	/**
 	 * @var integer
@@ -57,7 +57,7 @@ class KunenaBbcode extends NBBC_BBCode
 	public function __construct($relative = true)
 	{
 		parent::__construct();
-		$this->defaults  = new KunenaBbcodeLibrary;
+		$this->defaults  = new Nbbc\BBCodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
 		$this->smileys = $this->defaults->default_smileys;
@@ -509,7 +509,7 @@ class KunenaBbcode extends NBBC_BBCode
  * Class KunenaBbcodeLibrary
  * @since Kunena
  */
-class KunenaBbcodeLibrary extends BBCodeLibrary
+class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 {
 	/**
 	 * The bearer token to get tweet data
@@ -2456,9 +2456,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			$attachments = &$bbcode->parent->attachments;
 		}
 
-		/** @var KunenaAttachment $att */
-		/** @var KunenaAttachment $attachment */
-
 		$attachment = null;
 
 		if (!empty($default))
@@ -2623,7 +2620,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		// Legacy attachments support.
 		if (isset($bbcode->parent->attachments))
 		{
-			/** @var array|KunenaAttachment[] $attachments */
 			$attachments = &$bbcode->parent->attachments;
 
 			foreach ($attachments as $id => $attachment)

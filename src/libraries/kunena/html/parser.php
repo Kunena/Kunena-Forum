@@ -42,14 +42,16 @@ abstract class KunenaHtmlParser
 	{
 		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
-		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
+		$query = $db->getQuery(true);
+		$query->select(array($db->quoteName('code'), $db->quoteName($column, 'file')) )
+			->from($db->quoteName('#__kunena_smileys'));
 
 		if ($emoticonbar == true)
 		{
-			$sql .= " WHERE emoticonbar='1'";
+			$query .= " WHERE emoticonbar='1'";
 		}
 
-		$db->setQuery($sql);
+		$db->setQuery($query);
 
 		try
 		{
@@ -182,7 +184,9 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->context = $context;
 		$bbcode->SetPlainMode(false);
-		$txt = $bbcode->Parse($txt);
+
+		// Todo fix this
+		//$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt, $target);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -262,7 +266,8 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
-		$txt = $bbcode->Parse($txt);
+		// Todo fix this
+		//$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt, $target);
 		$txt = strip_tags($txt);
 

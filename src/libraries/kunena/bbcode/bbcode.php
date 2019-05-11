@@ -18,6 +18,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Nbbc\BBCode;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/src/bbcode.php';
 jimport('joomla.utilities.string');
@@ -600,7 +601,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'font' => array(
-			'mode'     => BBCODE_MODE_LIBRARY,
+			'mode'     => BBCode::BBCODE_MODE_LIBRARY,
 			'allow'    => array('_default' => '/^[a-zA-Z0-9._ -]+$/'),
 			'method'   => 'DoFont',
 			'class'    => 'inline',
@@ -608,7 +609,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'color' => array(
-			'mode'     => BBCODE_MODE_ENHANCED,
+			'mode'     => BBCode::BBCODE_MODE_ENHANCED,
 			'allow'    => array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
 			'template' => '<span style="color:{$_default/tw};">{$_content/v}</span>',
 			'class'    => 'inline',
@@ -616,7 +617,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'size' => array(
-			'mode'     => BBCODE_MODE_LIBRARY,
+			'mode'     => BBCode::BBCODE_MODE_LIBRARY,
 			'method'   => 'DoSize',
 			'allow'    => array('_default' => '/^[0-9.]+(px|em|pt|%)?$/D'),
 			'class'    => 'inline',
@@ -638,118 +639,118 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'spoiler' => array(
-			'mode'        => BBCODE_MODE_LIBRARY,
+			'mode'        => BBCode::BBCODE_MODE_LIBRARY,
 			'method'      => 'DoSpoiler',
 			'class'       => 'block',
 			'allow_in'    => array('listitem', 'block', 'columns'),
-			'content'     => BBCODE_REQUIRED,
+			'content'     => BBCode::BBCODE_REQUIRED,
 			'plain_start' => "\nSpoiler:\n<i>",
 			'plain_end'   => "</i>",
 		),
 
 		'hide' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoHide',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'plain_content' => array(),
 		),
 
 		'confidential' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoConfidential',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'plain_content' => array(),
 		),
 
 		'map' => array(
-			'mode'     => BBCODE_MODE_LIBRARY,
+			'mode'     => BBCode::BBCODE_MODE_LIBRARY,
 			'method'   => 'DoMap',
 			'class'    => 'block',
 			'allow'    => array('type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/'),
 			'allow_in' => array('listitem', 'block', 'columns'),
-			'content'  => BBCODE_VERBATIM,
+			'content'  => BBCode::BBCODE_VERBATIM,
 		),
 
 		'ebay' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoEbay',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "[ebay]",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'article' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoArticle',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'plain_start'   => "\n[article]\n",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'tableau' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoTableau',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "\n[tableau]\n",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'video' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoVideo',
 			'allow'         => array('type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/'),
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "[video]",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'img' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoImage',
 			'allow'         => array('size' => '/^\d*$/'),
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns', 'link'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "[image]",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'file' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoFile',
 			'allow'         => array('size' => '/^\d*$/'),
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "\n[file]\n",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'attachment' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoAttachment',
 			'allow'         => array('_default' => '/^\d*$/'),
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "\n[attachment]\n",
 			'plain_end'     => "",
 			'plain_content' => array(),
@@ -765,18 +766,18 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'acronym' => array(
-			'mode'     => BBCODE_MODE_ENHANCED,
+			'mode'     => BBCode::BBCODE_MODE_ENHANCED,
 			'template' => '<span class="bbcode_acronym" title="{$_default/e}">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 		),
 
 		'url' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoUrl',
 			'class'         => 'link',
 			'allow_in'      => array('listitem', 'block', 'columns', 'inline'),
-			'content'       => BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'plain_start'   => "<a href=\"{\$link}\" rel=\"nofollow\" target=\"_blank\">",
 			'plain_end'     => "</a>",
 			'plain_content' => array('_content', '_default'),
@@ -784,11 +785,11 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'email' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoEmail',
 			'class'         => 'link',
 			'allow_in'      => array('listitem', 'block', 'columns', 'inline'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "<a href=\"mailto:{\$link}\">",
 			'plain_end'     => "</a>",
 			'plain_content' => array('_content', '_default'),
@@ -796,12 +797,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'wiki' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => "DoWiki",
 			'class'         => 'link',
 			'allow_in'      => array('listitem', 'block', 'columns', 'inline'),
-			'end_tag'       => BBCODE_PROHIBIT,
-			'content'       => BBCODE_PROHIBIT,
+			'end_tag'       => BBCode::BBCODE_PROHIBIT,
+			'content'       => BBCode::BBCODE_PROHIBIT,
 			'plain_start'   => "<b>[",
 			'plain_end'     => "]</b>",
 			'plain_content' => array('title', '_default'),
@@ -809,12 +810,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'rule' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => "DoRule",
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'end_tag'       => BBCODE_PROHIBIT,
-			'content'       => BBCODE_PROHIBIT,
+			'end_tag'       => BBCode::BBCODE_PROHIBIT,
+			'content'       => BBCode::BBCODE_PROHIBIT,
 			'before_tag'    => "sns",
 			'after_tag'     => "sns",
 			'plain_start'   => "\n-----\n",
@@ -823,13 +824,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'br' => array(
-			'mode'          => BBCODE_MODE_SIMPLE,
+			'mode'          => BBCode::BBCODE_MODE_SIMPLE,
 			'simple_start'  => "<br />\n",
 			'simple_end'    => "",
 			'class'         => 'inline',
 			'allow_in'      => array('listitem', 'block', 'columns', 'inline', 'link'),
-			'end_tag'       => BBCODE_PROHIBIT,
-			'content'       => BBCODE_PROHIBIT,
+			'end_tag'       => BBCode::BBCODE_PROHIBIT,
+			'content'       => BBCode::BBCODE_PROHIBIT,
 			'before_tag'    => "s",
 			'after_tag'     => "s",
 			'plain_start'   => "\n",
@@ -838,13 +839,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'hr' => array(
-			'mode'          => BBCODE_MODE_SIMPLE,
+			'mode'          => BBCode::BBCODE_MODE_SIMPLE,
 			'simple_start'  => "<hr />\n",
 			'simple_end'    => "",
 			'class'         => 'inline',
 			'allow_in'      => array('listitem', 'block', 'columns', 'inline', 'link'),
-			'end_tag'       => BBCODE_PROHIBIT,
-			'content'       => BBCODE_PROHIBIT,
+			'end_tag'       => BBCode::BBCODE_PROHIBIT,
+			'content'       => BBCode::BBCODE_PROHIBIT,
 			'before_tag'    => "s",
 			'after_tag'     => "s",
 			'plain_start'   => "\n-----\n",
@@ -905,8 +906,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_end'    => "</table>\n",
 			'class'         => 'table',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'end_tag'       => BBCODE_REQUIRED,
-			'content'       => BBCODE_REQUIRED,
+			'end_tag'       => BBCode::BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'before_tag'    => "sns",
 			'after_tag'     => "sns",
 			'before_endtag' => "sns",
@@ -920,8 +921,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_end'    => "</tr>\n",
 			'class'         => 'tr',
 			'allow_in'      => array('table'),
-			'end_tag'       => BBCODE_REQUIRED,
-			'content'       => BBCODE_REQUIRED,
+			'end_tag'       => BBCode::BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'before_tag'    => "sns",
 			'after_tag'     => "sns",
 			'before_endtag' => "sns",
@@ -961,8 +962,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_end'    => "\n</td></tr></tbody></table>\n",
 			'class'         => 'columns',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'end_tag'       => BBCODE_REQUIRED,
-			'content'       => BBCODE_REQUIRED,
+			'end_tag'       => BBCode::BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'before_tag'    => "sns",
 			'after_tag'     => "sns",
 			'before_endtag' => "sns",
@@ -975,8 +976,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_start'  => "\n</td><td class=\"bbcode_column\">\n",
 			'class'         => 'nextcol',
 			'allow_in'      => array('columns'),
-			'end_tag'       => BBCODE_PROHIBIT,
-			'content'       => BBCODE_PROHIBIT,
+			'end_tag'       => BBCode::BBCODE_PROHIBIT,
+			'content'       => BBCode::BBCODE_PROHIBIT,
 			'before_tag'    => "sns",
 			'after_tag'     => "sns",
 			'before_endtag' => "sns",
@@ -986,12 +987,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'code' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoCode',
 			'allow'         => array('type' => '/^[\w]*$/'),
 			'class'         => 'code',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'before_tag'    => "sns",
 			'after_tag'     => "sn",
 			'before_endtag' => "sn",
@@ -1001,7 +1002,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'quote' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoQuote',
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'before_tag'    => "sns",
@@ -1013,7 +1014,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'list' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoList',
 			'class'         => 'list',
 			'allow_in'      => array('listitem', 'block', 'columns'),
@@ -1026,7 +1027,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'ul' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoList',
 			'default'       => array('_default' => 'disc'),
 			'class'         => 'list',
@@ -1040,7 +1041,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'ol' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoList',
 			'allow'         => array('_default' => '/^[\d\w]*$/'),
 			'default'       => array('_default' => '1'),
@@ -1059,7 +1060,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_end'    => "</li>\n",
 			'class'         => 'listitem',
 			'allow_in'      => array('list'),
-			'end_tag'       => BBCODE_OPTIONAL,
+			'end_tag'       => BBCode::BBCODE_OPTIONAL,
 			'before_tag'    => "s",
 			'after_tag'     => "s",
 			'before_endtag' => "sns",
@@ -1082,7 +1083,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		),
 
 		'terminal' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoTerminal',
 			'allow_in'      => array('listitem', 'block', 'columns'),
 			'class'         => 'code',
@@ -1091,38 +1092,38 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'after_tag'     => "sn",
 			'before_endtag' => "ns",
 			'after_endtag'  => "sns",
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "\nTerminal:\n",
 			'plain_end'     => "\n",
 		),
 
 		'tweet' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoTweet',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_REQUIRED,
+			'content'       => BBCode::BBCODE_REQUIRED,
 			'plain_content' => array(),
 		),
 
 		'soundcloud' => array(
-			'mode'          => BBCODE_MODE_LIBRARY,
+			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoSoundcloud',
 			'class'         => 'block',
 			'allow_in'      => array('listitem', 'block', 'columns'),
-			'content'       => BBCODE_VERBATIM,
+			'content'       => BBCode::BBCODE_VERBATIM,
 			'plain_start'   => "[soundcloud]",
 			'plain_end'     => "",
 			'plain_content' => array(),
 		),
 
 		'instagram' => array(
-			'mode'     => BBCODE_MODE_LIBRARY,
+			'mode'     => BBCode::BBCODE_MODE_LIBRARY,
 			'method'   => 'DoInstagram',
 			'allow_in' => array('listitem', 'block', 'columns'),
 			'class'    => 'block',
 			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
-			'content'  => BBCODE_PROHIBIT,
+			'content'  => BBCode::BBCODE_PROHIBIT,
 		),
 	);
 

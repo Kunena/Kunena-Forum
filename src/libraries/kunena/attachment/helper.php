@@ -228,11 +228,10 @@ abstract class KunenaAttachmentHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = $db->getQuery(true);
-		$query->clear()
-			->select('*')
+		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

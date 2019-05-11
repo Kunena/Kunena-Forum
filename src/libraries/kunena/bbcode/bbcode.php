@@ -1201,7 +1201,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1252,7 +1252,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	{
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
 		// Has been processed.
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			$bbcode->autolink_disable++;
 
@@ -1346,7 +1346,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1423,7 +1423,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$default = $bbcode->tag_rules [$name] ['default'] ['_default'];
 		}
 
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			if (!is_string($default) || strlen($default) == "")
 			{
@@ -1501,7 +1501,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1547,7 +1547,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1597,7 +1597,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1687,7 +1687,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1743,7 +1743,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1846,7 +1846,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoArticle($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -1990,7 +1990,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2003,7 +2003,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html = '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
+		$html = '<blockquote class="Quote UserQuote">\n' . $user . '\n<div class="QuoteText">' . $wrote . $content . '</div>\n</blockquote><blockquote>';
 
 		return $html;
 	}
@@ -2022,7 +2022,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoCode($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2090,7 +2090,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			$bbcode->autolink_disable++;
 
@@ -2152,7 +2152,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoVideo($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			$bbcode->autolink_disable++;
 
@@ -2435,7 +2435,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2593,7 +2593,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoFile($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2684,7 +2684,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2708,7 +2708,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/'))
 		{
 			// Remove attachment from the attachments list and show it if it exists.
-			/** @var array|KunenaAttachment[] $attachments */
 			$attachments = &$bbcode->parent->attachments;
 
 			foreach ($attachments as $id => $attachment)
@@ -2777,7 +2776,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -2806,7 +2805,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -3091,7 +3090,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}
@@ -3136,7 +3135,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 */
 	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCode::BBCODE_CHECK)
 		{
 			return true;
 		}

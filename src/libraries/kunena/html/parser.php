@@ -184,9 +184,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->context = $context;
 		$bbcode->SetPlainMode(false);
-
-		// Todo fix this
-		//$txt = $bbcode->Parse($txt);
+		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt, $target);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -266,8 +264,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
-		// Todo fix this
-		//$txt = $bbcode->Parse($txt);
+		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt, $target);
 		$txt = strip_tags($txt);
 

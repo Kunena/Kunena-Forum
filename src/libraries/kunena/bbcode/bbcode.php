@@ -70,9 +70,9 @@ class KunenaBbcode extends Nbbc\BBCode
 
 		$this->SetSmileyDir(JPATH_ROOT);
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
-		$this->SetDetectURLs(true);
-		$this->SetURLPattern(array($this, 'parseUrl'));
-		$this->SetURLTarget('_blank');
+		$this->SetDetectURLs(false);
+		$this->SetURLPattern(false);
+		$this->SetURLTarget(false);
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));

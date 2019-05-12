@@ -53,7 +53,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Class constructor, overridden in descendant classes.
 	 *
 	 * @param   mixed $properties   Associative array to set the initial properties of the object.
-	 *                              If not profided, default values will be used.
+	 *                              If not provided, default values will be used.
 	 *
 	 * @internal
 	 * @since Kunena

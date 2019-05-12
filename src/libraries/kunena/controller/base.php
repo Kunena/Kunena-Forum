@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 
 /**
@@ -21,7 +22,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The application object.
 	 *
-	 * @var    Joomla\CMS\Application\BaseApplication|JSite|JAdministrator
+	 * @var    Joomla\CMS\Application\BaseApplication|JSite
 	 * @since Kunena
 	 */
 	protected $app;
@@ -68,9 +69,9 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Load the application object.
 	 *
-	 * @return  Joomla\CMS\Application\BaseApplication  The application object.
-	 * @throws Exception
+	 * @return CMSApplicationInterface
 	 * @since Kunena
+	 *@throws Exception
 	 */
 	protected function loadApplication()
 	{

@@ -50,7 +50,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 *
 	 * @internal
 	 *
-	 * @param   bool $relative relative
+	 * @param   bool  $relative  relative
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -81,7 +81,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	/**
 	 * Get global instance from BBCode parser.
 	 *
-	 * @param   bool $relative relative
+	 * @param   bool  $relative  relative
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -102,7 +102,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	}
 
 	/**
-	 * @param   mixed $params params
+	 * @param   mixed  $params  params
 	 *
 	 * @return string
 	 * @since Kunena
@@ -324,7 +324,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	}
 
 	/**
-	 * @param   mixed $params params
+	 * @param   mixed  $params  params
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -346,7 +346,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	}
 
 	/**
-	 * @param   string $url url
+	 * @param   string  $url  url
 	 *
 	 * @return string
 	 *
@@ -376,7 +376,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	}
 
 	/**
-	 * @param   string $string string
+	 * @param   string  $string  string
 	 *
 	 * @return array
 	 * @since Kunena
@@ -471,9 +471,9 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @see   BBCode::IsValidURL()
 	 * Regular expression taken from https://gist.github.com/729294
 	 *
-	 * @param   string $string    string
-	 * @param   bool   $email_too email
-	 * @param   bool   $local_too local
+	 * @param   string  $string     string
+	 * @param   bool    $email_too  email
+	 * @param   bool    $local_too  local
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -1136,7 +1136,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		if (!KunenaFactory::getConfig()->disemoticons)
 		{
 			$db    = Factory::getDBO();
-			$query = "SELECT code, location FROM #__kunena_smileys";
+			$query = $db->getQuery(true);
+			$query->select(array($db->quoteName('code'), $db->quoteName('location')))
+				->from($db->quoteName('#__kunena_smileys'));
 			$db->setQuery((string) $query);
 			$smileys = $db->loadObjectList();
 
@@ -1155,7 +1157,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * Query from eBay API the JSON stream of item id given to render
 	 *
-	 * @param   int $ItemID The eBay ID of object to query
+	 * @param   int  $ItemID  The eBay ID of object to query
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1188,12 +1190,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|mixed|string
 	 * @since Kunena
@@ -1237,12 +1239,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * Format a [url] tag by producing an <a>...</a> element.
 	 * The URL only allows http, https, mailto, and ftp protocols for safety.
 	 *
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1333,12 +1335,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1399,12 +1401,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1488,12 +1490,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1534,12 +1536,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1584,12 +1586,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1674,12 +1676,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -1730,12 +1732,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1769,7 +1771,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * Render eBay layout from template
 	 *
-	 * @param   integer $ItemID id
+	 * @param   integer  $ItemID  id
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1816,7 +1818,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * Load eBay object item from cache
 	 *
-	 * @param   int $ItemID The eBay ID of object to query
+	 * @param   int  $ItemID  The eBay ID of object to query
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1833,12 +1835,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -1858,15 +1860,17 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$config = KunenaFactory::getConfig();
 		$user   = Factory::getUser();
-		$db     = Factory::getDBO();
 		$site   = Factory::getApplication('site');
 
-		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
-			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
-			FROM #__content AS a
-			LEFT JOIN #__categories AS cc ON cc.id = a.catid
-			LEFT JOIN #__users AS u ON u.id = a.created_by
-			WHERE a.id=' . $db->quote($articleid);
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select(array('a.*', $db->quoteName('u.name', 'author'), $db->quoteName('cc.title', 'category'),
+			$db->quoteName(0, 'sec_pub'), $db->quoteName(0, 'sectionid'), $db->quoteName('cc.published', 'cat_pub'),
+			$db->quoteName('cc.access', 'cat_access'),))
+			->from($db->quoteName('#__content', 'a'))
+			->leftJoin($db->quoteName('#__categories', 'cc') . 'ON cc.id = a.catid')
+			->leftJoin($db->quoteName('#__users', 'u') . 'ON u.id = a.created_by')
+			->where('a.id=' . $db->quote($articleid));
 		$db->setQuery((string) $query);
 		$article = $db->loadObject();
 
@@ -1978,12 +1982,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2009,12 +2013,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2077,12 +2081,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2139,12 +2143,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2421,12 +2425,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2534,9 +2538,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaAttachment $attachment
-	 * @param                    $bbcode
-	 * @param   bool             $displayImage
+	 * @param   KunenaAttachment  $attachment
+	 * @param                     $bbcode
+	 * @param   bool              $displayImage
 	 *
 	 * @return string
 	 * @since Kunena
@@ -2579,12 +2583,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2670,12 +2674,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2763,12 +2767,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2792,12 +2796,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -2836,7 +2840,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * Render the tweet by loading the right layout
 	 *
-	 * @param   int $tweetid The tweet id to render in layout
+	 * @param   int  $tweetid  The tweet id to render in layout
 	 *
 	 * @return string
 	 * @since Kunena
@@ -2875,7 +2879,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * Get JSON tweet data by using OAuth 2.0 authentification
 	 *
-	 * @param   int $tweetid The tweet ID to query against twitter API
+	 * @param   int  $tweetid  The tweet ID to query against twitter API
 	 *
 	 * @return string
 	 * @since Kunena
@@ -3078,12 +3082,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena
@@ -3123,12 +3127,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   mixed $bbcode  bbcode
-	 * @param   mixed $action  action
-	 * @param   mixed $name    name
-	 * @param   mixed $default default
-	 * @param   mixed $params  params
-	 * @param   mixed $content content
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
 	 * @since Kunena

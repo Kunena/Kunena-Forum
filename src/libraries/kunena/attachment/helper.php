@@ -139,8 +139,11 @@ abstract class KunenaAttachmentHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
-		$db->setQuery((string) $query);
+		$query  = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_attachments'))
+			->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+		$db->setQuery($query);
 
 		try
 		{
@@ -554,10 +557,13 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function cleanup()
 	{
-		$db = Factory::getDBO();
-
 		// Find up to 50 orphan attachments and delete them
-		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+		$db     = Factory::getDBO();
+		$query  = $db->getQuery(true);
+		$query->select('a.*')
+			->from($db->quoteName('#__kunena_attachments', 'a'))
+			->leftJoin($db->quoteName('#__kunena_messages', 'm')  . ' ON a.mesid=m.id')
+			->where($db->quoteName('m.id') . ' IS NULL');
 		$db->setQuery($query, 0, 50);
 
 		try
@@ -584,8 +590,10 @@ abstract class KunenaAttachmentHelper
 
 		$ids = implode(',', array_keys($results));
 		unset($results);
-		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
-		$db->setQuery((string) $query);
+		$query->delete()
+			->from($db->quoteName('#__kunena_attachments'))
+			->where($db->quoteName('id') . 'IN ' . ($ids));
+		$db->setQuery($query);
 
 		try
 		{
@@ -665,7 +673,10 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$db    = Factory::getDBO();
-		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
+		$query  = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_attachments'))
+			->where($db->quoteName('userid') . ' = ' . $user->userid . $filetype . $orderby);
 		$db->setQuery($query, 0, $params['limit']);
 
 		try

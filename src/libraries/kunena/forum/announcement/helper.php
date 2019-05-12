@@ -28,8 +28,8 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int  $identifier Announcement to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   int   $identifier  Announcement to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
@@ -64,12 +64,12 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get url
 	 *
-	 * @param   string $layout layout
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $layout  layout
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getUrl($layout = null, $xhtml = true)
@@ -82,7 +82,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get uri
 	 *
-	 * @param   string $layout layout
+	 * @param   string  $layout  layout
 	 *
 	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
@@ -102,13 +102,13 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Announcements
 	 *
-	 * @param   int  $start  start
-	 * @param   int  $limit  limit
-	 * @param   bool $filter filter
+	 * @param   int   $start   start
+	 * @param   int   $limit   limit
+	 * @param   bool  $filter  filter
 	 *
 	 * @return KunenaForumAnnouncement[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
@@ -169,11 +169,11 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Get Count
 	 *
-	 * @param   bool $filter filter
+	 * @param   bool  $filter  filter
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getCount($filter = true)
 	{

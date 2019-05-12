@@ -731,7 +731,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		if (!isset($this->_aliases))
 		{
 			$db    = Factory::getDbo();
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_aliases'))
 				->where($db->quoteName('type') . ' = ' . $db->quote('catid') . ' AND' .
@@ -759,7 +759,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		}
 
 		$db    = Factory::getDbo();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->delete()
 			->from($db->quoteName('#__kunena_aliases'))
 			->where($db->quoteName('type') . ' = ' . $db->quote('catid') . ' AND' .
@@ -1281,7 +1281,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
 			->where('tt.category_id = ' . $db->quote($this->id) . $where)
@@ -1333,7 +1333,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
 			->where('tt.category_id = ' . $db->quote($this->id) . ' AND tt.hold!=2 ' . $where)
@@ -1493,8 +1493,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$this->setProperties($table->getProperties());
 		$this->params = $params;
 
-		$cache = Factory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		//$cache = Factory::getCache('com_kunena', 'output');
+		//$cache->clean('categories');
 
 		return $result;
 	}
@@ -1564,7 +1564,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			// If last topic/post got moved or deleted, we need to find last post
 			$db    = Factory::getDBO();
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_topics'))
 				->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id) . ' AND' .

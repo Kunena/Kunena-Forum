@@ -77,7 +77,7 @@ abstract class KunenaForumCategoryHelper
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$db    = Factory::getDBO();
-		$query = $db->getQuery();
+		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_categories'))
 			->order(array($db->quoteName('ordering'), $db->quoteName('name')));
@@ -179,7 +179,7 @@ abstract class KunenaForumCategoryHelper
 	{
 		$user  = KunenaUserHelper::get($user);
 		$db    = Factory::getDBO();
-		$query = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid) . ' AND' .

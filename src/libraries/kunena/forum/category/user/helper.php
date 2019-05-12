@@ -140,7 +140,7 @@ abstract class KunenaForumCategoryUserHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_categories'))
-			->where($db->quoteName('user_id') . ' = ' . $db->quoteName($user->userid) . ' AND category_id IN (' . $idlist . ')');
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid) . ' AND ' . $db->quoteName('category_id') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try

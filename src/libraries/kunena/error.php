@@ -138,7 +138,7 @@ abstract class KunenaError
 	/**
 	 * Return different error if it's an admin or a simple user
 	 *
-	 * @param   void $exception exception
+	 * @param   Exception|JDatabaseExceptionExecuting $exception exception
 	 *
 	 * @return void
 	 * @since 5.0

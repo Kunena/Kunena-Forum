@@ -159,9 +159,13 @@ class KunenaForumCategoryUser extends CMSObject
 		}
 
 		// Store the category data in the database
-		if (!$result = $table->store())
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->store();
+		}
+		catch (Exception $e)
+		{
+			KunenaError::displayDatabaseError($e);
 		}
 
 		// Fill up KunenaForumCategoryUser object in case we created a new category.
@@ -214,6 +218,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @return boolean    True on success
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete()
 	{
@@ -225,11 +230,13 @@ class KunenaForumCategoryUser extends CMSObject
 		// Create the table object
 		$table = $this->getTable();
 
-		$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
-
-		if (!$result)
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
+		}
+		catch (Exception $e)
+		{
+			KunenaError::displayDatabaseError($e);
 		}
 
 		$this->_exists = false;

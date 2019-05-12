@@ -39,6 +39,7 @@ use Joomla\CMS\Uri\Uri;
  * @property string $last_post_message
  * @property string $last_post_guest_name
  * @property string $params
+ * @property int    $rating
  * @since Kunena
  */
 class KunenaForumTopic extends KunenaDatabaseObject

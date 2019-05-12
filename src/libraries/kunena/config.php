@@ -1058,12 +1058,6 @@ class KunenaConfig extends CMSObject
 	public $categoryicons = 1;
 
 	/**
-	 * @var    integer  Avatar resize method; select, selection
-	 * @since  K4.0.0
-	 */
-	public $avatarresizemethod = 1;
-
-	/**
 	 * @var    integer  Avatar crop; select, boolean
 	 * @since  K4.0.0
 	 */

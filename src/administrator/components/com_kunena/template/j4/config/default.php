@@ -874,11 +874,6 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														</td>
 														<td></td>
 													</tr>
-													<tr <?php if ($this->config->avatarresizemethod != 1) : echo 'class="changed"'; endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_AVATAR_RESIZE_METHOD') ?></td>
-														<td><?php echo $this->lists ['avatarresizemethod'] ?></td>
-														<td></td>
-													</tr>
 													<tr <?php if ($this->config->avatarcrop != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_AVATAR_CROP') ?></td>
 														<td><?php echo $this->lists ['avatarcrop'] ?></td>

@@ -555,7 +555,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory $category category
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return Joomla\CMS\Uri\Uri|boolean
 	 * @since Kunena
 	 */
 	public function getPermaUri($category = null)
@@ -626,7 +626,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Method to save the KunenaForumMessage object to the database.
 	 *
-	 * @return    boolean True on success
+	 * @return    boolean|KunenaExceptionAuthorise
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -1508,12 +1508,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			// Ignore identical messages (posted within 5 minutes)
 			$duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
-			$this->_db->setQuery("SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-				WHERE m.userid={$this->_db->quote($this->userid)}
-				AND m.ip={$this->_db->quote($this->ip)}
-				AND t.message={$this->_db->quote($this->message)}
-				AND m.time>={$this->_db->quote($duplicatetimewindow)}"
-			);
+			$query  = $this->_db->getQuery();
+			$query->select('m.id')
+				->from($this->_db->quoteName('#__kunena_messages', 'm'))
+				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
+				->where('m.userid=' . $this->_db->quote($this->userid) .'
+				 AND m.ip=' . $this->_db->quote($this->ip) .'
+				 AND t.message=' . $this->_db->quote($this->message).'
+				 AND m.time>=' . $this->_db->quote($duplicatetimewindow));
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -1573,7 +1576,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1602,7 +1605,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
 	 */
 	protected function authoriseNotHold(KunenaUser $user)
@@ -1619,7 +1622,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1644,7 +1647,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1676,7 +1679,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|boolean|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1739,7 +1742,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1806,7 +1809,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|NULL
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1851,7 +1854,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|NULL
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1894,7 +1897,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */

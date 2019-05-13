@@ -245,7 +245,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 			}
 			else
 			{
-				$search = $db->Quote('%' . $db->escape($search, true) . '%');
+				$search = $db->quote('%' . $db->escape($search, true) . '%');
 				$query->where('(a.username LIKE ' . $search . ' OR a.name LIKE ' . $search . ' OR a.email LIKE ' . $search . ' OR ku.ip LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
 			}
 		}
@@ -255,7 +255,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($username))
 		{
-			$username = $db->Quote('%' . $db->escape($username, true) . '%');
+			$username = $db->quote('%' . $db->escape($username, true) . '%');
 			$query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
 		}
 
@@ -264,7 +264,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($rank))
 		{
-			$rank = $db->Quote('%' . $db->escape($rank, true) . '%');
+			$rank = $db->quote('%' . $db->escape($rank, true) . '%');
 			$query->where('ku.rank LIKE ' . $rank);
 		}
 
@@ -273,7 +273,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($email))
 		{
-			$email = $db->Quote('%' . $db->escape($email, true) . '%');
+			$email = $db->quote('%' . $db->escape($email, true) . '%');
 			$query->where('a.email LIKE ' . $email);
 		}
 
@@ -282,7 +282,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($ip))
 		{
-			$ip = $db->Quote('%' . $db->escape($ip, true) . '%');
+			$ip = $db->quote('%' . $db->escape($ip, true) . '%');
 			$query->where('ku.ip LIKE ' . $ip);
 		}
 

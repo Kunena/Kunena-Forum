@@ -338,8 +338,8 @@ abstract class KunenaForumTopicHelper
 			$whereuser[] = 'ut.subscribed=1';
 		}
 
-		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
-		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (" . implode(' OR ', $whereuser) . ')' : '');
+		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->quote($starttime)}" : '');
+		$whereuser = ($whereuser ? " AND ut.user_id={$db->quote($user->userid)} AND (" . implode(' OR ', $whereuser) . ')' : '');
 
 		if ($exclude)
 		{
@@ -403,7 +403,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
 				FROM #__kunena_topics AS tt
-				LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$db->Quote($user->userid)}
+				LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$db->quote($user->userid)}
 				WHERE {$where} ORDER BY {$orderby}";
 		}
 
@@ -750,8 +750,8 @@ abstract class KunenaForumTopicHelper
 			$db = Factory::getDBO();
 			$db->setQuery("SELECT m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread
 				FROM #__kunena_messages AS m
-				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
-				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
+				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->quote($user->userid)}
+				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
 				GROUP BY thread"
 			);
 

@@ -122,7 +122,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$code = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$code = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.code LIKE ' . $code . ')');
 		}
 
@@ -130,7 +130,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$location = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$location = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.location LIKE ' . $location . ')');
 		}
 

@@ -130,7 +130,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$title = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$title = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.rank_title LIKE ' . $title . ')');
 		}
 

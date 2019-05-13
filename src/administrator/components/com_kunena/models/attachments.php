@@ -176,7 +176,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$title = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$title = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.filename LIKE ' . $title . ' OR a.filename_real LIKE ' . $title . ')');
 		}
 
@@ -184,7 +184,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$type = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$type = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.filetype LIKE ' . $type . ')');
 		}
 
@@ -193,7 +193,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$size = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$size = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.size LIKE ' . $size . ')');
 		}
 
@@ -201,7 +201,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$username = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$username = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(m.name LIKE ' . $username . ')');
 		}
 
@@ -209,7 +209,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$post = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$post = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(m.subject LIKE ' . $post . ')');
 		}
 
@@ -241,7 +241,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 
 		if (!empty($filter))
 		{
-			$post = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$post = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.filename LIKE ' . $post . ')');
 		}
 

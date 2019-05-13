@@ -323,7 +323,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 		$db    = Factory::getDbo();
 		$query = 'SELECT element' .
 			' FROM #__extensions' .
-			' WHERE (type =' . $db->Quote('plugin') . 'AND folder=' . $db->Quote($folder) . ')';
+			' WHERE (type =' . $db->quote('plugin') . 'AND folder=' . $db->quote($folder) . ')';
 		$db->setQuery((string) $query);
 		$elements = $db->loadColumn();
 
@@ -397,8 +397,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	protected function getReorderConditions($table)
 	{
 		$condition   = array();
-		$condition[] = 'type = ' . $this->_db->Quote($table->type);
-		$condition[] = 'folder = ' . $this->_db->Quote($table->folder);
+		$condition[] = 'type = ' . $this->_db->quote($table->type);
+		$condition[] = 'folder = ' . $this->_db->quote($table->folder);
 
 		return $condition;
 	}

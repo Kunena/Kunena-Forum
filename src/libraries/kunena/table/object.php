@@ -705,7 +705,7 @@ abstract class KunenaTableObject
 		{
 			$filterValue = $this->$orderingFilter;
 			$this->reorder($orderingFilter ?
-				static::$db->quoteName($orderingFilter) . ' = ' . static::$db->Quote($filterValue) : '');
+				static::$db->quoteName($orderingFilter) . ' = ' . static::$db->quote($filterValue) : '');
 		}
 
 		// Set the error to empty and return true.

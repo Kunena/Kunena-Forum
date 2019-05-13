@@ -434,14 +434,15 @@ abstract class KunenaForumCategoryHelper
 
 		$catlist = implode(',', array_keys($catlist));
 		$db      = Factory::getDBO();
-		$query   = "SELECT t.category_id, COUNT(*) AS new
-			FROM #__kunena_topics AS t
-			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=t.category_id AND uc.user_id={$db->Quote($user->userid)}
-			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=t.id AND ur.user_id={$db->Quote($user->userid)}
-			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->getAllReadTime())}
+		$query  = $db->getQuery();
+		$query->select('t.category_id, COUNT(*) AS new')
+			->from($db->quoteName('#__kunena_topics', 't'))
+			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id=t.category_id AND uc.user_id=' . $db->quote($user->userid))
+			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id=t.id AND ur.user_id=' . $db->quote($user->userid))
+			->where('t.category_id IN (' . $catlist . ') AND t.hold=0 AND t.last_post_time>' . $db->quote($session->getAllReadTime()) . '
 				AND (uc.allreadtime IS NULL OR t.last_post_time>uc.allreadtime)
-				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
-			GROUP BY category_id";
+				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
+			->group($db->quoteName('category_id'));
 		$db->setQuery((string) $query);
 
 		try
@@ -895,14 +896,16 @@ abstract class KunenaForumCategoryHelper
 		$rows = $db->getAffectedRows();
 
 		// Update categories which have no published topics
-		$query = "UPDATE #__kunena_categories AS c
-			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id AND tt.hold=0
-			SET c.numTopics=0,
+		$query  = $db->getQuery(true);
+		$query
+			->update($db->quoteName('#__kunena_categories', 'c'))
+			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON c.id=tt.category_id AND tt.hold=0')
+			->set("c.numTopics=0,
 				c.numPosts=0,
 				c.last_topic_id=0,
 				c.last_post_id=0,
-				c.last_post_time=0
-			WHERE tt.id IS NULL";
+				c.last_post_time=0")
+			->where("tt.id IS NULL");
 		$db->setQuery((string) $query);
 
 		try
@@ -983,7 +986,8 @@ abstract class KunenaForumCategoryHelper
 	{
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('*')->from($db->quoteName('#__kunena_categories'))->where($db->quoteName('alias') . " = " . $db->quote($alias));
+		$query->select('*')->from($db->quoteName('#__kunena_categories'))
+			->where($db->quoteName('alias') . " = " . $db->quote($alias));
 		$db->setQuery((string) $query);
 
 		try

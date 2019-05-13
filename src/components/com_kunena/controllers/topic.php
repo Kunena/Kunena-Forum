@@ -488,7 +488,7 @@ class KunenaControllerTopic extends KunenaController
 			$ip        = $_SERVER ["REMOTE_ADDR"];
 
 			$db = Factory::getDBO();
-			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}");
+			$db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->quote($ip)} AND time>{$db->quote($timelimit)}");
 
 			try
 			{

@@ -127,14 +127,14 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
 	$db    = Factory::getDbo();
-	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
+	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item, state) VALUES ({$db->quote($alias)},{$db->quote($type)},{$db->quote($item)},{$db->quote($state)})";
 	$db->setQuery((string) $query);
 	$success = $db->execute() && $db->getAffectedRows();
 
 	if ($success && $state)
 	{
 		// There can be only one primary alias
-		$query = "UPDATE `#__kunena_aliases` SET state=0 WHERE type={$db->Quote($type)} AND item={$db->Quote($item)} AND alias!={$db->Quote($alias)} AND state=1";
+		$query = "UPDATE `#__kunena_aliases` SET state=0 WHERE type={$db->quote($type)} AND item={$db->quote($item)} AND alias!={$db->quote($alias)} AND state=1";
 		$db->setQuery((string) $query);
 		$db->execute();
 	}
@@ -154,14 +154,14 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
 	$db    = Factory::getDbo();
-	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
+	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item) VALUES ({$db->quote($alias)},'catid',{$db->quote($category->id)})";
 	$db->setQuery((string) $query);
 	$success = $db->execute() && $db->getAffectedRows();
 
 	if ($success && $state)
 	{
 		// Update primary alias into category table
-		$query = "UPDATE `#__kunena_categories` SET alias={$db->Quote($alias)} WHERE id={$db->Quote($category->id)}";
+		$query = "UPDATE `#__kunena_categories` SET alias={$db->quote($alias)} WHERE id={$db->quote($category->id)}";
 		$db->setQuery((string) $query);
 		$db->execute();
 	}

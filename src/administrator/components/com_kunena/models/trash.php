@@ -109,7 +109,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		/*
 		if (!empty($filter))
 		{
-		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$like = $db->quote('%' . $db->escape($filter, true) . '%');
 		$query->where('(a.subject LIKE ' . $like . ')');
 		}
 
@@ -117,7 +117,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$like = $db->quote('%' . $db->escape($filter, true) . '%');
 		$query->where('(c.name LIKE ' . $like . ')');
 
 		}
@@ -126,7 +126,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-		$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+		$like = $db->quote('%' . $db->escape($filter, true) . '%');
 		$query->where('(m.name LIKE ' . $like . ')');
 
 		} */
@@ -182,7 +182,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.subject LIKE ' . $like . ')');
 		}
 
@@ -190,7 +190,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(tt.subject LIKE ' . $like . ')');
 			$join['tt'] = true;
 		}
@@ -199,7 +199,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(c.name LIKE ' . $like . ')');
 			$join['c'] = true;
 		}
@@ -208,7 +208,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.ip LIKE ' . $like . ')');
 		}
 
@@ -216,7 +216,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.name LIKE ' . $like . ')');
 		}
 
@@ -224,7 +224,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($filter))
 		{
-			$like = $db->Quote('%' . $db->escape($filter, true) . '%');
+			$like = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.time LIKE ' . $like . ')');
 		}
 
@@ -232,7 +232,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (!empty($search))
 		{
-			$like = $db->Quote('%' . $db->escape($search, true) . '%');
+			$like = $db->quote('%' . $db->escape($search, true) . '%');
 			$query->where('( a.subject LIKE ' . $like . ' OR a.name LIKE ' . $like . ' OR a.id LIKE ' . $like . ' )');
 		}
 

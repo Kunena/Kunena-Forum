@@ -223,7 +223,7 @@ class KunenaAccessCommunity
 		$query = "SELECT g.memberid AS user_id, c.id AS category_id, " . KunenaForum::ADMINISTRATOR . " AS role
 			FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote(COMMUNITY_GROUP_ADMIN)}";
+			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->quote(COMMUNITY_GROUP_ADMIN)}";
 		$db->setQuery((string) $query);
 
 		try

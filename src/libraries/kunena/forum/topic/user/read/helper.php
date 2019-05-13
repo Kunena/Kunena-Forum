@@ -143,7 +143,10 @@ abstract class KunenaForumTopicUserReadHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
+		$query = $db->getQuery();
+		$query->select('*')
+			->from('#__kunena_user_read')
+			->where('user_id=' . $db->quote($user->userid). ' AND topic_id IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -185,7 +188,10 @@ abstract class KunenaForumTopicUserReadHelper
 	{
 		// Update database
 		$db    = Factory::getDBO();
-		$query = "UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
+		$query = $db->getQuery();
+		$query->update('#__kunena_user_read')
+			->set('topic_id=' . $db->quote($new->id) . ', category_id= ' . $db->quote($new->category_id))
+			->where('topic_id=' . $db->quote($old->id));
 		$db->setQuery((string) $query);
 
 		try
@@ -286,7 +292,10 @@ abstract class KunenaForumTopicUserReadHelper
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$query = $db->getQuery();
+		$query->select('*')
+			->from('#__kunena_user_read')
+			->where('user_id IN (' . $idlist . ') AND topic_id=' . $id);
 		$db->setQuery((string) $query);
 
 		try
@@ -323,9 +332,10 @@ abstract class KunenaForumTopicUserReadHelper
 	public static function recount()
 	{
 		$db    = Factory::getDBO();
-		$query = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
-			SET ur.category_id=t.category_id";
+		$query = $db->getQuery();
+		$query->update($db->quoteName('#__user_read', 'ur'))
+			->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON t.id=ur.topic_id')
+			->set('ur.category_id=t.category_id');
 		$db->setQuery((string) $query);
 
 		try
@@ -354,7 +364,9 @@ abstract class KunenaForumTopicUserReadHelper
 		// Purge items that are older than x days (defaulting to a year)
 		$db        = Factory::getDBO();
 		$timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
-		$query     = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
+		$query = $db->getQuery();
+		$query->delete($db->quoteName('#__kunena_user_read'))
+			->where('time<' . $db->quote($timestamp));
 		$db->setQuery((string) $query);
 
 		try

@@ -46,6 +46,12 @@ class KunenaForumTopicRate extends CMSObject
 	public $time = null;
 
 	/**
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $rate;
+
+	/**
 	 * @var boolean
 	 * @since Kunena
 	 */
@@ -222,11 +228,8 @@ class KunenaForumTopicRate extends CMSObject
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
-		/*
-		if ($this->users === false)
-			{  */
 		$query = $this->_db->getQuery(true);
-		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
+		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
 
 		try
@@ -242,10 +245,6 @@ class KunenaForumTopicRate extends CMSObject
 		{
 			$this->_add($user->userid, $user->time);
 		}
-
-		// }
-
-		// Return $this->users;
 	}
 
 	/**

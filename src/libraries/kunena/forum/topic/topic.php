@@ -1744,7 +1744,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 				// Note: Do not remove poll from shadow: information could still be used to show icon etc
 
-				$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
+				$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->quote($target->id)} WHERE `threadid`={$this->_db->quote($this->id)}";
 				$this->_db->setQuery((string) $query);
 
 				try

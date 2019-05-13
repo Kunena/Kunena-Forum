@@ -206,7 +206,7 @@ abstract class KunenaForumCategoryUserHelper
 			$idlist = implode(',', $updateList);
 			$query  = $db->getQuery(true);
 			$query
-				->update('#__kunena_user_categories')
+				->update($db->quoteName('#__kunena_user_categories'))
 				->set("allreadtime={$db->quote($time)}")
 				->where("user_id={$db->quote($user->userid)}")
 				->where("category_id IN ({$idlist})");
@@ -218,7 +218,7 @@ abstract class KunenaForumCategoryUserHelper
 		{
 			$query = $db->getQuery(true);
 			$query
-				->insert('#__kunena_user_categories')
+				->insert($db->quoteName('#__kunena_user_categories'))
 				->columns('user_id, category_id, allreadtime')
 				->values($insertList);
 			$db->setQuery((string) $query);

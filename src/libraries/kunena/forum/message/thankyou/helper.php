@@ -96,9 +96,10 @@ abstract class KunenaForumMessageThankyouHelper
 		$idlist = implode(',', $ids);
 
 		$db    = Factory::getDBO();
-		$query = "SELECT *
-				FROM #__kunena_thankyou
-				WHERE postid IN ({$idlist})";
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_thankyou'))
+			->where('postid IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -148,7 +149,9 @@ abstract class KunenaForumMessageThankyouHelper
 			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
 		}
 
-		$query = "SELECT COUNT(*) FROM #__kunena_thankyou";
+		$query = $db->getQuery(true);
+		$query->select('COUNT(*)')
+			->from($db->quoteName('#__kunena_thankyou'));
 
 		if (!empty($where))
 		{
@@ -190,12 +193,13 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 
 		$db    = Factory::getDBO();
-		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
-				FROM #__kunena_thankyou AS s
-				INNER JOIN #__users AS u
-				WHERE s.{$field}=u.id
-				GROUP BY s.{$field}
-				ORDER BY countid DESC";
+		$query = $db->getQuery(true);
+		$query->select('s.userid, count(s.' . $field . ') AS countid, u.username')
+			->from($db->quoteName('#__kunena_thankyou', 's'))
+			->innerJoin($db->quoteName('#__users', 'u'))
+			->where('s.' . $field .'=u.id')
+			->group('s.' . $field)
+			->order('countid DESC');
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
 
 		try
@@ -225,14 +229,14 @@ abstract class KunenaForumMessageThankyouHelper
 		$db         = Factory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
-		$query      = "SELECT s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject
-				FROM #__kunena_thankyou AS s
-				INNER JOIN #__kunena_messages AS m ON s.postid=m.id
-				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
-				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0
-				GROUP BY s.postid
-				ORDER BY countid DESC";
-
+		$query = $db->getQuery(true);
+		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
+			->from($db->quoteName('#__kunena_thankyou', 's'))
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . 'ON s.postid=m.id')
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . 'ON m.thread=tt.id')
+			->where('m.catid IN (' . $catlist . ') AND m.hold=0 AND tt.hold=0')
+			->group('s.postid')
+			->order('countid DESC');
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
 
 		try
@@ -271,11 +275,12 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
-		$query      = "SELECT m.catid, m.thread, m.id
-				FROM #__kunena_thankyou AS t
-				INNER JOIN #__kunena_messages AS m ON m.id=t.postid
-				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
-				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
+		$query = $db->getQuery(true);
+		$query->select('m.catid, m.thread, m.id')
+			->from($db->quoteName('#__kunena_thankyou', 't'))
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . 'ON m.id=t.postid')
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . 'ON m.thread=tt.id')
+			->where('m.catid IN (' . $catlist . ') AND m.hold=0 AND tt.hold=0 AND t.' . $field .'='. $db->quote(intval($userid)));
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
 
 		try
@@ -303,10 +308,11 @@ abstract class KunenaForumMessageThankyouHelper
 		$db = Factory::getDBO();
 
 		// Users who have no thank yous, set thankyou count to 0
-		$query = "UPDATE #__kunena_users AS u
-			LEFT JOIN #__kunena_thankyou AS t ON t.targetuserid = u.userid
-			SET u.thankyou = 0
-			WHERE t.targetuserid IS NULL";
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_users', 'u'))
+			->leftJoin($db->quoteName('#__kunena_thankyou', 't') . 'ON t.targetuserid = u.userid')
+			->set('u.thankyou = 0')
+			->where('t.targetuserid IS NULL');
 		$db->setQuery((string) $query);
 
 		try
@@ -337,11 +343,11 @@ abstract class KunenaForumMessageThankyouHelper
 		$db = Factory::getDBO();
 
 		// Update user thankyou count
-		$query = "INSERT INTO #__kunena_users (userid, thankyou)
-			SELECT targetuserid AS userid, COUNT(*) AS thankyou
-			FROM #__kunena_thankyou
-			GROUP BY targetuserid
-			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
+		$query = $db->getQuery(true);
+		$query->insert($db->quoteName('#__kunena_users') . '(userid, thankyou)')
+			->select('targetuserid AS userid, COUNT(*) AS thankyou')
+			->from($db->quoteName('#__kunena_thankyou'))
+			->group($db->quoteName('targetuserid') . 'ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)');
 		$db->setQuery((string) $query);
 
 		try

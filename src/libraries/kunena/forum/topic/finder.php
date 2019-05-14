@@ -64,7 +64,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where("a.category_id IN ({$list})");
+		$this->query->where("a.category_id IN (' . $list . ')");
 
 		return $this;
 	}
@@ -106,7 +106,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 			$list = -1;
 		}
 
-		$this->query->where("a.category_id IN ({$list})");
+		$this->query->where("a.category_id IN (' . $list .')");
 
 		return $this;
 	}
@@ -166,16 +166,16 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		switch ($action)
 		{
 			case 'first_post':
-				$this->query->where('a.first_post_userid={$this->db->quote($user->userid)}');
+				$this->query->where('a.first_post_userid=' . $this->db->quote($user->userid));
 				break;
 			case '!first_post':
-				$this->query->where('a.first_post_userid!={$this->db->quote($user->userid)}');
+				$this->query->where('a.first_post_userid!=' . $this->db->quote($user->userid));
 				break;
 			case 'last_post':
-				$this->query->where('a.last_post_userid={$this->db->quote($user->userid)}');
+				$this->query->where('a.last_post_userid=' . $this->db->quote($user->userid));
 				break;
 			case '!last_post':
-				$this->query->where('a.last_post_userid!={$this->db->quote($user->userid)}');
+				$this->query->where('a.last_post_userid!=' . $this->db->quote($user->userid));
 				break;
 			case 'owner':
 				$this->query->where('ut.owner=1');
@@ -258,15 +258,15 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 
 		$subQuery = $this->db->getQuery(true);
 		$subQuery->select('st.id, MAX(sut.last_post_id) AS max_post_id')
-			->from('#__kunena_topics AS st')
-			->leftJoin('#__kunena_user_topics AS sut ON sut.topic_id=st.id')
-			->where("sut.user_id IN ({$userlist})")
+			->from($this->db->quoteName('#__kunena_topics', 'st'))
+			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), 'ON sut.topic_id=st.id')
+			->where('sut.user_id IN (' . $userlist . ')')
 			->group('st.last_post_id')
 			->order('st.last_post_id DESC');
 
 		// Hard limit on sub-query to make derived table faster to sort.
-		$this->query->innerJoin("({$subQuery} LIMIT 1000) AS uu ON uu.id=a.id");
-		$this->query->innerJoin("#__kunena_user_topics AS ut ON ut.topic_id=a.id AND ut.owner=1");
+		$this->query->innerJoin('(' . $subQuery . ' LIMIT 1000) AS uu ON uu.id=a.id');
+		$this->query->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'),'ON ut.topic_id=a.id AND ut.owner=1');
 
 		if ($negate)
 		{
@@ -356,7 +356,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where("a.hold IN ({$hold})");
+			$query->where("a.hold IN (' . $hold .')");
 		}
 
 		if (isset($this->moved))

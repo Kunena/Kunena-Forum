@@ -209,7 +209,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   KunenaForumMessage $message   message
 	 * @param   int                $postDelta postdelta
 	 *
-	 * @return boolean|null
+	 * @return boolean|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -232,9 +232,11 @@ class KunenaForumTopicUser extends CMSObject
 		}
 		elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id))
 		{
-			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
-					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
-					GROUP BY userid, thread";
+			$query = $this->_db->getQuery(true);
+			$query->select('COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner')
+				->from($this->_db->quoteName('#__kunena_messages'))
+				->where('userid='. $this->_db->quote($this->user_id) . ' AND thread=' . $this->_db->quote($this->topic_id) . ' AND moved=0 AND hold=0')
+				->group('userid, thread');
 			$this->_db->setQuery($query, 0, 1);
 
 			try

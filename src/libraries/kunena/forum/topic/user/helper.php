@@ -138,7 +138,10 @@ abstract class KunenaForumTopicUserHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_user_topics'))
+			->where('user_id=' . $db->quote($user->userid) . ' AND topic_id IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -239,7 +242,10 @@ abstract class KunenaForumTopicUserHelper
 	{
 		// Update database
 		$db    = Factory::getDBO();
-		$query = "UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_user_topics'))
+			->set('topic_id=' . $db->quote($new->id) . ', category_id=' . $db->quote($new->category_id))
+			->where('topic_id=' . $db->quote($old->id));
 		$db->setQuery((string) $query);
 
 		try
@@ -419,12 +425,12 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		// Create missing user topics and update post count and last post if there are posts by that user
-		$query = "INSERT INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
-					SELECT m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`
-					FROM `#__kunena_messages` AS m
-					WHERE m.userid>0 AND m.moved=0 {$where}
-					GROUP BY m.userid, m.thread
-				ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
+		$query = $db->getQuery(true);
+		$query->insert($db->quoteName('#__kunena_user_topics') . '(`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)')
+			->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
+			->from($db->quoteName('#__kunena_messages', 'm'))
+			->where('m.userid>0 AND m.moved=0 ' . $where)
+			->group('m.userid, m.thread' . ' ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)');
 		$db->setQuery((string) $query);
 
 		try
@@ -441,10 +447,11 @@ abstract class KunenaForumTopicUserHelper
 		$rows = $db->getAffectedRows();
 
 		// Find user topics where last post doesn't exist and reset values in it
-		$query = "UPDATE #__kunena_user_topics AS ut
-			LEFT JOIN #__kunena_messages AS m ON ut.last_post_id=m.id AND m.hold=0
-			SET posts=0, last_post_id=0
-			WHERE m.id IS NULL {$where2}";
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_user_topics', 'ut'))
+			->leftJoin($db->quoteName('#__kunena_messages', 'm') . 'ON ut.last_post_id=m.id AND m.hold=0')
+			->set('posts=0, last_post_id=0')
+			->where('m.id IS NULL ' . $where2);
 		$db->setQuery((string) $query);
 
 		try
@@ -461,7 +468,10 @@ abstract class KunenaForumTopicUserHelper
 		$rows += $db->getAffectedRows();
 
 		// Delete entries that have default values
-		$query = "DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
+		$query = $db->getQuery(true);
+		$query->delete('ut')
+			->from($db->quoteName('#__kunena_user_topics', 'ut'))
+			->where('ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params=\'\' ' . $where2);
 		$db->setQuery((string) $query);
 
 		try

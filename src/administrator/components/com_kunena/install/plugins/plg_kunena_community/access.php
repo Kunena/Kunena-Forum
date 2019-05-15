@@ -79,7 +79,7 @@ class KunenaAccessCommunity
 	 * @param   string $accesstype Access type.
 	 * @param   int    $id         Group id.
 	 *
-	 * @return boolean|null|string
+	 * @return boolean|void|string
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -109,9 +109,10 @@ class KunenaAccessCommunity
 		if ($this->groups === false)
 		{
 			$db    = Factory::getDBO();
-			$query = "SELECT id, CONCAT('c', categoryid) AS parent_id, name
-				FROM #__community_groups
-				ORDER BY categoryid, name";
+			$query = $db->getQuery(true);
+			$query->select('id, CONCAT(\'c\', categoryid) AS parent_id, name')
+				->update($db->quoteName('#__community_groups'))
+				->order('categoryid, name');
 			$db->setQuery((string) $query);
 
 			try
@@ -180,9 +181,10 @@ class KunenaAccessCommunity
 		if ($this->categories === false)
 		{
 			$db    = Factory::getDBO();
-			$query = "SELECT CONCAT('c', id) AS id, CONCAT('c', parent) AS parent_id, name
-				FROM #__community_groups_category
-				ORDER BY parent, name";
+			$query = $db->getQuery(true);
+			$query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parent_id, name')
+				->update($db->quoteName('#__community_groups_category'))
+				->order('parent, name');
 			$db->setQuery((string) $query);
 
 			try
@@ -220,10 +222,11 @@ class KunenaAccessCommunity
 	public function loadCategoryRoles(array $categories = null)
 	{
 		$db    = Factory::getDBO();
-		$query = "SELECT g.memberid AS user_id, c.id AS category_id, " . KunenaForum::ADMINISTRATOR . " AS role
-			FROM #__kunena_categories AS c
-			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->quote(COMMUNITY_GROUP_ADMIN)}";
+		$query = $db->getQuery(true);
+		$query->select('g.memberid AS user_id, c.id AS category_id, ' . KunenaForum::ADMINISTRATOR . ' AS role')
+			->from($db->quoteName('#__kunena_categories', 'c'))
+			->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
+			->where('c.published=1 AND g.approved=1 AND g.permissions=' . $db->quote(COMMUNITY_GROUP_ADMIN));
 		$db->setQuery((string) $query);
 
 		try
@@ -260,9 +263,11 @@ class KunenaAccessCommunity
 		if (KunenaFactory::getUser($userid)->exists())
 		{
 			$db    = Factory::getDBO();
-			$query = "SELECT c.id FROM #__kunena_categories AS c
-				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
+			$query = $db->getQuery(true);
+			$query->select('c.id')
+				->from($db->quoteName('#__kunena_categories', 'c'))
+				->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
+				->where('c.published=1 AND g.approved=1 AND  g.memberid=' . $db->quote($userid));
 			$db->setQuery((string) $query);
 
 			try
@@ -304,9 +309,11 @@ class KunenaAccessCommunity
 		$userlist = implode(',', $userids);
 
 		$db    = Factory::getDBO();
-		$query = "SELECT c.id FROM #__kunena_categories AS c
-			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
+		$query = $db->getQuery(true);
+		$query->select('c.id')
+			->from($db->quoteName('#__kunena_categories', 'c'))
+			->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
+			->where('c.id=' . $category->id . ' AND g.approved=1 AND g.memberid IN (' . $userlist .')');
 		$db->setQuery((string) $query);
 
 		try

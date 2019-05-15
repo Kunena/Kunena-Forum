@@ -43,8 +43,8 @@ class KunenaLoginComprofiler
 	 * @param $rememberme
 	 *
 	 * @return null|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function loginUser($username, $password, $rememberme)
@@ -66,8 +66,8 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function logoutUser()
@@ -88,10 +88,12 @@ class KunenaLoginComprofiler
 	 */
 	public function getRememberMe()
 	{
-		$db = Factory::getDbo();
-
-		// TODO: test if works (see #1079)
-		$db->setQuery("SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1);
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('params')
+			->from($db->quoteName('#__extensions'))
+			->innerJoin($db->quoteName('#__users', 'u') . 'ON u.id=cu.userid')
+			->where('element=\'mod_cblogin\' AND type=\'module\'');
 		$raw_params = $db->loadResult();
 		$params     = new \CBLib\Registry\Registry($raw_params);
 
@@ -121,7 +123,7 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return null|string
+	 * @return void|string
 	 * @since Kunena
 	 */
 	public function getRegistrationURL()

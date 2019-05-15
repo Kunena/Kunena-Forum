@@ -126,7 +126,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return null|string
+	 * @return void|string
 	 * @since Kunena
 	 */
 	public function getRegistrationURL()

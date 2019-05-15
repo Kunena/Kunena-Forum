@@ -141,7 +141,7 @@ class KunenaGravatar
 	 *
 	 * @param $hash_email
 	 *
-	 * @return IMG|string
+	 * @return string
 	 * @since Kunena
 	 */
 	public function getLink($hash_email)

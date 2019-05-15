@@ -39,7 +39,7 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar
+	 * @return KunenaAvatar|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()

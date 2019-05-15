@@ -70,7 +70,7 @@ class PlgKunenaUddeIM extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaPrivateUddeIM|null
+	 * @return KunenaPrivateUddeIM|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()

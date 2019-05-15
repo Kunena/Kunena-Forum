@@ -36,6 +36,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @param $subject
 	 * @param $config
 	 *
+	 * @return void|boolean
 	 * @since       Kunena
 	 *
 	 */
@@ -55,7 +56,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin
+	 * @return KunenaLoginEasySocial
 	 * @since       Kunena
 	 */
 	public function onKunenaGetLogin()

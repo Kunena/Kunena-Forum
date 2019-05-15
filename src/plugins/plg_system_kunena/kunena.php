@@ -11,14 +11,18 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Class plgSystemKunena
  * @since Kunena
  */
-class plgSystemKunena extends Joomla\CMS\Plugin\CMSPlugin
+class plgSystemKunena extends CMSPlugin
 {
 	/**
 	 * @param   object $subject Subject
@@ -40,7 +44,7 @@ class plgSystemKunena extends Joomla\CMS\Plugin\CMSPlugin
 		jimport('joomla.application.component.helper');
 
 		// Check if Kunena component is installed/enabled
-		if (!Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
+		if (!ComponentHelper::isEnabled('com_kunena'))
 		{
 			return;
 		}
@@ -63,7 +67,7 @@ class plgSystemKunena extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if ($app->scope == 'com_kunena')
 			{
-				if (!Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+				if (!PluginHelper::isEnabled('kunena', 'powered'))
 				{
 					$styles = <<<EOF
 		.layout#kunena + div { display: block !important;}
@@ -135,7 +139,7 @@ EOF;
 	 * @param   string $manifest manifest
 	 * @param   int    $eid      id
 	 *
-	 * @return boolean|null
+	 * @return boolean|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -168,7 +172,7 @@ EOF;
 		}
 
 		// Generate component name
-		$name    = strtolower(Joomla\CMS\Filter\InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
+		$name    = strtolower(InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
 		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
 
 		if ($element != 'com_kunena')
@@ -216,7 +220,7 @@ EOF;
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 
 		$row       = new stdClass;
 		$row->text = &$text;

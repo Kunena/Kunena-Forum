@@ -115,7 +115,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @return null|string
+	 * @return void|string
 	 * @since Kunena
 	 */
 	public function getInboxURL()
@@ -133,7 +133,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @return integer|null
+	 * @return integer|void
 	 * @since Kunena
 	 */
 	protected function getCBUserid()
@@ -166,7 +166,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * @param $text
 	 *
-	 * @return null|string
+	 * @return void|string
 	 * @since Kunena
 	 */
 	public function getInboxLink($text)

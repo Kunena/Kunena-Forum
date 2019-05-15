@@ -69,11 +69,12 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function _getTopHits($limit = 0)
 	{
 		$db    = Factory::getDBO();
-		$query = "SELECT cu.userid AS id, cu.view AS count
-			FROM #__community_users AS cu
-			INNER JOIN #__users AS u ON u.id=cu.userid
-			WHERE cu.view>0
-			ORDER BY cu.view DESC";
+		$query = $db->getQuery(true);
+		$query->select('cu.userid AS id, cu.view AS count')
+			->from($db->quoteName('#__community_users', 'cu'))
+			->innerJoin($db->quoteName('#__users', 'u') . 'ON u.id=cu.userid')
+			->where('cu.view>0')
+			->order('cu.view DESC');
 		$db->setQuery($query, 0, $limit);
 
 		try

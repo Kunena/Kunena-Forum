@@ -152,11 +152,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 	public function _getTopHits($limit = 0)
 	{
 		$db    = Factory::getDBO();
-		$query = "SELECT cu.user_id AS id, cu.hits AS count
-			FROM #__comprofiler AS cu
-			INNER JOIN #__users AS u ON u.id=cu.user_id
-			WHERE cu.hits>0
-			ORDER BY cu.hits DESC";
+		$query = $db->getQuery(true);
+		$query->select('cu.user_id AS id, cu.hits AS count');
+		$query->from($db->quoteName('#__comprofiler','cu'));
+		$query->innerJoin($db->quoteName('#__users', 'u') . 'ON u.id=cu.user_id');
+		$query->where('cu.hits>0');
+		$query->order('cu.hits DESC');
 		$db->setQuery($query, 0, $limit);
 
 		try

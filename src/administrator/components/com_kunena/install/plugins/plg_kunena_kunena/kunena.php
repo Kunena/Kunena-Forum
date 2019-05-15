@@ -38,7 +38,7 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaAvatarKunena|null
+	 * @return KunenaAvatarKunena|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
@@ -54,7 +54,7 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaProfileKunena|null
+	 * @return KunenaProfileKunena|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()

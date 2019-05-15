@@ -37,7 +37,7 @@ class plgKunenaJoomla extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaAccessJoomla|null
+	 * @return KunenaAccessJoomla|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()

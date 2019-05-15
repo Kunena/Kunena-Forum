@@ -308,7 +308,7 @@ class KunenaForumStatistics
 			$todaystart     = strtotime(date('Y-m-d'));
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
-			$query  = $this->_db->getQuery();
+			$query  = $this->_db->getQuery(true);
 			$query->select('SUM(time>=' . $todaystart . ' AND parent=0) AS todayTopicCount,
 				SUM(time>=' . $todaystart . ' AND parent>0) AS todayReplyCount,
 				SUM(time>=' . $yesterdaystart . ' AND time<' . $todaystart . '  AND parent=0) AS yesterdayTopicCount,

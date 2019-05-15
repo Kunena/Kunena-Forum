@@ -195,7 +195,7 @@ abstract class KunenaForumTopicHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_topics'))
 			->where('id IN (' . $idlist . ')');
@@ -397,7 +397,7 @@ abstract class KunenaForumTopicHelper
 		// Get items
 		if ($whereuser)
 		{
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
 				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON tt.id=ut.topic_id')
@@ -406,7 +406,7 @@ abstract class KunenaForumTopicHelper
 		}
 		else
 		{
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_topics', 'tt'))
 				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . 'ON tt.id=ut.topic_id AND ut.user_id=' . $db->quote($user->userid))

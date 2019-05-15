@@ -146,7 +146,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 		// Load the user data.
 		if ($mode == self::ACTIVE)
 		{
-			$where = 'AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql());
+			$where = ' AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql()) . ')';
 		}
 		else
 		{
@@ -234,7 +234,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 
 		if ($mode == self::ACTIVE)
 		{
-			$where = 'AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql());
+			$where = 'AND (expiration = ' . $nullDate . ' OR expiration > ' . $this->_db->quote($now->toSql()) . ')';
 		}
 		else
 		{

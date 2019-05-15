@@ -309,12 +309,12 @@ class KunenaForumStatistics
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
 			$query  = $this->_db->getQuery(true);
-			$query->select('SUM(time>=' . $todaystart . ' AND parent=0) AS todayTopicCount,
+			$query->select('SUM(time >= ' . $todaystart . ' AND parent=0) AS todayTopicCount,
 				SUM(time>=' . $todaystart . ' AND parent>0) AS todayReplyCount,
 				SUM(time>=' . $yesterdaystart . ' AND time<' . $todaystart . '  AND parent=0) AS yesterdayTopicCount,
 				SUM(time>=' . $yesterdaystart . '  AND time<' . $todaystart . '  AND parent>0) AS yesterdayReplyCount')
 				->from($this->_db->quoteName('#__kunena_messages'))
-				->where('time>={$yesterdaystart} AND hold=0');
+				->where('time >=' . $yesterdaystart . ' AND hold=0');
 			$this->_db->setQuery((string) $query);
 
 			try

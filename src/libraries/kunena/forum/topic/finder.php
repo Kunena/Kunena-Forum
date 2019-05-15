@@ -64,7 +64,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where("a.category_id IN (' . $list . ')");
+		$this->query->where('a.category_id IN (' . $list . ')');
 
 		return $this;
 	}
@@ -106,7 +106,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 			$list = -1;
 		}
 
-		$this->query->where("a.category_id IN (' . $list .')");
+		$this->query->where('a.category_id IN (' . $list . ')');
 
 		return $this;
 	}
@@ -127,15 +127,15 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 
 		if ($starting && $ending)
 		{
-			$this->query->where("a.{$name}_post_time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where('a.' . $name . '_post_time BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
-			$this->query->where("a.{$name}_post_time > {$this->db->quote($starting->toUnix())}");
+			$this->query->where('a.' . $name . '_post_time > ' . $this->db->quote($starting->toUnix()));
 		}
 		elseif ($ending)
 		{
-			$this->query->where("a.{$name}_post_time <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where('a.' . $name . '_post_time <= ' . $this->db->quote($ending->toUnix()));
 		}
 
 		return $this;
@@ -161,7 +161,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
 		$this->query->innerJoin('#__kunena_user_topics AS ut ON a.id=ut.topic_id');
-		$this->query->where("ut.user_id = {$this->db->quote($user->userid)}");
+		$this->query->where('ut.user_id = ' . $this->db->quote($user->userid));
 
 		switch ($action)
 		{
@@ -356,7 +356,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where("a.hold IN (' . $hold .')");
+			$query->where('a.hold IN (' . $hold. ')');
 		}
 
 		if (isset($this->moved))

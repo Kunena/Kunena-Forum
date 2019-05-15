@@ -77,34 +77,23 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
-				$this->setTitle($title);
+				$doc->setTitle($title);
 			}
 			else
 			{
 				$title = $this->config->board_title;
-				$this->setTitle($title);
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->config->board_title;
-				$this->setKeywords($keywords);
+				$doc->setTitle($title);
 			}
 
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
+				$doc->setDescription($description);
 			}
 			else
 			{
 				$description = $this->config->board_title;
-				$this->setDescription($description);
+				$doc->setDescription($description);
 			}
 
 			if (!empty($params_robots))

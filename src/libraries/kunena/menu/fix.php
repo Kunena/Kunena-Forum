@@ -199,7 +199,7 @@ abstract class KunenaMenuFix
 	/**
 	 * @param   StdClass $item item
 	 *
-	 * @return object
+	 * @return object|boolean
 	 * @since Kunena
 	 */
 	protected static function getHome($item)

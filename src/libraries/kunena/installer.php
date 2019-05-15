@@ -34,7 +34,7 @@ class KunenaInstaller
 	 *
 	 * @param   string $version version
 	 *
-	 * @return  boolean  True if version can be safely downgraded.
+	 * @return  boolean|void  True if version can be safely downgraded.
 	 * @since Kunena
 	 */
 	public static function canDowngrade($version)
@@ -76,7 +76,12 @@ class KunenaInstaller
 
 		// Get installed version.
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT version FROM {$db->quoteName('#__kunena_version')} WHERE state='' ORDER BY id DESC", 0, 1);
+		$query  = $db->getQuery();
+		$query->select('version')
+			->from($db->quoteName('#__kunena_version'))
+			->where('state=\'\'')
+			->order('id DESC');
+		$db->setQuery((string) $query, 0, 1);
 		$version = $db->loadResult();
 
 		return $version;

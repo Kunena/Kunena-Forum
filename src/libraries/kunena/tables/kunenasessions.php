@@ -76,11 +76,12 @@ class TableKunenaSessions extends KunenaTable
 	}
 
 	/**
-	 * @param   null $oid   oid
-	 * @param   bool $reset reset
+	 * @param   null  $oid    oid
+	 * @param   bool  $reset  reset
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($oid = null, $reset = true)
 	{

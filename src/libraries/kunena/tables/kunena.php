@@ -23,11 +23,12 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	protected $_exists = false;
 
 	/**
-	 * @param   null $keys  keys
-	 * @param   bool $reset reset
+	 * @param   null  $keys   keys
+	 * @param   bool  $reset  reset
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -207,12 +208,13 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	/**
 	 * Updates a row in a table based on an object's properties.
 	 *
-	 * @param   boolean $nulls True to update null fields or false to ignore them.
+	 * @param   boolean  $nulls  True to update null fields or false to ignore them.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @throws  RuntimeException
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws  RuntimeException
 	 */
 	public function updateObject($nulls = false)
 	{
@@ -300,8 +302,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 *
 	 * @return  boolean    True on success.
 	 *
-	 * @throws  RuntimeException
 	 * @since Kunena
+	 * @throws Exception
+	 * @throws  RuntimeException
 	 */
 	protected function insertObject()
 	{
@@ -375,10 +378,11 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   null $pk pk
+	 * @param   null  $pk  pk
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete($pk = null)
 	{

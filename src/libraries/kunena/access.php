@@ -127,7 +127,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @return mixed
+	 * @return mixed|void
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -190,7 +190,7 @@ class KunenaAccess
 	/**
 	 * @param   array $list list
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @since Kunena
 	 */
 	protected function storeRoles(array $list = null)
@@ -365,8 +365,6 @@ window.addEvent('domready', function(){
 			return $list;
 		}
 
-		// @var KunenaAccess $access
-
 		foreach ($this->accesstypes[$accesstype] as $access)
 		{
 			if (method_exists($access, 'getCategoryAccess'))
@@ -393,7 +391,7 @@ window.addEvent('domready', function(){
 	 * @param   string $accesstype Access type.
 	 * @param   mixed  $id         Group id.
 	 *
-	 * @return string|null
+	 * @return string|void
 	 *
 	 * @since      Kunena
 	 * @deprecated 6.0.0
@@ -405,7 +403,6 @@ window.addEvent('domready', function(){
 			return Text::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		}
 
-		/** @var KunenaAccess $access */
 		foreach ($this->accesstypes[$accesstype] as $access)
 		{
 			if (method_exists($access, 'getGroupName'))

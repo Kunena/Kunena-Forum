@@ -272,7 +272,7 @@ class KunenaUser extends CMSObject
 	 * @param   KunenaUser $user   user
 	 * @param   bool       $throw  throw
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|boolean
 	 * @throws null
 	 * @since  K4.0
 	 */
@@ -706,7 +706,7 @@ class KunenaUser extends CMSObject
 	 * @param   bool   $xhtml xhtml
 	 * @param   string $task  task
 	 *
-	 * @return mixed
+	 * @return boolean|mixed|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1323,7 +1323,7 @@ class KunenaUser extends CMSObject
 	 * @param   string    $type    Possible values: 'title' | 'image' | false (for object).
 	 * @param   bool|null $special True if special only, false if post count, otherwise combined.
 	 *
-	 * @return stdClass|string|null
+	 * @return stdClass|string|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1543,7 +1543,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @param $catid
 	 *
-	 * @return string
+	 * @return string|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1771,7 +1771,7 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return boolean|void
 	 * @since Kunena
 	 */
 	public function isBanned()
@@ -1867,7 +1867,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * @param   string $name name
 	 *
-	 * @return string
+	 * @return string|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2166,7 +2166,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * @param   string $name name
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @since Kunena
 	 */
 	public function __get($name)
@@ -2195,7 +2195,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * Check if captcha is allowed for guests users or registered users
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 * @throws Exception
 	 * @since Kunena
 	 */

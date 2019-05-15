@@ -40,10 +40,10 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param   string $content content
+	 * @param   string  $content  content
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function appendAfter($content)
 	{
@@ -51,7 +51,7 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   mixed $key key
+	 * @param   mixed  $key  key
 	 *
 	 * @return string
 	 * @since Kunena
@@ -64,12 +64,12 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Method to render the view.
 	 *
-	 * @param   string $layout layout
+	 * @param   string  $layout  layout
 	 *
 	 * @return  string  The rendered view.
 	 *
-	 * @throws  Exception|RunTimeException
 	 * @since Kunena
+	 * @throws  Exception|RunTimeException
 	 */
 	public function render($layout = null)
 	{
@@ -96,15 +96,15 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   string $link  link
-	 * @param   string $name  name
-	 * @param   string $scope scope
-	 * @param   string $type  type
-	 * @param   null   $id    id
+	 * @param   string  $link   link
+	 * @param   string  $name   name
+	 * @param   string  $scope  scope
+	 * @param   string  $type   type
+	 * @param   null    $id     id
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -113,12 +113,12 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   string $name  name
-	 * @param   string $title title
+	 * @param   string  $name   name
+	 * @param   string  $title  title
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -132,8 +132,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * in the language file. The significant digits are used to limit the
 	 * number of digits displayed when in 10k or 1m mode.
 	 *
-	 * @param   int $number    Number to be formated
-	 * @param   int $precision Significant digits for output
+	 * @param   int  $number     Number to be formated
+	 * @param   int  $precision  Significant digits for output
 	 *
 	 * @return string
 	 * @since Kunena
@@ -164,12 +164,12 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category  category
-	 * @param   null                $content   content
-	 * @param   null                $title     title
-	 * @param   null                $class     class
-	 * @param   bool                $follow    follow
-	 * @param   null                $canonical canonical
+	 * @param   KunenaForumCategory  $category   category
+	 * @param   null                 $content    content
+	 * @param   null                 $title      title
+	 * @param   null                 $class      class
+	 * @param   bool                 $follow     follow
+	 * @param   null                 $canonical  canonical
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -227,18 +227,18 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   KunenaForumTopic    $topic     topic
-	 * @param   null                $action    action
-	 * @param   null                $content   content
-	 * @param   null                $title     title
-	 * @param   null                $class     class
-	 * @param   KunenaForumCategory $category  category
-	 * @param   bool                $follow    follow
-	 * @param   bool                $canonical canonical
+	 * @param   KunenaForumTopic     $topic      topic
+	 * @param   null                 $action     action
+	 * @param   null                 $content    content
+	 * @param   null                 $title      title
+	 * @param   null                 $class      class
+	 * @param   KunenaForumCategory  $category   category
+	 * @param   bool                 $follow     follow
+	 * @param   bool                 $canonical  canonical
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null, $follow = true, $canonical = false)
@@ -328,17 +328,17 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param   mixed $category  category
-	 * @param   null  $content   content
-	 * @param   null  $title     title
-	 * @param   null  $class     class
-	 * @param   int   $length    length
-	 * @param   bool  $follow    follow
-	 * @param   null  $canonical canonical
+	 * @param   mixed  $category   category
+	 * @param   null   $content    content
+	 * @param   null   $title      title
+	 * @param   null   $class      class
+	 * @param   int    $length     length
+	 * @param   bool   $follow     follow
+	 * @param   null   $canonical  canonical
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
@@ -398,13 +398,13 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
 	 *
-	 * @param   KunenaView $view view
+	 * @param   KunenaView  $view  view
 	 *
+	 * @return $this
 	 * @since      4.0
 	 *
-	 * @deprecated 5.0
-	 * @return $this
 	 * @since      Kunena
+	 * @deprecated 5.0
 	 */
 	public function setLegacy(KunenaView $view = null)
 	{

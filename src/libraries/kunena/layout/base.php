@@ -492,7 +492,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   mixed $property property
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @throws InvalidArgumentException
 	 * @since Kunena
 	 */

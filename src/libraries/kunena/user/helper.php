@@ -462,8 +462,7 @@ abstract class KunenaUserHelper
 			$config = KunenaFactory::getConfig();
 			$db     = Factory::getDbo();
 			$query  = $db->getQuery(true);
-			$query
-				->select('COUNT(*)')
+			$query->select('COUNT(*)')
 				->from($db->quoteName('#__session'))
 				->where($db->quoteName('client_id') . '=0')
 				->andWhere($db->quoteName('userid') . '=0');
@@ -515,8 +514,7 @@ abstract class KunenaUserHelper
 			$config = KunenaFactory::getConfig();
 			$db     = Factory::getDbo();
 			$query  = $db->getQuery(true);
-			$query
-				->select('userid, MAX(time) AS time')
+			$query->select('userid, MAX(time) AS time')
 				->from($db->quoteName('#__session'))
 				->where($db->quoteName('client_id') . '=0')
 				->andWhere($db->quoteName('userid') . '>0')
@@ -684,10 +682,11 @@ abstract class KunenaUserHelper
 		$db = Factory::getDBO();
 
 		// If user has no user_topics, set posts into 0
-		$query = "UPDATE #__kunena_users AS u
-			LEFT JOIN #__kunena_user_topics AS ut ON ut.user_id=u.userid
-			SET u.posts = 0
-			WHERE ut.user_id IS NULL";
+		$query  = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_users', 'u'))
+			->leftJoin($db->quoteName('kunena_user_topics', 'ut') . 'ON ut.user_id=u.userid')
+			->set('u.posts = 0')
+			->where('ut.user_id IS NULL');
 		$db->setQuery((string) $query);
 
 		try

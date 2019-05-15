@@ -71,6 +71,7 @@ class KunenaLogin
 	 *
 	 * @return integer
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTwoFactorMethods()
 	{
@@ -238,10 +239,11 @@ class KunenaLogin
 	 * user has enabled a specific TFA method on their account. Only if both conditions
 	 * are met will this method return true;
 	 *
-	 * @param integer $userId The user ID to check. Skip to use the current user.
+	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
 	 *
 	 * @return boolean True if TFA is enabled for this user
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isTFAEnabled($userId = null)
 	{
@@ -281,7 +283,7 @@ class KunenaLogin
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return JRegistry
+	 * @return JRegistry|boolean
 	 * @since Kunena 5.1
 	 */
 	public function getParams()

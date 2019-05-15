@@ -261,7 +261,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   void $delta delta
+	 * @param   float $delta delta
 	 *
 	 * @return void
 	 * @since Kunena

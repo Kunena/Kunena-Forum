@@ -776,7 +776,7 @@ HTML;
 	 * @param   string $filename filename
 	 * @param   string $group    group
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -819,7 +819,7 @@ HTML;
 	 *
 	 * @param   string $filename filename
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @throws Exception
 	 * @since Kunena 5.1.3
 	 */
@@ -843,7 +843,7 @@ HTML;
 	 *
 	 * @param   string $filename filename
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @throws Exception
 	 * @since Kunena 5.1.3
 	 */
@@ -865,7 +865,7 @@ HTML;
 	/**
 	 * @param $style
 	 *
-	 * @return string
+	 * @return string|void
 	 *
 	 * @throws Exception
 	 * @since version
@@ -964,7 +964,7 @@ HTML;
 	 * @param   string $content content
 	 * @param   string $type    type
 	 *
-	 * @return Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -989,7 +989,7 @@ HTML;
 	 * @param array    $options
 	 * @param array    $attribs
 	 *
-	 * @return Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1034,7 +1034,7 @@ HTML;
 	 * @param   mixed  $options Scrip options as array or string
 	 * @param   bool   $merge   Whether merge with existing (true) or replace (false)
 	 *
-	 * @return Joomla\CMS\Document\Document
+	 * @return Joomla\CMS\Document\Document|void
 	 *
 	 * @throws Exception
 	 * @since   3.5
@@ -1468,7 +1468,7 @@ HTML;
 	 * @param   int    $id    id
 	 * @param   string $style style
 	 *
-	 * @return stdClass
+	 * @return stdClass|void
 	 * @since Kunena
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
@@ -1501,7 +1501,7 @@ HTML;
 	 * @param   int    $id    id
 	 * @param   string $style style
 	 *
-	 * @return stdClass
+	 * @return stdClass|void
 	 * @since Kunena
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
@@ -1683,7 +1683,7 @@ HTML;
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)
+	public function getCategoryIconPath($filename = '', $url = true, $category_iconset = 'default')
 	{
 		if (!$this->isHmvc())
 		{
@@ -1893,7 +1893,7 @@ HTML;
 	/**
 	 * @param   mixed $topic topic
 	 *
-	 * @return stdClass
+	 * @return stdClass|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1935,7 +1935,7 @@ HTML;
 	 * @param   int    $id    id
 	 * @param   string $style style
 	 *
-	 * @return stdClass
+	 * @return stdClass|void
 	 * @since Kunena
 	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
@@ -1987,7 +1987,7 @@ HTML;
 	/**
 	 * @param   bool $class class
 	 *
-	 * @return string
+	 * @return string|void
 	 *
 	 * @since version
 	 * @throws Exception
@@ -2013,7 +2013,7 @@ HTML;
 	/**
 	 * @param bool $topic_ids
 	 *
-	 * @return string
+	 * @return string|void
 	 *
 	 * @throws Exception
 	 * @since version

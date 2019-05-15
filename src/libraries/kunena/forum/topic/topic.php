@@ -40,6 +40,7 @@ use Joomla\CMS\Uri\Uri;
  * @property string $last_post_guest_name
  * @property string $params
  * @property int    $rating
+ * @property int    $count
  * @since Kunena
  */
 class KunenaForumTopic extends KunenaDatabaseObject
@@ -111,7 +112,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	protected $_table = 'KunenaTopics';
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var JDatabaseDriver|void
 	 * @since Kunena
 	 */
 	protected $_db = null;
@@ -461,11 +462,12 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		if (!$this->moved_id)
 		{
 			// Recount total posts and attachments
-			$query = "SELECT COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments
-					FROM #__kunena_messages AS m
-					LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
-					WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
-					GROUP BY m.thread";
+			$query  = $this->_db->getQuery();
+			$query->select('COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments')
+				->from($this->_db->quoteName('#__kunena_messages', 'm'))
+				->leftJoin($this->_db->quoteName('#__kunena_attachments', 'a') . 'ON m.id=a.mesid')
+				->where('m.hold=' . $this->_db->quote($this->hold) . ' AND m.thread=' . $this->_db->quote($this->id))
+				->group('m.thread');
 			$this->_db->setQuery((string) $query);
 
 			try
@@ -484,10 +486,11 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$this->posts = 0;
 
 				// Double check if all posts have been removed from the database
-				$query = "SELECT COUNT(m.id) AS posts, MIN(m.hold) AS hold
-						FROM #__kunena_messages AS m
-						WHERE m.thread={$this->_db->quote($this->id)}
-						GROUP BY m.thread";
+				$query  = $this->_db->getQuery();
+				$query->select('COUNT(m.id) AS posts, MIN(m.hold) AS hold')
+					->from($this->_db->quoteName('#__kunena_messages', 'm'))
+					->where('m.thread=' . $this->_db->quote($this->id))
+					->group('m.thread');
 				$this->_db->setQuery((string) $query);
 
 				try
@@ -560,8 +563,12 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				// If message got deleted and was cached, we need to find new first post
 				$db    = Factory::getDBO();
-				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
+				$query  = $this->_db->getQuery();
+				$query->select('*')
+					->from($this->_db->quoteName('#__kunena_messages', 'm'))
+					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
+					->where('m.thread=' . $db->quote($this->id) . ' AND m.hold=' . $this->hold)
+					->order('m.time ASC, m.id ASC');
 				$db->setQuery($query, 0, 1);
 
 				try
@@ -588,8 +595,12 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				// If topic got deleted and was cached, we need to find new last post
 				$db    = Factory::getDBO();
-				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
+				$query  = $this->_db->getQuery();
+				$query->select('*')
+					->from($this->_db->quoteName('#__kunena_messages', 'm'))
+					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
+					->where('m.thread=' . $db->quote($this->id) . ' AND m.hold=' . $this->hold)
+					->order('m.time ASC, m.id ASC');
 				$db->setQuery($query, 0, 1);
 
 				try
@@ -853,7 +864,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   int|null $limitstart Null if all pages need to be active.
+	 * @param   int|void $limitstart Null if all pages need to be active.
 	 * @param   int      $limit      limit
 	 * @param   int      $display    display
 	 * @param   string   $prefix     prefix
@@ -885,7 +896,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   mixed  $category category
 	 * @param   string $action   action
 	 *
-	 * @return Joomla\CMS\Uri\Uri|null
+	 * @return Joomla\CMS\Uri\Uri|void
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
@@ -963,7 +974,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param   int         $mesid     mesid
-	 * @param   string|null $direction direction
+	 * @param   string|void $direction direction
 	 * @param   mixed       $hold      hold
 	 *
 	 * @return integer
@@ -1223,7 +1234,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   array|bool $fields     fields
 	 * @param   mixed      $user       user
-	 * @param   array|null $safefields safefields
+	 * @param   array|void $safefields safefields
 	 *
 	 * @return KunenaForumMessage
 	 * @throws null
@@ -1743,8 +1754,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$target->poll_id = $this->poll_id;
 
 				// Note: Do not remove poll from shadow: information could still be used to show icon etc
-
-				$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->quote($target->id)} WHERE `threadid`={$this->_db->quote($this->id)}";
+				$query  = $this->_db->getQuery();
+				$query->update($this->_db->quoteName('#__kunena_polls'))
+					->set('threadid=' . $this->_db->quote($target->id))
+					->where('threadid=' . $this->_db->quote($this->id));
 				$this->_db->setQuery((string) $query);
 
 				try
@@ -1901,7 +1914,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return false;
 		}
 
-		$query = "UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
+		$query  = $this->_db->getQuery();
+		$query->update($this->_db->quoteName('#__kunena_polls_options'))
+			->set('votes=0')
+			->where('pollid=' . $this->_db->quote($this->poll_id));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -1915,7 +1931,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return false;
 		}
 
-		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
+		$query  = $this->_db->getQuery();
+		$query->delete($this->_db->quoteName('#__kunena_polls_users'))
+			->where('pollid=' . $this->_db->quote($this->poll_id));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -1935,7 +1953,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
 	 */
 	protected function authoriseNotExists(KunenaUser $user)
@@ -1952,7 +1970,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -1987,7 +2005,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
 	 */
 	protected function authoriseNotHold(KunenaUser $user)
@@ -2004,7 +2022,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
 	 */
 	protected function authoriseNotMoved(KunenaUser $user)
@@ -2021,7 +2039,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2039,7 +2057,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2065,7 +2083,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
 	 */
 	protected function authorisePoll(KunenaUser $user)
@@ -2108,7 +2126,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2167,7 +2185,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2189,7 +2207,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|NULL
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -2213,7 +2231,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|void
 	 * @throws Exception
 	 * @since Kunena
 	 */

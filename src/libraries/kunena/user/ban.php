@@ -23,6 +23,8 @@ jimport('joomla.utilities.date');
  *
  * @property    integer $expiration
  * @property    integer $created_time
+ * @property    integer $created_by
+ * @property    integer $userid
  *
  * @since Kunena
  */

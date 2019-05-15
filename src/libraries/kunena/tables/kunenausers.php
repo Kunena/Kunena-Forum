@@ -493,10 +493,11 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
-			FROM #__users AS u
-			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
-			WHERE u.id = {$this->$k}";
+		$query  = $this->_db->getQuery();
+		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
+			->from($this->_db->quoteName('#__users' , 'u'))
+			->leftJoin($this->_db->quoteName($this->_tbl , 'ku') . 'ON u.id = ku.userid')
+			->where('u.id = ' . $this->$k);
 		$this->_db->setQuery((string) $query);
 
 		try

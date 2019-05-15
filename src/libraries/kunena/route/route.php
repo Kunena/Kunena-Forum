@@ -102,7 +102,7 @@ abstract class KunenaRoute
 	public static $default = false;
 
 	/**
-	 * @var null
+	 * @var mixed
 	 * @since Kunena
 	 */
 	public static $active = null;

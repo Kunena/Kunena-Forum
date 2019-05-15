@@ -62,7 +62,6 @@ abstract class KunenaModule
 		// Load CSS only once
 		if (static::$css)
 		{
-			/** @noinspection PhpDeprecationInspection */
 			$this->document->addStyleSheet(Uri::root(true) . static::$css);
 			static::$css = null;
 		}

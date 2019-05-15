@@ -37,7 +37,7 @@ class KunenaUploadHelper
 	 * @param   string $uploadfolder upload
 	 * @param   string $format       format
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @since Kunena
 	 */
 	public static function upload($file, $uploadfolder, $format)
@@ -50,7 +50,7 @@ class KunenaUploadHelper
 		jimport('joomla.client.helper');
 		Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
 
-		// Make the filename safe		
+		// Make the filename safe
 		$file['name'] = File::makeSafe($file['name']);
 
 		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error']))

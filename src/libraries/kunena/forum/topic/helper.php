@@ -27,8 +27,8 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Returns KunenaForumTopic object.
 	 *
-	 * @param   int  $identifier The topic to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   int   $identifier  The topic to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
@@ -65,13 +65,13 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids   ids
-	 * @param   bool  $value value
-	 * @param   mixed $user  user
+	 * @param   mixed  $ids    ids
+	 * @param   bool   $value  value
+	 * @param   mixed  $user   user
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
 	{
@@ -96,13 +96,13 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids   ids
-	 * @param   bool  $value value
-	 * @param   mixed $user  user
+	 * @param   mixed  $ids    ids
+	 * @param   bool   $value  value
+	 * @param   mixed  $user   user
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function favorite($ids, $value = true, $user = null)
 	{
@@ -127,13 +127,13 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed  $ids       ids
-	 * @param   string $authorise authorise
+	 * @param   mixed   $ids        ids
+	 * @param   string  $authorise  authorise
 	 *
 	 * @return KunenaForumTopic[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public static function getTopics($ids = false, $authorise = 'read')
 	{
@@ -170,11 +170,11 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadTopics(array $ids)
 	{
@@ -195,7 +195,10 @@ abstract class KunenaForumTopicHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
+		$query  = $db->getQuery();
+		$query->select('*')
+			->from($db->quoteName('#__kunena_topics'))
+			->where('id IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -225,12 +228,12 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids  ids
-	 * @param   mixed $user user
+	 * @param   mixed  $ids   ids
+	 * @param   mixed  $user  user
 	 *
 	 * @return KunenaForumTopicUser[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getUserTopics($ids = false, $user = null)
 	{
@@ -243,15 +246,15 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $categories categories
-	 * @param   int   $limitstart limitstart
-	 * @param   int   $limit      limit
-	 * @param   array $params     params
+	 * @param   mixed  $categories  categories
+	 * @param   int    $limitstart  limitstart
+	 * @param   int    $limit       limit
+	 * @param   array  $params      params
 	 *
 	 * @return array|KunenaForumTopic[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -394,17 +397,21 @@ abstract class KunenaForumTopicHelper
 		// Get items
 		if ($whereuser)
 		{
-			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
-				FROM #__kunena_user_topics AS ut
-				INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
-				WHERE {$where} ORDER BY {$orderby}";
+			$query  = $db->getQuery();
+			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
+				->from($db->quoteName('#__kunena_user_topics', 'ut'))
+				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON tt.id=ut.topic_id')
+				->where($where)
+				->group($orderby);
 		}
 		else
 		{
-			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
-				FROM #__kunena_topics AS tt
-				LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$db->quote($user->userid)}
-				WHERE {$where} ORDER BY {$orderby}";
+			$query  = $db->getQuery();
+			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
+				->from($db->quoteName('#__kunena_topics', 'tt'))
+				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . 'ON tt.id=ut.topic_id AND ut.user_id=' . $db->quote($user->userid))
+				->where($where)
+				->group($orderby);
 		}
 
 		$db->setQuery($query, $limitstart, $limit);
@@ -441,11 +448,11 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to delete selected topics.
 	 *
-	 * @param   array|int $ids ids
+	 * @param   array|int  $ids  ids
 	 *
 	 * @return integer    Count of deleted topics.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function delete($ids)
 	{
@@ -512,11 +519,11 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to trash topics. They will be marked as deleted, but still exist in database.
 	 *
-	 * @param   array|int $ids ids
+	 * @param   array|int  $ids  ids
 	 *
 	 * @return integer    Count of trashed topics.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function trash($ids)
 	{
@@ -559,8 +566,8 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -568,13 +575,13 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   mixed $ids   ids
-	 * @param   int   $start start
-	 * @param   int   $end   end
+	 * @param   mixed  $ids    ids
+	 * @param   int    $start  start
+	 * @param   int    $end    end
 	 *
 	 * @return boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
 	{
@@ -608,22 +615,23 @@ abstract class KunenaForumTopicHelper
 		}
 
 		// Mark all empty topics as deleted
-		$query = "UPDATE #__kunena_topics AS tt
-			LEFT JOIN #__kunena_messages AS m ON m.thread=tt.id AND tt.hold=m.hold
-			SET tt.hold = 4,
+		$query  = $db->getQuery();
+		$query->update($db->quoteName('#__kunena_topics', 'tt'))
+			->leftJoin($db->quoteName('#__kunena_messages', 'm'). 'ON m.thread=tt.id AND tt.hold=m.hold')
+			->set('tt.hold = 4,
 				tt.posts = 0,
 				tt.attachments = 0,
 				tt.first_post_id = 0,
 				tt.first_post_time = 0,
 				tt.first_post_userid = 0,
-				tt.first_post_message = '',
-				tt.first_post_guest_name = '',
+				tt.first_post_message = \'\',
+				tt.first_post_guest_name = \'\',
 				tt.last_post_id = 0,
 				tt.last_post_time = 0,
 				tt.last_post_userid = 0,
-				tt.last_post_message = '',
-				tt.last_post_guest_name = ''
-			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
+				tt.last_post_message = \'\',
+				tt.last_post_guest_name = \'\'')
+			->where('tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL ' . $topics . ' ' . $threads);
 		$db->setQuery((string) $query);
 
 		try
@@ -706,12 +714,12 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param   array $topics Topics
-	 * @param   mixed $user   User
+	 * @param   array  $topics  Topics
+	 * @param   mixed  $user    User
 	 *
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function fetchNewStatus(array $topics, $user = null)
 	{
@@ -748,12 +756,13 @@ abstract class KunenaForumTopicHelper
 			$idstr = implode(",", $ids);
 
 			$db = Factory::getDBO();
-			$db->setQuery("SELECT m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread
-				FROM #__kunena_messages AS m
-				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->quote($user->userid)}
-				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
-				GROUP BY thread"
-			);
+			$query  = $db->getQuery();
+			$query->select('m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread')
+				->from($db->quoteName('#__kunena_messages', 'm'))
+				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . 'ON ur.topic_id=m.thread AND user_id=' . $db->quote($user->userid))
+				->where('m.hold=0 AND m.moved=0 AND m.thread IN (' . $idstr . ') AND m.time>' . $db->quote($session->getAllReadTime()) . ' AND (ur.time IS NULL OR m.time>ur.time)')
+				->group('thread');
+			$db->setQuery((string) $query);
 
 			try
 			{

@@ -141,7 +141,7 @@ class KunenaView extends HtmlView
 	 * @param   null $layout layout
 	 * @param   null $tpl    tmpl
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -486,7 +486,7 @@ class KunenaView extends HtmlView
 	 * @param   string $layout   layout
 	 * @param   null   $template template
 	 *
-	 * @return KunenaLayout|KunenaView
+	 * @return KunenaLayout|KunenaView|void
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -546,7 +546,7 @@ class KunenaView extends HtmlView
 	 *                             automatically searches the template paths and compiles as needed.
 	 * @param   array  $hmvcParams Extra parameters for HMVC.
 	 *
-	 * @return string The output of the the template script.
+	 * @return string|void The output of the the template script.
 	 * @since Kunena
 	 * @throws Exception
 	 */

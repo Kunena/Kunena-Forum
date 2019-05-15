@@ -307,13 +307,15 @@ class KunenaForumStatistics
 		{
 			$todaystart     = strtotime(date('Y-m-d'));
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
-			$this->_db->setQuery("SELECT
-				SUM(time>={$todaystart} AND parent=0) AS todayTopicCount,
-				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
-				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
-				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0"
-			);
+
+			$query  = $this->_db->getQuery();
+			$query->select('SUM(time>=' . $todaystart . ' AND parent=0) AS todayTopicCount,
+				SUM(time>=' . $todaystart . ' AND parent>0) AS todayReplyCount,
+				SUM(time>=' . $yesterdaystart . ' AND time<' . $todaystart . '  AND parent=0) AS yesterdayTopicCount,
+				SUM(time>=' . $yesterdaystart . '  AND time<' . $todaystart . '  AND parent>0) AS yesterdayReplyCount')
+				->from($this->_db->quoteName('#__kunena_messages'))
+				->where('time>={$yesterdaystart} AND hold=0');
+			$this->_db->setQuery((string) $query);
 
 			try
 			{
@@ -423,12 +425,14 @@ class KunenaForumStatistics
 
 		if ($this->topPolls < $limit)
 		{
-			$query = "SELECT poll.threadid AS id, SUM(opt.votes) AS count
-					FROM #__kunena_polls_options AS opt
-					INNER JOIN #__kunena_polls AS poll ON poll.id=opt.pollid
-					GROUP BY pollid
-					HAVING count > 0
-					ORDER BY count DESC";
+			$db = Factory::getDBO();
+			$query  = $db->getQuery();
+			$query->select('poll.threadid AS id, SUM(opt.votes) AS count')
+				->from($db->quoteName('#__kunena_polls_options', 'opt'))
+				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . 'ON poll.id=opt.pollid')
+				->group('pollid')
+				->having('count > 0')
+				->order('count DESC');
 			$this->_db->setQuery($query, 0, $limit);
 
 			try

@@ -32,7 +32,7 @@ abstract class JHtmlKunenaForum
 	 * @param   bool   $idtag     idtag
 	 * @param   bool   $translate translate
 	 *
-	 * @return string
+	 * @return string|void
 	 * @throws null
 	 * @since Kunena
 	 */

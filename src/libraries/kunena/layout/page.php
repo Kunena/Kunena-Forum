@@ -145,7 +145,6 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @return $this
 	 * @throws Exception
 	 * @since Kunena
-	 * @throws null
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{

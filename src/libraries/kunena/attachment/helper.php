@@ -673,7 +673,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('userid') . ' = ' . $user->userid . $filetype . $orderby);

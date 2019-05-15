@@ -609,7 +609,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		// Update catid in all messages
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . 'ON tt.id=m.thread')
 			->set('m.catid=tt.category_id ' . $where);
@@ -646,7 +646,7 @@ abstract class KunenaForumMessageHelper
 		$db = Factory::getDBO();
 
 		$idlist = implode(',', $ids);
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')

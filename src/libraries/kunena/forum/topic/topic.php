@@ -462,7 +462,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		if (!$this->moved_id)
 		{
 			// Recount total posts and attachments
-			$query  = $this->_db->getQuery();
+			$query  = $this->_db->getQuery(true);
 			$query->select('COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments')
 				->from($this->_db->quoteName('#__kunena_messages', 'm'))
 				->leftJoin($this->_db->quoteName('#__kunena_attachments', 'a') . 'ON m.id=a.mesid')
@@ -486,7 +486,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$this->posts = 0;
 
 				// Double check if all posts have been removed from the database
-				$query  = $this->_db->getQuery();
+				$query  = $this->_db->getQuery(true);
 				$query->select('COUNT(m.id) AS posts, MIN(m.hold) AS hold')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
 					->where('m.thread=' . $this->_db->quote($this->id))
@@ -563,7 +563,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				// If message got deleted and was cached, we need to find new first post
 				$db    = Factory::getDBO();
-				$query  = $this->_db->getQuery();
+				$query  = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
 					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
@@ -595,7 +595,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				// If topic got deleted and was cached, we need to find new last post
 				$db    = Factory::getDBO();
-				$query  = $this->_db->getQuery();
+				$query  = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
 					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
@@ -1754,7 +1754,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$target->poll_id = $this->poll_id;
 
 				// Note: Do not remove poll from shadow: information could still be used to show icon etc
-				$query  = $this->_db->getQuery();
+				$query  = $this->_db->getQuery(true);
 				$query->update($this->_db->quoteName('#__kunena_polls'))
 					->set('threadid=' . $this->_db->quote($target->id))
 					->where('threadid=' . $this->_db->quote($this->id));
@@ -1914,7 +1914,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return false;
 		}
 
-		$query  = $this->_db->getQuery();
+		$query  = $this->_db->getQuery(true);
 		$query->update($this->_db->quoteName('#__kunena_polls_options'))
 			->set('votes=0')
 			->where('pollid=' . $this->_db->quote($this->poll_id));
@@ -1931,7 +1931,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			return false;
 		}
 
-		$query  = $this->_db->getQuery();
+		$query  = $this->_db->getQuery(true);
 		$query->delete($this->_db->quoteName('#__kunena_polls_users'))
 			->where('pollid=' . $this->_db->quote($this->poll_id));
 		$this->_db->setQuery((string) $query);

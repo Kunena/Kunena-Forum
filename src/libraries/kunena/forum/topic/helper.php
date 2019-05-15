@@ -615,7 +615,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		// Mark all empty topics as deleted
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_topics', 'tt'))
 			->leftJoin($db->quoteName('#__kunena_messages', 'm'). 'ON m.thread=tt.id AND tt.hold=m.hold')
 			->set('tt.hold = 4,
@@ -756,7 +756,7 @@ abstract class KunenaForumTopicHelper
 			$idstr = implode(",", $ids);
 
 			$db = Factory::getDBO();
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread')
 				->from($db->quoteName('#__kunena_messages', 'm'))
 				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . 'ON ur.topic_id=m.thread AND user_id=' . $db->quote($user->userid))

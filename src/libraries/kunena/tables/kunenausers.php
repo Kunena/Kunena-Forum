@@ -493,7 +493,7 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Load the user data.
-		$query  = $this->_db->getQuery();
+		$query  = $this->_db->getQuery(true);
 		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
 			->from($this->_db->quoteName('#__users' , 'u'))
 			->leftJoin($this->_db->quoteName($this->_tbl , 'ku') . 'ON u.id = ku.userid')
@@ -519,7 +519,7 @@ class TableKunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data['posts'] !== null)
+		if ($data !== null)
 		{
 			$this->_exists = true;
 		}

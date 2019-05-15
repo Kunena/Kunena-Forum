@@ -426,7 +426,7 @@ class KunenaForumStatistics
 		if ($this->topPolls < $limit)
 		{
 			$db = Factory::getDBO();
-			$query  = $db->getQuery();
+			$query  = $db->getQuery(true);
 			$query->select('poll.threadid AS id, SUM(opt.votes) AS count')
 				->from($db->quoteName('#__kunena_polls_options', 'opt'))
 				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . 'ON poll.id=opt.pollid')

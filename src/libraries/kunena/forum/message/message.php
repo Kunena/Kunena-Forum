@@ -1508,7 +1508,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			// Ignore identical messages (posted within 5 minutes)
 			$duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
-			$query  = $this->_db->getQuery();
+			$query  = $this->_db->getQuery(true);
 			$query->select('m.id')
 				->from($this->_db->quoteName('#__kunena_messages', 'm'))
 				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')

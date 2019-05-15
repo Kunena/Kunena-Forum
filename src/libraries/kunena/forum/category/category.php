@@ -1711,7 +1711,6 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		}
 
 		$db    = Factory::getDbo();
-		$query  = $db->getQuery();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->quote($alias)},'catid',{$db->quote($this->id)})";
 		$db->setQuery((string) $query);
 

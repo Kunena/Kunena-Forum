@@ -337,7 +337,7 @@ abstract class KunenaForumCategoryHelper
 		}
 
 		// Get total count
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('COUNT(DISTINCT c.id)')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -368,7 +368,7 @@ abstract class KunenaForumCategoryHelper
 			$limitstart = intval($total / $limit) * $limit;
 		}
 
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('c.id')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -434,7 +434,7 @@ abstract class KunenaForumCategoryHelper
 
 		$catlist = implode(',', array_keys($catlist));
 		$db      = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
 			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id=t.category_id AND uc.user_id=' . $db->quote($user->userid))

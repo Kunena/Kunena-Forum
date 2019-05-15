@@ -76,7 +76,7 @@ class KunenaInstaller
 
 		// Get installed version.
 		$db = Factory::getDBO();
-		$query  = $db->getQuery();
+		$query  = $db->getQuery(true);
 		$query->select('version')
 			->from($db->quoteName('#__kunena_version'))
 			->where('state=\'\'')

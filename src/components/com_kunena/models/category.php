@@ -252,12 +252,11 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$catlist = implode(',', $modcats);
 				$db      = Factory::getDBO();
-				$db->setQuery(
-					"SELECT catid, COUNT(*) AS count
-				FROM #__kunena_messages
-				WHERE catid IN ({$catlist}) AND hold=1
-				GROUP BY catid"
-				);
+				$query = $db->getQuery(true);
+				$query->select('catid, COUNT(*) AS count')
+					->from($db->quoteName('#__kunena_messages'))
+					->where('catid IN (' . $catlist . ') AND hold=1');
+				$db->setQuery($query);
 
 				try
 				{

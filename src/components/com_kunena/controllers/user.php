@@ -1356,7 +1356,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   mixed   $user      user
 	 * @param   string  $evidence  evidence
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 * @since Kunena
 	 */
 	protected function report($user, string $evidence = '')
@@ -1370,7 +1370,14 @@ class KunenaControllerUser extends KunenaController
 
 		// TODO: remove this query by getting the ip of user by an another way
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $user->userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$query = $db->getQuery(true);
+		$query->select('ip')
+			->from($db->quoteName('#__kunena_messages'))
+			->where('userid=' . $user->userid)
+		->group('ip')
+		->order('time DESC');
+		$db->setQuery($query, 0, 1);
+
 		$ip = $db->loadResult();
 
 		if (!empty($ip))

@@ -36,7 +36,11 @@ class KunenaAdminModelUser extends KunenaModel
 		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
 
-		$db->setQuery("SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1");
+		$query = $db->getQuery(true);
+		$query->select('topic_id AS thread')
+			->from($db->quoteName('#__kunena_user_topics'))
+			->where('user_id=' . $userid . ' AND subscribed=1');
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -90,7 +94,12 @@ class KunenaAdminModelUser extends KunenaModel
 		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
 
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip");
+		$query = $db->getQuery(true);
+		$query->select('ip')
+			->from($db->quoteName('#__kunena_messages'))
+			->where('userid=' . $userid)
+		->group('ip');
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -108,7 +117,13 @@ class KunenaAdminModelUser extends KunenaModel
 		if ($iplist)
 		{
 			$iplist = "'{$iplist}'";
-			$db->setQuery("SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip");
+			$query = $db->getQuery(true);
+			$query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
+				->from($db->quoteName('#__kunena_messages', 'm'))
+				->innerJoin($db->quoteName('#__users', 'u') . 'ON m.userid=u.id')
+				->where('m.ip IN (' . $iplist . ')')
+				->group('m.userid,m.ip');
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -180,7 +195,7 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|mixed
+	 * @return array|mixed|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -190,7 +205,11 @@ class KunenaAdminModelUser extends KunenaModel
 		$user = $this->getUser();
 
 		// Grab all special ranks
-		$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_special = '1'");
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_ranks'))
+			->where('rank_special = \'1\'');
+		$db->setQuery((string) $query);
 
 		try
 		{
@@ -227,7 +246,7 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|string
+	 * @return array|string|void
 	 * @throws Exception
 	 * @since Kunena
 	 */
@@ -243,7 +262,11 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 
 		$userids = implode(',', $userids);
-		$db->setQuery("SELECT id,username FROM #__users WHERE id IN(" . $userids . ")");
+		$query = $db->getQuery(true);
+		$query->select('id,username')
+			->from($db->quoteName('#__users'))
+			->where('id IN(' . $userids . ')');
+		$db->setQuery((string) $query);
 
 		try
 		{

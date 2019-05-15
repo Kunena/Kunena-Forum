@@ -110,7 +110,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return boolean|null|string
+	 * @return boolean|void|string
 	 * @since Kunena
 	 */
 	public function getFileLessParsed()
@@ -130,7 +130,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return boolean|null|string
+	 * @return boolean|void|string
 	 * @since Kunena
 	 */
 	public function getFileContentParsed()

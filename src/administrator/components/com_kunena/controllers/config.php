@@ -88,7 +88,7 @@ class KunenaAdminControllerConfig extends KunenaController
 
 		$post_config = $this->app->input->post->getArray();
 
-		// TODO: fix depricated value
+		// TODO: fix deprecated value
 		foreach ($post_config as $postsetting => $postvalue)
 		{
 			if (Joomla\String\StringHelper::strpos($postsetting, 'cfg_') === 0)

@@ -21,10 +21,11 @@ use Joomla\CMS\Language\Text;
 class KunenaAdminViewAttachments extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

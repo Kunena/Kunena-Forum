@@ -23,9 +23,10 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 {
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{

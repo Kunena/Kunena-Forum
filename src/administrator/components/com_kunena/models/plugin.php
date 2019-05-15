@@ -56,9 +56,10 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	protected $event_before_save = 'onExtensionBeforeSave';
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -309,7 +310,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   mixed  $data  The data expected for the form.
 	 * @param   string $group Form group.
 	 *
-	 * @return  mixed  True if successful.
+	 * @return  mixed|void  True if successful.
 	 * @throws    Exception if there is an error in the form event.
 	 * @since   1.6
 	 */

@@ -136,7 +136,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		if (!$rankid)
 		{
 			$query  = $db->getQuery(true)
-				->insert("{$db->qn('#__kunena_ranks')}")
+				->insert("{$db->quoteName('#__kunena_ranks')}")
 				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}");
 
 			$db->setQuery((string) $query);
@@ -155,7 +155,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		else
 		{
 			$query  = $db->getQuery(true)
-				->update("{$db->qn('#__kunena_ranks')}")
+				->update("{$db->quoteName('#__kunena_ranks')}")
 				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}")
 				->where("rank_id={$db->quote($rankid)}");
 
@@ -247,7 +247,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		{
 			$query  = $db->getQuery(true)
 				->delete()
-				->from("{$db->qn('#__kunena_ranks')}")
+				->from("{$db->quoteName('#__kunena_ranks')}")
 				->where("rank_id IN ($cids)");
 
 			$db->setQuery((string) $query);

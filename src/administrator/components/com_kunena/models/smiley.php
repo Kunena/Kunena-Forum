@@ -69,7 +69,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 	}
 
 	/**
-	 * @return  mixed|null
+	 * @return  mixed|void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -82,7 +82,11 @@ class KunenaAdminModelSmiley extends KunenaModel
 
 		if ($id)
 		{
-			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
+			$query = $db->getQuery(true);
+			$query->select('*')
+				->from($db->quoteName('#__kunena_smileys'))
+				->where('id=' . $db->quote($id));
+			$db->setQuery((string) $query);
 
 			try
 			{

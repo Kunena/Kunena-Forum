@@ -463,7 +463,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get the default joomla template.
 	 *
-	 * @return boolean|stdClass
+	 * @return boolean|stdClass|void
 	 *
 	 * @throws Exception
 	 * @since    1.6
@@ -473,8 +473,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$db = Factory::getDBO();
 
 		// Get Joomla! frontend assigned template
-		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
-
+		$query = $db->getQuery(true);
+		$query->select('template')
+			->from($db->quoteName('#__template_styles'))
+			->where('client_id=0 AND home=1');
 		$db->setQuery((string) $query);
 
 		try
@@ -567,7 +569,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to check the tables collation.
 	 *
-	 * @return    string
+	 * @return    string|void
 	 *
 	 * @throws Exception
 	 * @since    1.6

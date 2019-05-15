@@ -33,10 +33,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config construct
+	 * @param   array  $config  construct
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,11 +47,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Edit
 	 *
-	 * @throws Exception
-	 *
 	 * @return boolean|void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function edit()
@@ -64,8 +64,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -84,11 +84,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function save()
@@ -174,11 +174,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Apply
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 */
 	public function apply()
 	{
@@ -273,11 +273,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Trash menu
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function trashusermessages()
@@ -320,11 +320,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Move
 	 *
-	 * @throws Exception
-	 *
 	 * @return  void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function move()
@@ -356,11 +356,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Move Messages
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function movemessages()
@@ -427,11 +427,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Logout
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function logout()
@@ -446,7 +446,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$cid = $this->input->get('cid', array(), 'array');
 		$cid = ArrayHelper::toInteger($cid, array());
-		$id = array_shift($cid);
+		$id  = array_shift($cid);
 
 		if ($id <= 0)
 		{
@@ -466,11 +466,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function remove()
@@ -546,11 +546,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Ban
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function ban()
@@ -563,8 +563,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -607,11 +607,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Unban
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function unban()
@@ -624,8 +624,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -675,54 +675,54 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	public function moderate()
 	{
-	    if (!Session::checkToken('post'))
-	    {
-	        $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-	        return;
-	    }
+			return;
+		}
 
-	    $modCatids    = $this->app->input->get('catid', array(), 'post', 'array');
-	    $modCatids    = ArrayHelper::toInteger($modCatids);
+		$modCatids = $this->app->input->get('catid', array(), 'post', 'array');
+		$modCatids = ArrayHelper::toInteger($modCatids);
 
-	    $cid = $this->app->input->get('cid', array(), 'post', 'array');
-	    $cid = ArrayHelper::toInteger($cid);
-	    $userid = array_shift($cid);
+		$cid    = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid    = ArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
-	    if ($userid <= 0)
-	    {
-	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		if ($userid <= 0)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-	        return;
-	    }
+			return;
+		}
 
-	    if ($userid <= 0)
-	    {
-	        $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-	        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		if ($userid <= 0)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-	        return;
-	    }
+			return;
+		}
 
-	    $user = KunenaUserHelper::get($userid);
+		$user = KunenaUserHelper::get($userid);
 
-	    $this->setModerate($user, $modCatids);
+		$this->setModerate($user, $modCatids);
 
-	    $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'));
 
-	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
 	 * Unmoderate
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    5.1
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function unmoderate()
@@ -735,8 +735,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'post', 'array');
-		$cid = ArrayHelper::toInteger($cid);
+		$cid    = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid    = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -747,7 +747,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$user = KunenaUserHelper::get($userid);
+		$user     = KunenaUserHelper::get($userid);
 		$category = null;
 
 		if ($category instanceof KunenaForumCategory)
@@ -794,11 +794,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Block
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function block()
@@ -811,8 +811,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -855,11 +855,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Unblock
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function unblock()
@@ -872,8 +872,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -916,11 +916,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Batch Moderators
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function batch_moderators()
@@ -933,8 +933,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid    = $this->input->get('cid', array(), 'array');
+		$cid    = ArrayHelper::toInteger($cid, array());
 		$catids = $this->input->get('catid', array(), 'array');
 		$catids = ArrayHelper::toInteger($catids, array());
 
@@ -984,8 +984,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since K4.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function cancel()
@@ -996,11 +996,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove categories subscriptions for the users selected
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function removecatsubscriptions()
@@ -1043,11 +1043,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove topics subscriptions for the users selected
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function removetopicsubscriptions()
@@ -1090,11 +1090,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Subscribe users to categories selected
 	 *
+	 * @return void
 	 * @since 5.1.8
 	 *
-	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function subscribeuserstocategories()
@@ -1109,8 +1109,8 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$userids = $this->app->input->get('cid', array(), 'post', 'array');
 		$userids = ArrayHelper::toInteger($userids);
-		$catids = $this->app->input->get('catid', array(), 'post', 'array');
-		$catids = ArrayHelper::toInteger($catids);
+		$catids  = $this->app->input->get('catid', array(), 'post', 'array');
+		$catids  = ArrayHelper::toInteger($catids);
 
 		if (empty($userids))
 		{
@@ -1186,26 +1186,27 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * Set moderator rights on the user given
 	 *
 	 * @param $user
+	 *
 	 * @return boolean
 	 *
 	 * @since Kunena 5.1
 	 */
 	protected function setModerate(KunenaUser $user, $modCatids)
 	{
-	    // Update moderator rights
-	    $categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		// Update moderator rights
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
 
-	    foreach ($categories as $category)
-	    {
-	        $category->setModerator($user, in_array($category->id, $modCatids));
-	    }
+		foreach ($categories as $category)
+		{
+			$category->setModerator($user, in_array($category->id, $modCatids));
+		}
 
-	    // Global moderator is a special case
-	    if ($this->me->isAdmin())
-	    {
-	        KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
-	    }
+		// Global moderator is a special case
+		if ($this->me->isAdmin())
+		{
+			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+		}
 
-	    return true;
+		return true;
 	}
 }

@@ -27,10 +27,12 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array $config An optional associative array of configuration settings.
-	 *
 	 * @see        JController
+	 *
+	 * @param   array  $config  An optional associative array of configuration settings.
+	 *
 	 * @since      Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{

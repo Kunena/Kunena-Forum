@@ -731,9 +731,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function uninstallModule($name)
 	{
-		$query = "SELECT extension_id FROM `#__extensions` WHERE type='module' AND element='{$name}'";
-		$this->db->setQuery((string) $query);
-		$moduleid = $this->db->loadResult();
+		$db = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from($db->quoteName('#__extensions'))
+			->where('type=\'module\' AND element=\' ' . $name);
+		$db->setQuery((string) $query);
+
+		$moduleid = $db->loadResult();
 
 		if ($moduleid)
 		{
@@ -750,9 +755,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function uninstallPlugin($folder, $name)
 	{
-		$query = "SELECT extension_id FROM `#__extensions` WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
-		$this->db->setQuery((string) $query);
-		$pluginid = $this->db->loadResult();
+		$db = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from($db->quoteName('#__extensions'))
+			->where('type=\'plugin\'  AND folder=\'' . $folder .'\' AND element=\'' . $name);
+		$db->setQuery((string) $query);
+
+		$pluginid = $db->loadResult();
 
 		if ($pluginid)
 		{
@@ -1225,7 +1235,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
-		/** @var Joomla\CMS\Cache\Cache | Joomla\CMS\Cache\CacheController $cache */
+
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 
@@ -1936,8 +1946,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			'media/kunena/attachments/legacy',
 		);
 
-		$query = "SELECT COUNT(*) FROM `#__kunena_attachments`
-			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
+		$query = $this->db->getQuery(true);
+		$query->select('COUNT(*)')
+			->from($this->db->quoteName('#__kunena_attachments'))
+			->where('id > ' . $this->db->quote($stats->current). ' AND hash IS NULL');
 		$this->db->setQuery((string) $query);
 
 		try
@@ -1977,8 +1989,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			}
 		}
 
-		$query = "SELECT * FROM `#__kunena_attachments`
-			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
+		$query = $this->db->getQuery(true);
+		$query->select('COUNT(*)')
+			->from($this->db->quoteName('#__kunena_attachments'))
+			->where('id > ' . $this->db->quote($stats->current). ' AND hash IS NULL');
 		$this->db->setQuery($query, 0, 251);
 
 		try
@@ -2070,8 +2084,11 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 				$stat  = stat($destfile);
 				$size  = (int) $stat['size'];
 				$hash  = md5_file($destfile);
-				$query = "UPDATE `#__kunena_attachments` SET folder='media/kunena/attachments/legacy/{$lastpath}', size={$this->db->quote($size)}, hash={$this->db->quote($hash)}, filetype={$this->db->quote($attachment->filetype)}
-					WHERE id={$this->db->quote($attachment->id)}";
+				$query = $this->db->getQuery(true);
+				$query->update($this->db->quoteName('#__kunena_attachments'))
+					->set('folder=\'media/kunena/attachments/legacy/' . $lastpath .'\', size=' .
+						$this->db->quote($size) . ', hash=' . $this->db->quote($hash) . ', filetype=' . $this->db->quote($attachment->filetype))
+					->where('id=' . $this->db->quote($attachment->id));
 				$this->db->setQuery((string) $query);
 
 				try

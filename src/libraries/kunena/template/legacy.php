@@ -28,7 +28,7 @@ class KunenaTemplateLegacy
 	}
 }
 
-$app = Factory::getApplication();
+$app = Factory::getApplication()->isClient('site');
 
 if (!defined('DS'))
 {

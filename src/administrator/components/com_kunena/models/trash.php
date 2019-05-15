@@ -51,7 +51,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
-	 * @return    array
+	 * @return    array|object
 	 * @throws Exception
 	 * @since    1.6
 	 * @throws null
@@ -175,8 +175,10 @@ class KunenaAdminModelTrash extends KunenaModel
 		$db   = Factory::getDBO();
 		$join = array();
 
-		$query = $db->getQuery(true)->select('a.id')->from('#__kunena_messages AS a');
-		$query->where('a.hold>=2');
+		$query = $db->getQuery(true)
+			->select('a.id')
+			->from($db->quoteName('#__kunena_messages', 'a'));
+		$query->where('a.hold >= 2');
 
 		$filter = $this->getState('filter.title');
 
@@ -268,12 +270,12 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (isset($join['tt']))
 		{
-			$query->innerJoin('#__kunena_topics AS tt ON tt.id=a.thread');
+			$query->innerJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON tt.id=a.thread');
 		}
 
 		if (isset($join['c']))
 		{
-			$query->innerJoin('#__kunena_categories AS c ON c.id=a.catid');
+			$query->innerJoin($db->quoteName('#__kunena_categories', 'c') . 'ON c.id=a.catid');
 		}
 
 		// TODO: add authorization.

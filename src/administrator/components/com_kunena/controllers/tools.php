@@ -33,10 +33,10 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -49,8 +49,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function diagnostics()
@@ -91,11 +91,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Prune
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function prune()
@@ -216,8 +216,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function syncusers()
@@ -239,13 +239,13 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($useradd)
 		{
-			$db->setQuery(
-				"INSERT INTO #__kunena_users (userid, showOnline)
-					SELECT a.id AS userid, 1 AS showOnline
-					FROM #__users AS a
-					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
-					WHERE b.userid IS NULL"
-			);
+			$query = $db->getQuery(true);
+			$query->insert($db->quoteName('#__kunena_users') . '(userid, showOnline)')
+				->select('a.id AS userid, 1 AS showOnline')
+				->from($db->quoteName('#__users', 'a'))
+				->leftJoin($db->quoteName('#__kunena_users', 'b') . 'ON b.userid=a.id')
+				->where('b.userid IS NULL');
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -263,10 +263,10 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdel)
 		{
-			$query  = $db->getQuery(true)
+			$query = $db->getQuery(true)
 				->delete('a')
-				->from("{$db->qn('#__kunena_users')} AS a")
-				->leftJoin("{$db->qn('#__users')} AS b ON a.userid=b.id")
+				->from($db->quoteName('#__kunena_users', 'a'))
+				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
 				->where('b.username IS NULL');
 
 			$db->setQuery((string) $query);
@@ -287,19 +287,29 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$db->setQuery(
-				"DELETE a
-			FROM #__kunena_users AS a
-			LEFT JOIN #__users AS b ON a.userid=b.id
-			WHERE banned='1000-01-01 00:00:00'"
-			);
-			$db->execute();
+			$query = $db->getQuery(true)
+				->delete('a')
+				->from($db->quoteName('#__kunena_users', 'a'))
+				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
+				->where('banned=\'1000-01-01 00:00:00\'');
+			$db->setQuery((string) $query);
 
-			$db->setQuery(
-				"DELETE a
-			FROM #__users AS a
-			WHERE block='1'"
-			);
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				$this->app->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			$query = $db->getQuery(true)
+				->delete('a')
+				->from($db->quoteName('#__users', 'a'))
+				->where('block=\'1\'');
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -319,10 +329,10 @@ class KunenaAdminControllerTools extends KunenaController
 		{
 			$queryName = $this->config->username ? "username" : "name";
 
-			$query  = $db->getQuery(true)
-				->update("{$db->qn('#__kunena_messages')} AS m")
-				->innerJoin("{$db->qn('#__users')} AS u")
-				->set("m.name = u.{$queryName}")
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__kunena_messages', 'm'))
+				->innerJoin($db->quoteName('#__users', 'u'))
+				->set('m.name = u.' . $queryName)
 				->where('m.userid = u.id');
 
 			$db->setQuery((string) $query);
@@ -343,10 +353,29 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
-			$db->execute();
+			$query = $db->getQuery(true)
+				->delete('a')
+				->from($db->quoteName('#__kunena_users', 'a'))
+				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
+				->where('banned=\'1000-01-01 00:00:00\'');
+			$db->setQuery((string) $query);
 
-			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
+			try
+			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				$this->app->enqueueMessage($e->getMessage());
+
+				return;
+			}
+
+			$query = $db->getQuery(true)
+				->delete('a')
+				->from($db->quoteName('#__users', 'a'))
+				->where('block=\'1\'');
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -370,8 +399,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function recount()
@@ -485,9 +514,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @since    2.0
 	 * @throws Exception
 	 *
-	 * @since    2.0
 	 * @throws null
 	 */
 	public function dorecount()
@@ -646,7 +675,7 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Check timeout
 	 *
-	 * @param   bool $stop stop
+	 * @param   bool  $stop  stop
 	 *
 	 * @return boolean
 	 *
@@ -683,8 +712,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function trashmenu()
@@ -704,8 +733,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function fixlegacy()
@@ -738,8 +767,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function purgeReStatements()
@@ -756,13 +785,13 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($re_string != null)
 		{
-			$db    = Factory::getDbo();
-			
-			$query  = $db->getQuery(true)
-				->update("{$db->qn('#__kunena_messages')}")
+			$db = Factory::getDbo();
+
+			$query = $db->getQuery(true)
+				->update("{$db->quoteName('#__kunena_messages')}")
 				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
 				->where("subject LIKE {$db->quote($re_string.'%')}");
-			
+
 			$db->setQuery((string) $query);
 
 			try
@@ -799,11 +828,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Clean ip
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function cleanupIP()
@@ -825,11 +854,11 @@ class KunenaAdminControllerTools extends KunenaController
 			$where      = 'WHERE time < ' . $clean_date;
 		}
 
-		$db    = Factory::getDbo();
-		
-		$query  = $db->getQuery(true)
-			->update("{$db->qn('#__kunena_messages')}")->set('ip=NULL')->where($where);
-		
+		$db = Factory::getDbo();
+
+		$query = $db->getQuery(true)
+			->update("{$db->quoteName('#__kunena_messages')}")->set('ip=NULL')->where($where);
+
 		$db->setQuery((string) $query);
 
 		try
@@ -850,7 +879,9 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($deleteipusers)
 		{
 			$db    = Factory::getDbo();
-			$query = "UPDATE #__kunena_users SET ip = NULL;";
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__kunena_users'))
+				->set('ip=NULL');
 			$db->setQuery((string) $query);
 
 			try
@@ -884,8 +915,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since K4.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function cancel()
@@ -898,8 +929,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since K4.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function uninstall()
@@ -952,8 +983,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function systemreport()

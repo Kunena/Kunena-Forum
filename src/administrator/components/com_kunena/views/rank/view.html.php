@@ -21,10 +21,11 @@ use Joomla\CMS\Language\Text;
 class KunenaAdminViewRank extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
 	 * @return mixed|void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

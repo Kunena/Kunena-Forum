@@ -21,9 +21,10 @@ use Joomla\CMS\Language\Text;
 class KunenaAdminViewEmail extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

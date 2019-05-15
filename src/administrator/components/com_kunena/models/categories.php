@@ -197,7 +197,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 				$query  = $db->getQuery(true)
 					->select('a.id, a.name')
-					->from("{$db->qn('#__kunena_categories')} AS a")
+					->from("{$db->quoteName('#__kunena_categories')} AS a")
 					->where("parent_id={$db->quote('0')}")
 					->where("id!={$db->quote($category->id)}")
 					->order('ordering');

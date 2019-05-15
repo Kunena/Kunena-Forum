@@ -70,7 +70,7 @@ class KunenaAdminModelRank extends KunenaModel
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return mixed|void
 	 *
 	 * @throws Exception
 	 * @since Kunena
@@ -83,7 +83,11 @@ class KunenaAdminModelRank extends KunenaModel
 
 		if ($id)
 		{
-			$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_id={$db->quote($id)}");
+			$query = $db->getQuery(true);
+			$query->select('*')
+				->from($db->quoteName('#__kunena_ranks'))
+				->where('rank_id=' . $db->quote($id));
+			$db->setQuery((string) $query);
 
 			try
 			{

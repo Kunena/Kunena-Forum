@@ -40,7 +40,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 		global $ueConfig;
 
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
 		{
 			return;
 		}

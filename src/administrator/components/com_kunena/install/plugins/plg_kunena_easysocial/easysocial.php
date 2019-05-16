@@ -43,7 +43,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0')))
 		{
 			return true;
 		}

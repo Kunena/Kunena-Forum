@@ -27,7 +27,7 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
 		{
 			return;
 		}

@@ -49,7 +49,7 @@ class KunenaControllerMisc extends KunenaController
 
 			if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml"))
 			{
-				$name = 'crypsis';
+				$name = 'aurelia';
 			}
 
 			setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);

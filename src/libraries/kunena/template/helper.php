@@ -186,7 +186,7 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
-	 * Check if crypsis template can be used on Joomla! version used
+	 * Check if aurelia template can be used on Joomla! version used
 	 *
 	 * @param   string $templatename The name of template which needs to be checked
 	 *
@@ -195,7 +195,7 @@ abstract class KunenaTemplateHelper
 	 */
 	public static function templateCanBeUsed($templatename)
 	{
-		if ($templatename == 'Crypsis')
+		if ($templatename == 'aurelia')
 		{
 			return false;
 		}

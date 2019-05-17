@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Crypsis
+ * @package         Kunena.Template.Aurelia
  * @subpackage      BBCode
  *
  * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.

@@ -39,7 +39,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @since    2.0
 	 */
-	protected $locked = array('crypsis');
+	protected $locked = array('aurelia');
 
 	/**
 	 * Construct

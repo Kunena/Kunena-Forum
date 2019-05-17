@@ -105,7 +105,7 @@ class KunenaConfig extends CMSObject
 	 * @var    string  Template; input, hidden
 	 * @since  1.0.0
 	 */
-	public $template = 'crypsis';
+	public $template = 'aurelia';
 
 	/**
 	 * @var    integer  Show announcement; select, boolean

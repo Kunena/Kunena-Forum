@@ -379,9 +379,9 @@ class KunenaTemplate extends CMSObject
 				&& !is_file(KPATH_SITE . "/template/{$templatename}/config/config.xml")
 			)
 			{
-				// If template xml doesn't exist, raise warning and use Crypsis instead
+				// If template xml doesn't exist, raise warning and use aurelia instead
 				$file         = JPATH_THEMES . "/{$app->getTemplate()}/html/com_kunena/template.php";
-				$templatename = 'crypsis';
+				$templatename = 'aurelia';
 				$classname    = "KunenaTemplate{$templatename}";
 
 				if (is_dir(KPATH_SITE . "/template/{$templatename}"))
@@ -396,8 +396,8 @@ class KunenaTemplate extends CMSObject
 
 				if (!is_file($file))
 				{
-					$classname = "KunenaTemplateCrypsis";
-					$file      = KPATH_SITE . "/template/crypsis/template.php";
+					$classname = "KunenaTemplateaurelia";
+					$file      = KPATH_SITE . "/template/aurelia/template.php";
 				}
 
 				if (is_file($file))

@@ -1012,7 +1012,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 					if ($dest == KUNENA_INSTALLER_SITEPATH)
 					{
-						$this->deleteFolder("$dest/template/crypsis", array('params.ini'));
+						$this->deleteFolder("$dest/template/aurelia", array('params.ini'));
 					}
 				}
 

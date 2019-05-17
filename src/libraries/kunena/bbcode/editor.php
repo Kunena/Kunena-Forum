@@ -161,7 +161,7 @@ class KunenaBbcodeEditor
 	 */
 	public function initializeHMVC()
 	{
-		$xml_file = simplexml_load_file(dirname(__FILE__) . '/crypsis_editor.xml');
+		$xml_file = simplexml_load_file(dirname(__FILE__) . '/aurelia_editor.xml');
 
 		$this->editor_elements = self::parseXML($xml_file, 'parseHMVCXML');
 

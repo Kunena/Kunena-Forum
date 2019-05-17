@@ -899,6 +899,11 @@
             <query mode="silenterror">UPDATE `#__kunena_users_banned` SET `created_time` = CASE WHEN `created_time` IN ('0000-00-00 00:00:00', '1000-01-01 00:00:00') THEN NULL ELSE `created_time` END;</query>
             <query mode="silenterror">UPDATE `#__kunena_users_banned` SET `modified_time` = CASE WHEN `modified_time` IN ('0000-00-00 00:00:00', '1000-01-01 00:00:00') THEN NULL ELSE `modified_time` END;</query>
         </version>
+        <version version="6.0.0-ALPHA3"
+                 versiondate="2019-05-17"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `facebook` `facebook` VARCHAR(65) NULL DEFAULT NULL;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

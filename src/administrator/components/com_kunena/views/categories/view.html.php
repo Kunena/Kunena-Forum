@@ -142,14 +142,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolbarHelper::unpublish();
 		JToolbarHelper::divider();
 
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
-		}
-		else
-		{
-			HTMLHelper::_('bootstrap.modal', 'moderateModal');
-		}
+		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">

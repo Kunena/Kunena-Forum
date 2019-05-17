@@ -44,23 +44,13 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return KunenaAdminTemplate4|KunenaAdminTemplate3|KunenaTemplate
+	 * @return KunenaAdminTemplate|KunenaTemplate
 	 * @since Kunena
 	 */
 	public static function getAdminTemplate()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			// Joomla 4.0+ template:
-			require_once KPATH_ADMIN . '/template/j4/template.php';
-			$template = new KunenaAdminTemplate4;
-		}
-		else
-		{
-			// Joomla 3 template:
-			require_once KPATH_ADMIN . '/template/j3/template.php';
-			$template = new KunenaAdminTemplate3;
-		}
+		require_once KPATH_ADMIN . '/template/template.php';
+		$template = new KunenaAdminTemplate;
 
 		return $template;
 	}
@@ -254,23 +244,9 @@ abstract class KunenaFactory
 		// Capture hidden PHP errors from the parsing.
 		$php_errormsg = null;
 
-		// Todo Remove when we only Support php > 7.2
-		if (version_compare(PHP_VERSION, '7.2.0', '<'))
-		{
-			$track_errors = ini_get('track_errors');
-			ini_set('track_errors', true);
-		}
-
 		$contents = file_get_contents($filename);
 		$contents = str_replace('_QQ_', '"\""', $contents);
 		$strings  = @parse_ini_string($contents);
-
-		// Todo Remove when we only Support php > 7.2
-		if (version_compare(PHP_VERSION, '7.2.0', '<'))
-		{
-			// Restore error tracking to what it was before.
-			ini_set('track_errors', $track_errors);
-		}
 
 		if (!is_array($strings))
 		{

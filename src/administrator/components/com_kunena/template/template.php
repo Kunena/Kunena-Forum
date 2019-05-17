@@ -18,7 +18,7 @@ use Joomla\CMS\Uri\Uri;
  * Class KunenaAdminTemplate
  * @since Kunena
  */
-class KunenaAdminTemplate3
+class KunenaAdminTemplate
 {
 	/**
 	 * @since Kunena
@@ -26,9 +26,7 @@ class KunenaAdminTemplate3
 	public function initialize()
 	{
 		$document = Factory::getDocument();
-		/** @noinspection PhpDeprecationInspection */
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/layout.css');
-		/** @noinspection PhpDeprecationInspection */
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}
 
@@ -50,7 +48,7 @@ class KunenaAdminTemplate3
 		}
 
 		$array   = array();
-		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/j3/' . $path;
+		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/' . $path;
 
 		return $array;
 	}
@@ -90,17 +88,17 @@ class KunenaAdminTemplate3
 		{
 			$limit = 'limitstart.value=' . (int) $item->base;
 
-			return '<li><a href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . ';
+			return '<li class="page-item hidden-sm-down"><a class="page-link" href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . ';
 			 Joomla.submitform();return false;">' . $display . '</a></li>';
 		}
 
 		// Check if the item is the active (or current) page.
 		if (!empty($item->active))
 		{
-			return '<li class="active"><a>' . $display . '</a></li>';
+			return '<li class="page-item active hidden-sm-down"><a class="page-link">' . $display . '</a></li>';
 		}
 
 		// Doesn't match any other condition, render disabled item.
-		return '<li class="disabled"><a>' . $display . '</a></li>';
+		return '<li class="page-item disabled"><a class="page-link">' . $display . '</a></li>';
 	}
 }

@@ -26,23 +26,20 @@ class Com_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'8.0' => '8.0.0',
+			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',
-			'7.1' => '7.1.9',
-			'0'   => '7.1.9', // Preferred version
+			'0'   => '7.3.9', // Preferred version
 		),
 		'MySQL'   => array(
 			'8.0' => '8.0',
 			'5.7' => '5.7',
-			'5.6' => '5.6',
-			'5.5' => '5.5.3',
 			'0'   => '5.7' // Preferred version
 		),
 		'Joomla!' => array(
 			'4.0'  => '4.0.0-alpha8-dev',
-			'3.10' => '3.10.0',
-			'3.9'  => '3.9.3',
-			'0'    => '3.9.3', // Preferred version
+			'0'    => '4.0.0-alpha8-dev', // Preferred version
 		),
 	);
 
@@ -323,11 +320,6 @@ class Com_KunenaInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		if (version_compare(JVERSION, '4.0', '<'))
-		{
-			$this->convertTablesToUtf8mb4();
-		}
-
 		return true;
 	}
 
@@ -496,7 +488,11 @@ class Com_KunenaInstallerScript
 		}
 
 		// Get installed Kunena version
-		$db->setQuery("SELECT version FROM {$db->quoteName($table)} ORDER BY `id` DESC", 0, 1);
+		$query = $db->getQuery(true)
+			->select($db->quoteName('version'))
+			->from($db->quoteName($db->quoteName($table)))
+			->order($db->quoteName('id') . ' DESC');
+		$db->setQuery($query,0, 1);
 		$installed = $db->loadResult();
 
 		if (!$installed)
@@ -645,7 +641,10 @@ class Com_KunenaInstallerScript
 			return;
 		}
 
-		$db->setQuery('SELECT default_character_set_name FROM ' . $db->quoteName('#__kunena_version'));
+		$query = $db->getQuery(true)
+			->select($db->quoteName('default_character_set_name'))
+			->from($db->quoteName('#__kunena_version'));
+		$db->setQuery($query,0, 1);
 
 		// Nothing to do, saved conversion status from DB is equal to required
 		if ($db->getCollation() == 'utf8mb4_unicode_ci')

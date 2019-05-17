@@ -112,16 +112,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<div class="dropdown-divider"></div>
 
 							<div id="statustext">
-								<?php
-								if (version_compare(JVERSION, '4.0', '>'))
-								{
-									HTMLHelper::_('bootstrap.renderModal', 'statusText');
-								}
-								else
-								{
-									HTMLHelper::_('bootstrap.modal', 'statusText');
-								}
-								?>
+								<?php HTMLHelper::_('bootstrap.renderModal', 'statusText'); ?>
 								<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 									<?php echo KunenaIcons::edit(); ?>
 									<?php echo Text::_('COM_KUNENA_STATUS') ?>

@@ -76,14 +76,7 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
-		}
-		else
-		{
-			HTMLHelper::_('bootstrap.modal', 'moderateModal');
-		}
+		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
@@ -100,14 +93,7 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolbarHelper::spacer();
 
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
-		}
-		else
-		{
-			HTMLHelper::_('bootstrap.modal', 'subscribecatsusersModal');
-		}
+		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#subscribecatsusersModal\" class=\"btn btn-small\">

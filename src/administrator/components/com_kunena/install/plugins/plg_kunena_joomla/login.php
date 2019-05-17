@@ -34,24 +34,19 @@ class KunenaLoginJoomla
 	public function __construct($params)
 	{
 		$this->params = $params;
-
-		if (version_compare(JVERSION, '4.0', '<'))
-		{
-			require_once JPATH_SITE . '/components/com_users/helpers/route.php';
-		}
 	}
 
 	/**
 	 * Method to login via Joomla! framework
 	 *
-	 * @param   string  $username   Username of user
-	 * @param   string  $password   Password of user
-	 * @param   boolean $rememberme Remember the user next time it wants login
-	 * @param   string  $secretkey  The secretkey given by user when TFA is enabled
+	 * @param   string   $username    Username of user
+	 * @param   string   $password    Password of user
+	 * @param   boolean  $rememberme  Remember the user next time it wants login
+	 * @param   string   $secretkey   The secretkey given by user when TFA is enabled
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)
 	{
@@ -70,8 +65,8 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return boolean|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function logoutUser()
 	{
@@ -95,16 +90,7 @@ class KunenaLoginJoomla
 	 */
 	public function getLoginURL()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			$Itemid = '';
-		}
-		else
-		{
-			$Itemid = UsersHelperRoute::getLoginRoute();
-		}
-
-		return Route::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=login');
 	}
 
 	/**
@@ -113,16 +99,7 @@ class KunenaLoginJoomla
 	 */
 	public function getLogoutURL()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			$Itemid = '';
-		}
-		else
-		{
-			$Itemid = UsersHelperRoute::getLoginRoute();
-		}
-
-		return Route::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=login');
 	}
 
 	/**
@@ -135,16 +112,7 @@ class KunenaLoginJoomla
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$Itemid = '';
-			}
-			else
-			{
-				$Itemid = UsersHelperRoute::getRegistrationRoute();
-			}
-
-			return Route::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+			return Route::_('index.php?option=com_users&view=registration');
 		}
 
 		return;
@@ -156,16 +124,7 @@ class KunenaLoginJoomla
 	 */
 	public function getResetURL()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			$Itemid = '';
-		}
-		else
-		{
-			$Itemid = UsersHelperRoute::getResetRoute();
-		}
-
-		return Route::_('index.php?option=com_users&view=reset' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=reset');
 	}
 
 	/**
@@ -174,16 +133,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRemindURL()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			$Itemid = '';
-		}
-		else
-		{
-			$Itemid = UsersHelperRoute::getRemindRoute();
-		}
-
-		return Route::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
+		return Route::_('index.php?option=com_users&view=remind');
 	}
 
 	/**
@@ -194,6 +144,6 @@ class KunenaLoginJoomla
 	 */
 	public function getParams()
 	{
-	    return $this->params;
+		return $this->params;
 	}
 }

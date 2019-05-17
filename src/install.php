@@ -27,23 +27,20 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'8.0' => '8.0.0',
+			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',
-			'7.1' => '7.1.9',
-			'0'   => '7.1.9' // Preferred version
+			'0'   => '7.3.9', // Preferred version
 		),
 		'MySQL'   => array(
 			'8.0' => '8.0',
 			'5.7' => '5.7',
-			'5.6' => '5.6',
-			'5.5' => '5.5.3',
 			'0'   => '5.7' // Preferred version
 		),
 		'Joomla!' => array(
 			'4.0'  => '4.0.0-alpha8-dev',
-			'3.10' => '3.10.0',
-			'3.9'  => '3.9.3',
-			'0'    => '3.9.3', // Preferred version
+			'0'    => '4.0.0-alpha8-dev', // Preferred version
 		),
 	);
 
@@ -383,7 +380,11 @@ EOS;
 		}
 
 		// Get installed Kunena version.
-		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
+		$query = $db->getQuery(true)
+			->select($db->quoteName('version'))
+			->from($db->quoteName($table))
+			->order($db->quoteName('id') . ' DESC');
+		$db->setQuery($query,0, 1);
 		$installed = $db->loadResult();
 
 		if (!$installed)

@@ -364,13 +364,6 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
 
-			if (version_compare(JVERSION, '4.0', '<'))
-			{
-				if (!empty($version_warning))
-				{
-					$this->app->enqueueMessage($version_warning, 'notice');
-				}
-			}
 		}
 		else
 		{

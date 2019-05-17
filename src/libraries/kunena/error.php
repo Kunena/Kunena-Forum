@@ -74,13 +74,6 @@ abstract class KunenaError
 			@ini_set('display_errors', 1);
 			self::$handler = true;
 
-			if (version_compare(JVERSION, '4.0', '<'))
-			{
-				@error_reporting(E_ALL | E_STRICT);
-				Factory::getDbo()->setDebug(true);
-				set_error_handler(array('KunenaError', 'errorHandler'));
-			}
-
 			self::$enabled++;
 		}
 	}

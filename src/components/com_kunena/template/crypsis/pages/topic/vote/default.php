@@ -4,7 +4,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Pages.Topic
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -18,6 +18,7 @@ $content = $this->request('Topic/Poll')
 // Display breadcrumb path to the current category / topic / message / report.
 $parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
+
 
 foreach ($parents as $parent)
 {

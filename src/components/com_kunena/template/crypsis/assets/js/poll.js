@@ -38,10 +38,8 @@ jQuery(document).ready(function ($) {
 		polldiv.append(newInput);
 	}
 
-	var kpollalert = $('#kpoll-alert-error');
-	var polladd = $('#kbutton-poll-add');
-	if (polladd !== undefined) {
-		polladd.click(function () {
+	if ($('#kbutton-poll-add') !== undefined) {
+		$('#kbutton-poll-add').click(function () {
 			var nboptionsmax = $('#nb_options_allowed').val();
 			var koptions = getOptionsNumber();
 
@@ -54,21 +52,20 @@ jQuery(document).ready(function ($) {
 			}
 			else {
 				// Set error message with alert bootstrap way
-				kpollalert.show();
-				polladd.hide();
+				$('#kpoll-alert-error').show();
+				$('#kbutton-poll-add').hide();
 			}
 		});
 	}
 
-	var pollremove = $('#kbutton-poll-rem');
-	if (pollremove !== undefined) {
-		pollremove.click(function () {
+	if ($('#kbutton-poll-rem') !== undefined) {
+		$('#kbutton-poll-rem').click(function () {
 			var koption = $('div.polloption:last');
 			if (koption) {
-				var isvisible = kpollalert.is(":visible");
+				var isvisible = $('#kpoll-alert-error').is(":visible");
 
 				if (isvisible) {
-					kpollalert.hide();
+					$('#kpoll-alert-error').hide();
 					$('#kbutton-poll-add').show();
 				}
 
@@ -77,12 +74,10 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var postcatid = $('#postcatid');
-	if (postcatid !== undefined) {
-		postcatid.change(function () {
+	if ($('#postcatid') !== undefined) {
+		$('#postcatid').change(function () {
 			var catid = $('select#postcatid option').filter(':selected').val();
 			var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-
 			if (pollcategoriesid[catid] !== undefined) {
 				$('.pollbutton').show();
 			}
@@ -92,30 +87,27 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var results = $('#poll-results');
-	var hide = $('#kpoll_hide_results');
-
 	$('#kpoll_go_results').click(function () {
-		if (results.is(':visible') === true) {
-			results.hide();
-			hide.hide();
+		if ($('#poll-results').is(':visible') === true) {
+			$('#poll-results').hide();
+			$('#kpoll_hide_results').hide();
 		}
 		else {
-			results.show();
-			hide.show();
+			$('#poll-results').show();
+			$('#kpoll_hide_results').show();
 			$('#kpoll_go_results').hide();
 		}
 	});
 
-	hide.click(function () {
-		if (results.is(':visible') === true) {
-			results.hide();
-			hide.show();
+	$('#kpoll_hide_results').click(function () {
+		if ($('#poll-results').is(':visible') === true) {
+			$('#poll-results').hide();
+			$('#kpoll_go_results').show();
 			$('#kpoll_hide_results').hide();
 		}
 		else {
-			results.show();
-			hide.show();
+			$('#poll-results').show();
+			$('#kpoll_hide_results').show();
 			$('#kpoll_go_results').hide();
 		}
 	});

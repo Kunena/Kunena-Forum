@@ -17,15 +17,17 @@ if ($item->base !== null)
 {
 	// Check if the item can be clicked.
 	$limit = 'limitstart.value=' . (int) $item->base;
-	echo '<li><a ' . KunenaTemplate::getInstance()->tooltips(true) . ' href="' . $item->link . '" title="' . Text::_('COM_KUNENA_PAGE') . $item->text . '">' . $item->text . '</a></li>';
+	echo '<li class="page-item">
+			<a class="page-link" ' . KunenaTemplate::getInstance()->tooltips(true) . ' href="' . $item->link . '" title="' . Text::_('COM_KUNENA_PAGE') . $item->text . '">' . $item->text . '</a>
+		  </li>';
 }
 elseif (!empty($item->active))
 {
 	// Check if the item is the active (or current) page.
-	echo '<li class="active"><a>' . $item->text . '</a></li>';
+	echo '<li class="page-item active"><a class="page-link">' . $item->text . '</a></li>';
 }
 else
 {
 	// Doesn't match any other condition, render disabled item.
-	echo '<li><a class="disabled">' . $item->text . '</a></li>';
+	echo '<li class="page-item"><a class="page-link disabled">' . $item->text . '</a></li>';
 }

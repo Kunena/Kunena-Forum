@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 ?>
-<ul class="nav pull-right">
+<ul class="nav float-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-mobile">
 			<?php echo KunenaIcons::user(); ?>
@@ -29,32 +29,30 @@ use Joomla\CMS\Router\Route;
 				<input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
-				<div id="kmobile-form-login-username" class="control-group center">
-					<div class="controls">
-						<div class="input-prepend input-append">
-							<span class="add-on">
+				<div class="form-group" id="kmobile-form-login-username">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">
 								<?php echo KunenaIcons::user(); ?>
 								<label for="kmobile-username" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
 							</span>
-							<input id="kmobile-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+							<input class="form-control" id="kmobile-username" name="username" tabindex="1" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" type="email">
 						</div>
 					</div>
 				</div>
 
-				<div id="kmobile-form-login-password" class="control-group center">
-					<div class="controls">
-						<div class="input-prepend input-append">
-							<span class="add-on">
+				<div class="form-group" id="kmobile-form-login-password">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">
 								<?php echo KunenaIcons::lock(); ?>
 								<label for="kmobile-passwd" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
 							</span>
-							<input id="kmobile-passwd" type="password" name="password" class="input-small" tabindex="2"
-							       size="18" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+							<input class="form-control" id="kmobile-passwd" name="password" tabindex="2" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
 						</div>
 					</div>
 				</div>
@@ -81,19 +79,13 @@ use Joomla\CMS\Router\Route;
 					</div>
 				<?php endif; ?>
 
-				<?php if ($this->rememberMe)
-					:
-					?>
-					<div id="kmobile-form-login-remember" class="control-group center">
+				<?php if ($this->rememberMe) : ?>
+					<div class="form-group row center" id="kform-login-remember">
 						<div class="controls">
-							<div class="input-prepend input-append">
-								<div class="add-on">
-									<input id="kmobile-remember" type="checkbox" name="remember" class="inputbox"
-									       value="yes"/>
-									<label for="kmobile-remember" class="control-label">
-										<?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?>
-									</label>
-								</div>
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" name="kmobile-remember" id="kmobile-remember"
+								       value="1"/>
+								<label class="custom-control-label" for="kmobile-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
 							</div>
 						</div>
 					</div>

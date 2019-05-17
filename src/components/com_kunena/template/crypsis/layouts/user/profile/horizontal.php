@@ -10,11 +10,11 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 
 $user              = $this->user;
-$avatar            = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+$this->ktemplate   = KunenaFactory::getTemplate();
+$avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $config            = KunenaConfig::getInstance();
 $show              = $config->showuserstats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
@@ -32,76 +32,76 @@ if ($show)
 }
 ?>
 
-<div class="span2">
-	<ul class="profilebox center">
+<div class="col-md-2">
+	<ul class="unstyled center profilebox">
 		<li>
 			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
 		</li>
-		<?php if ($optional_username) : ?>
+
+		<?php if ($optional_username)
+			:
+			?>
 			<li>
 				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
 			</li>
 		<?php endif; ?>
-		<?php if ($user->exists() && $config->user_status) : ?>
-			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
-				<?php
-				if (isset($this->topic_starter) && $this->topic_starter)
-					:
-					?>
-					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
-					{
-						echo 'topic-starter-circle';
-					} ?>"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-				<?php endif;
-				?>
-				<?php // If (!$this->topic_starter && $user->isModerator()) :
-				?><!--
-					<span class="<?php // If (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};
-				?> topic-moderator"><?php // echo Text::_('COM_KUNENA_TEAM_MEMBER')
-				?></span>
-				--><?php // Endif;
-				?>
-			</li>
-		<?php endif; ?>
-		<?php
-		if ($user->exists())
+
+		<?php if ($avatar)
 			:
 			?>
+			<li>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
+			</li>
+			<?php if (isset($this->topic_starter) && $this->topic_starter)
+			:
+			?>
+			<span class="hidden-sm hidden-md topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+		<?php endif;
+			?>
+			<?php // If (!$this->topic_starter && $user->isModerator()) :
+			?><!--
+					<span class="topic-moderator"><?php // Echo Text::_('COM_KUNENA_MODERATOR')
+			?></span>
+				--><?php // Endif;
+			?>
+
+		<?php endif; ?>
+		<?php if ($user->exists() && $config->user_status) : ?>
 			<li>
 				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>
 		<?php endif; ?>
 	</ul>
 </div>
-<div class="span2">
+<div class="col-md-2">
 	<br>
-	<?php if (!empty($rankTitle))
-		:
-		?>
-		<li>
-			<?php echo $this->escape($rankTitle); ?>
-		</li>
-	<?php endif; ?>
+	<ul class="profilebox center">
+		<?php if (!empty($rankTitle))
+			:
+			?>
+			<li>
+				<?php echo $this->escape($rankTitle); ?>
+			</li>
+		<?php endif; ?>
 
-	<?php if (!empty($rankImage))
-		:
-		?>
-		<li>
-			<?php echo $rankImage; ?>
-		</li>
-	<?php endif; ?>
+		<?php if (!empty($rankImage))
+			:
+			?>
+			<li>
+				<?php echo $rankImage; ?>
+			</li>
+		<?php endif; ?>
 
-	<?php if (!empty($personalText))
-		:
-		?>
-		<li>
-			<?php echo $personalText; ?>
-		</li>
-	<?php endif; ?>
+		<?php if (!empty($personalText))
+			:
+			?>
+			<li>
+				<?php echo $personalText; ?>
+			</li>
+		<?php endif; ?>
+	</ul>
 </div>
-
-<div class="span2">
+<div class="col-md-2">
 	<br>
 	<?php if ($user->posts >= 1)
 		:
@@ -143,7 +143,7 @@ if ($show)
 		</li>
 	<?php endif; ?>
 </div>
-<div class="span3">
+<div class="col-md-3">
 	<br>
 	<li>
 		<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>

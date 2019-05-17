@@ -39,7 +39,7 @@ if ($attachment->isImage())
 		<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
 		     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
-		<?php
+	<?php
 	else:
 		echo KunenaIcons::picture();
 	endif;

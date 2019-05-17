@@ -1245,20 +1245,6 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			File::delete(KPATH_ADMIN . '/install.php');
 		}
 
-		// Set Crypsis as default template when do update
-		$config = KunenaFactory::getConfig();
-
-		if (version_compare(JVERSION, '4.0', '<'))
-		{
-			$config->template = 'crypsis';
-			$config->save();
-		}
-		else
-		{
-			$config->template = 'crypsisb4';
-			$config->save();
-		}
-
 		// Resync bbcode plugins
 		$editor = KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();

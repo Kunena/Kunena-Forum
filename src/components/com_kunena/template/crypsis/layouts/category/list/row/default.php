@@ -21,8 +21,8 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 <tr>
 	<td>
 		<h3>
-			<?php echo $this->getCategoryLink($this->category, null, $this->category->description, KunenaTemplate::getInstance()->tooltips()); ?>
-			<small class="hidden-phone">
+			<?php echo $this->getCategoryLink($this->category); ?>
+			<small class="hidden-xs-down">
 				(<?php echo Text::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>
 				)
 			</small>
@@ -36,15 +36,17 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 			<?php echo Text::_('COM_KUNENA_NO_POSTS'); ?>
 		</td>
 
-	<?php else:
+	<?php else
+
+		:
 		?>
 
 		<?php if ($avatar)
 		:
 		?>
 		<td class="center">
-		<span class="hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
+		<span class="hidden-xs-down">
+			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		</td>
 	<?php endif; ?>
@@ -54,7 +56,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 			echo ' colspan="2"';
 		} ?>>
 			<div>
-				<?php echo $this->getTopicLink($topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $this->category, true, true); ?>
+				<?php echo $this->getTopicLink($topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip', $this->category, true, true); ?>
 			</div>
 			<div>
 				<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>

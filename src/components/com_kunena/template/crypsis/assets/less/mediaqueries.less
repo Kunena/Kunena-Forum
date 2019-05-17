@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright     Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+* @copyright     Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
 * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link https://www.kunena.org
 **/
@@ -21,6 +21,10 @@
     -webkit-transform: translate3d(0, 0, 0);
   }
 
+  .visible-xs .text-muted {
+    margin-top: -30px;
+  }
+
   .form-search {
     padding-bottom: 0;
   }
@@ -29,16 +33,16 @@
     width: 85%;
   }
 
-  .pull-right,
+  .float-right,
   span > form {
     float: none;
   }
 
-  .table td.span1, .table th.span1 {
+  .table td.col-md-1, .table th.col-md-1 {
     width: 0;
   }
 
-  div.navbar > div > div.visible-phone.hidden-tablet > ul.nav.navbar-nav.pull-left > a > i {
+  div.navbar > div > div.visible-sm.hidden-md > ul.nav.navbar-nav.float-left > a > i {
     cursor: pointer;
     vertical-align: super;
   }
@@ -69,6 +73,10 @@
     margin-top: 10px;
   }
 
+  .input-group input {
+    width: 60%;
+  }
+
   form#ktopicsform input,
   #login-remember {
     width: auto;
@@ -95,9 +103,7 @@
   }
 
   a.dropdown-toggle,
-  i.icon-large,
-  .glyphicon-large,
-  .fa-large {
+  i.glyphicon .glyphicon-large {
     color: inherit;
   }
 
@@ -107,6 +113,9 @@
 
   .navbar .nav {
     width: 100%;
+  }
+
+  .navbar-nav.float-left > div {
     padding-top: 10px;
   }
 
@@ -208,7 +217,7 @@
   }
 
   // Navbar button
-  .navbar .btn-navbar {
+  .navbar .navbar-btn {
     display: block;
   }
 
@@ -217,11 +226,14 @@
   }
 }
 
+@media (min-width: 768px) {
+  select#mode {
+    margin-left: 69px;
+  }
+}
+
 /* Tablets */
 @media (min-width: 768px) and (max-width: 959px) {
-  #kbbcode-preview {
-    margin-top: 63px;
-  }
 
 }
 
@@ -238,13 +250,11 @@
   }
 
   a.dropdown-toggle,
-  i.icon-large,
-  .glyphicon-large,
-  .fa-large {
+  i.glyphicon .glyphicon-large {
     color: inherit;
   }
 
-  ul.pull-right {
+  ul.float-right {
     margin: 0;
   }
 
@@ -252,12 +262,8 @@
     width: 53%;
   }
 
-  #kbbcode-preview {
-    margin-top: 35px;
-  }
-
-  #announcement-add-button {
-    margin-left: -10px;
+  .navbar-nav > li > .dropdown-menu {
+    min-width: 190px;
   }
 }
 

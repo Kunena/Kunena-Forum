@@ -36,7 +36,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 		) : ?>
 			<div class="btn-group">
 				<a class="btn btn-primary"
-				   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+				   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
+				</a>
 				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><?php echo $this->topicButtons->get('delete') ?></li>
@@ -53,17 +54,16 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 
 <?php if ($fullactions) : ?>
 	<div class="clearfix"></div>
-	<div class="btn-toolbar" id="topic-actions-toolbar">
+	<div class="btn-toolbar btn-marging kmessagepadding" id="topic-actions-toolbar">
 		<div>
 			<?php if ($this->topicButtons->get('reply')
 				|| $this->topicButtons->get('subscribe')
 				|| $this->topicButtons->get('favorite')
 			) : ?>
 				<div class="btn-group">
-					<a class="btn"
-					   data-toggle="dropdown"><?php echo KunenaIcons::edit(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
-					</a>
-					<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+					<a class="btn btn-default border"
+					   data-toggle="dropdown"><?php echo KunenaIcons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?></a>
+					<a class="btn btn-default border dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><?php echo $this->topicButtons->get('reply') ?></li>
 						<li><?php echo $this->topicButtons->get('subscribe') ?></li>
@@ -81,7 +81,8 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			) : ?>
 				<div class="btn-group">
 					<a class="btn btn-primary"
-					   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+					   data-toggle="dropdown"><?php echo KunenaIcons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
+					</a>
 					<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><?php echo $this->topicButtons->get('delete') ?></li>
@@ -96,3 +97,4 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 		</div>
 	</div>
 <?php endif ?>
+

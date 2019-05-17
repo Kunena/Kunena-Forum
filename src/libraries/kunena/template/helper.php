@@ -195,7 +195,7 @@ abstract class KunenaTemplateHelper
 	 */
 	public static function templateCanBeUsed($templatename)
 	{
-		if ($templatename == 'Crypsis' || $templatename == 'Crypsisb3')
+		if ($templatename == 'Crypsis')
 		{
 			return false;
 		}

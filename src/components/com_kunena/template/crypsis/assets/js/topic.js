@@ -31,29 +31,6 @@ jQuery(document).ready(function ($) {
 		$(boxToOpen).css('visibility', 'visible');
 	});
 
-	var dropdown = $('#userdropdown');
-	$('[id^="login-link"]').click(function () {
-		$(this).ready(function () {
-			if (dropdown.is(":visible")) {
-				$(this).addClass('kdelay');
-			}
-			else {
-				dropdown.css('display', 'inline-block');
-				dropdown.css('visibility', 'visible').delay(500).queue(function () {
-					$(this).addClass('kdelay');
-				});
-			}
-		});
-	});
-
-	$(document).click(function () {
-		$('.kdelay').css('display', 'none').removeClass('kdelay');
-	});
-
-	dropdown.click(function (e) {
-		e.stopPropagation();
-	});
-
 	/* Button to show more info on profilebox */
 	$(".heading").click(function () {
 		if (!$(this).hasClass('heading-less')) {
@@ -66,6 +43,28 @@ jQuery(document).ready(function ($) {
 			$(this).hide();
 			content.next(".content").slideToggle(500);
 		}
+	});
+
+	$('[id^="login-link"]').click(function () {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$(this).addClass('kdelay');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
+			}
+		});
+	});
+
+	$(document).click(function () {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
+	});
+
+	$('#userdropdown').click(function (e) {
+		e.stopPropagation();
 	});
 
 	/* On moderate page display subject or field to enter manually the topic ID */
@@ -105,7 +104,7 @@ jQuery(document).ready(function ($) {
 				},
 				{
 					share: "googleplus",
-					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLE_LABEL')
+					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
 				},
 				{
 					share: "linkedin",
@@ -123,7 +122,7 @@ jQuery(document).ready(function ($) {
 					label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
 				}]
 		});
-		$('.jssocials-share-whatsapp').addClass('visible-phone');
+		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
 	}
 
 	$('#kmod_categories').change(function () {

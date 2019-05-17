@@ -3,7 +3,7 @@
  * Kunena Component
  *
  * @package         Kunena.Template.Crypsis
- * @subpackage      Topic
+ * @subpackage      Layout.Widget
  *
  * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -82,6 +82,7 @@ Text::script('COM_KUNENA_WYSIBB_EDITOR_SM6');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM7');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
+
 $this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
 $settings         = $templatesettings->get('wysibb');
@@ -96,5 +97,5 @@ $settings         = $templatesettings->get('wysibb');
 	});
 </script>
 
-<textarea class="span12" name="message" id="editor-<?php echo $this->message->id; ?>" rows="12" tabindex="7"
+<textarea class="col-md-12" name="message" id="editor-<?php echo $this->message->id; ?>" rows="12" tabindex="7"
           required="required"></textarea>

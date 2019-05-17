@@ -19,11 +19,11 @@ use Joomla\CMS\Language\Text;
 	<table class="table table-bordered table-striped table-hover">
 		<tbody>
 		<tr>
-			<td class="span3">
+			<td class="col-md-3">
 				<label for="username"><?php echo Text::_('COM_KUNENA_UNAME'); ?></label>
 			</td>
 			<td>
-				<input type="text" name="username" id="username"
+				<input type="text" name="username" id="username" class="form-control"
 				       value="<?php echo $this->escape($this->user->get('username')); ?>"
 					<?php
 					if (!$this->changeUsername)
@@ -37,7 +37,7 @@ use Joomla\CMS\Language\Text;
 				<label for="name"><?php echo Text::_('COM_KUNENA_REALNAME'); ?></label>
 			</td>
 			<td>
-				<input class="required" type="text" id="name" name="name"
+				<input class="required form-control" type="text" id="name" name="name"
 				       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
 			</td>
 		</tr>
@@ -46,7 +46,7 @@ use Joomla\CMS\Language\Text;
 				<label for="email"><?php echo Text::_('COM_KUNENA_USRL_EMAIL'); ?></label>
 			</td>
 			<td>
-				<input class="required validate-email" type="text" id="email" name="email"
+				<input class="required validate-email form-control" type="text" id="email" name="email"
 				       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
 			</td>
 		</tr>
@@ -58,7 +58,7 @@ use Joomla\CMS\Language\Text;
 					<label for="password"><?php echo Text::_('COM_KUNENA_PASS'); ?></label>
 				</td>
 				<td>
-					<input class="validate-password" type="password" id="password" name="password"
+					<input class="validate-password form-control" type="password" id="password" name="password"
 					       value="" size="40"/>
 				</td>
 			</tr>
@@ -67,7 +67,7 @@ use Joomla\CMS\Language\Text;
 					<label for="password2"><?php echo Text::_('COM_KUNENA_VPASS'); ?></label>
 				</td>
 				<td>
-					<input class="validate-passverify" type="password" id="password2" name="password2"
+					<input class="validate-passverify form-control" type="password" id="password2" name="password2"
 					       value="" size="40"/>
 				</td>
 			</tr>
@@ -89,7 +89,7 @@ use Joomla\CMS\Language\Text;
 			:
 			?>
 			<tr>
-				<td class="span3">
+				<td class="col-md-3">
 					<?php echo $field->label; ?>
 				</td>
 				<td>
@@ -103,7 +103,7 @@ use Joomla\CMS\Language\Text;
 <?php endif;
 
 if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
-	<a class="btn"
+	<a class="btn btn-default border"
 	   href="<?php echo Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
 	   data-toggle="modal" id="2fa_settings"><?php echo Text::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
 <?php endif;

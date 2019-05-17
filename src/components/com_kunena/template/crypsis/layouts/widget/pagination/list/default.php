@@ -24,8 +24,8 @@ elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
 
-<div class="pagination hidden-phone">
-	<ul>
+<nav class="hidden-xs-down">
+	<ul class="pagination">
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
@@ -34,7 +34,7 @@ $last = 0;
 		{
 			if ($last + 1 != $k)
 			{
-				echo '<li><a class="disabled">...</a></li>';
+				echo '<li class="page-item"><a class="disabled">...</a></li>';
 			}
 
 			$last = $k;
@@ -46,10 +46,10 @@ $last = 0;
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
 		?>
 	</ul>
-</div>
+</nav>
 
-<div class="pagination test visible-phone">
-	<ul>
+<nav class="d-block d-sm-none">
+	<ul class="pagination">
 		<?php
 		foreach ($data->pages as $k => $item)
 		{
@@ -57,4 +57,4 @@ $last = 0;
 		}
 		?>
 	</ul>
-</div>
+</nav>

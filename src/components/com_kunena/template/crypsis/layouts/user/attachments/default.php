@@ -30,34 +30,34 @@ $attachments = $this->attachments;
 	<table class="table table-bordered table-striped table-hover">
 		<thead>
 		<tr>
-			<th class="span1 center">
+			<th class="col-md-1 center">
 				#
 			</th>
 			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
-			<th class="span1 center">
+			<th class="col-md-1 center">
 				<label>
 					<input type="checkbox" name="checkall-toggle" value="cid"
 					       title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
 				</label>
 			</th>
 			<?php endif; ?>
-			<th class="span1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_FILETYPE'); ?>
 			</th>
-			<th class="span2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
 			</th>
-			<th class="span2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_FILESIZE'); ?>
 			</th>
-			<th class="span2">
+			<th class="col-md-2">
 				<?php echo Text::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
 			</th>
-			<th class="span1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
 			</th>
 			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :?>
-			<th class="span1 center">
+			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_DELETE'); ?>
 			</th>
 			<?php endif; ?>
@@ -80,13 +80,11 @@ $attachments = $this->attachments;
 				?>
 				<tr>
 					<td class="center"><?php echo ++$i; ?></td>
-
-					<?php if ($canDelete) :?>
+					<?php if ($canDelete) : ?>
 					<td class="center">
-						<?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id));?>
+						<?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id)); ?>
 					</td>
-					<?php endif;?>
-
+					<?php endif; ?>
 					<td class="center">
 						<?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
 					</td>
@@ -102,26 +100,31 @@ $attachments = $this->attachments;
 					<td class="center">
 						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 					</td>
-					<?php if ($canDelete) :?>
+					<?php if ($canDelete) : ?>
 					<td class="center">
-						<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
+							<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
 							   data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
 
-							<div id="modaldelete<?php echo $i ?>" class="modal hide fade" tabindex="-1" role="dialog"
-							     aria-labelledby="modaldeleteLabel" aria-hidden="true">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-									</button>
-									<h3 id="modaldeleteLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h3>
-								</div>
-								<div class="modal-body">
-									<p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
-								</div>
-								<div class="modal-footer">
-									<button class="btn" data-dismiss="modal"
-									        aria-hidden="true"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
-									<button class="btn btn-primary"
-									        onclick="return listItemTask('cb<?php echo $i; ?>','delfile');"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+							<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog"
+							     aria-labelledby="modaldeleteLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title"
+											    id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
+										</div>
+										<div class="modal-body">
+											<p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default border"
+											        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+											<button type="button"
+											        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
+										</div>
+									</div>
 								</div>
 							</div>
 					</td>
@@ -132,30 +135,34 @@ $attachments = $this->attachments;
 		<?php endif; ?>
 		</tbody>
 	</table>
-	<div class="pull-left">
+	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination->setDisplayedPages(4))
 			->set('display', true); ?>
 	</div>
-
 	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator()) : ?>
-		<a href="#modaldeleteall" class="btn pull-right"
+		<a href="#modaldeleteall" class="btn btn-default border float-right"
 		   data-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
-		<div id="modaldeleteall" class="modal hide fade" tabindex="-1" role="dialog"
-		     aria-labelledby="modaldeleteallLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="modaldeleteLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_SELECTED_MODAL_LABEL') ?></h3>
-			</div>
-			<div class="modal-body">
-				<p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
-				<button class="btn btn-primary"
-				        onclick="adminform.submit();"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_SELECTED_MODAL_BUTTON') ?></button>
+		<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="modaldeleteLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+									aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"
+						    id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
+					</div>
+					<div class="modal-body">
+						<p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default border"
+						        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+						<button type="button" class="btn btn-primary"
+						        onclick="adminform.submit();"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
+					</div>
+				</div>
 			</div>
 		</div>
 	<?php endif; ?>

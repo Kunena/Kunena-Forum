@@ -26,7 +26,7 @@ jQuery(function ($) {
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
 				url: Joomla.getOptions('com_kunena.avatar_remove_url') + '&userid=' + userid + '&avatar=' + avatar,
-				type: 'POST'
+				type: 'POST',
 			})
 				.done(function (data) {
 					$this.parent().remove();

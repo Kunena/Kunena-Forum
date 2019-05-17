@@ -9,9 +9,8 @@
 
 jQuery(document).ready(function () {
 	if (jQuery.fn.datepicker !== undefined) {
-		jQuery('#birthdate .input-append.date').datepicker({
-			orientation: "top auto",
-			language: "kunena"
+		jQuery('#birthdate .input-group.date').datepicker({
+			orientation: "top auto"
 		});
 	}
 

@@ -15,29 +15,27 @@ use Joomla\CMS\Language\Text;
 
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
+<div class="kunena-search search">
+	<form role="search" action="<?php echo KunenaRoute::_(); ?>" method="post">
+		<input type="hidden" name="view" value="search"/>
+		<input type="hidden" name="task" value="results"/>
+		<?php if (isset($this->catid)) : ?>
+			<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>"/>
+		<?php endif; ?>
 
-<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search pull-right">
-	<input type="hidden" name="view" value="search"/>
-	<input type="hidden" name="task" value="results"/>
-
-	<?php if (isset($this->catid))
-		:
-		?>
-		<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>"/>
-	<?php endif; ?>
-
-	<?php if (isset($this->id))
-		:
-		?>
-		<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>"/>
-	<?php endif; ?>
-
-	<input type="hidden" name="childforums" value="<?php echo $childforums; ?>"/>
-	<?php echo HTMLHelper::_('form.token'); ?>
-
-	<div class="input-append">
-		<input class="input-medium search-query" type="text" name="query" value=""
-		       placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>"/>
-		<button class="btn btn-default" type="submit"><?php echo KunenaIcons::search(); ?></button>
-	</div>
-</form>
+		<?php if (isset($this->id)) : ?>
+			<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>"/>
+		<?php endif; ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
+		<div class="input-group">
+			<label for="example-search-input"></label>
+			<input name="searchword" class="form-control" id="mod-search-searchword" type="search" maxlength="64"
+			       placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
+			<span class="input-group-append">
+				<button class="btn btn-light border" type="submit">
+				<?php echo KunenaIcons::search(); ?>
+			</button>
+			</span>
+		</div>
+	</form>
+</div>

@@ -23,7 +23,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn pull-right'
+		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default border float-right'
 	); ?>
 </h2>
 
@@ -42,12 +42,11 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				?>
 				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
-				<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-					<a href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+				<li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
+					<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#edit<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 				</li>
 			<?php endif; ?>
 			<?php endforeach; ?>
-
 		</ul>
 		<div class="tab-content">
 
@@ -56,8 +55,8 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				?>
 				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena): ?>
 			<?php else : ?>
-				<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="edit<?php echo $name; ?>">
-					<div>
+				<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="edit<?php echo $name; ?>">
+					<div class="row">
 						<?php echo $tab->content; ?>
 					</div>
 				</div>
@@ -71,7 +70,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 			<button class="btn btn-primary validate" type="submit">
 				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
 			</button>
-			<button class="btn btn-default" type="button" name="cancel" onclick="window.history.back();"
+			<button class="btn btn-default border" type="button" name="cancel" onclick="window.history.back();"
 			        title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
 			</button>

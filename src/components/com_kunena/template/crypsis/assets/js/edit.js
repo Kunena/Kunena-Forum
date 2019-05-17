@@ -153,6 +153,20 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('.Kreplyclick').click(function () {
+		var name = '#' + $(this).attr('data-related');
+		if ($(name).is(":visible")) {
+			$(name).hide();
+		}
+		else {
+			$(name).show();
+		}
+	});
+
+	$('.kreply-cancel').click(function () {
+		$('.qreplyform').hide();
+	});
+
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
 		$("#editor").attr('required', 'required');
@@ -212,12 +226,12 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<span>', {
-								'class': 'icon icon-topic icon-' + value.b2,
+								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
 								'border': '0',
 								'al': ''
 							}));
@@ -300,8 +314,8 @@ jQuery(document).ready(function ($) {
 
 	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for poll
-		$('#datepoll-container .input-append.date').datepicker({
-			orientation: "top auto"
+		$('#datepoll-container .input-group.date').datepicker({
+			orientation: "bottom auto"
 		});
 	}
 

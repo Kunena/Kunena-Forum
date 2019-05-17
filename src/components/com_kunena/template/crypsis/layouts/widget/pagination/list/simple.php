@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $data = $this->pagination->getData();
 
-if ($data->pages && count($data->pages) <= 1)
+if (count($data->pages) <= 1)
 {
 	return;
 }
@@ -21,7 +21,7 @@ $last = 0;
 ?>
 
 <div class="pagination pagination-small">
-	<ul>
+	<ul class="pagination">
 		<?php
 		foreach ($data->pages as $k => $item)
 		{

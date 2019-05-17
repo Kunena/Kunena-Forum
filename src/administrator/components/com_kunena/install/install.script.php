@@ -227,55 +227,6 @@ class Com_KunenaInstallerScript
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
 		}
 
-		// Copy files to new dir for Crypsisb3
-		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less'))
-		{
-			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
-			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less');
-
-			if (!empty($file) && !$filenew)
-			{
-				Folder::create($sitePath . '/template/crypsisb3/assets/less');
-				$src  = $sitePath . '/template/crypsisb3/less/custom.less';
-				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
-				File::copy($src, $dest);
-			}
-
-			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
-		}
-
-		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css'))
-		{
-			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
-			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css');
-
-			if (!empty($file) && !$filenew)
-			{
-				Folder::create($sitePath . '/template/crypsisb3/assets/css');
-				$src  = $sitePath . '/template/crypsisb3/css/custom.css';
-				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
-				File::copy($src, $dest);
-			}
-
-			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
-		}
-
-		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini'))
-		{
-			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
-			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/config/params.ini');
-
-			if (!empty($file) && !$filenew)
-			{
-				Folder::create($sitePath . '/template/crypsisb3/config');
-				$src  = $sitePath . '/template/crypsisb3/params.ini';
-				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
-				File::copy($src, $dest);
-			}
-
-			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
-		}
-
 		// Remove old Crypsis files
 		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsis/template.xml'))
 		{
@@ -286,18 +237,6 @@ class Com_KunenaInstallerScript
 			$this->deleteFile($sitePath . '/template/crypsis/config.xml');
 			$this->deleteFile($sitePath . '/template/crypsis/kunena_tmpl_crypsis.xml');
 			$this->deleteFile($sitePath . '/template/crypsis/template.xml');
-		}
-
-		// Remove old Crypsisb3 files
-		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/template.xml'))
-		{
-			$this->deleteKfolder($sitePath . '/template/crypsisb3/css');
-			$this->deleteKfolder($sitePath . '/template/crypsisb3/images');
-			$this->deleteKfolder($sitePath . '/template/crypsisb3/less');
-			$this->deleteKfolder($sitePath . '/template/crypsisb3/media');
-			$this->deleteFile($sitePath . '/template/crypsisb3/config.xml');
-			$this->deleteFile($sitePath . '/template/crypsisb3/kunena_tmpl_crypsis.xml');
-			$this->deleteFile($sitePath . '/template/crypsisb3/template.xml');
 		}
 
 		$language_folders = Folder::folders(JPATH_ROOT . '/language');
@@ -353,7 +292,6 @@ class Com_KunenaInstallerScript
 		{
 			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php');
 			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsis/layouts/topic/edit/editor');
-			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/layouts/topic/edit/editor');
 			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
 		}
 
@@ -361,11 +299,6 @@ class Com_KunenaInstallerScript
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js'))
 		{
 			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js');
-		}
-
-		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/js/markitup.editor-min.js'))
-		{
-			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/js/markitup.editor-min.js');
 		}
 
 		// Prepare installation.

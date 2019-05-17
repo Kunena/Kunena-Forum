@@ -15,7 +15,6 @@ use Joomla\CMS\Language\Text;
 
 echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/profile.js');
-
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -25,15 +24,16 @@ $this->addScript('assets/js/profile.js');
 	<tbody>
 	<?php if ($this->config->personal) : ?>
 		<tr>
-			<td class="span3">
+			<td class="col-md-3">
 				<label for="personaltext">
 					<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
 				</label>
 			</td>
 			<td>
-				<input id="personaltext" type="text" maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
+				<input class="form-control hasTooltip" id="personaltext" type="text"
+				       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
 				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"
-				       class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
+				       title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -45,11 +45,11 @@ $this->addScript('assets/js/profile.js');
 		</td>
 		<td>
 			<div id="birthdate">
-				<div class="input-append date">
-					<input type="text" name="birthdate" data-date-format="mm/dd/yyyy"
+				<div class="input-group date">
+					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
 					       value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
-					       class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
-					<span class="add-on"><?php echo KunenaIcons::grid();?></span>
+					       title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
 			</div>
 		</td>
@@ -61,8 +61,8 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-			<input id="location" type="text" name="location"
-			       value="<?php echo $this->escape($this->profile->location); ?>" class="hasTooltip"
+			<input id="location" type="text" name="location" class="form-control hasTooltip"
+			       value="<?php echo $this->escape($this->profile->location); ?>"
 			       title="<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
 		</td>
 	</tr>
@@ -81,7 +81,7 @@ $this->addScript('assets/js/profile.js');
 
 			// Build the html select list
 			echo HTMLHelper::_(
-				'select.genericlist', $gender, 'gender', 'class="inputbox hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
+				'select.genericlist', $gender, 'gender', 'class="inputbox form-control hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
 				$this->escape($this->profile->gender), 'gender'
 			);
 			?>
@@ -96,7 +96,7 @@ $this->addScript('assets/js/profile.js');
 		<td>
 				<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
-					<input id="social-site" type="text" maxlength="25" name="websitename"
+					<input id="social-site" type="text" maxlength="25" name="websitename" class="form-control"
 					       value="<?php echo $this->escape($this->profile->websitename); ?>"/>
 				</span>
 		</td>
@@ -110,7 +110,7 @@ $this->addScript('assets/js/profile.js');
 		<td>
 				<span class="hasTooltip"
 				      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
-					<input id="social-url" type="url" name="websiteurl"
+					<input id="social-url" type="url" name="websiteurl" class="form-control"
 					       value="<?php echo $this->escape($this->profile->getWebsiteURL()); ?>"/>
 				</span>
 		</td>
@@ -145,12 +145,12 @@ $this->addScript('assets/js/profile.js');
 				</label>
 			</td>
 			<td>
-				<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
-					. '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
-					<textarea class="input-xxlarge" maxlength="<?php echo (int) $this->config->maxsig; ?>"
-					          name="signature" id="signature" rows="10"
-					          cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
-				</span>
+			<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
+				. '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
+				<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
+				          name="signature" id="signature" rows="10"
+				          cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
+			</span>
 			</td>
 		</tr>
 	<?php endif; ?>

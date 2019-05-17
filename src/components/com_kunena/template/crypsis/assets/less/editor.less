@@ -14,15 +14,17 @@
 BBCODE BUTTONS
 -------------------------------------------------------------------- */
 
-table.kpostbuttonset {
-  tr {
-    td.kpostbuttons {
-      select.selectbox {
-        position: relative;
-        bottom: 5px;
-      }
+tr {
+  td.kpostbuttons {
+    select.selectbox {
+      position: relative;
+      bottom: 5px;
     }
   }
+}
+
+textarea.form-control {
+  max-width: 100% !important;
 }
 
 .form-horizontal .controls {
@@ -254,6 +256,10 @@ table.kpostbuttonset {
   border: 1px solid #e5e5e5;
 }
 
+.markItUpEditor a {
+  box-sizing: content-box;
+}
+
 .markItUpPreviewFrame {
   overflow: auto;
   background-color: #FFFFFF;
@@ -267,7 +273,7 @@ table.kpostbuttonset {
   margin: 0;
   padding-bottom: 10px;
   padding-left: 10px;
-  height: 50px;
+  height: 25px;
 }
 
 .markItUpFooter {
@@ -345,6 +351,7 @@ table.kpostbuttonset {
   background-repeat: no-repeat;
   padding: 4px;
   margin: 0;
+  box-sizing: content-box;
 }
 
 .markItUpHeader ul ul a {
@@ -428,14 +435,14 @@ li.markItUpButton ul {
   margin-bottom: 35px;
 }
 
-#iconset_inject .inline:hover {
-  cursor: pointer;
-}
-
 .wysibb-text-editor {
   min-height: 300px !important;
 }
 
-video {
-  width: 100% !important;
+#iconset_inject .inline:hover {
+  cursor: pointer;
+}
+
+.kpoll-time-to-live-input {
+  margin-left: -30px !important;
 }

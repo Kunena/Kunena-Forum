@@ -18,7 +18,7 @@ $announcement = $this->announcement;
 ?>
 
 <tr>
-	<td class="nowrap hidden-phone">
+	<td class="nowrap hidden-xs-down">
 		<?php echo $announcement->displayField('created', 'date_today'); ?>
 	</td>
 
@@ -26,11 +26,14 @@ $announcement = $this->announcement;
 		<div class="overflow">
 			<?php echo HTMLHelper::_(
 				'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-				null, null, ''); ?>
+				null, 'follow'
+			); ?>
 		</div>
 	</td>
 
-	<?php if ($this->checkbox) : ?>
+	<?php if ($this->checkbox)
+		:
+		?>
 		<td class="center">
 			<?php if ($this->canPublish())
 			{
@@ -42,7 +45,8 @@ $announcement = $this->announcement;
 			{
 				echo HTMLHelper::_(
 					'kunenagrid.task', $row, 'tick.png', Text::_('COM_KUNENA_ANN_EDIT'),
-					'edit', '', true);
+					'edit', '', true
+				);
 			} ?>
 		</td>
 		<td class="center">
@@ -50,23 +54,32 @@ $announcement = $this->announcement;
 			{
 				echo HTMLHelper::_(
 					'kunenagrid.task', $row, 'publish_x.png',
-					Text::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true);
+					Text::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true
+				);
 			} ?>
 		</td>
 	<?php endif; ?>
+
 	<td>
-		<?php if (KunenaConfig::getInstance()->username) : ?>
+		<?php if (KunenaConfig::getInstance()->username)
+			:
+			?>
 			<?php echo $announcement->getAuthor()->username; ?>
-		<?php else : ?>
+		<?php else
+
+			:
+			?>
 			<?php echo $announcement->getAuthor()->name; ?>
 		<?php endif; ?>
 	</td>
 
-	<td class="center hidden-phone">
+	<td class="center hidden-xs-down">
 		<?php echo $announcement->displayField('id'); ?>
 	</td>
 
-	<?php if ($this->checkbox) : ?>
+	<?php if ($this->checkbox)
+		:
+		?>
 		<td class="center">
 			<?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
 		</td>

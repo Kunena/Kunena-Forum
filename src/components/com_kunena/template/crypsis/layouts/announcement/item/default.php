@@ -13,24 +13,28 @@ defined('_JEXEC') or die;
 $announcement = $this->announcement;
 $actions      = $this->getActions();
 ?>
-<h2>
+<h3>
 	<?php echo $announcement->displayField('title'); ?>
 
-	<?php if ($this->announcement->showdate) : ?>
+	<?php if ($announcement->showdate)
+		:
+		?>
 		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
 	<?php endif; ?>
-</h2>
+</h3>
 
-<?php if (!empty($actions)) : ?>
+<?php if (!empty($actions))
+	:
+	?>
 	<div>
 		<?php echo implode(' ', $actions); ?>
 	</div>
-	<br/>
+	<br>
 <?php endif; ?>
 
-<div class="well well-small">
+<div class="shadow-lg rounded">
 	<div><?php echo $announcement->displayField('sdescription'); ?></div>
 	<div><?php echo $announcement->displayField('description'); ?></div>
 </div>

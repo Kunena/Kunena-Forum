@@ -11,19 +11,18 @@
 defined('_JEXEC') or die;
 ?>
 
-<div class="navbar" itemscope itemtype="https://schema.org/SiteNavigationElement">
-	<div class="navbar-inner">
-		<div class="visible-desktop">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border"
+     itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+		<button class="navbar-toggler" aria-expanded="false" aria-controls="knav-collapse" aria-label="Toggle navigation" type="button" data-target=".knav-collapse" data-toggle="collapse">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="knav-collapse collapse navbar-collapse">
 			<?php echo $this->subRequest('Widget/Menu'); ?>
 		</div>
-		<div class="hidden-desktop">
-			<div class="nav navbar-nav pull-left">
-				<div>
-					<a class="btn btn-link" data-toggle="collapse" data-target=".knav-collapse"><?php echo KunenaIcons::hamburger(); ?></a>
-				</div>
-				<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-			</div>
+		<button class="navbar-toggler float-right" aria-expanded="false" aria-controls="knav-usercollapse" aria-label="Toggle navigation" type="button" data-target=".knav-usercollapse" data-toggle="collapse">
+			<?php echo KunenaIcons::user(); ?>
+		</button>
+		<div class="knav-usercollapse navbar-collapse collapse">
+			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>
-		<?php echo $this->subRequest('Widget/Login'); ?>
-	</div>
-</div>
+</nav>

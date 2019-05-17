@@ -15,19 +15,19 @@ use Joomla\CMS\Language\Text;
 
 $this->addScript('assets/js/poll.js');
 ?>
-	<div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-vote">&times;</div>
+	<div class="float-right btn btn-default border btn-small" data-toggle="collapse" data-target="#poll-vote">&times;</div>
 	<h2>
 		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
 	</h2>
 
-	<div class="collapse in" id="poll-vote">
+	<div class="" id="poll-vote">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post">
 			<input type="hidden" name="task" value="vote"/>
 			<input type="hidden" name="catid" value="<?php echo $this->topic->category_id; ?>"/>
 			<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
-			<div class="well">
+			<div class="card card-body">
 				<ul class="unstyled">
 
 					<?php foreach ($this->poll->getOptions() as $key => $poll_option)

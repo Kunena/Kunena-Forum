@@ -8,11 +8,10 @@
  **/
 
 jQuery(document).ready(function ($) {
-	var kurlusers = $('#kurl_users');
 
 	/* Provide autocomplete user list in search form and in user list */
-	if (kurlusers.length > 0) {
-		var users_url = kurlusers.val();
+	if ($('#kurl_users').length > 0) {
+		var users_url = $('#kurl_users').val();
 
 		$('#kusersearch').atwho({
 			at: "",

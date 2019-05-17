@@ -227,13 +227,13 @@ jQuery(function ($) {
 				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
 				type: 'POST'
 			})
-			.done(function (data) {
-				data.inline = 0;
-				$this.hide();
-			})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
+				.done(function (data) {
+					data.inline = 0;
+					$this.hide();
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 		});
 
 	var removeButton = $('<button/>')

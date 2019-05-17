@@ -10,5 +10,11 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<h1><?php echo $this->header; ?></h1>
-<div class="well well-small"><div class="kcustom-top"><?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_top'); ?></div><?php echo $this->body; ?><div class="kcustom-bottom"><?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_bottom'); ?></div></div>
+<div class="card">
+	<h3 class="card-header"><?php echo $this->header; ?></h3>
+	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_top'); ?>
+	<div class="card-body">
+		<?php echo $this->body; ?>
+	</div>
+	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_bottom'); ?>
+</div>

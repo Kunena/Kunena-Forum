@@ -16,9 +16,9 @@ $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $class           = ' class="' . ' label label-' . $icon->labeltype . '"';
 
-if ($topicicontype == 'B2')
+if ($topicicontype == 'B3')
 {
-	$icons = '<span class="icon icon-' . $icon->b2 . '" aria-hidden="true"></span>';
+	$icons = '<span class="glyphicon glyphicon-' . $icon->b3 . '" aria-hidden="true"></span>';
 }
 elseif ($topicicontype == 'fa')
 {

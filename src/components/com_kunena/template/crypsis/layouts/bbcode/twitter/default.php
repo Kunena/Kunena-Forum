@@ -89,21 +89,21 @@ use Joomla\CMS\Factory;
 					<li>
 						<a class="reply-action web-intent" data-scribe="element:reply" title="Reply"
 						   href="https://twitter.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
-							<i class="large-kicon icon-undo "></i>
+							<i class="large-kicon glyphicon glyphicon-undo "></i>
 							<b>Reply</b>
 						</a>
 					</li>
 					<li>
 						<a class="retweet-action web-intent" data-scribe="element:retweet" title="Retweet"
 						   href="https://twitter.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
-							<i class="large-kicon icon-loop"></i>
+							<i class="large-kicon glyphicon glyphicon-loop"></i>
 							<b>Retweet</b>
 						</a>
 					</li>
 					<li>
 						<a class="favorite-action web-intent" data-scribe="element:favorite" title="Favorite"
 						   href="https://twitter.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
-							<i class="large-kicon icon-star"></i>
+							<i class="large-kicon glyphicon glyphicon-star"></i>
 							<b>Favorite</b>
 						</a>
 					</li>

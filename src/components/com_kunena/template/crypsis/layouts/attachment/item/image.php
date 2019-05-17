@@ -35,6 +35,7 @@ if ($config->lightbox == 1)
 
 	$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
+
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>

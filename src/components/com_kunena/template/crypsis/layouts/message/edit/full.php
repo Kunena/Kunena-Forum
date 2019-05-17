@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package         Kunena.Template.Crypsis
- * @subpackage      Layout.Message
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
+ * @copyright   Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -53,16 +53,10 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 }
 ?>
 
-<div class="kreply span12 well" id="kreply<?php echo $message->displayField('id'); ?>_form"
+<div class="kreply col-md-12 card" id="kreply<?php echo $message->displayField('id'); ?>_form"
      style="display: inline-block;">
-	<div class="modal-header">
-		<h3>
-			<?php echo Text::sprintf('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY', $author->getLink()); ?>
-		</h3>
-	</div>
-
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
-	      enctype="multipart/form-data" name="postform" id="postform" class="form-inline">
+	      enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 		<input type="hidden" name="task" value="post"/>
 		<input type="hidden" name="parentid" value="<?php echo $topic->last_post_id; ?>"/>
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>"/>
@@ -81,37 +75,41 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 
-		<div class="modal-body">
+		<div class="modal-header">
+			<h3>
+				<?php echo Text::sprintf('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY', $author->getLink()); ?>
+			</h3>
+		</div>
 
+		<div class="modal-body">
 			<?php if (!$me->exists())
 				:
 				?>
-				<div class="controls">
-					<label>
+				<div class="form-group">
+					<label class="col-md-12 control-label">
 						<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
 					</label>
-					<input type="text" name="authorname" class="span12" maxlength="35"
-					       placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>"
-					       value="" required/>
+					<input type="text" name="authorname" class="form-control" maxlength="35"
+					       placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required/>
 				</div>
 			<?php endif; ?>
 
 			<?php if ($config->askemail && !$me->exists())
 				:
 				?>
-				<div class="controls">
+				<div class="form-group">
 					<?php echo $config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 					<input type="text" id="email" name="email"
 					       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
-					       class="inputbox span12" maxlength="35" value="" required/>
+					       class="inputbox col-md-12 form-control" maxlength="35" value="" required/>
 				</div>
 			<?php endif; ?>
 
-			<div class="controls">
+			<div class="form-group">
 				<label for="kanonymous<?php echo intval($message->id); ?>">
 					<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 				</label>
-				<input type="text" id="subject" name="subject" class="inputbox span12"
+				<input type="text" id="subject" name="subject" class="form-control"
 				       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
 				       <?php
 				       if (!$config->allow_change_subject && !$me->isModerator())
@@ -120,8 +118,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				endif; ?>
 				       value="<?php echo $message->displayField('subject'); ?>"/>
 			</div>
-			<div class="controls">
-				<label>
+			<div class="form-group">
+				<label class="col-md-12 control-label">
 					<?php echo Text::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
 				<?php if ($editor == 1)
@@ -130,13 +128,14 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				}
 				else
 				{
-					echo '<textarea class="span12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="col-md-12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe'))
 				:
 				?>
+				<div class="clearfix"></div>
 				<div class="control-group">
 					<div class="controls">
 						<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
@@ -148,27 +147,31 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 						<label class="string optional"
 						       for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 					</div>
-					<?php if ($me->exists() && $category->allow_anonymous)
-						:
-						?>
-						<div class="controls">
-							<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>"
-							       name="anonymous"
-							       value="1" class="kinputbox postinput" <?php
-							if ($category->post_anonymous)
-							{
-								echo 'checked="checked"';
-							} ?> />
-							<label for="kanonymous<?php echo intval($message->id); ?>">
-								<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
-							</label>
-						</div>
-					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+			<?php
+			if ($me->exists() && $category->allow_anonymous)
+				:
+				?>
+				<div class="control-group">
+					<div class="controls">
+						<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>"
+						       name="anonymous"
+						       value="1" class="kinputbox postinput form-control" <?php
+						if ($category->post_anonymous)
+						{
+							echo 'checked="checked"';
+						} ?> />
+						<label for="kanonymous<?php echo intval($message->id); ?>">
+							<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
+						</label>
+					</div>
 				</div>
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
-			   role="button" class="btn btn-small btn-link pull-right"
+			   role="button" class="btn btn-default border btn-small btn-link float-right"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+			<br/>
 		</div>
 		<?php if (!empty($this->captchaEnabled)): ?>
 			<div class="control-group">
@@ -177,20 +180,18 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		<?php endif; ?>
 		<div class="modal-footer">
 			<small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-			<input type="submit" class="btn btn-primary kreply-submit" name="submit"
+			<input type="submit" class="btn btn-primary border kreply-submit" name="submit"
 			       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
 			       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
 			       ?>"/>
 			<?php // TODO: remove data on cancel. ?>
-			<input type="reset" name="reset" class="btn"
+			<input type="reset" name="reset" class="btn btn-default border"
 			       value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
 			       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal"
 			       aria-hidden="true"/>
 		</div>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-		       value="<?php echo $config->disemoticons ? 0 : 1 ?>"/>
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>"/>
 	</form>
 </div>
-<div class="clearfix"></div>

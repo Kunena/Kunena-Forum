@@ -4,19 +4,22 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Pages.User
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 $content = $this->execute('User/Edit');
 
 $avatartab = $this->input->getInt('avatartab');
 
-$this->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
+$document = Factory::getDocument();
+
+$document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_EDIT'),

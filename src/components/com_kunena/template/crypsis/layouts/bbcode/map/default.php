@@ -50,6 +50,7 @@ if (!empty($this->config->google_map_api_key))
 	$mapid      = 'kgooglemap' . $this->mapid;
 	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 	$map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
+
 	if (!in_array($map_type, $map_typeId))
 	{
 		$map_type = 'ROADMAP';
@@ -104,10 +105,11 @@ if (!empty($this->config->google_map_api_key))
 	<?php
 }
 else
-{ ?>
-	<div class="alert alert-info">
+{
+	?>
+	<div class="alert alert-info" role="alert">
 		<?php
 		echo Text::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
 		?>
 	</div>
-<?php } ?>
+<?php }

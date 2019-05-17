@@ -9,20 +9,22 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 
-$message  = $this->message;
-$topic    = $message->getTopic();
-$category = $topic->getCategory();
-$author   = $message->getAuthor();
-$isReply  = $message->id != $topic->first_post_id;
-$config   = KunenaFactory::getConfig();
-$name     = $config->username ? $author->username : $author->name;
-$me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$message              = $this->message;
+$topic                = $message->getTopic();
+$category             = $topic->getCategory();
+$author               = $message->getAuthor();
+$isReply              = $message->id != $topic->first_post_id;
+$config               = KunenaFactory::getConfig();
+$name                 = $config->username ? $author->username : $author->name;
+$me                   = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$this->ktemplate      = KunenaFactory::getTemplate();
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
 ?>
-<div id="kunena_search_results" class="row-fluid">
-	<div class="span2 center">
+<div id="kunena_search_results" class="row">
+	<div class="col-md-2 center">
 		<ul class="unstyled center profilebox">
 			<li>
 				<strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong>
@@ -31,31 +33,19 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 		</ul>
 	</div>
 
-	<div class="span10">
-		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
-			<?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?>
-			<?php
-			if ($message->modified_time)
+	<div class="col-md-10">
+		<small class="text-muted float-right hidden-phone"
+		       style="margin-top:-5px;"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
 				:
 				?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan();
-			endif; ?>
-		</small>
-		<div class="badger-left badger-info khistory">
+			endif; ?></small>
+		<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $message->getState(); ?> khistory">
 			<div class="mykmsg-header">
 				<?php
-				$subject = $message->displayField('subject');
-				$msg     = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($msg, $name, $subject);
-				?>
+				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
-			<h3>
-				<?php echo $this->getTopicLink($topic, $message, null, null, 'hasTooltip'); ?>
-			</h3>
-
-			<p>
-				<?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($category, null, null, 'hasTooltip')); ?>
-			</p>
-
 			<div class="kmessage">
 				<?php if (!$isReply)
 					:

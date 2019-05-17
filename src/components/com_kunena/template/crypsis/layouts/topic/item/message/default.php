@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $template     = KunenaTemplate::getInstance();
 $direction    = $template->params->get('avatarPosition');
@@ -18,11 +19,11 @@ $quick        = $template->params->get('quick');
 if ($direction === "left")
 	:
 	?>
-	<div class="row-fluid message">
-		<div class="span2 hidden-phone">
+	<div class="row message">
+		<div class="col-md-2 shadow rounded hidden-xs-down">
 			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
-		<div class="span10 message-<?php echo $this->message->getState(); ?>">
+		<div class="col-md-10 shadow-lg rounded message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
@@ -36,8 +37,8 @@ if ($direction === "left")
 <?php elseif ($direction === "right")
 	:
 	?>
-	<div class="row-fluid message">
-		<div class="span10 message-<?php echo $this->message->getState(); ?>">
+	<div class="row message">
+		<div class="col-md-10 shadow-lg rounded message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
@@ -47,15 +48,15 @@ if ($direction === "left")
 				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 			<?php endif; ?>
 		</div>
-		<div class="span2 hidden-phone">
+		<div class="col-md-2 shadow rounded hidden-xs-down">
 			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top")
 	:
 	?>
-	<div class="row-fluid message">
-		<div class="span12  message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
+	<div class="row message message-<?php echo $this->message->getState(); ?>">
+		<div class="col-md-12 shadow-lg rounded" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Top')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php
@@ -69,8 +70,8 @@ if ($direction === "left")
 <?php elseif ($direction === "bottom")
 	:
 	?>
-	<div class="row-fluid message">
-		<div class="span12 message-<?php echo $this->message->getState(); ?>" style="margin-left: 0;">
+	<div class="row message message-<?php echo $this->message->getState(); ?>">
+		<div class="col-md-12 shadow-lg rounded" style="margin-left: 0;">
 			<?php echo $this->subLayout('Message/Item/Bottom')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php

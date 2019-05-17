@@ -14,23 +14,13 @@
                description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
             <option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
         </field>
-        <field name="bootstrap" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP"
-               description="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP_DESC">
-            <option value="0">COM_KUNENA_NO</option>
-            <option value="1">COM_KUNENA_YES</option>
-        </field>
-        <field name="icomoon" type="list" default="1" label="COM_KUNENA_TEMPLATE_LOAD_ICOMOON"
-               description="COM_KUNENA_TEMPLATE_LOAD_ICOMOON_DESC">
+        <field name="borderless" type="list" default="1" label="COM_KUNENA_TEMPLATE_BORDERLESS"
+               description="COM_KUNENA_TEMPLATE_BORDERLESS_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
         <field name="tooltips" type="list" default="1" label="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS"
                description="COM_KUNENA_TEMPLATE_LOAD_TOOLTIPS_DESC">
-            <option value="0">COM_KUNENA_NO</option>
-            <option value="1">COM_KUNENA_YES</option>
-        </field>
-        <field name="borderless" type="list" default="1" label="COM_KUNENA_TEMPLATE_BORDERLESS"
-               description="COM_KUNENA_TEMPLATE_BORDERLESS_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
@@ -93,12 +83,10 @@
             <option value="top">COM_KUNENA_TEMPLATE_TOP</option>
             <option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
         </field>
-        <field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE"
-               description="COM_KUNENA_TEMPLATE_PROFILE_TYPE_DESC">
-            <option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
-            <option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
-            <option value="img-polaroid">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
-            <option value="none">COM_KUNENA_TEMPLATE_NONE</option>
+        <field name="formRecover" type="list" default="0" label="COM_KUNENA_TEMPLATE_RECOVER"
+               description="COM_KUNENA_TEMPLATE_RECOVER_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
         </field>
         <field name="labels" type="list" default="0" label="COM_KUNENA_TEMPLATE_LABELS"
                description="COM_KUNENA_TEMPLATE_LABELS_DESC">
@@ -112,12 +100,14 @@
             <option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
             <option value="both">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_BOTH</option>
         </field>
-        <field name="formRecover" type="list" default="0" label="COM_KUNENA_TEMPLATE_RECOVER"
-               description="COM_KUNENA_TEMPLATE_RECOVER_DESC">
-            <option value="0">COM_KUNENA_NO</option>
-            <option value="1">COM_KUNENA_YES</option>
+        <field name="avatarType" type="list" default="img-rounded" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE"
+               description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
+            <option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
+            <option value="rounded-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
+            <option value="img-thumbnail">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
+            <option value="none">COM_KUNENA_TEMPLATE_NONE</option>
         </field>
-        <field name="topicicontype" type="list" default="B2" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS"
+        <field name="topicicontype" type="list" default="B3" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS"
                description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
             <option value="B2">COM_KUNENA_TEMPLATE_BOOTSTRAP2</option>
             <option value="B3">COM_KUNENA_TEMPLATE_BOOTSTRAP3</option>
@@ -126,6 +116,11 @@
         </field>
         <field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME"
                description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="icons" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_ICONS"
+               description="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_ICONS_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
@@ -170,7 +165,7 @@
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
-        <field name="editor" type="list" default="0" label="COM_KUNENA_TEMPLATE_EDITOR"
+        <field name="editor" type="list" default="1" label="COM_KUNENA_TEMPLATE_EDITOR"
                description="COM_KUNENA_TEMPLATE_EDITOR_DESC">
             <option value="0">COM_KUNENA_TEMPLATE_EDITOR_BBCODE</option>
             <option value="1">COM_KUNENA_TEMPLATE_EDITOR_WYSIBB</option>

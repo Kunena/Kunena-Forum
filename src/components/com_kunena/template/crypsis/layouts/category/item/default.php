@@ -15,30 +15,31 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $categoryActions = $this->getCategoryActions();
-$cols            = empty($this->checkbox) ? 7 : 6;
+$cols            = empty($this->checkbox) ? 5 : 6;
 $this->addStyleSheet('assets/css/rating.css');
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
-	<div class="alert alert-info kfrontend">
-		<h1>
-			<a class="close" data-dismiss="alert" href="#"></a>
-		</h1>
+	<div class="clearfix"></div>
+	<br>
+	<h1 class="alert alert-info shadow-lg rounded">
+		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
-	</div>
+	</h1>
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
 
 	<?php if (!empty($this->topics)) : ?>
-		<div class="row-fluid">
-			<div class="span12">
-				<h2 class="pull-right">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="float-right">
 					<?php echo $this->subLayout('Widget/Search')
 						->set('catid', $this->category->id)
 						->setLayout('topic'); ?>
 				</h2>
-				<div class="pull-left">
+
+				<div class="float-left">
 					<?php echo $this->subLayout('Widget/Pagination/List')
 						->set('pagination', $this->pagination)
 						->set('display', true); ?>
@@ -47,7 +48,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		</div>
 	<?php endif; ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="ktopicsform">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
 		<input type="hidden" name="view" value="topics"/>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div>
@@ -63,27 +64,18 @@ $this->addStyleSheet('assets/css/rating.css');
 		<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
 			<thead>
 			<tr>
-				<td class="span1 center hidden-phone">
+				<th scope="col" class="center hidden-xs-down">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
-				</td>
-				<td class="span<?php echo $cols ?>">
-					<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>
-				</td>
-				<td class="span2 hidden-phone">
-					<?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>
-				</td>
-				<td class="span3 hidden-phone">
-					<?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?>
-				</td>
+				</th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+
 				<?php if (!empty($this->topicActions)) : ?>
-					<td class="span1 center">
-						<label>
-							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
-						</label>
-					</td>
+					<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
 				<?php endif; ?>
 			</tr>
 			</thead>
@@ -107,59 +99,61 @@ $this->addStyleSheet('assets/css/rating.css');
 			<tfoot>
 			<?php if ($this->topics) : ?>
 				<tr>
-					<td class="center hidden-phone">
+					<th scope="col" class="center hidden-xs-down">
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
-							<span class="divider"></span>
+							<span class="dropdown-divider"></span>
 							<?php echo KunenaIcons::arrowup(); ?>
 						</a>
-					</td>
-					<td colspan="6" class="hidden-phone">
-						<div class="input-append">
+					</th>
+					<th scope="col" class="hidden-xs-down">
+						<div class="form-group">
+							<div class="input-group" role="group">
+								<div class="input-group-btn">
+									<?php if (!empty($this->moreUri))
+									{
+										echo HTMLHelper::_(
+											'kunenaforum.link', $this->moreUri,
+											Text::_('COM_KUNENA_MORE'), null, null, 'follow');
+									} ?>
 
-							<?php if (!empty($this->moreUri))
-							{
-								echo HTMLHelper::_(
-									'kunenaforum.link', $this->moreUri,
-									Text::_('COM_KUNENA_MORE'), null, null, 'follow');
-							} ?>
+									<?php if (!empty($this->topicActions)) : ?>
+										<?php echo HTMLHelper::_(
+											'select.genericlist', $this->topicActions, 'task',
+											'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
-							<?php if (!empty($this->topicActions)) : ?>
-								<?php echo HTMLHelper::_(
-									'select.genericlist', $this->topicActions, 'task',
-									'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
-
-								<?php if ($this->actionMove) : ?>
-									<?php
-									$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-									echo HTMLHelper::_(
-										'kunenaforum.categorylist', 'target', 0, $options, array(),
-										' disabled="disabled"', 'value', 'text', 0,
-										'kchecktarget'
-									);
-									?>
-									<button class="btn" name="kcheckgo"
-									        type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
-								<?php endif; ?>
-							<?php endif; ?>
+										<?php if ($this->actionMove) : ?>
+											<?php
+											$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+											echo HTMLHelper::_(
+												'kunenaforum.categorylist', 'target', 0, $options, array(),
+												'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
+												'kchecktarget'
+											);
+											?>
+											<button class="btn btn-default border" name="kcheckgo"
+											        type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+										<?php endif; ?>
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
-					</td>
+					</th>
 				</tr>
-			<?php else:
-				echo Text::_('COM_KUNENA_VIEW_NO_TOPICS');
-			endif; ?>
+			<?php endif; ?>
 			</tfoot>
 			<?php endif; ?>
 		</table>
 	</form>
 
 	<?php if ($this->topics) : ?>
-		<div class="pull-left">
+		<div class="float-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
 				->set('pagination', $this->pagination)
 				->set('display', true); ?>
 		</div>
 	<?php endif; ?>
+
 	<div class="clearfix"></div>
 
 	<?php if (!empty($this->moderators))

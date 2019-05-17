@@ -20,39 +20,37 @@ $config         = KunenaFactory::getConfig();
 $status         = $config->user_status;
 $config         = KunenaFactory::getTemplate()->params;
 ?>
+
 <div class="klogout">
 	<?php if ($config->get('displayDropdownMenu')) : ?>
-		<ul class="nav pull-right">
+		<ul class="nav float-right">
 			<li class="dropdown mobile-user">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			<span class="kwho-<?php echo $this->me->getType(0, true); ?>">
-			<?php
-			$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
+					<?php
+					$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
 
-			if ($this->me->getStatus() == 0 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20, 'green');
-			elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20, 'yellow');
-			elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20, 'red');
-			elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus) :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20, 'grey');
-			else :
-				echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
-			endif; ?>
-				<b class="caret"></b>
-				</span>
+					if ($this->me->getStatus() == 0 && $status && $showOnlineStatus) :
+						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20, 'green');
+					elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus) :
+						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20, 'yellow');
+					elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus) :
+						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20, 'red');
+					elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus) :
+						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20, 'grey');
+					else :
+						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
+					endif; ?>
+					<b class="caret"></b>
 				</a>
 
-				<div class="dropdown-menu" id="nav-menu">
+				<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
 					<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) : ?>
 						<div class="center">
 							<p>
 								<strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong>
 							</p>
-							<a class="kwho-<?php echo $this->me->getType(0, true); ?>"
-							   href="<?php echo $this->me->getURL(); ?>">
-								<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'logout'); ?>
+							<a href="<?php echo $this->me->getURL(); ?>">
+								<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post'); ?>
 							</a>
 							<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 							<p>
@@ -60,7 +58,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 							</p>
 						</div>
-						<div class="divider"></div>
+						<div class="dropdown-divider"></div>
 
 						<?php if ($status) : ?>
 							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
@@ -111,7 +109,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<input type="hidden" name="task" value="status"/>
 								<?php echo HTMLHelper::_('form.token'); ?>
 							</form>
-							<div class="divider"></div>
+							<div class="dropdown-divider"></div>
 
 							<div id="statustext">
 								<?php
@@ -129,9 +127,8 @@ $config         = KunenaFactory::getTemplate()->params;
 									<?php echo Text::_('COM_KUNENA_STATUS') ?>
 								</a>
 							</div>
-							<div class="divider"></div>
+							<div class="dropdown-divider"></div>
 						<?php endif; ?>
-
 
 						<?php if (!empty($this->announcementsUrl))
 							:
@@ -156,12 +153,12 @@ $config         = KunenaFactory::getTemplate()->params;
 						<?php endif; ?>
 
 						<div id="settings">
-							<a href="<?php echo $this->profile_edit_url; ?>" class="btn btn-link">
+							<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
 								<?php echo KunenaIcons::cog(); ?>
 								<?php echo Text::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 							</a>
 						</div>
-						<div class="divider"></div>
+						<div class="dropdown-divider"></div>
 
 						<?php if ($markAllReadUrl)
 							:
@@ -174,10 +171,8 @@ $config         = KunenaFactory::getTemplate()->params;
 							</div>
 						<?php endif ?>
 						<?php if ($this->plglogin): ?>
-						<div class="divider"></div>
-
+						<div class="dropdown-divider"></div>
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
-
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
 						      id="logout-form" class="form-inline">
 							<div>
@@ -190,17 +185,20 @@ $config         = KunenaFactory::getTemplate()->params;
 							<input type="hidden" name="task" value="logout"/>
 							<?php echo HTMLHelper::_('form.token'); ?>
 						</form>
-						<?php endif; ?>
-					<?php endif; ?>
-					<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
+						<?php endif ?>
+						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
+					<?php endif ?>
 				</div>
 			</li>
 		</ul>
 	<?php
-
-	endif; ?>
+	endif;
+	/*
+	 * Note these have to be outsize the dropdown as z-index stack context is different
+	 * from the parent forcing the dropsown to take over z-index calculation
+	 */
+	?>
 </div>
-
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-text-form"
       class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')

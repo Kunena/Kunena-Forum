@@ -45,7 +45,6 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 				<label for="kavatar-upload"><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 			</td>
 			<td>
-
 					<span class="btn btn-primary fileinput-button">
 						<?php echo KunenaIcons::plus(); ?>
 						<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
@@ -72,12 +71,12 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 		:
 		?>
 		<tr>
-			<td class="span3">
+			<td class="col-md-3">
 				<label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
 				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 			</td>
-			<td class="span9">
+			<td>
 
 				<?php if ($this->galleryOptions)
 					:
@@ -98,7 +97,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 						<?php foreach ($this->galleryImages as $image)
 							:
 							?>
-							<li>
+							<li class="col-md-2">
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
 								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">

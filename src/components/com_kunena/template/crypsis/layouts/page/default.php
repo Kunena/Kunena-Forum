@@ -9,7 +9,6 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 $config = KunenaFactory::getTemplate()->params;
 ?>
 

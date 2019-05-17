@@ -14,8 +14,6 @@ use Joomla\CMS\Language\Text;
 
 $topic = $this->topic;
 
-$this->addScript('assets/js/topic.js');
-
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
 Text::script('COM_KUNENA_RATE_ALLREADY');
@@ -25,17 +23,18 @@ Text::script('COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED');
 Text::script('COM_KUNENA_SOCIAL_EMAIL_LABEL');
 Text::script('COM_KUNENA_SOCIAL_TWITTER_LABEL');
 Text::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
-Text::script('COM_KUNENA_SOCIAL_GOOGLE_LABEL');
+Text::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
 Text::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
 Text::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
 Text::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
 Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 
-$this->addStyleSheet('assets/css/jquery.atwho.css');
-
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
+
+$this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
@@ -52,10 +51,9 @@ if ($topic->locked)
 	$txt .= ' topic-locked';
 }
 ?>
-
 <div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
-		<div class="alert alert-info">
+		<div class="alert alert-info shadow-lg rounded">
 			<a class="close" data-dismiss="alert" href="#">&times;</a>
 			<?php echo $this->category->displayField('headerdesc'); ?>
 		</div>
@@ -75,13 +73,12 @@ if ($topic->locked)
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
-	<div class="pull-left">
+	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
-
-	<h2 class="pull-right">
+	<h2 class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -137,13 +134,12 @@ if ($topic->locked)
 	}
 	?>
 
-	<div class="pull-left">
+	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
-
-	<div class="pull-right">
+	<div class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -154,14 +150,13 @@ if ($topic->locked)
 
 	<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 		<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
-	<?php endif;
+	<?php endif; ?>
 
+	<?php
 	if ($this->config->enableforumjump)
 	{
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>
-
-	<div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
-
 	<div class="clearfix"></div>
+	<div class="float-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
 </div>

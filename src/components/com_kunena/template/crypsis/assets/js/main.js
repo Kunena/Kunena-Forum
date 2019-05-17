@@ -68,17 +68,17 @@ jQuery(document).ready(function ($) {
 
 	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for announcement
-		$('#ann-date .input-append.date').datepicker({
+		$('#ann-date .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});
 
-		$('#ann-date2 .input-append.date').datepicker({
+		$('#ann-date2 .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});
 
-		$('#ann-date3 .input-append.date').datepicker({
+		$('#ann-date3 .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});
@@ -88,6 +88,6 @@ jQuery(document).ready(function ($) {
 	clearcache.on('click', function (e) {
 		e.preventDefault();
 		clearcache.addClass('btn-success');
-		clearcache.html('<i class="icon-checkmark-2"></i>' + Joomla.JText._('COM_KUNENA_CLEARED'));
+		clearcache.html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
 });

@@ -9,7 +9,6 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 
 $config          = KunenaConfig::getInstance();
@@ -24,7 +23,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		<div class="kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2) : ?>
 				<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-				   class="btn openmodal"
+				   class="btn btn-default border Kreplyclick"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
 				   rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
@@ -34,13 +33,18 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('reply'); ?>
 			<?php echo $this->messageButtons->get('quote'); ?>
 			<?php echo $this->messageButtons->get('edit'); ?>
-			<?php if ($this->message->isAuthorised('delete')) : ?>
+			<?php
+			if ($this->message->isAuthorised('delete'))
+				:
+				?>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
 			<?php echo $this->messageButtons->get('thankyou'); ?>
 			<?php echo $this->messageButtons->get('unthankyou'); ?>
 
-			<?php if ($this->messageButtons->get('moderate')) : ?>
+			<?php if ($this->messageButtons->get('moderate'))
+				:
+				?>
 				<br/>
 				<br/>
 				<?php echo $this->messageButtons->get('moderate'); ?>
@@ -51,7 +55,8 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php endif; ?>
 		</div>
 
-	<?php else : ?>
+	<?php else:
+		?>
 
 		<div class="kreplymessage">
 			<?php echo $this->message_closed; ?>
@@ -65,16 +70,16 @@ endif; ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-				   class="btn openmodal"
+				   class="btn btn-default border Kreplyclick"
 				   data-toggle="modal" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
-				<button class="btn" data-toggle="dropdown">
+				<button class="btn btn-default border" data-toggle="dropdown">
 					<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
-				<button class="btn dropdown-toggle" data-toggle="dropdown">
+				<button class="btn btn-default border dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -89,10 +94,10 @@ endif; ?>
 
 			<?php if ($this->messageButtons->get('moderate')) : ?>
 				<div class="btn-group">
-					<button class="btn" data-toggle="dropdown">
+					<button class="btn btn-default border" data-toggle="dropdown">
 						<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
-					<button class="btn dropdown-toggle" data-toggle="dropdown">
+					<button class="btn btn-default border dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">

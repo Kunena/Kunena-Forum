@@ -5,15 +5,15 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Template
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2018 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
-
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Crypsis template.
@@ -34,6 +34,62 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	protected $default = array('crypsis');
 
 	/**
+	 * Relative paths to various file types in this template.
+	 *
+	 * These will override default files in JROOT/media/kunena
+	 *
+	 * @var array
+	 * @since Kunena
+	 */
+	protected $pathTypes = array(
+		'emoticons'     => 'media/emoticons',
+		'ranks'         => 'media/ranks',
+		'icons'         => 'media/icons',
+		'categoryicons' => 'media/category_icons',
+		'images'        => 'media/images',
+		'js'            => 'media/js',
+		'css'           => 'media/css',
+	);
+
+	/**
+	 * User group initialization.
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	protected $userClasses = array(
+		'kwho-',
+		'admin'     => 'kwho-admin',
+		'globalmod' => 'kwho-globalmoderator',
+		'moderator' => 'kwho-moderator',
+		'user'      => 'kwho-user',
+		'guest'     => 'kwho-guest',
+		'banned'    => 'kwho-banned',
+		'blocked'   => 'kwho-blocked',
+	);
+
+	/**
+	 * Logic to load language strings for the template.
+	 *
+	 * By default language files are also loaded from the parent templates.
+	 *
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	public function loadLanguage()
+	{
+		$lang = Factory::getLanguage();
+		KunenaFactory::loadLanguage('kunena_tmpl_crypsis');
+
+		foreach (array_reverse($this->default) as $template)
+		{
+			$file = "kunena_tmpl_crypsis";
+			$lang->load($file, JPATH_SITE) || $lang->load($file, KPATH_SITE) || $lang->load($file, KPATH_SITE . "/template/{$template}");
+		}
+	}
+
+	/**
 	 * Template initialization.
 	 *
 	 * @return void
@@ -42,59 +98,41 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		// Template requires Bootstrap javascript
-		HTMLHelper::_('bootstrap.framework');
+		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 
-		// Template also requires jQuery framework.
-		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('bootstrap.tooltip');
+		JHtml::_('bootstrap.renderModal');
 
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			HTMLHelper::_('bootstrap.renderModal');
-		}
-		else
-		{
-			HTMLHelper::_('bootstrap.modal');
-		}
-
-		// Load JavaScript.
 		$this->addScript('assets/js/main.js');
 
-		$ktemplate = KunenaFactory::getTemplate();
-		$storage   = $ktemplate->params->get('storage');
+		// Compile CSS from LESS files.
+		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
+		$this->addStyleSheet('kunena.css');
+
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$storage         = $this->ktemplate->params->get('storage');
 
 		if ($storage)
 		{
 			$this->addScript('assets/js/localstorage.js');
 		}
 
-		// Compile CSS from LESS files.
-		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
-		$this->addLessSheet('kunena.css');
+		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less';
+
+		if (file_exists($filenameless) && 0 != filesize($filenameless))
+		{
+			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
+			$this->addStyleSheet('kunena-custom.css');
+		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css';
 
-		if (file_exists($filename) && filesize($filename) != 0)
+		if (file_exists($filename))
 		{
-			$this->addLessSheet('assets/css/custom.css');
+			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$bootstrap = $ktemplate->params->get('bootstrap');
-
-		if ($bootstrap)
-		{
-			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap.min.css');
-			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap-extended.css');
-			$this->addStyleSheet(Uri::base() . 'media/jui/css/bootstrap-responsive.min.css');
-
-			if ($ktemplate->params->get('icomoon'))
-			{
-				$this->addStyleSheet(Uri::base() . 'media/jui/css/icomoon.css');
-			}
-		}
-
-		$fontawesome = $ktemplate->params->get('fontawesome');
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$doc         = Factory::getDocument();
 
 		if ($fontawesome)
 		{
@@ -102,24 +140,30 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addScript('https://use.fontawesome.com/releases/v5.8.1/js/v4-shims.js', array(), array('defer' => true));
 		}
 
+		$icons = $this->ktemplate->params->get('icons');
+
+		if ($icons)
+		{
+			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+		}
+
 		// Load template colors settings
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
-		$iconcolor = $ktemplate->params->get('IconColor');
+		$iconcolor = $this->ktemplate->params->get('IconColor');
 
 		if ($iconcolor)
 		{
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
 		.layout#kunena .glyphicon-topic,
-		.layout#kunena h3 i,
 		.layout#kunena #kwho i.icon-users,
 		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
 EOF;
 		}
 
-		$iconcolornew = $ktemplate->params->get('IconColorNew');
+		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
 
 		if ($iconcolornew)
 		{
@@ -127,13 +171,104 @@ EOF;
 		.layout#kunena [class*="category"] .knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
-		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread .glyphicon { color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread svg { color: {$iconcolornew} !important;}
 EOF;
 		}
 
-		$this->addStyleDeclaration($styles);
+		$document = Factory::getDocument();
+		$document->addStyleDeclaration($styles);
+
 		parent::initialize();
+	}
+
+	/**
+	 * @param          $filename
+	 * @param   string $group group
+	 *
+	 * @return Joomla\CMS\Document\Document
+	 * @since Kunena
+	 */
+	public function addStyleSheet($filename, $group = 'forum')
+	{
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+
+		/** @noinspection PhpDeprecationInspection */
+		return Factory::getDocument()->addStyleSheet(Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
+	}
+
+	/**
+	 * @param        $link
+	 * @param        $name
+	 * @param        $scope
+	 * @param        $type
+	 * @param   null $id id
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getButton($link, $name, $scope, $type, $id = null)
+	{
+		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
+		$names = array('unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply');
+
+		// Need special style for buttons in drop-down list
+		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
+
+		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
+		{
+			$title = '';
+		}
+
+		if ($id)
+		{
+			$id = 'id="' . $id . '"';
+		}
+
+		if (in_array($name, $buttonsDropdown))
+		{
+			return <<<HTML
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
+				{$text}
+				</a>
+HTML;
+		}
+		else
+		{
+			return <<<HTML
+				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
+				<span class="{$name}"></span>
+				{$text}
+				</a>
+HTML;
+		}
+	}
+
+	/**
+	 * @param          $name
+	 * @param   string $title title
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getIcon($name, $title = '')
+	{
+		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
+	}
+
+	/**
+	 * @param          $image
+	 * @param   string $alt alt
+	 *
+	 * @return string
+	 * @since Kunena
+	 */
+	public function getImage($image, $alt = '')
+	{
+		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
 }

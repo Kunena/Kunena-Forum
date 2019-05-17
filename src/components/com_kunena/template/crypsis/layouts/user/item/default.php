@@ -14,12 +14,12 @@ use Joomla\CMS\Language\Text;
 $tabs = $this->getTabs();
 ?>
 
-<h1 class="pull-left">
+<h1 class="float-left">
 	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 </h1>
 
-<h2 class="pull-right">
+<h2 class="float-right">
 	<?php if ($this->profile->isAuthorised('edit'))
 		:
 		?>
@@ -39,33 +39,23 @@ echo $this->subLayout('User/Item/Summary')
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-	<br/>
-	<br/>
-
 	<ul class="nav nav-tabs">
-
-		<?php foreach ($tabs as $name => $tab)
-			:
-			?>
-			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-				<a href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+		<?php foreach ($tabs as $name => $tab) : ?>
+			<li class="nav-item">
+				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
 		<?php endforeach; ?>
-
 	</ul>
 	<div class="tab-content">
-
-		<?php foreach ($tabs as $name => $tab)
-			:
-			?>
-			<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
+		<?php foreach ($tabs as $name => $tab) : ?>
+			<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
 				<div>
 					<?php echo $tab->content; ?>
 				</div>
 			</div>
 		<?php endforeach; ?>
-
 	</div>
 </div>
 
 <div class="clearfix"></div>
+

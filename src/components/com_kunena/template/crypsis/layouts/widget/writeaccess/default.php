@@ -9,17 +9,17 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 
 $topic  = KunenaForumTopicHelper::get($this->id);
 $config = KunenaFactory::getConfig();
 ?>
 
-<div class="kfrontend">
-	<div class="btn-toolbar pull-right">
+<div class="kfrontend shadow-lg rounded mt-4">
+	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-small" data-toggle="collapse" data-target="#writeaccess"></div>
+			<div class="btn btn-default border btn-sm" data-toggle="collapse"
+			     data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
 
@@ -27,9 +27,9 @@ $config = KunenaFactory::getConfig();
 		<?php echo Text::_('COM_KUNENA_WRITEACCESS'); ?>
 	</h3>
 
-	<div class="row-fluid collapse in" id="writeaccess">
-		<div class="well-small">
-			<ul class="unstyled span6">
+	<div class="row-fluid " id="writeaccess">
+		<div class="card card-block bg-faded p-2">
+			<ul class="unstyled col-md-6">
 				<li>
 					<?php
 					if ($topic->getCategory()->isAuthorised('topic.create'))
@@ -106,8 +106,8 @@ $config = KunenaFactory::getConfig();
 						</li> <?php
 					}
 					elseif ($config->file_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
-							$config->file_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
-							$config->file_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+						$config->file_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
+						$config->file_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -145,11 +145,11 @@ $config = KunenaFactory::getConfig();
 						}
 						else
 						{
-						?>
-						<li>
-							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-						</li>
-						<?php
+							?>
+							<li>
+								<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+							</li>
+							<?php
 						}
 					}
 					else

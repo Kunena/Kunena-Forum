@@ -9,13 +9,14 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 
-$user                = $this->user;
-$avatar              = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-$config              = KunenaConfig::getInstance();
-$show                = $config->showuserstats;
+$user            = $this->user;
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
+$config          = KunenaConfig::getInstance();
+$show            = $config->showuserstats;
+
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);
 $medals              = $activityIntegration->getUserMedals($user->userid);
@@ -46,13 +47,10 @@ if ($show)
 			<li>
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle')
-					{
-						echo 'topic-starter-circle';
-					} ?>"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+					<span class="hidden-sm hidden-md topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif; ?>
-				<?php /*if ($user->isModerator()) : */ ?><!--
-			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/ ?> topic-moderator"><?php /*echo Text::_('COM_KUNENA_TEAM_MEMBER') */ ?></span>
+				<?php /*if (!$this->topic_starter && $user->isModerator()) : */ ?><!--
+			<span class="topic-moderator"><?php /*echo Text::_('COM_KUNENA_MODERATOR') */ ?></span>
 		--><?php /*endif;*/ ?>
 			</li>
 		<?php endif; ?>
@@ -87,9 +85,9 @@ if ($show)
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php if ($user->userid > 1) : ?>
 	<div class="profile-expand center">
-		<span class="heading btn btn-small heading-less"
+		<span class="heading btn btn-default border btn-xs heading-less"
 		      style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-small"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+		<span class="heading btn btn-default border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1) : ?>

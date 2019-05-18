@@ -47,6 +47,17 @@ IF exist %GitTarget%\libraries\kunena ( rmdir /S/q %GitTarget%\libraries\kunena 
 IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
+IF exist %GitTarget%\plugins\kunena\altauserpoints ( rmdir /S/q %GitTarget%\plugins\kunena\altauserpoints )
+IF exist %GitTarget%\plugins\kunena\community ( rmdir /S/q %GitTarget%\plugins\kunena\community )
+IF exist %GitTarget%\plugins\kunena\comprofiler ( rmdir /S/q %GitTarget%\plugins\kunena\comprofiler )
+IF exist %GitTarget%\plugins\kunena\easyprofile ( rmdir /S/q %GitTarget%\plugins\kunena\easyprofile )
+IF exist %GitTarget%\plugins\kunena\easysocial ( rmdir /S/q %GitTarget%\plugins\kunena\easysocial )
+IF exist %GitTarget%\plugins\kunena\finder ( rmdir /S/q %GitTarget%\plugins\kunena\finder )
+IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\finder\kunena )
+IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
+IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
+IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
+IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
 echo Put back kunena.xml file in place to allow to uninstall kunena
 Md %GitTarget%\administrator\components\com_kunena
 Copy %GitSource%\src\administrator\components\com_kunena\kunena.xml %GitTarget%\administrator\components\com_kunena
@@ -64,16 +75,36 @@ IF exist %GitTarget%\components\com_kunena ( rmdir /S/q %GitTarget%\components\c
 IF exist %GitTarget%\libraries\kunena ( rmdir /S/q %GitTarget%\libraries\kunena  )
 IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
-IF exist %GitTarget%\plugins\content\kunena ( rmdir /S/q %GitTarget%\plugins\content\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
+IF exist %GitTarget%\plugins\kunena\altauserpoints ( rmdir /S/q %GitTarget%\plugins\kunena\altauserpoints )
+IF exist %GitTarget%\plugins\kunena\community ( rmdir /S/q %GitTarget%\plugins\kunena\community )
+IF exist %GitTarget%\plugins\kunena\comprofiler ( rmdir /S/q %GitTarget%\plugins\kunena\comprofiler )
+IF exist %GitTarget%\plugins\kunena\easyprofile ( rmdir /S/q %GitTarget%\plugins\kunena\easyprofile )
+IF exist %GitTarget%\plugins\kunena\easysocial ( rmdir /S/q %GitTarget%\plugins\kunena\easysocial )
+IF exist %GitTarget%\plugins\kunena\finder ( rmdir /S/q %GitTarget%\plugins\kunena\finder )
+IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\finder\kunena )
+IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
+IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
+IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
+IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
 
 echo Make symbolic links
 mklink /d %GitTarget%\administrator\components\com_kunena %GitSource%\src\administrator\components\com_kunena
 mklink /d %GitTarget%\components\com_kunena %GitSource%\src\components\com_kunena
 mklink /d %GitTarget%\libraries\kunena %GitSource%\src\libraries\kunena
 mklink /d %GitTarget%\plugins\system\kunena %GitSource%\src\plugins\plg_system_kunena
-mklink /d %GitTarget%\plugins\content\kunena %GitSource%\src\plugins\plg_content_kunena
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\src\plugins\plg_quickicon_kunena
+mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_altauserpoints
+mklink /d %GitTarget%\plugins\kunena\community %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_community
+mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_comprofiler
+mklink /d %GitTarget%\plugins\kunena\easyprofile %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easyprofile
+mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easysocial
+mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_finder
+mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_finder_kunena
+mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_gravatar
+mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_joomla
+mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_kunena
+mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_uddeim
 echo Copying media/kunena
 xcopy /E /I %GitSource%\src\media\kunena\*.* %GitTarget%\media\kunena
 

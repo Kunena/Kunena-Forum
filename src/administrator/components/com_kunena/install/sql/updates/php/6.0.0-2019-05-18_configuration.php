@@ -27,8 +27,9 @@ function kunena_600_2019_05_18_configuration($parent)
 	if (isset($config->template))
 	{
 		if ($config->template == 'crypsis' || $config->template == 'crypsisb4')
-
-		$config->set('template', 'aurelia');
+		{
+			$config->set('template', 'aurelia');
+		}
 	}
 
 	// Save configuration

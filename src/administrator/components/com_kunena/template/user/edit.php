@@ -46,7 +46,7 @@ jQuery(function($) {
 				<div class="module-title nav-header">
 					<i class="icon-user"></i>
 					<?php echo Text::_('COM_KUNENA_USRL_USERNAME') ?>
-					: <?php echo $this->escape($this->user->name); ?></div>
+					: <?php echo $this->escape($this->user->username); ?></div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>"
 				      method="post" id="adminForm"

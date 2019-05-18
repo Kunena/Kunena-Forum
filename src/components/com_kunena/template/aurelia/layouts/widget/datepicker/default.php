@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
-$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
+$this->addStyleSheet('bootstrap.datepicker.css');
+$this->addScript('bootstrap.datepicker.js');
 $this->addScriptDeclaration(';(function($){
 
 		$.fn.datepicker.dates[\'kunena\'] = {

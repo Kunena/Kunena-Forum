@@ -11,8 +11,10 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Aurelia template.
@@ -41,13 +43,13 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * @since Kunena
 	 */
 	protected $pathTypes = array(
-		'emoticons'     => 'media/emoticons',
-		'ranks'         => 'media/ranks',
-		'icons'         => 'media/icons',
-		'categoryicons' => 'media/category_icons',
-		'images'        => 'media/images',
-		'js'            => 'media/js',
-		'css'           => 'media/css',
+		'emoticons'     => 'media/kunena/emoticons',
+		'ranks'         => 'media/kunena/ranks',
+		'icons'         => 'media/kunena/icons',
+		'categoryicons' => 'media/kunena/category_icons',
+		'images'        => 'media/kunena/core/images',
+		'js'            => 'media/kunena/core/js',
+		'css'           => 'media/kunena/core/css',
 	);
 
 	/**
@@ -112,7 +114,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		if ($storage)
 		{
-			$this->addScript('assets/js/localstorage.js');
+			$this->addScript('localstorage.js');
 		}
 
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/less/custom.less';
@@ -180,21 +182,6 @@ EOF;
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
-	}
-
-	/**
-	 * @param          $filename
-	 * @param   string $group group
-	 *
-	 * @return Joomla\CMS\Document\Document
-	 * @since Kunena
-	 */
-	public function addStyleSheet($filename, $group = 'forum')
-	{
-		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-
-		/** @noinspection PhpDeprecationInspection */
-		return Factory::getDocument()->addStyleSheet(Joomla\CMS\Uri\Uri::root(true) . "/{$filename}");
 	}
 
 	/**

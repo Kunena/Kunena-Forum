@@ -81,16 +81,16 @@ $this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 HTMLHelper::_('jquery.ui');
-$this->addScript('assets/js/load-image.min.js');
-$this->addScript('assets/js/canvas-to-blob.min.js');
-$this->addScript('assets/js/jquery.fileupload.js');
-$this->addScript('assets/js/jquery.fileupload-process.js');
-$this->addScript('assets/js/jquery.iframe-transport.js');
-$this->addScript('assets/js/jquery.fileupload-image.js');
-$this->addScript('assets/js/jquery.fileupload-audio.js');
-$this->addScript('assets/js/jquery.fileupload-video.js');
-$this->addScript('assets/js/upload.main.js');
-$this->addStyleSheet('assets/css/fileupload.css');
+$this->addScript('load-image.min.js');
+$this->addScript('canvas-to-blob.min.js');
+$this->addScript('jquery.fileupload.js');
+$this->addScript('jquery.fileupload-process.js');
+$this->addScript('jquery.iframe-transport.js');
+$this->addScript('jquery.fileupload-image.js');
+$this->addScript('jquery.fileupload-audio.js');
+$this->addScript('jquery.fileupload-video.js');
+$this->addScript('upload.main.js');
+$this->addStyleSheet('fileupload.css');
 
 $this->k = 0;
 
@@ -110,34 +110,27 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
-if ($editor == 0)
-{
-	$this->addScript('assets/js/markitup.js');
-	$this->addScript('assets/js/markitup.editor.js');
-	$this->addScript('assets/js/markitup.set.js');
-}
-
 // If polls are enabled, load also poll JavaScript.
-$this->addScript('assets/js/pollcheck.js');
+$this->addScript('pollcheck.js');
 
 if ($this->config->pollenabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('assets/js/poll.js');
+	$this->addScript('poll.js');
 }
 
 $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
 
-$this->addScript('assets/js/edit.js');
+$this->addScript('edit.js');
 
 echo $this->subLayout('Widget/Lightbox');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('assets/js/sisyphus.js');
+	$this->addScript('sisyphus.js');
 }
 ?>
 	<div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog"

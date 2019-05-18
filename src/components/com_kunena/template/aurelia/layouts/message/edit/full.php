@@ -29,17 +29,17 @@ $config   = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addStyleSheet('assets/css/jquery.atwho.css');
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('jquery.atwho.css');
+$this->addScript('jquery.caret.js');
+$this->addScript('jquery.atwho.js');
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
-$this->addScript('assets/js/edit.js');
+$this->addScript('edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('assets/js/sisyphus.js');
+	$this->addScript('sisyphus.js');
 }
 
 $template = KunenaTemplate::getInstance();

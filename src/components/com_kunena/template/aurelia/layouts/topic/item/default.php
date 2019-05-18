@@ -30,9 +30,9 @@ Text::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
 Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addStyleSheet('assets/css/jquery.atwho.css');
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('jquery.atwho.css');
+$this->addScript('jquery.caret.js');
+$this->addScript('jquery.atwho.js');
 
 $this->addScript('assets/js/topic.js');
 

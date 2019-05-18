@@ -14,8 +14,8 @@ use Joomla\CMS\Language\Text;
 
 if ($this->config->ratingenabled)
 {
-    $this->addStyleSheet('assets/css/rating.css');
-    $this->addScript('assets/js/rating.js');
+    $this->addStyleSheet('/media/kunena/core//css/rating.css');
+    $this->addScript('rating.js');
     $this->addScript('assets/js/krating.js');
 
     Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');

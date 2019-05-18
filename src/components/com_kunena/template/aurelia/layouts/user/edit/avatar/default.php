@@ -18,14 +18,14 @@ Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
 HTMLHelper::_('jquery.ui');
-$this->addScript('assets/js/load-image.min.js');
-$this->addScript('assets/js/canvas-to-blob.min.js');
-$this->addScript('assets/js/jquery.iframe-transport.js');
-$this->addScript('assets/js/jquery.fileupload.js');
-$this->addScript('assets/js/jquery.fileupload-process.js');
-$this->addScript('assets/js/jquery.fileupload-image.js');
-$this->addScript('assets/js/upload.avatar.js');
-$this->addStyleSheet('assets/css/fileupload.css');
+$this->addScript('load-image.min.js');
+$this->addScript('canvas-to-blob.min.js');
+$this->addScript('jquery.iframe-transport.js');
+$this->addScript('jquery.fileupload.js');
+$this->addScript('jquery.fileupload-process.js');
+$this->addScript('jquery.fileupload-image.js');
+$this->addScript('upload.avatar.js');
+$this->addStyleSheet('fileupload.css');
 
 $this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));

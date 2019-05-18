@@ -792,9 +792,23 @@ HTML;
 
 		if (!preg_match('|https?://|', $filename) && !preg_match('|media/jui|', $filename))
 		{
-			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filename     = preg_replace('/^assets\//', '', $filename);
-			$filename     = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+			if (preg_match('/assets/', $filename))
+			{
+				$filename     = preg_replace('|^css/|u', '', $filename);
+				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
+			}
+			elseif (preg_match('/kunena.css/', $filename) || preg_match('/kunena-custom.css/', $filename))
+			{
+				$filename     = preg_replace('|^css/|u', '', $filename);
+				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/cache/' . $this->name . '/css');
+			}
+			else
+			{
+				$filename = $this->getFile($filename, false, $this->pathTypes['css'],  $this->pathTypes['css']);
+			}
+
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
@@ -1005,9 +1019,17 @@ HTML;
 
 		if (!preg_match('|https?://|', $filename))
 		{
-			$filename     = preg_replace('|^js/|u', '', $filename);
-			$filename     = preg_replace('/^assets\//', '', $filename);
-			$filename     = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+			if (preg_match('/assets/', $filename))
+			{
+				$filename     = preg_replace('|^css/|u', '', $filename);
+				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+			}
+			else
+			{
+				$filename = $this->getFile($filename, false, $this->pathTypes['js'],  $this->pathTypes['js']);
+			}
+
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
 

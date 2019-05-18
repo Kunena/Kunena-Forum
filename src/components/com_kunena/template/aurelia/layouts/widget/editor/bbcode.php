@@ -12,11 +12,16 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
-$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('jquery.caret.js');
+$this->addScript('jquery.atwho.js');
+$this->addScript('markitup.js');
+$this->addScript('markitup.editor.js');
+$this->addScript('markitup.set.js');
+$this->addStyleSheet('jquery.atwho.css');
+$this->addStyleSheet('markitup.css');
 
 echo $this->subLayout('Widget/Datepicker');
+
 $this->getBBcodesEnabled();
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>

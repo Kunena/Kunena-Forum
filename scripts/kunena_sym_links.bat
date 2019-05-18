@@ -58,6 +58,7 @@ IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\ku
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
 IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
+IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 echo Put back kunena.xml file in place to allow to uninstall kunena
 Md %GitTarget%\administrator\components\com_kunena
 Copy %GitSource%\src\administrator\components\com_kunena\kunena.xml %GitTarget%\administrator\components\com_kunena
@@ -87,6 +88,7 @@ IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\ku
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
 IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
+IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 
 echo Make symbolic links
 mklink /d %GitTarget%\administrator\components\com_kunena %GitSource%\src\administrator\components\com_kunena
@@ -105,8 +107,7 @@ mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\administrator\comp
 mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_joomla
 mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_kunena
 mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_uddeim
-echo Copying media/kunena
-xcopy /E /I %GitSource%\src\media\kunena\*.* %GitTarget%\media\kunena
+mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 
 pause
 goto:eof

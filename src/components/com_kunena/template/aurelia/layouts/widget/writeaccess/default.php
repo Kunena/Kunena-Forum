@@ -15,7 +15,7 @@ $topic  = KunenaForumTopicHelper::get($this->id);
 $config = KunenaFactory::getConfig();
 ?>
 
-<div class="kfrontend shadow-lg rounded mt-4">
+<div class="kfrontend shadow-lg rounded mt-4 border">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-default border btn-sm" data-toggle="collapse"

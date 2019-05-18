@@ -124,7 +124,7 @@ $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('edit
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
 
-$this->addScript('edit.js');
+$this->addScript('assets/js/edit.js');
 
 echo $this->subLayout('Widget/Lightbox');
 

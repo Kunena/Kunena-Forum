@@ -35,7 +35,7 @@ $this->addScript('jquery.atwho.js');
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
-$this->addScript('edit.js');
+$this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

@@ -1,4 +1,4 @@
-# Crypsis Template Structure
+# Aurelia Template Structure
 
 ## ./media
 

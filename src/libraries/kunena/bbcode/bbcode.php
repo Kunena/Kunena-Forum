@@ -748,8 +748,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'class'         => 'link',
 			'allow_in'      => ['listitem', 'block', 'columns', 'inline'],
 			'content'       => BBCode::BBCODE_REQUIRED,
-			'plain_start'   => "<a href=\"{\$link}\">",
-			'plain_end'     => "</a>",
 			'plain_content' => ['_content', '_default'],
 			'plain_link'    => ['_default', '_content'],
 		],
@@ -1210,12 +1208,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
 
-		if ($bbcode->url_targetable !== false && isset($params['target']))
-		{
-			$target = $params['target'];
-			$class  = $params['class'];
-		}
-		elseif ($bbcode->url_target !== false)
+		if (isset($params['target']))
 		{
 			$target = $bbcode->url_target;
 			$class  = $params['class'];
@@ -1240,6 +1233,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		if ($smart && $bbcode->get_title($url))
 		{
 			$content = $bbcode->get_title($url);
+		}
+		else
+		{
+			$content = $url;
 		}
 
 		$layout = KunenaLayout::factory('BBCode/URL');

@@ -198,7 +198,7 @@ abstract class KunenaForumMessageHelper
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
 			->where('m.thread=' . $db->quote($topic_id) .' AND m.hold IN (' . $hold .')')
-			->order('m.times ' . $ordering);
+			->order('m.time ' . $ordering);
 		$db->setQuery($query, $start, $limit);
 
 		try

@@ -17,7 +17,7 @@ use Joomla\CMS\Uri\Uri;
 $config            = KunenaConfig::getInstance();
 $author            = $this->message->getAuthor();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
-$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false)  . $config->utm_source ? '?utm_source=' . $config->board_title . '&utm_medium=Email&utm_campaign=Subscription' : '';
 
 $msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');

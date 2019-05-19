@@ -15,7 +15,7 @@ use Joomla\CMS\Uri\Uri;
 
 $config            = KunenaConfig::getInstance();
 $user              = $this->message->getAuthor();
-$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
+$this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false) . $config->utm_source ? '?utm_source=' . $config->board_title . '&utm_medium=Email&utm_campaign=Report' : '';
 
 // Report moderator email (HTML)
 if (!$config->plain_email) :

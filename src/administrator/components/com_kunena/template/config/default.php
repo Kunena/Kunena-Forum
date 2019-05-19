@@ -54,6 +54,10 @@ HTMLHelper::_('behavior.tabstate');
 											   data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_USERS'); ?></a>
 										</li>
 										<li class="nav-item">
+											<a class="nav-link" href="#tab_emails"
+											   data-toggle="tab"><?php echo Text::_('COM_KUNENA_SUBSCRIPTIONS'); ?></a>
+										</li>
+										<li class="nav-item">
 											<a class="nav-link" href="#tab_security"
 											   data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_SECURITY'); ?></a>
 										</li>
@@ -575,6 +579,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													</tbody>
 												</table>
 											</fieldset>
+										</div>
+										<div class="tab-pane" id="tab_emails">
 											<fieldset>
 												<legend><?php echo Text::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
 												<table class="table table-striped">
@@ -645,6 +651,11 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_USE_SYSTEM_EMAILS') ?></td>
 														<td><?php echo $this->lists ['use_system_emails'] ?></td>
 														<td><?php echo Text::_('COM_KUNENA_A_USE_SYSTEM_EMAILS_DESC') ?></td>
+													</tr>
+													<tr <?php if ($this->config->utm_source != 0) : echo 'class="changed"'; endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_A_USE_UTM_SOURCE') ?></td>
+														<td><?php echo $this->lists ['utm_source'] ?></td>
+														<td><?php echo Text::_('COM_KUNENA_A_USE_UTM_SOURCE_DESC') ?></td>
 													</tr>
 													</tbody>
 												</table>

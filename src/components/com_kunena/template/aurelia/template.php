@@ -99,7 +99,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
+		JHtml::_('bootstrap.tooltip');
 
 		JHtml::_('bootstrap.renderModal');
 

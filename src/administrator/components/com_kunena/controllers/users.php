@@ -1162,7 +1162,6 @@ class KunenaAdminControllerUsers extends KunenaController
 		$user->myspace          = str_replace(' ', '', trim($app->input->getString('myspace', '')));
 		$user->linkedin         = str_replace(' ', '', trim($app->input->getString('linkedin', '')));
 		$user->linkedin_company = str_replace(' ', '', trim($app->input->getString('linkedin_company', '')));
-		$user->delicious        = str_replace(' ', '', trim($app->input->getString('delicious', '')));
 		$user->friendfeed       = str_replace(' ', '', trim($app->input->getString('friendfeed', '')));
 		$user->digg             = str_replace(' ', '', trim($app->input->getString('digg', '')));
 		$user->blogspot         = str_replace(' ', '', trim($app->input->getString('blogspot', '')));

@@ -62,7 +62,6 @@ jimport('joomla.utilities.date');
  * @property    string $myspace
  * @property    string $linkedin
  * @property    string $linkedin_company
- * @property    string $delicious
  * @property    string $friendfeed
  * @property    string $digg
  * @property    string $blogspot
@@ -2134,7 +2133,6 @@ class KunenaUser extends CMSObject
 						'myspace'            => array('url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'),
 						'linkedin'           => array('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'),
 						'linkedin_company'   => array('url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'),
-						'delicious'          => array('url' => 'https://del.icio.us/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DELICIOUS'), 'nourl' => '0'),
 						'friendfeed'         => array('url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'),
 						'digg'               => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
 						'skype'              => array('url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),

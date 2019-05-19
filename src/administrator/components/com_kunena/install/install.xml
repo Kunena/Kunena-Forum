@@ -931,9 +931,6 @@
         <field name="linkedin_company"
                type="varchar(75)"
                null="1"/>
-        <field name="delicious"
-               type="varchar(75)"
-               null="1"/>
         <field name="instagram"
                type="varchar(75)"
                null="1"/>

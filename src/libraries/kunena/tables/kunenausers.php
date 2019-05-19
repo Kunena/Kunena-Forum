@@ -275,13 +275,6 @@ class TableKunenaUsers extends KunenaTable
 	public $linkedin = null;
 
 	/**
-	 * DELICIOUS ID
-	 * @var string
-	 * @since Kunena
-	 */
-	public $delicious = null;
-
-	/**
 	 * FRIENDFEED ID
 	 * @var string
 	 * @since Kunena

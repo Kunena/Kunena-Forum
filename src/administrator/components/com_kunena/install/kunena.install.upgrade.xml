@@ -917,7 +917,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `myspace` `myspace` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin` `linkedin` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin_company` `linkedin_company` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `delicious` `delicious` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` DROP COLUMN `delicious`</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `instagram` `instagram` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `qqsocial` `qqsocial` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `blogspot` `blogspot` VARCHAR(75) NULL DEFAULT NULL;</query>

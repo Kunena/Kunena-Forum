@@ -442,7 +442,6 @@ class KunenaControllerUser extends KunenaController
 			$user->myspace          = '';
 			$user->linkedin         = '';
 			$user->linkedin_company = '';
-			$user->delicious        = '';
 			$user->friendfeed       = '';
 			$user->digg             = '';
 			$user->blogspot         = '';
@@ -1024,7 +1023,6 @@ class KunenaControllerUser extends KunenaController
 		$user->myspace          = str_replace(' ', '', trim($input->$method->get('myspace', '', 'string')));
 		$user->linkedin         = str_replace(' ', '', trim($input->$method->get('linkedin', '', 'string')));
 		$user->linkedin_company = str_replace(' ', '', trim($input->$method->get('linkedin_company', '', 'string')));
-		$user->delicious        = str_replace(' ', '', trim($input->$method->get('delicious', '', 'string')));
 		$user->friendfeed       = str_replace(' ', '', trim($input->$method->get('friendfeed', '', 'string')));
 		$user->digg             = str_replace(' ', '', trim($input->$method->get('digg', '', 'string')));
 		$user->blogspot         = str_replace(' ', '', trim($input->$method->get('blogspot', '', 'string')));

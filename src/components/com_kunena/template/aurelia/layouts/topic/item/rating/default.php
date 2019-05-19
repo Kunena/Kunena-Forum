@@ -14,15 +14,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 
-?>
-
-<?php if ($this->category->allow_ratings && $this->config->ratingenabled)
-	:
-
-	$this->addStyleSheet('assets/css/rating.css');
-	$this->addScript('assets/js/rating.js');
-	$this->addScript('assets/js/krating.js');
-	?>
+if ($this->category->allow_ratings && $this->config->ratingenabled) :
+	$this->addStyleSheet('rating.css');
+	$this->addScript('rating.js');
+	$this->addScript('krating.js'); ?>
 	<input id="topic_id" type="hidden" value="<?php echo $this->topic->id; ?>"/>
 	<input type="hidden" id="krating_url" name="krating_url"
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=getrate&format=raw'); ?>"/>

@@ -12,21 +12,15 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
-if ($this->config->ratingenabled)
-{
-    $this->addStyleSheet('/media/kunena/core//css/rating.css');
-    $this->addScript('rating.js');
-    $this->addScript('assets/js/krating.js');
+if ($this->config->ratingenabled && $this->category->allow_ratings) :
+	$this->addStyleSheet('rating.css');
+	$this->addScript('rating.js');
+	$this->addScript('krating.js');
 
-    Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
-    Text::script('COM_KUNENA_RATING_WARNING_LABEL');
-}
+	Text::script('COM_KUNENA_RATING_SUCCESS_LABEL');
+	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
 
-if ($this->config->ratingenabled && $this->category->allow_ratings)
-	:
-	if ($this->topic->rating)
-		:
-		?>
+	if ($this->topic->rating) : ?>
 		<div id="krating-top" title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>" class="hasTooltip">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>

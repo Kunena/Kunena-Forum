@@ -22,7 +22,7 @@ HTMLHelper::_('behavior.tabstate');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\j4\categories\edit.js');
+Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
 ?>
 
 <div id="kunena" class="container-fluid">

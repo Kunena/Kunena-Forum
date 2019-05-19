@@ -28,7 +28,7 @@ Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER');
 Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
 Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
-Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\j4\tools\recount.js');
+Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\tools\recount.js');
 ?>
 
 <div id="kunena" class="container-fluid">

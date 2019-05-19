@@ -12,8 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
-// @var KunenaAdminViewUsers $this
+use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
@@ -217,10 +216,8 @@ HTMLHelper::_('dropdown.init');
 						$img_no                 = '<i class="icon-cancel"></i>';
 						$img_yes                = '<i class="icon-checkmark"></i>';
 
-						if ($this->pagination->total > 0)
-							:
-							foreach ($this->users as $user)
-								:
+						if ($this->pagination->total > 0) :
+							foreach ($this->users as $user) :
 								$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
 								$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
 								$userModerateTask = $user->isModerator() ? 'unmoderate' : 'moderate';
@@ -233,8 +230,8 @@ HTMLHelper::_('dropdown.init');
 										<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true); ?>"
 										      title="<?php echo $this->escape($user->username); ?> ">
 											<?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
-											<a href="#edit"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
+											<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo Text::sprintf('COM_USERS_EDIT_USER', $this->escape($user->name)); ?>">
+											<span class="fa fa-pen-square mr-2" aria-hidden="true"></span><?php echo $this->escape($user->name); ?></a>
 											<small>
 												(<?php echo Text::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>
 												)
@@ -242,16 +239,16 @@ HTMLHelper::_('dropdown.init');
 										</span>
 									</td>
 									<td>
-										<a href="#edit"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->email); ?></a>
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
+											<?php echo $this->escape($user->email); ?></a>
 									</td>
 									<td>
-										<a href="#tab6"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->ip); ?></a>
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
+											<?php echo $this->escape($user->ip); ?></a>
 									</td>
 									<td class="hidden-phone hidden-tablet">
-										<a href="#tab7"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->getRank(0, 'title')); ?></a>
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
+											<?php echo $this->escape($user->getRank(0, 'title')); ?></a>
 									</td>
 									<td class="center hidden-phone hidden-tablet">
 										<span class="editlinktip <?php echo $user->signature ? 'hasTip' : ''; ?>"

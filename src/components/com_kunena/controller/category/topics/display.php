@@ -316,7 +316,17 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$keywords = Text::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+				if (!empty($parentText))
+				{
+					$parentText = ',' . $parentText;
+				}
+
+				if (!empty($categoryText))
+				{
+					$categoryText = ',' . $categoryText;
+				}
+
+				$keywords = Text::_('COM_KUNENA_CATEGORIES') . $parentText . $categoryText . ',' . $this->config->board_title;
 				$this->setKeywords($keywords);
 			}
 

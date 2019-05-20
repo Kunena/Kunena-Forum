@@ -491,7 +491,7 @@ class Com_KunenaInstallerScript
 		// Get installed Kunena version
 		$query = $db->getQuery(true)
 			->select($db->quoteName('version'))
-			->from($db->quoteName($db->quoteName($table)))
+			->from($db->quoteName($table))
 			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query,0, 1);
 		$installed = $db->loadResult();

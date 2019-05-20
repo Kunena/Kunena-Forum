@@ -179,7 +179,7 @@ abstract class KunenaForumCategoryHelper
 	{
 		$user  = KunenaUserHelper::get($user);
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid) . ' AND' .
@@ -296,6 +296,12 @@ abstract class KunenaForumCategoryHelper
 			}
 
 			$usercategory->subscribed = (int) $value;
+
+			if (!$usercategory->params)
+			{
+				$usercategory->params = '';
+			}
+
 			$usercategory->save();
 		}
 
@@ -337,7 +343,7 @@ abstract class KunenaForumCategoryHelper
 		}
 
 		// Get total count
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select('COUNT(DISTINCT c.id)')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -368,7 +374,7 @@ abstract class KunenaForumCategoryHelper
 			$limitstart = intval($total / $limit) * $limit;
 		}
 
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select('c.id')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -434,7 +440,7 @@ abstract class KunenaForumCategoryHelper
 
 		$catlist = implode(',', array_keys($catlist));
 		$db      = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$query   = $db->getQuery(true);
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
 			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id=t.category_id AND uc.user_id=' . $db->quote($user->userid))
@@ -896,7 +902,7 @@ abstract class KunenaForumCategoryHelper
 		$rows = $db->getAffectedRows();
 
 		// Update categories which have no published topics
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query
 			->update($db->quoteName('#__kunena_categories', 'c'))
 			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON c.id=tt.category_id AND tt.hold=0')

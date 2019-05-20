@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+$this->addScript('assets/js/search.js');
 
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
@@ -28,7 +29,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group">
-			<label for="example-search-input"></label>
+			<label for="mod-search-searchword"></label>
 			<input name="searchword" class="form-control" id="mod-search-searchword" type="search" maxlength="64"
 			       placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
 			<span class="input-group-append">

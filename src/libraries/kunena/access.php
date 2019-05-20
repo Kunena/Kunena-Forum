@@ -188,7 +188,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   array $list list
+	 * @param   array  $list  list
 	 *
 	 * @return mixed|void
 	 * @since Kunena
@@ -243,7 +243,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return array
 	 * @since Kunena
@@ -278,7 +278,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return string
 	 * @since Kunena
@@ -349,7 +349,7 @@ window.addEvent('domready', function(){
 	/**
 	 * Get access groups for the selected category.
 	 *
-	 * @param   KunenaForumCategory $category Category
+	 * @param   KunenaForumCategory  $category  Category
 	 *
 	 * @return array|null
 	 * @since Kunena
@@ -379,7 +379,7 @@ window.addEvent('domready', function(){
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-			                                     'title' => $name, );
+			                                     'title' => $name,);
 		}
 
 		return $list;
@@ -388,8 +388,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
 	 *
-	 * @param   string $accesstype Access type.
-	 * @param   mixed  $id         Group id.
+	 * @param   string  $accesstype  Access type.
+	 * @param   mixed   $id          Group id.
 	 *
 	 * @return string|void
 	 *
@@ -417,8 +417,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get category administrators.
 	 *
-	 * @param   int  $catid Category Id
-	 * @param   bool $all   all
+	 * @param   int   $catid  Category Id
+	 * @param   bool  $all    all
 	 *
 	 * @return array
 	 * @since Kunena
@@ -438,8 +438,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get category moderators.
 	 *
-	 * @param   int  $catid Category Id
-	 * @param   bool $all   all
+	 * @param   int   $catid  Category Id
+	 * @param   bool  $all    all
 	 *
 	 * @return array
 	 * @since Kunena
@@ -457,7 +457,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user user
+	 * @param   mixed  $user  user
 	 *
 	 * @return array
 	 * @since Kunena
@@ -476,9 +476,9 @@ window.addEvent('domready', function(){
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @param   int   $category category
-	 * @param   mixed $user     user
-	 * @param   bool  $status   status
+	 * @param   int    $category  category
+	 * @param   mixed  $user      user
+	 * @param   bool   $status    status
 	 *
 	 * @return boolean
 	 *
@@ -514,7 +514,13 @@ window.addEvent('domready', function(){
 		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status))
 		{
 			$usercategory->role = $status;
-			$success            = $usercategory->save();
+
+			if (!$usercategory->params)
+			{
+				$usercategory->params = '';
+			}
+
+			$success = $usercategory->save();
 
 			// Clear role cache
 			$this->clearCache();
@@ -533,7 +539,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user user
+	 * @param   mixed  $user  user
 	 *
 	 * @return array
 	 * @since Kunena
@@ -550,7 +556,7 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user user
+	 * @param   mixed  $user  user
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -625,8 +631,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user  user
-	 * @param   int   $catid catid
+	 * @param   mixed  $user   user
+	 * @param   int    $catid  catid
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -670,8 +676,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user  user
-	 * @param   int   $catid catid
+	 * @param   mixed  $user   user
+	 * @param   int    $catid  catid
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -716,8 +722,8 @@ window.addEvent('domready', function(){
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   KunenaForumCategory $category category
-	 * @param   int                 $userid   user id
+	 * @param   KunenaForumCategory  $category  category
+	 * @param   int                  $userid    user id
 	 *
 	 * @return array
 	 * @since Kunena
@@ -750,9 +756,9 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   mixed $user   user
-	 * @param   int   $catid  catid
-	 * @param   bool  $string string
+	 * @param   mixed  $user    user
+	 * @param   int    $catid   catid
+	 * @param   bool   $string  string
 	 *
 	 * @return string|array
 	 * @since Kunena
@@ -797,12 +803,12 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   int   $catid       catid
-	 * @param   mixed $topic       topic
-	 * @param   mixed $type        type
-	 * @param   bool  $moderators  moderators
-	 * @param   bool  $admins      admins
-	 * @param   mixed $excludeList exclude list
+	 * @param   int    $catid        catid
+	 * @param   mixed  $topic        topic
+	 * @param   mixed  $type         type
+	 * @param   bool   $moderators   moderators
+	 * @param   bool   $admins       admins
+	 * @param   mixed  $excludeList  exclude list
 	 *
 	 * @return array
 	 * @since Kunena
@@ -981,8 +987,8 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param   KunenaForumTopic $topic loadSubscribers
-	 * @param   bool             $type  type
+	 * @param   KunenaForumTopic  $topic  loadSubscribers
+	 * @param   bool              $type   type
 	 *
 	 * @return array
 	 * @since Kunena

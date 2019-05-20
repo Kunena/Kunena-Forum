@@ -291,6 +291,11 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$usercategory             = KunenaForumCategoryUserHelper::get($this->id, $user);
 		$usercategory->subscribed = (int) $value;
 
+		if (!$usercategory->params)
+		{
+			$usercategory->params = '';
+		}
+
 		try
 		{
 			$usercategory->save();

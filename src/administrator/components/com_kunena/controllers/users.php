@@ -762,7 +762,13 @@ class KunenaAdminControllerUsers extends KunenaController
 		if ($usercategory->role == 1)
 		{
 			$usercategory->role = false;
-			$success            = $usercategory->save();
+
+			if (!$usercategory->params)
+			{
+				$usercategory->params = '';
+			}
+
+			$success = $usercategory->save();
 
 			// Clear role cache
 			KunenaAccess::getInstance()->clearCache();

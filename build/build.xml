@@ -45,7 +45,6 @@
 		<mkdir dir="${tmp_dir}" />
 		<mkdir dir="${tmp_dir}/languages_extra" />
 		<mkdir dir="${tmp_dir}/languages_extra/language" />
-		<mkdir dir="${tmp_dir}/crypsisb3" />
 		<mkdir dir="${build_dir}" />
 		<mkdir dir="${package_dir}" />
 		<mkdir dir="${package_dir}/archive" />
@@ -341,7 +340,6 @@
 		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
-		<archive destfile="${package_dir}/tmpl_kunena_crypsisb3${str.fileversion}" basedir="${tmp_dir}/crypsisb3" />
 	</target>
 
 	<target name="info" depends="copy">

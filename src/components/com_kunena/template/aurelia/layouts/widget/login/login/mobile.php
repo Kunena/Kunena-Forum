@@ -23,7 +23,7 @@ use Joomla\CMS\Router\Route;
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu" id="userdropdown">
+		<div class="dropdown-menu dropdown-menu-right" id="userdropdown">
 			<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user"/>
 				<input type="hidden" name="task" value="login"/>

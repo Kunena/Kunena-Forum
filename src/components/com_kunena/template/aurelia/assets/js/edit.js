@@ -161,6 +161,8 @@ jQuery(document).ready(function ($) {
 		else {
 			$(name).show();
 		}
+
+		document.getElementsByTagName('body')[0].style = 'overflow: auto';
 	});
 
 	$('.kreply-cancel').click(function () {

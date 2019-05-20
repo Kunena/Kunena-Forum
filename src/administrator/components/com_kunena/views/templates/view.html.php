@@ -207,6 +207,11 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		if (!file_exists($file))
 		{
+			if (!Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
+			{
+				Folder::create(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/');
+			}
+
 			$fp = fopen($file, "w");
 			fwrite($fp, "");
 			fclose($fp);

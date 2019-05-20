@@ -1,18 +1,17 @@
 language: php
 php:
-- 5.6
-- 7.0
-- 7.1
+- 7.2
+- 7.3
 addons:
-  firefox: "59.0.2"
+  firefox: "latest"
   sonarcloud:
       organization: "kunena-forum"
       token:
         secure: "5236152baa004029e309405ee0af8e30ac1add88"
       branches:
-        - K5.1
+        - K6.0
 jdk:
-  - oraclejdk8
+  - oraclejdk12
 script:
   - sonar-scanner
 cache:

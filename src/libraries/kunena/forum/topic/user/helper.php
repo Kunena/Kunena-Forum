@@ -425,15 +425,20 @@ abstract class KunenaForumTopicUserHelper
 		}
 
 		// Create missing user topics and update post count and last post if there are posts by that user
+		$subQuery = $db->getQuery(true);
 		$query = $db->getQuery(true);
 		
+		// Create the base subQuery select statement.
+		$subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
+		->from($db->quoteName('#__kunena_messages', 'm'))
+		->where($db->quoteName('m.userid') . '>0 AND ' . $db->quoteName('m.moved') . '=0 ' . $where)
+		->group('m.userid, m.thread');
+		
+		// Create the base insert statement.
 		$query = "INSERT INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
-			SELECT m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`
-			FROM `#__kunena_messages` AS m
-			WHERE m.userid>0 AND m.moved=0 {$where}
-			GROUP BY m.userid, m.thread
+			{$subQuery}
 			ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
-
+		
 		$db->setQuery((string) $query);
 
 		try

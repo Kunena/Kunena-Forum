@@ -430,7 +430,7 @@ abstract class KunenaForumTopicUserHelper
 			->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->where('m.userid>0 AND m.moved=0 ' . $where)
-			->group('m.userid, m.thread' . ' ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)');
+			->group('m.userid, m.thread' . ' ON DUPLICATE KEY UPDATE' . $db->quoteName('category_id') . ' = VALUES(`category_id`), ' . $db->quoteName('posts') . '=VALUES(`posts`), ' . $db->quoteName('last_post_id') . '=VALUES(`last_post_id`)');
 		$db->setQuery((string) $query);
 
 		try

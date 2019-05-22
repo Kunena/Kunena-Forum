@@ -25,7 +25,7 @@ $me              = KunenaUserHelper::getMyself();
 
 if (KunenaConfig::getInstance()->ratingenabled)
 {
-	$this->addStyleSheet('assets/css/rating.css');
+	$this->addStyleSheet('rating.css');
 }
 ?>
 <div class="row">

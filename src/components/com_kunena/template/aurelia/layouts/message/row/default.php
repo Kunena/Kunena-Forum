@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
-$this->addStyleSheet('assets/css/rating.css');
+$this->addStyleSheet('rating.css');
 
 $message         = $this->message;
 $author          = $message->getAuthor();

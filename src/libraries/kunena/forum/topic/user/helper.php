@@ -457,7 +457,7 @@ abstract class KunenaForumTopicUserHelper
 		// Find user topics where last post doesn't exist and reset values in it
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_user_topics', 'ut'))
-			->leftJoin($db->quoteName('#__kunena_messages', 'm') . 'ON ut.last_post_id=m.id AND m.hold=0')
+			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ut.last_post_id=m.id AND m.hold=0')
 			->set('posts=0, last_post_id=0')
 			->where('m.id IS NULL ' . $where2);
 		$db->setQuery((string) $query);

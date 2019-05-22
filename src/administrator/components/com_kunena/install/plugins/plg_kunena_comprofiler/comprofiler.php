@@ -54,11 +54,11 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
-				$query->update('`#__extensions`');
+				$query->update($db->quoteName('#__extensions'));
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('comprofiler'));
 				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
-				$query->set($db->quoteName('enabled') . '=0');
+				$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
+				$query->set($db->quoteName('enabled') . ' = 0');
 				$db->setQuery((string) $query);
 				$db->execute();
 			}
@@ -136,7 +136,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess|KunenaAccessComprofiler
+	 * @return KunenaAccess|KunenaAccessComprofiler|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAccessControl()
@@ -154,7 +154,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin|KunenaLoginComprofiler
+	 * @return KunenaLogin|KunenaLoginComprofiler|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
@@ -172,7 +172,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar
+	 * @return KunenaAvatar|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
@@ -190,7 +190,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfile
+	 * @return KunenaProfile|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
@@ -208,7 +208,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return KunenaPrivate
+	 * @return KunenaPrivate|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
@@ -226,7 +226,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivity
+	 * @return KunenaActivity|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()

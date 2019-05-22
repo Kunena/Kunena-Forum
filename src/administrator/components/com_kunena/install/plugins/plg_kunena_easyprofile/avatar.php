@@ -81,7 +81,9 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('params')->from('#__jsn_fields')->where('alias=\'avatar\'');
+			$query->select($db->quoteName('params'))
+				->from('#__jsn_fields')
+				->where('alias = \'avatar\'');
 			$db->setQuery((string) $query);
 			$params   = $db->loadResult();
 			$registry = new Joomla\Registry\Registry;

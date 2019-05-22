@@ -72,8 +72,8 @@ class KunenaProfileCommunity extends KunenaProfile
 		$query = $db->getQuery(true);
 		$query->select('cu.userid AS id, cu.view AS count')
 			->from($db->quoteName('#__community_users', 'cu'))
-			->innerJoin($db->quoteName('#__users', 'u') . 'ON u.id=cu.userid')
-			->where('cu.view>0')
+			->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')
+			->where('cu.view > 0')
 			->order('cu.view DESC');
 		$db->setQuery($query, 0, $limit);
 

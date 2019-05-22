@@ -137,8 +137,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$query = $db->getQuery(true);
 			$query->select('COUNT(mm.id) AS replies')
 				->from($db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($db->quoteName('#__kunena_messages', 't') . 'ON m.thread=t.id')
-				->leftJoin($db->quoteName('#__kunena_messages', 'mm') . 'ON mm.thread=m.thread AND mm.time > m.time')
+				->innerJoin($db->quoteName('#__kunena_messages', 't') . ' ON m.thread=t.id')
+				->leftJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON mm.thread=m.thread AND mm.time > m.time')
 				->where('m.id=' . $db->quote($this->message->id));
 			$db->setQuery($query, 0, 1);
 

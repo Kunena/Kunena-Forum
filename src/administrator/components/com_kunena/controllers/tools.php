@@ -243,7 +243,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query->insert($db->quoteName('#__kunena_users') . '(userid, showOnline)')
 				->select('a.id AS userid, 1 AS showOnline')
 				->from($db->quoteName('#__users', 'a'))
-				->leftJoin($db->quoteName('#__kunena_users', 'b') . 'ON b.userid=a.id')
+				->leftJoin($db->quoteName('#__kunena_users', 'b') . ' ON b.userid=a.id')
 				->where('b.userid IS NULL');
 			$db->setQuery((string) $query);
 
@@ -266,7 +266,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true)
 				->delete('a')
 				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
+				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
 				->where('b.username IS NULL');
 
 			$db->setQuery((string) $query);
@@ -290,7 +290,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true)
 				->delete('a')
 				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
+				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
 				->where('banned=\'1000-01-01 00:00:00\'');
 			$db->setQuery((string) $query);
 
@@ -356,7 +356,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true)
 				->delete('a')
 				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . 'ON a.userid=b.id')
+				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
 				->where('banned=\'1000-01-01 00:00:00\'');
 			$db->setQuery((string) $query);
 

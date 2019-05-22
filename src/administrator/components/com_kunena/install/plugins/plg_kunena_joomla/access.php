@@ -122,12 +122,12 @@ class KunenaAccessJoomla
 
 			if ($accesstype == 'joomla.group')
 			{
-				$query->from('#__usergroups');
+				$query->from($db->quoteName('#__usergroups'));
 				$db->setQuery((string) $query);
 			}
 			elseif ($accesstype == 'joomla.level')
 			{
-				$query->from('#__viewlevels');
+				$query->from($db->quoteName('#__viewlevels'));
 				$db->setQuery((string) $query);
 			}
 			else
@@ -351,7 +351,7 @@ class KunenaAccessJoomla
 		// Get a database object.
 		$db = Factory::getDbo();
 
-		$test = $recursive ? '>=' : '=';
+		$rec = $recursive ? '>=' : '=';
 
 		if (empty($groupId))
 		{
@@ -367,15 +367,15 @@ class KunenaAccessJoomla
 
 		// First find the users contained in the group
 		$query = $db->getQuery(true);
-		$query->select('DISTINCT(user_id)');
-		$query->from('#__usergroups AS ug1');
-		$query->join('INNER', '#__usergroups AS ug2 ON ug2.lft' . $test . 'ug1.lft AND ug1.rgt' . $test . 'ug2.rgt');
-		$query->join('INNER', '#__user_usergroup_map AS m ON ug2.id=m.group_id');
-		$query->where("ug1.id IN ({$groupId})");
+		$query->select('DISTINCT(user_id)')
+			->from($db->quoteName('#__usergroups', 'ug1'))
+			->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ug2.lft ' . $rec . ' ug1.lft AND ug1.rgt ' . $rec . ' ug2.rgt')
+			->innerJoin( $db->quoteName('#__user_usergroup_map', 'm') . ' ON ug2.id = m.group_id')
+			->where('ug1.id IN ( ' . $db->quote($groupId) . ')');
 
 		if ($inUsers)
 		{
-			$query->where("user_id IN ({$inUsers})");
+			$query->andWhere('user_id IN (' . $db->quote($inUsers) .')');
 		}
 
 		$db->setQuery((string) $query);
@@ -530,7 +530,7 @@ class KunenaAccessJoomla
 			// Build the base query.
 			$query = $db->getQuery(true);
 			$query->select('id, rules');
-			$query->from('`#__viewlevels`');
+			$query->from($db->quoteName('#__viewlevels'));
 
 			// Set the query for execution.
 			$db->setQuery((string) $query);

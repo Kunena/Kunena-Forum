@@ -45,11 +45,11 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 			{
 				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
-				$query->update('`#__extensions`');
+				$query->update($db->quoteName('#__extensions'));
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));
 				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-				$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
-				$query->set($db->quoteName('enabled') . '=0');
+				$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
+				$query->set($db->quoteName('enabled') . ' = 0');
 				$db->setQuery((string) $query);
 				$db->execute();
 			}
@@ -67,7 +67,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess|KunenaAccessCommunity
+	 * @return KunenaAccess|KunenaAccessCommunity|void
 	 *
 	 * @todo  Should we remove category ACL integration?
 	 * @since Kunena
@@ -87,7 +87,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return \KunenaLoginCommunity|null
+	 * @return \KunenaLoginCommunity|null|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetLogin()
@@ -105,7 +105,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return \KunenaAvatarCommunity|null
+	 * @return \KunenaAvatarCommunity|null|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
@@ -123,7 +123,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return \KunenaProfileCommunity|null
+	 * @return \KunenaProfileCommunity|null|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()
@@ -141,7 +141,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return \KunenaPrivateCommunity|null
+	 * @return \KunenaPrivateCommunity|null|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetPrivate()
@@ -159,7 +159,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return \KunenaActivityCommunity|null
+	 * @return \KunenaActivityCommunity|null|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetActivity()

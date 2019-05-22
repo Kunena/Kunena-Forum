@@ -100,7 +100,7 @@ class KunenaControllerTopics extends KunenaController
 				$query = $db->getQuery(true);
 				$query->delete('a.*')
 					->from($db->quoteName('#__kunena_attachments', 'a'))
-					->leftJoin($db->quoteName('#__kunena_messages', 'm') . 'ON a.mesid=m.id')
+					->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid=m.id')
 					->where('m.id IS NULL');
 				$db->setQuery((string) $query);
 

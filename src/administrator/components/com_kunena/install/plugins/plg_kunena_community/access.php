@@ -225,8 +225,10 @@ class KunenaAccessCommunity
 		$query = $db->getQuery(true);
 		$query->select('g.memberid AS user_id, c.id AS category_id, ' . KunenaForum::ADMINISTRATOR . ' AS role')
 			->from($db->quoteName('#__kunena_categories', 'c'))
-			->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
-			->where('c.published=1 AND g.approved=1 AND g.permissions=' . $db->quote(COMMUNITY_GROUP_ADMIN));
+			->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype=\'jomsocial\' AND c.access = g.groupid')
+			->where('c.published = 1')
+			->andWhere('g.approved = 1')
+			->andWhere('g.permissions = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
 		$db->setQuery((string) $query);
 
 		try
@@ -266,8 +268,10 @@ class KunenaAccessCommunity
 			$query = $db->getQuery(true);
 			$query->select('c.id')
 				->from($db->quoteName('#__kunena_categories', 'c'))
-				->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
-				->where('c.published=1 AND g.approved=1 AND  g.memberid=' . $db->quote($userid));
+				->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
+				->where('c.published = 1')
+				->andWhere('g.approved = 1')
+				->andWhere('g.memberid = ' . $db->quote((int) $userid));
 			$db->setQuery((string) $query);
 
 			try
@@ -312,8 +316,10 @@ class KunenaAccessCommunity
 		$query = $db->getQuery(true);
 		$query->select('c.id')
 			->from($db->quoteName('#__kunena_categories', 'c'))
-			->innerJoin($db->quoteName('#__community_groups_members', 'g') . 'ON c.accesstype=\'jomsocial\' AND c.access=g.groupid')
-			->where('c.id=' . $category->id . ' AND g.approved=1 AND g.memberid IN (' . $userlist .')');
+			->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
+			->where('c.id = ' . $db->quote((int) $category->id))
+		->andWhere(' g.approved = 1')
+		->andWhere('g.memberid IN (' . $db->quote($userlist) . ')');
 		$db->setQuery((string) $query);
 
 		try

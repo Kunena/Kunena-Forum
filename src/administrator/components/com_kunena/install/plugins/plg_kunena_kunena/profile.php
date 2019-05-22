@@ -71,13 +71,13 @@ class KunenaProfileKunena extends KunenaProfile
 		$query->select($db->quoteName(array('u.id', 'ku.uhits'), array(null, 'count')));
 		$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
 		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
-		$query->where($db->quoteName('ku.uhits') . '>0');
+		$query->where($db->quoteName('ku.uhits') . ' > 0');
 		$query->order($db->quoteName('ku.uhits') . ' DESC');
 
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
-			$query->where('u.id NOT IN (' . implode(',', $filter) . ')');
+			$query->andwhere('u.id NOT IN (' . $db->quote(implode(',', $filter)) . ')');
 		}
 
 		$db->setQuery($query, 0, $limit);

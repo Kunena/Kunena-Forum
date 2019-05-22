@@ -92,8 +92,9 @@ class KunenaLoginComprofiler
 		$query = $db->getQuery(true);
 		$query->select('params')
 			->from($db->quoteName('#__extensions'))
-			->innerJoin($db->quoteName('#__users', 'u') . 'ON u.id=cu.userid')
-			->where('element=\'mod_cblogin\' AND type=\'module\'');
+			->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')
+			->where('element = \'mod_cblogin\'')
+			->andWhere('type = \'module\'');
 		$raw_params = $db->loadResult();
 		$params     = new \CBLib\Registry\Registry($raw_params);
 

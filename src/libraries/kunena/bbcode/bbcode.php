@@ -1788,8 +1788,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$db->quoteName(0, 'sec_pub'), $db->quoteName(0, 'sectionid'), $db->quoteName('cc.published', 'cat_pub'),
 			$db->quoteName('cc.access', 'cat_access'),))
 			->from($db->quoteName('#__content', 'a'))
-			->leftJoin($db->quoteName('#__categories', 'cc') . 'ON cc.id = a.catid')
-			->leftJoin($db->quoteName('#__users', 'u') . 'ON u.id = a.created_by')
+			->leftJoin($db->quoteName('#__categories', 'cc') . ' ON cc.id = a.catid')
+			->leftJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.created_by')
 			->where('a.id=' . $db->quote($articleid));
 		$db->setQuery((string) $query);
 		$article = $db->loadObject();

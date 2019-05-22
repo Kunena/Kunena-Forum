@@ -270,12 +270,12 @@ class KunenaAdminModelTrash extends KunenaModel
 
 		if (isset($join['tt']))
 		{
-			$query->innerJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON tt.id=a.thread');
+			$query->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON tt.id=a.thread');
 		}
 
 		if (isset($join['c']))
 		{
-			$query->innerJoin($db->quoteName('#__kunena_categories', 'c') . 'ON c.id=a.catid');
+			$query->innerJoin($db->quoteName('#__kunena_categories', 'c') . ' ON c.id=a.catid');
 		}
 
 		// TODO: add authorization.

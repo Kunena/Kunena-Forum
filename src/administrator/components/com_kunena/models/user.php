@@ -120,7 +120,7 @@ class KunenaAdminModelUser extends KunenaModel
 			$query = $db->getQuery(true);
 			$query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
 				->from($db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($db->quoteName('#__users', 'u') . 'ON m.userid=u.id')
+				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid=u.id')
 				->where('m.ip IN (' . $iplist . ')')
 				->group('m.userid,m.ip');
 			$db->setQuery((string) $query);

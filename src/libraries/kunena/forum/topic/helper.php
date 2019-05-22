@@ -400,7 +400,7 @@ abstract class KunenaForumTopicHelper
 			$query  = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
-				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . 'ON tt.id=ut.topic_id')
+				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON tt.id=ut.topic_id')
 				->where($where)
 				->group($orderby);
 		}
@@ -409,7 +409,7 @@ abstract class KunenaForumTopicHelper
 			$query  = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_topics', 'tt'))
-				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . 'ON tt.id=ut.topic_id AND ut.user_id=' . $db->quote($user->userid))
+				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON tt.id=ut.topic_id AND ut.user_id=' . $db->quote($user->userid))
 				->where($where)
 				->group($orderby);
 		}
@@ -617,7 +617,7 @@ abstract class KunenaForumTopicHelper
 		// Mark all empty topics as deleted
 		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_topics', 'tt'))
-			->leftJoin($db->quoteName('#__kunena_messages', 'm'). 'ON m.thread=tt.id AND tt.hold=m.hold')
+			->leftJoin($db->quoteName('#__kunena_messages', 'm'). ' ON m.thread=tt.id AND tt.hold=m.hold')
 			->set('tt.hold = 4,
 				tt.posts = 0,
 				tt.attachments = 0,
@@ -759,7 +759,7 @@ abstract class KunenaForumTopicHelper
 			$query  = $db->getQuery(true);
 			$query->select('m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread')
 				->from($db->quoteName('#__kunena_messages', 'm'))
-				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . 'ON ur.topic_id=m.thread AND user_id=' . $db->quote($user->userid))
+				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id=m.thread AND user_id=' . $db->quote($user->userid))
 				->where('m.hold=0 AND m.moved=0 AND m.thread IN (' . $idstr . ') AND m.time>' . $db->quote($session->getAllReadTime()) . ' AND (ur.time IS NULL OR m.time>ur.time)')
 				->group('thread');
 			$db->setQuery((string) $query);

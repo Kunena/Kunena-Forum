@@ -1511,7 +1511,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$query  = $this->_db->getQuery(true);
 			$query->select('m.id')
 				->from($this->_db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
+				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON m.id=t.mesid')
 				->where('m.userid=' . $this->_db->quote($this->userid) .'
 				 AND m.ip=' . $this->_db->quote($this->ip) .'
 				 AND t.message=' . $this->_db->quote($this->message).'

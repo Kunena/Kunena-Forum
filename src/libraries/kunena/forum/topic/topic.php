@@ -465,7 +465,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query  = $this->_db->getQuery(true);
 			$query->select('COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments')
 				->from($this->_db->quoteName('#__kunena_messages', 'm'))
-				->leftJoin($this->_db->quoteName('#__kunena_attachments', 'a') . 'ON m.id=a.mesid')
+				->leftJoin($this->_db->quoteName('#__kunena_attachments', 'a') . ' ON m.id=a.mesid')
 				->where('m.hold=' . $this->_db->quote($this->hold) . ' AND m.thread=' . $this->_db->quote($this->id))
 				->group('m.thread');
 			$this->_db->setQuery((string) $query);
@@ -566,7 +566,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query  = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
-					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
+					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON t.mesid=m.id')
 					->where('m.thread=' . $db->quote($this->id) . ' AND m.hold=' . $this->hold)
 					->order('m.time ASC, m.id ASC');
 				$db->setQuery($query, 0, 1);
@@ -598,7 +598,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query  = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
-					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . 'ON t.mesid=m.id')
+					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON t.mesid=m.id')
 					->where('m.thread=' . $db->quote($this->id) . ' AND m.hold=' . $this->hold)
 					->order('m.time ASC, m.id ASC');
 				$db->setQuery($query, 0, 1);

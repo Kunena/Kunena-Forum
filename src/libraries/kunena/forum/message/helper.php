@@ -99,7 +99,7 @@ abstract class KunenaForumMessageHelper
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id=t.mesid')
 			->where('m.id IN (' . $idlist .')');
 		$db->setQuery((string) $query);
 
@@ -196,7 +196,7 @@ abstract class KunenaForumMessageHelper
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id=t.mesid')
 			->where('m.thread=' . $db->quote($topic_id) .' AND m.hold IN (' . $hold .')')
 			->order('m.time ' . $ordering);
 		$db->setQuery($query, $start, $limit);
@@ -543,7 +543,7 @@ abstract class KunenaForumMessageHelper
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count')
 			->from($db->quoteName('#__kunena_messages' , 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages' , 'mm') . 'ON m.thread=mm.thread')
+			->innerJoin($db->quoteName('#__kunena_messages' , 'mm') . ' ON m.thread=mm.thread')
 			->where('m.id IN (' . $idlist .')')
 			->group( 'm.id, mm.hold');
 		$db->setQuery((string) $query);
@@ -611,7 +611,7 @@ abstract class KunenaForumMessageHelper
 		// Update catid in all messages
 		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . 'ON tt.id=m.thread')
+			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON tt.id=m.thread')
 			->set('m.catid=tt.category_id ' . $where);
 		$db->setQuery((string) $query);
 
@@ -649,7 +649,7 @@ abstract class KunenaForumMessageHelper
 		$query  = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . 'ON m.id=t.mesid')
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id=t.mesid')
 			->where('m.thread IN (' . $idlist . ') AND m.hold=0');
 		$db->setQuery((string) $query);
 

@@ -889,7 +889,7 @@ class KunenaViewTopic extends KunenaView
 				{
 					if (!empty($this->message->ip))
 					{
-						$this->ipLink = '<a href="https://www.geoiptool.com/en/?ip=' . $this->message->ip . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+						$this->ipLink = '<a href="https://www.geoiptool.de/en/?ip=' . $this->message->ip . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 					}
 					else
 					{

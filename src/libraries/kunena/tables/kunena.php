@@ -432,12 +432,11 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 			// Delete the row by primary key.
 			$query = $this->_db->getQuery(true)
-				->delete($this->_tbl)
-				->where('');
+				->delete($this->_db->quoteName($this->_tbl));
 
 			foreach ($pk as $key => $value)
 			{
-				$query->andWhere("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
+				$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 			}
 
 			$this->_db->setQuery((string) $query);

@@ -407,21 +407,20 @@ abstract class KunenaUserHelper
 			->select($db->quoteName('m.*'))
 			->from($db->quoteName( '#__usergroups',  'ug1'))
 			->innerJoin($db->quoteName( '#__usergroups','ug2') . ' ON ' . $db->quoteName('ug2.lft') .  $recurs . $db->quoteName('ug1.lft') . ' AND ' . $db->quoteName('ug1.rgt') . $recurs . $db->quoteName('ug2.rgt'))
-			->innerJoin($db->quoteName( '#__user_usergroup_map','m') .' ON ' . $db->quoteName('ug2.id') . ' = ' . $db->quoteName('m.group_id'))
-			->where('');
+			->innerJoin($db->quoteName( '#__user_usergroup_map','m') .' ON ' . $db->quoteName('ug2.id') . ' = ' . $db->quoteName('m.group_id'));
 
 		if ($groupIds)
 		{
 			$groupIds  = ArrayHelper::toInteger($groupIds);
 			$groupList = implode(',', $groupIds);
-			$query->andWhere($db->quoteName('ug1.id') . ' IN (' . $db->quote($groupList) . ')');
+			$query->where($db->quoteName('ug1.id') . ' IN (' . $db->quote($groupList) . ')');
 		}
 
 		if ($userIds)
 		{
 			$userIds  = ArrayHelper::toInteger($userIds);
 			$userList = implode(',', $userIds);
-			$query->andWhere($db->quoteName('user_id') . ' IN (' . $db->quote($userList) . ')');
+			$query->where($db->quoteName('user_id') . ' IN (' . $db->quote($userList) . ')');
 		}
 
 		$db->setQuery((string) $query);

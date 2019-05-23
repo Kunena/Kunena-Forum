@@ -523,8 +523,8 @@ class KunenaTableMap
 		// Initialise the query.
 		$query = $this->_db->getQuery(true)
 			->select($this->_db->quoteName($this->_tbl_mapped))
-			->from($this->_db->quoteName($this->_tbl))
-			->where('');
+			->from($this->_db->quoteName($this->_tbl));
+
 		$fields = array_keys($this->getProperties());
 
 		foreach ($keys as $field => $value)
@@ -537,7 +537,7 @@ class KunenaTableMap
 
 			// Add the search tuple to the query.
 			$this->{$field} = $value;
-			$query->andWhere($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
+			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
 		$this->_db->setQuery((string) $query);
@@ -603,12 +603,11 @@ class KunenaTableMap
 		// Delete the row by primary key.
 		$query = $this->_db->getQuery(true)
 			->delete()
-			->from($this->_tbl)
-			->where('');
+			->from($this->_tbl);
 
 		foreach ($pk as $key => $value)
 		{
-			$query->andWhere($key . ' = ' . $this->_db->quote($value));
+			$query->where($key . ' = ' . $this->_db->quote($value));
 		}
 
 		$this->_db->setQuery((string) $query);

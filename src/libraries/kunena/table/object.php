@@ -242,11 +242,12 @@ abstract class KunenaTableObject
 			$this->reset();
 		}
 
+		$k = static::$tbl;
+
 		// Initialise the query.
 		$query = static::$db->getQuery(true)
 			->select('*')
-			->from(static::$tbl)
-			->where('');
+			->from(static::$db->quoteName($k));
 
 		foreach ($keys as $field => $value)
 		{
@@ -255,7 +256,7 @@ abstract class KunenaTableObject
 			$this->$field = $value;
 
 			// Add the search tuple to the query.
-			$query->andWhere(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
+			$query->where(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
 		}
 
 		static::$db->setQuery($query, 0, 1);
@@ -844,15 +845,15 @@ abstract class KunenaTableObject
 			throw $e;
 		}
 
+		$k = static::$tbl;
 		// Delete the row by given keys/fields.
 		$query = static::$db->getQuery(true)
 			->delete()
-			->from(static::$tbl)
-			->where('');
+			->from(static::$db->quoteName($k));
 
 		foreach ($keys as $key => $value)
 		{
-			$query->andWhere(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
+			$query->where(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
 		}
 
 		static::$db->setQuery($query, 0, 1);
@@ -902,7 +903,7 @@ abstract class KunenaTableObject
 			->update(static::$tbl)
 			->set(static::$db->quoteName('checked_out') . ' = ' . static::$db->quote((int) $userId))
 			->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote($time))
-			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
+			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 		static::$db->execute();
 
@@ -946,7 +947,7 @@ abstract class KunenaTableObject
 		$query->update(static::$tbl)
 			->set(static::$db->quoteName('checked_out') . ' = 0')
 			->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate)
-			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
+			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 
 		// Check for a database error.
@@ -992,7 +993,7 @@ abstract class KunenaTableObject
 		$query = static::$db->getQuery(true)
 			->update(static::$tbl)
 			->set(static::$db->quoteName('hits') . ' = (' . static::$db->quoteName('hits') . ' + 1)')
-			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
+			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 		static::$db->execute();
 

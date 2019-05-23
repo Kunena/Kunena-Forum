@@ -451,7 +451,7 @@ abstract class KunenaForumCategoryHelper
 			->andWhere('t.hold = 0')
 			->andWhere('t.last_post_time > ' . $db->quote($session->getAllReadTime()))
 			->andWhere('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
-			->andWhere('ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
+			->andWhere('ur.topic_id IS NULL OR t.last_post_id != ur.message_id')
 			->group($db->quoteName('category_id'));
 		$db->setQuery((string) $query);
 

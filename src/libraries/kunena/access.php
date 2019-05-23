@@ -154,10 +154,10 @@ class KunenaAccess
 
 		// Load native category moderators and administrators
 		$db    = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select($db->quoteName(array('user_id', 'category_id', 'role')));
-		$query->from($db->quoteName('#__kunena_user_categories'));
-		$query->where($db->quoteName('role') . ' IN (1,2)');
+		$query = $db->getQuery(true)
+			->select($db->quoteName(array('user_id', 'category_id', 'role')))
+			->from($db->quoteName('#__kunena_user_categories'))
+			->where($db->quoteName('role') . ' IN (1,2)');
 		$db->setQuery((string) $query);
 
 		try
@@ -1003,17 +1003,17 @@ window.addEvent('domready', function(){
 		if ($type & self::TOPIC_SUBSCRIPTION)
 		{
 			// Get topic subscriptions
-			$querytopic = $db->getQuery(true);
-			$querytopic->select($db->quoteName('user_id'));
-			$querytopic->from($db->quoteName('#__kunena_user_topics') . 'AS ut');
-			$querytopic->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
-			$querytopic->where('ut.topic_id =' . $topic->id);
-			$querytopic->andWhere('ut.subscribed=1');
-			$querytopic->andWhere('ku.banned <>0');
-			$querytopic->orWhere('ku.banned IS NULL');
-			$querytopic->andWhere('ut.topic_id =' . $topic->id);
-			$querytopic->andWhere('ut.subscribed=1');
-			$querytopic->group($db->quoteName('user_id'));
+			$querytopic = $db->getQuery(true)
+				->select($db->quoteName('user_id'))
+				->from($db->quoteName('#__kunena_user_topics', 'ut'))
+				->leftJoin($db->quoteName('#__kunena_users','ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
+				->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
+				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
+				->andWhere($db->quoteName('ku.banned') . ' <> 0')
+				->orWhere($db->quoteName('ku.banned') . ' IS NULL')
+				->andWhere($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
+				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
+				->group($db->quoteName('user_id'));
 
 			$query[] = $querytopic;
 		}
@@ -1021,18 +1021,17 @@ window.addEvent('domready', function(){
 		if ($type & self::CATEGORY_SUBSCRIPTION)
 		{
 			// Get category subscriptions
-			$querycat = $db->getQuery(true);
-			$querycat->select($db->quoteName('user_id'));
-			$querycat->from($db->quoteName('#__kunena_user_categories') . 'AS ut');
-			$querycat->leftJoin('#__kunena_users AS ku ON ut.user_id = ku.userid');
-			$querycat->where($db->quoteName('category_id') . '=' . $category->id);
-			$querycat->andWhere('ut.subscribed=1');
-			$querycat->andWhere('ku.banned <>0');
-			$querycat->orWhere('ku.banned IS NULL');
-			$querycat->andWhere($db->quoteName('category_id') . '=' . $category->id);
-			$querycat->andWhere('ut.subscribed=1');
-			$querycat->group($db->quoteName('user_id'));
-
+			$querycat = $db->getQuery(true)
+				->select($db->quoteName('user_id'))
+				->from($db->quoteName('#__kunena_user_categories', 'ut'))
+				->leftJoin($db->quoteName('#__kunena_users','ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
+				->where($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
+				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
+				->andWhere($db->quoteName('ku.banned') . ' <> 0')
+				->orWhere($db->quoteName('ku.banned') . ' IS NULL')
+				->andWhere($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
+				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
+				->group($db->quoteName('user_id'));
 			$query[] = $querycat;
 		}
 

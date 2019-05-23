@@ -736,11 +736,11 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		if (!isset($this->_aliases))
 		{
 			$db    = Factory::getDbo();
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_aliases'))
-				->where($db->quoteName('type') . ' = ' . $db->quote('catid') . ' AND' .
-					$db->quoteName('item') . ' = ' . $db->quote($this->id));
+				->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
+				->andWhere($db->quoteName('item') . ' = ' . $db->quote($this->id));
 			$db->setQuery((string) $query);
 			$this->_aliases = (array) $db->loadObjectList('alias');
 		}
@@ -764,12 +764,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		}
 
 		$db    = Factory::getDbo();
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->delete()
 			->from($db->quoteName('#__kunena_aliases'))
-			->where($db->quoteName('type') . ' = ' . $db->quote('catid') . ' AND' .
-				$db->quoteName('item') . ' = ' . $db->quote($this->id) . ' AND' . $db->quoteName('alias') .
-				' = ' . $db->quote($alias));
+			->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
+			->andWhere($db->quoteName('item') . ' = ' . $db->quote($this->id))
+			->andWhere($db->quoteName('alias') . ' = ' . $db->quote($alias));
 		$db->setQuery((string) $query);
 
 		try
@@ -820,8 +820,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function buildInfo()
 	{
@@ -1165,6 +1165,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null)
 	{
@@ -1286,10 +1287,10 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $db->quote($this->id) . $where)
+			->where('tt.category_id = ' . $db->quoteName($this->id) . ' ' . $db->quote($where))
 			->order('tt.last_post_time ASC');
 		$db->setQuery($query, 0, $limit);
 
@@ -1338,10 +1339,10 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $db->quote($this->id) . ' AND tt.hold!=2 ' . $where)
+			->where('tt.category_id = ' . $db->quoteName($this->id) . ' AND tt.hold!=2 ' . $where)
 			->order('tt.last_post_time ASC');
 		$db->setQuery($query, 0, $limit);
 
@@ -1569,12 +1570,13 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			// If last topic/post got moved or deleted, we need to find last post
 			$db    = Factory::getDBO();
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_topics'))
-				->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id) . ' AND' .
-					$db->quoteName('hold') . ' = 0' . ' AND' . $db->quoteName('moved_id') . ' = 0')
-			->order(array($db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC'));
+				->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id))
+				->andWhere($db->quoteName('hold') . ' = 0')
+				->andWhere($db->quoteName('moved_id') . ' = 0')
+				->order(array($db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC'));
 			$db->setQuery($query, 0, 1);
 
 			try

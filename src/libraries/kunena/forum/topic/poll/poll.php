@@ -83,6 +83,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $identifier  identifier
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -98,6 +99,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id)
 	{
@@ -184,7 +186,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery();
 			$query->select('*')
 				->from($this->_db->quoteName('#__kunena_polls_options'))
-				->where('pollid=' . $this->_db->quote($this->id))
+				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
 				->order($this->_db->quoteName('id'));
 			$this->_db->setQuery((string) $query);
 
@@ -244,7 +246,7 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery();
 			$query->select('COUNT(*)')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
-				->where('pollid=' . $this->_db->quote($this->id));
+				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id));
 			$this->_db->setQuery((string) $query);
 
 			try
@@ -275,8 +277,8 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery();
 			$query->select('*')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
-				->where('pollid=' . $this->_db->quote($this->id))
-				->order('lasttime DESC');
+				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
+				->order($this->_db->quoteName('lasttime') . ' DESC');
 			$this->_db->setQuery($query, $start, $limit);
 
 			try
@@ -308,7 +310,8 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery();
 			$query->select('SELECT MAX(lasttime)')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
-				->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($user->userid));
+				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
+				->andWhere($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid));
 			$this->_db->setQuery((string) $query);
 
 			try
@@ -485,9 +488,10 @@ class KunenaForumTopicPoll extends CMSObject
 	{
 		$user  = KunenaFactory::getUser($user);
 		$query = $this->_db->getQuery();
-		$query->select('lastvote')
+		$query->select($this->_db->quoteName('lastvote'))
 			->from($this->_db->quoteName('#__kunena_polls_users'))
-			->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($user->userid));
+			->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
+			->andWhere($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -516,9 +520,10 @@ class KunenaForumTopicPoll extends CMSObject
 		if (!isset($this->myvotes[$user->userid]))
 		{
 			$query = $this->_db->getQuery();
-			$query->select('SUM(votes)')
+			$query->select('SUM(' . $this->_db->quoteName('votes') . ')')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
-				->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($user->userid));
+				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
+				->andWhere($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid));
 			$this->_db->setQuery((string) $query);
 
 			try
@@ -556,8 +561,8 @@ class KunenaForumTopicPoll extends CMSObject
 		$delta = intval($delta);
 		$query = $this->_db->getQuery();
 		$query->update($this->_db->quoteName('#__kunena_polls_users'))
-			->set('votes=votes+' . $delta)
-			->where('id=' . $this->_db->quote($option));
+			->set($this->_db->quoteName('votes') . ' = votes+' . $this->_db->quote($delta))
+			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($option));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -623,7 +628,7 @@ class KunenaForumTopicPoll extends CMSObject
 		$db    = Factory::getDBO();
 		$query = $this->_db->getQuery();
 		$query->delete($this->_db->quoteName('#__kunena_polls_options'))
-			->where('pollid=' . $db->quote($this->id));
+			->where($this->_db->quoteName('pollid') . ' = ' . $db->quote($this->id));
 		$db->setQuery((string) $query);
 
 		try
@@ -638,7 +643,7 @@ class KunenaForumTopicPoll extends CMSObject
 		// Delete votes
 		$query = $this->_db->getQuery();
 		$query->delete($this->_db->quoteName('#__kunena_polls_users'))
-			->where('pollid=' . $db->quote($this->id));
+			->where($this->_db->quoteName('pollid') . ' = ' . $db->quote($this->id));
 		$db->setQuery((string) $query);
 
 		try
@@ -736,7 +741,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$query = $this->_db->getQuery();
 				$query->delete($this->_db->quoteName('#__kunena_polls_options'))
-					->where('id=' . $this->_db->quote($key));
+					->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($key));
 				$this->_db->setQuery((string) $query);
 
 				try
@@ -787,8 +792,8 @@ class KunenaForumTopicPoll extends CMSObject
 				// Option exists and has changed: update text
 				$query = $this->_db->getQuery();
 				$query->update($this->_db->quoteName('#__kunena_polls_options'))
-					->set('text=' . $this->_db->quote($value))
-					->where('id=' . $this->_db->quote($key));
+					->set($this->_db->quoteName('text') . ' = ' . $this->_db->quote($value))
+					->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($key));
 				$this->_db->setQuery((string) $query);
 
 				try

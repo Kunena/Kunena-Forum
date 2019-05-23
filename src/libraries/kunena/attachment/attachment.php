@@ -899,7 +899,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 *
 	 * @since  K4.0
 	 */
@@ -917,7 +917,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 *
 	 * @throws Exception
 	 * @since  K4.0
@@ -951,7 +951,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser $user user
 	 *
-	 * @return mixed
+	 * @return mixed|void
 	 *
 	 * @throws Exception
 	 * @since  K4.0

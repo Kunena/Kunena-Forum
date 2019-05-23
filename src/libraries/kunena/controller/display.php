@@ -100,7 +100,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			if (!$this->primary)
 			{
-				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
+				return "<div class=\"alert alert-danger\" role=\"alert\"><b>Exception</b> in layout <b>{$this->name}!</b>" . (JDEBUG ? '<br>' . $e->getMessage() : '') . '</div>';
 			}
 
 			$title    = '500 Internal Server Error';

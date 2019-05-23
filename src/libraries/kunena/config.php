@@ -1390,9 +1390,9 @@ class KunenaConfig extends CMSObject
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from($db->quoteName('#__kunena_configuration'));
-		$query->where($db->quoteName('id') . '=1');
+		$query->select('*')
+			->from($db->quoteName('#__kunena_configuration'))
+			->where($db->quoteName('id') . ' = 1');
 		$db->setQuery((string) $query);
 
 		try

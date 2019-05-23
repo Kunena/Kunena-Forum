@@ -52,11 +52,13 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Class constructor, overridden in descendant classes.
 	 *
-	 * @param   mixed $properties   Associative array to set the initial properties of the object.
+	 * @internal
+	 *
+	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
 	 *                              If not provided, default values will be used.
 	 *
-	 * @internal
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -227,10 +229,11 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Method to load object from the database.
 	 *
-	 * @param   mixed $id Id to be loaded.
+	 * @param   mixed  $id  Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null)
 	{

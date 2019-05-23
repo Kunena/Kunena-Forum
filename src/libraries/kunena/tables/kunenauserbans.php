@@ -156,8 +156,8 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 		$query  = $this->_db->getQuery(true);
 		$query->select('*')
 			->from($this->_db->quoteName($this->_tbl))
-			->where('userid = ' . $this->_db->quote($userid) . ' ' . $where)
-			->order('id DESC');
+			->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($userid) . ' ' . $where)
+			->order($this->_db->quoteName('id') . ' DESC');
 		$this->_db->setQuery($query, 0, 1);
 
 		try
@@ -244,8 +244,8 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 		$query  = $this->_db->getQuery(true);
 		$query->select('*')
 			->from($this->_db->quoteName($this->_tbl))
-			->where('ip = ' . $this->_db->quote($ip) . ' ' . $where)
-			->order('id DESC');
+			->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($ip) . ' ' . $where)
+			->order($this->_db->quoteName('id') . ' DESC');
 		$this->_db->setQuery($query, 0, 1);
 
 		try

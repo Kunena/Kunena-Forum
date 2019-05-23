@@ -444,10 +444,10 @@ class KunenaTableMap
 					$values[] = (int) $id . ',' . (int) $var;
 				}
 
-				$query = $this->_db->getQuery(true);
-				$query->insert($this->_db->quoteName($this->_tbl));
-				$query->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)));
-				$query->values($values);
+				$query = $this->_db->getQuery(true)
+					->insert($this->_db->quoteName($this->_tbl))
+					->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)))
+					->values($this->_db->quote($values));
 				$this->_db->setQuery((string) $query);
 				$this->_db->execute();
 			}
@@ -455,10 +455,10 @@ class KunenaTableMap
 			// Remove all deleted items.
 			if ($deleted)
 			{
-				$query = $this->_db->getQuery(true);
-				$query->delete($this->_db->quoteName($this->_tbl));
-				$query->where($this->_db->quoteName($this->_tbl_key) . '=' . (int) $id);
-				$query->where($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
+				$query = $this->_db->getQuery(true)
+					->delete($this->_db->quoteName($this->_tbl))
+					->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote((int) $id))
+					->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . $this->_db->quote(implode(',', $deleted)) . ')');
 				$this->_db->setQuery((string) $query);
 				$this->_db->execute();
 			}
@@ -521,9 +521,10 @@ class KunenaTableMap
 		}
 
 		// Initialise the query.
-		$query = $this->_db->getQuery(true);
-		$query->select($this->_tbl_mapped);
-		$query->from($this->_tbl);
+		$query = $this->_db->getQuery(true)
+			->select($this->_db->quoteName($this->_tbl_mapped))
+			->from($this->_db->quoteName($this->_tbl))
+			->where('');
 		$fields = array_keys($this->getProperties());
 
 		foreach ($keys as $field => $value)
@@ -536,7 +537,7 @@ class KunenaTableMap
 
 			// Add the search tuple to the query.
 			$this->{$field} = $value;
-			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
+			$query->andWhere($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
 		$this->_db->setQuery((string) $query);
@@ -600,13 +601,14 @@ class KunenaTableMap
 		}
 
 		// Delete the row by primary key.
-		$query = $this->_db->getQuery(true);
-		$query->delete();
-		$query->from($this->_tbl);
+		$query = $this->_db->getQuery(true)
+			->delete()
+			->from($this->_tbl)
+			->where('');
 
 		foreach ($pk as $key => $value)
 		{
-			$query->where($key . ' = ' . $this->_db->quote($value));
+			$query->andWhere($key . ' = ' . $this->_db->quote($value));
 		}
 
 		$this->_db->setQuery((string) $query);

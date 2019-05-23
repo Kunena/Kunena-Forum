@@ -1827,8 +1827,8 @@ class KunenaUser extends CMSObject
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
 				->select($db->quoteName('title'))
-				->from('#__usergroups')
-				->where($db->quoteName('id') . '=' . (int) $groupid_list);
+				->from($db->quoteName('#__usergroups'))
+				->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
 
 			$db->setQuery((string) $query);
 			$groupNames = $db->loadResult();

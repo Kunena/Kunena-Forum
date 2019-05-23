@@ -140,7 +140,8 @@ abstract class KunenaForumCategoryUserHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_categories'))
-			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid) . ' AND ' . $db->quoteName('category_id') . ' IN (' . $idlist . ')');
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+			->andWhere($db->quoteName('category_id') . ' IN (' . $db->quote($idlist) . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -197,7 +198,7 @@ abstract class KunenaForumCategoryUserHelper
 			}
 			else
 			{
-				$insertList[] = "{$db->quote($user->userid)}, {$db->quote($item->category_id)}, {$db->quote($time)}";
+				$insertList[] = $user->userid . ', ' . $item->category_id . ', ' . $time;
 			}
 		}
 
@@ -207,9 +208,9 @@ abstract class KunenaForumCategoryUserHelper
 			$query  = $db->getQuery(true);
 			$query
 				->update($db->quoteName('#__kunena_user_categories'))
-				->set("allreadtime={$db->quote($time)}")
-				->where("user_id={$db->quote($user->userid)}")
-				->where("category_id IN ({$idlist})");
+				->set('allreadtime = ' . $db->quote($time))
+				->where('user_id = ' . $db->quote($user->userid))
+				->where($db->quoteName('category_id') . ' IN (' . $db->quote($idlist) . ')');
 			$db->setQuery((string) $query);
 			$db->execute();
 		}
@@ -220,7 +221,7 @@ abstract class KunenaForumCategoryUserHelper
 			$query
 				->insert($db->quoteName('#__kunena_user_categories'))
 				->columns('user_id, category_id, allreadtime')
-				->values($insertList);
+				->values($db->quote($insertList));
 			$db->setQuery((string) $query);
 			$db->execute();
 		}

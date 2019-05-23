@@ -33,6 +33,7 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -120,17 +121,17 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement')
-				->order('id DESC')
-				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
-				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
+				->from($db->quoteName('#__kunena_announcement'))
+				->where($db->quoteName('published') . ' = 1')
+				->andWhere($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
+				->andWhere($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+				->order('id DESC');
 		}
 		else
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement')
+				->from($db->quoteName('#__kunena_announcement'))
 				->order('id DESC');
 		}
 
@@ -184,18 +185,18 @@ abstract class KunenaForumAnnouncementHelper
 		if ($filter)
 		{
 			$query = $db->getQuery(true)
-				->select('*')
-				->from('#__kunena_announcement')
-				->order('id DESC')
-				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
-				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
+				->select('COUNT(*)')
+				->from($db->quoteName('#__kunena_announcement'))
+				->where($db->quoteName('published') . ' = 1')
+				->andWhere($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
+				->andWhere($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+				->order('id DESC');
 		}
 		else
 		{
 			$query = $db->getQuery(true)
-				->select('*')
-				->from('#__kunena_announcement')
+				->select('COUNT(*)')
+				->from($db->quoteName('#__kunena_announcement'))
 				->order('id DESC');
 		}
 

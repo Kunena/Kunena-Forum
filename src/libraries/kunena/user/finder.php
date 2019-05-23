@@ -40,7 +40,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		$this->config = KunenaConfig::getInstance();
 		$this->limit  = $this->config->userlist_rows;
 
-		$this->query->leftJoin($this->db->quoteName('#__kunena_users') . ' AS ku ON ku.userid=a.id');
+		$this->query->leftJoin($this->db->quoteName('#__kunena_users','ku') . ' ON ' . $this->db->quoteName('ku.userid') . ' = ' . $this->db->quoteName('a.id'));
 	}
 
 	/**
@@ -59,15 +59,15 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 
 		if ($starting && $ending)
 		{
-			$this->query->where("a.{$name} BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where($this->db->quoteName('a.' . $name) . ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
-			$this->query->where("a.{$name} > {$this->db->quote($starting->toUnix())}");
+			$this->query->where($this->db->quoteName('a.' . $name) . ' > ' . $this->db->quote($starting->toUnix()));
 		}
 		elseif ($ending)
 		{
-			$this->query->where("a.{$name} <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where($this->db->quoteName('a.' . $name) . ' <= ' . $this->db->quote($ending->toUnix()));
 		}
 
 		return $this;
@@ -83,21 +83,23 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($this->config->userlist_count_users == '1')
 		{
-			$this->query->where('(a.block=0 OR a.activation="")');
+			$this->query->where($this->db->quoteName('a.block') . ' = 0')
+				->orWhere($this->db->quoteName('a.activation') . '=""');
 		}
 		elseif ($this->config->userlist_count_users == '2')
 		{
-			$this->query->where('(a.block=0 AND a.activation="")');
+			$this->query->where($this->db->quoteName('a.block') . ' = 0')
+				->orWhere($this->db->quoteName('a.activation') . '=""');
 		}
 		elseif ($this->config->userlist_count_users == '3')
 		{
-			$this->query->where('a.block=0');
+			$this->query->where($this->db->quoteName('a.block') . ' = 0');
 		}
 
 		// Hide super admins from the list
 		if ($this->config->superadmin_userlist && $ignore)
 		{
-			$this->query->where('a.id NOT IN (' . implode(',', $ignore) . ')');
+			$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $this->db->quote(implode(',', $ignore)) . ')');
 		}
 
 		return $this;
@@ -115,11 +117,11 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		{
 			if ($this->config->username)
 			{
-				$this->query->where("a.username LIKE '%{$this->db->escape($search)}%'");
+				$this->query->where($this->db->quoteName('a.username') . ' LIKE ' . $this->db->quote($search));
 			}
 			else
 			{
-				$this->query->where("a.name LIKE '%{$this->db->escape($search)}%'");
+				$this->query->where($this->db->quoteName('a.name') . ' LIKE ' . $this->db->quote($search));
 			}
 		}
 

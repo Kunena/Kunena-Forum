@@ -73,7 +73,7 @@ class KunenaPath extends JPath
 	}
 
 	/**
-	 * Checks if path is writeable either by the server or by FTP.
+	 * Checks if path is writable either by the server or by FTP.
 	 *
 	 * @param   string $path paths
 	 *

@@ -365,11 +365,12 @@ class KunenaUserBan extends CMSObject
 		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 		$query = $db->getQuery(true);
-		$query->select('b.*')
-			->from($db->quoteName('#__kunena_users_banned') . ' AS b')
-			->innerJoin($db->quoteName('#__users') . ' AS u ON u.id=b.userid')
-			->where('b.expiration = ' . $nullDate . ' OR b.expiration > ' . $db->quote($now->toSql()))
-			->order('b.created_time DESC');
+		$query->select($db->quoteName('b.*'))
+			->from($db->quoteName('#__kunena_users_banned','b'))
+			->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('b.userid'))
+			->where($db->quoteName('b.expiration') . ' = ' . $nullDate)
+			->orWhere($db->quoteName('b.expiration') . ' > ' . $db->quote($now->toSql()))
+			->order($db->quoteName('b.created_time') . ' DESC');
 		$db->setQuery($query, $start, $limit);
 
 		try
@@ -415,8 +416,8 @@ class KunenaUserBan extends CMSObject
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_users_banned'))
-			->where('userid = ' . $db->quote($userid))
-			->order('id DESC');
+			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
+			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery((string) $query);
 
 		try

@@ -89,7 +89,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Initialise the query.
 			$query  = $this->_db->getQuery(true)
 				->select('*')
-				->from($this->_db->quoteName($this->_tbl));
+				->from($this->_db->quoteName($this->_tbl))
+				->where('');
 			$fields = array_keys($this->getProperties());
 
 			foreach ($keys as $field => $value)
@@ -101,7 +102,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				}
 
 				// Add the search tuple to the query.
-				$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
+				$query->andWhere($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 			}
 
 			$this->_db->setQuery((string) $query);
@@ -143,10 +144,11 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   bool $updateNulls update
+	 * @param   bool  $updateNulls  update
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function store($updateNulls = false)
 	{
@@ -342,7 +344,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			$query = $this->_db->getQuery(true)
 				->insert($this->_db->quoteName($this->_tbl))
 				->columns($fields)
-				->values(implode(',', $values));
+				->values($this->_db->quote(implode(',', $values)));
 
 			// Set the query and execute the insert.
 			$this->_db->setQuery((string) $query);
@@ -431,11 +433,12 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 			// Delete the row by primary key.
 			$query = $this->_db->getQuery(true)
-				->delete($this->_tbl);
+				->delete($this->_tbl)
+				->where('');
 
 			foreach ($pk as $key => $value)
 			{
-				$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
+				$query->andWhere("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 			}
 
 			$this->_db->setQuery((string) $query);

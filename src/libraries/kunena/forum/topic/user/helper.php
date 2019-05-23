@@ -141,7 +141,8 @@ abstract class KunenaForumTopicUserHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where('user_id=' . $db->quote($user->userid) . ' AND topic_id IN (' . $idlist . ')');
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+			->andWhere($db->quoteName('topic_id') . ' IN (' . $db->quote($idlist) . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -204,8 +205,8 @@ abstract class KunenaForumTopicUserHelper
 		$query = $db->getQuery(true);
 		$query->select('topic_id, user_id')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where("topic_id IN ({$idlist})")
-			->where('posts>0');
+			->where($db->quoteName('topic_id') . ' IN (' . $db->quote($idlist) . ')')
+			->where($db->quoteName('posts') . ' > 0');
 
 		$query->select($db->quoteName($value));
 
@@ -244,8 +245,9 @@ abstract class KunenaForumTopicUserHelper
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_user_topics'))
-			->set('topic_id=' . $db->quote($new->id) . ', category_id=' . $db->quote($new->category_id))
-			->where('topic_id=' . $db->quote($old->id));
+			->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
+			->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
+			->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
 		$db->setQuery((string) $query);
 
 		try
@@ -349,7 +351,11 @@ abstract class KunenaForumTopicUserHelper
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db     = Factory::getDBO();
-		$query  = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$query  = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_user_topics'))
+			->where($db->quoteName('user_id') . ' IN (' . $db->quote($idlist) . ')')
+			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
 		$db->setQuery((string) $query);
 
 		try
@@ -427,18 +433,18 @@ abstract class KunenaForumTopicUserHelper
 		// Create missing user topics and update post count and last post if there are posts by that user
 		$subQuery = $db->getQuery(true);
 		$query = $db->getQuery(true);
-		
+
 		// Create the base subQuery select statement.
 		$subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
 		->from($db->quoteName('#__kunena_messages', 'm'))
 		->where($db->quoteName('m.userid') . '>0 AND ' . $db->quoteName('m.moved') . '=0 ' . $where)
 		->group('m.userid, m.thread');
-		
+
 		// Create the base insert statement.
 		$query = "INSERT INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
 			{$subQuery}
 			ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
-		
+
 		$db->setQuery((string) $query);
 
 		try
@@ -457,9 +463,10 @@ abstract class KunenaForumTopicUserHelper
 		// Find user topics where last post doesn't exist and reset values in it
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_user_topics', 'ut'))
-			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ut.last_post_id=m.id AND m.hold=0')
-			->set('posts=0, last_post_id=0')
-			->where('m.id IS NULL ' . $where2);
+			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id') . ' AND ' . $db->quoteName('m.hold') . ' = 0')
+			->set($db->quoteName('posts') . ' = 0')
+			->set($db->quoteName('last_post_id') . ' = 0')
+			->where($db->quoteName('m.id') . ' =  IS NULL ' . $where2);
 		$db->setQuery((string) $query);
 
 		try
@@ -477,9 +484,13 @@ abstract class KunenaForumTopicUserHelper
 
 		// Delete entries that have default values
 		$query = $db->getQuery(true);
-		$query->delete('ut')
+		$query->delete($db->quoteName('ut'))
 			->from($db->quoteName('#__kunena_user_topics', 'ut'))
-			->where('ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params=\'\' ' . $where2);
+			->where($db->quoteName('ut.posts') . ' = 0')
+			->andWhere($db->quoteName('ut.owner') . ' = 0')
+			->andWhere($db->quoteName('ut.favorite') . ' = 0')
+			->andWhere($db->quoteName('ut.subscribed') . ' = 0')
+			->andWhere($db->quoteName('ut.params') . " ='' "  . $where2);
 		$db->setQuery((string) $query);
 
 		try

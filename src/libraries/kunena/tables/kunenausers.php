@@ -489,8 +489,8 @@ class TableKunenaUsers extends KunenaTable
 		$query  = $this->_db->getQuery(true);
 		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
 			->from($this->_db->quoteName('#__users' , 'u'))
-			->leftJoin($this->_db->quoteName($this->_tbl , 'ku') . ' ON u.id = ku.userid')
-			->where('u.id = ' . $this->$k);
+			->leftJoin($this->_db->quoteName($this->_tbl , 'ku') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('ku.userid'))
+			->where($this->_db->quoteName('u.id') . ' = ' . $this->_db->quote($this->$k));
 		$this->_db->setQuery((string) $query);
 
 		try

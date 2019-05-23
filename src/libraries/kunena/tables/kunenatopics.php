@@ -203,10 +203,10 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = $this->_db->getQuery(true);
-		$query->select('*');
-		$query->from($this->_db->quoteName('#__kunena_topics'));
-		$query->where($this->_db->quoteName('id') . '=' . $this->$k);
+		$query = $this->_db->getQuery(true)
+			->select('*')
+			->from($this->_db->quoteName('#__kunena_topics'))
+			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -238,6 +238,7 @@ class TableKunenaTopics extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{

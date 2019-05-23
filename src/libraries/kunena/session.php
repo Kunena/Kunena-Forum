@@ -43,6 +43,24 @@ class KunenaSession extends CMSObject
 	protected $allreadtime;
 
 	/**
+	 * @var int|string
+	 * @since Kunena
+	 */
+	public $lasttime;
+
+	/**
+	 * @var int|string
+	 * @since Kunena
+	 */
+	public $currvisit;
+
+	/**
+	 * @var int|string
+	 * @since Kunena
+	 */
+	public $readtopics;
+
+	/**
 	 * @param   mixed|null $identifier identifier
 	 *
 	 * @since Kunena

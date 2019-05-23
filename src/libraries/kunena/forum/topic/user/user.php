@@ -164,6 +164,7 @@ class KunenaForumTopicUser extends CMSObject
 	 *
 	 * @return boolean    True on success.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete()
 	{
@@ -235,7 +236,10 @@ class KunenaForumTopicUser extends CMSObject
 			$query = $this->_db->getQuery(true);
 			$query->select('COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner')
 				->from($this->_db->quoteName('#__kunena_messages'))
-				->where('userid='. $this->_db->quote($this->user_id) . ' AND thread=' . $this->_db->quote($this->topic_id) . ' AND moved=0 AND hold=0')
+				->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($this->user_id))
+				->andWhere($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($this->topic_id))
+				->andWhere($this->_db->quoteName('moved') . ' = 0')
+				->andWhere($this->_db->quoteName('hold') . ' = 0')
 				->group('userid, thread');
 			$this->_db->setQuery($query, 0, 1);
 

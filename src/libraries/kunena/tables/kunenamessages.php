@@ -192,13 +192,12 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = $this->_db->getQuery(true);
-		$query->select(array('m.*', 't.message'));
-		$query->from($this->_db->quoteName('#__kunena_messages', 'm'));
-		$query->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') .
-			' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
-		);
-		$query->where($this->_db->quoteName('m.id') . '=' . $this->$k);
+		$query = $this->_db->getQuery(true)
+			->select($this->_db->quoteName(array('m.*', 't.message')))
+			->from($this->_db->quoteName('#__kunena_messages', 'm'))
+			->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') .
+			' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid'))
+			->where($this->_db->quoteName('m.id') . ' = ' . $this->_db->quote($this->$k));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -240,6 +239,7 @@ class TableKunenaMessages extends KunenaTable
 	/**
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{
@@ -304,9 +304,9 @@ class TableKunenaMessages extends KunenaTable
 
 		if ($update)
 		{
-			$query->update($this->_db->quoteName('#__kunena_messages_text'));
-			$query->set($this->_db->quoteName('message') . '=' . $this->_db->quote($this->message));
-			$query->where($this->_db->quoteName('mesid') . '=' . $this->$k);
+			$query->update($this->_db->quoteName('#__kunena_messages_text'))
+				->set($this->_db->quoteName('message') . ' = ' . $this->_db->quote($this->message))
+				->where($this->_db->quoteName('mesid') . ' = ' . $this->_db->quote($this->$k));
 		}
 		else
 		{
@@ -317,7 +317,7 @@ class TableKunenaMessages extends KunenaTable
 						$this->_db->quoteName('message'),
 					)
 				)
-				->values($this->$k . ', ' . $this->_db->quote($this->message));
+				->values($this->_db->quoteName($this->$k) . ', ' . $this->_db->quote($this->message));
 		}
 
 		$this->_db->setQuery((string) $query);

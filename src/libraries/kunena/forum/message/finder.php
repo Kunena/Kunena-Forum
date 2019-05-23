@@ -78,7 +78,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where("a.catid IN ({$list})");
+		$this->query->where('a.catid IN (' . $this->db->quote($list). ')');
 
 		return $this;
 	}
@@ -93,7 +93,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   array $categories categories
 	 *
-	 * @return $this
+	 * @return $this|void
 	 * @since Kunena
 	 */
 	public function filterByCategories(array $categories)
@@ -115,7 +115,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 			}
 
 			$list = implode(',', $list);
-			$this->query->where("a.catid IN ({$list})");
+			$this->query->where('a.catid IN (' . $this->db->quote($list). ')');
 
 			return $this;
 		}
@@ -134,15 +134,15 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($starting && $ending)
 		{
-			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where('a.time BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
-			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");
+			$this->query->where('a.time > ' . $this->db->quote($starting->toUnix()));
 		}
 		elseif ($ending)
 		{
-			$this->query->where("a.time <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where('a.time <= ' . $this->db->quote($ending->toUnix()));
 		}
 
 		return $this;
@@ -169,28 +169,28 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		switch ($action)
 		{
 			case 'author':
-				$this->query->where('a.userid=' . (int) $user->userid);
+				$this->query->where('a.userid = ' . (int) $user->userid);
 				break;
 			case '!author':
-				$this->query->where('a.userid!=' . (int) $user->userid);
+				$this->query->where('a.userid != ' . (int) $user->userid);
 				break;
 			case 'editor':
-				$this->query->where('a.modified_by=' . (int) $user->userid);
+				$this->query->where('a.modified_by = ' . (int) $user->userid);
 				break;
 			case '!editor':
-				$this->query->where('a.modified_by!=' . (int) $user->userid);
+				$this->query->where('a.modified_by != ' . (int) $user->userid);
 				break;
 			case 'thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid=' . (int) $user->userid);
+				$this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON th.postid = a.id AND th.userid = ' . (int) $user->userid);
 				break;
 			case '!thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid!=' . (int) $user->userid);
+				$this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON th.postid = a.id AND th.userid != ' . (int) $user->userid);
 				break;
 			case 'thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid=' . (int) $user->userid);
+				$this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON th.postid = a.id AND th.targetuserid = ' . (int) $user->userid);
 				break;
 			case '!thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid!=' . (int) $user->userid);
+				$this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON th.postid = a.id AND th.targetuserid != ' . (int) $user->userid);
 				break;
 		}
 
@@ -237,14 +237,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 */
 	protected function build(JDatabaseQuery $query)
 	{
-		// TODO: remove the field..
-		$query->where("a.moved=0");
-
 		if (!empty($this->hold))
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where("a.hold IN ({$hold})");
+			$query->where('a.hold IN (' . $this->db->quote($hold) . ')');
 		}
 	}
 }

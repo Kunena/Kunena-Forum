@@ -111,7 +111,7 @@ class KunenaForumMessageThankyou extends CMSObject
 		$time  = Factory::getDate();
 		$query = $db->getQuery(true);
 		$query->insert($db->quoteName('#__kunena_thankyou'))
-			->set('postid=' . $db->quote($this->id) . ', userid=' . $db->quote($user->userid) . ', targetuserid=' . $db->quote($message->userid) . ', time=' . $db->quote($time->toSql()));
+			->set('postid = ' . $db->quote($this->id) . ', userid = ' . $db->quote($user->userid) . ', targetuserid = ' . $db->quote($message->userid) . ', time = ' . $db->quote($time->toSql()));
 		$db->setQuery((string) $query);
 
 		try
@@ -155,8 +155,8 @@ class KunenaForumMessageThankyou extends CMSObject
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users'))
-			->set('thankyou=thankyou+1')
-			->where('userid=' .$db->quote($message->userid));
+			->set('thankyou = thankyou+1')
+			->where('userid = ' .$db->quote($message->userid));
 		$db->setQuery((string) $query);
 
 		try
@@ -210,14 +210,15 @@ class KunenaForumMessageThankyou extends CMSObject
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_thankyou'))
-			->where('postid=' . $db->quote($this->id) . ' AND userid=' . $db->quote($user->userid));
+			->where('postid = ' . $db->quote($this->id))
+			->andWhere('userid = ' . $db->quote($user->userid));
 		$db->setQuery((string) $query);
 		$db->execute();
 
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users'))
-			->set('thankyou=thankyou-1')
-			->where('userid=' . $db->quote($message->userid));
+			->set('thankyou = thankyou-1')
+			->where('userid = ' . $db->quote($message->userid));
 		$db->setQuery((string) $query);
 
 		try

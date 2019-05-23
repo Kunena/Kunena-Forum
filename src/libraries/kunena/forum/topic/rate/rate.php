@@ -70,9 +70,10 @@ class KunenaForumTopicRate extends CMSObject
 	protected $users = array();
 
 	/**
-	 * @param   int $identifier identifier
+	 * @param   int  $identifier  identifier
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -84,10 +85,11 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Method to load a KunenaForumTopicPoll object by id.
 	 *
-	 * @param   int $id The poll id to be loaded.
+	 * @param   int  $id  The poll id to be loaded.
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id)
 	{
@@ -191,11 +193,11 @@ class KunenaForumTopicRate extends CMSObject
 
 		$time  = Factory::getDate();
 		$query = $this->_db->getQuery(true);
-		$query->insert('#__kunena_rate')
-			->set('topic_id=' . $this->_db->quote($this->topic_id))
-			->set("userid={$this->_db->quote($user->userid)}")
-			->set("rate={$this->_db->quote($this->stars)}")
-			->set("time={$this->_db->quote($time->toSQL())}");
+		$query->insert($this->_db->quoteName('#__kunena_rate'))
+			->set($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id))
+			->set($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid))
+			->set($this->_db->quoteName('rate') . ' = ' . $this->_db->quote($this->stars))
+			->set($this->_db->quoteName('time') . ' = ' . $this->_db->quote($time->toSQL()));
 		$this->_db->setQuery((string) $query);
 
 		try
@@ -229,7 +231,9 @@ class KunenaForumTopicRate extends CMSObject
 	public function getUsers($start = 0, $limit = 0)
 	{
 		$query = $this->_db->getQuery(true);
-		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->quote($this->topic_id));
+		$query->select('*')
+			->from($this->_db->quoteName('#__kunena_rate'))
+			->where($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id));
 		$this->_db->setQuery($query, $start, $limit);
 
 		try

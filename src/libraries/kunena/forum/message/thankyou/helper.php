@@ -99,7 +99,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_thankyou'))
-			->where('postid IN (' . $idlist . ')');
+			->where('postid IN (' . $db->quote($idlist) . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -197,7 +197,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query->select('s.userid, count(s.' . $field . ') AS countid, u.username')
 			->from($db->quoteName('#__kunena_thankyou', 's'))
 			->innerJoin($db->quoteName('#__users', 'u'))
-			->where('s.' . $field .'=u.id')
+			->where('s.' . $field . ' = u.id')
 			->group('s.' . $field)
 			->order('countid DESC');
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
@@ -232,9 +232,11 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = $db->getQuery(true);
 		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
 			->from($db->quoteName('#__kunena_thankyou', 's'))
-			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON s.postid=m.id')
-			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread=tt.id')
-			->where('m.catid IN (' . $catlist . ') AND m.hold=0 AND tt.hold=0')
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON s.postid = m.id')
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread = tt.id')
+			->where('m.catid IN (' . $catlist . ')')
+			->andWhere('m.hold = 0')
+			->andWhere('tt.hold = 0')
 			->group('s.postid')
 			->order('countid DESC');
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
@@ -278,9 +280,12 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = $db->getQuery(true);
 		$query->select('m.catid, m.thread, m.id')
 			->from($db->quoteName('#__kunena_thankyou', 't'))
-			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON m.id=t.postid')
-			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread=tt.id')
-			->where('m.catid IN (' . $catlist . ') AND m.hold=0 AND tt.hold=0 AND t.' . $field .'='. $db->quote(intval($userid)));
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON m.id = t.postid')
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread = tt.id')
+			->where('m.catid IN (' . $db->quote($catlist) . ')')
+			->andWhere('m.hold = 0')
+			->andWhere('tt.hold = 0')
+			->andWhere('t.' . $field . ' = ' . $db->quote(intval($userid)));
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
 
 		try

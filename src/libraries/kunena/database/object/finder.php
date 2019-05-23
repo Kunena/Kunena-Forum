@@ -78,7 +78,7 @@ abstract class KunenaDatabaseObjectFinder
 
 		$this->db    = Factory::getDbo();
 		$this->query = $this->db->getQuery(true);
-		$this->query->from($this->table . ' AS a');
+		$this->query->from($this->db->quoteName($this->table, 'a'));
 	}
 
 	/**
@@ -257,7 +257,7 @@ abstract class KunenaDatabaseObjectFinder
 		if ($query->group)
 		{
 			$countQuery = $this->db->getQuery(true);
-			$countQuery->select('COUNT(*)')->from("({$query}) AS c");
+			$countQuery->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
 			$this->db->setQuery($countQuery);
 		}
 		else

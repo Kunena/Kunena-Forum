@@ -45,15 +45,15 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($starting && $ending)
 		{
-			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where($this->db->quoteName('a.time'). ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
-			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");
+			$this->query->where($this->db->quoteName('a.time') . ' > ' . $this->db->quote($starting->toUnix()));
 		}
 		elseif ($ending)
 		{
-			$this->query->where("a.time <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where($this->db->quoteName('a.time') . ' <= ' . $this->db->quote($ending->toUnix()));
 		}
 
 		return $this;
@@ -114,7 +114,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 
 		$query = clone $this->query;
 		$this->build($query);
-		$query->select('a.*');
+		$query->select($this->db->quoteName('a.*'));
 		$this->db->setQuery($query, $this->start, $this->limit);
 
 		try

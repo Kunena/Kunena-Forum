@@ -321,7 +321,7 @@ class KunenaLog
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
-				->insert('#__kunena_logs')
+				->insert($db->quoteName('#__kunena_logs'))
 				->columns('type, user_id, category_id, topic_id, target_user, ip, time, operation, data');
 
 			foreach (static::$entries as $entry)

@@ -63,10 +63,9 @@ abstract class KunenaForumTopicPollHelper
 	{
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query
-			->update('#__kunena_topics AS a')
-			->innerJoin('#__kunena_polls AS b ON a.id=b.threadid')
-			->set('a.poll_id=b.id');
+		$query->update($db->quoteName('#__kunena_topics', 'a'))
+			->innerJoin($db->quoteName('#__kunena_polls','b') . ' ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('b.threadid'))
+			->set($db->quoteName('a.poll_id') . ' = ' . $db->quoteName('b.id'));
 
 		$db->setQuery((string) $query);
 		$db->execute();

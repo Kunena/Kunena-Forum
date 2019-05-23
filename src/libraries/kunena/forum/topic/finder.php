@@ -64,7 +64,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where('a.category_id IN (' . $list . ')');
+		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $this->db->quote($list) . ')');
 
 		return $this;
 	}
@@ -106,7 +106,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 			$list = -1;
 		}
 
-		$this->query->where('a.category_id IN (' . $list . ')');
+		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $this->db->quote($list) . ')');
 
 		return $this;
 	}
@@ -127,15 +127,15 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 
 		if ($starting && $ending)
 		{
-			$this->query->where('a.' . $name . '_post_time BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
+			$this->query->where($this->db->quoteName('a.' . $name . '_post_time') . ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
-			$this->query->where('a.' . $name . '_post_time > ' . $this->db->quote($starting->toUnix()));
+			$this->query->where($this->db->quoteName('a.' . $name . '_post_time') . ' > ' . $this->db->quote($starting->toUnix()));
 		}
 		elseif ($ending)
 		{
-			$this->query->where('a.' . $name . '_post_time <= ' . $this->db->quote($ending->toUnix()));
+			$this->query->where($this->db->quoteName('a.' . $name . '_post_time') . ' <= ' . $this->db->quote($ending->toUnix()));
 		}
 
 		return $this;
@@ -160,58 +160,64 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
-		$this->query->innerJoin('#__kunena_user_topics AS ut ON a.id=ut.topic_id');
-		$this->query->where('ut.user_id = ' . $this->db->quote($user->userid));
+		$this->query->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut') .' ON ' . $this->db->quoteName('a.id') . ' = ' . $this->db->quoteName('ut.topic_id'));
+		$this->query->where($this->db->quoteName('ut.user_id') . ' = ' . $this->db->quote($user->userid));
 
 		switch ($action)
 		{
 			case 'first_post':
-				$this->query->where('a.first_post_userid=' . $this->db->quote($user->userid));
+				$this->query->where($this->db->quoteName('a.first_post_userid') . ' = ' . $this->db->quote($user->userid));
 				break;
 			case '!first_post':
-				$this->query->where('a.first_post_userid!=' . $this->db->quote($user->userid));
+				$this->query->where($this->db->quoteName('a.first_post_userid') . ' != ' . $this->db->quote($user->userid));
 				break;
 			case 'last_post':
-				$this->query->where('a.last_post_userid=' . $this->db->quote($user->userid));
+				$this->query->where($this->db->quoteName('a.last_post_userid') . ' = ' . $this->db->quote($user->userid));
 				break;
 			case '!last_post':
-				$this->query->where('a.last_post_userid!=' . $this->db->quote($user->userid));
+				$this->query->where($this->db->quoteName('a.last_post_userid') . ' != ' . $this->db->quote($user->userid));
 				break;
 			case 'owner':
-				$this->query->where('ut.owner=1');
+				$this->query->where($this->db->quoteName('ut.owner') . ' = 1');
 				break;
 			case '!owner':
-				$this->query->where('ut.owner!=1');
+				$this->query->where($this->db->quoteName('ut.owner') . ' != 1');
 				break;
 			case 'posted':
-				$this->query->where('ut.posts>0');
+				$this->query->where($this->db->quoteName('ut.posts') . ' => 0');
 				break;
 			case '!posted':
-				$this->query->where('ut.posts=0');
+				$this->query->where($this->db->quoteName('ut.posts') . ' = 0');
 				break;
 			case 'replied':
-				$this->query->where('(ut.owner=0 AND ut.posts>0)');
+				$this->query->where($this->db->quoteName('ut.owner') . ' = 0')
+					->andWhere($this->db->quoteName('ut.posts') . ' > 0');
 				break;
 			case '!replied':
-				$this->query->where('(ut.owner=0 AND ut.posts=0)');
+				$this->query->where($this->db->quoteName('ut.owner') . ' = 0')
+					->andWhere($this->db->quoteName('ut.posts') . ' = 0');
 				break;
 			case 'favorited':
-				$this->query->where('ut.favorite=1');
+				$this->query->where($this->db->quoteName('ut.favorite') . ' = 1');
 				break;
 			case '!favorited':
-				$this->query->where('ut.favorite!=1');
+				$this->query->where($this->db->quoteName('ut.favorite') . ' != 1');
 				break;
 			case 'subscribed':
-				$this->query->where('ut.subscribed=1');
+				$this->query->where($this->db->quoteName('ut.subscribed') . ' = 1');
 				break;
 			case '!subscribed':
-				$this->query->where('ut.subscribed!=1');
+				$this->query->where($this->db->quoteName('ut.subscribed') . ' != 1');
 				break;
 			case 'involved':
-				$this->query->where('(ut.posts>0 OR ut.favorite=1 OR ut.subscribed=1)');
+				$this->query->where($this->db->quoteName('ut.posts') . ' > 0')
+					->orWhere($this->db->quoteName('ut.favorite') . ' = 1')
+					->orWhere($this->db->quoteName('ut.subscribed') .' = 1');
 				break;
 			case '!involved':
-				$this->query->where('(ut.posts<1 AND ut.favorite=0 AND ut.subscribed=0)');
+				$this->query->where($this->db->quoteName('ut.posts') . ' < 1')
+					->andWhere($this->db->quoteName('ut.favorite') . ' = 0')
+					->andWhere($this->db->quoteName('ut.subscribed') . ' = 0');
 				break;
 		}
 
@@ -257,26 +263,26 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$userlist = implode(',', $list);
 
 		$subQuery = $this->db->getQuery(true);
-		$subQuery->select('st.id, MAX(sut.last_post_id) AS max_post_id')
+		$subQuery->select($this->db->quoteName('st.id') . ', MAX(' . $this->db->quoteName('sut.last_post_id') . ') AS ' . $this->db->quoteName('max_post_id'))
 			->from($this->db->quoteName('#__kunena_topics', 'st'))
-			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), 'ON sut.topic_id=st.id')
-			->where('sut.user_id IN (' . $userlist . ')')
-			->group('st.last_post_id')
-			->order('st.last_post_id DESC');
+			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), 'ON ' . $this->db->quoteName('sut.topic_id') . ' = ' . $this->db->quoteName('st.id'))
+			->where($this->db->quoteName('sut.user_id') . ' IN (' . $this->db->quote($userlist) . ')')
+			->group($this->db->quoteName('st.last_post_id'))
+			->order($this->db->quoteName('st.last_post_id') . ' DESC');
 
 		// Hard limit on sub-query to make derived table faster to sort.
-		$this->query->innerJoin('(' . $subQuery . ' LIMIT 1000) AS uu ON uu.id=a.id');
-		$this->query->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'),'ON ut.topic_id=a.id AND ut.owner=1');
+		$this->query->innerJoin('(' . $this->db->quoteName($subQuery) . ' LIMIT 1000) AS ' . $this->db->quoteName('uu') . ' ON ' . $this->db->quoteName('uu.id') .' = ' . $this->db->quoteName('a.id'))
+			->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'),' ON ' . $this->db->quoteName('ut.topic_id') . ' = ' . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('ut.owner') . ' = 1');
 
 		if ($negate)
 		{
 			// Topic owner has posted after $users (or $users haven't replied at all).
-			$this->query->where("ut.last_post_id > uu.max_post_id");
+			$this->query->where($this->db->quoteName('ut.last_post_id') . ' > ' . $this->db->quoteName('uu.max_post_id'));
 		}
 		else
 		{
 			// One of the $users has posted after topic owner.
-			$this->query->where("ut.last_post_id < uu.max_post_id");
+			$this->query->where($this->db->quoteName('ut.last_post_id') . ' < ' . $this->db->quoteName('uu.max_post_id'));
 		}
 
 		return $this;
@@ -356,12 +362,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where('a.hold IN (' . $hold. ')');
-		}
-
-		if (isset($this->moved))
-		{
-			$query->where('a.moved_id' . ($this->moved ? '>0' : '=0'));
+			$query->where($this->db->quoteName('a.hold') . ' IN (' . $this->db->quote($hold) . ')');
 		}
 	}
 }

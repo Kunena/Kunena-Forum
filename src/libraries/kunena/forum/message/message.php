@@ -131,10 +131,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
-	 * @param   mixed $properties properties
-	 *
 	 * @internal
+	 *
+	 * @param   mixed  $properties  properties
+	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -209,6 +211,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategory()
 	{
@@ -509,12 +512,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				$sentusers = implode(',', $sentusers);
 				$db        = Factory::getDbo();
 				$query     = $db->getQuery(true)
-					->update('#__kunena_user_topics')
-					->set('subscribed=2')
-					->where("topic_id={$this->thread}")
-					->where("user_id IN ({$sentusers})")
-					->where('subscribed=1');
-
+					->update($db->quoteName('#__kunena_user_topics'))
+					->set($db->quoteName('subscribed') . ' = 2')
+					->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
+					->where($db->quoteName('user_id') . ' IN (' . $db->quote($sentusers) . ')')
+					->where($db->quoteName('subscribed') . ' = 1');
 				$db->setQuery((string) $query);
 
 				try
@@ -553,10 +555,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   null|KunenaForumCategory $category category
+	 * @param   null|KunenaForumCategory  $category  category
 	 *
 	 * @return Joomla\CMS\Uri\Uri|boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPermaUri($category = null)
 	{
@@ -587,6 +590,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
 			->set('mail', $mail)
+			->set('subject', $subject)
 			->set('message', $this)
 			->set('messageUrl', $url)
 			->set('once', $once);
@@ -1370,10 +1374,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Method to load a KunenaForumMessage object by id.
 	 *
-	 * @param   mixed $id The message id to be loaded
+	 * @param   mixed  $id  The message id to be loaded
 	 *
 	 * @return boolean    True on success
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null)
 	{
@@ -1511,11 +1516,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$query  = $this->_db->getQuery(true);
 			$query->select('m.id')
 				->from($this->_db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON m.id=t.mesid')
-				->where('m.userid=' . $this->_db->quote($this->userid) .'
-				 AND m.ip=' . $this->_db->quote($this->ip) .'
-				 AND t.message=' . $this->_db->quote($this->message).'
-				 AND m.time>=' . $this->_db->quote($duplicatetimewindow));
+				->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
+				->where($this->_db->quoteName('m.userid') . ' = ' . $this->_db->quote($this->userid))
+				->andWhere($this->_db->quoteName('m.ip') . ' = ' . $this->_db->quote($this->ip))
+				->andWhere($this->_db->quoteName('t.message') . ' = ' . $this->_db->quote($this->message))
+				->andWhere($this->_db->quoteName('m.time') . ' >= ' . $this->_db->quote($duplicatetimewindow));
 			$this->_db->setQuery((string) $query);
 
 			try

@@ -243,7 +243,10 @@ abstract class KunenaTableObject
 		}
 
 		// Initialise the query.
-		$query = static::$db->getQuery(true)->select('*')->from(static::$tbl);
+		$query = static::$db->getQuery(true)
+			->select('*')
+			->from(static::$tbl)
+			->where('');
 
 		foreach ($keys as $field => $value)
 		{
@@ -252,7 +255,7 @@ abstract class KunenaTableObject
 			$this->$field = $value;
 
 			// Add the search tuple to the query.
-			$query->where(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
+			$query->andWhere(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
 		}
 
 		static::$db->setQuery($query, 0, 1);
@@ -620,7 +623,9 @@ abstract class KunenaTableObject
 	public static function getQuery()
 	{
 		$db    = static::$db;
-		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
+		$query = $db->getQuery(true)
+			->select($db->quoteName('a.*'))
+			->from($db->quoteName(static::$tbl, 'a'));
 
 		return $query;
 	}
@@ -840,11 +845,14 @@ abstract class KunenaTableObject
 		}
 
 		// Delete the row by given keys/fields.
-		$query = static::$db->getQuery(true)->delete()->from(static::$tbl);
+		$query = static::$db->getQuery(true)
+			->delete()
+			->from(static::$tbl)
+			->where('');
 
 		foreach ($keys as $key => $value)
 		{
-			$query->where(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
+			$query->andWhere(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
 		}
 
 		static::$db->setQuery($query, 0, 1);
@@ -890,11 +898,11 @@ abstract class KunenaTableObject
 		$time = Factory::getDate()->toSql();
 
 		// Check the row out by primary key.
-		$query = static::$db->getQuery(true);
-		$query->update(static::$tbl);
-		$query->set(static::$db->quoteName('checked_out') . ' = ' . (int) $userId);
-		$query->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote($time));
-		$query->where(static::$tbl_key . ' = ' . static::$db->quote($pk));
+		$query = static::$db->getQuery(true)
+			->update(static::$tbl)
+			->set(static::$db->quoteName('checked_out') . ' = ' . static::$db->quote((int) $userId))
+			->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote($time))
+			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 		static::$db->execute();
 
@@ -935,10 +943,10 @@ abstract class KunenaTableObject
 		// Check the row in by primary key.
 		$query = static::$db->getQuery(true);
 		$nullDate = static::$db->getNullDate() ?  static::$db->quote(static::$db->getNullDate()) : 'NULL';
-		$query->update(static::$tbl);
-		$query->set(static::$db->quoteName('checked_out') . ' = 0');
-		$query->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate);
-		$query->where(static::$tbl_key . ' = ' . static::$db->quote($pk));
+		$query->update(static::$tbl)
+			->set(static::$db->quoteName('checked_out') . ' = 0')
+			->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate)
+			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 
 		// Check for a database error.
@@ -981,10 +989,10 @@ abstract class KunenaTableObject
 		}
 
 		// Check the row in by primary key.
-		$query = static::$db->getQuery(true);
-		$query->update(static::$tbl);
-		$query->set(static::$db->quoteName('hits') . ' = (' . static::$db->quoteName('hits') . ' + 1)');
-		$query->where(static::$tbl_key . ' = ' . static::$db->quote($pk));
+		$query = static::$db->getQuery(true)
+			->update(static::$tbl)
+			->set(static::$db->quoteName('hits') . ' = (' . static::$db->quoteName('hits') . ' + 1)')
+			->where(static::$db->quoteName($tbl_key) . ' = ' . static::$db->quote($pk));
 		static::$db->setQuery((string) $query);
 		static::$db->execute();
 
@@ -1023,7 +1031,7 @@ abstract class KunenaTableObject
 		}
 
 		static::$db = Factory::getDBO();
-		static::$db->setQuery('SELECT COUNT(userid)' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . (int) $against);
+		static::$db->setQuery('SELECT COUNT(' . static::$db->quoteName('userid') . ')' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));
 		$checkedOut = (boolean) static::$db->loadResult();
 
 		// If a session exists for the user then it is checked out.

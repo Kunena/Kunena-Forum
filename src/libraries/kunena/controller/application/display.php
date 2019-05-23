@@ -180,7 +180,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				if (!($e instanceof KunenaExceptionAuthorise))
 				{
 					$header  = 'Error while rendering layout';
-					$content = isset($content) ? $content->renderError($e) : $this->content->renderError($e);
+					$content = $e->getMessage();
 					$e       = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
 				}
 				else

@@ -182,8 +182,8 @@ abstract class KunenaForumCategoryHelper
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
 			->from($db->quoteName('#__kunena_user_categories'))
-			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid) . ' AND' .
-				$db->quoteName('subscribed') . ' = 1');
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
+			->andWhere($db->quoteName('subscribed') . ' = 1');
 		$db->setQuery((string) $query);
 
 		try
@@ -335,7 +335,7 @@ abstract class KunenaForumCategoryHelper
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where   = isset($params['where']) ? (string) $params['where'] : '';
-		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
+		$allowed = $db->quote(implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories())));
 
 		if (!$userids || !$allowed)
 		{
@@ -347,14 +347,16 @@ abstract class KunenaForumCategoryHelper
 		$query->select('COUNT(DISTINCT c.id)')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
-			->where('u.user_id IN (' . $userids . ') AND u.category_id IN (' . $allowed . ') AND u.subscribed=1 ' . $where);
+			->where('u.user_id IN (' . $db->quote($userids) . ')')
+			->andWhere( $db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
+			->andWhere($db->quoteName('u.subscribed') . ' = 1 ' . $where);
 		$db->setQuery((string) $query);
 
 		try
 		{
 			$total = (int) $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (Exception $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -443,11 +445,13 @@ abstract class KunenaForumCategoryHelper
 		$query   = $db->getQuery(true);
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
-			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id=t.category_id AND uc.user_id=' . $db->quote($user->userid))
-			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id=t.id AND ur.user_id=' . $db->quote($user->userid))
-			->where('t.category_id IN (' . $catlist . ') AND t.hold=0 AND t.last_post_time>' . $db->quote($session->getAllReadTime()) . '
-				AND (uc.allreadtime IS NULL OR t.last_post_time>uc.allreadtime)
-				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
+			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id = t.category_id AND uc.user_id=' . $db->quote($user->userid))
+			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id = t.id AND ur.user_id=' . $db->quote($user->userid))
+			->where('t.category_id IN (' . $catlist . ')')
+			->andWhere('t.hold = 0')
+			->andWhere('t.last_post_time > ' . $db->quote($session->getAllReadTime()))
+			->andWhere('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
+			->andWhere('ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
 			->group($db->quoteName('category_id'));
 		$db->setQuery((string) $query);
 
@@ -625,6 +629,7 @@ abstract class KunenaForumCategoryHelper
 	 * @return KunenaForumCategory    The Category object.
 	 *
 	 * @since    1.6
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -905,12 +910,12 @@ abstract class KunenaForumCategoryHelper
 		$query = $db->getQuery(true);
 		$query
 			->update($db->quoteName('#__kunena_categories', 'c'))
-			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON c.id=tt.category_id AND tt.hold=0')
-			->set("c.numTopics=0,
-				c.numPosts=0,
-				c.last_topic_id=0,
-				c.last_post_id=0,
-				c.last_post_time=0")
+			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON c.id = tt.category_id AND tt.hold = 0')
+			->set("c.numTopics = 0,
+				c.numPosts = 0,
+				c.last_topic_id = 0,
+				c.last_post_id = 0,
+				c.last_post_time = 0")
 			->where("tt.id IS NULL");
 		$db->setQuery((string) $query);
 
@@ -992,8 +997,10 @@ abstract class KunenaForumCategoryHelper
 	{
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('*')->from($db->quoteName('#__kunena_categories'))
-			->where($db->quoteName('alias') . " = " . $db->quote($alias));
+		$query->select('*')
+			->from($db->quoteName('#__kunena_categories'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($category_id))
+			->andWhere($db->quoteName('alias') . ' = ' . $db->quote($alias));
 		$db->setQuery((string) $query);
 
 		try

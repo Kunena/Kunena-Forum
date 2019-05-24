@@ -198,7 +198,7 @@ abstract class KunenaForumCategoryUserHelper
 			}
 			else
 			{
-				$insertList[] = $user->userid . ', ' . $item->category_id . ', ' . $time;
+			    $insertList[] = $db->quote($user->userid) . ', ' . $db->quote($item->category_id) . ', ' . $db->quote($time);
 			}
 		}
 
@@ -212,7 +212,15 @@ abstract class KunenaForumCategoryUserHelper
 				->where('user_id = ' . $db->quote($user->userid))
 				->where($db->quoteName('category_id') . ' IN (' . $db->quote($idlist) . ')');
 			$db->setQuery((string) $query);
-			$db->execute();
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		if ($insertList)
@@ -221,9 +229,17 @@ abstract class KunenaForumCategoryUserHelper
 			$query
 				->insert($db->quoteName('#__kunena_user_categories'))
 				->columns('user_id, category_id, allreadtime')
-				->values($db->quote($insertList));
+				->values($insertList);
 			$db->setQuery((string) $query);
-			$db->execute();
+
+			try
+			{
+				$db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 	}
 }

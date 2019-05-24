@@ -123,16 +123,16 @@ abstract class KunenaForumAnnouncementHelper
 				->select('*')
 				->from($db->quoteName('#__kunena_announcement'))
 				->where($db->quoteName('published') . ' = 1')
-				->andWhere($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
-				->andWhere($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
-				->order('id DESC');
+				->where($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
+				->where($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+				->order($db->quoteName('id') . ' DESC');
 		}
 		else
 		{
 			$query = $db->getQuery(true)
 				->select('*')
 				->from($db->quoteName('#__kunena_announcement'))
-				->order('id DESC');
+				->order($db->quoteName('id') . ' DESC');
 		}
 
 		$db->setQuery($query, $start, $limit);

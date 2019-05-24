@@ -355,7 +355,7 @@ abstract class KunenaUserHelper
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
-				$query->andWhere($db->quoteName('u.id') . ' NOT IN (' . $db->quote(implode(',', $filter)) . ')');
+				$query->where($db->quote('u.id') . ' NOT IN (' . $db->quote(implode(',', $filter)) . ')');
 			}
 
 			$db->setQuery($query, 0, $limit);
@@ -465,19 +465,19 @@ abstract class KunenaUserHelper
 			$query->select('COUNT(*)')
 				->from($db->quoteName('#__session'))
 				->where($db->quoteName('client_id') . ' = 0')
-				->andWhere($db->quoteName('userid') . ' = 0');
+				->where($db->quoteName('userid') . ' = 0');
 
 			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
 			{
 				// Calculate x minutes by using Kunena setting.
 				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
-				$query->andWhere($db->quoteName('time') . ' > ' . $db->quote($time));
+				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
 				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
-				$query->andWhere($db->quoteName('time') . ' > ' . $db->quote($time));
+				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 
 			$db->setQuery((string) $query);
@@ -517,7 +517,7 @@ abstract class KunenaUserHelper
 			$query->select('userid, MAX(time) AS time')
 				->from($db->quoteName('#__session'))
 				->where($db->quoteName('client_id') . ' = 0')
-				->andWhere($db->quoteName('userid') . ' > 0')
+				->where($db->quoteName('userid') . ' > 0')
 				->group($db->quoteName('userid'))
 				->order($db->quoteName('time') . ' DESC');
 
@@ -525,13 +525,13 @@ abstract class KunenaUserHelper
 			{
 				// Calculate x minutes by using Kunena setting.
 				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
-				$query->andWhere($db->quoteName('time') . ' > ' . $db->quote($time));
+				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
 				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
-				$query->andWhere($db->quoteName('time') . ' > ' . $db->quote($time));
+				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 
 			$db->setQuery((string) $query);

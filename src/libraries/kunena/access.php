@@ -1008,11 +1008,11 @@ window.addEvent('domready', function(){
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
 				->leftJoin($db->quoteName('#__kunena_users','ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
-				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
-				->andWhere($db->quoteName('ku.banned') . ' <> 0')
-				->orWhere($db->quoteName('ku.banned') . ' IS NULL')
-				->andWhere($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
-				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
+				->where($db->quoteName('ut.subscribed') . ' = 1')
+				->where($db->quoteName('ku.banned') . ' <> 0')
+				->where($db->quoteName('ku.banned') . ' IS NULL')
+				->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
+				->where($db->quoteName('ut.subscribed') . ' = 1')
 				->group($db->quoteName('user_id'));
 
 			$query[] = $querytopic;

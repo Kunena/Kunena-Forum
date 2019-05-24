@@ -348,8 +348,8 @@ abstract class KunenaForumCategoryHelper
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
 			->where('u.user_id IN (' . $db->quote($userids) . ')')
-			->andWhere( $db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
-			->andWhere($db->quoteName('u.subscribed') . ' = 1 ' . $where);
+			->where( $db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
+			->where($db->quoteName('u.subscribed') . ' = 1 ' . $where);
 		$db->setQuery((string) $query);
 
 		try
@@ -447,11 +447,11 @@ abstract class KunenaForumCategoryHelper
 			->from($db->quoteName('#__kunena_topics', 't'))
 			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id = t.category_id AND uc.user_id=' . $db->quote($user->userid))
 			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id = t.id AND ur.user_id=' . $db->quote($user->userid))
-			->where('t.category_id IN (' . $catlist . ')')
-			->andWhere('t.hold = 0')
-			->andWhere('t.last_post_time > ' . $db->quote($session->getAllReadTime()))
-			->andWhere('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
-			->andWhere('ur.topic_id IS NULL OR t.last_post_id != ur.message_id')
+			->where('t.category_id IN (' . $db->quote($catlist) . ')')
+			->where('t.hold = 0')
+			->where('t.last_post_time > ' . $db->quote($session->getAllReadTime()))
+			->where('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
+			->where('ur.topic_id IS NULL OR t.last_post_id != ur.message_id')
 			->group($db->quoteName('category_id'));
 		$db->setQuery((string) $query);
 

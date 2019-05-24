@@ -297,11 +297,11 @@ abstract class KunenaUserHelper
 
 			if ($config->userlist_count_users == '1')
 			{
-				$where = $db->quoteName('block') . ' = 0 OR activation="")';
+			    $where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
 			}
 			elseif ($config->userlist_count_users == '2')
 			{
-				$where = $db->quoteName('block') . ' = 0 AND activation="")';
+			    $where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
 			}
 			elseif ($config->userlist_count_users == '3')
 			{

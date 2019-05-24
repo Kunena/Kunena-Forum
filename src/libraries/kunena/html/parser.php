@@ -50,6 +50,8 @@ abstract class KunenaHtmlParser
 		{
 			$query->where($db->quoteName('emoticonbar') . ' = 1');
 		}
+		
+		$db->setQuery($query);
 
 		try
 		{

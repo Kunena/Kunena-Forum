@@ -343,7 +343,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			$query = $this->_db->getQuery(true)
 				->insert($this->_db->quoteName($this->_tbl))
 				->columns($fields)
-				->values($this->_db->quote(implode(',', $values)));
+				->values(implode(',', $values));
 
 			// Set the query and execute the insert.
 			$this->_db->setQuery((string) $query);

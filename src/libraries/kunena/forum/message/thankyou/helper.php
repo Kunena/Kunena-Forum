@@ -349,10 +349,15 @@ abstract class KunenaForumMessageThankyouHelper
 
 		// Update user thankyou count
 		$query = $db->getQuery(true);
-		$query->insert($db->quoteName('#__kunena_users') . '(userid, thankyou)')
-			->select('targetuserid AS userid, COUNT(*) AS thankyou')
-			->from($db->quoteName('#__kunena_thankyou'))
-			->group($db->quoteName('targetuserid') . ' ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)');
+		$subquery = $db->getQuery(true);
+
+		$subquery->select('targetuserid AS userid, COUNT(*) AS thankyou')
+		->from($db->quoteName('#__kunena_thankyou'))
+		->group($db->quoteName('targetuserid'));
+
+		$query = "INSERT INTO #__kunena_users (userid, thankyou)" .
+		$subquery . "ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
+		
 		$db->setQuery((string) $query);
 
 		try

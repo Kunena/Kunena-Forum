@@ -317,7 +317,7 @@ class TableKunenaMessages extends KunenaTable
 						$this->_db->quoteName('message'),
 					)
 				)
-				->values($this->_db->quoteName($this->$k) . ', ' . $this->_db->quote($this->message));
+				->values((int) $this->$k . ', ' . $this->_db->quote($this->message));
 		}
 
 		$this->_db->setQuery((string) $query);

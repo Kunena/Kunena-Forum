@@ -43,7 +43,7 @@ abstract class KunenaHtmlParser
 		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$query = $db->getQuery(true)
-			->select(array($db->quoteName('code'), $db->quoteName($column)) )
+			->select(array($db->quoteName('code'), $db->quoteName($column, 'file')) )
 			->from($db->quoteName('#__kunena_smileys'));
 
 		if ($emoticonbar == true)

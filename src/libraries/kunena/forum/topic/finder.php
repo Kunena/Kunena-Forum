@@ -64,7 +64,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $this->db->quote($list) . ')');
+		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $list . ')');
 
 		return $this;
 	}
@@ -106,7 +106,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 			$list = -1;
 		}
 
-		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $this->db->quote($list) . ')');
+		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $list . ')');
 
 		return $this;
 	}
@@ -362,7 +362,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where($this->db->quoteName('a.hold') . ' IN (' . $this->db->quote($hold) . ')');
+			$query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
 		}
 	}
 }

@@ -78,7 +78,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where('a.catid IN (' . $this->db->quote($list). ')');
+		$this->query->where('a.catid IN (' . $list. ')');
 
 		return $this;
 	}
@@ -115,7 +115,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 			}
 
 			$list = implode(',', $list);
-			$this->query->where('a.catid IN (' . $this->db->quote($list). ')');
+			$this->query->where('a.catid IN (' . $list. ')');
 
 			return $this;
 		}
@@ -241,7 +241,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where('a.hold IN (' . $this->db->quote($hold) . ')');
+			$query->where('a.hold IN (' . $hold . ')');
 		}
 	}
 }

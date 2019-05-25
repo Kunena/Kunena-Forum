@@ -161,21 +161,21 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
 		$this->query->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut') .' ON ' . $this->db->quoteName('a.id') . ' = ' . $this->db->quoteName('ut.topic_id'));
-		$this->query->where($this->db->quoteName('ut.user_id') . ' = ' . $this->db->quote($user->userid));
+		$this->query->where($this->db->quoteName('ut.user_id') . ' = ' . (int) $user->userid);
 
 		switch ($action)
 		{
 			case 'first_post':
-				$this->query->where($this->db->quoteName('a.first_post_userid') . ' = ' . $this->db->quote($user->userid));
+			    $this->query->where($this->db->quoteName('a.first_post_userid') . ' = ' . (int) $user->userid);
 				break;
 			case '!first_post':
-				$this->query->where($this->db->quoteName('a.first_post_userid') . ' != ' . $this->db->quote($user->userid));
+			    $this->query->where($this->db->quoteName('a.first_post_userid') . ' != ' . (int) $user->userid);
 				break;
 			case 'last_post':
-				$this->query->where($this->db->quoteName('a.last_post_userid') . ' = ' . $this->db->quote($user->userid));
+			    $this->query->where($this->db->quoteName('a.last_post_userid') . ' = ' . (int) $user->userid);
 				break;
 			case '!last_post':
-				$this->query->where($this->db->quoteName('a.last_post_userid') . ' != ' . $this->db->quote($user->userid));
+			    $this->query->where($this->db->quoteName('a.last_post_userid') . ' != ' . (int) $user->userid);
 				break;
 			case 'owner':
 				$this->query->where($this->db->quoteName('ut.owner') . ' = 1');
@@ -266,7 +266,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$subQuery->select($this->db->quoteName('st.id') . ', MAX(' . $this->db->quoteName('sut.last_post_id') . ') AS ' . $this->db->quoteName('max_post_id'))
 			->from($this->db->quoteName('#__kunena_topics', 'st'))
 			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), 'ON ' . $this->db->quoteName('sut.topic_id') . ' = ' . $this->db->quoteName('st.id'))
-			->where($this->db->quoteName('sut.user_id') . ' IN (' . $this->db->quote($userlist) . ')')
+			->where($this->db->quoteName('sut.user_id') . ' IN (' . $userlist . ')')
 			->group($this->db->quoteName('st.last_post_id'))
 			->order($this->db->quoteName('st.last_post_id') . ' DESC');
 

@@ -439,7 +439,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$query      = new KunenaDatabaseQuery;
 		$query->update($this->_db->quoteName('#__kunena_messages'))
 			->set($this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->hold))
-			->where($this->_db->quoteName('thread') . ' = ' . $this->_db->quoteName($this->id) . ' AND ' . $this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->_hold));
+			->where($this->_db->quoteName('thread') . ' = ' . (int) $this->id . ' AND ' . $this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->_hold));
 
 		$this->_db->setQuery((string) $query);
 
@@ -571,7 +571,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query  = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
-					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $this->_db->quoteName('t.mesid=m.id'))
+					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $this->_db->quoteName('t.mesid') . '=' . $this->_db->quoteName('m.id'))
 					->where($this->_db->quoteName('m.thread') . ' = ' . $db->quote($this->id) . ' AND ' . $this->_db->quoteName('m.hold') .' = ' . $this->_db->quote($this->hold))
 					->order($this->_db->quoteName('m.time') . ' ASC, ' . $this->_db->quoteName('m.id') . ' ASC');
 				$db->setQuery($query, 0, 1);

@@ -99,7 +99,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		// Hide super admins from the list
 		if ($this->config->superadmin_userlist && $ignore)
 		{
-			$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $this->db->quote(implode(',', $ignore)) . ')');
+			$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $ignore) . ')');
 		}
 
 		return $this;

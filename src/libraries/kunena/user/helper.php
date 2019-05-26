@@ -355,7 +355,7 @@ abstract class KunenaUserHelper
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
-				$query->where($db->quote('u.id') . ' NOT IN (' . $db->quote(implode(',', $filter)) . ')');
+				$query->where($db->quote('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
 			$db->setQuery($query, 0, $limit);

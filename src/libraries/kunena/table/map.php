@@ -458,7 +458,7 @@ class KunenaTableMap
 				$query = $this->_db->getQuery(true)
 					->delete($this->_db->quoteName($this->_tbl))
 					->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote((int) $id))
-					->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . $this->_db->quote(implode(',', $deleted)) . ')');
+					->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
 				$this->_db->setQuery((string) $query);
 				$this->_db->execute();
 			}

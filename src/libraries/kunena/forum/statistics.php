@@ -604,7 +604,7 @@ class KunenaForumStatistics
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
 				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
-				$query->where($this->_db->quoteName('u.id') . ' NOT IN (' . $this->_db->quote(implode(',', $filter)) . ')');
+				$query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
 			$this->_db->setQuery($query, 0, $limit);

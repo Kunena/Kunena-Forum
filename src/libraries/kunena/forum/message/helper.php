@@ -600,7 +600,7 @@ abstract class KunenaForumMessageHelper
 
 		if (is_array($topicids))
 		{
-			$where = 'WHERE m.thread IN (' . $db->quote(implode(',', $topicids)) . ')';
+			$where = 'WHERE m.thread IN (' . implode(',', $topicids) . ')';
 		}
 		elseif ((int) $topicids)
 		{

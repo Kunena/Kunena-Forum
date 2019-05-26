@@ -589,7 +589,7 @@ abstract class KunenaForumTopicHelper
 
 		if (is_array($ids))
 		{
-			$threads = 'AND ' . $db->quoteName('m.thread') . ' IN (' . $db->quote(implode(',', $ids)) . ')';
+			$threads = 'AND ' . $db->quoteName('m.thread') . ' IN (' . implode(',', $ids) . ')';
 		}
 		elseif ((int) $ids)
 		{

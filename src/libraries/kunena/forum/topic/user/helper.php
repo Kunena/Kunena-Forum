@@ -466,7 +466,7 @@ abstract class KunenaForumTopicUserHelper
 			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id') . ' AND ' . $db->quoteName('m.hold') . ' = 0')
 			->set($db->quoteName('posts') . ' = 0')
 			->set($db->quoteName('last_post_id') . ' = 0')
-			->where($db->quoteName('m.id') . ' =  IS NULL ' . $where2);
+			->where($db->quoteName('m.id') . ' IS NULL ' . $where2);
 		$db->setQuery((string) $query);
 
 		try

@@ -483,14 +483,8 @@ abstract class KunenaForumTopicUserHelper
 		$rows += $db->getAffectedRows();
 
 		// Delete entries that have default values
-		$query = $db->getQuery(true);
-		$query->delete($db->quoteName('ut'))
-			->from($db->quoteName('#__kunena_user_topics', 'ut'))
-			->where($db->quoteName('ut.posts') . ' = 0')
-			->andWhere($db->quoteName('ut.owner') . ' = 0')
-			->andWhere($db->quoteName('ut.favorite') . ' = 0')
-			->andWhere($db->quoteName('ut.subscribed') . ' = 0')
-			->andWhere($db->quoteName('ut.params') . " ='' "  . $where2);
+		// TODO: find a way to use JDatabaseQuery on this query
+		$query = "DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
 		$db->setQuery((string) $query);
 
 		try

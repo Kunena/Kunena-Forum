@@ -326,7 +326,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		$allowed = implode(',', array_keys($catlist));
-		$query->where('m.catid IN (' . $db->quoteName($allowed) . ')');
+		$query->where('m.catid IN (' . $allowed . ')');
 
 		$query->where($hold);
 

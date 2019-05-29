@@ -83,13 +83,13 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($this->config->userlist_count_users == '1')
 		{
-			$this->query->where($this->db->quoteName('a.block') . ' = 0')
-				->orWhere($this->db->quoteName('a.activation') . '=""');
+			$this->query->where('(a.block=0 OR a.activation="")');
 		}
 		elseif ($this->config->userlist_count_users == '2')
 		{
-			$this->query->where($this->db->quoteName('a.block') . ' = 0')
-				->orWhere($this->db->quoteName('a.activation') . '=""');
+			$this->query
+				->where($this->db->quoteName('a.block') . ' = 0')
+				->where($this->db->quoteName('a.activation') . '=""');
 		}
 		elseif ($this->config->userlist_count_users == '3')
 		{

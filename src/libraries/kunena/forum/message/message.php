@@ -515,7 +515,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					->update($db->quoteName('#__kunena_user_topics'))
 					->set($db->quoteName('subscribed') . ' = 2')
 					->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
-					->where($db->quoteName('user_id') . ' IN (' . $db->quote($sentusers) . ')')
+					->where($db->quoteName('user_id') . ' IN (' . $sentusers . ')')
 					->where($db->quoteName('subscribed') . ' = 1');
 				$db->setQuery((string) $query);
 

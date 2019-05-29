@@ -198,7 +198,7 @@ abstract class KunenaForumTopicHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_topics'))
-			->where($db->quoteName('id') . ' IN (' . $db->quote($idlist) . ')');
+			->where($db->quoteName('id') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -764,7 +764,7 @@ abstract class KunenaForumTopicHelper
 				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
 				->where($db->quoteName('m.hold') . ' = 0')
 				->andWhere($db->quoteName('m.moved') . ' = 0')
-				->andWhere($db->quoteName('m.thread') . ' IN (' . $db->quote($idstr) . ')')
+				->andWhere($db->quoteName('m.thread') . ' IN (' . $idstr . ')')
 				->andWhere($db->quoteName('m.time') . ' > ' . $db->quote($session->getAllReadTime()))
 				->andWhere($db->quoteName('ur.time') . ' IS NULL')
 				->orWhere($db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time'))

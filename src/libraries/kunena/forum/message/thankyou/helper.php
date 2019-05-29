@@ -99,7 +99,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_thankyou'))
-			->where('postid IN (' . $db->quote($idlist) . ')');
+			->where('postid IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -282,10 +282,10 @@ abstract class KunenaForumMessageThankyouHelper
 			->from($db->quoteName('#__kunena_thankyou', 't'))
 			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON m.id = t.postid')
 			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread = tt.id')
-			->where('m.catid IN (' . $db->quote($catlist) . ')')
-			->andWhere('m.hold = 0')
-			->andWhere('tt.hold = 0')
-			->andWhere('t.' . $field . ' = ' . $db->quote(intval($userid)));
+			->where('m.catid IN (' . $catlist . ')')
+			->where('m.hold = 0')
+			->where('tt.hold = 0')
+			->where('t.' . $field . ' = ' . $db->quote(intval($userid)));
 		$db->setQuery($query, (int) $limitstart, (int) $limit);
 
 		try
@@ -357,7 +357,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)" .
 		$subquery . "ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
-		
+
 		$db->setQuery((string) $query);
 
 		try

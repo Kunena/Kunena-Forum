@@ -141,7 +141,7 @@ abstract class KunenaForumCategoryUserHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
-			->andWhere($db->quoteName('category_id') . ' IN (' . $db->quote($idlist) . ')');
+			->andWhere($db->quoteName('category_id') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -210,7 +210,7 @@ abstract class KunenaForumCategoryUserHelper
 				->update($db->quoteName('#__kunena_user_categories'))
 				->set('allreadtime = ' . $db->quote($time))
 				->where('user_id = ' . $db->quote($user->userid))
-				->where($db->quoteName('category_id') . ' IN (' . $db->quote($idlist) . ')');
+				->where($db->quoteName('category_id') . ' IN (' . $idlist . ')');
 			$db->setQuery((string) $query);
 
 			try

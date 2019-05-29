@@ -228,7 +228,7 @@ abstract class KunenaUserHelper
 			$query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
 				->from($db->quoteName('#__users', 'u'))
 				->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
-				->where($db->quoteName('u.id') . ' IN (' . $db->quote($userlist) . ')');
+				->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
 			$db->setQuery((string) $query);
 
 			try
@@ -413,14 +413,14 @@ abstract class KunenaUserHelper
 		{
 			$groupIds  = ArrayHelper::toInteger($groupIds);
 			$groupList = implode(',', $groupIds);
-			$query->where($db->quoteName('ug1.id') . ' IN (' . $db->quote($groupList) . ')');
+			$query->where($db->quoteName('ug1.id') . ' IN (' . $groupList . ')');
 		}
 
 		if ($userIds)
 		{
 			$userIds  = ArrayHelper::toInteger($userIds);
 			$userList = implode(',', $userIds);
-			$query->where($db->quoteName('user_id') . ' IN (' . $db->quote($userList) . ')');
+			$query->where($db->quoteName('user_id') . ' IN (' . $userList . ')');
 		}
 
 		$db->setQuery((string) $query);

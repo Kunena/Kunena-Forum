@@ -147,7 +147,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('user_id' ) . ' = ' . $db->quote($user->userid))
-			->andWhere($db->quoteName('topic_id') . ' IN (' . $db->quote($idlist) . ')');
+			->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -297,7 +297,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
-			->where($db->quoteName('user_id') . ' IN (' . $db->quote($idlist) . ')')
+			->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
 			->andWhere($db->quoteName('topic_id') . ' = ' . $db->quote($id));
 		$db->setQuery((string) $query);
 

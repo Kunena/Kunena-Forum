@@ -142,7 +142,7 @@ abstract class KunenaAttachmentHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
-			->where($db->quoteName('id') . ' IN (' . $db->quote($idlist) . ')');
+			->where($db->quoteName('id') . ' IN (' . $idlist . ')');
 		$db->setQuery($query);
 
 		try
@@ -233,7 +233,7 @@ abstract class KunenaAttachmentHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
-			->where($db->quoteName('mesid') . ' IN (' . $db->quote($idlist) . ')');
+			->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
 		$db->setQuery($query);
 
 		try
@@ -592,7 +592,7 @@ abstract class KunenaAttachmentHelper
 		unset($results);
 		$query->delete()
 			->from($db->quoteName('#__kunena_attachments'))
-			->where($db->quoteName('id') . 'IN (' . $db->quote($ids) . ')');
+			->where($db->quoteName('id') . 'IN (' . $ids . ')');
 		$db->setQuery($query);
 
 		try

@@ -142,7 +142,7 @@ abstract class KunenaForumTopicUserHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
-			->andWhere($db->quoteName('topic_id') . ' IN (' . $db->quote($idlist) . ')');
+			->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
 		$db->setQuery((string) $query);
 
 		try
@@ -205,7 +205,7 @@ abstract class KunenaForumTopicUserHelper
 		$query = $db->getQuery(true);
 		$query->select('topic_id, user_id')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where($db->quoteName('topic_id') . ' IN (' . $db->quote($idlist) . ')')
+			->where($db->quoteName('topic_id') . ' IN (' . $idlist . ')')
 			->where($db->quoteName('posts') . ' > 0');
 
 		$query->select($db->quoteName($value));
@@ -354,7 +354,7 @@ abstract class KunenaForumTopicUserHelper
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where($db->quoteName('user_id') . ' IN (' . $db->quote($idlist) . ')')
+			->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
 		$db->setQuery((string) $query);
 

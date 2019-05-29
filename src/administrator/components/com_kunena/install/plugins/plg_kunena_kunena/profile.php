@@ -77,7 +77,7 @@ class KunenaProfileKunena extends KunenaProfile
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
-			$query->andwhere('u.id NOT IN (' . $db->quote(implode(',', $filter)) . ')');
+			$query->andwhere('u.id NOT IN (' . implode(',', $filter) . ')');
 		}
 
 		$db->setQuery($query, 0, $limit);

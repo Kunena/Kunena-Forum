@@ -375,7 +375,7 @@ class KunenaAccessJoomla
 
 		if ($inUsers)
 		{
-			$query->andWhere('user_id IN (' . $db->quote($inUsers) .')');
+			$query->andWhere('user_id IN (' . $inUsers .')');
 		}
 
 		$db->setQuery((string) $query);

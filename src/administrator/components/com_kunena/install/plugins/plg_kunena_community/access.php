@@ -319,7 +319,7 @@ class KunenaAccessCommunity
 			->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
 			->where('c.id = ' . $db->quote((int) $category->id))
 		->andWhere(' g.approved = 1')
-		->andWhere('g.memberid IN (' . $db->quote($userlist) . ')');
+		->andWhere('g.memberid IN (' . $userlist . ')');
 		$db->setQuery((string) $query);
 
 		try

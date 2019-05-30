@@ -287,12 +287,8 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$query = $db->getQuery(true)
-				->delete('a')
-				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
-				->where('banned=\'1000-01-01 00:00:00\'');
-			$db->setQuery((string) $query);
+			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
 
 			try
 			{
@@ -305,11 +301,8 @@ class KunenaAdminControllerTools extends KunenaController
 				return;
 			}
 
-			$query = $db->getQuery(true)
-				->delete('a')
-				->from($db->quoteName('#__users', 'a'))
-				->where('block=\'1\'');
-			$db->setQuery((string) $query);
+			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
+			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
 
 			try
 			{
@@ -353,12 +346,8 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$query = $db->getQuery(true)
-				->delete('a')
-				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
-				->where('banned=\'1000-01-01 00:00:00\'');
-			$db->setQuery((string) $query);
+			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
+			$query = $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
 
 			try
 			{
@@ -371,11 +360,8 @@ class KunenaAdminControllerTools extends KunenaController
 				return;
 			}
 
-			$query = $db->getQuery(true)
-				->delete('a')
-				->from($db->quoteName('#__users', 'a'))
-				->where('block=\'1\'');
-			$db->setQuery((string) $query);
+			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
+			$query = $db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
 
 			try
 			{

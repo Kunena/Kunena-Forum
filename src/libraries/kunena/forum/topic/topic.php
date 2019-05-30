@@ -1740,7 +1740,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			throw new RuntimeException($e->getMessage(), $e->getCode());
 		}
 
-		$query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC';
+		$query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread=' . $target->id . ' ORDER BY time ASC, id ASC';
 		$this->_db->setQuery((string) $query);
 
 		try

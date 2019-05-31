@@ -684,7 +684,7 @@ abstract class KunenaUserHelper
 		// If user has no user_topics, set posts into 0
 		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users', 'u'))
-			->leftJoin($db->quoteName('kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
+			->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
 			->set($db->quoteName('u.posts') . ' = 0')
 			->where($db->quoteName('ut.user_id') . ' IS NULL');
 		$db->setQuery((string) $query);

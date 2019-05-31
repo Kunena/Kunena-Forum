@@ -263,13 +263,13 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdel)
 		{
-			$query = $db->getQuery(true)
-				->delete('a')
-				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . ' ON a.userid=b.id')
-				->where('b.username IS NULL');
-
-			$db->setQuery((string) $query);
+			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
+			$db->setQuery(
+				"DELETE a
+				FROM #__kunena_users AS a
+				LEFT JOIN #__users AS b ON a.userid=b.id
+				WHERE b.username IS NULL"
+			);
 
 			try
 			{
@@ -300,9 +300,12 @@ class KunenaAdminControllerTools extends KunenaController
 
 				return;
 			}
-
-			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
-			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
+		
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__users'))
+				->where('block=\'1\'');
+			
+			$db->setQuery((string) $query);
 
 			try
 			{
@@ -342,39 +345,6 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()));
-		}
-
-		if ($userdellife)
-		{
-			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
-			$query = $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
-			$query = $db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

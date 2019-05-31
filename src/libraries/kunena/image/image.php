@@ -111,6 +111,8 @@ class KunenaImage extends Joomla\Image\Image
 					$img->flip(IMG_FLIP_VERTICAL, false);
 				}
 			}
+			
+			$img->toFile($filename);
 		}
 	}
 }

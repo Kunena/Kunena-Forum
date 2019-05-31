@@ -162,7 +162,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			if ($success)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED'));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name));
 			}
 		}
 

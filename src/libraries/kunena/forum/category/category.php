@@ -305,7 +305,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			KunenaError::displayDatabaseError($e);
 		}
 
-		return;
+		return true;
 	}
 
 	/**

@@ -631,11 +631,9 @@ class KunenaUserBan extends CMSObject
 			return;
 		}
 
-		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
-
-		if (!$expiration || $expiration == $nullDate)
+		if (!$expiration || $expiration == '9999-12-31 23:59:59')
 		{
-			$this->expiration = $nullDate;
+			$this->expiration = '9999-12-31 23:59:59';
 		}
 		else
 		{

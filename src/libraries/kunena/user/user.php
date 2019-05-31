@@ -1712,7 +1712,7 @@ class KunenaUser extends CMSObject
 		{
 			$type = 'guest';
 		}
-		elseif ($this->isBlocked())
+		elseif ($this->isBlocked() && !$this->isBanned())
 		{
 			$type = 'blocked';
 		}
@@ -1770,7 +1770,9 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @return boolean|void
+	 * Return if the user is banned, there are two cases banned for life (9999-12-31 23:59:59) and banned for a short time with a date in near future
+	 * 
+	 * @return boolean
 	 * @since Kunena
 	 */
 	public function isBanned()
@@ -1780,9 +1782,7 @@ class KunenaUser extends CMSObject
 			return false;
 		}
 
-		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
-
-		if ($this->blocked || $this->banned == $nullDate)
+		if ($this->blocked || $this->banned == '9999-12-31 23:59:59')
 		{
 			return true;
 		}
@@ -1790,7 +1790,7 @@ class KunenaUser extends CMSObject
 		$expiration = new Joomla\CMS\Date\Date($this->banned);
 		$now        = new Joomla\CMS\Date\Date;
 
-		if ($expiration->toUnix() > $now->toUnix())
+		if ($expiration->toUnix() > $now->toUnix() && $expiration->toUnix() < '9999-12-31 23:59:59')
 		{
 			return true;
 		}

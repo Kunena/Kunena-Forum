@@ -607,7 +607,7 @@ abstract class KunenaForumTopicHelper
 				$start = 1;
 			}
 
-			$topics = ' AND (' . $db->quoteName('tt.id') . ' BETWEEN ' . $db->quote($start) . ' AND ' . $db->quote($end);
+			$topics = " AND (" . $db->quoteName('tt.id') . " BETWEEN {$start} AND {$end})";
 		}
 		else
 		{
@@ -624,16 +624,14 @@ abstract class KunenaForumTopicHelper
 			->set($db->quoteName('tt.first_post_id') . ' = 0')
 			->set($db->quoteName('tt.first_post_time') . ' = 0')
 			->set($db->quoteName('tt.first_post_userid') . ' = 0')
-			->set($db->quoteName('tt.first_post_message') . ' = ' . "''")
-			->set($db->quoteName('tt.first_post_guest_name') . ' = ' . "''")
+			->set($db->quoteName('tt.first_post_message') . ' =  \'\'')
+			->set($db->quoteName('tt.first_post_guest_name') . ' =  \'\'')
 			->set($db->quoteName('tt.last_post_id') . ' = 0')
 			->set($db->quoteName('tt.last_post_time') . ' = 0')
 			->set($db->quoteName('tt.last_post_userid') . ' = 0')
-			->set($db->quoteName('tt.last_post_message') . ' = ' . "''")
-			->set($db->quoteName('tt.last_post_guest_name') . ' = ' . "''")
-			->where($db->quoteName('tt.moved_id') . ' = 0')
-			->andWhere($db->quoteName('tt.hold') .' != 4')
-			->andWhere($db->quoteName('m.id') . ' IS NULL ' . $topics . ' ' . $threads);
+			->set($db->quoteName('tt.last_post_message') . ' =  \'\'')
+			->set($db->quoteName('tt.last_post_guest_name') . ' =  \'\'')
+			->where('tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL ' . $topics . ' ' . $threads);
 		$db->setQuery((string) $query);
 
 		try

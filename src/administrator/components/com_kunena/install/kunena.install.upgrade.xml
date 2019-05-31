@@ -929,6 +929,11 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `wechat` `wechat` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `yim` `yim` VARCHAR(75) NULL DEFAULT NULL;</query>
         </version>
+        <version version="6.0.0-ALPHA3"
+                 versiondate="2019-05-31"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `banned` `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

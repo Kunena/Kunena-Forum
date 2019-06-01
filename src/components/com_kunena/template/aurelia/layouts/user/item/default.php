@@ -33,7 +33,14 @@ $tabs = $this->getTabs();
 <?php
 echo $this->subLayout('User/Item/Summary')
 	->set('profile', $this->profile)
-	->set('config', $this->config);
+	->set('config', $this->config)
+	->set('me', $this->me)
+	->set('private', $this->private)
+	->set('points', $this->points)
+	->set('medals', $this->medals)
+	->set('socials', $this->socials)
+	->set('avatar', $this->avatar)
+	->set('banInfo', $this->banInfo);
 ?>
 
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>

@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class ComponentKunenaControllerUserItemDisplay
@@ -91,6 +92,18 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->user    = Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
+
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+		$this->points              = $activityIntegration->getUserPoints($this->profile->userid);
+		$this->medals              = $activityIntegration->getUserMedals($this->profile->userid);
+		$this->private             = KunenaFactory::getPrivateMessaging();
+		$socials             = $this->profile->socialButtons();
+		$this->socials             = ArrayHelper::toObject($socials);
+
+		$this->avatar              = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+		$this->banInfo             = $this->config->showbannedreason
+		? KunenaUserBan::getInstanceByUserid($this->profile->userid)
+		: null;
 
 		// Update profile hits.
 		if (!$this->profile->exists() || !$this->profile->isMyself())

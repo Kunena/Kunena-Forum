@@ -934,6 +934,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `banned` `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
+        <version version="6.0.0-ALPHA4"
+                 versiondate="2019-06-01"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` `ip` VARCHAR(75) NULL DEFAULT NULL;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

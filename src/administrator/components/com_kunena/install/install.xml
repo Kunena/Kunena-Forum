@@ -1002,8 +1002,7 @@
                default="0"/>
         <field name="ip"
                type="varchar(128)"
-               null="0"
-               default=""/>
+               null="1"/>
         <field name="socialshare"
                type="tinyint(1)"
                null="0"

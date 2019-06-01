@@ -17,13 +17,7 @@ use Joomla\CMS\Language\Text;
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
-		<div class="col-md-2 d-none d-md-block sidebar">
-			<div id="sidebar">
-				<nav class="sidebar-nav"><?php include KPATH_ADMIN . '/template/j4/common/menu.php'; ?></nav>
-			</div>
-		</div>
-		<div id="j-main-container" class="col-md-10" role="main">
-
+		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs') ?>"
 				  method="post"
 				  id="adminForm"
@@ -41,7 +35,9 @@ use Joomla\CMS\Language\Text;
 							<td width="20%"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM') ?></td>
 							<td>
 								<div class="input-append">
-									<input class="col-md-3" type="text" name="clean_days" value="30"/>
+									<label>
+										<input class="col-md-3" type="text" name="clean_days" value="30"/>
+									</label>
 									<span class="add-on"><?php echo Text::_('COM_KUNENA_LOG_CLEAN_FROM_DAYS') ?></span>
 								</div>
 							</td>

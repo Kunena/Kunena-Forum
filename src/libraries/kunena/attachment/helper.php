@@ -590,8 +590,8 @@ abstract class KunenaAttachmentHelper
 
 		$ids = implode(',', array_keys($results));
 		unset($results);
-		$query->delete()
-			->from($db->quoteName('#__kunena_attachments'))
+		$query  = $db->getQuery(true);
+		$query->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('id') . 'IN (' . $ids . ')');
 		$db->setQuery($query);
 

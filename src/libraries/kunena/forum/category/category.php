@@ -1290,7 +1290,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $db->quoteName($this->id) . ' ' . $db->quote($where))
+			->where('tt.category_id = ' . $this->id . ' ' . $where)
 			->order('tt.last_post_time ASC');
 		$db->setQuery($query, 0, $limit);
 
@@ -1342,7 +1342,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $db->quoteName($this->id) . ' AND tt.hold!=2 ' . $where)
+			->where('tt.category_id = ' . $this->id . ' AND tt.hold!=2 ' . $where)
 			->order('tt.last_post_time ASC');
 		$db->setQuery($query, 0, $limit);
 

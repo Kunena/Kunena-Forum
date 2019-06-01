@@ -269,7 +269,7 @@ class Com_KunenaInstallerScript
 
 			$db    = Factory::getDBO();
 			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$db->execute();
 		}
 

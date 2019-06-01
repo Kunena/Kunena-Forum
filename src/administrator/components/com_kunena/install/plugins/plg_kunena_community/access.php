@@ -113,7 +113,7 @@ class KunenaAccessCommunity
 			$query->select('id, CONCAT(\'c\', categoryid) AS parent_id, name')
 				->update($db->quoteName('#__community_groups'))
 				->order('categoryid, name');
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -185,7 +185,7 @@ class KunenaAccessCommunity
 			$query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parent_id, name')
 				->update($db->quoteName('#__community_groups_category'))
 				->order('parent, name');
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -229,7 +229,7 @@ class KunenaAccessCommunity
 			->where('c.published = 1')
 			->andWhere('g.approved = 1')
 			->andWhere('g.permissions = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -272,7 +272,7 @@ class KunenaAccessCommunity
 				->where('c.published = 1')
 				->andWhere('g.approved = 1')
 				->andWhere('g.memberid = ' . $db->quote((int) $userid));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -320,7 +320,7 @@ class KunenaAccessCommunity
 			->where('c.id = ' . $db->quote((int) $category->id))
 		->andWhere(' g.approved = 1')
 		->andWhere('g.memberid IN (' . $userlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

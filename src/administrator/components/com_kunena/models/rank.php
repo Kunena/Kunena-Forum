@@ -87,7 +87,7 @@ class KunenaAdminModelRank extends KunenaModel
 			$query->select('*')
 				->from($db->quoteName('#__kunena_ranks'))
 				->where('rank_id=' . $db->quote($id));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{

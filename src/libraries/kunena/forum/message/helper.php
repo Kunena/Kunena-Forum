@@ -101,7 +101,7 @@ abstract class KunenaForumMessageHelper
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
 			->where('m.id IN (' . $idlist .')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -549,7 +549,7 @@ abstract class KunenaForumMessageHelper
 			->innerJoin($db->quoteName('#__kunena_messages' , 'mm') . ' ON m.thread = mm.thread')
 			->where('m.id IN (' . $idlist .')')
 			->group( 'm.id, mm.hold');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -616,7 +616,7 @@ abstract class KunenaForumMessageHelper
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON tt.id = m.thread')
 			->set('m.catid = tt.category_id ' . $where);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -655,7 +655,7 @@ abstract class KunenaForumMessageHelper
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
 			->where('m.thread IN (' . $idlist . ')')
 			->andWhere('m.hold = 0');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

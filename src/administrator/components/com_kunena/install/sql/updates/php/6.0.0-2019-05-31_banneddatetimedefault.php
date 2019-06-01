@@ -26,7 +26,7 @@ function kunena_600_2019_31_banneddatetimedefault($parent)
 	$db  = Factory::getDbo();
 
 	$query    = "UPDATE `#___kunena_users` SET banned='9999-12-31 23:59:59' WHERE banned='0000-00-00 00:00:00'";
-	$db->setQuery((string) $query);
+	$db->setQuery($query);
 
 	try
 	{

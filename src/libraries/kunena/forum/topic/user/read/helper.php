@@ -148,7 +148,7 @@ abstract class KunenaForumTopicUserReadHelper
 			->from($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('user_id' ) . ' = ' . $db->quote($user->userid))
 			->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -194,7 +194,7 @@ abstract class KunenaForumTopicUserReadHelper
 			->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
 			->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -257,7 +257,7 @@ abstract class KunenaForumTopicUserReadHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -299,7 +299,7 @@ abstract class KunenaForumTopicUserReadHelper
 			->from($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
 			->andWhere($db->quoteName('topic_id') . ' = ' . $db->quote($id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -339,7 +339,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query->update($db->quoteName('#__user_read', 'ur'))
 			->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
 			->set($db->quoteName('ur.category_id') . ' = ' . $db->quoteName('t.category_id'));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -370,7 +370,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('time') . ' < ' . $db->quote($timestamp));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

@@ -200,7 +200,7 @@ abstract class KunenaForumAnnouncementHelper
 				->order('id DESC');
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

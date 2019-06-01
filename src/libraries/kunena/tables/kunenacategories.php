@@ -279,7 +279,7 @@ class TableKunenaCategories extends KunenaTable
 			->select('*')
 			->from($this->_db->quoteName('#__kunena_categories'))
 			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -394,7 +394,7 @@ class TableKunenaCategories extends KunenaTable
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName(array('id', 'parent_id')))
 				->from($this->_db->quoteName('#__kunena_categories'));
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			try
 			{
@@ -453,7 +453,7 @@ class TableKunenaCategories extends KunenaTable
 				->select($this->_db->quoteName('parent_id'))
 				->from($this->_db->quoteName('#__kunena_categories'))
 				->group($this->_db->quoteName('parent_id'));
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			$parents = $this->_db->loadColumn();
 			$success = true;

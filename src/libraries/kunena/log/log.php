@@ -338,7 +338,7 @@ class KunenaLog
 				$query->values($fields);
 			}
 
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$db->execute();
 			static::clear();
 		}

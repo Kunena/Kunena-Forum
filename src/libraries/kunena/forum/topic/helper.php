@@ -199,7 +199,7 @@ abstract class KunenaForumTopicHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_topics'))
 			->where($db->quoteName('id') . ' IN (' . $idlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -368,7 +368,7 @@ abstract class KunenaForumTopicHelper
 			$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -499,7 +499,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -547,7 +547,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -632,7 +632,7 @@ abstract class KunenaForumTopicHelper
 			->set($db->quoteName('tt.last_post_message') . ' =  \'\'')
 			->set($db->quoteName('tt.last_post_guest_name') . ' =  \'\'')
 			->where('tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL ' . $topics . ' ' . $threads);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -654,7 +654,7 @@ abstract class KunenaForumTopicHelper
 			) AS c ON tt.id=c.thread
 			SET tt.hold = c.hold
 			WHERE tt.moved_id=0 {$topics}";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -695,7 +695,7 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_message = tmax.message,
 				tt.last_post_guest_name = mmax.name
 			WHERE moved_id=0 {$topics}";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -767,7 +767,7 @@ abstract class KunenaForumTopicHelper
 				->andWhere($db->quoteName('ur.time') . ' IS NULL')
 				->orWhere($db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time'))
 				->group($db->quoteName('thread'));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{

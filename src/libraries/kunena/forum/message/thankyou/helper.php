@@ -100,7 +100,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_thankyou'))
 			->where('postid IN (' . $idlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -158,7 +158,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$query .= " WHERE " . implode(" AND ", $where);
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -318,7 +318,7 @@ abstract class KunenaForumMessageThankyouHelper
 			->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON t.targetuserid = u.userid')
 			->set('u.thankyou = 0')
 			->where('t.targetuserid IS NULL');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -358,7 +358,7 @@ abstract class KunenaForumMessageThankyouHelper
 		$query = "INSERT INTO #__kunena_users (userid, thankyou)" .
 		$subquery . "ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

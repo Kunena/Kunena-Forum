@@ -568,7 +568,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 			$query->from('#__kunena_messages as m');
 			$query->join('INNER', '#__kunena_categories as c on m.catid = c.id');
 			$query->where('c.id = ' . $db->quote($cat_id));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$ids               = $db->loadColumn();
 			$messages[$cat_id] = KunenaForumMessageHelper::getMessages($ids);
 		}
@@ -594,7 +594,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 			$query->from('#__kunena_messages AS m');
 			$query->join('INNER', '#__kunena_messages_text as t ON m.id = t.mesid');
 			$query->where('m.thread = ' . $db->quote($topic_id));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$results = $db->loadAssocList();
 			$list    = array();
 

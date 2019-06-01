@@ -49,7 +49,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
 				$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
 				$query->set($db->quoteName('enabled') . ' = 0');
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 				$db->execute();
 			}
 

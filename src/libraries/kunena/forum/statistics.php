@@ -314,7 +314,7 @@ class KunenaForumStatistics
 				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . '  AND ' . $this->_db->quoteName('time') . '< ' . $this->_db->quote($todaystart) . '  AND ' . $this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('yesterdayReplyCount'))
 				->from($this->_db->quoteName('#__kunena_messages'))
 				->where($this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' . $this->_db->quoteName('hold') . ' = 0');
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			try
 			{

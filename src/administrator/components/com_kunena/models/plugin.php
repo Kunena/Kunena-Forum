@@ -325,7 +325,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 		$query = 'SELECT element' .
 			' FROM #__extensions' .
 			' WHERE (type =' . $db->quote('plugin') . 'AND folder=' . $db->quote($folder) . ')';
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$elements = $db->loadColumn();
 
 		foreach ($elements as $elementa)

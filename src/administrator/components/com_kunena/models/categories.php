@@ -202,7 +202,7 @@ class KunenaAdminModelCategories extends KunenaModel
 					->where("id!={$db->quote($category->id)}")
 					->order('ordering');
 
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 
 				try
 				{

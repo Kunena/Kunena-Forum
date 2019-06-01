@@ -86,7 +86,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$query->select('*')
 				->from($db->quoteName('#__kunena_smileys'))
 				->where('id=' . $db->quote($id));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{

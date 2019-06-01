@@ -441,7 +441,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			->set($this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->hold))
 			->where($this->_db->quoteName('thread') . ' = ' . (int) $this->id . ' AND ' . $this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->_hold));
 
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -473,7 +473,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				->leftJoin($this->_db->quoteName('#__kunena_attachments', 'a') . ' ON ' . $this->_db->quoteName('m.id'). ' = ' . $this->_db->quoteName('a.mesid'))
 				->where($this->_db->quoteName('m.hold') . ' = ' . $this->_db->quote($this->hold) . ' AND ' . $this->_db->quoteName('m.thread') . ' = ' . $this->_db->quote($this->id))
 				->group($this->_db->quoteName('m.thread'));
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			try
 			{
@@ -496,7 +496,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
 					->where($this->_db->quoteName('m.thread') . ' = ' . $this->_db->quote($this->id))
 					->group($this->_db->quoteName('m.thread'));
-				$this->_db->setQuery((string) $query);
+				$this->_db->setQuery($query);
 
 				try
 				{
@@ -781,7 +781,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			foreach ($queries as $query)
 			{
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 
 				try
 				{
@@ -1551,7 +1551,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query->where($this->_db->quoteName('id') . ' NOT IN (' . $this->_db->quote($ids) . ')');
 			}
 
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			try
 			{
@@ -1716,7 +1716,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			$query->where($this->_db->quoteName('id') . ' IN (' . $this->_db->quote($ids) . ')');
 		}
 
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -1729,7 +1729,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
 		$query = "SET @ktime:=0";
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -1741,7 +1741,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread=' . $target->id . ' ORDER BY time ASC, id ASC';
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -1769,7 +1769,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query->update($this->_db->quoteName('#__kunena_polls'))
 					->set($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($target->id))
 					->where($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($this->id));
-				$this->_db->setQuery((string) $query);
+				$this->_db->setQuery($query);
 
 				try
 				{
@@ -1896,7 +1896,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -1929,7 +1929,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$query->update($this->_db->quoteName('#__kunena_polls_options'))
 			->set($this->_db->quoteName('votes') . ' = 0')
 			->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->poll_id));
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{
@@ -1945,7 +1945,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$query  = $this->_db->getQuery(true);
 		$query->delete($this->_db->quoteName('#__kunena_polls_users'))
 			->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->poll_id));
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{

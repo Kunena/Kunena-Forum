@@ -81,7 +81,7 @@ abstract class KunenaForumCategoryHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_categories'))
 			->order(array($db->quoteName('ordering'), $db->quoteName('name')));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -184,7 +184,7 @@ abstract class KunenaForumCategoryHelper
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
 			->andWhere($db->quoteName('subscribed') . ' = 1');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -350,7 +350,7 @@ abstract class KunenaForumCategoryHelper
 			->where('u.user_id IN (' . $userids . ')')
 			->where( $db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
 			->where($db->quoteName('u.subscribed') . ' = 1 ' . $where);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -453,7 +453,7 @@ abstract class KunenaForumCategoryHelper
 			->where('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
 			->where('ur.topic_id IS NULL OR t.last_post_id != ur.message_id')
 			->group($db->quoteName('category_id'));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -891,7 +891,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_topic_id=r.last_topic_id,
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -917,7 +917,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_id = 0,
 				c.last_post_time = 0")
 			->where("tt.id IS NULL");
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -964,7 +964,7 @@ abstract class KunenaForumCategoryHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -1001,7 +1001,7 @@ abstract class KunenaForumCategoryHelper
 			->from($db->quoteName('#__kunena_categories'))
 			->where($db->quoteName('id') . ' = ' . $db->quote($category_id))
 			->andWhere($db->quoteName('alias') . ' = ' . $db->quote($alias));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

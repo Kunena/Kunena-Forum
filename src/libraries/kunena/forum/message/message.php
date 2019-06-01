@@ -517,7 +517,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
 					->where($db->quoteName('user_id') . ' IN (' . $sentusers . ')')
 					->where($db->quoteName('subscribed') . ' = 1');
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 
 				try
 				{
@@ -879,7 +879,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$db->execute();
 
 			try
@@ -1521,7 +1521,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				->andWhere($this->_db->quoteName('m.ip') . ' = ' . $this->_db->quote($this->ip))
 				->andWhere($this->_db->quoteName('t.message') . ' = ' . $this->_db->quote($this->message))
 				->andWhere($this->_db->quoteName('m.time') . ' >= ' . $this->_db->quote($duplicatetimewindow));
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			try
 			{

@@ -811,7 +811,7 @@
                 AFTER `ip`;
             </query>
         </version>
-         <version version="5.1.2"
+        <version version="5.1.2"
                  versiondate="2018-06-23"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `linkedin_company` varchar(50) NULL
@@ -842,7 +842,7 @@
             </query>
             <query mode="silenterror">UPDATE `#__kunena_announcement` SET lasttime='1000-01-01 00:00:00' WHERE lasttime='0000-00-00 00:00:00'</query>
         </version>
-         <version version="5.1.11-DEV"
+        <version version="5.1.11-DEV"
                  versiondate="2019-10-03"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `qq` `qqsocial` varchar(50);
@@ -851,10 +851,10 @@
         <version version="6.0.0-ALPHA1"
                  versiondate="2018-11-25"
                  versionname="Internal">
-                 <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `vimeo` varchar(50) NULL
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `vimeo` varchar(50) NULL
                 AFTER `whatsapp`;
-                 </query>
-         </version>
+            </query>
+        </version>
         <version version="6.0.0-ALPHA1"
                  versiondate="2018-12-19"
                  versionname="Internal">
@@ -865,10 +865,10 @@
         <version version="6.0.0-ALPHA2"
                  versiondate="2019-04-23"
                  versionname="Internal">
-                <query mode="silenterror">ALTER TABLE `#__kunena_topics` MODIFY COLUMN `params` text NULL;
-                </query>
-                <query mode="silenterror">ALTER TABLE `#__kunena_user_topics` MODIFY COLUMN `params` text NULL;
-                </query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_topics` MODIFY COLUMN `params` text NULL;
+            </query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_user_topics` MODIFY COLUMN `params` text NULL;
+            </query>
         </version>
         <version version="6.0.0-ALPHA3"
                  versiondate="2019-04-28"
@@ -902,46 +902,46 @@
         <version version="6.0.0-ALPHA3"
                  versiondate="2019-05-17"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `friendfeed` `friendfeed` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `icq` `icq` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `bebo` `bebo` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `digg` `digg` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `telegram` `telegram` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `vk` `vk` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `microsoft` `microsoft` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `skype` `skype` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `twitter` `twitter` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `facebook` `facebook` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `google` `google` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `github` `github` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `myspace` `myspace` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin` `linkedin` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin_company` `linkedin_company` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `friendfeed` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `icq` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `bebo` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `digg` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `telegram` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `vk` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `microsoft` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `skype` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `twitter` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `facebook` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `google` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `github` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `myspace` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `linkedin_company` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` DROP COLUMN `delicious`</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `instagram` `instagram` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `qqsocial` `qqsocial` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `blogspot` `blogspot` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `flickr` `flickr` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `apple` `apple` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `qzone` `qzone` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `vimeo` `vimeo` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `weibo` `weibo` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `wechat` `wechat` VARCHAR(75) NULL DEFAULT NULL;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `yim` `yim` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `instagram` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `qqsocial` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `blogspot` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `flickr` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `apple` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `qzone` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `vimeo` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `weibo` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `wechat` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `yim` VARCHAR(75) NULL DEFAULT NULL;</query>
         </version>
         <version version="6.0.0-ALPHA3"
                  versiondate="2019-05-31"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `banned` `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
         <version version="6.0.0-ALPHA4"
                  versiondate="2019-06-01"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` `ip` VARCHAR(75) NULL DEFAULT NULL;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` VARCHAR(125) NULL DEFAULT NULL;</query>
         </version>
-        <version version="@kunenaversion@"
-                 versiondate="@kunenaversiondate@"
-                 versionname="@kunenaversionname@">
+        <version version="6.0.0-ALPHA4-DEV"
+                 versiondate="2019-06-01"
+                 versionname="Internal">
         </version>
     </upgrade>
 </comupgrade>

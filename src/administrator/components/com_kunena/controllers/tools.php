@@ -744,7 +744,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$db = Factory::getDbo();
 
 			$query = $db->getQuery(true)
-				->update("{$db->quoteName('#__kunena_messages')}")
+				->update($db->quoteName('#__kunena_messages'))
 				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
 				->where("subject LIKE {$db->quote($re_string.'%')}");
 
@@ -807,13 +807,13 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($cleanup_days)
 		{
 			$clean_date = Factory::getDate()->toUnix() - ($cleanup_days * 86400);
-			$where      = 'WHERE time < ' . $clean_date;
+			$where      = 'time < ' . $clean_date;
 		}
 
 		$db = Factory::getDbo();
 
 		$query = $db->getQuery(true)
-			->update("{$db->quoteName('#__kunena_messages')}")->set('ip=NULL')->where($where);
+			->update($db->quoteName('#__kunena_messages'))->set('ip=NULL')->where($where);
 
 		$db->setQuery((string) $query);
 

@@ -32,14 +32,22 @@ class KunenaImage extends Joomla\Image\Image
 	 */
 	public static function correctImageOrientation($filename)
 	{
-		// TODO: need to check here if the file given is right an image ?
+		$img = new Image();
+		
+		try 
+		{
+			$img->loadFile($filename);
+		}
+		catch (Exception $e)
+		{
+			throw new RuntimeException($e->getMessage(), 500);
+		}
 
 		if (function_exists('exif_read_data'))
 		{
 			$angle  = 0;
 			$exif   = @exif_read_data($filename);
 			$flip   = '';
-			$img    = '';
 
 			if ($exif && isset($exif['Orientation']))
 			{
@@ -47,8 +55,6 @@ class KunenaImage extends Joomla\Image\Image
 
 				if ($orientation != 1)
 				{
-					$img = new Image();
-					$img->loadFile($filename);
 
 					switch ($orientation)
 					{
@@ -97,22 +103,50 @@ class KunenaImage extends Joomla\Image\Image
 
 			if ($angle > 0)
 			{
-				$img->rotate($angle, -1, false);
+				try
+				{
+					$img->rotate($angle, -1, false);
+				}
+				catch (Exception $e)
+				{
+					throw new RuntimeException($e->getMessage(), 500);
+				}
 			}
 
 			if ($flip != 0)
 			{
 				if ($flip == 1)
 				{
-					$img->flip(IMG_FLIP_HORIZONTAL, false);
+					try
+					{
+						$img->flip(IMG_FLIP_HORIZONTAL, false);
+					}
+					catch (Exception $e)
+					{
+						throw new RuntimeException($e->getMessage(), 500);
+					}
 				}
 				else
 				{
-					$img->flip(IMG_FLIP_VERTICAL, false);
+					try
+					{
+						$img->flip(IMG_FLIP_VERTICAL, false);
+					}
+					catch (Exception $e)
+					{
+						throw new RuntimeException($e->getMessage(), 500);
+					}
 				}
 			}
 			
-			$img->toFile($filename);
+			try
+			{
+				$img->toFile($filename);
+			}
+			catch (Exception $e)
+			{
+				throw new RuntimeException($e->getMessage(), 500);
+			}
 		}
 	}
 }

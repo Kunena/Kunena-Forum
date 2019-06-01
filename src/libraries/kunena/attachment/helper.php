@@ -720,7 +720,7 @@ abstract class KunenaAttachmentHelper
 		$query
 			->select('COUNT(*)')
 			->from($db->quoteName('#__kunena_attachments'));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

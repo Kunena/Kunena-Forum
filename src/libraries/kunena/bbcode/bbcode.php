@@ -1060,7 +1060,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$query = $db->getQuery(true);
 			$query->select(array($db->quoteName('code'), $db->quoteName('location')))
 				->from($db->quoteName('#__kunena_smileys'));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$smileys = $db->loadObjectList();
 
 			$template = KunenaFactory::getTemplate();
@@ -1791,7 +1791,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			->leftJoin($db->quoteName('#__categories', 'cc') . ' ON cc.id = a.catid')
 			->leftJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.created_by')
 			->where('a.id = ' . $db->quote($articleid));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$article = $db->loadObject();
 
 		if ($article)

@@ -418,7 +418,7 @@ class KunenaUserBan extends CMSObject
 			->from($db->quoteName('#__kunena_users_banned'))
 			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
 			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

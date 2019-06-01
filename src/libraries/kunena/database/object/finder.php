@@ -263,7 +263,7 @@ abstract class KunenaDatabaseObjectFinder
 		else
 		{
 			$query->clear('select')->select('COUNT(*)');
-			$this->db->setQuery((string) $query);
+			$this->db->setQuery($query);
 		}
 
 		try

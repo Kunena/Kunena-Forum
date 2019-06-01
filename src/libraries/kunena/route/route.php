@@ -932,7 +932,7 @@ abstract class KunenaRoute
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db    = Factory::getDbo();
 		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->quote($alias . '%')}";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
 
 		$vars = array();

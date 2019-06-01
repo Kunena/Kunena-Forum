@@ -477,7 +477,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$query->select('template')
 			->from($db->quoteName('#__template_styles'))
 			->where('client_id=0 AND home=1');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

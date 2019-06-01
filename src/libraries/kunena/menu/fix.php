@@ -103,7 +103,7 @@ abstract class KunenaMenuFix
 			->order($db->quoteName('m.lft'));
 
 		// Set the query
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

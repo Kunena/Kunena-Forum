@@ -143,7 +143,7 @@ abstract class KunenaForumTopicUserHelper
 			->from($db->quoteName('#__kunena_user_topics'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
 			->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -210,7 +210,7 @@ abstract class KunenaForumTopicUserHelper
 
 		$query->select($db->quoteName($value));
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -248,7 +248,7 @@ abstract class KunenaForumTopicUserHelper
 			->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
 			->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -314,7 +314,7 @@ abstract class KunenaForumTopicUserHelper
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -356,7 +356,7 @@ abstract class KunenaForumTopicUserHelper
 			->from($db->quoteName('#__kunena_user_topics'))
 			->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -449,7 +449,7 @@ abstract class KunenaForumTopicUserHelper
 			{$subQuery}
 			ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -471,7 +471,7 @@ abstract class KunenaForumTopicUserHelper
 			->set($db->quoteName('posts') . ' = 0')
 			->set($db->quoteName('last_post_id') . ' = 0')
 			->where($db->quoteName('m.id') . ' IS NULL ' . $where2);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -496,7 +496,7 @@ abstract class KunenaForumTopicUserHelper
 			"params = ''",
 			"{$where3}"]);
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

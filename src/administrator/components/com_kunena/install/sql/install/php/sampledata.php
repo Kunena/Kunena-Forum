@@ -264,7 +264,7 @@ function installSampleData()
 
 	// Insert missing users
 	$query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
-	$db->setQuery((string) $query);
+	$db->setQuery($query);
 
 	try
 	{

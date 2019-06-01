@@ -229,7 +229,7 @@ abstract class KunenaUserHelper
 				->from($db->quoteName('#__users', 'u'))
 				->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -316,7 +316,7 @@ abstract class KunenaUserHelper
 			$query->select('COUNT(*), MAX(id)')
 				->from($db->quoteName('#__users'))
 				->where($where);
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -423,7 +423,7 @@ abstract class KunenaUserHelper
 			$query->where($db->quoteName('user_id') . ' IN (' . $userList . ')');
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$results = (array) $db->loadObjectList();
 		$list    = array();
 
@@ -480,7 +480,7 @@ abstract class KunenaUserHelper
 				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -534,7 +534,7 @@ abstract class KunenaUserHelper
 				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
 
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -619,7 +619,7 @@ abstract class KunenaUserHelper
 				FROM #__kunena_user_topics
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -653,7 +653,7 @@ abstract class KunenaUserHelper
 				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -687,7 +687,7 @@ abstract class KunenaUserHelper
 			->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
 			->set($db->quoteName('u.posts') . ' = 0')
 			->where($db->quoteName('ut.user_id') . ' IS NULL');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

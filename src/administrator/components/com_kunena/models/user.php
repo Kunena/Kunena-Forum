@@ -40,7 +40,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$query->select('topic_id AS thread')
 			->from($db->quoteName('#__kunena_user_topics'))
 			->where('user_id=' . $userid . ' AND subscribed=1');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -99,7 +99,7 @@ class KunenaAdminModelUser extends KunenaModel
 			->from($db->quoteName('#__kunena_messages'))
 			->where('userid=' . $userid)
 		->group('ip');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -123,7 +123,7 @@ class KunenaAdminModelUser extends KunenaModel
 				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid=u.id')
 				->where('m.ip IN (' . $iplist . ')')
 				->group('m.userid,m.ip');
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -209,7 +209,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$query->select('*')
 			->from($db->quoteName('#__kunena_ranks'))
 			->where('rank_special = \'1\'');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -266,7 +266,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$query->select('id,username')
 			->from($db->quoteName('#__users'))
 			->where('id IN(' . $userids . ')');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

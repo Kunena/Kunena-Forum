@@ -123,12 +123,12 @@ class KunenaAccessJoomla
 			if ($accesstype == 'joomla.group')
 			{
 				$query->from($db->quoteName('#__usergroups'));
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 			}
 			elseif ($accesstype == 'joomla.level')
 			{
 				$query->from($db->quoteName('#__viewlevels'));
-				$db->setQuery((string) $query);
+				$db->setQuery($query);
 			}
 			else
 			{
@@ -378,7 +378,7 @@ class KunenaAccessJoomla
 			$query->andWhere('user_id IN (' . $inUsers .')');
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		$result = (array) $db->loadColumn();
 
@@ -533,7 +533,7 @@ class KunenaAccessJoomla
 			$query->from($db->quoteName('#__viewlevels'));
 
 			// Set the query for execution.
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			// Build the view levels array.
 			foreach ($db->loadAssocList() as $level)

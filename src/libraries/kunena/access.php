@@ -158,7 +158,7 @@ class KunenaAccess
 			->select($db->quoteName(array('user_id', 'category_id', 'role')))
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('role') . ' IN (1,2)');
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -971,7 +971,7 @@ window.addEvent('domready', function(){
 			}
 
 			$db = Factory::getDBO();
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -1036,7 +1036,7 @@ window.addEvent('domready', function(){
 		}
 
 		$query = implode(' UNION ', $query);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

@@ -170,7 +170,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 				$query->order('a.rank_id ' . $direction);
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		return $query;
 	}

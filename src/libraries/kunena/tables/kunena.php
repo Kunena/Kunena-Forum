@@ -104,7 +104,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				$query->Where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 			}
 
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			$row = $this->_db->loadAssoc();
 
@@ -346,7 +346,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				->values(implode(',', $values));
 
 			// Set the query and execute the insert.
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			if (!$this->_db->execute())
 			{
@@ -439,7 +439,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 			}
 
-			$this->_db->setQuery((string) $query);
+			$this->_db->setQuery($query);
 
 			$this->_db->execute();
 

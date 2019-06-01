@@ -374,7 +374,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 				$query->order('a.username ' . $direction);
 		}
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		return $query;
 	}

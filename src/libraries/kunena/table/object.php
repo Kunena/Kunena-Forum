@@ -642,7 +642,7 @@ abstract class KunenaTableObject
 	public static function &loadInstances(JDatabaseQuery $query)
 	{
 		$db = Factory::getDbo();
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$items = (array) $db->loadObjectList('id', get_called_class());
 
 		if (is_array(static::$instances))
@@ -904,7 +904,7 @@ abstract class KunenaTableObject
 			->set(static::$db->quoteName('checked_out') . ' = ' . static::$db->quote((int) $userId))
 			->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote($time))
 			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
-		static::$db->setQuery((string) $query);
+		static::$db->setQuery($query);
 		static::$db->execute();
 
 		// Set table values in the object.
@@ -948,7 +948,7 @@ abstract class KunenaTableObject
 			->set(static::$db->quoteName('checked_out') . ' = 0')
 			->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate)
 			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
-		static::$db->setQuery((string) $query);
+		static::$db->setQuery($query);
 
 		// Check for a database error.
 		static::$db->execute();
@@ -994,7 +994,7 @@ abstract class KunenaTableObject
 			->update(static::$tbl)
 			->set(static::$db->quoteName('hits') . ' = (' . static::$db->quoteName('hits') . ' + 1)')
 			->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));
-		static::$db->setQuery((string) $query);
+		static::$db->setQuery($query);
 		static::$db->execute();
 
 		// Set table values in the object.

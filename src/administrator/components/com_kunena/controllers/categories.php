@@ -1041,7 +1041,7 @@ class KunenaAdminControllerCategories extends KunenaController
 					$query->update($db->quoteName('#__kunena_categories'));
 					$query->set($db->quoteName('parent_id') . " = " . $db->quote(intval($cat_parent)));
 					$query->where($db->quoteName('id') . " = " . $db->quote($cat));
-					$db->setQuery((string) $query);
+					$db->setQuery($query);
 
 					try
 					{

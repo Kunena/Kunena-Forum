@@ -76,7 +76,7 @@ abstract class KunenaForumTopicRateHelper
 		$query->select('(SUM(' . $db->quoteName('rate') . ')/COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
 			->from($db->quoteName('#__kunena_rate'))
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		return round($db->loadResult());
 	}
@@ -96,7 +96,7 @@ abstract class KunenaForumTopicRateHelper
 		$query->select('(COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
 			->from($db->quoteName('#__kunena_rate'))
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		return round($db->loadResult());
 	}
@@ -119,7 +119,7 @@ abstract class KunenaForumTopicRateHelper
 			->from($db->quoteName('#__kunena_rate'))
 			->where($db->quoteName('topic_id') . ' = ' . $db->quote($id))
 			->andWhere($db->quoteName('userid') . ' = ' . $db->quote($userid));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		return round($db->loadResult());
 	}

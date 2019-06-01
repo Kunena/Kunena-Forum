@@ -741,7 +741,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 				->from($db->quoteName('#__kunena_aliases'))
 				->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
 				->andWhere($db->quoteName('item') . ' = ' . $db->quote($this->id));
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 			$this->_aliases = (array) $db->loadObjectList('alias');
 		}
 
@@ -770,7 +770,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
 			->andWhere($db->quoteName('item') . ' = ' . $db->quote($this->id))
 			->andWhere($db->quoteName('alias') . ' = ' . $db->quote($alias));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{
@@ -1423,7 +1423,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		foreach ($queries as $query)
 		{
-			$db->setQuery((string) $query);
+			$db->setQuery($query);
 
 			try
 			{
@@ -1719,7 +1719,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$db    = Factory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->quote($alias)},'catid',{$db->quote($this->id)})";
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		try
 		{

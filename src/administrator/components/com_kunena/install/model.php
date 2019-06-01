@@ -736,7 +736,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
 			->where('type=\'module\' AND element=\' ' . $name);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		$moduleid = $db->loadResult();
 
@@ -760,7 +760,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
 			->where('type=\'plugin\'  AND folder=\'' . $folder .'\' AND element=\'' . $name);
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		$pluginid = $db->loadResult();
 
@@ -824,7 +824,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query->from($this->db->quoteName('#__extensions'));
 		$query->where($this->db->quoteName('type') . "='" . $type . "'");
 		$query->where($this->db->quoteName('element') . "='" . $element . "'");
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 		$id = $this->db->loadResult();
 
 		return $id;
@@ -934,7 +934,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
 			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'))
 			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('kunena'));
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 		$this->db->execute();
 
 		require_once KUNENA_INSTALLER_PATH . '/schema.php';
@@ -1486,7 +1486,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 				break;
 			case 'query':
 				$query = (string) $action;
-				$this->db->setQuery((string) $query);
+				$this->db->setQuery($query);
 
 				$success = true;
 
@@ -1592,7 +1592,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		$query = "SELECT COUNT(*) FROM `#__kunena_users`
 			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 
 		try
 		{
@@ -1690,7 +1690,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			if ($success)
 			{
 				$query = "UPDATE `#__kunena_users` SET avatar={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
-				$this->db->setQuery((string) $query);
+				$this->db->setQuery($query);
 
 				try
 				{
@@ -1861,7 +1861,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query->select('COUNT(*)')
 			->from($this->db->quoteName('#__kunena_attachments'))
 			->where('id > ' . $this->db->quote($stats->current). ' AND hash IS NULL');
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 
 		try
 		{
@@ -2000,7 +2000,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 					->set('folder=\'media/kunena/attachments/legacy/' . $lastpath .'\', size=' .
 						$this->db->quote($size) . ', hash=' . $this->db->quote($hash) . ', filetype=' . $this->db->quote($attachment->filetype))
 					->where('id=' . $this->db->quote($attachment->id));
-				$this->db->setQuery((string) $query);
+				$this->db->setQuery($query);
 
 				try
 				{
@@ -2028,7 +2028,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			// Note: com_fireboard has been replaced by com_kunena during 1.0.8 upgrade, use it instead
 			$query = "UPDATE `#__kunena_messages_text` SET message = REPLACE(REPLACE(message, '/images/fbfiles', '/media/kunena/attachments/legacy'), '/components/com_kunena/uploaded', '/media/kunena/attachments/legacy');";
-			$this->db->setQuery((string) $query);
+			$this->db->setQuery($query);
 
 			try
 			{
@@ -2068,7 +2068,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		{
 			// First run
 			$query = "SELECT MAX(id) FROM `#__kunena_messages`";
-			$this->db->setQuery((string) $query);
+			$this->db->setQuery($query);
 			$state        = new stdClass;
 			$state->step  = 0;
 			$state->maxId = (int) $this->db->loadResult();
@@ -2664,7 +2664,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
 		$query  = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 
 		try
 		{
@@ -2759,7 +2759,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		`state` text DEFAULT NULL,
 		PRIMARY KEY (`id`)
 		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 
 		try
 		{
@@ -2935,7 +2935,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
-		$this->db->setQuery((string) $query);
+		$this->db->setQuery($query);
 
 		try
 		{

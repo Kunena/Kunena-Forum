@@ -67,7 +67,7 @@ abstract class KunenaForumTopicPollHelper
 			->innerJoin($db->quoteName('#__kunena_polls','b') . ' ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('b.threadid'))
 			->set($db->quoteName('a.poll_id') . ' = ' . $db->quoteName('b.id'));
 
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$db->execute();
 	}
 }

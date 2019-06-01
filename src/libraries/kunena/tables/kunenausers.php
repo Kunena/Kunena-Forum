@@ -491,7 +491,7 @@ class TableKunenaUsers extends KunenaTable
 			->from($this->_db->quoteName('#__users' , 'u'))
 			->leftJoin($this->_db->quoteName($this->_tbl , 'ku') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('ku.userid'))
 			->where($this->_db->quoteName('u.id') . ' = ' . $this->_db->quote($this->$k));
-		$this->_db->setQuery((string) $query);
+		$this->_db->setQuery($query);
 
 		try
 		{

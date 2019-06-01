@@ -291,7 +291,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		$query->select($_db->quoteName('points'))
 			->from($_db->quoteName('#__alpha_userpoints'))
 			->where($_db->quoteName('userid') . ' = ' . $_db->quote((int) $userid));
-		$_db->setQuery((string) $query);
+		$_db->setQuery($query);
 
 		try
 		{

@@ -32,7 +32,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$query->select('id')
 			->from($db->quoteName('#__kunena_categories'))
 			->where('alias = ' . $db->quote($alias));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 		$result = $db->loadObject();
 
 		if ($result)
@@ -59,7 +59,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$query->delete('*')
 			->from($db->quoteName('#__kunena_aliases'))
 			->where('alias = ' . $db->quote($alias));
-		$db->setQuery((string) $query);
+		$db->setQuery($query);
 
 		$response['msg'] = 1;
 

@@ -87,7 +87,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->form         = $this->get('Form');
 		$this->params       = $this->get('editparams');
 		$this->details      = $this->get('templatedetails');
-		$this->templatename = $this->app->getUserState('kunena.edit.template');
+		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
 		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 

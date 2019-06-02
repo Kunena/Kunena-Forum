@@ -143,7 +143,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 
 		$template = KunenaPath::clean($template);
-		$this->app->setUserState('kunena.edit.template', $template);
+		$this->app->setUserState('kunena.edit.templatename', $template);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&name={$template}", false));
 	}

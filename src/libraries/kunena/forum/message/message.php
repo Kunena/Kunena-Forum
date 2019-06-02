@@ -747,9 +747,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				catch (\Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
-					continue;
 				}
-				continue;
 			}
 
 			$attachment->mesid = $this->id;
@@ -763,7 +761,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				catch (\Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
-					continue;
 				}
 			}
 			else
@@ -775,7 +772,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				catch (\Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
-					continue;
 				}
 			}
 
@@ -786,7 +782,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			catch (\Exception $e)
 			{
 				$app->enqueueMessage($e->getMessage(), 'error');
-				continue;
 			}
 
 			// Update attachments count and fix attachment name inside message

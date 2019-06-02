@@ -812,8 +812,16 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$db = Factory::getDbo();
 
-		$query = $db->getQuery(true)
-			->update($db->quoteName('#__kunena_messages'))->set('ip=NULL')->where($where);
+		if (!empty($where))
+		{
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__kunena_messages'))->set('ip=NULL')->where($where);
+		}
+		else
+		{
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__kunena_messages'))->set('ip=NULL');
+		}
 
 		$db->setQuery($query);
 

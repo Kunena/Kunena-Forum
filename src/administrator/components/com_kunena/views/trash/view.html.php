@@ -129,7 +129,7 @@ class KunenaAdminViewTrash extends KunenaView
 		// Set the titlebar text
 		JToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 		JToolbarHelper::spacer();
-		JToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
+		JToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();

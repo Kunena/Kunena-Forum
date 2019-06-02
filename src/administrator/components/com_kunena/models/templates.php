@@ -246,6 +246,11 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 		$value = $this->getUserStateFromRequest($this->context . '.edit', 'name', '', 'cmd');
 		$this->setState('template', $value);
 
+		if (empty($this->app->getUserState('kunena.edit.templatename')))
+		{
+			$this->app->setUserState('kunena.edit.templatename', $value);
+		}
+		
 		// List state information
 		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
 		$this->setState('list.limit', $value);

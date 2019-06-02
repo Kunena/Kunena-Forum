@@ -114,7 +114,6 @@ abstract class KunenaForumAnnouncementHelper
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
 		$db       = Factory::getDBO();
-		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 		$nowDate  = $db->quote(Factory::getDate()->toSql());
 
 		if ($filter)
@@ -123,8 +122,8 @@ abstract class KunenaForumAnnouncementHelper
 				->select('*')
 				->from($db->quoteName('#__kunena_announcement'))
 				->where($db->quoteName('published') . ' = 1')
-				->where($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
-				->where($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+				->where($db->quoteName('publish_up') . ' <= ' . $nowDate)
+				->where($db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' <= ' . $nowDate)
 				->order($db->quoteName('id') . ' DESC');
 		}
 		else

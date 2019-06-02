@@ -277,7 +277,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		if ($fields['publish_down'] == NULL)
 		{
-			$fields['publish_down'] = $now->toSql();
+			$fields['publish_down'] = '1000-01-01 00:00:00';
 		}
 
 		$announcement->bind($fields);

@@ -74,7 +74,14 @@ abstract class KunenaForumDiagnostics
 			$query->select('COUNT(*)');
 			$db->setQuery($query);
 
-			return (int) $db->loadResult();
+			try
+			{
+				return (int) $db->loadResult();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return 0;
@@ -104,7 +111,14 @@ abstract class KunenaForumDiagnostics
 			$db = Factory::getDbo();
 			$db->setQuery($query);
 
-			return (array) $db->loadAssocList();
+			try
+			{
+				return (array) $db->loadAssocList();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return array();
@@ -126,7 +140,14 @@ abstract class KunenaForumDiagnostics
 			$db    = Factory::getDbo();
 			$db->setQuery($query);
 
-			return (bool) $db->execute();
+			try
+			{
+				return (bool) $db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return false;
@@ -166,7 +187,14 @@ abstract class KunenaForumDiagnostics
 			$db    = Factory::getDbo();
 			$db->setQuery($query);
 
-			return (bool) $db->execute();
+			try
+			{
+				return (bool) $db->execute();
+			}
+			catch (JDatabaseExceptionExecuting $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
 		return false;
@@ -229,7 +257,7 @@ abstract class KunenaForumDiagnostics
 		{
 			$query = self::$function();
 
-			// @var KunenaDatabaseQuery $query
+			// @var Joomla\Database\QueryInterface $query
 
 			$query->select("COUNT(*)");
 
@@ -240,12 +268,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields(KunenaDatabaseQuery $query = null)
+	protected static function fields(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -256,7 +284,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_categoryOrphaned()
@@ -267,25 +295,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryOrphaned()
 	{
 		// Query to find orphaned categories
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parent_id=c.id")->where("a.parent_id>0 AND c.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_categoryOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -296,25 +325,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryMissingAlias()
 	{
 		// Query to find categories with missing alias
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_aliases AS c ON a.alias=c.alias")->where("c.alias IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryMissingAlias(KunenaDatabaseQuery $query = null)
+	protected static function fields_categoryMissingAlias(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -325,25 +355,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryWrongAlias()
 	{
 		// Query to find categories with wrong alias
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_categories AS a")->innerJoin("#__kunena_aliases AS c ON a.alias=c.alias")->where("c.type!='catid' OR c.item!=a.id");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryWrongAlias(KunenaDatabaseQuery $query = null)
+	protected static function fields_categoryWrongAlias(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -354,7 +385,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_aliasMissingCategory()
@@ -365,25 +396,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_aliasMissingCategory()
 	{
 		// Query to find orphaned aliases
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_aliases AS a")->leftJoin("#__kunena_categories AS c ON a.item=c.id")->where("a.type='catid' AND c.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_aliasMissingCategory(KunenaDatabaseQuery $query = null)
+	protected static function fields_aliasMissingCategory(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -394,7 +426,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageBodyMissingMessage()
@@ -405,25 +437,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageBodyMissingMessage()
 	{
 		// Query to find broken messages (orphan message text)
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_messages_text AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageBodyMissingMessage(KunenaDatabaseQuery $query = null)
+	protected static function fields_messageBodyMissingMessage(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -434,7 +467,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageMissingMessageBody()
@@ -445,25 +478,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageMissingMessageBody()
 	{
 		// Query to find broken messages (message is missing body)
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_messages_text AS t ON t.mesid=a.id")->where("t.mesid IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageMissingMessageBody(KunenaDatabaseQuery $query = null)
+	protected static function fields_messageMissingMessageBody(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -474,12 +508,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicInSection(KunenaDatabaseQuery $query = null)
+	protected static function fields_topicInSection(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -490,7 +524,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicInSection()
@@ -501,25 +535,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicInSection()
 	{
 		// Query to find topics which are located in section, not in category
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parent_id=0");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingCategory(KunenaDatabaseQuery $query = null)
+	protected static function fields_topicMissingCategory(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -530,7 +565,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingCategory()
@@ -541,20 +576,21 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingCategory()
 	{
 		// Query to find topics which do not have existing category
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingMessages()
@@ -565,25 +601,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingMessages()
 	{
 		// Query to find topics without messages
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_messages AS m ON m.thread=a.id")->where("a.moved_id=0 AND m.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingMessages(KunenaDatabaseQuery $query = null)
+	protected static function fields_topicMissingMessages(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -594,7 +631,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingPoll()
@@ -605,25 +642,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingPoll()
 	{
 		// Query to find topics which have missing poll
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingPoll(KunenaDatabaseQuery $query = null)
+	protected static function fields_topicMissingPoll(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -634,7 +672,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicPollMismatch()
@@ -645,25 +683,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicPollMismatch()
 	{
 		// Query to find polls which have wrong topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_polls AS p ON p.id=a.poll_id")->leftJoin("#__kunena_topics AS t ON p.threadid=t.id")->where("a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicPollMismatch(KunenaDatabaseQuery $query = null)
+	protected static function fields_topicPollMismatch(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -674,7 +713,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_movedMissingTopic()
@@ -685,25 +724,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_movedMissingTopic()
 	{
 		// Query to find moved topics pointing to non-existent topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.moved_id")->where("a.moved_id>0 AND t.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_movedMissingTopic(KunenaDatabaseQuery $query = null)
+	protected static function fields_movedMissingTopic(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -714,7 +754,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_movedAndMessages()
@@ -725,25 +765,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_movedAndMessages()
 	{
 		// Query to find topics without messages
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_messages AS m ON m.thread=a.id")->leftJoin("#__kunena_messages_text AS t ON m.id=t.mesid")->where("a.moved_id>0");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_movedAndMessages(KunenaDatabaseQuery $query = null)
+	protected static function fields_movedAndMessages(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -754,7 +795,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_messageWrongCategory()
@@ -765,25 +806,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageWrongCategory()
 	{
 		// Query to find messages which have wrong category id
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.category_id!=a.catid");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageWrongCategory(KunenaDatabaseQuery $query = null)
+	protected static function fields_messageWrongCategory(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -794,7 +836,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageOrphaned()
@@ -805,25 +847,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageOrphaned()
 	{
 		// Query to find messages which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_messageOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -834,7 +877,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_attachmentOrphaned()
@@ -845,25 +888,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_attachmentOrphaned()
 	{
 		// Query to find attachments which do not belong in any existing message
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_attachmentOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_attachmentOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -874,7 +918,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollOrphaned()
@@ -885,25 +929,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollOrphaned()
 	{
 		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.threadid")->where("t.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_pollOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -914,7 +959,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollTopicMismatch()
@@ -925,25 +970,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollTopicMismatch()
 	{
 		// Query to find polls which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollTopicMismatch(KunenaDatabaseQuery $query = null)
+	protected static function fields_pollTopicMismatch(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -954,7 +1000,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollOptionOrphaned()
@@ -965,25 +1011,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollOptionOrphaned()
 	{
 		// Query to find poll options which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollOptionOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_pollOptionOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -994,7 +1041,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollUserOrphaned()
@@ -1005,25 +1052,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollUserOrphaned()
 	{
 		// Query to find poll users which do not belong in any existing poll
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollUserOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_pollUserOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1034,7 +1082,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_thankyouOrphaned()
@@ -1045,25 +1093,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_thankyouOrphaned()
 	{
 		// Query to find thankyous which do not belong in any existing message
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_thankyou AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.postid")->where("m.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_thankyouOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_thankyouOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1074,7 +1123,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userCategoryOrphaned()
@@ -1085,25 +1134,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userCategoryOrphaned()
 	{
 		// Query to find user categories which do not belong in any existing category
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_user_categories AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("a.category_id>0 AND c.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userCategoryOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_userCategoryOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1114,7 +1164,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userReadOrphaned()
@@ -1125,25 +1175,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userReadOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_user_read AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userReadOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_userReadOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1154,7 +1205,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_userReadWrongCategory()
@@ -1165,25 +1216,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userReadWrongCategory()
 	{
 		// Query to find user read which wrong category information
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_user_read AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userReadWrongCategory(KunenaDatabaseQuery $query = null)
+	protected static function fields_userReadWrongCategory(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1194,7 +1246,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userTopicOrphaned()
@@ -1205,25 +1257,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userTopicOrphaned()
 	{
 		// Query to find user topics which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_user_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userTopicOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_userTopicOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1234,7 +1287,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_userTopicWrongCategory()
@@ -1245,25 +1298,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userTopicWrongCategory()
 	{
 		// Query to find user topic which wrong category information
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_user_topics AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userTopicWrongCategory(KunenaDatabaseQuery $query = null)
+	protected static function fields_userTopicWrongCategory(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1274,7 +1328,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_ratingOrphaned()
@@ -1285,12 +1339,13 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_ratingOrphaned()
 	{
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 
 		// Query to find orphaned ratings
 		$query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
@@ -1299,12 +1354,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_ratingOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_ratingOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1315,7 +1370,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_channelOrphaned()
@@ -1326,25 +1381,26 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_channelOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
 
 		return $query;
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_channelOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_channelOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1355,20 +1411,21 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_ownerOrphaned()
 	{
 		// Query to find user read which do not belong in any existing topic
-		$query = new KunenaDatabaseQuery;
+		$db    = Factory::getDbo();
+		$query  = $db->getQuery(true);
 		$query->from("#__kunena_topics AS t")->leftJoin("#__kunena_user_topics AS j ON j.topic_id=t.id")->where("t.first_post_userid > 0");
 
 		return $query;
 	}
 
 	/**
-	 * @return KunenaDatabaseQuery
+	 * @return Joomla\Database\QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_ownerOrphaned()
@@ -1379,12 +1436,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   KunenaDatabaseQuery $query query
+	 * @param   Joomla\Database\QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_ownerOrphaned(KunenaDatabaseQuery $query = null)
+	protected static function fields_ownerOrphaned(Joomla\Database\QueryInterface $query = null)
 	{
 		if ($query)
 		{

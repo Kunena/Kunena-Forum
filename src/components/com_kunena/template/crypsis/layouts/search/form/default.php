@@ -27,8 +27,7 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
-$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
+echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/search.js');
 ?>
 

@@ -155,8 +155,6 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 					}
 				}
 			}
-
-			$doc->setMetaData('robots', 'follow, noindex');
 		}
 
 		$pagdata = $this->pagination->getData();

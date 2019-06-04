@@ -39,8 +39,8 @@ abstract class KunenaModule
 	protected $params = null;
 
 	/**
-	 * @param   stdClass                  $module module
-	 * @param   Joomla\Registry\Registry $params params
+	 * @param   stdClass                  $module  module
+	 * @param   Joomla\Registry\Registry  $params  params
 	 *
 	 * @since Kunena
 	 */
@@ -53,9 +53,9 @@ abstract class KunenaModule
 
 	/**
 	 * Display module contents.
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	final public function display()
 	{
@@ -77,10 +77,11 @@ abstract class KunenaModule
 			$cache->setLifeTime($this->params->get('cache_time', 180));
 			$hash = md5(serialize($this->params));
 
-			if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest'))
+			// Disable Cache for now: FIXME
+			/*if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest'))
 			{
 				return;
-			}
+			}*/
 		}
 
 		// Initialize Kunena.
@@ -89,17 +90,18 @@ abstract class KunenaModule
 		// Display module.
 		$this->_display();
 
-		// Store cached page.
+		// Disable Cache for now: FIXME
+		/*// Store cached page.
 		if (isset($cache))
 		{
 			$cache->end();
-		}
+		}*/
 	}
 
 	/**
 	 * Internal module function to display module contents.
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	abstract protected function _display();
 }

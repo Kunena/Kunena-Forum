@@ -42,10 +42,6 @@ class KunenaUploadHelper
 	 */
 	public static function upload($file, $uploadfolder, $format)
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php';
-
-		$err = null;
-
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
 		Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');

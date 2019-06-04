@@ -1549,7 +1549,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			else
 			{
 				// All messages that were not selected will remain
-				$query->where($this->_db->quoteName('id') . ' NOT IN (' . $this->_db->quote($ids) . ')');
+				$query->where($this->_db->quoteName('id') . ' NOT IN (' . $ids . ')');
 			}
 
 			$this->_db->setQuery($query);
@@ -1563,7 +1563,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$app  = Factory::getApplication();
 				$app->enqueueMessage($e->getMessage());
 			}
-
+			
 			// So are we moving the whole topic?
 			if (!$oldcount)
 			{
@@ -1774,6 +1774,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query->update($this->_db->quoteName('#__kunena_polls'))
 					->set($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($target->id))
 					->where($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($this->id));
+
 				$this->_db->setQuery($query);
 
 				try

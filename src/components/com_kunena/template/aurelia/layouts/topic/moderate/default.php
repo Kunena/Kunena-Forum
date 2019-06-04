@@ -26,9 +26,8 @@ $labels          = $this->ktemplate->params->get('labels');
 ?>
 <div class="card">
 	<div class="card-header">
-		<h3> <?php echo !isset($this->message)
-				? Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC')
-				: Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
+		<h3>
+			<?php echo $this->title; ?>
 		</h3>
 	</div>
 	<div class="card-body">
@@ -42,23 +41,29 @@ $labels          = $this->ktemplate->params->get('labels');
 			<?php endif; ?>
 			<?php echo HTMLHelper::_('form.token'); ?>
 			<div>
-				<ul class="nav nav-tabs">
-					<li class="nav-link active"><a href="#tab1"
-					                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+						   aria-controls="tab1"
+						   aria-selected="true"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
 					</li>
-					<li class="nav-link"><a href="#tab2"
-					                        data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
+					<li class="nav-item">
+						<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
+						   aria-controls="tab2"
+						   aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a>
+					</li>
 					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
-						<li><a href="#tab3"
-						       data-toggle="tab"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
+						<li class="nav-item">
+							<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab"
+							   aria-controls="tab3"
+							   aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
 						</li>
 						<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 					<?php endif; ?>
 				</ul>
-				<br>
-				<div class="tab-content">
-					<div class="tab-pane active" id="tab1">
-
+				<br/>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
 						<dl class="dl-horizontal">
 							<dt> <?php echo Text::_('COM_KUNENA_MENU_TOPIC'); ?> </dt>
 							<dd> <?php echo $this->topic->displayField('subject'); ?> </dd>
@@ -71,7 +76,7 @@ $labels          = $this->ktemplate->params->get('labels');
 						</dl>
 						<?php if ($this->config->topicicons) : ?>
 							<div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
-							<br>
+							<br/>
 							<div class="kmoderate-topicicons">
 								<?php foreach ($this->topicIcons as $id => $icon): ?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
@@ -94,7 +99,7 @@ $labels          = $this->ktemplate->params->get('labels');
 							</div>
 						<?php elseif ($labels && !$this->config->topicicons) : ?>
 							<div><strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
-							<br>
+							<br/>
 							<div class="kmoderate-topicicons">
 								<?php foreach ($this->topicIcons as $id => $icon) : ?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
@@ -102,7 +107,8 @@ $labels          = $this->ktemplate->params->get('labels');
 								<?php if ($topicicontype == 'B3') : ?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="label label-<?php echo $icon->name; ?>"><span
-												class="icon icon-<?php echo $icon->b3; ?>" aria-hidden="true"></span><span
+												class="icon icon-<?php echo $icon->b3; ?>"
+												aria-hidden="true"></span><span
 												class="sr-only"></span><?php echo $icon->name; ?></span>
 									<?php elseif ($topicicontype == 'B2') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
@@ -122,11 +128,12 @@ $labels          = $this->ktemplate->params->get('labels');
 											</label>
 											<?php endforeach; ?>
 							</div>
-							<br>
+							<br/>
 						<?php endif; ?>
-						<br>
+						<br/>
 						<?php if (isset($this->message)) : ?>
 							<hr/>
+							<br/>
 							<h3>
 								<div class="float-left">
 									<?php echo $this->message->getAuthor()->getAvatarImage('img-thumbnail', 'list'); ?>
@@ -148,7 +155,7 @@ $labels          = $this->ktemplate->params->get('labels');
 						<?php endif; ?>
 					</div>
 
-					<div class="tab-pane" id="tab2">
+					<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 						<h3> <?php echo Text::_('COM_KUNENA_MODERATION_DEST'); ?> </h3>
 
 						<div class="control-group">
@@ -220,8 +227,8 @@ $labels          = $this->ktemplate->params->get('labels');
 							</div>
 						<?php endif; ?>
 					</div>
-					<?php if (isset($this->message)) : ?>
-						<div class="tab-pane" id="tab3">
+					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
+						<div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
 							<?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', $this->me); ?>
 						</div>
 

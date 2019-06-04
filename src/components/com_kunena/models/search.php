@@ -49,11 +49,6 @@ class KunenaModelSearch extends KunenaModel
 		// Get search word list
 		$value = Joomla\String\StringHelper::trim($this->app->input->get('query', '', 'string'));
 
-		if (empty($value))
-		{
-			$value = Joomla\String\StringHelper::trim($this->app->input->get('q', '', 'string'));
-		}
-
 		if ($value == Text::_('COM_KUNENA_GEN_SEARCH_BOX'))
 		{
 			$value = '';
@@ -117,7 +112,7 @@ class KunenaModelSearch extends KunenaModel
 
 		$this->setState('query.catids', $value);
 
-		if (isset($_POST ['q']) || isset($_POST ['searchword']))
+		if (isset($_POST ['searchword']))
 		{
 			$value = Factory::getApplication()->input->get('ids', array(0), 'post', 'array');
 			$value = ArrayHelper::toInteger($value);

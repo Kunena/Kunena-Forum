@@ -1023,7 +1023,7 @@ abstract class KunenaRoute
 				continue;
 			}
 
-			if (in_array($key, array('q', 'query', 'searchuser')))
+			if (in_array($key, array('query', 'searchuser')))
 			{
 				// Allow all values
 			}

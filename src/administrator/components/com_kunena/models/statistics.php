@@ -52,8 +52,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
-	 * @throws Exception
 	 * @since   3.1
+	 * @throws Exception
 	 */
 	public function getTotal()
 	{
@@ -84,7 +84,7 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string $id A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return    string        A store id.
 	 * @since Kunena
@@ -102,11 +102,11 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @param   string $field field
+	 * @param   string  $field  field
 	 *
 	 * @return KunenaLogFinder
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getFinder($field = 'user_id')
 	{
@@ -167,8 +167,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
-	 * @throws Exception
 	 * @since   3.1
+	 * @throws Exception
 	 */
 	public function getItems()
 	{
@@ -283,11 +283,11 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null $ordering  ordering
-	 * @param   null $direction direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

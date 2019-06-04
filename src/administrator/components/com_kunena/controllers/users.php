@@ -103,13 +103,13 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$signature    = $this->app->input->getString('signature', '');
 		$deleteSig    = $this->app->input->getInt('deleteSig');
 		$moderator    = $this->app->input->getInt('moderator');
 		$uid          = $this->app->input->getInt('uid');
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
-		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
+		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'array') : array();
 		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
@@ -172,6 +172,76 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Clean social items
+	 *
+	 * @param $user
+	 * @param $app
+	 *
+	 * @since Kunena
+	 */
+	protected function cleanSocial(&$user, $app)
+	{
+		$user->icq              = str_replace(' ', '', trim($app->input->getString('icq', '')));
+		$user->yim              = str_replace(' ', '', trim($app->input->getString('yim', '')));
+		$user->microsoft        = str_replace(' ', '', trim($app->input->getString('microsoft', '')));
+		$user->skype            = str_replace(' ', '', trim($app->input->getString('skype', '')));
+		$user->google           = str_replace(' ', '', trim($app->input->getString('google', '')));
+		$user->twitter          = str_replace(' ', '', trim($app->input->getString('twitter', '')));
+		$user->facebook         = str_replace(' ', '', trim($app->input->getString('facebook', '')));
+		$user->myspace          = str_replace(' ', '', trim($app->input->getString('myspace', '')));
+		$user->linkedin         = str_replace(' ', '', trim($app->input->getString('linkedin', '')));
+		$user->linkedin_company = str_replace(' ', '', trim($app->input->getString('linkedin_company', '')));
+		$user->friendfeed       = str_replace(' ', '', trim($app->input->getString('friendfeed', '')));
+		$user->digg             = str_replace(' ', '', trim($app->input->getString('digg', '')));
+		$user->blogspot         = str_replace(' ', '', trim($app->input->getString('blogspot', '')));
+		$user->flickr           = str_replace(' ', '', trim($app->input->getString('flickr', '')));
+		$user->bebo             = str_replace(' ', '', trim($app->input->getString('bebo', '')));
+		$user->instagram        = str_replace(' ', '', trim($app->input->getString('instagram', '')));
+		$user->qqsocial         = str_replace(' ', '', trim($app->input->getString('qqsocial', '')));
+		$user->qzone            = str_replace(' ', '', trim($app->input->getString('qzone', '')));
+		$user->weibo            = str_replace(' ', '', trim($app->input->getString('weibo', '')));
+		$user->wechat           = str_replace(' ', '', trim($app->input->getString('wechat', '')));
+		$user->apple            = str_replace(' ', '', trim($app->input->getString('apple', '')));
+		$user->vk               = str_replace(' ', '', trim($app->input->getString('vk', '')));
+		$user->telegram         = str_replace(' ', '', trim($app->input->getString('telegram', '')));
+		$user->vimeo            = str_replace(' ', '', trim($app->input->getString('vimeo', '')));
+		$user->whatsapp         = str_replace(' ', '', trim($app->input->getString('whatsapp', '')));
+		$user->youtube          = str_replace(' ', '', trim($app->input->getString('youtube', '')));
+		$user->ok               = str_replace(' ', '', trim($app->input->getString('ok', '')));
+	}
+
+	/**
+	 * Set moderator rights on the user given
+	 *
+	 * @param   KunenaUser  $user
+	 *
+	 * @param               $modCatids
+	 *
+	 * @return boolean
+	 *
+	 * @since Kunena 5.1
+	 * @throws Exception
+	 */
+	protected function setModerate(KunenaUser $user, $modCatids)
+	{
+		// Update moderator rights
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+
+		foreach ($categories as $category)
+		{
+			$category->setModerator($user, in_array($category->id, $modCatids));
+		}
+
+		// Global moderator is a special case
+		if ($this->me->isAdmin())
+		{
+			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+		}
+
+		return true;
+	}
+
+	/**
 	 * Apply
 	 *
 	 * @return void
@@ -191,13 +261,13 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$signature    = $this->app->input->getString('signature', '');
 		$deleteSig    = $this->app->input->getInt('deleteSig');
 		$moderator    = $this->app->input->getInt('moderator');
 		$uid          = $this->app->input->getInt('uid');
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
 		$neworder     = $this->app->input->getInt('neworder');
-		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'post', 'array') : array();
+		$modCatids    = $moderator ? $this->app->input->get('catid', array(), 'array') : array();
 		$modCatids    = ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
@@ -683,10 +753,10 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$modCatids = $this->app->input->get('catid', array(), 'post', 'array');
+		$modCatids = $this->app->input->get('catid', array(), 'array');
 		$modCatids = ArrayHelper::toInteger($modCatids);
 
-		$cid    = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid    = $this->app->input->get('cid', array(), 'array');
 		$cid    = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -735,7 +805,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid    = $this->app->input->get('cid', array(), 'post', 'array');
+		$cid    = $this->app->input->get('cid', array(), 'array');
 		$cid    = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -1028,7 +1098,9 @@ class KunenaAdminControllerUsers extends KunenaController
 			foreach ($cid as $userid)
 			{
 				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__kunena_user_categories'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
+				$query->update($db->quoteName('#__kunena_user_categories'))
+					->set($db->quoteName('subscribed') . ' = 0')
+					->where($db->quoteName('user_id') . ' = ' . $userid);
 				$db->setQuery($query);
 
 				try
@@ -1075,7 +1147,9 @@ class KunenaAdminControllerUsers extends KunenaController
 			foreach ($cid as $userid)
 			{
 				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__kunena_user_topics'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
+				$query->update($db->quoteName('#__kunena_user_topics'))
+					->set($db->quoteName('subscribed') . ' = 0')
+					->where($db->quoteName('user_id') . ' = ' . $userid);
 				$db->setQuery($query);
 
 				try
@@ -1113,9 +1187,9 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$userids = $this->app->input->get('cid', array(), 'post', 'array');
+		$userids = $this->app->input->get('cid', array(), 'array');
 		$userids = ArrayHelper::toInteger($userids);
-		$catids  = $this->app->input->get('catid', array(), 'post', 'array');
+		$catids  = $this->app->input->get('catid', array(), 'array');
 		$catids  = ArrayHelper::toInteger($catids);
 
 		if (empty($userids))
@@ -1146,72 +1220,5 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Clean social items
-	 *
-	 * @param $user
-	 * @param $app
-	 *
-	 * @since Kunena
-	 */
-	protected function cleanSocial(&$user, $app)
-	{
-		$user->icq              = str_replace(' ', '', trim($app->input->getString('icq', '')));
-		$user->yim              = str_replace(' ', '', trim($app->input->getString('yim', '')));
-		$user->microsoft        = str_replace(' ', '', trim($app->input->getString('microsoft', '')));
-		$user->skype            = str_replace(' ', '', trim($app->input->getString('skype', '')));
-		$user->google           = str_replace(' ', '', trim($app->input->getString('google', '')));
-		$user->twitter          = str_replace(' ', '', trim($app->input->getString('twitter', '')));
-		$user->facebook         = str_replace(' ', '', trim($app->input->getString('facebook', '')));
-		$user->myspace          = str_replace(' ', '', trim($app->input->getString('myspace', '')));
-		$user->linkedin         = str_replace(' ', '', trim($app->input->getString('linkedin', '')));
-		$user->linkedin_company = str_replace(' ', '', trim($app->input->getString('linkedin_company', '')));
-		$user->friendfeed       = str_replace(' ', '', trim($app->input->getString('friendfeed', '')));
-		$user->digg             = str_replace(' ', '', trim($app->input->getString('digg', '')));
-		$user->blogspot         = str_replace(' ', '', trim($app->input->getString('blogspot', '')));
-		$user->flickr           = str_replace(' ', '', trim($app->input->getString('flickr', '')));
-		$user->bebo             = str_replace(' ', '', trim($app->input->getString('bebo', '')));
-		$user->instagram        = str_replace(' ', '', trim($app->input->getString('instagram', '')));
-		$user->qqsocial         = str_replace(' ', '', trim($app->input->getString('qqsocial', '')));
-		$user->qzone            = str_replace(' ', '', trim($app->input->getString('qzone', '')));
-		$user->weibo            = str_replace(' ', '', trim($app->input->getString('weibo', '')));
-		$user->wechat           = str_replace(' ', '', trim($app->input->getString('wechat', '')));
-		$user->apple            = str_replace(' ', '', trim($app->input->getString('apple', '')));
-		$user->vk               = str_replace(' ', '', trim($app->input->getString('vk', '')));
-		$user->telegram         = str_replace(' ', '', trim($app->input->getString('telegram', '')));
-		$user->vimeo            = str_replace(' ', '', trim($app->input->getString('vimeo', '')));
-		$user->whatsapp         = str_replace(' ', '', trim($app->input->getString('whatsapp', '')));
-		$user->youtube          = str_replace(' ', '', trim($app->input->getString('youtube', '')));
-		$user->ok               = str_replace(' ', '', trim($app->input->getString('ok', '')));
-	}
-
-	/**
-	 * Set moderator rights on the user given
-	 *
-	 * @param $user
-	 *
-	 * @return boolean
-	 *
-	 * @since Kunena 5.1
-	 */
-	protected function setModerate(KunenaUser $user, $modCatids)
-	{
-		// Update moderator rights
-		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
-
-		foreach ($categories as $category)
-		{
-			$category->setModerator($user, in_array($category->id, $modCatids));
-		}
-
-		// Global moderator is a special case
-		if ($this->me->isAdmin())
-		{
-			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
-		}
-
-		return true;
 	}
 }

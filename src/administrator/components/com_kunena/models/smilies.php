@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\QueryInterface;
 
 jimport('joomla.application.component.modellist');
 
@@ -47,12 +48,12 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   string $ordering  ordering
-	 * @param   string $direction direction
+	 * @param   string  $ordering   ordering
+	 * @param   string  $direction  direction
 	 *
 	 * @return    void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -87,7 +88,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $id id
+	 * @param   string  $id  id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -102,7 +103,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @return JDatabaseQuery
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected function getListQuery()

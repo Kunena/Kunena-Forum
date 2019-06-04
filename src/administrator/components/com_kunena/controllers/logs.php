@@ -32,10 +32,10 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
-	 * @throws Exception
 	 * @since    5.0
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -46,9 +46,9 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Redirect user to the right layout in order to define some settings
 	 *
+	 * @return void
 	 * @since K5.0
 	 *
-	 * @return void
 	 * @since Kunena
 	 */
 	public function cleanentries()
@@ -61,10 +61,10 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
-	 * @throws Exception
 	 * @since  K5.0
 	 *
 	 * @since  Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function clean()
@@ -118,8 +118,8 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since K5.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function cancel()

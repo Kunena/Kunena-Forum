@@ -148,7 +148,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">
 					<i class=\"icon-trash\" title=\"$title\"> </i>
 						$title</button>";
-						$bar->appendButton('Custom', $dhtml, 'confirmdelete');
+		$bar->appendButton('Custom', $dhtml, 'confirmdelete');
 
 		JToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';

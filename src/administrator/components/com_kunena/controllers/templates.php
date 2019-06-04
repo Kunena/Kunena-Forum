@@ -44,10 +44,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -60,13 +60,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function publish()
 	{
-		$cid = $this->app->input->get('cid', array(), 'method', 'array');
+		$cid = $this->app->input->get('cid', array(), 'array');
 		$id  = array_shift($cid);
 
 		if (!Session::checkToken('post'))
@@ -95,8 +95,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function add()
@@ -117,13 +117,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function edit()
 	{
-		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
+		$cid      = $this->app->input->get('cid', array(), 'array');
 		$template = array_shift($cid);
 
 		if (!$template)
@@ -153,8 +153,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return boolean|void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function install()
@@ -278,13 +278,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function uninstall()
 	{
-		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
+		$cid      = $this->app->input->get('cid', array(), 'array');
 		$id       = array_shift($cid);
 		$template = $id;
 
@@ -348,8 +348,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function chooseless()
@@ -375,8 +375,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function editless()
@@ -384,7 +384,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
+		$filename = $this->app->input->get('filename', '', 'cmd');
 
 		if (File::getExt($filename) !== 'less')
 		{
@@ -403,8 +403,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function choosecss()
@@ -422,8 +422,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function applyless()
@@ -431,7 +431,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filename    = $this->app->input->get('filename', '', 'cmd');
 		$filecontent = $this->app->input->post->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
@@ -470,8 +470,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function saveless()
@@ -479,8 +479,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename    = $this->app->input->get('filename', '', 'cmd');
+		$filecontent = $this->app->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
 		{
@@ -522,8 +522,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function editcss()
@@ -531,7 +531,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
+		$filename = $this->app->input->get('filename', '', 'cmd');
 
 		if (File::getExt($filename) !== 'css')
 		{
@@ -550,16 +550,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function applycss()
 	{
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'cmd');
+		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
 		{
@@ -595,16 +595,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function savecss()
 	{
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'cmd');
+		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
 		{
@@ -642,14 +642,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function apply()
 	{
-		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
-		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
+		$template = $this->app->input->get('templatename', '', 'cmd');
+		$menus    = $this->app->input->get('selections', array(), 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
@@ -677,17 +677,17 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to save param.ini file on filesystem.
 	 *
-	 * @param   string $template The name of the template.
+	 * @param   string  $template  The name of the template.
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since  3.0.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function _saveParamFile($template)
 	{
-		$params = $this->app->input->get('jform', array(), 'post', 'array');
+		$params = $this->app->input->get('jform', array(), 'array');
 
 		$params['wysibb'] = '';
 
@@ -841,14 +841,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since    2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function save()
 	{
-		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
-		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
+		$template = $this->app->input->get('templatename', '', 'cmd');
+		$menus    = $this->app->input->get('selections', array(), 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
@@ -878,12 +878,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since 5.1
+	 * @throws Exception
 	 */
 	public function restore()
 	{
-		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
+		$template = $this->app->input->get('templatename', '', 'cmd');
 		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (file_exists($file))
@@ -905,8 +905,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since 3.0.5
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function cancel()

@@ -23,19 +23,19 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerAttachments extends KunenaController
 {
 	/**
+	 * @var null|string
 	 * @since    2.0.0-BETA2
 	 *
-	 * @var null|string
 	 */
 	protected $baseurl = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param   array $config Construct
+	 * @param   array  $config  Construct
 	 *
-	 * @throws Exception
 	 * @since 2.0
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -46,11 +46,11 @@ class KunenaAdminControllerAttachments extends KunenaController
 	/**
 	 * Delete
 	 *
-	 * @throws Exception
-	 *
 	 * @return void
 	 *
 	 * @since 2.0
+	 * @throws Exception
+	 *
 	 * @throws null
 	 */
 	public function delete()

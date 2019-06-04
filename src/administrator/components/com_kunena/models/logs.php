@@ -60,8 +60,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
-	 * @throws Exception
 	 * @since   5.0
+	 * @throws Exception
 	 */
 	public function getTotal()
 	{
@@ -92,7 +92,7 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param    string $id A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return    string        A store id.
 	 * @since Kunena
@@ -120,8 +120,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 * Build a finder query to load the list data.
 	 *
 	 * @return    KunenaLogFinder
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getFinder()
 	{
@@ -303,9 +303,9 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since   5.0
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getItems()
 	{
@@ -326,20 +326,18 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 
 		$userIds1 = $items->map(function ($item, $key) {
 			return $item->user_id;
-
 		});
+
 		$userIds2 = $items->map(function ($item, $key) {
-
 			return $item->target_user;
-
 		});
-		$userIds  = array_unique(array_merge($userIds1->all(), $userIds2->all()));
+
+		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
 		KunenaUserHelper::loadUsers($userIds);
 
 		KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) {
 			return $item->topic_id;
-
 		})->all());
 
 		// Add the items to the internal cache.
@@ -351,11 +349,11 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null $ordering
-	 * @param   null $direction
+	 * @param   null  $ordering
+	 * @param   null  $direction
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

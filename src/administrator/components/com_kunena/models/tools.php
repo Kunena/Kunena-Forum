@@ -242,11 +242,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to generate the report configuration with anonymous data
 	 *
+	 * @return string
 	 * @since 5.0
 	 *
-	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getSystemReportAnonymous()
 	{
@@ -269,11 +269,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Initialize data to generate configuration report
 	 *
+	 * @return void
 	 * @since 5.0
 	 *
-	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getReportData()
 	{
@@ -461,12 +461,34 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	/**
+	 * Method to put readable correctly the kunena template params
+	 *
+	 * @return    string
+	 * @since 5.1.1
+	 */
+	protected function getKunenaTemplateParams($params)
+	{
+		$template_params = json_decode($params);
+
+		$ktemplate_params = '[table]';
+
+		foreach ($template_params as $param => $value)
+		{
+			$ktemplate_params .= '[tr][td][b]' . $param . '[/b][/td][td]' . $value . '[/td][/tr]';
+		}
+
+		$ktemplate_params .= '[table]';
+
+		return $ktemplate_params;
+	}
+
+	/**
 	 * Method to get the default joomla template.
 	 *
 	 * @return boolean|stdClass|void
 	 *
-	 * @throws Exception
 	 * @since    1.6
+	 * @throws Exception
 	 */
 	protected function _getJoomlaTemplate()
 	{
@@ -571,8 +593,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @return    string|void
 	 *
-	 * @throws Exception
 	 * @since    1.6
+	 * @throws Exception
 	 */
 	protected function _getTablesCollation()
 	{
@@ -699,8 +721,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param   string $extension extension
-	 * @param   string $name      name
+	 * @param   string  $extension  extension
+	 * @param   string  $name       name
 	 *
 	 * @return    string
 	 *
@@ -730,7 +752,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param   $path $path    Path to extension directory
+	 * @param   $path  $path    Path to extension directory
 	 *
 	 * @return  string  Version number
 	 * @since Kunena
@@ -819,8 +841,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * Method to generate all the report configuration.
 	 *
 	 * @return    string
-	 * @throws Exception
 	 * @since    1.6
+	 * @throws Exception
 	 */
 	public function getSystemReport()
 	{
@@ -839,27 +861,5 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
-	}
-
-	/**
-	 * Method to put readable correctly the kunena template params
-	 *
-	 * @return    string
-	 * @since 5.1.1
-	 */
-	protected function getKunenaTemplateParams($params)
-	{
-		$template_params = json_decode($params);
-
-		$ktemplate_params = '[table]';
-
-		foreach ($template_params as $param => $value)
-		{
-			$ktemplate_params .= '[tr][td][b]' . $param . '[/b][/td][td]' . $value . '[/td][/tr]';
-		}
-
-		$ktemplate_params .= '[table]';
-
-		return $ktemplate_params;
 	}
 }

@@ -108,7 +108,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$ids = $this->app->input->get('prune_forum', array(), 'post', 'array');
+		$ids = $this->app->input->get('prune_forum', array(), 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -300,11 +300,11 @@ class KunenaAdminControllerTools extends KunenaController
 
 				return;
 			}
-		
+
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__users'))
 				->where('block=\'1\'');
-			
+
 			$db->setQuery($query);
 
 			try

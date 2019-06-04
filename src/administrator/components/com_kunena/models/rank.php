@@ -27,8 +27,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return mixed
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getRankspaths()
 	{
@@ -72,8 +72,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return mixed|void
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getRank()
 	{

@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\QueryInterface;
 
 jimport('joomla.application.component.modellist');
 
@@ -49,12 +50,12 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   string $ordering  ordering
-	 * @param   string $direction direction
+	 * @param   string  $ordering   ordering
+	 * @param   string  $direction  direction
 	 *
 	 * @return    void
-	 * @throws Exception
 	 * @since    1.6
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -101,7 +102,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $id id
+	 * @param   string  $id  id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -120,14 +121,14 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @param   string $query      query
-	 * @param   int    $limitstart limitstart
-	 * @param   int    $limit      limit
+	 * @param   string  $query       query
+	 * @param   int     $limitstart  limitstart
+	 * @param   int     $limit       limit
 	 *
 	 * @return KunenaAttachment[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
@@ -150,7 +151,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @return JDatabaseQuery
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected function getListQuery()

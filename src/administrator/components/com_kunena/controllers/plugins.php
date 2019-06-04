@@ -34,11 +34,11 @@ class KunenaAdminControllerPlugins extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config config
-	 *
-	 * @throws Exception
+	 * @param   array  $config  config
 	 *
 	 * @since    2.0
+	 * @throws Exception
+	 *
 	 */
 	public function __construct($config = array())
 	{
@@ -73,8 +73,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   12.2
+	 * @throws Exception
 	 */
 	public function publish()
 	{
@@ -139,9 +139,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 	/**
 	 * Getmodel
 	 *
-	 * @param   string $name   name
-	 * @param   string $prefix prefix
-	 * @param   array  $config config
+	 * @param   string  $name    name
+	 * @param   string  $prefix  prefix
+	 * @param   array   $config  config
 	 *
 	 * @return object
 	 *
@@ -162,8 +162,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @throws Exception
 	 * @since   12.2
+	 * @throws Exception
 	 */
 	public function reorder()
 	{
@@ -244,8 +244,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @throws Exception
 	 * @since   12.2
+	 * @throws Exception
 	 */
 	public function checkin()
 	{

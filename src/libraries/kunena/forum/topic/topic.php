@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaForumTopic
@@ -1535,7 +1536,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// First we need to check if there will be messages left in the old topic
 		if ($ids)
 		{
-			$query = new KunenaDatabaseQuery;
+			$query = $this->_db->getQuery(true);
 			$query->select('COUNT(*)')
 				->from($this->_db->quoteName('#__kunena_messages'))
 				->where($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($this->id));
@@ -1557,9 +1558,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				$oldcount = (int) $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (RuntimeException $e)
 			{
-				throw new RuntimeException($e->getMessage(), $e->getCode());
+				$app  = Factory::getApplication();
+				$app->enqueueMessage($e->getMessage());
 			}
 
 			// So are we moving the whole topic?
@@ -1693,7 +1695,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		// Move messages (set new category and topic)
 
-		$query = new KunenaDatabaseQuery;
+		$query = $this->_db->getQuery(true);
 		$query->update($this->_db->quoteName('#__kunena_messages'))
 			->set($this->_db->quoteName('catid') . ' = ' . $this->_db->quote($target->category_id))
 			->set($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($target->id))
@@ -1722,9 +1724,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (RuntimeException $e)
 		{
-			throw new RuntimeException($e->getMessage(), $e->getCode());
+			$app  = Factory::getApplication();
+			$app->enqueueMessage($query);
 		}
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
@@ -1735,9 +1738,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (RuntimeException $e)
 		{
-			throw new RuntimeException($e->getMessage(), $e->getCode());
+			$app  = Factory::getApplication();
+			$app->enqueueMessage($e->getMessage());
 		}
 
 		$query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread=' . $target->id . ' ORDER BY time ASC, id ASC';
@@ -1747,9 +1751,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (RuntimeException $e)
 		{
-			throw new RuntimeException($e->getMessage(), $e->getCode());
+			$app  = Factory::getApplication();
+			$app->enqueueMessage($e->getMessage());
 		}
 
 		if ($keep_poll)
@@ -1775,9 +1780,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				{
 					$this->_db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (RuntimeException $e)
 				{
-					throw new RuntimeException($e->getMessage(), $e->getCode());
+					$app  = Factory::getApplication();
+					$app->enqueueMessage($e->getMessage());
 				}
 			}
 

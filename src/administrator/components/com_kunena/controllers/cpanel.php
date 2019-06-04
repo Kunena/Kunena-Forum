@@ -32,10 +32,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Construct
 	 *
-	 * @param   array $config construct
+	 * @param   array  $config  construct
 	 *
-	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -50,8 +50,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @return array|null|string
 	 *
-	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws Exception
 	 */
 	public static function onGetIcons()
 	{
@@ -127,13 +127,13 @@ class KunenaAdminControllerCpanel extends KunenaController
 	/**
 	 * Display
 	 *
-	 * @param   bool $cachable  cachable
-	 * @param   bool $urlparams urlparams
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
-	 * @throws Exception
 	 * @since    2.0.0-BETA2
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function display($cachable = false, $urlparams = false)

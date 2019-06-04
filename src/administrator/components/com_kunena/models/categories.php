@@ -58,8 +58,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAdminOptions()
 	{
@@ -169,8 +169,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return boolean|KunenaForumCategory|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -195,7 +195,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = Factory::getDBO();
 
-				$query  = $db->getQuery(true)
+				$query = $db->getQuery(true)
 					->select('a.id, a.name')
 					->from("{$db->quoteName('#__kunena_categories')} AS a")
 					->where("parent_id={$db->quote('0')}")
@@ -234,8 +234,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAdminModerators()
 	{
@@ -252,12 +252,12 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @param   null $pks   pks
-	 * @param   null $order order
+	 * @param   null  $pks    pks
+	 * @param   null  $order  order
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function saveorder($pks = null, $order = null)
 	{
@@ -336,8 +336,8 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
-	 * @since 5.1.0
 	 * @return array
+	 * @since 5.1.0
 	 * @throws Exception
 	 * @throws null
 	 */
@@ -359,9 +359,9 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return array|KunenaForumCategory[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getAdminCategories()
 	{
@@ -380,7 +380,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				'filter_allow_polls' => $this->getState('filter.allow_polls'),
 				'filter_review'      => $this->getState('filter.review'),
 				'filter_anonymous'   => $this->getState('filter.anonymous'),
-				'action'             => 'admin', );
+				'action'             => 'admin',);
 
 			$catid      = $this->getState('item.id', 0);
 			$categories = array();
@@ -417,8 +417,8 @@ class KunenaAdminModelCategories extends KunenaModel
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:
-				$parent            = $category->getParent();
-				$siblings          = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
+				$parent   = $category->getParent();
+				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 
 				if ($parent)
 				{

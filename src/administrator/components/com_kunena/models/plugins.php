@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.application.component.modellist');
@@ -54,8 +55,8 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @param   string $ordering  An optional ordering field.
-	 * @param   string $direction An optional direction (asc|desc).
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 *
@@ -96,9 +97,9 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Returns an object list
 	 *
-	 * @param   JDatabaseQuery $query      The query
-	 * @param   int            $limitstart Offset
-	 * @param   int            $limit      The number of records
+	 * @param   JDatabaseQuery  $query       The query
+	 * @param   int             $limitstart  Offset
+	 * @param   int             $limit       The number of records
 	 *
 	 * @return  array
 	 * @since Kunena
@@ -173,7 +174,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Translate a list of objects
 	 *
-	 * @param   array $items The array of objects
+	 * @param   array  $items  The array of objects
 	 *
 	 * @return void The array of translated objects
 	 * @since Kunena
@@ -201,7 +202,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string $id A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return  string    A store id.
 	 * @since Kunena
@@ -221,7 +222,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected function getListQuery()

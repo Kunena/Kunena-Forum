@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\QueryInterface;
 
 jimport('joomla.application.component.modellist');
 
@@ -62,8 +63,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return boolean|KunenaUser
 	 *
-	 * @throws Exception
 	 * @since   3.0
+	 * @throws Exception
 	 */
 	public function getItems()
 	{
@@ -112,7 +113,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string $id A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return    string        A store id.
 	 * @since Kunena
@@ -138,8 +139,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  string
 	 *
-	 * @throws Exception
 	 * @since  3.0
+	 * @throws Exception
 	 */
 	public function getModcatslist()
 	{
@@ -156,11 +157,11 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null $ordering  ordering
-	 * @param   null $direction direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -215,7 +216,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @return    JDatabaseQuery
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected function getListQuery()
@@ -316,7 +317,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 
 		if ($filter !== '')
 		{
-			$now = new Joomla\CMS\Date\Date;
+			$now      = new Joomla\CMS\Date\Date;
 			$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 			if ($filter)

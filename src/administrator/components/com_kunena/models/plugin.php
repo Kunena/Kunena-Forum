@@ -70,13 +70,13 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to get the record form.
 	 *
-	 * @param   array   $data     Data for the form.
-	 * @param   boolean $loadData True if the form is to load its own data (default case), false if not.
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return boolean|JForm
 	 *
-	 * @throws Exception
 	 * @since   1.6
+	 * @throws Exception
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -126,11 +126,11 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer $pk The id of the primary key.
+	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getItem($pk = null)
 	{
@@ -182,9 +182,9 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @param   string $type   The table type to instantiate
-	 * @param   string $prefix A prefix for the table class name. Optional.
-	 * @param   array  $config Configuration array for model. Optional.
+	 * @param   string  $type    The table type to instantiate
+	 * @param   string  $prefix  A prefix for the table class name. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  Joomla\CMS\Table\Table    A database object
 	 * @since Kunena
@@ -197,12 +197,12 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Override method to save the form data.
 	 *
-	 * @param   array $data The form data.
+	 * @param   array  $data  The form data.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @throws Exception
 	 * @since   1.6
+	 * @throws Exception
 	 */
 	public function save($data)
 	{
@@ -236,8 +236,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  mixed  The data for the form.
 	 *
-	 * @throws Exception
 	 * @since   1.6
+	 * @throws Exception
 	 */
 	protected function loadFormData()
 	{
@@ -257,13 +257,13 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string $context The context identifier.
-	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
+	 * @param   string  $context  The context identifier.
+	 * @param   mixed  &$data     The data to be processed. It gets altered directly.
 	 *
-	 * @param   string $group   group
+	 * @param   string  $group    group
 	 *
-	 * @throws Exception
 	 * @since   Joomla 3.1
+	 * @throws Exception
 	 */
 	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
@@ -288,8 +288,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   1.6
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -306,13 +306,13 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @param   \JForm $form  A form object.
-	 * @param   mixed  $data  The data expected for the form.
-	 * @param   string $group Form group.
+	 * @param   \JForm  $form   A form object.
+	 * @param   mixed   $data   The data expected for the form.
+	 * @param   string  $group  Form group.
 	 *
 	 * @return  mixed|void  True if successful.
-	 * @throws    Exception if there is an error in the form event.
 	 * @since   1.6
+	 * @throws    Exception if there is an error in the form event.
 	 */
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
@@ -389,7 +389,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   object $table A record object.
+	 * @param   object  $table  A record object.
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 *
@@ -407,11 +407,11 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
+	 * @param   null  $group      group
+	 *
+	 * @param   int   $client_id  client_id
+	 *
 	 * @since   1.6
-	 *
-	 * @param   null $group     group
-	 *
-	 * @param   int  $client_id client_id
 	 *
 	 * @since   Kunena
 	 */

@@ -371,7 +371,7 @@ class KunenaAccessJoomla
 			->from($db->quoteName('#__usergroups', 'ug1'))
 			->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ug2.lft ' . $rec . ' ug1.lft AND ug1.rgt ' . $rec . ' ug2.rgt')
 			->innerJoin( $db->quoteName('#__user_usergroup_map', 'm') . ' ON ug2.id = m.group_id')
-			->where('ug1.id IN ( ' . $db->quote($groupId) . ')');
+			->where('ug1.id IN ( ' . $groupId . ')');
 
 		if ($inUsers)
 		{

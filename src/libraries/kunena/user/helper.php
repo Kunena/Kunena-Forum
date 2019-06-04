@@ -545,7 +545,7 @@ abstract class KunenaUserHelper
 				KunenaError::displayDatabaseError($e);
 			}
 		}
-
+		
 		return self::$_online;
 	}
 
@@ -590,7 +590,7 @@ abstract class KunenaUserHelper
 		{
 			return 1;
 		}
-
+		
 		return $user->status;
 	}
 

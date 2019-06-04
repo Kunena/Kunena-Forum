@@ -1535,7 +1535,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// First we need to check if there will be messages left in the old topic
 		if ($ids)
 		{
-			$query = new KunenaDatabaseQuery;
+			$query = $this->_db->getQuery(true);
 			$query->select('COUNT(*)')
 				->from($this->_db->quoteName('#__kunena_messages'))
 				->where($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($this->id));
@@ -1548,7 +1548,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			else
 			{
 				// All messages that were not selected will remain
-				$query->where($this->_db->quoteName('id') . ' NOT IN (' . $this->_db->quote($ids) . ')');
+				$query->where($this->_db->quoteName('id') . ' NOT IN (' . $ids . ')');
 			}
 
 			$this->_db->setQuery($query);
@@ -1561,7 +1561,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				throw new RuntimeException($e->getMessage(), $e->getCode());
 			}
-
+			
 			// So are we moving the whole topic?
 			if (!$oldcount)
 			{
@@ -1693,7 +1693,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		// Move messages (set new category and topic)
 
-		$query = new KunenaDatabaseQuery;
+		$query = $this->_db->getQuery(true);
 		$query->update($this->_db->quoteName('#__kunena_messages'))
 			->set($this->_db->quoteName('catid') . ' = ' . $this->_db->quote($target->category_id))
 			->set($this->_db->quoteName('thread') . ' = ' . $this->_db->quote($target->id))
@@ -1769,6 +1769,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$query->update($this->_db->quoteName('#__kunena_polls'))
 					->set($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($target->id))
 					->where($this->_db->quoteName('threadid') . ' = ' . $this->_db->quote($this->id));
+
 				$this->_db->setQuery($query);
 
 				try

@@ -1937,7 +1937,7 @@ class KunenaControllerTopic extends KunenaController
 			$topic   = $object = KunenaForumTopicHelper::get($topicId);
 			$message = KunenaForumMessageHelper::get($topic->first_post_id);
 		}
-
+		
 		if ($targetTopic)
 		{
 			$target = KunenaForumTopicHelper::get($targetTopic);
@@ -1985,7 +1985,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$ids = false;
 			}
-
+			
 			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
 
 			if (!$targetobject)
@@ -2009,7 +2009,7 @@ class KunenaControllerTopic extends KunenaController
 				);
 			}
 		}
-
+		
 		if ($error)
 		{
 			$this->app->enqueueMessage($error, 'notice');

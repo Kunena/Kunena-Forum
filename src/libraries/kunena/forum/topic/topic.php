@@ -1715,7 +1715,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		elseif ($ids)
 		{
 			// Move individual messages
-			$query->where($this->_db->quoteName('id') . ' IN (' . $this->_db->quote($ids) . ')');
+			$query->where($this->_db->quoteName('id') . ' IN (' . $ids . ')');
 		}
 
 		$this->_db->setQuery($query);

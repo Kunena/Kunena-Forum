@@ -1118,6 +1118,70 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
+	 * @return boolean|string|void
+	 * @since Kunena
+	 */
+	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCode::BBCODE_CHECK)
+		{
+			return true;
+		}
+
+		if (!empty($content))
+		{
+			// Display tag in activity streams etc..
+			if (!empty($bbcode->parent->forceMinimal))
+			{
+				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+			}
+
+			$before  = $content;
+			$content = strip_tags($content);
+
+			$content = trim($content);
+
+			$url_parsed = parse_url($content);
+
+			if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
+			{
+				$content = $url_parsed['host'] . $url_parsed['path'];
+			}
+			else
+			{
+				$content = $url_parsed['path'];
+			}
+
+			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+			{
+				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+				{
+					// Add scheme to raw domain URLs.
+					$url = "https://{$content}";
+				}
+
+				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+
+			if (!empty($content))
+			{
+				return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+			else
+			{
+				return $before;
+			}
+		}
+	}
+
+	/**
+	 * @param   mixed  $bbcode   bbcode
+	 * @param   mixed  $action   action
+	 * @param   mixed  $name     name
+	 * @param   mixed  $default  default
+	 * @param   mixed  $params   params
+	 * @param   mixed  $content  content
+	 *
 	 * @return boolean|mixed|string
 	 * @since Kunena
 	 * @throws Exception
@@ -1155,6 +1219,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
 		}
 	}
+
+	// Format a [size] tag by producing a <span> with a style with a different font-size.
 
 	/**
 	 * Format a [url] tag by producing an <a>...</a> element.
@@ -1252,7 +1318,21 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 	}
 
-	// Format a [size] tag by producing a <span> with a style with a different font-size.
+	// Format a [list] tag, which is complicated by the number of different
+	// ways a list can be started.  The following parameters are allowed:
+	//
+	//   [list]           Unordered list, using default marker
+	//   [list=circle]    Unordered list, using circle marker
+	//   [list=disc]      Unordered list, using disc marker
+	//   [list=square]    Unordered list, using square marker
+	//
+	//   [list=1]         Ordered list, numeric, starting at 1
+	//   [list=A]         Ordered list, capital letters, starting at A
+	//   [list=a]         Ordered list, lowercase letters, starting at a
+	//   [list=I]         Ordered list, capital Roman numerals, starting at I
+	//   [list=i]         Ordered list, lowercase Roman numerals, starting at i
+	//   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
+	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
 
 	/**
 	 * @param   mixed  $bbcode   bbcode
@@ -1303,22 +1383,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 				->set('size', $default);
 		}
 	}
-
-	// Format a [list] tag, which is complicated by the number of different
-	// ways a list can be started.  The following parameters are allowed:
-	//
-	//   [list]           Unordered list, using default marker
-	//   [list=circle]    Unordered list, using circle marker
-	//   [list=disc]      Unordered list, using disc marker
-	//   [list=square]    Unordered list, using square marker
-	//
-	//   [list=1]         Ordered list, numeric, starting at 1
-	//   [list=A]         Ordered list, capital letters, starting at A
-	//   [list=a]         Ordered list, lowercase letters, starting at a
-	//   [list=I]         Ordered list, capital Roman numerals, starting at I
-	//   [list=i]         Ordered list, lowercase Roman numerals, starting at i
-	//   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
-	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
 
 	/**
 	 * @param   mixed  $bbcode   bbcode
@@ -1784,9 +1848,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select(array('a.*', $db->quoteName('u.name', 'author'), $db->quoteName('cc.title', 'category'),
-			$db->quoteName(0, 'sec_pub'), $db->quoteName(0, 'sectionid'), $db->quoteName('cc.published', 'cat_pub'),
-			$db->quoteName('cc.access', 'cat_access'),))
+		$query->select('a.*, u.name AS author, cc.title AS category,
+			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access')
 			->from($db->quoteName('#__content', 'a'))
 			->leftJoin($db->quoteName('#__categories', 'cc') . ' ON cc.id = a.catid')
 			->leftJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.created_by')
@@ -3042,70 +3105,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			if ($url_parsed['host'] == 'soundcloud.com')
 			{
 				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
-			}
-		}
-	}
-
-	/**
-	 * @param   mixed  $bbcode   bbcode
-	 * @param   mixed  $action   action
-	 * @param   mixed  $name     name
-	 * @param   mixed  $default  default
-	 * @param   mixed  $params   params
-	 * @param   mixed  $content  content
-	 *
-	 * @return boolean|string|void
-	 * @since Kunena
-	 */
-	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
-	{
-		if ($action == BBCode::BBCODE_CHECK)
-		{
-			return true;
-		}
-
-		if (!empty($content))
-		{
-			// Display tag in activity streams etc..
-			if (!empty($bbcode->parent->forceMinimal))
-			{
-				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-			}
-
-			$before  = $content;
-			$content = strip_tags($content);
-
-			$content = trim($content);
-
-			$url_parsed = parse_url($content);
-
-			if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
-			{
-				$content = $url_parsed['host'] . $url_parsed['path'];
-			}
-			else
-			{
-				$content = $url_parsed['path'];
-			}
-
-			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
-			{
-				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
-				{
-					// Add scheme to raw domain URLs.
-					$url = "https://{$content}";
-				}
-
-				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
-			}
-
-			if (!empty($content))
-			{
-				return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
-			}
-			else
-			{
-				return $before;
 			}
 		}
 	}

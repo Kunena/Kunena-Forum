@@ -190,12 +190,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 				$this->query->where($this->db->quoteName('ut.posts') . ' = 0');
 				break;
 			case 'replied':
-				$this->query->where($this->db->quoteName('ut.owner') . ' = 0')
-					->andWhere($this->db->quoteName('ut.posts') . ' > 0');
+				$this->query->where('(' . $this->db->quoteName('ut.owner') . ' = 0 AND ' . $this->db->quoteName('ut.posts') . ' > 0)');
 				break;
 			case '!replied':
-				$this->query->where($this->db->quoteName('ut.owner') . ' = 0')
-					->andWhere($this->db->quoteName('ut.posts') . ' = 0');
+				$this->query->where('(' . $this->db->quoteName('ut.owner') . ' = 0 AND ' . $this->db->quoteName('ut.posts') . ' = 0)');
 				break;
 			case 'favorited':
 				$this->query->where($this->db->quoteName('ut.favorite') . ' = 1');
@@ -210,15 +208,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 				$this->query->where($this->db->quoteName('ut.subscribed') . ' != 1');
 				break;
 			case 'involved':
-				$this->query->where($this->db->quoteName('ut.posts') . ' > 0')
-					->orWhere($this->db->quoteName('ut.favorite') . ' = 1')
-					->orWhere($this->db->quoteName('ut.subscribed') . ' = 1');
+				$this->query->where('(' . $this->db->quoteName('ut.posts') . ' > 0 OR ' . $this->db->quoteName('ut.favorite') . ' = 1 OR ' . $this->db->quoteName('ut.subscribed') . ' = 1)');
 				break;
 			case '!involved':
-				$this->query->where($this->db->quoteName('ut.posts') . ' < 1')
-					->andWhere($this->db->quoteName('ut.favorite') . ' = 0')
-					->andWhere($this->db->quoteName('ut.subscribed') . ' = 0');
-				break;
+				$this->query->where('(' . $this->db->quoteName('ut.posts') . ' < 1 OR ' . $this->db->quoteName('ut.favorite') . ' = 0 OR ' . $this->db->quoteName('ut.subscribed') . ' = 0)');
 		}
 
 		return $this;

@@ -25,49 +25,44 @@ use Joomla\Utilities\ArrayHelper;
 class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var KunenaUser
+	 * @since Kunena
+	 */
+	public $me;
+	/**
+	 * @var Joomla\CMS\User\User
+	 * @since Kunena
+	 */
+	public $user;
+	/**
+	 * @var KunenaUser
+	 * @since Kunena
+	 */
+	public $profile;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $headerText;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $tabs;
+	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $name = 'User/Item';
 
 	/**
-	 * @var KunenaUser
-	 * @since Kunena
-	 */
-	public $me;
-
-	/**
-	 * @var Joomla\CMS\User\User
-	 * @since Kunena
-	 */
-	public $user;
-
-	/**
-	 * @var KunenaUser
-	 * @since Kunena
-	 */
-	public $profile;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $headerText;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $tabs;
-
-	/**
 	 * Load user profile.
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -94,16 +89,16 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->profile->tryAuthorise('read');
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$this->points              = $activityIntegration->getUserPoints($this->profile->userid);
-		$this->medals              = $activityIntegration->getUserMedals($this->profile->userid);
-		$this->private             = KunenaFactory::getPrivateMessaging();
+		$this->points        = $activityIntegration->getUserPoints($this->profile->userid);
+		$this->medals        = $activityIntegration->getUserMedals($this->profile->userid);
+		$this->private       = KunenaFactory::getPrivateMessaging();
 		$socials             = $this->profile->socialButtons();
-		$this->socials             = ArrayHelper::toObject($socials);
+		$this->socials       = ArrayHelper::toObject($socials);
 
-		$this->avatar              = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-		$this->banInfo             = $this->config->showbannedreason
-		? KunenaUserBan::getInstanceByUserid($this->profile->userid)
-		: null;
+		$this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+		$this->banInfo = $this->config->showbannedreason
+			? KunenaUserBan::getInstanceByUserid($this->profile->userid)
+			: null;
 
 		// Update profile hits.
 		if (!$this->profile->exists() || !$this->profile->isMyself())
@@ -154,8 +149,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

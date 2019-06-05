@@ -178,12 +178,12 @@ if ($this->config->showuserstats)
 				:
 				?>
 				<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-				   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
+				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
 			<?php elseif (empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL()))
 				:
 				?>
 				<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-				   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe(); ?></a>
+				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe(); ?></a>
 			<?php elseif (!empty($this->profile->getWebsiteName()) && empty($this->profile->getWebsiteURL()))
 				:
 				?>

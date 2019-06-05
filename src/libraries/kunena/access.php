@@ -901,10 +901,11 @@ window.addEvent('domready', function(){
 			$adminlist = array();
 		}
 
-		$query = new KunenaDatabaseQuery;
-		$query->select('u.id, u.name, u.username, u.email');
-		$query->from('#__users AS u');
-		$query->where("u.block=0");
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('u.id, u.name, u.username, u.email')
+			->from('#__users AS u')
+			->where("u.block=0");
 		$userlist = array();
 
 		if (!empty($subslist))
@@ -1006,7 +1007,7 @@ window.addEvent('domready', function(){
 			$querytopic = $db->getQuery(true)
 				->select($db->quoteName('user_id'))
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
-				->leftJoin($db->quoteName('#__kunena_users','ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
+				->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
 				->where($db->quoteName('ut.subscribed') . ' = 1')
 				->where($db->quoteName('ku.banned') . ' <> 0')
@@ -1024,7 +1025,7 @@ window.addEvent('domready', function(){
 			$querycat = $db->getQuery(true)
 				->select($db->quoteName('user_id'))
 				->from($db->quoteName('#__kunena_user_categories', 'ut'))
-				->leftJoin($db->quoteName('#__kunena_users','ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
+				->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
 				->andWhere($db->quoteName('ku.banned') . ' <> 0')
@@ -1032,7 +1033,7 @@ window.addEvent('domready', function(){
 				->andWhere($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
 				->group($db->quoteName('user_id'));
-			$query[] = $querycat;
+			$query[]  = $querycat;
 		}
 
 		$query = implode(' UNION ', $query);

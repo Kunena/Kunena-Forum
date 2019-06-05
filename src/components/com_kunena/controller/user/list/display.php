@@ -136,7 +136,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	{
 		$page      = $this->pagination->pagesCurrent;
 		$pages     = $this->pagination->pagesTotal;
-		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
+		$pagesText = ($page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$app       = Factory::getApplication();
 		$menu_item = $app->getMenu()->getActive();

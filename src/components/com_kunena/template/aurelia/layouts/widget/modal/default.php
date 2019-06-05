@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $id          = ' id="' . $this->id . '"';
@@ -24,8 +25,10 @@ $form        = $this->form;
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
-				<h3><?php echo $label ?></h3>
+				<h3 class="modal-title"><?php echo $label ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo $description ?></p>

@@ -154,6 +154,106 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @param $karmaDelta
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
+	 */
+	protected function karma($karmaDelta)
+	{
+		if (!Session::checkToken('get'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		// 14400 seconds = 6 hours
+		$karma_delay = '14400';
+
+		$userid = $this->app->input->getInt('userid', 0);
+
+		$target = KunenaFactory::getUser($userid);
+
+		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$now = Factory::getDate()->toUnix();
+
+		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		if ($karmaDelta > 0)
+		{
+			if ($this->me->userid == $target->userid)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'notice');
+				$karmaDelta = -10;
+			}
+			else
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_INCREASED'));
+			}
+		}
+		else
+		{
+			if ($this->me->userid == $target->userid)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'notice');
+			}
+			else
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_DECREASED'));
+			}
+		}
+
+		$this->me->karma_time = $now;
+
+		try
+		{
+			$this->me->userid == $target->userid && $this->me->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$target->karma += $karmaDelta;
+
+		try
+		{
+			$target->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
+		$this->setRedirectBack();
+	}
+
+	/**
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -269,516 +369,6 @@ class KunenaControllerUser extends KunenaController
 		{
 			return $return;
 		}
-	}
-
-	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function ban()
-	{
-		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
-
-		if (!$user->exists() || !Session::checkToken('post'))
-		{
-			$this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-
-			return;
-		}
-
-		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
-
-		try
-		{
-			$ban->canBan();
-		}
-		catch (Exception $e)
-		{
-			$this->setRedirect($user->getUrl(false), $e->getMessage(), 'error');
-
-			return;
-		}
-
-		$ip             = $this->app->input->getString('ip', '');
-		$block          = $this->app->input->getInt('block', 0);
-		$expiration     = $this->app->input->getString('expiration', '');
-		$reason_private = $this->app->input->getString('reason_private', '');
-		$reason_public  = $this->app->input->getString('reason_public', '');
-		$comment        = $this->app->input->getString('comment', '');
-
-		$banDelPosts     = $this->app->input->getString('bandelposts', '');
-		$banDelPostsPerm = $this->app->input->getString('bandelpostsperm', '');
-		$DelAvatar       = $this->app->input->getString('delavatar', '');
-		$DelSignature    = $this->app->input->getString('delsignature', '');
-		$DelProfileInfo  = $this->app->input->getString('delprofileinfo', '');
-
-		$delban = $this->app->input->getString('delban', '');
-
-		if (!$ban->id)
-		{
-			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
-			$success = $ban->save();
-
-			// Send report to stopforumspam
-			$this->report($user);
-		}
-		else
-		{
-			if ($delban)
-			{
-				$ban->unBan($comment);
-				$success = $ban->save();
-			}
-			else
-			{
-				$ban->blocked = $block;
-				$ban->setExpiration($expiration, $comment);
-				$ban->setReason($reason_public, $reason_private);
-				$success = $ban->save();
-			}
-		}
-
-		if ($block)
-		{
-			if ($ban->isEnabled())
-			{
-				$this->app->logout($user->userid);
-				$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
-				$log     = KunenaLog::LOG_USER_BLOCK;
-			}
-			else
-			{
-				$message = Text::_('COM_KUNENA_USER_UNBLOCKED_DONE');
-				$log     = KunenaLog::LOG_USER_UNBLOCK;
-			}
-		}
-		else
-		{
-			if ($ban->isEnabled())
-			{
-				$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
-				$log     = KunenaLog::LOG_USER_BAN;
-			}
-			else
-			{
-				$message = Text::_('COM_KUNENA_USER_UNBANNED_DONE');
-				$log     = KunenaLog::LOG_USER_UNBAN;
-			}
-		}
-
-		try
-		{
-			$success;
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'error');
-		}
-
-		if ($success)
-		{
-			if ($this->config->log_moderation)
-			{
-				KunenaLog::log(
-					KunenaLog::TYPE_MODERATION,
-					$log,
-					array(
-						'expiration'     => $delban ? 'NOW' : $expiration,
-						'reason_private' => $reason_private,
-						'reason_public'  => $reason_public,
-						'comment'        => $comment,
-						'options'        => array(
-							'resetProfile'   => (bool) $DelProfileInfo,
-							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
-							'deleteAvatar'   => (bool) $DelAvatar || $DelProfileInfo,
-							'deletePosts'    => (bool) $banDelPosts,
-						),
-					),
-					null,
-					null,
-					$user
-				);
-
-				KunenaUserHelper::recountBanned();
-			}
-
-			$this->app->enqueueMessage($message);
-		}
-
-		if (!empty($DelAvatar) || !empty($DelProfileInfo))
-		{
-			$avatar_deleted = '';
-
-			// Delete avatar from file system
-			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
-			{
-				File::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
-				$avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
-			}
-
-			$user->avatar = '';
-			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
-		}
-
-		$now = new Joomla\CMS\Date\Date;
-		$birthdate =  $now->format('Y-m-d');
-
-		if (!empty($DelProfileInfo))
-		{
-			$user->personalText     = '';
-			$user->birthdate        = $birthdate;
-			$user->location         = '';
-			$user->gender           = 0;
-			$user->icq              = '';
-			$user->yim              = '';
-			$user->microsoft        = '';
-			$user->skype            = '';
-			$user->google           = '';
-			$user->github           = '';
-			$user->twitter          = '';
-			$user->facebook         = '';
-			$user->myspace          = '';
-			$user->linkedin         = '';
-			$user->linkedin_company = '';
-			$user->friendfeed       = '';
-			$user->digg             = '';
-			$user->blogspot         = '';
-			$user->flickr           = '';
-			$user->bebo             = '';
-			$user->instagram        = '';
-			$user->qqsocial         = '';
-			$user->qzone            = '';
-			$user->whatsapp         = '';
-			$user->youtube          = '';
-			$user->ok               = '';
-			$user->vimeo            = '';
-			$user->weibo            = '';
-			$user->wechat           = '';
-			$user->apple            = '';
-			$user->vk               = '';
-			$user->telegram         = '';
-			$user->websitename      = '';
-			$user->websiteurl       = '';
-			$user->signature        = '';
-			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
-		}
-		elseif (!empty($DelSignature))
-		{
-			$user->signature = '';
-			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
-		}
-
-		if (!empty($banDelPosts))
-		{
-			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
-
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
-
-			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
-
-			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
-
-			$messages = array_merge($messages_recent, $messages);
-
-			foreach ($messages as $mes)
-			{
-				$mes->publish(KunenaForum::DELETED);
-			}
-
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
-		}
-
-		if (!empty($banDelPostsPerm))
-		{
-			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
-
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
-
-			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
-
-			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
-
-			$messages = array_merge($messages_recent, $messages);
-
-			foreach ($messages as $mes)
-			{
-				$mes->delete();
-			}
-
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
-		}
-
-		$this->setRedirect($user->getUrl(false));
-	}
-
-	/**
-	 * @since Kunena
-	 * @throws Exception
-	 */
-	public function cancel()
-	{
-		$user = KunenaFactory::getUser();
-		$this->setRedirect($user->getUrl(false));
-	}
-
-	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function login()
-	{
-		if (!Factory::getUser()->guest || !Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$input  = $this->app->input;
-		$method = $input->getMethod();
-
-		$username  = $input->$method->get('username', '', 'USERNAME');
-		$password  = $input->$method->get('password', '', 'RAW');
-		$remember  = $this->input->getBool('remember', false);
-		$secretkey = $input->$method->get('secretkey', '', 'RAW');
-
-		$login = KunenaLogin::getInstance();
-		$error = $login->loginUser($username, $password, $remember, $secretkey);
-
-		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode($input->post->get('return', '', 'BASE64'));
-
-		if (!$error && $return && Uri::isInternal($return))
-		{
-			// Redirect the user.
-			$this->setRedirect(Route::_($return, false));
-
-			return;
-		}
-
-		$this->setRedirectBack();
-	}
-
-	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function logout()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$login = KunenaLogin::getInstance();
-
-		if (!Factory::getUser()->guest)
-		{
-			$login->logoutUser();
-		}
-
-		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode($this->app->input->getBase64('return'));
-
-		if ($return && Uri::isInternal($return))
-		{
-			// Redirect the user.
-			$this->setRedirect(Route::_($return, false));
-
-			return;
-		}
-
-		$this->setRedirectBack();
-	}
-
-	/**
-	 * Save online status for user
-	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function status()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$status     = $this->app->input->getInt('status', 0);
-		$me         = KunenaUserHelper::getMyself();
-		$me->status = $status;
-
-		try
-		{
-			$me->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'error');
-		}
-
-		if ($me->save())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
-		}
-
-		$this->setRedirectBack();
-	}
-
-	/**
-	 * Set online status text for user
-	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function statusText()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$status_text     = $this->app->input->post->getString('status_text', null);
-		$me              = KunenaUserHelper::getMyself();
-		$me->status_text = $status_text;
-
-		try
-		{
-			$me->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'error');
-		}
-
-		if ($me->save())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
-		}
-
-		$this->setRedirectBack();
-	}
-
-	// Internal functions:
-
-	/**
-	 * @param $karmaDelta
-	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
-	 */
-	protected function karma($karmaDelta)
-	{
-		if (!Session::checkToken('get'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		// 14400 seconds = 6 hours
-		$karma_delay = '14400';
-
-		$userid = $this->app->input->getInt('userid', 0);
-
-		$target = KunenaFactory::getUser($userid);
-
-		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$now = Factory::getDate()->toUnix();
-
-		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		if ($karmaDelta > 0)
-		{
-			if ($this->me->userid == $target->userid)
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'notice');
-				$karmaDelta = -10;
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_INCREASED'));
-			}
-		}
-		else
-		{
-			if ($this->me->userid == $target->userid)
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'notice');
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_DECREASED'));
-			}
-		}
-
-		$this->me->karma_time = $now;
-
-		try
-		{
-			$this->me->userid == $target->userid && $this->me->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		$target->karma += $karmaDelta;
-
-		try
-		{
-			$target->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
-			$this->setRedirectBack();
-
-			return;
-		}
-
-		// Activity integration
-		$activity = KunenaFactory::getActivityIntegration();
-		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
-		$this->setRedirectBack();
 	}
 
 	/**
@@ -1003,10 +593,10 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $date->format('Y-m-d');
 		}
 
-		if ($birthdate == NULL)
+		if ($birthdate == null)
 		{
-			$now = new Joomla\CMS\Date\Date;
-			$birthdate =  $now->format('Y-m-d');
+			$now       = new Joomla\CMS\Date\Date;
+			$birthdate = $now->format('Y-m-d');
 		}
 
 		$user->birthdate        = $birthdate;
@@ -1053,38 +643,500 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	protected function saveSettings()
+	{
+		$this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+
+		if ($this->app->input->get('hidemail', null) === null)
+		{
+			return;
+		}
+
+		$this->user->ordering     = $this->app->input->getInt('messageordering', 0);
+		$this->user->hideEmail    = $this->app->input->getInt('hidemail', 1);
+		$this->user->showOnline   = $this->app->input->getInt('showonline', 1);
+		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', -1);
+		$this->user->userListtime = $this->app->input->getInt('userlisttime', -2);
+		$this->user->socialshare  = $this->app->input->getInt('socialshare', 1);
+	}
+
 	/**
-	 * Delete previoulsy uplaoded avatars from filesystem
+	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
+	 */
+	public function ban()
+	{
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+
+		if (!$user->exists() || !Session::checkToken('post'))
+		{
+			$this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+			return;
+		}
+
+		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
+
+		try
+		{
+			$ban->canBan();
+		}
+		catch (Exception $e)
+		{
+			$this->setRedirect($user->getUrl(false), $e->getMessage(), 'error');
+
+			return;
+		}
+
+		$ip             = $this->app->input->getString('ip', '');
+		$block          = $this->app->input->getInt('block', 0);
+		$expiration     = $this->app->input->getString('expiration', '');
+		$reason_private = $this->app->input->getString('reason_private', '');
+		$reason_public  = $this->app->input->getString('reason_public', '');
+		$comment        = $this->app->input->getString('comment', '');
+
+		$banDelPosts     = $this->app->input->getString('bandelposts', '');
+		$banDelPostsPerm = $this->app->input->getString('bandelpostsperm', '');
+		$DelAvatar       = $this->app->input->getString('delavatar', '');
+		$DelSignature    = $this->app->input->getString('delsignature', '');
+		$DelProfileInfo  = $this->app->input->getString('delprofileinfo', '');
+
+		$delban = $this->app->input->getString('delban', '');
+
+		if (!$ban->id)
+		{
+			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
+			$success = $ban->save();
+
+			// Send report to stopforumspam
+			$this->report($user);
+		}
+		else
+		{
+			if ($delban)
+			{
+				$ban->unBan($comment);
+				$success = $ban->save();
+			}
+			else
+			{
+				$ban->blocked = $block;
+				$ban->setExpiration($expiration, $comment);
+				$ban->setReason($reason_public, $reason_private);
+				$success = $ban->save();
+			}
+		}
+
+		if ($block)
+		{
+			if ($ban->isEnabled())
+			{
+				$this->app->logout($user->userid);
+				$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
+				$log     = KunenaLog::LOG_USER_BLOCK;
+			}
+			else
+			{
+				$message = Text::_('COM_KUNENA_USER_UNBLOCKED_DONE');
+				$log     = KunenaLog::LOG_USER_UNBLOCK;
+			}
+		}
+		else
+		{
+			if ($ban->isEnabled())
+			{
+				$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
+				$log     = KunenaLog::LOG_USER_BAN;
+			}
+			else
+			{
+				$message = Text::_('COM_KUNENA_USER_UNBANNED_DONE');
+				$log     = KunenaLog::LOG_USER_UNBAN;
+			}
+		}
+
+		try
+		{
+			$success;
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($success)
+		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					$log,
+					array(
+						'expiration'     => $delban ? 'NOW' : $expiration,
+						'reason_private' => $reason_private,
+						'reason_public'  => $reason_public,
+						'comment'        => $comment,
+						'options'        => array(
+							'resetProfile'   => (bool) $DelProfileInfo,
+							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
+							'deleteAvatar'   => (bool) $DelAvatar || $DelProfileInfo,
+							'deletePosts'    => (bool) $banDelPosts,
+						),
+					),
+					null,
+					null,
+					$user
+				);
+
+				KunenaUserHelper::recountBanned();
+			}
+
+			$this->app->enqueueMessage($message);
+		}
+
+		if (!empty($DelAvatar) || !empty($DelProfileInfo))
+		{
+			$avatar_deleted = '';
+
+			// Delete avatar from file system
+			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
+			{
+				File::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
+				$avatar_deleted = Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
+			}
+
+			$user->avatar = '';
+			$user->save();
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
+		}
+
+		$now       = new Joomla\CMS\Date\Date;
+		$birthdate = $now->format('Y-m-d');
+
+		if (!empty($DelProfileInfo))
+		{
+			$user->personalText     = '';
+			$user->birthdate        = $birthdate;
+			$user->location         = '';
+			$user->gender           = 0;
+			$user->icq              = '';
+			$user->yim              = '';
+			$user->microsoft        = '';
+			$user->skype            = '';
+			$user->google           = '';
+			$user->github           = '';
+			$user->twitter          = '';
+			$user->facebook         = '';
+			$user->myspace          = '';
+			$user->linkedin         = '';
+			$user->linkedin_company = '';
+			$user->friendfeed       = '';
+			$user->digg             = '';
+			$user->blogspot         = '';
+			$user->flickr           = '';
+			$user->bebo             = '';
+			$user->instagram        = '';
+			$user->qqsocial         = '';
+			$user->qzone            = '';
+			$user->whatsapp         = '';
+			$user->youtube          = '';
+			$user->ok               = '';
+			$user->vimeo            = '';
+			$user->weibo            = '';
+			$user->wechat           = '';
+			$user->apple            = '';
+			$user->vk               = '';
+			$user->telegram         = '';
+			$user->websitename      = '';
+			$user->websiteurl       = '';
+			$user->signature        = '';
+			$user->save();
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
+		}
+		elseif (!empty($DelSignature))
+		{
+			$user->signature = '';
+			$user->save();
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
+		}
+
+		if (!empty($banDelPosts))
+		{
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
+
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
+
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
+			foreach ($messages as $mes)
+			{
+				$mes->publish(KunenaForum::DELETED);
+			}
+
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
+		}
+
+		if (!empty($banDelPostsPerm))
+		{
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
+
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
+
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
+			foreach ($messages as $mes)
+			{
+				$mes->delete();
+			}
+
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
+		}
+
+		$this->setRedirect($user->getUrl(false));
+	}
+
+	/**
+	 * Reports a user to stopforumspam.com
+	 *
+	 * @param   mixed   $user      user
+	 * @param   string  $evidence  evidence
+	 *
+	 * @return boolean|void
+	 * @since Kunena
+	 */
+	protected function report($user, string $evidence = '')
+	{
+		if (!$this->config->stopforumspam_key || !$user)
+		{
+			return false;
+		}
+
+		$spammer = Factory::getUser($user->userid);
+
+		// TODO: remove this query by getting the ip of user by an another way
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('ip')
+			->from($db->quoteName('#__kunena_messages'))
+			->where('userid=' . $user->userid)
+			->group('ip')
+			->order('time DESC');
+		$db->setQuery($query, 0, 1);
+
+		$ip = $db->loadResult();
+
+		if (!empty($ip))
+		{
+			$options = new Joomla\Registry\Registry;
+
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+
+			// Create a 'stream' transport.
+			$http = new Joomla\CMS\Http\Http($options, $transport);
+
+			$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' .
+				$this->config->stopforumspam_key . '&evidence=' . $evidence;
+
+			$response = $http->post('https://www.stopforumspam.com/add', $data);
+
+			if ($response->code == '200')
+			{
+				// Report accepted. There is no need to display the reason
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+
+				return true;
+			}
+			else
+			{
+				// Report failed or refused
+				$reasons = array();
+				preg_match('/<p>.*<\/p>/', $response->body, $reasons);
+
+				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+
+				return false;
+			}
+		}
+		else
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+		}
+	}
+
+	// Internal functions:
+
+	/**
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function cancel()
+	{
+		$user = KunenaFactory::getUser();
+		$this->setRedirect($user->getUrl(false));
+	}
+
+	/**
+	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
+	 */
+	public function login()
+	{
+		if (!Factory::getUser()->guest || !Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$input  = $this->app->input;
+		$method = $input->getMethod();
+
+		$username  = $input->$method->get('username', '', 'USERNAME');
+		$password  = $input->$method->get('password', '', 'RAW');
+		$remember  = $this->input->getBool('remember', false);
+		$secretkey = $input->$method->get('secretkey', '', 'RAW');
+
+		$login = KunenaLogin::getInstance();
+		$error = $login->loginUser($username, $password, $remember, $secretkey);
+
+		// Get the return url from the request and validate that it is internal.
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
+
+		if (!$error && $return && Uri::isInternal($return))
+		{
+			// Redirect the user.
+			$this->setRedirect(Route::_($return, false));
+
+			return;
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
+	 */
+	public function logout()
+	{
+		if (!Session::checkToken('request'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$login = KunenaLogin::getInstance();
+
+		if (!Factory::getUser()->guest)
+		{
+			$login->logoutUser();
+		}
+
+		// Get the return url from the request and validate that it is internal.
+		$return = base64_decode($this->app->input->getBase64('return'));
+
+		if ($return && Uri::isInternal($return))
+		{
+			// Redirect the user.
+			$this->setRedirect(Route::_($return, false));
+
+			return;
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Save online status for user
 	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception
+	 * @throws null
 	 */
-	protected function deleteOldAvatars()
+	public function status()
 	{
-		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
-
-		if (preg_match('|^users/|', $user->avatar))
+		if (!Session::checkToken('request'))
 		{
-			// Delete old uploaded avatars:
-			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
-			{
-				$deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
 
-				foreach ($deletelist as $delete)
-				{
-					if (is_file($delete . '/' . $user->avatar))
-					{
-						File::delete($delete . '/' . $user->avatar);
-					}
-				}
-			}
-
-			if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar))
-			{
-				File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
-			}
+			return;
 		}
+
+		$status     = $this->app->input->getInt('status', 0);
+		$me         = KunenaUserHelper::getMyself();
+		$me->status = $status;
+
+		try
+		{
+			$me->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($me->save())
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Set online status text for user
+	 *
+	 * @return void
+	 * @since Kunena
+	 * @throws Exception
+	 * @throws null
+	 */
+	public function statusText()
+	{
+		if (!Session::checkToken('request'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$status_text     = $this->app->input->post->getString('status_text', '');
+		$me              = KunenaUserHelper::getMyself();
+		$me->status_text = $status_text;
+
+		try
+		{
+			$me->save();
+		}
+		catch (\Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		if ($me->save())
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
+		}
+
+		$this->setRedirectBack();
 	}
 
 	/**
@@ -1163,6 +1215,40 @@ class KunenaControllerUser extends KunenaController
 		echo $upload->ajaxResponse($response);
 
 		jexit();
+	}
+
+	/**
+	 * Delete previoulsy uplaoded avatars from filesystem
+	 *
+	 * @return void
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function deleteOldAvatars()
+	{
+		$user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+
+		if (preg_match('|^users/|', $user->avatar))
+		{
+			// Delete old uploaded avatars:
+			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
+			{
+				$deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+
+				foreach ($deletelist as $delete)
+				{
+					if (is_file($delete . '/' . $user->avatar))
+					{
+						File::delete($delete . '/' . $user->avatar);
+					}
+				}
+			}
+
+			if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar))
+			{
+				File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
+			}
+		}
 	}
 
 	/**
@@ -1268,23 +1354,6 @@ class KunenaControllerUser extends KunenaController
 		jexit();
 	}
 
-	protected function saveSettings()
-	{
-		$this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
-
-		if ($this->app->input->get('hidemail', null) === null)
-		{
-			return;
-		}
-
-		$this->user->ordering     = $this->app->input->getInt('messageordering', 0);
-		$this->user->hideEmail    = $this->app->input->getInt('hidemail', 1);
-		$this->user->showOnline   = $this->app->input->getInt('showonline', 1);
-		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', -1);
-		$this->user->userListtime = $this->app->input->getInt('userlisttime', -2);
-		$this->user->socialshare  = $this->app->input->getInt('socialshare', 1);
-	}
-
 	public function delfile()
 	{
 		if (!Session::checkToken('post'))
@@ -1346,74 +1415,5 @@ class KunenaControllerUser extends KunenaController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
 		$this->setRedirectBack();
-	}
-
-	/**
-	 * Reports a user to stopforumspam.com
-	 *
-	 * @param   mixed   $user      user
-	 * @param   string  $evidence  evidence
-	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 */
-	protected function report($user, string $evidence = '')
-	{
-		if (!$this->config->stopforumspam_key || !$user)
-		{
-			return false;
-		}
-
-		$spammer = Factory::getUser($user->userid);
-
-		// TODO: remove this query by getting the ip of user by an another way
-		$db = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('ip')
-			->from($db->quoteName('#__kunena_messages'))
-			->where('userid=' . $user->userid)
-		->group('ip')
-		->order('time DESC');
-		$db->setQuery($query, 0, 1);
-
-		$ip = $db->loadResult();
-
-		if (!empty($ip))
-		{
-			$options = new Joomla\Registry\Registry;
-
-			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
-
-			// Create a 'stream' transport.
-			$http = new Joomla\CMS\Http\Http($options, $transport);
-
-			$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' .
-				$this->config->stopforumspam_key . '&evidence=' . $evidence;
-
-			$response = $http->post('https://www.stopforumspam.com/add', $data);
-
-			if ($response->code == '200')
-			{
-				// Report accepted. There is no need to display the reason
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
-
-				return true;
-			}
-			else
-			{
-				// Report failed or refused
-				$reasons = array();
-				preg_match('/<p>.*<\/p>/', $response->body, $reasons);
-
-				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
-
-				return false;
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
-		}
 	}
 }

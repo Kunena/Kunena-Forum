@@ -150,7 +150,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 			if (!empty($params_title))
 			{
-				$title = $params->get('page_title');
+				$title = $params->get('page_title') . $pagesText;
 				$this->setTitle($title);
 			}
 			else
@@ -166,7 +166,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_VIEW_USER_LIST');
+				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
 				$this->setKeywords($keywords);
 			}
 
@@ -177,7 +177,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title . $pagesText;
 				$this->setDescription($description);
 			}
 		}

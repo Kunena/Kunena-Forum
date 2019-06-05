@@ -26,8 +26,8 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 	 * Prepare topic list for moderators.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()
@@ -94,11 +94,8 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			->filterByTime($time)
 			->order('id', 0)
 			->filterByUserAccess($this->me)
+			->filterByUserUnread($this->me)
 			->find();
-
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
-
-		$limitnew = $finder->count();
 
 		$mesIds = array();
 
@@ -119,7 +116,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 
 		$this->topics = $list;
 
-		$this->pagination = new KunenaPagination($limitnew, $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		if ($this->moreUri)
 		{

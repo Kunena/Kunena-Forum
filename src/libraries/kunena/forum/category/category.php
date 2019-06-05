@@ -173,7 +173,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @var integer
 	 * @since Kunena
 	 */
-	protected $_new = 0;
+	protected $_new = null;
 
 	/**
 	 * @var string

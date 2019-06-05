@@ -23,7 +23,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to return a KunenaPagination object
 	 *
-	 * @param   int $maxpages Maximum that are allowed for pagination
+	 * @param   int  $maxpages  Maximum that are allowed for pagination
 	 *
 	 * @return KunenaPagination
 	 * @since Kunena
@@ -39,11 +39,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve category icon
 	 *
-	 * @param   string $category The KunenaCategory object
+	 * @param   string  $category  The KunenaCategory object
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -77,11 +77,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve small category icon
 	 *
-	 * @param   string $subcategory The KunenaCategory object
+	 * @param   string  $subcategory  The KunenaCategory object
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
@@ -115,12 +115,12 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of mark read button
 	 *
-	 * @param   int $category_id The category Id
-	 * @param   int $numTopics   The number of topics
+	 * @param   int  $category_id  The category Id
+	 * @param   int  $numTopics    The number of topics
 	 *
 	 * @return boolean|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
@@ -141,12 +141,12 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int         $catid The Id of category
-	 * @param   bool|string $xhtml Replace & by & for XML compliance.
+	 * @param   int          $catid  The Id of category
+	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
 	 * @return boolean|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)

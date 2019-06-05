@@ -22,47 +22,42 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $state;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $me;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $total;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $users;
+	/**
+	 * @var
+	 * @since Kunena
+	 */
+	public $pagination;
+	/**
 	 * @var string
 	 * @since Kunena
 	 */
 	protected $name = 'User/List';
 
 	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $state;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $me;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $total;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $users;
-
-	/**
-	 * @var
-	 * @since Kunena
-	 */
-	public $pagination;
-
-	/**
 	 * Load user list.
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -134,8 +129,8 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -166,7 +161,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 			if (!empty($params_keywords))
 			{
-				$keywords = $params->get('menu-meta_keywords');
+				$keywords = $params->get('menu-meta_keywords') . $pagesText;
 				$this->setKeywords($keywords);
 			}
 			else
@@ -177,7 +172,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description');
+				$description = $params->get('menu-meta_description') . $pagesText;
 				$this->setDescription($description);
 			}
 			else

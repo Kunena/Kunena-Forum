@@ -108,7 +108,8 @@ HTMLHelper::_('behavior.tabstate');
 													<tr <?php if ($this->config->board_title != 'Kunena') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_BOARD_TITLE') ?></td>
 														<td>
-															<input type="text" name="cfg_board_title"
+															<input type="text" class="form-control"
+															       name="cfg_board_title"
 															       value="<?php echo $this->escape($this->config->board_title) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?></td>
@@ -116,7 +117,7 @@ HTMLHelper::_('behavior.tabstate');
 													<tr <?php if ($this->config->email != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_EMAIL') ?></td>
 														<td>
-															<input type="text" name="cfg_email"
+															<input type="text" class="form-control" name="cfg_email"
 															       value="<?php echo $this->escape($this->config->email) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
@@ -148,7 +149,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->escape($this->config->sessiontimeout) != 1800) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 														</td>
-														<td><input type="text"
+														<td><input type="text" class="form-control"
 														           name="cfg_sessiontimeout"
 														           value="<?php echo $this->escape($this->config->sessiontimeout);
 														           ?>"/></td>
@@ -255,7 +256,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->threads_per_page != 20) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_THREADS') ?></td>
 														<td>
-															<input type="text" name="cfg_threads_per_page"
+															<input type="text" class="form-control"
+															       name="cfg_threads_per_page"
 															       value="<?php echo $this->escape($this->config->threads_per_page) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_THREADS_DESC') ?></td>
@@ -263,7 +265,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->messages_per_page != 6) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_MESSAGES') ?></td>
 														<td>
-															<input type="text" name="cfg_messages_per_page"
+															<input type="text" class="form-control"
+															       name="cfg_messages_per_page"
 															       value="<?php echo $this->escape($this->config->messages_per_page) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_MESSAGES_DESC') ?></td>
@@ -271,7 +274,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->messages_per_page_search != 15) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_MESSAGES_SEARCH') ?></td>
 														<td>
-															<input type="text" name="cfg_messages_per_page_search"
+															<input type="text" class="form-control"
+															       name="cfg_messages_per_page_search"
 															       value="<?php echo $this->escape($this->config->messages_per_page_search) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
@@ -284,7 +288,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->historylimit != 6) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_HISTLIM') ?></td>
 														<td>
-															<input type="text" name="cfg_historylimit"
+															<input type="text" class="form-control"
+															       name="cfg_historylimit"
 															       value="<?php echo $this->escape($this->config->historylimit) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
@@ -322,7 +327,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->catimagepath != 'category_images') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CATIMAGEPATH_LEGACY') ?></td>
 														<td>
-															<input type="text" name="cfg_catimagepath"
+															<input type="text" class="form-control"
+															       name="cfg_catimagepath"
 															       value="<?php echo $this->escape($this->config->catimagepath) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CATIMAGEPATH_LEGACY_DESC') ?></td>
@@ -418,7 +424,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->attach_start != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START') ?></td>
 														<td>
-															<input type="text" name="cfg_attach_start" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_attach_start" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->attach_start) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC') ?></td>
@@ -426,7 +433,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->attach_end != 14) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END') ?></td>
 														<td>
-															<input type="text" name="cfg_attach_end" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_attach_end" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->attach_end) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
@@ -486,7 +494,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->thankyou_max != 10) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
 														<td>
-															<input type="text" name="cfg_thankyou_max" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_thankyou_max" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->thankyou_max) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
@@ -499,7 +508,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->useredittime != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_USER_EDIT_TIME') ?></td>
 														<td>
-															<input type="text" name="cfg_useredittime"
+															<input type="text" class="form-control"
+															       name="cfg_useredittime"
 															       value="<?php echo $this->escape($this->config->useredittime) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_USER_EDIT_TIME_DESC') ?></td>
@@ -507,7 +517,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->useredittimegrace != 600) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE') ?></td>
 														<td>
-															<input type="text" name="cfg_useredittimegrace"
+															<input type="text" class="form-control"
+															       name="cfg_useredittimegrace"
 															       value="<?php echo $this->escape($this->config->useredittimegrace) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC') ?></td>
@@ -570,7 +581,9 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->maxsig != 300) : echo 'class="changed"'; endif; ?>>
 														<td align="left"
 														    valign="top"><?php echo Text::_('COM_KUNENA_A_SIGNATURE') ?></td>
-														<td align="left" valign="top"><input type="text" name="cfg_maxsig"
+														<td align="left" valign="top"><input type="text"
+														                                     class="form-control"
+														                                     name="cfg_maxsig"
 														                                     value="<?php echo $this->escape($this->config->maxsig) ?>"/>
 														</td>
 														<td align="left"
@@ -595,6 +608,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->emailheader != 'media/kunena/email/hero-wide.png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER') ?></td>
 														<td><input name="cfg_emailheader" type="text"
+														           class="inputbox form-control"
 														           value="<?php echo $this->escape($this->config->emailheader) ?>">
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_DESC') ?></td>
@@ -642,7 +656,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->email_visible_address != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS') ?></td>
 														<td>
-															<input type="text" name="cfg_email_visible_address"
+															<input type="text" class="form-control"
+															       name="cfg_email_visible_address"
 															       value="<?php echo $this->escape($this->config->email_visible_address) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC') ?></td>
@@ -702,7 +717,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->hold_newusers_posts != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS') ?></td>
 														<td>
-															<input type="text" name="cfg_hold_newusers_posts"
+															<input type="text" class="form-control"
+															       name="cfg_hold_newusers_posts"
 															       class="ksm-field"
 															       value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>"/>
 														</td>
@@ -721,7 +737,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->floodprotection != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_FLOOD') ?></td>
 														<td>
-															<input type="text" name="cfg_floodprotection"
+															<input type="text" class="form-control"
+															       name="cfg_floodprotection"
 															       value="<?php echo $this->escape($this->config->floodprotection) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
@@ -749,7 +766,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->max_links != 6) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
 														<td>
-															<input type="text" name="cfg_max_links"
+															<input type="text" class="form-control" name="cfg_max_links"
 															       value="<?php echo $this->escape($this->config->max_links) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
@@ -791,7 +808,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->captcha_post_limit != 0) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
 														<td>
-															<input type="text" name="cfg_captcha_post_limit"
+															<input type="text" class="form-control"
+															       name="cfg_captcha_post_limit"
 															       class="ksm-field"
 															       value="<?php echo $this->escape($this->config->captcha_post_limit) ?>"/>
 														</td>
@@ -807,7 +825,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="25%"><?php echo Text::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
 														<td align="left" valign="top" width="25%">
-															<input type="text"
+															<input type="text" class="form-control"
 															       name="cfg_stopforumspam_key"
 															       class="ksm-field-large"
 															       value="<?php echo $this->escape($this->config->stopforumspam_key); ?>"/>
@@ -838,21 +856,24 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													</tr>
 													<tr <?php if ($this->config->defaultavatar != 'nophoto.png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_AVATAR_DEFAULT') ?></td>
-														<td><input type="text" name="cfg_defaultavatar"
+														<td><input type="text" class="form-control"
+														           name="cfg_defaultavatar"
 														           value="<?php echo $this->escape($this->config->defaultavatar) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_AVATAR_DEFAULT_DESC') ?></td>
 													</tr>
 													<tr <?php if ($this->config->defaultavatarsmall != 's_nophoto.png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL') ?></td>
-														<td><input type="text" name="cfg_defaultavatarsmall"
+														<td><input type="text" class="form-control"
+														           name="cfg_defaultavatarsmall"
 														           value="<?php echo $this->escape($this->config->defaultavatarsmall) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_AVATAR_DEFAULT_SMALL_DESC') ?></td>
 													</tr>
 													<tr <?php if ($this->config->avatartypes != 'gif, jpeg, jpg, png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED') ?></td>
-														<td><input type="text" name="cfg_avatartypes"
+														<td><input type="text" class="form-control"
+														           name="cfg_avatartypes"
 														           value="<?php echo $this->escape($this->config->avatartypes) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC') ?></td>
@@ -870,7 +891,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->avatarsize != 2048) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_AVSIZE') ?></td>
 														<td>
-															<input type="text" name="cfg_avatarsize" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_avatarsize" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->avatarsize) ?>"/>
 															kB
 														</td>
@@ -879,7 +901,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->avatarquality != 75) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 														<td class="nowrap">
-															<input type="text" name="cfg_avatarquality" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_avatarquality" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->avatarquality) ?>"/>
 															%
 														</td>
@@ -915,7 +938,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->attachment_limit != 8) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
 														<td>
-															<input type="text" name="cfg_attachment_limit"
+															<input type="text" class="form-control"
+															       name="cfg_attachment_limit"
 															       value="<?php echo $this->escape($this->config->attachment_limit) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
@@ -957,7 +981,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imagetypes != 'jpg,jpeg,gif,png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?></td>
 														<td>
-															<input type="text" name="cfg_imagetypes"
+															<input type="text" class="form-control"
+															       name="cfg_imagetypes"
 															       value="<?php echo $this->escape($this->config->imagetypes) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?></td>
@@ -970,7 +995,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imagemimetypes != 'image/jpeg,image/jpg,image/gif,image/png') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?></td>
 														<td>
-															<input type="text" name="cfg_imagemimetypes"
+															<input type="text" class="form-control"
+															       name="cfg_imagemimetypes"
 															       value="<?php echo $this->escape($this->config->imagemimetypes) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?></td>
@@ -978,7 +1004,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imagesize != 150) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGSIZE') ?></td>
 														<td>
-															<input type="text" name="cfg_imagesize" class="ksm-field"
+															<input type="text" class="form-control" name="cfg_imagesize"
+															       class="ksm-field"
 															       value="<?php echo $this->escape($this->config->imagesize) ?>"/>
 															kB
 														</td>
@@ -994,7 +1021,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imagewidth != 800) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 														<td>
-															<input type="text" name="cfg_imagewidth" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_imagewidth" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->imagewidth) ?>"/>
 															px
 														</td>
@@ -1003,7 +1031,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imageheight != 800) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 														<td>
-															<input type="text" name="cfg_imageheight" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_imageheight" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->imageheight) ?>"/>
 															px
 														</td>
@@ -1012,7 +1041,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->thumbwidth != 32) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
 														<td>
-															<input type="text" name="cfg_thumbwidth" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_thumbwidth" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->thumbwidth) ?>"/>
 															px
 														</td>
@@ -1021,7 +1051,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->thumbheight != 32) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
 														<td>
-															<input type="text" class="ksm-field" name="cfg_thumbheight"
+															<input type="text" class="form-control" class="ksm-field"
+															       name="cfg_thumbheight"
 															       value="<?php echo $this->escape($this->config->thumbheight) ?>"/>
 															px
 														</td>
@@ -1030,7 +1061,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->imagequality != 50) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 														<td>
-															<input type="text" name="cfg_imagequality" class="ksm-field"
+															<input type="text" class="form-control"
+															       name="cfg_imagequality" class="ksm-field"
 															       value="<?php echo $this->escape($this->config->imagequality) ?>"/>
 															%
 														</td>
@@ -1063,7 +1095,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->filetypes != 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_FILEALLOWEDTYPES') ?></td>
 														<td>
-															<input type="text" name="cfg_filetypes"
+															<input type="text" class="form-control" name="cfg_filetypes"
 															       value="<?php echo $this->escape($this->config->filetypes) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC') ?></td>
@@ -1071,7 +1103,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->filesize != 120) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_FILESIZE') ?></td>
 														<td>
-															<input type="text" name="cfg_filesize" class="ksm-field"
+															<input type="text" class="form-control" name="cfg_filesize"
+															       class="ksm-field"
 															       value="<?php echo $this->escape($this->config->filesize) ?>"/> <?php echo Text::_('COM_KUNENA_A_FILESIZE_KB') ?>
 														</td>
 														<td>
@@ -1155,7 +1188,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->trimlongurlsfront != 40) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_TRIMLONGURLSFRONT') ?></td>
 														<td>
-															<input type="text" name="cfg_trimlongurlsfront"
+															<input type="text" class="form-control"
+															       name="cfg_trimlongurlsfront"
 															       value="<?php echo $this->escape($this->config->trimlongurlsfront) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC') ?></td>
@@ -1163,7 +1197,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->trimlongurlsback != 20) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_TRIMLONGURLSBACK') ?></td>
 														<td>
-															<input type="text" name="cfg_trimlongurlsback"
+															<input type="text" class="form-control"
+															       name="cfg_trimlongurlsback"
 															       value="<?php echo $this->escape($this->config->trimlongurlsback) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?></td>
@@ -1216,7 +1251,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->ebay_affiliate_id != 5337089937) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_EBAY_AFFILIATE_ID') ?></td>
 														<td>
-															<input type="text" name="cfg_ebay_affiliate_id"
+															<input type="text" class="form-control"
+															       name="cfg_ebay_affiliate_id"
 															       value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
@@ -1224,7 +1260,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->ebay_api_key != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL') ?></td>
 														<td>
-															<input type="text" name="cfg_ebay_api_key"
+															<input type="text" class="form-control"
+															       name="cfg_ebay_api_key"
 															       value="<?php echo $this->escape($this->config->ebay_api_key) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
@@ -1232,7 +1269,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->twitter_consumer_key != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
 														<td>
-															<input type="text" name="cfg_twitter_consumer_key"
+															<input type="text" class="form-control"
+															       name="cfg_twitter_consumer_key"
 															       value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
@@ -1240,7 +1278,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->twitter_consumer_secret != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
 														<td>
-															<input type="text" name="cfg_twitter_consumer_secret"
+															<input type="text" class="form-control"
+															       name="cfg_twitter_consumer_secret"
 															       value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
@@ -1248,7 +1287,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->google_map_api_key != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY') ?></td>
 														<td>
-															<input type="text" name="cfg_google_map_api_key"
+															<input type="text" class="form-control"
+															       name="cfg_google_map_api_key"
 															       value="<?php echo $this->escape($this->config->google_map_api_key) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC') ?></td>
@@ -1288,7 +1328,7 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->rss_limit != 100) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_LIMIT') ?></td>
 														<td>
-															<input type="text" name="cfg_rss_limit"
+															<input type="text" class="form-control" name="cfg_rss_limit"
 															       value="<?php echo $this->escape($this->config->rss_limit) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_LIMIT_DESC') ?></td>
@@ -1296,7 +1336,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->rss_included_categories != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
 														<td>
-															<input type="text" name="cfg_rss_included_categories"
+															<input type="text" class="form-control"
+															       name="cfg_rss_included_categories"
 															       value="<?php echo $this->escape($this->config->rss_included_categories) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
@@ -1304,7 +1345,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->rss_excluded_categories != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
 														<td>
-															<input type="text" name="cfg_rss_excluded_categories"
+															<input type="text" class="form-control"
+															       name="cfg_rss_excluded_categories"
 															       value="<?php echo $this->escape($this->config->rss_excluded_categories) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
@@ -1342,7 +1384,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->rss_feedburner_url != '') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_RSS_FEEDBURNER_URL') ?></td>
 														<td>
-															<input type="text" class="ksm-field-large"
+															<input type="text" class="form-control"
+															       class="ksm-field-large"
 															       name="cfg_rss_feedburner_url"
 															       value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>"/>
 														</td>
@@ -1368,7 +1411,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->userlist_rows != 30) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 														<td>
-															<input type="text" name="cfg_userlist_rows"
+															<input type="text" class="form-control"
+															       name="cfg_userlist_rows"
 															       value="<?php echo $this->escape($this->config->userlist_rows) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
@@ -1426,7 +1470,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->show_session_starttime != 1800) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
 														<td>
-															<input type="text" name="cfg_show_session_starttime"
+															<input type="text" class="form-control"
+															       name="cfg_show_session_starttime"
 															       value="<?php echo $this->escape($this->config->show_session_starttime) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
@@ -1468,7 +1513,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->popusercount != 5) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_USERNUM') ?></td>
 														<td>
-															<input type="text" name="cfg_popusercount"
+															<input type="text" class="form-control"
+															       name="cfg_popusercount"
 															       value="<?php echo $this->escape($this->config->popusercount) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_USERNUM') ?></td>
@@ -1481,7 +1527,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->popsubjectcount != 5) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_NUMPOP') ?></td>
 														<td>
-															<input type="text" name="cfg_popsubjectcount"
+															<input type="text" class="form-control"
+															       name="cfg_popsubjectcount"
 															       value="<?php echo $this->escape($this->config->popsubjectcount) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_NUMPOP') ?></td>
@@ -1494,7 +1541,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->poppollscount != 5) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_POLLSPOP') ?></td>
 														<td>
-															<input type="text" name="cfg_poppollscount"
+															<input type="text" class="form-control"
+															       name="cfg_poppollscount"
 															       value="<?php echo $this->escape($this->config->poppollscount) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_POLLSPOP') ?></td>
@@ -1507,7 +1555,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->popthankscount != 5) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_THANKSPOP') ?></td>
 														<td>
-															<input type="text" name="cfg_popthankscount"
+															<input type="text" class="form-control"
+															       name="cfg_popthankscount"
 															       value="<?php echo $this->escape($this->config->popthankscount) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_THANKSPOP') ?></td>
@@ -1539,7 +1588,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->pollnboptions != 4) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS') ?></td>
 														<td>
-															<input type="text" name="cfg_pollnboptions"
+															<input type="text" class="form-control"
+															       name="cfg_pollnboptions"
 															       value="<?php echo $this->escape($this->config->pollnboptions) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC') ?></td>
@@ -1547,7 +1597,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->polltimebtvotes != '00:15:00') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_TIME_VOTES') ?></td>
 														<td>
-															<input type="text" name="cfg_polltimebtvotes"
+															<input type="text" class="form-control"
+															       name="cfg_polltimebtvotes"
 															       value="<?php echo $this->escape($this->config->polltimebtvotes) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC') ?></td>
@@ -1555,7 +1606,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<tr <?php if ($this->config->pollnbvotesbyuser != 100) : echo 'class="changed"'; endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER') ?></td>
 														<td>
-															<input type="text" name="cfg_pollnbvotesbyuser"
+															<input type="text" class="form-control"
+															       name="cfg_pollnbvotesbyuser"
 															       value="<?php echo $this->escape($this->config->pollnbvotesbyuser) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC') ?></td>
@@ -1588,7 +1640,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="5%"><?php echo Text::_('COM_KUNENA_A_ACTIVEMENU') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_activemenuitem"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_activemenuitem"
 														                      value="<?php echo $this->escape($this->config->activemenuitem); ?>"/>
 														</td>
 														<td align="left"
@@ -1598,7 +1651,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="5%"><?php echo Text::_('COM_KUNENA_A_MAINMENU') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_mainmenu_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_mainmenu_id"
 														                      value="<?php echo $this->escape($this->config->mainmenu_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1608,7 +1662,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="5%"><?php echo Text::_('COM_KUNENA_A_HOMEID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_home_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_home_id"
 														                      value="<?php echo $this->escape($this->config->home_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1618,7 +1673,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_INDEXID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_index_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_index_id"
 														                      value="<?php echo $this->escape($this->config->index_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1628,7 +1684,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_MODERATORSID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_moderators_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_moderators_id"
 														                      value="<?php echo $this->escape($this->config->moderators_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1638,7 +1695,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_TOPICLISTID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_topiclist_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_topiclist_id"
 														                      value="<?php echo $this->escape($this->config->topiclist_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1648,7 +1706,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_MISCID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_misc_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_misc_id"
 														                      value="<?php echo $this->escape($this->config->misc_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1658,7 +1717,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_PROFILEID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_profile_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_profile_id"
 														                      value="<?php echo $this->escape($this->config->profile_id); ?>"/>
 														</td>
 														<td align="left"
@@ -1668,7 +1728,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td align="left" valign="top"
 														    width="15%"><?php echo Text::_('COM_KUNENA_A_SEARCHID') ?></td>
 														<td align="left" valign="top"
-														    width="5%"><input type="text" name="cfg_search_id"
+														    width="5%"><input type="text" class="form-control"
+														                      name="cfg_search_id"
 														                      value="<?php echo $this->escape($this->config->search_id); ?>"/>
 														</td>
 														<td align="left"

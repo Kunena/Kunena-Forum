@@ -48,12 +48,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
-
-		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
-		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.8.2/js/all.js', array(), array('defer' => true));
-		}
-
+		
 		$this->display();
 	}
 
@@ -99,7 +94,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#subscribecatsusersModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
 						$title</button>";
-						$bar->appendButton('Custom', $dhtml, 'batch');
+		$bar->appendButton('Custom', $dhtml, 'batch');
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
 		JToolbarHelper::help('COM_KUNENA', false, $help_url);

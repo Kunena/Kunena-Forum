@@ -63,7 +63,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$smiley_list[] = HTMLHelper::_('select.option', $path, $file);
 		}
 
-		$list = HTMLHelper::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
+		$list = HTMLHelper::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox form-control" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
 
 		return $list;
 	}

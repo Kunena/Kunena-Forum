@@ -29,8 +29,8 @@ class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getInput()
 	{
@@ -59,7 +59,7 @@ class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField
 		}
 		else
 		{
-			$attribs .= 'class="inputbox"';
+			$attribs .= 'class="inputbox form-control"';
 		}
 
 		if (!empty($this->element['multiple']))

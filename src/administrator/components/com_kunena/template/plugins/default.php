@@ -28,8 +28,7 @@ $user = Factory::getUser();
 		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
-		}
-		else {
+		} else {
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -126,7 +125,8 @@ $user = Factory::getUser();
 							<td class="nowrap center">
 								<label for="filter_enabled"
 								       class="element-invisible"><?php echo Text::_('All'); ?></label>
-								<select name="filter_enabled" id="filter_enabled" class="select-filter filter"
+								<select name="filter_enabled" id="filter_enabled"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterEnabled, true); ?>
@@ -135,7 +135,8 @@ $user = Factory::getUser();
 							<td class="nowrap">
 								<label for="filter_name"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_name"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_name"
 								       id="filter_name"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterName; ?>"
@@ -144,7 +145,8 @@ $user = Factory::getUser();
 							<td class="nowrap center">
 								<label for="filter_element"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_element"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_element"
 								       id="filter_element"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterElement; ?>"
@@ -153,7 +155,8 @@ $user = Factory::getUser();
 							<td class="nowrap center">
 								<label for="filter_access"
 								       class="element-invisible"><?php echo Text::_('All'); ?></label>
-								<select name="filter_access" id="filter_access" class="select-filter filter"
+								<select name="filter_access" id="filter_access"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess, true); ?>

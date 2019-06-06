@@ -174,7 +174,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$params  = array(
 			'sections' => false,
 			'action'   => 'read',);
-		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
 	}
@@ -230,7 +230,7 @@ class KunenaAdminModelUser extends KunenaModel
 		}
 
 		// Build special ranks select list
-		$selectRank = HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank);
+		$selectRank = HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
 
 		return $selectRank;
 	}
@@ -242,7 +242,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getMovecatslist()
 	{
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
 	}
 
 	/**

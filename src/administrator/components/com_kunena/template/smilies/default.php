@@ -28,8 +28,7 @@ HTMLHelper::_('behavior.tabstate');
 
 		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
-		}
-		else {
+		} else {
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -135,7 +134,8 @@ HTMLHelper::_('behavior.tabstate');
 											<td class="nowrap center">
 												<label for="filter_code"
 												       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-												<input class="input-block-level input-filter filter" type="text"
+												<input class="input-block-level input-filter filter form-control"
+												       type="text"
 												       name="filter_code" id="filter_code"
 												       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 												       value="<?php echo $this->filterCode; ?>"
@@ -144,7 +144,8 @@ HTMLHelper::_('behavior.tabstate');
 											<td class="nowrap center">
 												<label for="filter_location"
 												       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-												<input class="input-block-level input-filter filter" type="text"
+												<input class="input-block-level input-filter filter form-control"
+												       type="text"
 												       name="filter_location"
 												       id="filter_location"
 												       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"

@@ -109,7 +109,7 @@ jQuery(function($) {
 											<fieldset>
 												<legend><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 												<div>
-														<textarea id="user-signature" class="input-xxlarge"
+														<textarea id="user-signature" class="inputbox form-control"
 														          name="signature"
 														          cols="4" rows="6"
 														><?php echo $this->escape($this->user->signature); ?></textarea>
@@ -139,6 +139,7 @@ jQuery(function($) {
 														</td>
 														<td>
 															<input id="personaltext" type="text"
+															       class="inputbox form-control"
 															       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
 															       name="personaltext"
 															       value="<?php echo $this->escape($this->user->personalText); ?>"/>
@@ -168,6 +169,7 @@ jQuery(function($) {
 														</td>
 														<td>
 															<input id="location" type="text" name="location"
+															       class="inputbox form-control"
 															       value="<?php echo $this->escape($this->user->location); ?>"/>
 														</td>
 													</tr>
@@ -185,7 +187,7 @@ jQuery(function($) {
 															$gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 															// Build the html select list
 															echo HTMLHelper::_(
-																'select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text',
+																'select.genericlist', $gender, 'gender', 'class="inputbox form-control" size="1"', 'value', 'text',
 																$this->escape($this->user->gender), 'gender');
 															?>
 														</td>
@@ -201,6 +203,7 @@ jQuery(function($) {
 															      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 																      . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 																<input id="social-site" type="text" name="websitename"
+																       class="inputbox form-control"
 																       value="<?php echo $this->escape($this->user->websitename); ?>"/>
 															</span>
 														</td>
@@ -215,6 +218,7 @@ jQuery(function($) {
 															<span class="hasTooltip"
 															      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 																<input id="social-url" type="text" name="websiteurl"
+																       class="inputbox form-control"
 																       value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
 															</span>
 														</td>
@@ -235,7 +239,7 @@ jQuery(function($) {
 																		      . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																	<?php endif; ?>
 																		<input id="social-<?php echo $key; ?>"
-																		       type="text"
+																		       type="text" class="inputbox form-control"
 																		       name="<?php echo $key ?>"
 																		       value="<?php echo $this->escape($this->user->$key); ?>"/>
 																	</span>

@@ -5,8 +5,8 @@
  * @subpackage      Pagination
  *
  * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @copyright       Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
@@ -133,10 +133,10 @@ class KunenaPagination
 	/**
 	 * Constructor.
 	 *
-	 * @param   integer $total      The total number of items.
-	 * @param   integer $limitstart The offset of the item to start at.
-	 * @param   integer $limit      The number of items to display per page.
-	 * @param   string  $prefix     The prefix used for request variables.
+	 * @param   integer  $total       The total number of items.
+	 * @param   integer  $limitstart  The offset of the item to start at.
+	 * @param   integer  $limit       The number of items to display per page.
+	 * @param   string   $prefix      The prefix used for request variables.
 	 *
 	 * @since   1.5
 	 */
@@ -191,9 +191,9 @@ class KunenaPagination
 	/**
 	 * Set number of displayed pages.
 	 *
-	 * @param   int $displayed Number of displayed pages.
-	 * @param   int $start     How many items to display from the beginning (1 2 ...)
-	 * @param   int $end       How many items to display from the end (... 49 50)
+	 * @param   int  $displayed  Number of displayed pages.
+	 * @param   int  $start      How many items to display from the beginning (1 2 ...)
+	 * @param   int  $end        How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 * @since Kunena
@@ -238,7 +238,7 @@ class KunenaPagination
 	/**
 	 * Set URI for pagination.
 	 *
-	 * @param   Joomla\CMS\Uri\Uri $uri Joomla\CMS\Uri\Uri object.
+	 * @param   Joomla\CMS\Uri\Uri  $uri  Joomla\CMS\Uri\Uri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 * @since Kunena
@@ -254,8 +254,8 @@ class KunenaPagination
 	 * Method to set an additional URL parameter to be added to all pagination class generated
 	 * links.
 	 *
-	 * @param   string $key   The name of the URL parameter for which to set a value.
-	 * @param   mixed  $value The value to set for the URL parameter.
+	 * @param   string  $key    The name of the URL parameter for which to set a value.
+	 * @param   mixed   $value  The value to set for the URL parameter.
 	 *
 	 * @return  mixed  The old value for the parameter.
 	 *
@@ -283,7 +283,7 @@ class KunenaPagination
 	 * Method to get an additional URL parameter (if it exists) to be added to
 	 * all pagination class generated links.
 	 *
-	 * @param   string $key The name of the URL parameter for which to get the value.
+	 * @param   string  $key  The name of the URL parameter for which to get the value.
 	 *
 	 * @return  mixed  The value if it exists or null if it does not.
 	 *
@@ -299,7 +299,7 @@ class KunenaPagination
 	/**
 	 * Return the rationalised offset for a row with a given index.
 	 *
-	 * @param   integer $index The row index
+	 * @param   integer  $index  The row index
 	 *
 	 * @return  integer  Rationalised offset for a row with a given index.
 	 *
@@ -462,8 +462,8 @@ class KunenaPagination
 	 *
 	 * @return  string  Pagination footer.
 	 *
-	 * @throws Exception
 	 * @since   1.5
+	 * @throws Exception
 	 */
 	public function getListFooter()
 	{
@@ -484,12 +484,12 @@ class KunenaPagination
 	/**
 	 * Creates a dropdown box for selecting how many records to show per page.
 	 *
-	 * @param   bool $all True if you want to display option for all.
+	 * @param   bool  $all  True if you want to display option for all.
 	 *
 	 * @return  string  The HTML for the limit # input box.
 	 *
-	 * @throws Exception
 	 * @since   1.5
+	 * @throws Exception
 	 */
 	public function getLimitBox($all = false)
 	{
@@ -519,7 +519,7 @@ class KunenaPagination
 				'select.genericlist',
 				$limits,
 				$this->prefix . 'limit',
-				'class="inputbox input-mini" size="1" onchange="Joomla.submitform();"',
+				'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
 				'value',
 				'text',
 				$selected
@@ -531,7 +531,7 @@ class KunenaPagination
 				'select.genericlist',
 				$limits,
 				$this->prefix . 'limit',
-				'class="inputbox input-mini" size="1" onchange="this.form.submit()"',
+				'class="inputbox input-mini form-control" size="1" onchange="this.form.submit()"',
 				'value',
 				'text',
 				$selected
@@ -660,9 +660,9 @@ class KunenaPagination
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	protected function setChrome()
 	{
@@ -676,12 +676,12 @@ class KunenaPagination
 	/**
 	 * Return the icon to move an item UP.
 	 *
-	 * @param   integer $i         The row index.
-	 * @param   boolean $condition True to show the icon.
-	 * @param   string  $task      The task to fire.
-	 * @param   string  $alt       The image alternative text string.
-	 * @param   boolean $enabled   An optional setting for access control on the action.
-	 * @param   string  $checkbox  An optional prefix for checkboxes.
+	 * @param   integer  $i          The row index.
+	 * @param   boolean  $condition  True to show the icon.
+	 * @param   string   $task       The task to fire.
+	 * @param   string   $alt        The image alternative text string.
+	 * @param   boolean  $enabled    An optional setting for access control on the action.
+	 * @param   string   $checkbox   An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item up or a space.
 	 *
@@ -702,13 +702,13 @@ class KunenaPagination
 	/**
 	 * Return the icon to move an item DOWN.
 	 *
-	 * @param   integer $i         The row index.
-	 * @param   integer $n         The number of items in the list.
-	 * @param   boolean $condition True to show the icon.
-	 * @param   string  $task      The task to fire.
-	 * @param   string  $alt       The image alternative text string.
-	 * @param   boolean $enabled   An optional setting for access control on the action.
-	 * @param   string  $checkbox  An optional prefix for checkboxes.
+	 * @param   integer  $i          The row index.
+	 * @param   integer  $n          The number of items in the list.
+	 * @param   boolean  $condition  True to show the icon.
+	 * @param   string   $task       The task to fire.
+	 * @param   string   $alt        The image alternative text string.
+	 * @param   boolean  $enabled    An optional setting for access control on the action.
+	 * @param   string   $checkbox   An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item down or a space.
 	 *
@@ -729,7 +729,7 @@ class KunenaPagination
 	/**
 	 * Create the HTML for a list footer
 	 *
-	 * @param   array $list Pagination list data structure.
+	 * @param   array  $list  Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list footer
 	 *
@@ -752,7 +752,7 @@ class KunenaPagination
 	/**
 	 * Create the html for a list footer
 	 *
-	 * @param   array $list Pagination list data structure.
+	 * @param   array  $list  Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list start, previous, next,end
 	 *
@@ -780,12 +780,12 @@ class KunenaPagination
 	/**
 	 * Method to create an active pagination link to the item
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject $item The object with which to make an active link.
+	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The object with which to make an active link.
 	 *
 	 * @return  string  HTML link
 	 *
-	 * @throws Exception
 	 * @since   1.5
+	 * @throws Exception
 	 */
 	protected function _item_active(Joomla\CMS\Pagination\PaginationObject $item)
 	{
@@ -813,12 +813,12 @@ class KunenaPagination
 	/**
 	 * Method to create an inactive pagination string
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject $item The item to be processed
+	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The item to be processed
 	 *
 	 * @return  string
 	 *
-	 * @throws Exception
 	 * @since   1.5
+	 * @throws Exception
 	 */
 	protected function _item_inactive(Joomla\CMS\Pagination\PaginationObject $item)
 	{

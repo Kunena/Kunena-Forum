@@ -76,8 +76,8 @@ class KunenaAccessCommunity
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param   string $accesstype Access type.
-	 * @param   int    $id         Group id.
+	 * @param   string  $accesstype  Access type.
+	 * @param   int     $id          Group id.
 	 *
 	 * @return boolean|void|string
 	 * @since Kunena
@@ -134,8 +134,8 @@ class KunenaAccessCommunity
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param   string $accesstype Access type.
-	 * @param   int    $category   Group id.
+	 * @param   string  $accesstype  Access type.
+	 * @param   int     $category    Group id.
 	 *
 	 * @return array
 	 * @since Kunena
@@ -165,7 +165,7 @@ class KunenaAccessCommunity
 			$html ['jomsocial']['access'] = array(
 				'title' => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected),
+				'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),
 			);
 		}
 
@@ -213,11 +213,11 @@ class KunenaAccessCommunity
 	 *
 	 * Results may be cached.
 	 *
-	 * @param   array $categories List of categories, null = all.
+	 * @param   array  $categories  List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -251,12 +251,12 @@ class KunenaAccessCommunity
 	 *
 	 * Results for the current user are saved into session.
 	 *
-	 * @param   int   $userid     User who needs the authorisation (null=current user, 0=visitor).
-	 * @param   array $categories List of categories in access type.
+	 * @param   int    $userid      User who needs the authorisation (null=current user, 0=visitor).
+	 * @param   array  $categories  List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -295,12 +295,12 @@ class KunenaAccessCommunity
 	/**
 	 * Authorise list of userids to topic or category.
 	 *
-	 * @param   mixed $topic   Category or topic.
-	 * @param   array $userids list(allow, deny).
+	 * @param   mixed  $topic    Category or topic.
+	 * @param   array  $userids  list(allow, deny).
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
@@ -318,8 +318,8 @@ class KunenaAccessCommunity
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
 			->where('c.id = ' . $db->quote((int) $category->id))
-		->andWhere(' g.approved = 1')
-		->andWhere('g.memberid IN (' . $userlist . ')');
+			->andWhere(' g.approved = 1')
+			->andWhere('g.memberid IN (' . $userlist . ')');
 		$db->setQuery($query);
 
 		try

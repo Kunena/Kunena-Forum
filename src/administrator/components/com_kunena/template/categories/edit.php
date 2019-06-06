@@ -95,14 +95,16 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_NAMEADD'); ?></td>
 														<td>
-															<input class="inputbox" type="text" name="name" size="80"
+															<input class="inputbox form-control" type="text" name="name"
+															       size="80"
 															       value="<?php echo $this->escape($this->category->name); ?>"/>
 														</td>
 													</tr>
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 														<td>
-															<input class="inputbox" id="jform_aliases" type="text"
+															<input class="inputbox form-control" id="jform_aliases"
+															       type="text"
 															       name="alias" size="80"
 															       value="<?php echo $this->escape($this->category->alias); ?>"/>
 															<?php
@@ -120,7 +122,8 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_ICON'); ?></td>
 														<td>
-															<input class="inputbox" type="text" name="icon" size="80"
+															<input class="inputbox form-control" type="text" name="icon"
+															       size="80"
 															       value="<?php echo $this->escape($this->category->icon); ?>"/>
 															<p><?php echo Text::_('COM_KUNENA_ICON_DESC'); ?></p>
 														</td>
@@ -128,7 +131,8 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_CLASS_SFX'); ?></td>
 														<td>
-															<input class="inputbox" type="text" name="class_sfx"
+															<input class="inputbox form-control" type="text"
+															       name="class_sfx"
 															       size="20"
 															       maxlength="20"
 															       value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
@@ -138,7 +142,7 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 														<td>
-															<textarea class="inputbox" cols="50" rows="6"
+															<textarea class="inputbox form-control" cols="50" rows="6"
 															          name="description"
 															          id="description"
 															          style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
@@ -148,7 +152,7 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_HEADERADD'); ?></td>
 														<td>
-															<textarea class="inputbox" cols="50" rows="6"
+															<textarea class="inputbox form-control" cols="50" rows="6"
 															          name="headerdesc"
 															          id="headerdesc"
 															          style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
@@ -157,7 +161,7 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE'); ?></td>
 														<td>
-															<textarea class="inputbox" cols="50" rows="6"
+															<textarea class="inputbox form-control" cols="50" rows="6"
 															          name="topictemplate" id="topictemplate"
 															          style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
 														</td>

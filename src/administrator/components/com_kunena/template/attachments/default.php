@@ -115,7 +115,8 @@ HTMLHelper::_('dropdown.init');
 							<td class="nowrap">
 								<label for="filter_title"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_title"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_title"
 								       id="filter_title"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterTitle; ?>"
@@ -124,7 +125,8 @@ HTMLHelper::_('dropdown.init');
 							<td class="nowrap">
 								<label for="filter_type"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_type"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_type"
 								       id="filter_type"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterType; ?>"
@@ -133,7 +135,8 @@ HTMLHelper::_('dropdown.init');
 							<td class="nowrap">
 								<label for="filter_size"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_size"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_size"
 								       id="filter_size"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterSize; ?>"
@@ -142,13 +145,14 @@ HTMLHelper::_('dropdown.init');
 							<td class="nowrap">
 								<?php /*
 										<label for="filter_dims" class="element-invisible"><?php echo 'Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');;?></label>
-										<input class="input-block-level input-filter filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDimensions; ?>" title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<input class="input-block-level input-filter filter form-control" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDimensions; ?>" title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									*/ ?>
 							</td>
 							<td class="nowrap">
 								<label for="filter_username"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_username"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_username"
 								       id="filter_username"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterUsername; ?>"
@@ -157,7 +161,8 @@ HTMLHelper::_('dropdown.init');
 							<td class="nowrap">
 								<label for="filter_post"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_post"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_post"
 								       id="filter_post"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterPost; ?>"

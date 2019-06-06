@@ -186,7 +186,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$cat_params['unpublished'] = 1;
 		$cat_params['action']      = 'admin';
 
-		$forum = HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $cat_params, 'class="inputbox" multiple="multiple"', 'value', 'text');
+		$forum = HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $cat_params, 'class="inputbox form-control" multiple="multiple"', 'value', 'text');
 
 		return $forum;
 	}
@@ -202,7 +202,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$trashdelete [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_TRASH_USERMESSAGES'));
 		$trashdelete [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
-		return HTMLHelper::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
+		return HTMLHelper::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox form-control" size="1"', 'value', 'text', 0);
 	}
 
 	/**
@@ -222,7 +222,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$contoloptions [] = HTMLHelper::_('select.option', 'deleted', Text::_('COM_KUNENA_A_PRUNE_DELETED'));
 		$contoloptions [] = HTMLHelper::_('select.option', 'shadow', Text::_('COM_KUNENA_A_PRUNE_SHADOW'));
 
-		return HTMLHelper::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
+		return HTMLHelper::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox form-control" size="1"', 'value', 'text', 'normal');
 	}
 
 	/**
@@ -236,7 +236,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$optionsticky [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$optionsticky [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-		return HTMLHelper::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
+		return HTMLHelper::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox form-control" size="1"', 'value', 'text', 1);
 	}
 
 	/**

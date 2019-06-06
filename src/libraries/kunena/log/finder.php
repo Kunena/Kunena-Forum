@@ -35,8 +35,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
+	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 * @since Kunena 5.0
@@ -45,7 +45,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($starting && $ending)
 		{
-			$this->query->where($this->db->quoteName('a.time'). ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
+			$this->query->where($this->db->quoteName('a.time') . ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
 		}
 		elseif ($starting)
 		{
@@ -60,7 +60,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   mixed $condition condition
+	 * @param   mixed  $condition  condition
 	 *
 	 * @return $this
 	 * @since Kunena 5.0
@@ -73,7 +73,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   mixed $columns columns
+	 * @param   mixed  $columns  columns
 	 *
 	 * @return $this
 	 * @since Kunena 5.0
@@ -86,7 +86,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   mixed $columns columns
+	 * @param   mixed  $columns  columns
 	 *
 	 * @return $this
 	 * @since Kunena 5.0
@@ -102,8 +102,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
-	 * @throws Exception
 	 * @since Kunena 5.0
+	 * @throws Exception
 	 */
 	public function find()
 	{
@@ -130,10 +130,10 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery $query query
+	 * @param   JDatabaseQuery  $query  query
 	 *
-	 * @since Kunena 5.0
 	 * @return void
+	 * @since Kunena 5.0
 	 */
 	protected function build(JDatabaseQuery $query)
 	{

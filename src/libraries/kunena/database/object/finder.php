@@ -84,7 +84,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Set limitstart for the query.
 	 *
-	 * @param   int $limitstart limitstart
+	 * @param   int  $limitstart  limitstart
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -101,7 +101,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * If this function isn't used, RokClub will use threads per page configuration setting.
 	 *
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -121,9 +121,9 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param   string $by        by
-	 * @param   int    $direction direction
-	 * @param   string $alias     alias
+	 * @param   string  $by         by
+	 * @param   int     $direction  direction
+	 * @param   string  $alias      alias
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -140,10 +140,10 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param   string       $field     Field name.
-	 * @param   string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param   string|array $value     Value.
-	 * @param   bool         $escape    Only works for LIKE / NOT LIKE.
+	 * @param   string        $field      Field name.
+	 * @param   string        $operation  Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param   string|array  $value      Value.
+	 * @param   bool          $escape     Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -185,8 +185,8 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db) {
-							$item = $db->quote($item);
-						}
+						$item = $db->quote($item);
+					}
 					);
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
@@ -203,8 +203,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function find()
 	{
@@ -233,7 +233,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param   JDatabaseQuery $query query
+	 * @param   JDatabaseQuery  $query  query
 	 *
 	 * @return void
 	 * @since Kunena
@@ -246,8 +246,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function count()
 	{
@@ -258,10 +258,11 @@ abstract class KunenaDatabaseObjectFinder
 		{
 			$countQuery = $this->db->getQuery(true);
 			$countQuery->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
-			$this->db->setQuery($countQuery);
+			$this->db->setQuery((string) $countQuery);
 		}
 		else
 		{
+			$query = $this->db->getQuery(true);
 			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}

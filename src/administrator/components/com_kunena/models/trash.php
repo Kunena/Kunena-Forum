@@ -52,8 +52,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
 	 * @return    array|object
-	 * @throws Exception
 	 * @since    1.6
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTrashItems()
@@ -73,9 +73,9 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    object
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since    1.6
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function _getTopics()
 	{
@@ -166,9 +166,9 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get all deleted messages.
 	 *
 	 * @return    array
-	 * @throws Exception
-	 * @throws null
 	 * @since    1.6
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function _getMessages()
 	{
@@ -327,7 +327,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		$view_options[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
 
 		return HTMLHelper::_('select.genericlist', $view_options, 'layout',
-			'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
+			'class="inputbox form-control" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
 		);
 	}
 
@@ -336,9 +336,9 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since    1.6
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getPurgeItems()
 	{

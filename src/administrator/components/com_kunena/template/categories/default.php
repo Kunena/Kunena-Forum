@@ -159,7 +159,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center">
 								<label for="filter_published"
 								       class="element-invisible"><?php echo Text::_('All'); ?></label>
-								<select name="filter_published" id="filter_published" class="select-filter filter"
+								<select name="filter_published" id="filter_published"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
@@ -170,7 +171,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap">
 								<label for="filter_title"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_title"
+								<input class="input-block-level input-filter filter form-control" type="text"
+								       name="filter_title"
 								       id="filter_title"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterTitle; ?>"
@@ -179,7 +181,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center hidden-phone">
 								<label for="filter_access"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_access" id="filter_access" class="select-filter filter"
+								<select name="filter_access" id="filter_access"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
@@ -188,7 +191,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center">
 								<label for="filter_locked"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_locked" id="filter_locked" class="select-filter filter"
+								<select name="filter_locked" id="filter_locked"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
@@ -197,7 +201,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center">
 								<label for="filter_review"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_review" id="filter_review" class="select-filter filter"
+								<select name="filter_review" id="filter_review"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
@@ -206,7 +211,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center">
 								<label for="filter_allow_polls"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter"
+								<select name="filter_allow_polls" id="filter_allow_polls"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
@@ -215,7 +221,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td class="nowrap center">
 								<label for="filter_anonymous"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter"
+								<select name="filter_anonymous" id="filter_anonymous"
+								        class="select-filter filter form-control"
 								        onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
@@ -233,7 +240,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<?php // Load the batch processing form. ?>
 								<?php echo $this->loadTemplate('batch'); ?>
 								<?php // Load the modal to confirm delete. ?>
-							<?php echo $this->loadTemplate('confirmdelete'); ?>
+								<?php echo $this->loadTemplate('confirmdelete'); ?>
 							</td>
 						</tr>
 						</tfoot>

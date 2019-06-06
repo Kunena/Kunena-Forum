@@ -143,7 +143,8 @@ HTMLHelper::_('behavior.tabstate');
 											<td class="nowrap">
 												<label for="filter_title"
 												       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-												<input class="input-block-level input-filter filter" type="text"
+												<input class="input-block-level input-filter filter form-control"
+												       type="text"
 												       name="filter_title" id="filter_title"
 												       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 												       value="<?php echo $this->filterTitle; ?>"
@@ -153,7 +154,7 @@ HTMLHelper::_('behavior.tabstate');
 												<label for="filter_special"
 												       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 												<select name="filter_special" id="filter_special"
-												        class="select-filter filter"
+												        class="select-filter filter form-control"
 												        onchange="Joomla.orderTable()">
 													<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 													<?php echo HTMLHelper::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
@@ -162,7 +163,8 @@ HTMLHelper::_('behavior.tabstate');
 											<td class="nowrap center">
 												<label for="filter_min"
 												       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-												<input class="input-block-level input-filter filter" type="text"
+												<input class="input-block-level input-filter filter form-control"
+												       type="text"
 												       name="filter_min" id="filter_min"
 												       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 												       value="<?php echo $this->filterMinPostCount; ?>"

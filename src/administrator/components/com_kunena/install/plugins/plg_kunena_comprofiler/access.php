@@ -64,8 +64,8 @@ class KunenaAccessComprofiler
 	 * List all access types you want to handle. All names must be less than 20 characters.
 	 *
 	 * @return array    Supported access types.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAccessTypes()
 	{
@@ -81,12 +81,12 @@ class KunenaAccessComprofiler
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param   string $accesstype Access type.
-	 * @param   int    $id         Group id.
+	 * @param   string  $accesstype  Access type.
+	 * @param   int     $id          Group id.
 	 *
 	 * @return boolean|integer|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -131,12 +131,12 @@ class KunenaAccessComprofiler
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param   string $accesstype Access type.
-	 * @param   int    $category   Group id.
+	 * @param   string  $accesstype  Access type.
+	 * @param   int     $category    Group id.
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -168,7 +168,7 @@ class KunenaAccessComprofiler
 			$html ['communitybuilder']['access'] = array(
 				'title' => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected),
+				'input' => HTMLHelper::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),
 			);
 		}
 
@@ -206,11 +206,11 @@ class KunenaAccessComprofiler
 	 *
 	 * Results may be cached.
 	 *
-	 * @param   array $categories List of categories, null = all.
+	 * @param   array  $categories  List of categories, null = all.
 	 *
 	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -226,12 +226,12 @@ class KunenaAccessComprofiler
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   KunenaForumCategory $category category
-	 * @param   int                 $userid   userid
+	 * @param   KunenaForumCategory  $category  category
+	 * @param   int                  $userid    userid
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
@@ -251,12 +251,12 @@ class KunenaAccessComprofiler
 	 *
 	 * Results for the current user are saved into session.
 	 *
-	 * @param   int   $userid     User who needs the authorisation (null=current user, 0=visitor).
-	 * @param   array $categories List of categories in access type.
+	 * @param   int    $userid      User who needs the authorisation (null=current user, 0=visitor).
+	 * @param   array  $categories  List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -282,12 +282,12 @@ class KunenaAccessComprofiler
 	/**
 	 * Authorise list of userids to topic or category.
 	 *
-	 * @param   mixed $topic   Category or topic.
-	 * @param   array $userids list(allow, deny).
+	 * @param   mixed  $topic    Category or topic.
+	 * @param   array  $userids  list(allow, deny).
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{

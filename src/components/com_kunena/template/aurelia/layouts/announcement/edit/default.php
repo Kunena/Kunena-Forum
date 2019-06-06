@@ -107,9 +107,10 @@ echo $this->subLayout('Widget/Datepicker');
 
 		<div class="control-group">
 			<div class="controls center" id="ann-publish">
-				<input name="submit" class="btn btn-primary" type="submit"
+				<input name="submit" class="btn btn-outline-primary" type="submit"
 				       value="<?php echo Text::_('COM_KUNENA_SAVE'); ?>"/>
-				<input onclick="window.history.back();" name="cancel" class="btn btn-default border" type="button"
+				<input onclick="window.history.back();" name="cancel" class="btn btn-outline-primary border"
+				       type="button"
 				       value="<?php echo Text::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>

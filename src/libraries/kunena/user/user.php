@@ -21,6 +21,7 @@ jimport('joomla.utilities.date');
 /**
  * Class KunenaUser
  *
+ * @since Kunena
  * @property    int    $userid
  * @property    int    $status
  * @property    string $status_text
@@ -81,7 +82,6 @@ jimport('joomla.utilities.date');
  * @property    string $youtube
  * @property    string $ok
  * @property    int    $socialshare
- * @since Kunena
  */
 class KunenaUser extends CMSObject
 {
@@ -152,11 +152,12 @@ class KunenaUser extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @param   int $identifier identifier
-	 *
-	 * @throws Exception
 	 * @internal
+	 *
+	 * @param   int  $identifier  identifier
+	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -179,11 +180,11 @@ class KunenaUser extends CMSObject
 	/**
 	 * Method to load a KunenaUser object by userid.
 	 *
-	 * @param   mixed $id The user id of the user to load.
+	 * @param   mixed  $id  The user id of the user to load.
 	 *
 	 * @return    boolean            True on success
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id)
 	{
@@ -211,8 +212,8 @@ class KunenaUser extends CMSObject
 	/**
 	 * Method to get the user table object.
 	 *
-	 * @param   string $type   The user table name to be used.
-	 * @param   string $prefix The user table prefix to be used.
+	 * @param   string  $type    The user table name to be used.
+	 * @param   string  $prefix  The user table prefix to be used.
 	 *
 	 * @return    Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
 	 * @since Kunena
@@ -235,13 +236,13 @@ class KunenaUser extends CMSObject
 	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param   null|int $identifier The user to load - Can be an integer or string - If string, it is converted to ID
-	 *                               automatically.
-	 * @param   bool     $reload     Reload user from database.
+	 * @param   null|int  $identifier  The user to load - Can be an integer or string - If string, it is converted to ID
+	 *                                 automatically.
+	 * @param   bool      $reload      Reload user from database.
 	 *
 	 * @return KunenaUser
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -251,13 +252,13 @@ class KunenaUser extends CMSObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string     $action action
-	 * @param   KunenaUser $user   user
+	 * @param   string      $action  action
+	 * @param   KunenaUser  $user    user
 	 *
 	 * @return boolean
 	 *
-	 * @throws null
 	 * @since  K4.0
+	 * @throws null
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
@@ -267,13 +268,13 @@ class KunenaUser extends CMSObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string     $action action
-	 * @param   KunenaUser $user   user
-	 * @param   bool       $throw  throw
+	 * @param   string      $action  action
+	 * @param   KunenaUser  $user    user
+	 * @param   bool        $throw   throw
 	 *
 	 * @return KunenaExceptionAuthorise|boolean
-	 * @throws null
 	 * @since  K4.0
+	 * @throws null
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -340,7 +341,7 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|bool $exists exists
+	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -375,11 +376,11 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isAdmin(KunenaForumCategory $category = null)
 	{
@@ -391,11 +392,11 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isModerator(KunenaForumCategory $category = null)
 	{
@@ -403,8 +404,8 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string $visitorname visitor name
-	 * @param   bool   $escape      escape
+	 * @param   string  $visitorname  visitor name
+	 * @param   bool    $escape       escape
 	 *
 	 * @return string
 	 * @since Kunena
@@ -455,11 +456,11 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   mixed $data   data
-	 * @param   array $ignore ignore
+	 * @param   mixed  $data    data
+	 * @param   array  $ignore  ignore
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function bind($data, array $ignore = array())
 	{
@@ -471,8 +472,8 @@ class KunenaUser extends CMSObject
 	 * Method to delete the KunenaUser object from the database.
 	 *
 	 * @return    boolean    True on success.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete()
 	{
@@ -495,8 +496,8 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getStatus()
 	{
@@ -505,8 +506,8 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getStatusText()
 	{
@@ -515,8 +516,8 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAllowedCategories()
 	{
@@ -530,8 +531,8 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getMessageOrdering()
 	{
@@ -553,13 +554,13 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string     $class class
-	 * @param   string|int $sizex sizex
-	 * @param   int        $sizey sizey
+	 * @param   string      $class  class
+	 * @param   string|int  $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90, $online = '')
 	{
@@ -628,12 +629,12 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string|int $sizex sizex
-	 * @param   int        $sizey sizey
+	 * @param   string|int  $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90)
 	{
@@ -645,16 +646,17 @@ class KunenaUser extends CMSObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @param   null $name  name
-	 * @param   null $title title
-	 * @param   null $class class
-	 *
-	 * @return string
-	 * @throws Exception
 	 * @internal param int $catid Category id or 0 for global.
 	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
 	 *
+	 * @param   null  $class  class
+	 *
+	 * @param   null  $name   name
+	 * @param   null  $title  title
+	 *
+	 * @return string
 	 * @since    K5.1.0
+	 * @throws Exception
 	 */
 	public function getLinkNoStyle($name = null, $title = null, $class = null)
 	{
@@ -702,12 +704,12 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   bool   $xhtml xhtml
-	 * @param   string $task  task
+	 * @param   bool    $xhtml  xhtml
+	 * @param   string  $task   task
 	 *
 	 * @return boolean|mixed|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getURL($xhtml = true, $task = '')
 	{
@@ -732,8 +734,8 @@ class KunenaUser extends CMSObject
 	 * Return local time for the user.
 	 *
 	 * @return KunenaDate  User time instance.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTime()
 	{
@@ -795,11 +797,11 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string $layout layout
+	 * @param   string  $layout  layout
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function setTopicLayout($layout = 'default')
 	{
@@ -818,7 +820,7 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|string $layout layout
+	 * @param   null|string  $layout  layout
 	 *
 	 * @return string
 	 * @since Kunena
@@ -856,11 +858,11 @@ class KunenaUser extends CMSObject
 	/**
 	 * Method to save the KunenaUser object to the database.
 	 *
-	 * @param   boolean $updateOnly Save the object only if not a new user.
+	 * @param   boolean  $updateOnly  Save the object only if not a new user.
 	 *
 	 * @return    boolean True on success.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -922,8 +924,8 @@ class KunenaUser extends CMSObject
 	 * Get the URL to private messages
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPrivateMsgURL()
 	{
@@ -936,8 +938,8 @@ class KunenaUser extends CMSObject
 	 * Get the label for URL to private messages
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPrivateMsgLabel()
 	{
@@ -967,8 +969,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return string  URL.
 	 *
-	 * @throws Exception
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public function getPrivateMsgLink()
 	{
@@ -1000,12 +1002,12 @@ class KunenaUser extends CMSObject
 	/**
 	 * Show email address if current user has permissions to see it.
 	 *
-	 * @param   mixed $profile profile
+	 * @param   mixed  $profile  profile
 	 *
 	 * @return boolean Cloaked email address or empty string.
 	 *
-	 * @throws Exception
 	 * @since  K5.1
+	 * @throws Exception
 	 */
 	public function getEmail($profile)
 	{
@@ -1038,8 +1040,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return string  Cloaked email address or empty string.
 	 *
-	 * @throws Exception
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public function getEmailLink()
 	{
@@ -1116,7 +1118,7 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string $var var
+	 * @param   string  $var  var
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1129,7 +1131,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * Output gender.
 	 *
-	 * @param   bool $translate translate
+	 * @param   bool  $translate  translate
 	 *
 	 * @return string  One of: male, female or unknown.
 	 *
@@ -1157,8 +1159,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public function getSignature()
 	{
@@ -1182,8 +1184,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since  K5.0
+	 * @throws Exception
 	 */
 	public function getKarma()
 	{
@@ -1232,12 +1234,12 @@ class KunenaUser extends CMSObject
 	/**
 	 * Render user sidebar.
 	 *
-	 * @param   KunenaLayout $layout layout
+	 * @param   KunenaLayout  $layout  layout
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since  K5.0
+	 * @throws Exception
 	 */
 	public function getSideProfile($layout)
 	{
@@ -1318,13 +1320,13 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   int       $catid   Category Id for the rank (user can have different rank in different categories).
-	 * @param   string    $type    Possible values: 'title' | 'image' | false (for object).
-	 * @param   bool|null $special True if special only, false if post count, otherwise combined.
+	 * @param   int        $catid    Category Id for the rank (user can have different rank in different categories).
+	 * @param   string     $type     Possible values: 'title' | 'image' | false (for object).
+	 * @param   bool|null  $special  True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
 	{
@@ -1538,13 +1540,158 @@ class KunenaUser extends CMSObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
+	 * @param   int   $catid  Category id or 0 for global.
+	 * @param   bool  $code   True if we want to return the code, otherwise return translation key.
+	 *
+	 * @return string
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function getType($catid = 0, $code = false)
+	{
+		static $types = array(
+			'admin'      => 'COM_KUNENA_VIEW_ADMIN',
+			'localadmin' => 'COM_KUNENA_VIEW_ADMIN',
+			'globalmod'  => 'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
+			'moderator'  => 'COM_KUNENA_VIEW_MODERATOR',
+			'user'       => 'COM_KUNENA_VIEW_USER',
+			'guest'      => 'COM_KUNENA_VIEW_VISITOR',
+			'banned'     => 'COM_KUNENA_VIEW_BANNED',
+			'blocked'    => 'COM_KUNENA_VIEW_BLOCKED',
+		);
+
+		$adminCategories     = KunenaAccess::getInstance()->getAdminStatus($this);
+		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
+
+		if ($this->userid == 0)
+		{
+			$type = 'guest';
+		}
+		elseif ($this->isBlocked() && !$this->isBanned())
+		{
+			$type = 'blocked';
+		}
+		elseif ($this->isBanned())
+		{
+			$type = 'banned';
+		}
+		elseif (!empty($adminCategories[0]))
+		{
+			$type = 'admin';
+		}
+		elseif (!empty($adminCategories[$catid]))
+		{
+			$type = 'localadmin';
+		}
+		elseif (!empty($moderatedCategories[0]))
+		{
+			$type = 'globalmod';
+		}
+		elseif (!empty($moderatedCategories[$catid]))
+		{
+			$type = 'moderator';
+		}
+		elseif (!$catid && !empty($moderatedCategories))
+		{
+			$type = 'moderator';
+		}
+		else
+		{
+			$type = 'user';
+		}
+
+		if ($code === 'class')
+		{
+			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
+
+			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0] . $type;
+		}
+
+		return $code ? $type : $types[$type];
+	}
+
+	/**
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isBlocked()
+	{
+		if ($this->blocked)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Return if the user is banned, there are two cases banned for life (9999-12-31 23:59:59) and banned for a short
+	 * time with a date in near future
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function isBanned()
+	{
+		if (!$this->banned)
+		{
+			return false;
+		}
+
+		if ($this->blocked || $this->banned == '9999-12-31 23:59:59')
+		{
+			return true;
+		}
+
+		$expiration = new Joomla\CMS\Date\Date($this->banned);
+		$now        = new Joomla\CMS\Date\Date;
+
+		if ($expiration->toUnix() > $now->toUnix() && $expiration->toUnix() < '9999-12-31 23:59:59')
+		{
+			return true;
+		}
+	}
+
+	/**
+	 * @param   integer  $userid  userid
+	 *
+	 * @return mixed|string
+	 *
+	 * @since version
+	 */
+	public function GetUserGroup($userid)
+	{
+		jimport('joomla.access.access');
+		$groups = Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
+
+		$groupid_list = implode(',', $groups);
+
+		foreach ($groups as $groupId => $value)
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('title'))
+				->from($db->quoteName('#__usergroups'))
+				->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
+
+			$db->setQuery($query);
+			$groupNames = $db->loadResult();
+			$groupNames .= '<br/>';
+		}
+
+		return $groupNames;
+	}
+
+	/**
+	 * Get users type as a string inside the specified category.
+	 *
 	 * @param $rank
 	 *
 	 * @param $catid
 	 *
 	 * @return string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function rankCss($rank, $catid)
 	{
@@ -1683,168 +1830,12 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * Get users type as a string inside the specified category.
-	 *
-	 * @param   int  $catid Category id or 0 for global.
-	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
-	 *
-	 * @return string
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getType($catid = 0, $code = false)
-	{
-		static $types = array(
-			'admin'      => 'COM_KUNENA_VIEW_ADMIN',
-			'localadmin' => 'COM_KUNENA_VIEW_ADMIN',
-			'globalmod'  => 'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
-			'moderator'  => 'COM_KUNENA_VIEW_MODERATOR',
-			'user'       => 'COM_KUNENA_VIEW_USER',
-			'guest'      => 'COM_KUNENA_VIEW_VISITOR',
-			'banned'     => 'COM_KUNENA_VIEW_BANNED',
-			'blocked'    => 'COM_KUNENA_VIEW_BLOCKED',
-		);
-
-		$adminCategories     = KunenaAccess::getInstance()->getAdminStatus($this);
-		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
-
-		if ($this->userid == 0)
-		{
-			$type = 'guest';
-		}
-		elseif ($this->isBlocked() && !$this->isBanned())
-		{
-			$type = 'blocked';
-		}
-		elseif ($this->isBanned())
-		{
-			$type = 'banned';
-		}
-		elseif (!empty($adminCategories[0]))
-		{
-			$type = 'admin';
-		}
-		elseif (!empty($adminCategories[$catid]))
-		{
-			$type = 'localadmin';
-		}
-		elseif (!empty($moderatedCategories[0]))
-		{
-			$type = 'globalmod';
-		}
-		elseif (!empty($moderatedCategories[$catid]))
-		{
-			$type = 'moderator';
-		}
-		elseif (!$catid && !empty($moderatedCategories))
-		{
-			$type = 'moderator';
-		}
-		else
-		{
-			$type = 'user';
-		}
-
-		if ($code === 'class')
-		{
-			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
-
-			return isset($userClasses[$type]) ? $userClasses[$type] : $userClasses[0] . $type;
-		}
-
-		return $code ? $type : $types[$type];
-	}
-
-	/**
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isBlocked()
-	{
-		if ($this->blocked)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Return if the user is banned, there are two cases banned for life (9999-12-31 23:59:59) and banned for a short time with a date in near future
-	 * 
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function isBanned()
-	{
-		if (!$this->banned)
-		{
-			return false;
-		}
-
-		if ($this->blocked || $this->banned == '9999-12-31 23:59:59')
-		{
-			return true;
-		}
-
-		$expiration = new Joomla\CMS\Date\Date($this->banned);
-		$now        = new Joomla\CMS\Date\Date;
-
-		if ($expiration->toUnix() > $now->toUnix() && $expiration->toUnix() < '9999-12-31 23:59:59')
-		{
-			return true;
-		}
-	}
-
-	/**
-	 * @return mixed
-	 * @since Kunena
-	 */
-	public function bannedDate()
-	{
-		$ban = new Joomla\CMS\Date\Date($this->banned);
-		$now = new Joomla\CMS\Date\Date;
-
-		return $ban->toUnix() > $now->toUnix();
-	}
-
-	/**
-	 * @param   integer $userid userid
-	 *
-	 * @return mixed|string
-	 *
-	 * @since version
-	 */
-	public function GetUserGroup($userid)
-	{
-		jimport('joomla.access.access');
-		$groups = Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
-
-		$groupid_list = implode(',', $groups);
-
-		foreach ($groups as $groupId => $value)
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('title'))
-				->from($db->quoteName('#__usergroups'))
-				->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
-
-			$db->setQuery($query);
-			$groupNames = $db->loadResult();
-			$groupNames .= '<br/>';
-		}
-
-		return $groupNames;
-	}
-
-	/**
 	 * Render personal text.
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public function getPersonalText()
 	{
@@ -1864,11 +1855,23 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string $name name
+	 * @return mixed
+	 * @since Kunena
+	 */
+	public function bannedDate()
+	{
+		$ban = new Joomla\CMS\Date\Date($this->banned);
+		$now = new Joomla\CMS\Date\Date;
+
+		return $ban->toUnix() > $now->toUnix();
+	}
+
+	/**
+	 * @param   string  $name  name
 	 *
 	 * @return string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function profileIcon($name)
 	{
@@ -1952,17 +1955,17 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|string $name       name
-	 * @param   null|string $title      title
-	 * @param   string      $rel        rel
-	 * @param   string      $task       task
-	 * @param   string      $class      class
-	 * @param   int         $catid      catid
-	 * @param   int         $avatarLink avatarlink
+	 * @param   null|string  $name        name
+	 * @param   null|string  $title       title
+	 * @param   string       $rel         rel
+	 * @param   string       $task        task
+	 * @param   string       $class       class
+	 * @param   int          $catid       catid
+	 * @param   int          $avatarLink  avatarlink
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
 	{
@@ -1987,13 +1990,13 @@ class KunenaUser extends CMSObject
 				if ($class == 'btn')
 				{
 				}
-				elseif ($class == 'btn btn-default')
+				elseif ($class == 'btn btn-outline-primary')
 				{
 				}
 				elseif ($class == 'btn pull-right')
 				{
 				}
-				elseif ($class == 'btn btn-default pull-right')
+				elseif ($class == 'btn btn-outline-primary pull-right')
 				{
 				}
 				else
@@ -2057,13 +2060,13 @@ class KunenaUser extends CMSObject
 	/**
 	 * Legacy method to prepare social buttons for the template
 	 *
-	 * @param   string $name name
-	 * @param   bool   $gray gray
+	 * @param   string  $name  name
+	 * @param   bool    $gray  gray
 	 *
+	 * @return void
+	 * @since      K2.0
 	 * @throws Exception
 	 * @deprecated 5.1.0
-	 * @since      K2.0
-	 * @return void
 	 */
 	public function socialButton($name, $gray = false)
 	{
@@ -2073,12 +2076,12 @@ class KunenaUser extends CMSObject
 	/**
 	 * Prepare social buttons for the template
 	 *
-	 * @param   string $name name
-	 * @param   bool   $gray gray
+	 * @param   string  $name  name
+	 * @param   bool    $gray  gray
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since K5.0
+	 * @throws Exception
 	 */
 	public function socialButtonsTemplate($name, $gray = false)
 	{
@@ -2128,41 +2131,41 @@ class KunenaUser extends CMSObject
 	 */
 	public function socialButtons()
 	{
-		$social = array('twitter'            => array('url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'),
-						'facebook'           => array('url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'),
-						'myspace'            => array('url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'),
-						'linkedin'           => array('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'),
-						'linkedin_company'   => array('url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'),
-						'friendfeed'         => array('url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'),
-						'digg'               => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
-						'skype'              => array('url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
-						'yim'                => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
-						'google'             => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'),
-						'github'             => array('url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'),
-						'microsoft'          => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
-						'icq'                => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),
-						'blogspot'           => array('url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'),
-						'flickr'             => array('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'),
-						'bebo'               => array('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'),
-						'instagram'          => array('url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'),
-						'qqsocial'           => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'),
-						'qzone'              => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'),
-						'weibo'              => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'),
-						'wechat'             => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'),
-						'vk'                 => array('url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'),
-						'telegram'           => array('url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
-						'apple'              => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'),
-						'vimeo'              => array('url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'),
-						'whatsapp'           => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'),
-						'youtube'            => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
-						'ok'                 => array('url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
+		$social = array('twitter'          => array('url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'),
+		                'facebook'         => array('url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'),
+		                'myspace'          => array('url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'),
+		                'linkedin'         => array('url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'),
+		                'linkedin_company' => array('url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'),
+		                'friendfeed'       => array('url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'),
+		                'digg'             => array('url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'),
+		                'skype'            => array('url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'),
+		                'yim'              => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'),
+		                'google'           => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'),
+		                'github'           => array('url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'),
+		                'microsoft'        => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'),
+		                'icq'              => array('url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'),
+		                'blogspot'         => array('url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'),
+		                'flickr'           => array('url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'),
+		                'bebo'             => array('url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'),
+		                'instagram'        => array('url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'),
+		                'qqsocial'         => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'),
+		                'qzone'            => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'),
+		                'weibo'            => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'),
+		                'wechat'           => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'),
+		                'vk'               => array('url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'),
+		                'telegram'         => array('url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'),
+		                'apple'            => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'),
+		                'vimeo'            => array('url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'),
+		                'whatsapp'         => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'),
+		                'youtube'          => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
+		                'ok'               => array('url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
 		);
 
 		return $social;
 	}
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return mixed|void
 	 * @since Kunena
@@ -2183,8 +2186,8 @@ class KunenaUser extends CMSObject
 	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function canDoCaptcha()
 	{

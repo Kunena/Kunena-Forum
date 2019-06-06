@@ -26,8 +26,7 @@ HTMLHelper::_('dropdown.init');
 
 		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
-		}
-		else {
+		} else {
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -66,17 +65,17 @@ HTMLHelper::_('dropdown.init');
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search"
 								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-								<input type="text" name="filter_search" id="filter_search" class="filter"
+								<input type="text" name="filter_search" id="filter_search" class="filter form-control"
 								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 								       value="<?php echo $this->filterSearch; ?>"
 								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</div>
 							<div class="btn-group pull-left">
-								<button class="btn tip" type="submit"
+								<button class="btn btn-outline-primary tip" type="submit"
 								        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 											class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>
 								</button>
-								<button class="btn tip" type="button"
+								<button class="btn btn-outline-primary tip" type="button"
 								        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 								        onclick="document.id('filter_search').value='';this.form.submit();"><i
 											class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
@@ -141,7 +140,8 @@ HTMLHelper::_('dropdown.init');
 								<td class="hidden-phone">
 									<label for="filter_title"
 									       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-									<input class="input-block-level input-filter" type="text" name="filter_title"
+									<input class="input-block-level input-filter form-control" type="text"
+									       name="filter_title"
 									       id="filter_title"
 									       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									       value="<?php echo $this->filterTitle; ?>"
@@ -150,7 +150,8 @@ HTMLHelper::_('dropdown.init');
 								<td class="hidden-phone">
 									<label for="filter_category"
 									       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-									<input class="input-block-level input-filter" type="text" name="filter_category"
+									<input class="input-block-level input-filter form-control" type="text"
+									       name="filter_category"
 									       id="filter_category"
 									       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									       value="<?php echo $this->filterCategory; ?>"
@@ -159,7 +160,8 @@ HTMLHelper::_('dropdown.init');
 								<td class="nowrap">
 									<label for="filter_author"
 									       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-									<input class="input-block-level input-filter" type="text" name="filter_author"
+									<input class="input-block-level input-filter form-control" type="text"
+									       name="filter_author"
 									       id="filter_author"
 									       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									       value="<?php echo $this->filterAuthor; ?>"
@@ -168,7 +170,7 @@ HTMLHelper::_('dropdown.init');
 								<td class="nowrap">
 									<?php /*
 											<label for="filter_time" class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-											<input class="input-block-level input-filter" type="text" name="filter_time" id="filter_time" placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+											<input class="input-block-level input-filter form-control" type="text" name="filter_time" id="filter_time" placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 											*/ ?>
 								</td>
 								<td class="nowrap">
@@ -214,7 +216,7 @@ HTMLHelper::_('dropdown.init');
 													if ($this->filterActive || $this->pagination->total > 0)
 														:
 														?>
-														<button class="btn btn-default" type="button"
+														<button class="btn btn-outline-primary" type="button"
 														        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 													<?php endif; ?>
 												</span>

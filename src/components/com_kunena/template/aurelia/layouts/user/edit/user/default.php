@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 ?>
@@ -103,7 +104,7 @@ use Joomla\CMS\Language\Text;
 <?php endif;
 
 if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
-	<a class="btn btn-default border"
+	<a class="btn btn-outline-primary border"
 	   href="<?php echo Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
 	   data-toggle="modal" id="2fa_settings"><?php echo Text::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
 <?php endif;

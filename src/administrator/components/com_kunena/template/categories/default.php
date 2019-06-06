@@ -63,17 +63,17 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<div class="filter-search btn-group pull-left">
 							<label for="filter_search"
 							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-							<input type="text" name="filter_search" id="filter_search" class="filter"
+							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
 							       placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
 							       value="<?php echo $this->filterSearch; ?>"
 							       title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
-							<button class="btn tip" type="submit"
+							<button class="btn btn-outline-primary tip" type="submit"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 										class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 							</button>
-							<button class="btn tip" type="button"
+							<button class="btn btn-outline-primary tip" type="button"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 							        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
@@ -420,12 +420,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
 												if ($this->filterActive)
 													:
 													?>
-													<button class="btn btn-default" type="button"
+													<button class="btn btn-outline-primary" type="button"
 													        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 												<?php else
 													:
 													?>
-													<button class="btn btn-success" type="button"
+													<button class="btn btn-outline-success" type="button"
 													        onclick="Joomla.submitbutton('add');"><?php echo Text::_('COM_KUNENA_NEW_CATEGORY'); ?></button>
 												<?php endif; ?>
 											</span>

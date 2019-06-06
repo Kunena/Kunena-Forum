@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 ?>
@@ -31,7 +32,8 @@ use Joomla\CMS\Language\Text;
 				<button class="btn" type="button" onclick="document.id('catid').value='';" data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
-				<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('subscribeuserstocategories');">
+				<button class="btn btn-outline-primary" type="submit"
+				        onclick="Joomla.submitbutton('subscribeuserstocategories');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

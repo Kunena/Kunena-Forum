@@ -169,7 +169,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				</div>
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
-			   role="button" class="btn btn-default border btn-small btn-link float-right"
+			   role="button" class="btn btn-outline-primary border btn-small btn-link float-right"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 			<br/>
 		</div>
@@ -180,12 +180,12 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		<?php endif; ?>
 		<div class="modal-footer">
 			<small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-			<input type="submit" class="btn btn-primary border kreply-submit" name="submit"
+			<input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit"
 			       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
 			       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
 			       ?>"/>
 			<?php // TODO: remove data on cancel. ?>
-			<input type="reset" name="reset" class="btn btn-default border"
+			<input type="reset" name="reset" class="btn btn-outline-primary border"
 			       value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
 			       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal"
 			       aria-hidden="true"/>

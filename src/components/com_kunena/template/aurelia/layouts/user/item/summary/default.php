@@ -164,30 +164,30 @@ if ($this->config->showuserstats)
 			<?php if ($this->private)
 				:
 				?>
-				<?php echo $this->private->shownewIcon($this->profile->userid, 'btn btn-default border btn-sm', 'glyphicon glyphicon-comment'); ?>
+				<?php echo $this->private->shownewIcon($this->profile->userid, 'btn btn-outline-primary border btn-sm', 'glyphicon glyphicon-comment'); ?>
 			<?php endif; ?>
 			<?php
 			if (KunenaUser::getInstance()->getEmail($this->profile))
 				:
 				?>
-				<a class="btn btn-default border btn-sm" href="mailto:<?php echo $this->profile->email; ?>"
+				<a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->profile->email; ?>"
 				   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 			<?php endif; ?>
 			<?php
 			if (!empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL()))
 				:
 				?>
-				<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+				<a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
 				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
 			<?php elseif (empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL()))
 				:
 				?>
-				<a class="btn btn-default border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
+				<a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
 				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe(); ?></a>
 			<?php elseif (!empty($this->profile->getWebsiteName()) && empty($this->profile->getWebsiteURL()))
 				:
 				?>
-				<button class="btn btn-default border btn-sm"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></button>
+				<button class="btn btn-outline-primary border btn-sm"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></button>
 			<?php endif; ?>
 		</div>
 	</div>

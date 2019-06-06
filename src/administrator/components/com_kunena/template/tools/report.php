@@ -56,7 +56,7 @@ HTMLHelper::_('behavior.multiselect');
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-					  method="post" id="adminForm" name="adminForm">
+				      method="post" id="adminForm" name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="1"/>
 					<fieldset>
@@ -69,12 +69,12 @@ HTMLHelper::_('behavior.multiselect');
 									<p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
 									<p>
 										<a href="#" id="link_sel_all" name="link_sel_all" type="button"
-										   class="btn btn-small btn-primary"><i
+										   class="btn btn-small btn-outline-primary"><i
 													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>
 									</p>
 									<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
-											  rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+									          rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 								</td>
 							</tr>
 						</table>
@@ -90,13 +90,13 @@ HTMLHelper::_('behavior.multiselect');
 									<p>
 										<a href="#" id="link_sel_all_complete" name="link_sel_all_complete"
 										   type="button"
-										   class="btn btn-small btn-primary"><i
+										   class="btn btn-small btn-outline-primary"><i
 													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>
 									</p>
 									<textarea id="report_final_anonymous" class="input-block-level"
-											  name="report_final_anonymous" cols="80"
-											  rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+									          name="report_final_anonymous" cols="80"
+									          rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
 								</td>
 							</tr>
 						</table>

@@ -19,8 +19,8 @@ use Joomla\CMS\Language\Text;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-				  method="post"
-				  enctype="multipart/form-data" id="adminForm" name="adminForm">
+			      method="post"
+			      enctype="multipart/form-data" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="install"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -32,8 +32,8 @@ use Joomla\CMS\Language\Text;
 						<label for="install_package"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
 							:</label>
 						<input class="input_box" name="install_package" type="file"/>
-						<input class="btn btn-default" type="submit" name="submit"
-							   value="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
+						<input class="btn btn-outline-primary" type="submit" name="submit"
+						       value="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
 					</div>
 				</fieldset>
 			</form>

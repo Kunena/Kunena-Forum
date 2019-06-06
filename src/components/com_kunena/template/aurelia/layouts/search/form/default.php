@@ -45,9 +45,10 @@ $this->addScript('assets/js/search.js');
 
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<button class="btn btn-default border btn-sm" type="button"
+			<button class="btn btn-outline-primary border btn-sm" type="button"
 			        data-toggle="collapse"
-			        data-target="#search" aria-expanded="false" aria-controls="search"><?php echo KunenaIcons::collapse(); ?></button>
+			        data-target="#search" aria-expanded="false"
+			        aria-controls="search"><?php echo KunenaIcons::collapse(); ?></button>
 		</div>
 	</div>
 	<h1>
@@ -102,9 +103,10 @@ $this->addScript('assets/js/search.js');
 			</div>
 		</div>
 
-		<button type="button" class="btn btn-default border btn-sm float-right"
+		<button type="button" class="btn btn-outline-primary border btn-sm float-right"
 		        data-toggle="collapse"
-		        data-target="#search-options" aria-expanded="false" aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
+		        data-target="#search-options" aria-expanded="false"
+		        aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
 		<h2>
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
@@ -223,10 +225,10 @@ $this->addScript('assets/js/search.js');
 		</div>
 
 		<div class="text-center">
-			<button type="submit" class="btn btn-primary border">
+			<button type="submit" class="btn btn-outline-primary border">
 				<?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
 			</button>
-			<button type="reset" class="btn btn-default border" onclick="window.history.back();">
+			<button type="reset" class="btn btn-outline-primary border" onclick="window.history.back();">
 				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>

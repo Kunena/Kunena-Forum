@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $this->addScript('jquery.wysibb.js');
@@ -143,14 +144,14 @@ $settings         = $templatesettings->get('wysibb');
 						<option value="18">18</option>
 					</select><br/>
 					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city"
-					                                                                            id="modal-map-city"
-					                                                                            type="text"
-					                                                                            value=""/></p>
+					                                                                           id="modal-map-city"
+					                                                                           type="text"
+					                                                                           value=""/></p>
 			</div>
 			<div class="modal-footer">
 				<button id="map-modal-submit"
-				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default border" data-dismiss="modal"
+				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -173,8 +174,8 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-footer">
 					<button id="code-modal-submit"
-					        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-					<button class="btn btn-default border" data-dismiss="modal"
+					        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+					<button class="btn btn-outline-primary border" data-dismiss="modal"
 					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
@@ -202,8 +203,8 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="picture-modal-submit"
-				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default border" data-dismiss="modal"
+				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -227,8 +228,8 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="link-modal-submit"
-				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default border" data-dismiss="modal"
+				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -277,8 +278,8 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="videosettings-modal-submit"
-				        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default border" data-dismiss="modal"
+				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -301,8 +302,8 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit"
-				        class="btn btn-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-				<button class="btn btn-default border" data-dismiss="modal"
+				        class="btn btn-outline-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
@@ -366,8 +367,8 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-footer">
 					<button id="poll-settings-modal-submit"
-					        class="btn btn-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-					<button class="btn btn-default border" data-dismiss="modal"
+					        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+					<button class="btn btn-outline-primary border" data-dismiss="modal"
 					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
@@ -393,7 +394,7 @@ if (!empty($codeTypes)) : ?>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default border" data-dismiss="modal"
+				<button class="btn btn-outline-primary border" data-dismiss="modal"
 				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>

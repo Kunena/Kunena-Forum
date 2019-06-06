@@ -47,7 +47,8 @@ use Joomla\CMS\Router\Route;
 						</label>
 					</span>
 					<input id="klogin-passwd-full" type="password" name="password" class="input-small" tabindex="2"
-					       size="18" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+					       size="18" autocomplete="current-password"
+					       placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 				</div>
 			</div>
 		</div>
@@ -75,7 +76,7 @@ use Joomla\CMS\Router\Route;
 
 		<div id="kform-login-submit" class="control-group center">
 			<p>
-				<button type="submit" tabindex="3" name="submit" class="btn btn-primary btn">
+				<button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary btn">
 					<?php echo Text::_('JLOGIN'); ?>
 				</button>
 			</p>

@@ -45,7 +45,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 				<label for="kavatar-upload"><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 			</td>
 			<td>
-					<span class="btn btn-primary fileinput-button">
+					<span class="btn btn-outline-primary fileinput-button">
 						<?php echo KunenaIcons::plus(); ?>
 						<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
 						<!-- The file input field used as target for the file upload widget -->

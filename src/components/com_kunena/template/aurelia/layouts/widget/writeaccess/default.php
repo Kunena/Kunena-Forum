@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $topic  = KunenaForumTopicHelper::get($this->id);
@@ -18,7 +19,7 @@ $config = KunenaFactory::getConfig();
 <div class="kfrontend shadow-lg rounded mt-4 border">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
-			<div class="btn btn-default border btn-sm" data-toggle="collapse"
+			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
 			     data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>

@@ -48,7 +48,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
-		
+
 		$this->display();
 	}
 

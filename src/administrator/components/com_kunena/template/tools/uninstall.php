@@ -81,15 +81,16 @@ use Joomla\CMS\Language\Text;
 											<p><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_DESC') ?></p>
 										</div>
 										<div class="modal-footer">
-											<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+											<button class="btn btn-outline-primary" data-dismiss="modal"
+											        aria-hidden="true">
 												Close
 											</button>
 											<button type="submit"
-											        class="btn btn-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+											        class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 										</div>
 									</div>
 
-									<button type="button" class="btn btn-danger" data-toggle="modal"
+									<button type="button" class="btn btn-outline-danger" data-toggle="modal"
 									        data-target="#myModal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 								</td>
 							</tr>

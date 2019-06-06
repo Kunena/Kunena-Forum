@@ -30,19 +30,19 @@ HTMLHelper::_('bootstrap.popover');
 				</div>
 				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
-					<a class="btn btn-default" href="#">
+					<a class="btn btn-outline-primary" href="#">
 						<i class="icon-big icon-user"></i><br/>
 						<span><?php echo Text::_('Subscription') ?></span>
 					</a>
-					<a class="btn btn-default" href="#">
+					<a class="btn btn-outline-primary" href="#">
 						<i class="icon-big icon-shield"></i><br/>
 						<span><?php echo Text::_('Moderator') ?></span>
 					</a>
-					<a class="btn btn-default" href="#">
+					<a class="btn btn-outline-primary" href="#">
 						<i class="icon-big icon-checkmark"></i><br/>
 						<span><?php echo Text::_('Approved') ?></span>
 					</a>
-					<a class="btn btn-default" href="#">
+					<a class="btn btn-outline-primary" href="#">
 						<i class="icon-big icon-notification-circle"></i><br/>
 						<span><?php echo Text::_('Report') ?></span>
 					</a>

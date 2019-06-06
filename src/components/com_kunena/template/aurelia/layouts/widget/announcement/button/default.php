@@ -10,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
@@ -21,9 +22,9 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
 }
 
 $id      = isset($this->id) ? ' id="' . $this->id . '"' : '';
-$primary = !empty($this->primary) ? ' btn-primary' : '';
+$primary = !empty($this->primary) ? ' btn-outline-primary' : '';
 ?>
-<a<?php echo $id; ?> class="btn btn-default <?php echo $primary; ?> border" href="<?php echo $this->url; ?>"
+<a<?php echo $id; ?> class="btn btn-outline-primary <?php echo $primary; ?> border" href="<?php echo $this->url; ?>"
                      title="<?php echo $title; ?>">
 	<span class="<?php echo $this->name; ?>"></span>
 	<?php echo $label; ?>

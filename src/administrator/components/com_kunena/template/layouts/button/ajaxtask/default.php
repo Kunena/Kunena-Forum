@@ -14,7 +14,7 @@ use Joomla\CMS\Router\Route;
 
 $dataTarget = (isset($this->dataTarget)) ? " data-target=\"{$this->dataTarget}\"" : '';
 $dataForm   = (isset($this->dataForm)) ? " data-form=\"{$this->dataForm}\"" : '';
-$class      = (isset($this->class)) ? " {$this->class}" : 'btn-success';
+$class      = (isset($this->class)) ? " {$this->class}" : 'btn-outline-success';
 ?>
 <a href="<?php echo Route::_($this->uri); ?>" data-toggle="ajaxmodal"<?php echo $dataTarget . $dataForm; ?>
    class="btn btn-small <?php echo $class; ?>">

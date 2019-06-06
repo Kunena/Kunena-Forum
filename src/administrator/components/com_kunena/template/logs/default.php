@@ -61,11 +61,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo HTMLHelper::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
 						</div>
 						<div class="btn-group pull-left">
-							<button class="btn tip" type="submit"
+							<button class="btn btn-outline-primary tip" type="submit"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 										class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 							</button>
-							<button class="btn tip" type="button"
+							<button class="btn btn-outline-primary tip" type="button"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 							        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
@@ -338,10 +338,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<div class="modal-footer">
 										<a href="#" id="link_sel_all<?php echo $item->id; ?>"
 										   name="link_sel_all<?php echo $item->id; ?>" type="button"
-										   class="btn btn-small btn-primary"><i
+										   class="btn btn-small btn-outline-primary"><i
 													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 										</a>
-										<button class="btn btn-danger" data-dismiss="modal"
+										<button class="btn btn-outline-danger" data-dismiss="modal"
 										        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 									</div>
 								</div>
@@ -358,7 +358,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									if ($this->filterActive)
 										:
 										?>
-										<button class="btn btn-default" type="button"
+										<button class="btn btn-outline-primary" type="button"
 										        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 									<?php endif; ?>
 								</span>

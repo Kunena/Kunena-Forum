@@ -38,7 +38,9 @@ use Joomla\CMS\Router\Route;
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
 							</span>
-							<input class="form-control" id="kmobile-username" name="username" tabindex="1" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" type="email">
+							<input class="form-control" id="kmobile-username" name="username" tabindex="1"
+							       autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"
+							       type="email">
 						</div>
 					</div>
 				</div>
@@ -52,7 +54,9 @@ use Joomla\CMS\Router\Route;
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
 							</span>
-							<input class="form-control" id="kmobile-passwd" name="password" tabindex="2" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
+							<input class="form-control" id="kmobile-passwd" name="password" tabindex="2"
+							       autocomplete="current-password"
+							       placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
 						</div>
 					</div>
 				</div>
@@ -83,9 +87,11 @@ use Joomla\CMS\Router\Route;
 					<div class="form-group row center" id="kform-login-remember">
 						<div class="controls">
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" name="kmobile-remember" id="kmobile-remember"
+								<input type="checkbox" class="custom-control-input" name="kmobile-remember"
+								       id="kmobile-remember"
 								       value="1"/>
-								<label class="custom-control-label" for="kmobile-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
+								<label class="custom-control-label"
+								       for="kmobile-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
 							</div>
 						</div>
 					</div>
@@ -93,7 +99,7 @@ use Joomla\CMS\Router\Route;
 
 				<div id="kmobile-form-login-submit" class="control-group center">
 					<p>
-						<button type="submit" tabindex="3" name="submit" class="btn btn-primary">
+						<button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary">
 							<?php echo Text::_('JLOGIN'); ?>
 						</button>
 					</p>

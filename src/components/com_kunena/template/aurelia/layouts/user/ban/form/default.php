@@ -165,7 +165,7 @@ use Joomla\CMS\Language\Text;
 		</tr>
 		<tr>
 			<td class="center" colspan="2">
-				<input class="btn btn-primary" type="submit" value="<?php echo $this->banInfo->id
+				<input class="btn btn-outline-primary" type="submit" value="<?php echo $this->banInfo->id
 					? Text::_('COM_KUNENA_BAN_EDIT')
 					: Text::_('COM_KUNENA_BAN_NEW'); ?>" name="Submit"/>
 			</td>

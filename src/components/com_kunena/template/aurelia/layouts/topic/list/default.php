@@ -85,8 +85,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
       id="ktopicsform">
 	<?php echo HTMLHelper::_('form.token'); ?>
-	<?php if($view == 'user'): ?>
-		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
+	<?php if ($view == 'user'): ?>
+		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 	<?php endif; ?>
 	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
 		<thead>
@@ -98,7 +98,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 				</a>
 			</th>
 			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+				/ <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
 			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
 			<?php if (!empty($this->actions)) : ?>
@@ -123,7 +124,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 								<label>
 									<?php if (!empty($this->topics) && !empty($this->moreUri))
 									{
-										echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-primary float-left', 'follow');
+										echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
 									} ?>
 									<?php if (!empty($this->actions)) : ?>
 										<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
@@ -132,7 +133,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 											echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 										endif; ?>
 										<button type="submit" name="kcheckgo"
-										        class="btn btn-default border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+										        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 									<?php endif; ?>
 								</label>
 							</div>

@@ -242,10 +242,10 @@ $labels          = $this->ktemplate->params->get('labels');
 				</div>
 			</div>
 			<div class="control-group center">
-				<input type="submit" class="btn btn-primary"
+				<input type="submit" class="btn btn-outline-primary"
 				       value="<?php echo Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
 				<a href="javascript:window.history.back();"
-				   class="btn btn-default border"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
+				   class="btn btn-outline-primary border"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
 			</div>
 		</form>
 	</div>

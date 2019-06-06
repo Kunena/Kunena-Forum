@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 	<div class="col-md-12">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
 		      name="kcategoryform" id="kcategoryform">
-			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>" />
+			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
 			<h3>
@@ -31,7 +31,7 @@ use Joomla\CMS\Language\Text;
 							<div class="input-group-btn">
 								<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 									'kchecktask'); ?>
-								<input type="submit" name="kcheckgo" class="btn btn-default border"
+								<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 								       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							</div>
 						</div>

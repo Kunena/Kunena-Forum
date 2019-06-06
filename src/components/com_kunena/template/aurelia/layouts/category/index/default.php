@@ -15,6 +15,7 @@
 /** @var KunenaForumCategory $subcategory */
 
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 if ($this->config->enableforumjump)
@@ -27,7 +28,7 @@ $config = $this->ktemplate->params;
 
 if ($config->get('socialshare') == 1)
 {
-    echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
+	echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
 }
 
 if ($config->get('socialshare') == 2)
@@ -50,7 +51,7 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend shadow-lg rounded mt-4 border">
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 0) : ?>
-				<button class="btn btn-default border btn-sm" type="button"
+				<button class="btn btn-outline-primary border btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
@@ -219,13 +220,13 @@ foreach ($this->sections as $section) :
 								<td colspan="5" class="hidden-xs-down">
 									<div class="row">
 										<?php if ($avatar) : ?>
-											<div class="col-xs-6 col-md-3" id="kcat-avatar">
-												<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
-											</div>
-											<div class="col-xs-6 col-md-9" id="kcat-last">
-										<?php else : ?>
+										<div class="col-xs-6 col-md-3" id="kcat-avatar">
+											<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
+										</div>
+										<div class="col-xs-6 col-md-9" id="kcat-last">
+											<?php else : ?>
 											<div class="col-md-12" id="kcat-last">
-										<?php endif; ?>
+												<?php endif; ?>
 												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
 												<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>

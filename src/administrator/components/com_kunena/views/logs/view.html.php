@@ -22,10 +22,10 @@ use Joomla\CMS\Language\Text;
 class KunenaAdminViewLogs extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws ReflectionException
 	 * @since Kunena
+	 * @throws ReflectionException
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -130,8 +130,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return array
-	 * @throws ReflectionException
 	 * @since  Kunena
+	 * @throws ReflectionException
 	 */
 	protected function getFilterOperationFields()
 	{
@@ -215,6 +215,6 @@ class KunenaAdminViewLogs extends KunenaView
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';
 
-		return '<input type="checkbox" name="group_' . $name . '" value="1" title="Group By" ' . $checked . ' class="filter" />';
+		return '<input type="checkbox" name="group_' . $name . '" value="1" title="Group By" ' . $checked . ' class="filter form-control" />';
 	}
 }

@@ -36,9 +36,9 @@ HTMLHelper::_('behavior.core');
 					<div class="input-group float-right" role="group">
 						<div class="input-group-btn">
 							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-left"', 'value', 'text', 0, 'kchecktask'); ?>
-							<input type="submit" name="kcheckgo" class="btn btn-default border"
+							<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
-							<a class="btn btn-primary border"
+							<a class="btn btn-outline-primary border"
 							   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 								<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 							</a>

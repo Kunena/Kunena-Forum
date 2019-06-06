@@ -24,39 +24,40 @@ use Joomla\CMS\Language\Text;
 				</div>
 				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=report">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=report">
 						<i class="icon-big icon-support"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=prune">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=prune">
 						<i class="icon-big icon-list-view"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_C_PRUNETAB'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=syncusers">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=syncusers">
 						<i class="icon-big icon-shuffle"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=recount">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=recount">
 						<i class="icon-big icon-loop"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_A_RECOUNT'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=menu">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=menu">
 						<i class="icon-big icon-menu"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=purgerestatements">
+					<a class="btn btn-outline-primary"
+					   href="index.php?option=com_kunena&view=tools&layout=purgerestatements">
 						<i class="icon-big icon-filter"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=cleanupip">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=cleanupip">
 						<i class="icon-big icon-location"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=diagnostics">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=diagnostics">
 						<i class="icon-big icon-health"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?></span>
 					</a>
-					<a class="btn btn-default" href="index.php?option=com_kunena&view=tools&layout=uninstall">
+					<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=tools&layout=uninstall">
 						<i class="icon-big icon-remove"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?></span>
 					</a>
@@ -64,7 +65,7 @@ use Joomla\CMS\Language\Text;
 					<?php if (KunenaForum::isDev())
 						:
 						?>
-						<a class="btn btn-default" href="index.php?option=com_kunena&view=install">
+						<a class="btn btn-outline-primary" href="index.php?option=com_kunena&view=install">
 							<i class="icon-big icon-tree-2"></i><br/>
 							<span><?php echo Text::_('COM_KUNENA_GIT_INSTALL'); ?></span>
 						</a>

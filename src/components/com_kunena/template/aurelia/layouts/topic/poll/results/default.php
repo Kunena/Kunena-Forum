@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
@@ -18,7 +19,8 @@ $this->addScript('assets/js/poll.js');
 <?php if ($this->show_title)
 	:
 	?>
-	<button class="btn btn-default border float-right" type="button" data-toggle="collapse" data-target="#poll-results"
+	<button class="btn btn-outline-primary border float-right" type="button" data-toggle="collapse"
+	        data-target="#poll-results"
 	        aria-expanded="false"
 	        aria-controls="poll-results">
 		&times;
@@ -105,7 +107,7 @@ $this->addScript('assets/js/poll.js');
 				<?php if ($this->me->isModerator($this->category))
 				:
 				?>
-				<a href="#resetVotes" role="button" class="btn btn-default border" data-toggle="modal">
+				<a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-toggle="modal">
 					<?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 				</a>
 				<div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -123,11 +125,11 @@ $this->addScript('assets/js/poll.js');
 								<p><?php echo Text::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
 							</div>
 							<div class="modal-footer">
-								<a data-dismiss="modal" aria-hidden="true" class="btn btn-default border">
+								<a data-dismiss="modal" aria-hidden="true" class="btn btn-outline-primary border">
 									<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 								</a>
 								<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . Session::getFormToken() . '=1') ?>"
-								   class="btn btn-primary">
+								   class="btn btn-outline-primary">
 									<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
 								</a>
 							</div>

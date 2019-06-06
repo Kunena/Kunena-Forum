@@ -26,11 +26,11 @@ class KunenaPrivate
 	protected static $instance = false;
 
 	/**
-	 * @param   null $integration integration
+	 * @param   null  $integration  integration
 	 *
 	 * @return boolean|KunenaPrivate
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -61,11 +61,11 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   integer $userid userid
+	 * @param   integer  $userid  userid
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function showIcon($userid)
 	{
@@ -90,7 +90,7 @@ class KunenaPrivate
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			$class = 'btn btn-default btn-sm';
+			$class = 'btn btn-outline-primary btn-sm';
 		}
 		else
 		{
@@ -112,7 +112,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   integer $userid userid
+	 * @param   integer  $userid  userid
 	 *
 	 * @return string
 	 * @since Kunena
@@ -123,7 +123,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   integer $userid userid
+	 * @param   integer  $userid  userid
 	 *
 	 * @return string
 	 * @since Kunena
@@ -134,14 +134,16 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   integer $userid userid
-	 * @param   string  $class  class
-	 * @param   string  $icon   icon
+	 * @internal param $text
+	 *
+	 * @param   string   $class   class
+	 * @param   string   $icon    icon
+	 *
+	 * @param   integer  $userid  userid
 	 *
 	 * @return string
-	 * @throws Exception
-	 * @internal param $text
 	 * @since    Kunena
+	 * @throws Exception
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
 	{
@@ -170,7 +172,7 @@ class KunenaPrivate
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				$class = 'btn btn-default btn-sm';
+				$class = 'btn btn-outline-primary btn-sm';
 			}
 			else
 			{
@@ -193,7 +195,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   integer $userid userid
+	 * @param   integer  $userid  userid
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -213,7 +215,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param   string $text text
+	 * @param   string  $text  text
 	 *
 	 * @return string
 	 * @since Kunena

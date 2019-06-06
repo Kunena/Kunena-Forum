@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
@@ -22,9 +23,9 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
 $modal   = isset($this->modal) ? 'data-toggle="modal" data-backdrop="false"' : '';
 $right   = isset($this->pullright) ? ' float-right' : '';
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
-$success = !empty($this->success) ? ' btn-success' : '';
-$primary = !empty($this->primary) ? ' btn-primary' : '';
-$normal  = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-default border';
+$success = !empty($this->success) ? ' btn-outline-success' : '';
+$primary = !empty($this->primary) ? ' btn-outline-primary' : '';
+$normal  = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-outline-primary border';
 $icon    = $this->icon;
 ?>
 

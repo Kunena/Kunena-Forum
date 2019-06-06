@@ -32,10 +32,10 @@ use Joomla\CMS\Language\Text;
 			</div>
 			<div class="modal-footer">
 				<button class="btn" type="button"
-						data-dismiss="modal">
+				        data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
-				<button class="btn btn-danger" type="submit" onclick="Joomla.submitbutton('remove');">
+				<button class="btn btn-outline-danger" type="submit" onclick="Joomla.submitbutton('remove');">
 					<?php echo Text::_('COM_KUNENA_CATEGORIES_DELETE_MODAL_BUTTON_LABEL'); ?>
 				</button>
 			</div>

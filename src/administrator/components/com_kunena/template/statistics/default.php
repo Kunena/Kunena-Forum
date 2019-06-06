@@ -61,11 +61,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo HTMLHelper::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_STATISTICS_END_DATE'))); ?>
 						</div>
 						<div class="btn-group pull-left">
-							<button class="btn tip" type="submit"
+							<button class="btn btn-outline-primary tip" type="submit"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 										class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 							</button>
-							<button class="btn tip" type="button"
+							<button class="btn btn-outline-primary tip" type="button"
 							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
 							        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
@@ -178,7 +178,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									if ($this->filterActive)
 										:
 										?>
-										<button class="btn btn-default" type="button"
+										<button class="btn btn-outline-primary" type="button"
 										        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 									<?php endif; ?>
 								</span>

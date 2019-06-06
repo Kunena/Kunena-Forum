@@ -15,8 +15,8 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
-	  name="settingFormModal"
-	  id="settingFormModal">
+      name="settingFormModal"
+      id="settingFormModal">
 	<div class="modal hide fade" id="settingModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -31,11 +31,11 @@ use Joomla\CMS\Language\Text;
 					<p><?php echo Text::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-default" type="button" data-dismiss="modal">
+					<button class="btn btn-outline-primary" type="button" data-dismiss="modal">
 						<?php echo Text::_('JCANCEL'); ?>
 					</button>
-					<button class="btn btn-primary" type="submit"
-							onclick="document.getElementById('settingFormModal').submit();">
+					<button class="btn btn-outline-primary" type="submit"
+					        onclick="document.getElementById('settingFormModal').submit();">
 						<?php echo Text::_('JSUBMIT'); ?>
 					</button>
 				</div>

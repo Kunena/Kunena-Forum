@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 // [ebay]112233445566[/ebay]
@@ -29,7 +30,7 @@ use Joomla\CMS\Language\Text;
 	<div style="margin:10px 0;"/></div>
 	<div style="margin:10px 0;"/></div>
 	<?php if ($this->status == "Active") : ?>
-		<a class="btn btn-default border" href="<?php echo $this->naturalurl; ?>"
+		<a class="btn btn-outline-primary border" href="<?php echo $this->naturalurl; ?>"
 		   target="_blank"><?php echo Text::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
 	<?php else: ?>
 		<?php echo Text::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>

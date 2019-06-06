@@ -289,7 +289,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_categoryOrphaned()
 	{
-		$query = self::query_categoryOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS c ON a.parent_id=c.id WHERE a.parent_id>0 AND c.id IS NULL";
 
 		return $query;
 	}
@@ -390,7 +390,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_aliasMissingCategory()
 	{
-		$query = self::query_aliasMissingCategory()->delete('a');
+		$query = "DELETE a FROM #__kunena_aliases AS a LEFT JOIN #__kunena_categories AS c ON a.item=c.id WHERE a.type='catid' AND c.id IS NULL";
 
 		return $query;
 	}
@@ -431,7 +431,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_messageBodyMissingMessage()
 	{
-		$query = self::query_messageBodyMissingMessage()->delete('a');
+		$query = "DELETE a FROM #__kunena_messages_text AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 
 		return $query;
 	}
@@ -472,7 +472,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_messageMissingMessageBody()
 	{
-		$query = self::query_messageMissingMessageBody()->delete('a');
+		$query = "DELETE a FROM #__kunena_messages AS a LEFT JOIN #__kunena_messages_text AS t ON t.mesid=a.id WHERE t.mesid IS NULL";
 
 		return $query;
 	}
@@ -529,7 +529,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_topicInSection()
 	{
-		$query = self::query_topicInSection()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE c.parent_id=0";
 
 		return $query;
 	}
@@ -570,7 +570,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_topicMissingCategory()
 	{
-		$query = self::query_topicMissingCategory()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE c.id IS NULL";
 
 		return $query;
 	}
@@ -595,7 +595,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_topicMissingMessages()
 	{
-		$query = self::query_topicMissingMessages()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_messages AS m ON m.thread=a.id WHERE a.moved_id=0 AND m.id IS NULL";
 
 		return $query;
 	}
@@ -636,7 +636,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_topicMissingPoll()
 	{
-		$query = self::query_topicMissingPoll()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_polls AS p ON p.id=a.poll_id WHERE a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL";
 
 		return $query;
 	}
@@ -677,7 +677,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_topicPollMismatch()
 	{
-		$query = self::query_topicPollMismatch()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a INNER JOIN #__kunena_polls AS p ON p.id=a.poll_id LEFT JOIN #__kunena_topics AS t ON p.threadid=t.id WHERE a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id";
 
 		return $query;
 	}
@@ -718,7 +718,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_movedMissingTopic()
 	{
-		$query = self::query_movedMissingTopic()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.moved_id WHERE a.moved_id>0 AND t.id IS NULL";
 
 		return $query;
 	}
@@ -759,7 +759,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_movedAndMessages()
 	{
-		$query = self::query_movedAndMessages()->delete('a');
+		$query = "DELETE a FROM #__kunena_topics AS a INNER JOIN #__kunena_messages AS m ON m.thread=a.id LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE a.moved_id>0";
 
 		return $query;
 	}
@@ -841,7 +841,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_messageOrphaned()
 	{
-		$query = self::query_messageOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_messages AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.thread LEFT JOIN #__kunena_messages_text AS mt ON a.id=mt.mesid WHERE t.id IS NULL";
 
 		return $query;
 	}
@@ -882,7 +882,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_attachmentOrphaned()
 	{
-		$query = self::query_attachmentOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 
 		return $query;
 	}
@@ -923,7 +923,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_pollOrphaned()
 	{
-		$query = self::query_pollOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_polls AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.threadid WHERE t.id IS NULL";
 
 		return $query;
 	}
@@ -964,7 +964,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_pollTopicMismatch()
 	{
-		$query = self::query_pollTopicMismatch()->delete('a');
+		$query = "DELETE a FROM #__kunena_polls AS a INNER JOIN #__kunena_topics AS t ON t.id=a.threadid LEFT JOIN #__kunena_topics AS tt ON tt.poll_id=a.id WHERE t.poll_id!=a.id";
 
 		return $query;
 	}
@@ -1005,7 +1005,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_pollOptionOrphaned()
 	{
-		$query = self::query_pollOptionOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_polls_options AS a LEFT JOIN #__kunena_polls AS p ON p.id=a.pollid WHERE p.id IS NULL";
 
 		return $query;
 	}
@@ -1046,7 +1046,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_pollUserOrphaned()
 	{
-		$query = self::query_pollUserOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_polls_users AS a LEFT JOIN #__kunena_polls AS p ON p.id=a.pollid WHERE p.id IS NULL";
 
 		return $query;
 	}
@@ -1087,7 +1087,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_thankyouOrphaned()
 	{
-		$query = self::query_thankyouOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_thankyou AS a LEFT JOIN #__kunena_messages AS m ON m.id=a.postid WHERE m.id IS NULL";
 
 		return $query;
 	}
@@ -1128,7 +1128,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_userCategoryOrphaned()
 	{
-		$query = self::query_userCategoryOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_user_categories AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE a.category_id>0 AND c.id IS NULL";
 
 		return $query;
 	}
@@ -1169,7 +1169,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_userReadOrphaned()
 	{
-		$query = self::query_userReadOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_user_read AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.topic_id WHERE t.id IS NULL";
 
 		return $query;
 	}
@@ -1251,7 +1251,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_userTopicOrphaned()
 	{
-		$query = self::query_userTopicOrphaned()->delete('a');
+		$query = "DELETE a FROM #__kunena_user_topics AS a LEFT JOIN #__kunena_topics AS t ON t.id=a.topic_id WHERE t.id IS NULL";
 
 		return $query;
 	}
@@ -1333,7 +1333,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	protected static function delete_ratingOrphaned()
 	{
-		$query = self::query_ratingOrphaned()->delete('r');
+		$query = "DELETE r FROM #__kunena_rate AS r LEFT JOIN #__kunena_topics AS t ON t.id=r.topic_id WHERE t.id IS NULL";
 
 		return $query;
 	}

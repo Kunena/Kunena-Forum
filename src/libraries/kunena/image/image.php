@@ -14,6 +14,7 @@ define('MIME_GIF', 'image/gif');
 define('MIME_PNG', 'image/png');
 
 use Joomla\Image\Image;
+use Joomla\CMS\Helper;
 
 /**
  * Helper class for image manipulation.
@@ -32,8 +33,13 @@ class KunenaImage extends Joomla\Image\Image
 	 */
 	public static function correctImageOrientation($filename)
 	{
+		if (!MediaHelper::isImage($filename))
+		{
+			return;
+		}
+
 		$img = new Image();
-		
+
 		try 
 		{
 			$img->loadFile($filename);

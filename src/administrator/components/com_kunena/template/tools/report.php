@@ -17,9 +17,9 @@ use Joomla\CMS\Language\Text;
 $document = Factory::getDocument();
 $document->addScriptDeclaration(
 	"
-window.addEvent('domready', function(){
-	$('link_sel_all').addEvent('click', function(e){
-		$('report_final').select();
+jQuery(document).ready(function ($) {
+	$('#link_sel_all').click(function(e) {
+		$('#report_final').select();
 		try {
 			var successful = document.execCommand('copy');
 			var msg = successful ? 'successful' : 'unsuccessful';
@@ -31,8 +31,8 @@ window.addEvent('domready', function(){
 	}
 	});
 
-    $('link_sel_all_complete').addEvent('click', function(e){
-		$('report_final_anonymous').select();
+	$('#link_sel_all_complete').click(function(e) {
+		$('#report_final_anonymous').select();
 		try {
 			var successful = document.execCommand('copy');
 			var msg = successful ? 'successful' : 'unsuccessful';

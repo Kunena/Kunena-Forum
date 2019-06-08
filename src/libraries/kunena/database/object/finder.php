@@ -258,7 +258,7 @@ abstract class KunenaDatabaseObjectFinder
 		{
 			$countQuery = $this->db->getQuery(true);
 			$countQuery->select('COUNT(*)')->from($this->db->quoteName($query, 's'));
-			$this->db->setQuery((string) $countQuery);
+			$this->db->setQuery($countQuery);
 		}
 		else
 		{

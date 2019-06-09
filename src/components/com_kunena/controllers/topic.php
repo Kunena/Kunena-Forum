@@ -456,11 +456,6 @@ class KunenaControllerTopic extends KunenaController
 						// For ReCaptcha API 2.0
 						$res = Factory::getApplication()->triggerEvent('onCheckAnswer', array($this->app->input->getString('g-recaptcha-response')));
 					}
-					else
-					{
-						// For ReCaptcha API 1.0
-						$res = Factory::getApplication()->triggerEvent('onCheckAnswer', array($this->app->input->getString('recaptcha_response_field')));
-					}
 
 					if (!$res[0])
 					{

@@ -291,19 +291,22 @@ class KunenaAccess
 		{
 			$enabled = true;
 			Factory::getDocument()->addScriptDeclaration(
-				"function kShowAccessType(htmlclass, el) {
-	var selected = el.getChildren().filter(function(option){ return option.selected; });
-	var name = selected[0].value;
-	name = name.replace(/[^\\w\\d]+/, '-');
-	$$('.'+htmlclass).each(function(e){
-		e.setStyle('display', 'none');
-	});
-	$$('.'+htmlclass+'-'+name).each(function(e){
-		e.setStyle('display', '');
-	});
+	"function kShowAccessType(htmlclass, el) {
+	var selectedvalue = el.find(\":selected\").val();
+	
+	name = selectedvalue.replace(/[^\\w\\d]+/, '-');
+
+$('.'+htmlclass).each(function() {
+  $( this ).hide();
+});
+
+$('.'+htmlclass+'-'+name).each(function() {
+  $( this ).show();
+});
+	
 }
-window.addEvent('domready', function(){
-	var item = $('accesstype');
+jQuery(document).ready(function ($) {
+	var item = $('#accesstype');
 	if (item) {
 		kShowAccessType('kaccess', item);
 	}

@@ -49,20 +49,6 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   mixed $field     field
-	 * @param   mixed $operation operation
-	 * @param   mixed $value     value
-	 *
-	 * @return $this
-	 * @deprecated Use where() instead.
-	 * @since      Kunena
-	 */
-	public function filterBy($field, $operation, $value)
-	{
-		return $this->where($field, $operation, $value);
-	}
-
-	/**
 	 * Filter by user access to the categories.
 	 *
 	 * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be

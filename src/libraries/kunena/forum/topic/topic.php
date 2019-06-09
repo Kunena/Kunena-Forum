@@ -1335,20 +1335,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   null  $user  user
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @deprecated
-	 *
-	 */
-	public function markNew($user = null)
-	{
-		return $this->markRead($user);
-	}
-
-	/**
 	 * @param   mixed  $user  user
 	 *
 	 * @return boolean

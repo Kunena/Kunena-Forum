@@ -1717,23 +1717,6 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 *
-	 * @return string
-	 * @deprecated K4.0
-	 * @since      Kunena
-	 */
-	public function getTopicsIconPath($filename)
-	{
-		if (empty($filename))
-		{
-			return false;
-		}
-
-		return "media/kunena/topicicons/{$filename}";
-	}
-
-	/**
 	 * @return SimpleXMLElement
 	 * @since Kunena
 	 */

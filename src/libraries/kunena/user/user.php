@@ -2058,22 +2058,6 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * Legacy method to prepare social buttons for the template
-	 *
-	 * @param   string  $name  name
-	 * @param   bool    $gray  gray
-	 *
-	 * @return void
-	 * @since      K2.0
-	 * @throws Exception
-	 * @deprecated 5.1.0
-	 */
-	public function socialButton($name, $gray = false)
-	{
-		$this->socialButtonsTemplate($name, $gray = false);
-	}
-
-	/**
 	 * Prepare social buttons for the template
 	 *
 	 * @param   string  $name  name

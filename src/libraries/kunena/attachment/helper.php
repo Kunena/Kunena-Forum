@@ -147,7 +147,7 @@ abstract class KunenaAttachmentHelper
 
 		try
 		{
-			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+			$results = (array) $db->loadObjectList('id');
 		}
 		catch (RuntimeException $e)
 		{
@@ -158,7 +158,7 @@ abstract class KunenaAttachmentHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance                               = $results[$id];
+				$instance                               = KunenaAttachmentHelper::get($id);
 				self::$_instances[$id]                  = $instance;
 				self::$_messages[$instance->mesid][$id] = $instance;
 			}
@@ -238,7 +238,7 @@ abstract class KunenaAttachmentHelper
 
 		try
 		{
-			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+			$results = (array) $db->loadObjectList('id');
 		}
 		catch (RuntimeException $e)
 		{
@@ -255,7 +255,8 @@ abstract class KunenaAttachmentHelper
 
 		foreach ($results as $id => $instance)
 		{
-			self::$_instances [$id]                  = $instance;
+			$instance = KunenaAttachmentHelper::get($id);
+		    self::$_instances [$id]                  = $instance;
 			self::$_messages [$instance->mesid][$id] = $instance;
 		}
 

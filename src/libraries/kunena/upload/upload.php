@@ -244,10 +244,13 @@ class KunenaUpload
 				}
 			}
 
-			// Get filename from stream
-			$meta_data = stream_get_meta_data($out);
-			$filename  = $meta_data['uri'];
-			KunenaImage::correctImageOrientation($filename);
+			if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
+			{
+				// Get filename from stream
+				$meta_data = stream_get_meta_data($out);
+				$filename  = $meta_data['uri'];
+				KunenaImage::correctImageOrientation($filename);
+			}
 		}
 		catch (Exception $exception)
 		{

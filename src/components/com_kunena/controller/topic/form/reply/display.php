@@ -106,6 +106,9 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$parent->tryAuthorise('reply');
 
+		$arraypollcatid    = array();
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+
 		// Run event.
 		$params = new Joomla\Registry\Registry;
 		$params->set('ksource', 'kunena');

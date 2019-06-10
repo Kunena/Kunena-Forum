@@ -67,8 +67,15 @@ abstract class KunenaHtmlParser
 
 		foreach ($smilies as $smiley)
 		{
+			$smileyProperties = KunenaImage::getImageFileProperties($template->getSmileyPath($smiley->file));
+			
+			$emoticon = new stdClass();
+			$emoticon->path = $template->getSmileyPath($smiley->file);
+			$emoticon->width = $smileyProperties->width;
+			$emoticon->height = $smileyProperties->height;
+			
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = $emoticon;
 		}
 
 		if ($emoticonbar == 0)
@@ -77,7 +84,7 @@ abstract class KunenaHtmlParser
 			array_multisort(array_keys($smileyArray), SORT_DESC, $smileyArray);
 			reset($smileyArray);
 		}
-
+		
 		return $smileyArray;
 	}
 

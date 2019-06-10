@@ -319,7 +319,7 @@ class KunenaControllerUser extends KunenaController
 			$success = $ban->save();
 
 			// Send report to stopforumspam
-			$this->report($user);
+			$this->report($user->userid);
 		}
 		else
 		{
@@ -1338,24 +1338,24 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param   mixed   $user      user
+	 * @param   int     $user      user
 	 * @param   string  $evidence  evidence
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($user, string $evidence = '')
+	protected function report($userid = 0, $evidence = null)
 	{
-		if (!$this->config->stopforumspam_key || !$user)
+		if (!$this->config->stopforumspam_key || !$userid)
 		{
 			return false;
 		}
 
-		$spammer = Factory::getUser($user->userid);
+		$spammer = Factory::getUser($userid);
 
 		// TODO: remove this query by getting the ip of user by an another way
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $user->userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
 		$ip = $db->loadResult();
 
 		if (!empty($ip))

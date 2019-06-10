@@ -970,6 +970,9 @@
         <field name="ok"
                type="varchar(75)"
                null="1"/>
+        <field name="pinterest"
+               type="varchar(75)"
+               null="1"/>
         <field name="websitename"
                type="varchar(50)"
                null="1"/>

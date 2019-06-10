@@ -668,4 +668,39 @@ abstract class KunenaForumMessageHelper
 
 		return $results;
 	}
+	
+	/**
+	 * Get last IP address used by the user
+	 * 
+	 * @param int $userid
+	 * @since 6.0.0
+	 */
+	public static function getLastUserIP(int $userid)
+	{
+		if (!$userid)
+		{
+			return false;
+		}
+
+		$db = Factory::getDBO();
+
+		$query = $db->getQuery(true);
+		$query->select('ip')
+		->from($db->quoteName('#__kunena_messages'))
+		->where('userid=' . $userid)
+		->group('ip')
+		->order('time DESC');
+		$db->setQuery($query, 0, 1);
+
+		try
+		{
+			$ip = $db->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $ip;
+	}
 }

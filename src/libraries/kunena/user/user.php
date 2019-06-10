@@ -82,6 +82,7 @@ jimport('joomla.utilities.date');
  * @property    string $youtube
  * @property    string $ok
  * @property    int    $socialshare
+ * @property    string $pinterest
  */
 class KunenaUser extends CMSObject
 {
@@ -2143,6 +2144,7 @@ class KunenaUser extends CMSObject
 		                'whatsapp'         => array('url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'),
 		                'youtube'          => array('url' => 'https://www.youtube.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
 		                'ok'               => array('url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
+						'pinterest'        => array('url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'),
 		);
 
 		return $social;

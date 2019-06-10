@@ -939,6 +939,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `ip` VARCHAR(125) NULL DEFAULT NULL;</query>
         </version>
+        <version version="6.0.0-ALPHA4"
+                 versiondate="2019-06-10"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `pinterest` VARCHAR(75) NULL DEFAULT NULL;</query>
+        </version>
         <version version="6.0.0-ALPHA4-DEV"
                  versiondate="2019-06-01"
                  versionname="Internal">

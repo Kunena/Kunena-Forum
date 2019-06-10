@@ -317,12 +317,9 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-body">
 				<div id="smilie"><?php
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-					foreach ($emoticons as $emo_code => $emo_url)
+					foreach ($emoticons as $emo_code => $emo_properties)
 					{
-						$data   = getimagesize(JPATH_ROOT . '/' . $emo_url);
-						$width  = $data[0];
-						$height = $data[1];
-						echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width . '" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						echo '<img class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 					}
 					?>
 				</div>

@@ -599,37 +599,15 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $now->format('Y-m-d');
 		}
 
+		foreach($user->socialButtons() as $social)
+		{
+			$user->$social = str_replace(' ', '', trim($input->$method->get($social, '', 'string')));
+		}
+
 		$user->birthdate        = $birthdate;
 		$user->location         = trim($input->$method->get('location', '', 'string'));
 		$user->gender           = $input->$method->get('gender', 0, 'int');
-		$user->icq              = str_replace(' ', '', trim($input->$method->get('icq', '', 'string')));
-		$user->yim              = str_replace(' ', '', trim($input->$method->get('yim', '', 'string')));
-		$user->microsoft        = str_replace(' ', '', trim($input->$method->get('microsoft', '', 'string')));
-		$user->skype            = str_replace(' ', '', trim($input->$method->get('skype', '', 'string')));
-		$user->google           = str_replace(' ', '', trim($input->$method->get('google', '', 'string')));
-		$user->github           = str_replace(' ', '', trim($input->$method->get('github', '', 'string')));
-		$user->twitter          = str_replace(' ', '', trim($input->$method->get('twitter', '', 'string')));
-		$user->facebook         = str_replace(' ', '', trim($input->$method->get('facebook', '', 'string')));
-		$user->myspace          = str_replace(' ', '', trim($input->$method->get('myspace', '', 'string')));
-		$user->linkedin         = str_replace(' ', '', trim($input->$method->get('linkedin', '', 'string')));
-		$user->linkedin_company = str_replace(' ', '', trim($input->$method->get('linkedin_company', '', 'string')));
-		$user->friendfeed       = str_replace(' ', '', trim($input->$method->get('friendfeed', '', 'string')));
-		$user->digg             = str_replace(' ', '', trim($input->$method->get('digg', '', 'string')));
-		$user->blogspot         = str_replace(' ', '', trim($input->$method->get('blogspot', '', 'string')));
-		$user->flickr           = str_replace(' ', '', trim($input->$method->get('flickr', '', 'string')));
-		$user->bebo             = str_replace(' ', '', trim($input->$method->get('bebo', '', 'string')));
-		$user->instagram        = str_replace(' ', '', trim($input->$method->get('instagram', '', 'string')));
-		$user->qqsocial         = str_replace(' ', '', trim($input->$method->get('qqsocial', '', 'string')));
-		$user->qzone            = str_replace(' ', '', trim($input->$method->get('qzone', '', 'string')));
-		$user->weibo            = str_replace(' ', '', trim($input->$method->get('weibo', '', 'string')));
-		$user->wechat           = str_replace(' ', '', trim($input->$method->get('wechat', '', 'string')));
-		$user->apple            = str_replace(' ', '', trim($input->$method->get('apple', '', 'string')));
-		$user->vimeo            = str_replace(' ', '', trim($input->$method->get('vimeo', '', 'string')));
-		$user->vk               = str_replace(' ', '', trim($input->$method->get('vk', '', 'string')));
-		$user->whatsapp         = str_replace(' ', '', trim($input->$method->get('whatsapp', '', 'string')));
-		$user->telegram         = str_replace(' ', '', trim($input->$method->get('telegram', '', 'string')));
-		$user->youtube          = str_replace(' ', '', trim($input->$method->get('youtube', '', 'string')));
-		$user->ok               = str_replace(' ', '', trim($input->$method->get('ok', '', 'string')));
+
 		$user->websitename      = $input->$method->get('websitename', '', 'string');
 		$user->websiteurl       = $input->$method->get('websiteurl', '', 'string');
 		$user->signature        = $input->$method->get('signature', '', 'raw');
@@ -820,34 +798,12 @@ class KunenaControllerUser extends KunenaController
 			$user->birthdate        = $birthdate;
 			$user->location         = '';
 			$user->gender           = 0;
-			$user->icq              = '';
-			$user->yim              = '';
-			$user->microsoft        = '';
-			$user->skype            = '';
-			$user->google           = '';
-			$user->github           = '';
-			$user->twitter          = '';
-			$user->facebook         = '';
-			$user->myspace          = '';
-			$user->linkedin         = '';
-			$user->linkedin_company = '';
-			$user->friendfeed       = '';
-			$user->digg             = '';
-			$user->blogspot         = '';
-			$user->flickr           = '';
-			$user->bebo             = '';
-			$user->instagram        = '';
-			$user->qqsocial         = '';
-			$user->qzone            = '';
-			$user->whatsapp         = '';
-			$user->youtube          = '';
-			$user->ok               = '';
-			$user->vimeo            = '';
-			$user->weibo            = '';
-			$user->wechat           = '';
-			$user->apple            = '';
-			$user->vk               = '';
-			$user->telegram         = '';
+			
+			foreach($user->socialButtons() as $social)
+			{
+				$user->$social = '';
+			}
+
 			$user->websitename      = '';
 			$user->websiteurl       = '';
 			$user->signature        = '';

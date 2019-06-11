@@ -443,9 +443,8 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$app        = Factory::getApplication();
-		$input      = $app->input;
-		$post       = $app->input->post->getArray();
+		$input      = $this->app->input;
+		$post       = $input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
 		if ($post['task'] == 'save2copy')
@@ -508,9 +507,9 @@ class KunenaAdminControllerCategories extends KunenaController
 			}
 
 			$success     = $category->save();
-			$aliases_all = explode(',', $app->input->getString('aliases_all'));
+			$aliases_all = explode(',', $input->getString('aliases_all'));
 
-			$aliases = $app->input->post->getArray(array('aliases' => ''));
+			$aliases = $input->post->getArray(array('aliases' => ''));
 
 			if ($aliases_all)
 			{

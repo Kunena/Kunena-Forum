@@ -102,7 +102,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
+		$this->app->triggerEvent('onKunenaGetButtons', array('category.action', $this->categoryButtons, $this));
 	}
 
 	/**

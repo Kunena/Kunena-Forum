@@ -163,6 +163,6 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		echo json_encode($response);
 
 		// It's much faster and safer to exit now than let Joomla to send the response.
-		Factory::getApplication()->close();
+		$this->app->close();
 	}
 }

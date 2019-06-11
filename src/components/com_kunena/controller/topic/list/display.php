@@ -134,8 +134,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');

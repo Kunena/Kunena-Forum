@@ -248,8 +248,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			default:
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 
-				$app  = Joomla\CMS\Factory::getApplication();
-				$view = $app->input->get('view');
+				$view = $this->input->get('view');
 
 				if ($view == 'user')
 				{
@@ -289,8 +288,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$user  = KunenaUserHelper::get($this->state->get('user'));
 
 		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
-		$app             = Factory::getApplication();
-		$menu_item       = $app->getMenu()->getActive();
+		$menu_item       = $this->app->getMenu()->getActive();
 		$config          = Factory::getApplication('site');
 		$componentParams = $config->getParams('com_config');
 		$robots          = $componentParams->get('robots');

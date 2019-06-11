@@ -121,8 +121,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 
 		if ($menu_item)
 		{

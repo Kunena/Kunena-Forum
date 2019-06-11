@@ -90,8 +90,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');

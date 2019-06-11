@@ -328,7 +328,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+		$this->app->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 	}
 
 	/**

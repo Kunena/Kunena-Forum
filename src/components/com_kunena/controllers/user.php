@@ -331,7 +331,7 @@ class KunenaControllerUser extends KunenaController
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
 
-		Factory::getApplication()->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
+		$this->app->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
 
 		if ($errors)
 		{
@@ -546,7 +546,7 @@ class KunenaControllerUser extends KunenaController
 		// Bind the form fields to the user table and save.
 		if (!$user->bind($post) || !$user->save(true))
 		{
-			Factory::getApplication()->enqueueMessage($user->getError(), 'error');
+			$this->app->enqueueMessage($user->getError(), 'error');
 
 			return false;
 		}
@@ -798,7 +798,7 @@ class KunenaControllerUser extends KunenaController
 			$user->birthdate        = $birthdate;
 			$user->location         = '';
 			$user->gender           = 0;
-			
+
 			foreach($user->socialButtons() as $social)
 			{
 				$user->$social = '';
@@ -877,7 +877,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$spammer = Factory::getUser($userid);
-		
+
 		$ip = KunenaForumMessageHelper::getLastUserIP($userid);
 
 		if (!empty($ip))

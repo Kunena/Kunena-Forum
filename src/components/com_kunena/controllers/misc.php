@@ -22,10 +22,10 @@ use Joomla\CMS\Uri\Uri;
 class KunenaControllerMisc extends KunenaController
 {
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -33,14 +33,14 @@ class KunenaControllerMisc extends KunenaController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function template()
 	{
-		$name = Factory::getApplication()->input->getString('name',
-			Factory::getApplication()->input->cookie->getString('kunena_template', '')
+		$name = $this->input->getString('name',
+			$this->input->cookie->getString('kunena_template', '')
 		);
 
 		if ($name)

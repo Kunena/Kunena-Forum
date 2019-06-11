@@ -311,8 +311,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
 

@@ -25,11 +25,11 @@ use Joomla\CMS\Plugin\PluginHelper;
 class plgSystemKunena extends CMSPlugin
 {
 	/**
-	 * @param   object $subject Subject
-	 * @param   array  $config  Config
+	 * @param   object  $subject  Subject
+	 * @param   array   $config   Config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -92,11 +92,11 @@ EOF;
 	/**
 	 * @internal
 	 *
-	 * @param   string  $context Context
-	 * @param   boolean $params  Params
+	 * @param   string   $context  Context
+	 * @param   boolean  $params   Params
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function onKunenaGetConfiguration($context, &$params)
 	{
@@ -107,14 +107,14 @@ EOF;
 	}
 
 	/**
-	 * @param   mixed   $user    User
-	 * @param   boolean $isnew   Is new
-	 * @param   boolean $success Success
-	 * @param   string  $msg     Message
+	 * @param   mixed    $user     User
+	 * @param   boolean  $isnew    Is new
+	 * @param   boolean  $success  Success
+	 * @param   string   $msg      Message
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)
 	{
@@ -134,14 +134,14 @@ EOF;
 	/**
 	 * Prevent downgrades to Kunena 1.7 and older releases
 	 *
-	 * @param   string $method   method
-	 * @param   string $type     type
-	 * @param   string $manifest manifest
-	 * @param   int    $eid      id
+	 * @param   string  $method    method
+	 * @param   string  $type      type
+	 * @param   string  $manifest  manifest
+	 * @param   int     $eid       id
 	 *
 	 * @return boolean|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
 	{
@@ -157,12 +157,12 @@ EOF;
 	/**
 	 * Prevent downgrades to Kunena 1.7 and older releases
 	 *
-	 * @param   boolean $type     type
-	 * @param   string  $manifest manifest
+	 * @param   boolean  $type      type
+	 * @param   string   $manifest  manifest
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
 	{
@@ -204,35 +204,6 @@ EOF;
 	}
 
 	/**
-	 * Runs all Joomla content plugins on a single KunenaForumMessage
-	 *
-	 * @access protected
-	 * @see    self::onKunenaPrepare()
-	 * @since  Kunena 2.0
-	 *
-	 * @param   string $text   String to run events on
-	 * @param   object $params Joomla\Registry\Registry object holding eventual parameters
-	 * @param   int    $page   An integer holding page number
-	 *
-	 * @return object KunenaForumMessage
-	 * @throws Exception
-	 */
-	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
-	{
-
-		PluginHelper::importPlugin('content');
-
-		$row       = new stdClass;
-		$row->text = &$text;
-
-		Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
-
-		$text = &$row->text;
-
-		return $text;
-	}
-
-	/**
 	 * Adds the Kunena Privacy Information to Joomla Privacy plugin.
 	 *
 	 * @return array
@@ -256,5 +227,35 @@ EOF;
 		);
 
 		return $capabilities;
+	}
+
+	/**
+	 * Runs all Joomla content plugins on a single KunenaForumMessage
+	 *
+	 * @access protected
+	 * @see    self::onKunenaPrepare()
+	 *
+	 * @param   string  $text    String to run events on
+	 * @param   object  $params  Joomla\Registry\Registry object holding eventual parameters
+	 * @param   int     $page    An integer holding page number
+	 *
+	 * @return object KunenaForumMessage
+	 * @since  Kunena 2.0
+	 *
+	 * @throws Exception
+	 */
+	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
+	{
+
+		PluginHelper::importPlugin('content');
+
+		$row       = new stdClass;
+		$row->text = &$text;
+
+		Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
+
+		$text = &$row->text;
+
+		return $text;
 	}
 }

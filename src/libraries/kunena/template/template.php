@@ -215,10 +215,10 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @access    protected
 	 *
-	 * @param   null $name name
+	 * @param   null  $name  name
 	 *
-	 * @throws Exception
 	 * @since     Kunena
+	 * @throws Exception
 	 */
 	public function __construct($name = null)
 	{
@@ -325,8 +325,8 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isHmvc()
 	{
@@ -348,15 +348,38 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
+	 * Wrapper to addScript
+	 *
+	 * @param   string  $content  content
+	 * @param   string  $type     type
+	 *
+	 * @return Joomla\CMS\Document\Document|void
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function addScriptDeclaration($content, $type = 'text/javascript')
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return;
+		}
+
+		return Factory::getDocument()->addScriptDeclaration($content, $type);
+	}
+
+	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
 	 * @access    public
 	 *
-	 * @param   int $name Template name or null for default/selected template in your configuration
+	 * @param   int  $name  Template name or null for default/selected template in your configuration
 	 *
 	 * @return    KunenaTemplate    The template object.
-	 * @throws Exception
 	 * @since     1.6
+	 * @throws Exception
 	 */
 	public static function getInstance($name = null)
 	{
@@ -452,9 +475,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function initialize()
 	{
@@ -490,9 +513,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function loadLanguage()
 	{
@@ -509,9 +532,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public function initializeBackend()
 	{
@@ -528,11 +551,11 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @param   string $link  link
-	 * @param   string $name  name
-	 * @param   string $scope scope
-	 * @param   string $type  type
-	 * @param   null   $id    id
+	 * @param   string  $link   link
+	 * @param   string  $name   name
+	 * @param   string  $scope  scope
+	 * @param   string  $type   type
+	 * @param   null    $id     id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -541,7 +564,7 @@ class KunenaTemplate extends CMSObject
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod');
 		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', );
+		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',);
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -579,8 +602,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $name  name
-	 * @param   string $title title
+	 * @param   string  $name   name
+	 * @param   string  $title  title
 	 *
 	 * @return string
 	 * @since Kunena
@@ -591,8 +614,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $image image
-	 * @param   string $alt   alt
+	 * @param   string  $image  image
+	 * @param   string  $alt    alt
 	 *
 	 * @return string
 	 * @since Kunena
@@ -603,8 +626,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   bool   $url      url
+	 * @param   string  $filename  filename
+	 * @param   bool    $url       url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -615,11 +638,11 @@ HTML;
 	}
 
 	/**
-	 * @param   string $file     file
-	 * @param   bool   $url      url
-	 * @param   string $basepath basepath
-	 * @param   null   $default  default
-	 * @param   null   $ignore   ignore
+	 * @param   string  $file      file
+	 * @param   bool    $url       url
+	 * @param   string  $basepath  basepath
+	 * @param   null    $default   default
+	 * @param   null    $ignore    ignore
 	 *
 	 * @return string
 	 * @since Kunena
@@ -658,7 +681,7 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $list list
+	 * @param   mixed  $list  list
 	 *
 	 * @return string
 	 * @since Kunena
@@ -676,7 +699,7 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $list list
+	 * @param   mixed  $list  list
 	 *
 	 * @return string
 	 * @since Kunena
@@ -704,7 +727,7 @@ HTML;
 	}
 
 	/**
-	 * @param   string $item item
+	 * @param   string  $item  item
 	 *
 	 * @return string
 	 * @since Kunena
@@ -715,7 +738,7 @@ HTML;
 	}
 
 	/**
-	 * @param   string $item item
+	 * @param   string  $item  item
 	 *
 	 * @return string
 	 * @since Kunena
@@ -726,8 +749,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $class     class
-	 * @param   string $class_sfx class_sfx
+	 * @param   string  $class      class
+	 * @param   string  $class_sfx  class_sfx
 	 *
 	 * @return string
 	 * @since Kunena
@@ -747,8 +770,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   string $default default
+	 * @param   string  $name     name
+	 * @param   string  $default  default
 	 *
 	 * @return string
 	 * @since Kunena
@@ -759,8 +782,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string  $name  name
-	 * @param   integer $value value
+	 * @param   string   $name   name
+	 * @param   integer  $value  value
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -773,12 +796,12 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   string $group    group
+	 * @param   string  $filename  filename
+	 * @param   string  $group     group
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
@@ -794,19 +817,19 @@ HTML;
 		{
 			if (preg_match('/assets/', $filename))
 			{
-				$filename     = preg_replace('|^css/|u', '', $filename);
-				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = preg_replace('|^css/|u', '', $filename);
+				$filename = preg_replace('/^assets\//', '', $filename);
 				$filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
 			}
 			elseif (preg_match('/kunena.css/', $filename) || preg_match('/kunena-custom.css/', $filename))
 			{
-				$filename     = preg_replace('|^css/|u', '', $filename);
-				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = preg_replace('|^css/|u', '', $filename);
+				$filename = preg_replace('/^assets\//', '', $filename);
 				$filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/cache/' . $this->name . '/css');
 			}
 			else
 			{
-				$filename = $this->getFile($filename, false, $this->pathTypes['css'],  $this->pathTypes['css']);
+				$filename = $this->getFile($filename, false, $this->pathTypes['css'], $this->pathTypes['css']);
 			}
 
 			$filemin      = $filename;
@@ -831,11 +854,11 @@ HTML;
 	/**
 	 * Set the LESS file into the document head
 	 *
-	 * @param   string $filename filename
+	 * @param   string  $filename  filename
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 * @since Kunena 5.1.3
+	 * @throws Exception
 	 */
 	public function addLessSheet($filename)
 	{
@@ -855,11 +878,11 @@ HTML;
 	/**
 	 * Set the Scss file into the document head
 	 *
-	 * @param   string $filename filename
+	 * @param   string  $filename  filename
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 * @since Kunena 5.1.3
+	 * @throws Exception
 	 */
 	public function addScssSheet($filename)
 	{
@@ -881,8 +904,8 @@ HTML;
 	 *
 	 * @return string|void
 	 *
-	 * @throws Exception
 	 * @since version
+	 * @throws Exception
 	 */
 	public function addStyleDeclaration($style)
 	{
@@ -898,11 +921,11 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename  filename
-	 * @param   string $condition condition
+	 * @param   string  $filename   filename
+	 * @param   string  $condition  condition
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{
@@ -915,8 +938,8 @@ HTML;
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function clearCache()
 	{
@@ -929,11 +952,11 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
+	 * @param   string  $filename  filename
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCachePath($filename = '')
 	{
@@ -955,7 +978,7 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $matches matches
+	 * @param   mixed  $matches  matches
 	 *
 	 * @return string
 	 * @since Kunena
@@ -975,37 +998,14 @@ HTML;
 	/**
 	 * Wrapper to addScript
 	 *
-	 * @param   string $content content
-	 * @param   string $type    type
+	 * @param   string  $filename  filename
+	 *
+	 * @param   array   $options
+	 * @param   array   $attribs
 	 *
 	 * @return Joomla\CMS\Document\Document|void
-	 * @throws Exception
 	 * @since Kunena
-	 */
-	public function addScriptDeclaration($content, $type = 'text/javascript')
-	{
-		$app    = Factory::getApplication();
-		$format = $app->input->getCmd('format');
-
-		if (!empty($format) && $format != 'html')
-		{
-			return;
-		}
-
-		return Factory::getDocument()->addScriptDeclaration($content, $type);
-	}
-
-	/**
-	 * Wrapper to addScript
-	 *
-	 * @param   string $filename filename
-	 *
-	 * @param array    $options
-	 * @param array    $attribs
-	 *
-	 * @return Joomla\CMS\Document\Document|void
 	 * @throws Exception
-	 * @since Kunena
 	 */
 	public function addScript($filename, $options = array(), $attribs = array())
 	{
@@ -1021,13 +1021,13 @@ HTML;
 		{
 			if (preg_match('/assets/', $filename))
 			{
-				$filename     = preg_replace('|^css/|u', '', $filename);
-				$filename     = preg_replace('/^assets\//', '', $filename);
+				$filename = preg_replace('|^css/|u', '', $filename);
+				$filename = preg_replace('/^assets\//', '', $filename);
 				$filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
 			}
 			else
 			{
-				$filename = $this->getFile($filename, false, $this->pathTypes['js'],  $this->pathTypes['js']);
+				$filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
 			}
 
 			$filemin      = $filename;
@@ -1052,14 +1052,14 @@ HTML;
 	/**
 	 * Add option for script
 	 *
-	 * @param   string $key     Name in Storage
-	 * @param   mixed  $options Scrip options as array or string
-	 * @param   bool   $merge   Whether merge with existing (true) or replace (false)
+	 * @param   string  $key      Name in Storage
+	 * @param   mixed   $options  Scrip options as array or string
+	 * @param   bool    $merge    Whether merge with existing (true) or replace (false)
 	 *
 	 * @return Joomla\CMS\Document\Document|void
 	 *
-	 * @throws Exception
 	 * @since   3.5
+	 * @throws Exception
 	 */
 	public function addScriptOptions($key, $options, $merge = true)
 	{
@@ -1075,10 +1075,10 @@ HTML;
 	}
 
 	/**
-	 * @param   string $path path
+	 * @param   string  $path  path
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function addPath($path)
 	{
@@ -1086,12 +1086,12 @@ HTML;
 	}
 
 	/**
-	 * @param   string $path     path
-	 * @param   bool   $fullpath fullpath
+	 * @param   string  $path      path
+	 * @param   bool    $fullpath  fullpath
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
@@ -1119,8 +1119,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   bool   $url      url
+	 * @param   string  $filename  filename
+	 * @param   bool    $url       url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1131,8 +1131,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   bool   $url      url
+	 * @param   string  $filename  filename
+	 * @param   bool    $url       url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1143,8 +1143,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   bool   $url      url
+	 * @param   string  $filename  filename
+	 * @param   bool    $url       url
 	 *
 	 * @return string
 	 * @since Kunena
@@ -1155,12 +1155,12 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $index index
-	 * @param   bool  $url   url
+	 * @param   mixed  $index  index
+	 * @param   bool   $url    url
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopicIconIndexPath($index, $url = false)
 	{
@@ -1180,12 +1180,12 @@ HTML;
 	}
 
 	/**
-	 * @param   bool $all     all
-	 * @param   int  $checked checked
+	 * @param   bool  $all      all
+	 * @param   int   $checked  checked
 	 *
 	 * @return array|SimpleXMLElement
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
@@ -1274,12 +1274,12 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename filename
-	 * @param   bool   $url      url
+	 * @param   string  $filename  filename
+	 * @param   bool    $url       url
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopicIconPath($filename = '', $url = true)
 	{
@@ -1308,12 +1308,13 @@ HTML;
 	}
 
 	/**
-	 * @param   KunenaForumTopic $topic topic
+	 * @internal param string $category_iconset
+	 *
+	 * @param   KunenaForumTopic  $topic  topic
 	 *
 	 * @return string
-	 * @throws Exception
-	 * @internal param string $category_iconset
 	 * @since    Kunena
+	 * @throws Exception
 	 */
 	public function getTopicIcon($topic)
 	{
@@ -1486,9 +1487,9 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed  $src   src
-	 * @param   int    $id    id
-	 * @param   string $style style
+	 * @param   mixed   $src    src
+	 * @param   int     $id     id
+	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
 	 * @since Kunena
@@ -1519,9 +1520,9 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed  $src   src
-	 * @param   int    $id    id
-	 * @param   string $style style
+	 * @param   mixed   $src    src
+	 * @param   int     $id     id
+	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
 	 * @since Kunena
@@ -1557,11 +1558,11 @@ HTML;
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -1584,12 +1585,12 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $index index
-	 * @param   bool  $url   url
+	 * @param   mixed  $index  index
+	 * @param   bool   $url    url
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
 	{
@@ -1609,12 +1610,12 @@ HTML;
 	}
 
 	/**
-	 * @param   bool $all     all
-	 * @param   int  $checked checked
+	 * @param   bool  $all      all
+	 * @param   int   $checked  checked
 	 *
 	 * @return array|SimpleXMLElement
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
@@ -1697,13 +1698,13 @@ HTML;
 	}
 
 	/**
-	 * @param   string $filename         filename
-	 * @param   bool   $url              url
-	 * @param   mixed  $category_iconset category
+	 * @param   string  $filename          filename
+	 * @param   bool    $url               url
+	 * @param   mixed   $category_iconset  category
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset = 'default')
 	{
@@ -1728,12 +1729,12 @@ HTML;
 	}
 
 	/**
-	 * @param   string $inputFile  input
-	 * @param   string $outputFile output
+	 * @param   string  $inputFile   input
+	 * @param   string  $outputFile  output
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function compileLess($inputFile, $outputFile)
 	{
@@ -1791,12 +1792,12 @@ HTML;
 	}
 
 	/**
-	 * @param   string $inputFile  input
-	 * @param   string $outputFile output
+	 * @param   string  $inputFile   input
+	 * @param   string  $outputFile  output
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function compileScss($inputFile, $outputFile)
 	{
@@ -1830,7 +1831,7 @@ HTML;
 
 		$outputFile = "{$outputDir}/{$outputFile}";
 
-		$scss = new Compiler();
+		$scss  = new Compiler();
 		$class = $this;
 		$scss->registerFunction('url', function ($arg) use ($class) {
 			list($type, $q, $values) = $arg;
@@ -1854,11 +1855,11 @@ HTML;
 	/**
 	 * Legacy template support.
 	 *
-	 * @param   string $search search
+	 * @param   string  $search  search
 	 *
 	 * @return array
-	 * @deprecated K4.0
 	 * @since      Kunena
+	 * @deprecated K4.0
 	 */
 	public function mapLegacyView($search)
 	{
@@ -1885,10 +1886,10 @@ HTML;
 	/**
 	 * Set the category iconset value
 	 *
-	 * @param   string $iconset iconset
+	 * @param   string  $iconset  iconset
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function setCategoryIconset($iconset = '/default')
 	{
@@ -1896,11 +1897,11 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed $topic topic
+	 * @param   mixed  $topic  topic
 	 *
 	 * @return stdClass|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopicLabel($topic)
 	{
@@ -1936,9 +1937,9 @@ HTML;
 	}
 
 	/**
-	 * @param   mixed  $src   src
-	 * @param   int    $id    id
-	 * @param   string $style style
+	 * @param   mixed   $src    src
+	 * @param   int     $id     id
+	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
 	 * @since Kunena
@@ -1971,8 +1972,8 @@ HTML;
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function borderless()
 	{
@@ -1990,7 +1991,7 @@ HTML;
 	}
 
 	/**
-	 * @param   bool $class class
+	 * @param   bool  $class  class
 	 *
 	 * @return string|void
 	 *
@@ -2016,12 +2017,12 @@ HTML;
 	}
 
 	/**
-	 * @param bool $topic_ids
+	 * @param   bool  $topic_ids
 	 *
 	 * @return string|void
 	 *
-	 * @throws Exception
 	 * @since version
+	 * @throws Exception
 	 */
 	public function recaptcha($topic_ids = false)
 	{

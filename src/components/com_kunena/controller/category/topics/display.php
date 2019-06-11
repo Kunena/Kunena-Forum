@@ -229,8 +229,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$categoryText = $this->category->name;
 		$categorydesc = $this->category->description;
 
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 		$doc       = Factory::getDocument();
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');

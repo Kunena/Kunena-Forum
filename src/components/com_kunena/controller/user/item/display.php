@@ -169,8 +169,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
 		}
 
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
 		$image     = '';

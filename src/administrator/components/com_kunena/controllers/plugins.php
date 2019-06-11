@@ -43,7 +43,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
-		$this->input  = Factory::getApplication()->input;
+		$this->input  = $this->app->input;
 
 		parent::__construct($config);
 		$this->baseurl     = 'administrator/index.php?option=com_kunena&view=plugins';

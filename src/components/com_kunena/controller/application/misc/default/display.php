@@ -41,8 +41,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 */
 	protected function display()
 	{
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive();
+		$menu_item = $this->app->getMenu()->getActive();
 
 		$doc             = Factory::getDocument();
 		$config          = Factory::getApplication('site');

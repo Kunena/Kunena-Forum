@@ -44,13 +44,24 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 
 		try
 		{
-			$results = new KunenaCollection((array) $this->db->loadObjectList('id', 'KunenaAttachment'));
+			$results = (array) $this->db->loadObjectList('id');
 		}
 		catch (RuntimeException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
 
-		return $results;
+		$instances = array();
+
+		foreach($results as $id => $result)
+		{
+			$instances[$id] = KunenaAttachmentHelper::get($id);
+		}
+
+		$instances = new KunenaCollection($instances);
+
+		unset($results);
+
+		return $instances;
 	}
 }

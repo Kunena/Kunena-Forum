@@ -9,6 +9,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $message              = $this->message;
@@ -49,19 +50,19 @@ $list = array();
 	</small>
 
 	<div class="shadow-none p-4 mb-5 rounded">
-			<div class="mykmsg-header">
-				<?php
-				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
-				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
-			</div>
-			<div class="kmsg">
-				<?php if (!$this->me->userid && !$isReply) :
-					echo $message->displayField('message');
-				else:
-					echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-				endif; ?>
-			</div>
+		<div class="mykmsg-header">
+			<?php
+			$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+			$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+			echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+		</div>
+		<div class="kmsg">
+			<?php if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif; ?>
+		</div>
 		<?php if ($signature) : ?>
 			<div class="ksig">
 				<hr>
@@ -71,10 +72,10 @@ $list = array();
 	</div>
 <?php if ($this->config->reportmsg && $this->me->exists()) : ?>
 	<div class="report pb-5">
-	    <?php echo KunenaLayout::factory('Widget/Button')
-		->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-		                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-		                      'modal' => 'modal', 'pullright' => 'pullright', ));?>
+		<?php echo KunenaLayout::factory('Widget/Button')
+			->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+			                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
+			                      'modal' => 'modal', 'pullright' => 'pullright',)); ?>
 	</div>
 	<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
@@ -93,24 +94,26 @@ $list = array();
 	<?php endif; ?>
 <?php endif; ?>
 <?php if (!empty($attachments)) : ?>
-	<div class="cart">
+	<div class="cart pb-3 pd-3">
 		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-		<ul class="card-body" style="list-style:none;">
-			<?php foreach ($attachments as $attachment) : ?>
-				<?php if ($attachment->isAudio()) :
-					echo $attachment->getLayout()->render('audio'); ?>
-				<?php elseif ($attachment->isVideo()) :
-					echo $attachment->getLayout()->render('video'); ?>
-				<?php else : ?>
-					<li class="col-md-3 text-center">
-						<div class="thumbnail">
-							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-							<?php echo $attachment->getLayout()->render('textlink'); ?>
-						</div>
-					</li>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		</ul>
+		<div class="card-body kattach">
+			<ul class="thumbnails" style="list-style:none;">
+				<?php foreach ($attachments as $attachment) : ?>
+					<?php if ($attachment->isAudio()) :
+						echo $attachment->getLayout()->render('audio'); ?>
+					<?php elseif ($attachment->isVideo()) :
+						echo $attachment->getLayout()->render('video'); ?>
+					<?php else : ?>
+						<li class="col-md-3 text-center">
+							<div class="thumbnail">
+								<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+								<?php echo $attachment->getLayout()->render('textlink'); ?>
+							</div>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</ul>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 <?php elseif ($attachs->total > 0 && !$this->me->exists()) :

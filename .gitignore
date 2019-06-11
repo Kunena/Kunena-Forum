@@ -7,6 +7,7 @@ src/components/com_kunena/template/crypsisb3/assets/js/markitup.editor.js
 src/components/com_kunena/template/blue_eagle5
 src/media/kunena/avatars
 src/media/kunena/cache
+src/media/kunena/attachments/
 
 # Builds
 build/tmp

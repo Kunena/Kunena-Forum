@@ -942,7 +942,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$message->catid  = $catid;
 		$message->name   = $user->getName('');
 		$message->userid = $user->userid;
-		$message->ip     = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
+		$message->ip     = !empty(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '';
 		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user) : 0;
 
 		if ($safefields)

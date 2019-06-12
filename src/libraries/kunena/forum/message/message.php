@@ -321,14 +321,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = $_SERVER ["REMOTE_ADDR"];
+		$message->ip      = KunenaUserHelper::getUserIp();
 
 		// Add IP to user.
 		if (KunenaConfig::getInstance()->iptracking)
 		{
-			if (empty($user->ip))
+		    if (empty($user->ip))
 			{
-				$user->ip = $_SERVER ["REMOTE_ADDR"];
+			    $user->ip = KunenaUserHelper::getUserIp();
 			}
 		}
 

@@ -1259,7 +1259,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = !empty($_SERVER ["REMOTE_ADDR"]) ? $_SERVER ["REMOTE_ADDR"] : '';
+		$message->ip      = !empty(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '';
 
 		if ($this->hold)
 		{

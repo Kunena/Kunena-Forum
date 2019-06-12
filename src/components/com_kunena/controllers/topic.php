@@ -532,6 +532,18 @@ class KunenaControllerTopic extends KunenaController
 			$topic->icon_id = $fields['icon_id'];
 		}
 
+		// Check for guest user if the IP, username or email are blacklisted
+		if ($message->getCategory()->allow_anonymous)
+		{
+			if ($this->checkIfBlacklisted($message))
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_BALCKLISTED'), 'error');
+				$this->setRedirectBack();
+
+				return;
+			}
+		}
+		
 		// Remove IP address
 		if (!$this->config->iptracking)
 		{
@@ -2294,5 +2306,85 @@ class KunenaControllerTopic extends KunenaController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
 		$this->setRedirect($topic->getUrl($this->return, false));
+	}
+	
+	/**
+	 * Check if the IP, username or email adress given are blacklisted
+	 * 
+	 * @return boolean
+	 * @since 6.0.0
+	 */
+	protected function checkIfBlacklisted($message)
+	{
+		$ip = $message->ip;
+		$name = $message->name;
+		$email = $message->email;
+
+		// Prepare the request to stopforumspam
+		if (KunenaUserHelper::isIPv6($message->ip))
+		{
+			$ip = '[' . $message->ip .']';
+		}
+
+		$data = 'ip=' . $ip ;
+
+		if (!empty($name))
+		{
+			$data .= '&username=' . $name;
+		}
+
+		if (!empty($email))
+		{
+			$data .= '&email=' . $email;
+		}
+
+		$options = new Joomla\Registry\Registry;
+
+		$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new Joomla\CMS\Http\Http($options, $transport);
+
+		$response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
+
+		if ($response->code == '200')
+		{
+ 			// The query has worked
+			$result = json_decode($response->body);
+
+			if ($result->success)
+			{
+				if ($result->ip->appears)
+				{
+					return true;
+				}
+				elseif (!empty($result->username) || !empty($result->email))
+				{
+					if ($result->username->appears || $result->email->appears)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			else
+			{
+				// TODO : log the result or display something in debug mode
+
+				return false;
+			}
+		}
+		else
+		{
+			// The query has failed or has been refused
+
+			// TODO : log the result or display something in debug mode
+
+			return false;
+		}
+
 	}
 }

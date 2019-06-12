@@ -14,6 +14,7 @@ KunenaUserHelper::initialize();
 
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
+use Joomla\Utilities\IpHelper;
 
 /**
  * Class KunenaUserHelper
@@ -703,5 +704,27 @@ abstract class KunenaUserHelper
 		$rows = $db->getAffectedRows();
 
 		return $rows;
+	}
+	
+	/**
+	 * Return the IP used by the user
+	 *
+	 * @return  string
+	 * @since 6.0.0
+	 */
+	public static function getUserIp()
+	{
+		return IpHelper::getIp();
+	}
+	
+	/**
+	 * Return is the user IP is ipv6 or not
+	 *
+	 * @return boolean
+	 * @since 6.0.0
+	 */
+	public static function isIPv6($ip)
+	{
+		return IpHelper::isIPv6($ip);
 	}
 }

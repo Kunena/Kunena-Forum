@@ -486,7 +486,7 @@ class KunenaControllerTopic extends KunenaController
 		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
 		{
 			$timelimit = Factory::getDate()->toUnix() - $this->config->floodprotection;
-			$ip        = $_SERVER ["REMOTE_ADDR"];
+			$ip        = KunenaUserHelper::getUserIp();
 
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);

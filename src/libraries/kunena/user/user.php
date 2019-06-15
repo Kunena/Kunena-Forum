@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Image\Image;
 
 jimport('joomla.utilities.date');
 
@@ -1508,11 +1509,9 @@ class KunenaUser extends CMSObject
 			{
 				$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
 				$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
-				$data     = getimagesize($location);
-				$width    = $data[0];
-				$height   = $data[1];
+				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
+				return '<img src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . $rank->rank_title . '" />';
 			}
 			elseif ($config->rankimages == 2)
 			{
@@ -1522,11 +1521,9 @@ class KunenaUser extends CMSObject
 			{
 				$url      = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
 				$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
-				$data     = getimagesize($location);
-				$width    = $data[0];
-				$height   = $data[1];
+				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
+				return '<img src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . $rank->rank_title . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 			elseif ($config->rankimages == 4)

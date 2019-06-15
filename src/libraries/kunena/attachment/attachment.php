@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\Image\Image;
 
 /**
  * Class KunenaAttachment
@@ -86,13 +87,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @var integer
 	 * @since Kunena
 	 */
-	protected $width;
+	public $width;
 
 	/**
 	 * @var integer
 	 * @since Kunena
 	 */
-	protected $height;
+	public $height;
 
 	/**
 	 * @var string
@@ -302,7 +303,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($path && $this->isImage())
 		{
-			list($this->width, $this->height) = getimagesize($path);
+			list($this->width, $this->height) = Image::getImageFileProperties($path);
 		}
 		else
 		{

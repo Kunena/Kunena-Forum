@@ -90,4 +90,8 @@ jQuery(document).ready(function ($) {
 		clearcache.addClass('btn-success');
 		clearcache.html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
+	
+	$('#modaldeteleallsubmit').click(function() {
+		$('#adminForm').submit();
+	});
 });

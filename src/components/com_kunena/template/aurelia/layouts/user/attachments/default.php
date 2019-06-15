@@ -105,8 +105,8 @@ $attachments = $this->attachments;
 								<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
 								   data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
 
-								<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog"
-								     aria-labelledby="modaldeleteLabel">
+								<div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
+								     aria-labelledby="modaldelete<?php echo $i ?>Label">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -121,7 +121,7 @@ $attachments = $this->attachments;
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-outline-primary border"
-												        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+												        onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','delfile');" data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
 												<button type="button"
 												        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 											</div>
@@ -145,7 +145,7 @@ $attachments = $this->attachments;
 		<a href="#modaldeleteall" class="btn btn-outline-primary border float-right"
 		   data-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
-		<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="modaldeleteLabel">
+		<div class="modal fade" id="modaldeleteall" tabindex="-1" role="dialog" aria-labelledby="modaldeleteallLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -159,9 +159,9 @@ $attachments = $this->attachments;
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-primary border"
-						        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+						        data-dismiss="modal" id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
 						<button type="button" class="btn btn-outline-primary"
-						        onclick="adminform.submit();"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
+						        ><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 					</div>
 				</div>
 			</div>

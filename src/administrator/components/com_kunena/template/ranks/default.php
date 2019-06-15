@@ -199,14 +199,14 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td>
 														<a href="#edit"
-														   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
 															<img src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
 															     alt="<?php echo $this->escape($row->rank_image); ?>"/>
 														</a>
 													</td>
 													<td class="nowrap">
 														<a href="#edit"
-														   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
 															<?php echo $this->escape($row->rank_title); ?>
 														</a>
 													</td>

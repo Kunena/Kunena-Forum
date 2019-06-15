@@ -268,27 +268,27 @@ HTMLHelper::_('dropdown.init');
 											{
 												?>
 												<a href="#edit"
-												   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_YES'); ?></a>
+												   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_YES'); ?></a>
 											<?php }
 											else
 											{
 												?>
 												<a href="#edit"
-												   onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_NO'); ?></a>
+												   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_NO'); ?></a>
 											<?php } ?>
 										</span>
 									</td>
 									<td class="center hidden-phone">
 										<a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>"
 										   href="javascript: void(0);"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
+										   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
 											<?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
 										</a>
 									</td>
 									<td class="center hidden-phone">
 										<a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>"
 										   href="javascript: void(0);"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
+										   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
 											<?php echo $user->isBanned() ? $img_yes : $img_no; ?>
 										</a>
 									</td>
@@ -296,13 +296,13 @@ HTMLHelper::_('dropdown.init');
 										<?php if ($user->moderator) : ?>
 											<a class="btn btn-micro active"
 											   href="javascript: void(0);"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
 												<?php echo $img_yes; ?>
 											</a>
 										<?php else : ?>
 											<a class="btn btn-micro active"
 											   href="javascript: void(0);"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
 												<?php echo $img_no; ?>
 											</a>
 										<?php endif; ?>

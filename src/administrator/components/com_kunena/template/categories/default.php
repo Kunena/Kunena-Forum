@@ -366,7 +366,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<td class="center hidden-phone">
 										<a class="btn btn-micro <?php echo($item->locked ? 'active' : ''); ?>"
 										   href="javascript: void(0);"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
+										   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
 											<?php echo($item->locked == 1 ? $img_yes : $img_no); ?>
 										</a>
 									</td>
@@ -383,21 +383,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo($item->review ? 'active' : ''); ?>"
 											   href="javascript: void(0);"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
 												<?php echo($item->review == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo($item->allow_polls ? 'active' : ''); ?>"
 											   href="javascript: void(0);"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
 												<?php echo($item->allow_polls == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo($item->allow_anonymous ? 'active' : ''); ?>"
 											   href="javascript: void(0);"
-											   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
 												<?php echo($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>

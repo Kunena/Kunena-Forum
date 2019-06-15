@@ -181,7 +181,7 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td class="hidden-phone center">
 														<a href="#edit"
-														   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
 															<img src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
 															     alt="<?php echo $this->escape($row->location); ?>"/>
 														</a>

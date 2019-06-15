@@ -82,7 +82,7 @@ HTMLHelper::_('dropdown.init');
 										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span class="icon-featured"></span></a>
 									<?php else : ?>
 										<a href="javascript: void(0);"
-										   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
+										   onclick="return Joomla.listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
 											<span class="icon-featured pl-2" title="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></span>
 										</a>
 									<?php endif; ?>

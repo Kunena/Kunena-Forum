@@ -53,7 +53,7 @@ class KunenaLogEntry
 			'category_id' => $category ? $category->id : 0,
 			'topic_id'    => $topic ? $topic->id : 0,
 			'target_user' => $user ? $user->userid : 0,
-			'ip'          => Factory::getApplication()->isClient('site') && isset(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '',
+			'ip'          => Factory::getApplication()->isClient('site') && KunenaUserHelper::getUserIp()!==null ? KunenaUserHelper::getUserIp() : '',
 			'time'        => $now->toUnix(),
 			'operation'   => $operation,
 			'data'        => json_encode($data),

@@ -567,19 +567,19 @@ class TableKunenaUsers extends KunenaTable
 	{
 		if (!$this->userid || !Factory::getUser($this->userid))
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
 		}
 
 		if ($this->status < 0 || $this->status > 3)
 		{
-			$this->setError(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
+			throw new UnexpectedValueException(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
 		}
 
 		if (strlen($this->status) < 0 || strlen($this->status) > 255)
 		{
-			$this->setError(Text::_('COM_KUNENA_STATUS_TOOLONG'));
+			throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 }

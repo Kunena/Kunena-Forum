@@ -104,9 +104,9 @@ class TableKunenaSessions extends KunenaTable
 
 		if (!$user->exists())
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 }

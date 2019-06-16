@@ -230,11 +230,15 @@ class KunenaSession extends CMSObject
 		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (!$table->check())
+		try {
+			if (!$table->check())
+			{
+				return false;
+			}
+		}
+		catch (Exception $e)
 		{
-			$this->setError($table->getError());
-
-			return false;
+			throw new RuntimeException($e->getMessage());
 		}
 
 		// Are we creating a new user

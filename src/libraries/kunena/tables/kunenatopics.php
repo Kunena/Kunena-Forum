@@ -246,7 +246,7 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$category->exists())
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
 		}
 		else
 		{
@@ -257,9 +257,9 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$this->subject)
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
+			throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 }

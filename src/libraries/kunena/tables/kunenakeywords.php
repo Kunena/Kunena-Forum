@@ -65,9 +65,9 @@ class TableKunenaKeywords extends KunenaTable
 
 		if (!$this->name)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_KEYWORDS_ERROR_EMPTY'));
+			throw new UnexpectedValueException();
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 }

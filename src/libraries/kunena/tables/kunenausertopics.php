@@ -97,16 +97,16 @@ class TableKunenaUserTopics extends KunenaTable
 
 		if (!$user->exists())
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
 		if (!$topic->exists())
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id));
 		}
 
 		$this->category_id = $topic->category_id;
 
-		return $this->getError() == '';
+		return true;
 	}
 }

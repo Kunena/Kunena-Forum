@@ -248,7 +248,7 @@ class TableKunenaMessages extends KunenaTable
 		if (!$category->exists())
 		{
 			// TODO: maybe we should have own error message? or not?
-			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
+			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
 		}
 		else
 		{
@@ -259,14 +259,14 @@ class TableKunenaMessages extends KunenaTable
 
 		if (!$this->subject)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
+			throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
 		}
 
 		$this->message = trim($this->message);
 
 		if (!$this->message)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+			throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
 		}
 
 		if (!$this->time)
@@ -276,7 +276,7 @@ class TableKunenaMessages extends KunenaTable
 
 		$this->modified_reason = trim($this->modified_reason);
 
-		return $this->getError() == '';
+		return true;
 	}
 
 	/**

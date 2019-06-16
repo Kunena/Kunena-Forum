@@ -533,7 +533,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Check for guest user if the IP, username or email are blacklisted
-		if ($message->getCategory()->allow_anonymous)
+		if ($message->getCategory()->allow_anonymous && !$this->me->userid)
 		{
 			if ($this->checkIfBlacklisted($message))
 			{
@@ -2358,9 +2358,20 @@ class KunenaControllerTopic extends KunenaController
 				{
 					return true;
 				}
-				elseif (!empty($result->username) || !empty($result->email))
+				elseif (!empty($result->username))
 				{
-					if ($result->username->appears || $result->email->appears)
+					if ($result->username->appears)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				elseif (!empty($result->email))
+				{
+					if ($result->email->appears)
 					{
 						return true;
 					}

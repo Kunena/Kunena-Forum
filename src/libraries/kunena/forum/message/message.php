@@ -965,8 +965,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Activity integration
-
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		// FIXME : load the plugin finder produce a fatal error 
+		//Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 
 		if ($postDelta < 0)

@@ -122,7 +122,7 @@ $attachments = $this->attachments;
 											<div class="modal-footer">
 												<button type="button" class="btn btn-outline-primary border"
 												        onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','delfile');" data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-												<button type="button"
+												<button type="button" data-dismiss="modal"
 												        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 											</div>
 										</div>
@@ -159,8 +159,8 @@ $attachments = $this->attachments;
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-primary border"
-						        data-dismiss="modal" id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-						<button type="button" class="btn btn-outline-primary"
+						        id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+						<button type="button" class="btn btn-outline-primary" data-dismiss="modal"
 						        ><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
 					</div>
 				</div>

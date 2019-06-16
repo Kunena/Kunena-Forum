@@ -154,13 +154,21 @@ abstract class KunenaDatabaseObject extends CMSObject
 		$table->exists($this->_exists);
 		$isNew = !$this->_exists;
 
+		
 		// Check the table object.
-		if (!$table->check())
+		try
 		{
-			$this->setError($table->getError());
-
-			return $this->_saving = false;
+			if (!$table->check())
+			{
+				return $this->_saving = false;
+			}
 		}
+		catch(Exception $e)
+		{
+			throw new Exception($e->getMessage());
+		}
+		
+		
 
 		// Include the Kunena plugins for the on save events.
 

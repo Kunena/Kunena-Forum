@@ -354,11 +354,11 @@ class TableKunenaCategories extends KunenaTable
 		{
 			if ($this->id == $this->parent_id)
 			{
-				$this->setError(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
+				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
 			elseif ($this->isChild($this->parent_id))
 			{
-				$this->setError(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
+				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
 		}
 
@@ -366,7 +366,7 @@ class TableKunenaCategories extends KunenaTable
 
 		if (!$this->name)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
+			throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
 		if ($this->params instanceof Joomla\Registry\Registry)
@@ -374,7 +374,7 @@ class TableKunenaCategories extends KunenaTable
 			$this->params = $this->params->toString();
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 
 	// Check if given forum is one of its own childs

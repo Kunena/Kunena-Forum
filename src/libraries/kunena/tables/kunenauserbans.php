@@ -285,10 +285,10 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 
 			if (!$user->exists())
 			{
-				$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
+				throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
 			}
 		}
 
-		return $this->getError() == '';
+		return true;
 	}
 }

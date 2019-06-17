@@ -567,7 +567,8 @@ class TableKunenaUsers extends KunenaTable
 	{
 		if (!$this->userid || !Factory::getUser($this->userid))
 		{
-			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
+			// FIIXME: find a way to throw exception because it prevent guest to post
+			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
 		}
 
 		if ($this->status < 0 || $this->status > 3)

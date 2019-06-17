@@ -20,7 +20,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Nbbc\BBCode;
 
-require_once KPATH_FRAMEWORK . '/external/nbbc/src/BBCode.php';
 jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:

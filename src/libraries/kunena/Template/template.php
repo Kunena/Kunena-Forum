@@ -1740,7 +1740,7 @@ HTML;
 	{
 		if (!class_exists('lessc'))
 		{
-			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
+			require_once KPATH_FRAMEWORK . '/External/lessc/lessc.php';
 		}
 
 		// Load the cache.
@@ -1801,7 +1801,7 @@ HTML;
 	 */
 	public function compileScss($inputFile, $outputFile)
 	{
-		require_once KPATH_FRAMEWORK . '/external/scss/scss.inc.php';
+		require_once KPATH_FRAMEWORK . '/External/scss/scss.inc.php';
 
 		// Load the cache.
 		$cacheDir = JPATH_CACHE . '/kunena';

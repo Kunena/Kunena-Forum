@@ -81,7 +81,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 
 		$this->logo = KunenaFactory::getTemplate()->getImagePath('icons/kunena-logo-48-white.png');
 
-		$this->intro = Text::sprintf('COM_KUNENA_CREDITS_INTRO', 'https://www.kunena.org/team');
+		$this->intro = Text::sprintf('COM_KUNENA_CREDITS_INTRODUCTION', 'https://www.kunena.org/team');
 
 		$this->memberList = array(
 			array(
@@ -106,7 +106,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'), ),
 		);
 		$this->thanks     = Text::sprintf(
-			'COM_KUNENA_CREDITS_THANKS', 'https://www.kunena.org/team#special_thanks',
+			'COM_KUNENA_CREDITS_THANKS_TO', 'https://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'https://www.kunena.org',
 			'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
 		);

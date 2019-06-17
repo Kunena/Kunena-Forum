@@ -46,7 +46,7 @@ if (is_file($libraryFile))
 
 if (Factory::getApplication()->isClient('site'))
 {
-	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE . '/controller');
+	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE . '/Controller');
 }
 
 // Kunena has been initialized

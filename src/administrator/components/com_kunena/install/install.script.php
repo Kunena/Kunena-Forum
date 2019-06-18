@@ -39,8 +39,8 @@ class Com_KunenaInstallerScript
 			'0'   => '5.7' // Preferred version
 		),
 		'Joomla!' => array(
-			'4.0'  => '4.0.0-alpha8-dev',
-			'0'    => '4.0.0-alpha8-dev', // Preferred version
+			'4.0' => '4.0.0-alpha8-dev',
+			'0'   => '4.0.0-alpha8-dev', // Preferred version
 		),
 	);
 
@@ -51,7 +51,18 @@ class Com_KunenaInstallerScript
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function discover_install($parent)
+	{
+		return self::install($parent);
+	}
+
+	/**
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -72,18 +83,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $parent parent
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function discover_install($parent)
-	{
-		return self::install($parent);
-	}
-
-	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -94,7 +94,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -116,8 +116,8 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $type   type
-	 * @param   string $parent parent
+	 * @param   string  $type    type
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -286,9 +286,9 @@ class Com_KunenaInstallerScript
 			$this->deleteFile(JPATH_ROOT . '/media/kunena/js/debug.js');
 		}
 
-		if (is_file(JPATH_ROOT . '/libraries/kunena/Compat/joomla/image/image.php'))
+		if (is_file(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php'))
 		{
-			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/Compat/joomla/image/image.php');
+			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php');
 			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsis/layouts/topic/edit/editor');
 			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
 		}
@@ -313,19 +313,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $type   type
-	 * @param   string $parent parent
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public function postflight($type, $parent)
-	{
-		return true;
-	}
-
-	/**
-	 * @param   string $version version
+	 * @param   string  $version  version
 	 *
 	 * @return boolean|integer
 	 * @since Kunena
@@ -344,24 +332,9 @@ class Com_KunenaInstallerScript
 		return $pass;
 	}
 
-	// Internal functions
-
 	/**
-	 * On some hosting the PHP version given with the version of the packet in the distribution
-	 * @internal param string $version The PHP version to clean
-	 * @return string
-	 * @since    Kunena
-	 */
-	protected function getCleanPhpVersion()
-	{
-		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
-
-		return $version;
-	}
-
-	/**
-	 * @param   string $name    name
-	 * @param   string $version version
+	 * @param   string  $name     name
+	 * @param   string  $version  version
 	 *
 	 * @return boolean
 	 *
@@ -400,9 +373,24 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	// Internal functions
+
 	/**
-	 * @param   string $name  name
-	 * @param   array  $types types
+	 * On some hosting the PHP version given with the version of the packet in the distribution
+	 * @internal param string $version The PHP version to clean
+	 * @return string
+	 * @since    Kunena
+	 */
+	protected function getCleanPhpVersion()
+	{
+		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
+
+		return $version;
+	}
+
+	/**
+	 * @param   string  $name   name
+	 * @param   array   $types  types
 	 *
 	 * @return boolean
 	 *
@@ -424,7 +412,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   array $extensions extensions
+	 * @param   array  $extensions  extensions
 	 *
 	 * @return integer
 	 *
@@ -450,7 +438,7 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $version version
+	 * @param   string  $version  version
 	 *
 	 * @return boolean
 	 *
@@ -493,7 +481,7 @@ class Com_KunenaInstallerScript
 			->select($db->quoteName('version'))
 			->from($db->quoteName($table))
 			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query,0, 1);
+		$db->setQuery($query, 0, 1);
 		$installed = $db->loadResult();
 
 		if (!$installed)
@@ -532,22 +520,21 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $path   path
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
 	 *
 	 * @return void
 	 * @since Kunena
 	 */
-	public function deleteFile($path)
+	public function deleteFolder($path, $ignore = array())
 	{
-		if (File::exists($path))
-		{
-			File::delete($path);
-		}
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
 	}
 
 	/**
-	 * @param   string $path   path
-	 * @param   array  $ignore ignore
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
 	 *
 	 * @return void
 	 * @since Kunena
@@ -569,8 +556,8 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $path   path
-	 * @param   array  $ignore ignore
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
 	 *
 	 * @return void
 	 * @since Kunena
@@ -592,22 +579,9 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $path   path
-	 * @param   array  $ignore ignore
-	 *
-	 * @return void
-	 * @since Kunena
-	 */
-	public function deleteFolder($path, $ignore = array())
-	{
-		$this->deleteFiles($path, $ignore);
-		$this->deleteFolders($path, $ignore);
-	}
-
-	/**
 	 * @internal param array $ignore
 	 *
-	 * @param   string $path path
+	 * @param   string  $path  path
 	 *
 	 * @return void
 	 * @since    Kunena
@@ -615,6 +589,32 @@ class Com_KunenaInstallerScript
 	public function deleteKfolder($path)
 	{
 		Folder::delete($path);
+	}
+
+	/**
+	 * @param   string  $path  path
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	public function deleteFile($path)
+	{
+		if (File::exists($path))
+		{
+			File::delete($path);
+		}
+	}
+
+	/**
+	 * @param   string  $type    type
+	 * @param   string  $parent  parent
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public function postflight($type, $parent)
+	{
+		return true;
 	}
 
 	/**
@@ -645,7 +645,7 @@ class Com_KunenaInstallerScript
 		$query = $db->getQuery(true)
 			->select($db->quoteName('default_character_set_name'))
 			->from($db->quoteName('#__kunena_version'));
-		$db->setQuery($query,0, 1);
+		$db->setQuery($query, 0, 1);
 
 		// Nothing to do, saved conversion status from DB is equal to required
 		if ($db->getCollation() == 'utf8mb4_unicode_ci')

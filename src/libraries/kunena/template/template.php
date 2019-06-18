@@ -1740,7 +1740,7 @@ HTML;
 	{
 		if (!class_exists('lessc'))
 		{
-			require_once KPATH_FRAMEWORK . '/External/lessc/lessc.php';
+			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
 		}
 
 		// Load the cache.

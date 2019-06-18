@@ -139,7 +139,7 @@
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/src/libraries/kunena">
-				<include name="Forum/forum.php"/>
+				<include name="forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>

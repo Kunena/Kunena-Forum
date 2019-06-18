@@ -220,7 +220,7 @@
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${kunena.libraries}">
-				<include name="Forum/forum.php"/>
+				<include name="forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>

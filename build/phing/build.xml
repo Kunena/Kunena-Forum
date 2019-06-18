@@ -220,7 +220,7 @@
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${kunena.libraries}">
-				<include name="forum/forum.php"/>
+				<include name="Forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -348,7 +348,7 @@
 
 		<!-- Zip the created Zips for packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/pkg_kunena_v5.0" />
+			<property name="destination.file" value="dist/pkg_kunena_v6.0" />
 			<property name="base.directory" value="${build_dir}/distribution/" />
 		</phingcall>
 	</target>

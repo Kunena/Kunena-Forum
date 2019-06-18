@@ -1,7 +1,7 @@
 language: php
 php:
-- 7.2
-- 7.3
+- "7.2"
+- "7.3"
 addons:
   firefox: "latest"
   sonarcloud:
@@ -9,19 +9,15 @@ addons:
       token:
         secure: "5236152baa004029e309405ee0af8e30ac1add88"
       branches:
-        - K6.0
+        - "K6.0"
 jdk:
   - oraclejdk12
 script:
+  # Build
+  # Disable tests for now vendor/bin/phing -f build/phing/build.xml
+  # Disable tests for now mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
+  # Disable tests for now vendor/bin/robo run:tests --use-htaccess
   - sonar-scanner
 cache:
   directories:
     - '$HOME/.sonar/cache'
-before_script:
-
-script:
-# Build
-# Disable tests for now vendor/bin/phing -f build/phing/build.xml
-# Disable tests for now mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
-# Disable tests for now vendor/bin/robo run:tests --use-htaccess
-- sonar-scanner

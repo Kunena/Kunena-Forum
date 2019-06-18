@@ -19,19 +19,19 @@ if (!class_exists('JLoader'))
 define('KPATH_FRAMEWORK', __DIR__);
 
 // Register the Joomla compatibility layer.
-JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/Compat/joomla');
+JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla');
 
 // Register the library base path for Kunena Framework.
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 
 // Give access to all Kunena tables.
-Joomla\CMS\Table\Table::addIncludePath(KPATH_FRAMEWORK . '/Tables');
+Joomla\CMS\Table\Table::addIncludePath(KPATH_FRAMEWORK . '/tables');
 
 // Give access to all Kunena JHtml functions.
-Joomla\CMS\HTML\HTMLHelper::addIncludePath(KPATH_FRAMEWORK . '/Html/html');
+Joomla\CMS\HTML\HTMLHelper::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 
 // Give access to all Kunena form fields.
-Joomla\CMS\Form\Form::addFieldPath(KPATH_FRAMEWORK . '/Form/fields');
+Joomla\CMS\Form\Form::addFieldPath(KPATH_FRAMEWORK . '/form/fields');
 
 // Register classes where the names have been changed to fit the autoloader rules.
 JLoader::register('KunenaAccess', KPATH_FRAMEWORK . '/access.php');
@@ -48,22 +48,22 @@ JLoader::register('KunenaProfiler', KPATH_FRAMEWORK . '/profiler.php');
 JLoader::register('KunenaSession', KPATH_FRAMEWORK . '/session.php');
 JLoader::register('KunenaTree', KPATH_FRAMEWORK . '/tree.php');
 JLoader::register('KunenaView', KPATH_FRAMEWORK . '/view.php');
-JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/Integration/avatar.php');
-JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/Integration/private.php');
-JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/Integration/profile.php');
-JLoader::register('KunenaForumAnnouncement', KPATH_FRAMEWORK . '/Forum/announcement/announcement.php');
-JLoader::register('KunenaForumCategory', KPATH_FRAMEWORK . '/Forum/category/category.php');
-JLoader::register('KunenaForumCategoryUser', KPATH_FRAMEWORK . '/Forum/category/user/user.php');
-JLoader::register('KunenaForumMessage', KPATH_FRAMEWORK . '/Forum/message/message.php');
+JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/integration/avatar.php');
+JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/integration/private.php');
+JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/integration/profile.php');
+JLoader::register('KunenaForumAnnouncement', KPATH_FRAMEWORK . '/forum/announcement/announcement.php');
+JLoader::register('KunenaForumCategory', KPATH_FRAMEWORK . '/forum/category/category.php');
+JLoader::register('KunenaForumCategoryUser', KPATH_FRAMEWORK . '/forum/category/user/user.php');
+JLoader::register('KunenaForumMessage', KPATH_FRAMEWORK . '/forum/message/message.php');
 JLoader::register('KunenaForumMessageThankyou', KPATH_FRAMEWORK . '/Forum/message/thankyou/thankyou.php');
 JLoader::register('KunenaForumTopic', KPATH_FRAMEWORK . '/Forum/topic/topic.php');
-JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/Forum/topic/poll/poll.php');
-JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/Forum/topic/user/user.php');
-JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/Forum/topic/user/read/read.php');
-JLoader::register('KunenaForumTopicRate', KPATH_FRAMEWORK . '/Forum/topic/rate/rate.php');
-JLoader::register('Nbbc\BBCode', KPATH_FRAMEWORK . '/External/nbbc/src/BBCode.php');
-JLoader::register('Nbbc\BBCodeLexer', KPATH_FRAMEWORK . '/External/nbbc/src/BBCodeLexer.php');
-JLoader::register('Nbbc\BBCodeLibrary', KPATH_FRAMEWORK . '/External/nbbc/src/BBCodeLibrary.php');
-JLoader::register('Nbbc\Debugger', KPATH_FRAMEWORK . '/External/nbbc/src/Debugger.php');
-JLoader::register('Nbbc\EmailAddressValidator', KPATH_FRAMEWORK . '/External/nbbc/src/EmailAddressValidator.php');
-JLoader::register('Nbbc\Profiler', KPATH_FRAMEWORK . '/External/nbbc/src/Profiler.php');
+JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/poll.php');
+JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/user.php');
+JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
+JLoader::register('KunenaForumTopicRate', KPATH_FRAMEWORK . '/forum/topic/rate/rate.php');
+JLoader::register('Nbbc\BBCode', KPATH_FRAMEWORK . '/external/nbbc/src/BBCode.php');
+JLoader::register('Nbbc\BBCodeLexer', KPATH_FRAMEWORK . '/external/nbbc/src/BBCodeLexer.php');
+JLoader::register('Nbbc\BBCodeLibrary', KPATH_FRAMEWORK . '/external/nbbc/src/BBCodeLibrary.php');
+JLoader::register('Nbbc\Debugger', KPATH_FRAMEWORK . '/external/nbbc/src/Debugger.php');
+JLoader::register('Nbbc\EmailAddressValidator', KPATH_FRAMEWORK . '/external/nbbc/src/EmailAddressValidator.php');
+JLoader::register('Nbbc\Profiler', KPATH_FRAMEWORK . '/external/nbbc/src/Profiler.php');

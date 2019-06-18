@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * The Kunena Installer Controller
@@ -56,13 +57,63 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @param   bool $cachable  cachable
-	 * @param   bool $urlparams urlparams
+	 * @param $exception
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public static function exceptionHandler($exception)
+	{
+		self::error('', 'Uncaught Exception: ' . $exception->getMessage());
+
+		return true;
+	}
+
+	/**
+	 * @param $type
+	 * @param $errstr
+	 *
+	 * @since Kunena
+	 */
+	public static function error($type, $errstr)
+	{
+		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
+		$model->addStatus($type, false, $errstr);
+		echo json_encode(array('success' => false, 'html' => $errstr));
+	}
+
+	/**
+	 * @param $errno
+	 * @param $errstr
+	 * @param $errfile
+	 * @param $errline
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 */
+	public static function errorHandler($errno, $errstr, $errfile, $errline)
+	{
+		// Self::error('', "Fatal Error: $errstr in $errfile on line $errline");
+		switch ($errno)
+		{
+			case E_ERROR:
+			case E_USER_ERROR:
+				self::error('', "Fatal Error: $errstr in $errfile on line $errline");
+
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -86,8 +137,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function run()
 	{
@@ -140,8 +191,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		}
-		while (!$stop && !$error);
+		} while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
@@ -188,8 +238,22 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @throws Exception
+	 * @return mixed|null
 	 * @since Kunena
+	 */
+	public function runStep()
+	{
+		if (empty($this->steps[$this->step]['step']))
+		{
+			return;
+		}
+
+		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
+	}
+
+	/**
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function uninstall()
 	{
@@ -236,69 +300,5 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 		{
 			$this->setRedirect('index.php?option=com_kunena&view=install');
 		}
-	}
-
-	/**
-	 * @return mixed|null
-	 * @since Kunena
-	 */
-	public function runStep()
-	{
-		if (empty($this->steps[$this->step]['step']))
-		{
-			return;
-		}
-
-		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
-	}
-
-	/**
-	 * @param $type
-	 * @param $errstr
-	 *
-	 * @since Kunena
-	 */
-	public static function error($type, $errstr)
-	{
-		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
-		$model->addStatus($type, false, $errstr);
-		echo json_encode(array('success' => false, 'html' => $errstr));
-	}
-
-	/**
-	 * @param $exception
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public static function exceptionHandler($exception)
-	{
-		self::error('', 'Uncaught Exception: ' . $exception->getMessage());
-
-		return true;
-	}
-
-	/**
-	 * @param $errno
-	 * @param $errstr
-	 * @param $errfile
-	 * @param $errline
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 */
-	public static function errorHandler($errno, $errstr, $errfile, $errline)
-	{
-		// Self::error('', "Fatal Error: $errstr in $errfile on line $errline");
-		switch ($errno)
-		{
-			case E_ERROR:
-			case E_USER_ERROR:
-				self::error('', "Fatal Error: $errstr in $errfile on line $errline");
-
-				return true;
-		}
-
-		return false;
 	}
 }

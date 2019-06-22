@@ -183,7 +183,7 @@ class KunenaForumTopicPoll extends CMSObject
 	{
 		if ($this->options === false)
 		{
-			$query = $this->_db->getQuery();
+			$query = $this->_db->getQuery(true);
 			$query->select('*')
 				->from($this->_db->quoteName('#__kunena_polls_options'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
@@ -243,7 +243,7 @@ class KunenaForumTopicPoll extends CMSObject
 	{
 		if ($this->usercount === false)
 		{
-			$query = $this->_db->getQuery();
+			$query = $this->_db->getQuery(true);
 			$query->select('COUNT(*)')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id));
@@ -274,7 +274,7 @@ class KunenaForumTopicPoll extends CMSObject
 	{
 		if ($this->users === false)
 		{
-			$query = $this->_db->getQuery();
+			$query = $this->_db->getQuery(true);
 			$query->select('*')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
@@ -307,8 +307,8 @@ class KunenaForumTopicPoll extends CMSObject
 
 		if (!isset($this->mytime[$user->userid]))
 		{
-			$query = $this->_db->getQuery();
-			$query->select('SELECT MAX(lasttime)')
+			$query = $this->_db->getQuery(true);
+			$query->select('MAX(lasttime)')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
 				->andWhere($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid));
@@ -412,12 +412,19 @@ class KunenaForumTopicPoll extends CMSObject
 		if ($votes->new)
 		{
 			// No votes
-			$query = $this->_db->getQuery();
+			$query = $this->_db->getQuery(true);
+			
+			// Insert columns.
+			$columns = array('pollid', 'userid', 'votes', 'lastvote', 'lasttime');
+			
+			// Insert values.
+			$values = array($this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
+			
+			// Prepare the insert query.
 			$query
-				->insert($this->_db->quoteName('#__kunena_polls_users') . '(pollid,userid,votes,lastvote,lasttime)')
-				->values($this->_db->quote($this->id) . ', ' . $this->_db->quote($votes->userid) . ', ' .
-					$this->_db->quote($votes->votes) . ', ' .
-					$this->_db->quote($votes->lastvote) . ', ' . $this->_db->quote($votes->lasttime));
+			->insert($this->_db->quoteName('#__kunena_polls_users'))
+			->columns($this->_db->quoteName($columns))
+				->values(implode(',', $values));
 			$this->_db->setQuery($query);
 
 			try
@@ -436,9 +443,19 @@ class KunenaForumTopicPoll extends CMSObject
 		else
 		{
 			// Already voted
-			$query = $this->_db->getQuery();
-			$query->insert($this->_db->quoteName('#__kunena_polls_users'))
-				->set('votes=' . $this->_db->quote($votes->votes) . ',lastvote=' . $this->_db->quote($votes->lastvote) . ',lasttime=' . $this->_db->quote($votes->lasttime))
+			$query = $this->_db->getQuery(true);
+			
+			// Insert columns.
+			$columns = array('votes', 'lastvote', 'lasttime');
+			
+			// Insert values.
+			$values = array($this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
+			
+			// Prepare the insert query.
+			$query
+			->insert($this->_db->quoteName('#__kunena_polls_users'))
+			->columns($this->_db->quoteName($columns))
+				->values(implode(',', $values))
 				->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($votes->userid));
 			$this->_db->setQuery($query);
 
@@ -487,7 +504,7 @@ class KunenaForumTopicPoll extends CMSObject
 	public function getLastVoteId($user = null)
 	{
 		$user  = KunenaFactory::getUser($user);
-		$query = $this->_db->getQuery();
+		$query = $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName('lastvote'))
 			->from($this->_db->quoteName('#__kunena_polls_users'))
 			->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
@@ -519,7 +536,7 @@ class KunenaForumTopicPoll extends CMSObject
 
 		if (!isset($this->myvotes[$user->userid]))
 		{
-			$query = $this->_db->getQuery();
+			$query = $this->_db->getQuery(true);
 			$query->select('SUM(' . $this->_db->quoteName('votes') . ')')
 				->from($this->_db->quoteName('#__kunena_polls_users'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
@@ -559,7 +576,7 @@ class KunenaForumTopicPoll extends CMSObject
 
 		// Change votes in the option
 		$delta = intval($delta);
-		$query = $this->_db->getQuery();
+		$query = $this->_db->getQuery(true);
 		$query->update($this->_db->quoteName('#__kunena_polls_users'))
 			->set($this->_db->quoteName('votes') . ' = votes+' . $this->_db->quote($delta))
 			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($option));
@@ -626,7 +643,7 @@ class KunenaForumTopicPoll extends CMSObject
 
 		// Delete options
 		$db    = Factory::getDBO();
-		$query = $this->_db->getQuery();
+		$query = $this->_db->getQuery(true);
 		$query->delete($this->_db->quoteName('#__kunena_polls_options'))
 			->where($this->_db->quoteName('pollid') . ' = ' . $db->quote($this->id));
 		$db->setQuery($query);
@@ -739,7 +756,7 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			if (empty($this->newOptions[$key]))
 			{
-				$query = $this->_db->getQuery();
+				$query = $this->_db->getQuery(true);
 				$query->delete($this->_db->quoteName('#__kunena_polls_options'))
 					->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($key));
 				$this->_db->setQuery($query);
@@ -773,7 +790,7 @@ class KunenaForumTopicPoll extends CMSObject
 			if (!isset($options[$key]))
 			{
 				// Option doesn't exist: create it
-				$query = $this->_db->getQuery();
+				$query = $this->_db->getQuery(true);
 				$query->insert($this->_db->quoteName('#__kunena_polls_options') . '(text, pollid, votes)')
 					->values($this->_db->quote($value).', ' . $this->_db->quote($this->id) . ' , 0');
 				$this->_db->setQuery($query);
@@ -790,7 +807,7 @@ class KunenaForumTopicPoll extends CMSObject
 			elseif ($options[$key]->text != $value)
 			{
 				// Option exists and has changed: update text
-				$query = $this->_db->getQuery();
+				$query = $this->_db->getQuery(true);
 				$query->update($this->_db->quoteName('#__kunena_polls_options'))
 					->set($this->_db->quoteName('text') . ' = ' . $this->_db->quote($value))
 					->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($key));

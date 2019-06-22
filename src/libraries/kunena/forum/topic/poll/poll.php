@@ -577,7 +577,7 @@ class KunenaForumTopicPoll extends CMSObject
 		// Change votes in the option
 		$delta = intval($delta);
 		$query = $this->_db->getQuery(true);
-		$query->update($this->_db->quoteName('#__kunena_polls_users'))
+		$query->update($this->_db->quoteName('#__kunena_polls_options'))
 			->set($this->_db->quoteName('votes') . ' = votes+' . $this->_db->quote($delta))
 			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($option));
 		$this->_db->setQuery($query);

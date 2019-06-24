@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
-$this->addScript('assets/js/poll.js');
+$this->addScript('poll.js');
 ?>
 
 <?php if ($this->show_title)

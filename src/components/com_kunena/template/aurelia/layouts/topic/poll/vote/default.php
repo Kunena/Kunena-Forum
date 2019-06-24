@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-$this->addScript('assets/js/poll.js');
+$this->addScript('poll.js');
 ?>
 	<div class="float-right btn btn-outline-primary border btn-small" data-toggle="collapse" data-target="#poll-vote">
 		&times;

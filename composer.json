@@ -6,7 +6,6 @@
         "php": ">=7.2.0"
     },
     "require-dev": {
-        "joomla/joomla-cms": "4.0-dev",
         "phing/phing": "2.*"
     }
 }

@@ -14,6 +14,7 @@ jdk:
   - oraclejdk12
 script:
   # Build
+  - composer install
   - vendor/bin/phing -f build/phing/build.xml
   - git clone https://github.com/joomla/joomla-cms.git ./tests/test-install
   - cd tests/joomla

@@ -24,7 +24,7 @@ script:
   - cd ../
   - mv ./package.json ./test-install/package.json
   - mv ./package-lock.json ./test-install/package-lock.json
-  - cd tests/test-install
+  - cd test-install
   - npm install
   - ./node_modules/.bin/selenium-standalone install
   - ./node_modules/.bin/selenium-standalone start

@@ -3,17 +3,10 @@
     "description": "Kunena forum for joomla",
     "license"    : "GPL-3.0",
     "require"    : {
-        "php": ">=5.5.13"
+        "php": ">=7.2.0"
     },
     "require-dev": {
-        "codeception/codeception": "~2.3",
-        "consolidation/robo": "^1.0.0",
-        "joomla-projects/joomla-testing-robo": "dev-container-test",
-        "joomla-projects/joomla-testing": "dev-container-test",
-        "joomla-projects/jorobo": "^0.7.0",
-        "joomla-projects/joomla-browser": "dev-develop",
-        "joomla-projects/selenium-server-standalone": "dev-master",
-        "behat/gherkin": "^4.4.1",
+        "joomla/joomla-cms": "4.0-dev",
         "phing/phing": "2.*"
     }
 }

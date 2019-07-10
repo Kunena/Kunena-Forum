@@ -3,7 +3,7 @@ php:
 - "7.2"
 - "7.3"
 addons:
-  firefox: "latest"
+  chrome: "stable"
   sonarcloud:
       organization: "kunena-forum"
       token:
@@ -14,8 +14,17 @@ jdk:
   - oraclejdk12
 script:
   # Build
-  # Disable tests for now vendor/bin/phing -f build/phing/build.xml
-  # Disable tests for now mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
+  - vendor/bin/phing -f build/phing/build.xml
+  - git clone https://github.com/joomla/joomla-cms.git ./tests/test-install
+  - cd tests/joomla
+  - git checkout 4.0-dev
+  - composer install
+  - npm install
+  - ./node_modules/.bin/selenium-standalone install
+  - ./node_modules/.bin/selenium-standalone start
+  - libraries/vendor/bin/codecept run acceptance tests/Codeception/acceptance/install
+  - libraries/vendor/bin/codecept run acceptance tests/Codeception/acceptance/install/kunenaCest
+  - mv tests/acceptance.suite.yml tests\joomla\tests\Codeception\acceptance.suite.yml
   # Disable tests for now vendor/bin/robo run:tests --use-htaccess
   - sonar-scanner
 cache:

@@ -17,7 +17,7 @@ script:
   - composer install
   - vendor/bin/phing -f build/phing/build.xml
   - git clone https://github.com/joomla/joomla-cms.git ./tests/test-install
-  - cd tests/joomla
+  - cd tests/test-install
   - git checkout 4.0-dev
   - composer install
   - npm install
@@ -25,7 +25,7 @@ script:
   - ./node_modules/.bin/selenium-standalone start
   - libraries/vendor/bin/codecept run acceptance tests/Codeception/acceptance/install
   - libraries/vendor/bin/codecept run acceptance tests/Codeception/acceptance/install/kunenaCest
-  - mv tests/acceptance.suite.yml tests\joomla\tests\Codeception\acceptance.suite.yml
+  - mv tests/acceptance.suite.yml tests/test-install/tests/Codeception/acceptance.suite.yml
   # Disable tests for now vendor/bin/robo run:tests --use-htaccess
   - sonar-scanner
 cache:

@@ -20,9 +20,14 @@ script:
   - cd tests/test-install
   - git checkout 4.0-dev
   - composer install
+  # Bug joomla
+  - cd ../
+  - mv ./package.json ./test-install/package.json
+  - mv ./package-lock.json ./test-install/package-lock.json
+  - cd tests/test-install
   - npm install
-  - node_modules/.bin/selenium-standalone install
-  - node_modules/.bin/selenium-standalone start
+  - ./node_modules/.bin/selenium-standalone install
+  - ./node_modules/.bin/selenium-standalone start
   - cd ../
   - mv ./acceptance.suite.yml ./test-install/tests/Codeception/acceptance.suite.yml
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install

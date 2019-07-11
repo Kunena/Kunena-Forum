@@ -43,6 +43,7 @@ script:
   - cd test-install
   - ./node_modules/.bin/selenium-standalone start &
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install
+  - ./node_modules/.bin/selenium-standalone start &
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install/kunenaCest
   #- sonar-scanner
 cache:

@@ -10,8 +10,19 @@ addons:
         secure: "5236152baa004029e309405ee0af8e30ac1add88"
       branches:
         - "K6.0"
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 jdk:
   - oraclejdk12
+before_install:
+  - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS test_joomla;'
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('joomla_ut') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -pnew_password
+  - sudo service mysql restart
 script:
   # Build
   - composer install

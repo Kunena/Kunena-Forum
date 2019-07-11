@@ -30,6 +30,7 @@ script:
   - ./node_modules/.bin/selenium-standalone start >> selenium.log 2>&1 &
   - cd ../
   - mv ./acceptance.suite.yml ./test-install/tests/Codeception/acceptance.suite.yml
+  - cd test-install
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install/kunenaCest
   #- sonar-scanner

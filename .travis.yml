@@ -27,7 +27,7 @@ script:
   - cd test-install
   - npm install
   - ./node_modules/.bin/selenium-standalone install
-  - ./node_modules/.bin/selenium-standalone start
+  - ./node_modules/.bin/selenium-standalone start >> selenium.log 2>&1 &
   - cd ../
   - mv ./acceptance.suite.yml ./test-install/tests/Codeception/acceptance.suite.yml
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install

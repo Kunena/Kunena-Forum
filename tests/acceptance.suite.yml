@@ -20,7 +20,7 @@ modules:
                 args: ["headless", "disable-gpu", "no-sandbox"]
             username: 'admin'                                  # UserName for the Administrator
             password: 'admin'                                  # Password for the Administrator
-            database host: 'mysql'                             # place where the Application is Hosted #server Address
+            database host: 'localhost'                         # place where the Application is Hosted #server Address
             database user: 'root'                              # MySQL Server user ID, usually root
             database password: 'joomla_ut'                     # MySQL Server password, usually empty or root
             database name: 'test_joomla'                       # DB Name, at the Server
@@ -31,7 +31,7 @@ modules:
             admin email: 'admin@mydomain.com'                  # email Id of the Admin
             language: 'English (United Kingdom)'               # Language in which you want the Application to be Installed
         Helper\JoomlaDb:
-            dsn: 'mysql:host=mysql;dbname=test_joomla'
+            dsn: 'mysql:host=localhost;dbname=test_joomla'
             user: 'root'
             password: 'joomla_ut'
             prefix: 'jos_'

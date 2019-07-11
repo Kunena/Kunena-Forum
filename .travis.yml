@@ -21,7 +21,7 @@ jdk:
 before_install:
   - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS test_joomla;'
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('joomla_ut') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - sudo mysql_upgrade -u root -pnew_password
+  - sudo mysql_upgrade -u root -pjoomla_ut
   - sudo service mysql restart
 script:
   # Build

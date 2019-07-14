@@ -136,6 +136,7 @@ class KunenaControllerTopic extends KunenaController
 				$response['result'] = $instance->setInline(1);
 				$response['value']  = 1;
 			}
+
 			unset($instance);
 		}
 		else
@@ -543,7 +544,7 @@ class KunenaControllerTopic extends KunenaController
 				return;
 			}
 		}
-		
+
 		// Remove IP address
 		if (!$this->config->iptracking)
 		{
@@ -2307,10 +2308,10 @@ class KunenaControllerTopic extends KunenaController
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
 		$this->setRedirect($topic->getUrl($this->return, false));
 	}
-	
+
 	/**
 	 * Check if the IP, username or email adress given are blacklisted
-	 * 
+	 *
 	 * @return boolean
 	 * @since 6.0.0
 	 */
@@ -2323,10 +2324,10 @@ class KunenaControllerTopic extends KunenaController
 		// Prepare the request to stopforumspam
 		if (KunenaUserHelper::isIPv6($message->ip))
 		{
-			$ip = '[' . $message->ip .']';
+			$ip = '[' . $message->ip . ']';
 		}
 
-		$data = 'ip=' . $ip ;
+		$data = 'ip=' . $ip;
 
 		if (!empty($name))
 		{
@@ -2349,7 +2350,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if ($response->code == '200')
 		{
- 			// The query has worked
+			// The query has worked
 			$result = json_decode($response->body);
 
 			if ($result->success)

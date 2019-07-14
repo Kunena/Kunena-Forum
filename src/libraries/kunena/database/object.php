@@ -154,7 +154,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 		$table->exists($this->_exists);
 		$isNew = !$this->_exists;
 
-		
 		// Check the table object.
 		try
 		{
@@ -163,12 +162,10 @@ abstract class KunenaDatabaseObject extends CMSObject
 				return $this->_saving = false;
 			}
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
 			throw new Exception($e->getMessage());
 		}
-		
-		
 
 		// Include the Kunena plugins for the on save events.
 

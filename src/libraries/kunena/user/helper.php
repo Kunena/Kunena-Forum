@@ -298,11 +298,11 @@ abstract class KunenaUserHelper
 
 			if ($config->userlist_count_users == '1')
 			{
-			    $where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
+				$where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
 			}
 			elseif ($config->userlist_count_users == '2')
 			{
-			    $where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
+				$where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
 			}
 			elseif ($config->userlist_count_users == '3')
 			{
@@ -406,9 +406,9 @@ abstract class KunenaUserHelper
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select($db->quoteName('m.*'))
-			->from($db->quoteName( '#__usergroups',  'ug1'))
-			->innerJoin($db->quoteName( '#__usergroups','ug2') . ' ON ' . $db->quoteName('ug2.lft') .  $recurs . $db->quoteName('ug1.lft') . ' AND ' . $db->quoteName('ug1.rgt') . $recurs . $db->quoteName('ug2.rgt'))
-			->innerJoin($db->quoteName( '#__user_usergroup_map','m') .' ON ' . $db->quoteName('ug2.id') . ' = ' . $db->quoteName('m.group_id'));
+			->from($db->quoteName('#__usergroups',  'ug1'))
+			->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ' . $db->quoteName('ug2.lft') . $recurs . $db->quoteName('ug1.lft') . ' AND ' . $db->quoteName('ug1.rgt') . $recurs . $db->quoteName('ug2.rgt'))
+			->innerJoin($db->quoteName('#__user_usergroup_map', 'm') . ' ON ' . $db->quoteName('ug2.id') . ' = ' . $db->quoteName('m.group_id'));
 
 		if ($groupIds)
 		{
@@ -546,7 +546,7 @@ abstract class KunenaUserHelper
 				KunenaError::displayDatabaseError($e);
 			}
 		}
-		
+
 		return self::$_online;
 	}
 
@@ -591,7 +591,7 @@ abstract class KunenaUserHelper
 		{
 			return 1;
 		}
-		
+
 		return $user->status;
 	}
 
@@ -705,7 +705,7 @@ abstract class KunenaUserHelper
 
 		return $rows;
 	}
-	
+
 	/**
 	 * Return the IP used by the user
 	 *
@@ -716,7 +716,7 @@ abstract class KunenaUserHelper
 	{
 		return IpHelper::getIp();
 	}
-	
+
 	/**
 	 * Return is the user IP is ipv6 or not
 	 *

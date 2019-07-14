@@ -188,7 +188,7 @@ abstract class KunenaForumAnnouncementHelper
 				->from($db->quoteName('#__kunena_announcement'))
 				->where($db->quoteName('published') . ' = 1')
 				->andWhere($db->quoteName('publish_up') . '  = ' . $nullDate . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
-				->andWhere($db->quoteName( 'publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+				->andWhere($db->quoteName('publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
 				->order('id DESC');
 		}
 		else

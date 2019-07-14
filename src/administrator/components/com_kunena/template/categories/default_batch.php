@@ -45,12 +45,12 @@ use Joomla\CMS\Language\Text;
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-outline-primary" type="button"
-				        onclick="document.id('batch-category-id').value='';document.id('batch-access').value='';document.id('batch-language-id').value=''"
-				        data-dismiss="modal">
+						onclick="document.id('batch-category-id').value='';document.id('batch-access').value='';document.id('batch-language-id').value=''"
+						data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-				        onclick="Joomla.submitbutton('batch_categories');">
+						onclick="Joomla.submitbutton('batch_categories');">
 					<?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
 				</button>
 			</div>

@@ -680,7 +680,7 @@ abstract class KunenaTableObject
 	 * @since  K4.0
 	 */
 	/*
- 	public function save($src, $orderingFilter = '', $ignore = '')
+	 public function save($src, $orderingFilter = '', $ignore = '')
 	{
 		// Attempt to bind the source to the instance.
 		if (!$this->bind($src, $ignore))
@@ -846,6 +846,7 @@ abstract class KunenaTableObject
 		}
 
 		$k = static::$tbl;
+
 		// Delete the row by given keys/fields.
 		$query = static::$db->getQuery(true)
 			->delete()
@@ -943,7 +944,7 @@ abstract class KunenaTableObject
 
 		// Check the row in by primary key.
 		$query = static::$db->getQuery(true);
-		$nullDate = static::$db->getNullDate() ?  static::$db->quote(static::$db->getNullDate()) : 'NULL';
+		$nullDate = static::$db->getNullDate() ? static::$db->quote(static::$db->getNullDate()) : 'NULL';
 		$query->update(static::$tbl)
 			->set(static::$db->quoteName('checked_out') . ' = 0')
 			->set(static::$db->quoteName('checked_out_time') . ' = ' . $nullDate)
@@ -955,7 +956,7 @@ abstract class KunenaTableObject
 
 		// Set table values in the object.
 		$this->checked_out      = 0;
-		$this->checked_out_time = NULL;
+		$this->checked_out_time = null;
 
 		return true;
 	}

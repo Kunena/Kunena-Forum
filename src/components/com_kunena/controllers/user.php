@@ -599,7 +599,7 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $now->format('Y-m-d');
 		}
 
-		foreach($user->socialButtons() as $social)
+		foreach ($user->socialButtons() as $social)
 		{
 			$user->$social = str_replace(' ', '', trim($input->$method->get($social, '', 'string')));
 		}
@@ -799,7 +799,7 @@ class KunenaControllerUser extends KunenaController
 			$user->location         = '';
 			$user->gender           = 0;
 
-			foreach($user->socialButtons() as $social)
+			foreach ($user->socialButtons() as $social)
 			{
 				$user->$social = '';
 			}

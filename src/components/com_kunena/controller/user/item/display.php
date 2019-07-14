@@ -29,26 +29,31 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 */
 	public $me;
+
 	/**
 	 * @var Joomla\CMS\User\User
 	 * @since Kunena
 	 */
 	public $user;
+
 	/**
 	 * @var KunenaUser
 	 * @since Kunena
 	 */
 	public $profile;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $headerText;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $tabs;
+
 	/**
 	 * @var string
 	 * @since Kunena

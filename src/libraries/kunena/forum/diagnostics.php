@@ -382,6 +382,7 @@ abstract class KunenaForumDiagnostics
 		$list = (array) $db->loadObjectList();
 
 		$ids   = new stdClass;
+
 		foreach ($list as $item)
 		{
 			$ids->id = $item->id;

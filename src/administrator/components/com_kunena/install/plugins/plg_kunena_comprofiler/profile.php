@@ -154,7 +154,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('cu.user_id AS id, cu.hits AS count');
-		$query->from($db->quoteName('#__comprofiler','cu'));
+		$query->from($db->quoteName('#__comprofiler', 'cu'));
 		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.user_id');
 		$query->where('cu.hits > 0');
 		$query->order('cu.hits DESC');

@@ -83,7 +83,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			$this->reset();
 		}
 
-		try {
+		try
+		{
 			$this->_db->transactionStart();
 
 			// Initialise the query.
@@ -112,7 +113,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		}
 		catch (Exception $e)
 		{
-			// catch any database errors.
+			// Catch any database errors.
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);
@@ -278,6 +279,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		try
 		{
 			$this->_db->transactionStart();
+
 			// Set the query and execute the update.
 			$this->_db->setQuery(sprintf($statement, implode(",", $fields), implode(' AND ', $where)));
 
@@ -287,7 +289,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		}
 		catch (Exception $e)
 		{
- 			// catch any database errors.
+			// Catch any database errors.
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);
@@ -336,7 +338,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			$values[] = $this->_db->quote($v);
 		}
 
-		try {
+		try
+		{
 			$this->_db->transactionStart();
 
 			// Create the base insert statement.
@@ -353,7 +356,6 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				return false;
 			}
 
-
 			// Update the primary key if it exists.
 			$id = $this->_db->insertid();
 
@@ -361,7 +363,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		}
 		catch (Exception $e)
 		{
-			// catch any database errors.
+			// Catch any database errors.
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);
@@ -447,7 +449,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		}
 		catch (Exception $e)
 		{
-			// catch any database errors.
+			// Catch any database errors.
 			$this->_db->transactionRollback();
 
 			KunenaError::displayDatabaseError($e);

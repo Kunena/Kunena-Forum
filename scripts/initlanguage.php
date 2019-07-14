@@ -1,12 +1,23 @@
 <?php
 
-if ($_SERVER['argc'] > 1) {
-	$languages = explode(',',$_SERVER['argv'][1]);
-} else {
+if ($_SERVER['argc'] > 1)
+{
+	$languages = explode(',', $_SERVER['argv'][1]);
+}
+else
+{
 	$languages = scandir('components/com_kunena/site/language');
-	foreach ($languages as $i=>$language) {
-		if ($language[0] == '.') unset($languages[$i]);
-		elseif (!is_dir("components/com_kunena/site/language/{$language}")) unset($languages[$i]);
+
+	foreach ($languages as $i => $language)
+	{
+		if ($language[0] == '.')
+		{
+			unset($languages[$i]);
+		}
+		elseif (!is_dir("components/com_kunena/site/language/{$language}"))
+		{
+			unset($languages[$i]);
+		}
 	}
 }
 
@@ -39,14 +50,26 @@ $files = array(
 
 echo "\nInitializing language files...\n\n";
 
-foreach ($languages as $language) {
-	if ($language == 'en-GB') continue;
-	if (!is_dir("components/com_kunena/site/language/{$language}")) die("Error: Unknown language '{$language}'\n\n");
+foreach ($languages as $language)
+{
+	if ($language == 'en-GB')
+	{
+		continue;
+	}
+
+
+	if (!is_dir("components/com_kunena/site/language/{$language}"))
+	{
+		die("Error: Unknown language '{$language}'\n\n");
+	}
 
 	// Save language files
-	foreach ($files as $infile) {
+	foreach ($files as $infile)
+	{
 		$outfile = preg_replace('|en-GB|', $language, $infile);
-		if (!is_file($outfile)) {
+
+		if (!is_file($outfile))
+		{
 			$contents = '; Sorry, this language file hasn\'t been translated yet.
 ;
 ; If you want to help us, please start by reading our documentation on translating Kunena:
@@ -54,7 +77,7 @@ foreach ($languages as $language) {
 ';
 
 			echo "Create $outfile\n";
-			$fp = fopen($outfile,'w');
+			$fp = fopen($outfile, 'w');
 			fwrite($fp, $contents);
 			fclose($fp);
 		}

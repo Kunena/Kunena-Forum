@@ -413,17 +413,17 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			// No votes
 			$query = $this->_db->getQuery(true);
-			
+
 			// Insert columns.
 			$columns = array('pollid', 'userid', 'votes', 'lastvote', 'lasttime');
-			
+
 			// Insert values.
 			$values = array($this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
-			
+
 			// Prepare the insert query.
 			$query
-			->insert($this->_db->quoteName('#__kunena_polls_users'))
-			->columns($this->_db->quoteName($columns))
+				->insert($this->_db->quoteName('#__kunena_polls_users'))
+				->columns($this->_db->quoteName($columns))
 				->values(implode(',', $values));
 			$this->_db->setQuery($query);
 
@@ -444,17 +444,17 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			// Already voted
 			$query = $this->_db->getQuery(true);
-			
+
 			// Insert columns.
 			$columns = array('votes', 'lastvote', 'lasttime');
-			
+
 			// Insert values.
 			$values = array($this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
-			
+
 			// Prepare the insert query.
 			$query
-			->insert($this->_db->quoteName('#__kunena_polls_users'))
-			->columns($this->_db->quoteName($columns))
+				->insert($this->_db->quoteName('#__kunena_polls_users'))
+				->columns($this->_db->quoteName($columns))
 				->values(implode(',', $values))
 				->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($votes->userid));
 			$this->_db->setQuery($query);
@@ -792,7 +792,7 @@ class KunenaForumTopicPoll extends CMSObject
 				// Option doesn't exist: create it
 				$query = $this->_db->getQuery(true);
 				$query->insert($this->_db->quoteName('#__kunena_polls_options') . '(text, pollid, votes)')
-					->values($this->_db->quote($value).', ' . $this->_db->quote($this->id) . ' , 0');
+					->values($this->_db->quote($value) . ', ' . $this->_db->quote($this->id) . ' , 0');
 				$this->_db->setQuery($query);
 
 				try

@@ -326,9 +326,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// Add IP to user.
 		if (KunenaConfig::getInstance()->iptracking)
 		{
-		    if (empty($user->ip))
+			if (empty($user->ip))
 			{
-			    $user->ip = KunenaUserHelper::getUserIp();
+				$user->ip = KunenaUserHelper::getUserIp();
 			}
 		}
 
@@ -965,8 +965,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Activity integration
-		// FIXME : load the plugin finder produce a fatal error 
-		//Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		// FIXME : load the plugin finder produce a fatal error
+		// Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 
 		if ($postDelta < 0)

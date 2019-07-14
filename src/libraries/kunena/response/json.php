@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
 	/**
-	 * @var int|mixed
+	 * @var integer|mixed
 	 * @since Kunena
 	 */
 	public $code = 200;

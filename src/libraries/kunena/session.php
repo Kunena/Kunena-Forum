@@ -38,24 +38,24 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @since Kunena
-	 * @var int|string
+	 * @var integer|string
 	 */
 	protected $allreadtime;
 
 	/**
-	 * @var int|string
+	 * @var integer|string
 	 * @since Kunena
 	 */
 	public $lasttime;
 
 	/**
-	 * @var int|string
+	 * @var integer|string
 	 * @since Kunena
 	 */
 	public $currvisit;
 
 	/**
-	 * @var int|string
+	 * @var integer|string
 	 * @since Kunena
 	 */
 	public $readtopics;
@@ -230,7 +230,8 @@ class KunenaSession extends CMSObject
 		$table->exists($this->_exists);
 
 		// Check and store the object.
-		try {
+		try
+		{
 			if (!$table->check())
 			{
 				return false;

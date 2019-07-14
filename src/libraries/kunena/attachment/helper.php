@@ -158,7 +158,7 @@ abstract class KunenaAttachmentHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance                               = KunenaAttachmentHelper::get($id);
+				$instance                               = self::get($id);
 				self::$_instances[$id]                  = $instance;
 				self::$_messages[$instance->mesid][$id] = $instance;
 			}
@@ -255,8 +255,8 @@ abstract class KunenaAttachmentHelper
 
 		foreach ($results as $id => $instance)
 		{
-			$instance = KunenaAttachmentHelper::get($id);
-		    self::$_instances [$id]                  = $instance;
+			$instance = self::get($id);
+			self::$_instances [$id]                  = $instance;
 			self::$_messages [$instance->mesid][$id] = $instance;
 		}
 
@@ -563,7 +563,7 @@ abstract class KunenaAttachmentHelper
 		$query  = $db->getQuery(true);
 		$query->select('a.*')
 			->from($db->quoteName('#__kunena_attachments', 'a'))
-			->leftJoin($db->quoteName('#__kunena_messages', 'm')  . ' ON a.mesid = m.id')
+			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
 			->where($db->quoteName('m.id') . ' IS NULL');
 		$db->setQuery($query, 0, 50);
 

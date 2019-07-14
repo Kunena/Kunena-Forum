@@ -20,8 +20,8 @@ if (!File::exists($file))
 	return;
 }
 
-require_once($file);
-require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
+require_once $file;
+require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
 /**
  * @package     Kunena
@@ -103,7 +103,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return null;
 		}
 
-		require_once(__DIR__ . "/profile.php");
+		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileEasySocial($this->params);
 	}

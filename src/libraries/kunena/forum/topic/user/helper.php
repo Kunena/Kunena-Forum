@@ -418,7 +418,8 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$where  = 'AND m.thread=' . (int) $topicids;
 			$where2 = 'AND ut.topic_id=' . (int) $topicids;
-			$where3 = 'topic_id=' . (int) $topicids;;
+			$where3 = 'topic_id=' . (int) $topicids;
+			;
 		}
 		else
 		{
@@ -440,9 +441,9 @@ abstract class KunenaForumTopicUserHelper
 
 		// Create the base subQuery select statement.
 		$subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
-		->from($db->quoteName('#__kunena_messages', 'm'))
-		->where($db->quoteName('m.userid') . '>0 AND ' . $db->quoteName('m.moved') . '=0 ' . $where)
-		->group('m.userid, m.thread');
+			->from($db->quoteName('#__kunena_messages', 'm'))
+			->where($db->quoteName('m.userid') . '>0 AND ' . $db->quoteName('m.moved') . '=0 ' . $where)
+			->group('m.userid, m.thread');
 
 		// Create the base insert statement.
 		$query = "INSERT INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
@@ -490,11 +491,12 @@ abstract class KunenaForumTopicUserHelper
 		$query = $db->getQuery(true)
 			->delete("#__kunena_user_topics")
 			->where(["posts = 0",
-			"owner = 0",
-			"favorite = 0",
-			"subscribed = 0",
-			"params = ''",
-			"{$where3}"]);
+				"owner = 0",
+				"favorite = 0",
+				"subscribed = 0",
+				"params = ''",
+				"{$where3}"]
+			);
 
 		$db->setQuery($query);
 

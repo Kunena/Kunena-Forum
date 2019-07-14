@@ -214,7 +214,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 				}
 				else
 				{
-				    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name));
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name));
 				}
 			}
 		}

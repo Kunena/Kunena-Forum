@@ -14,7 +14,7 @@ class KunenaViewTopics extends KunenaView
 {
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @return mixed|void
 	 *
@@ -33,7 +33,7 @@ class KunenaViewTopics extends KunenaView
 			$lastuser = $topic->getLastPostAuthor()->userid;
 			$users    = KunenaUserHelper::get($lastuser);
 
-			$response           = new stdClass();
+			$response           = new stdClass;
 			$response->id       = $topic->id;
 			$response->subject  = KunenaHtmlParser::parseText($topic->subject);
 			$response->category = $topic->getCategory()->name;

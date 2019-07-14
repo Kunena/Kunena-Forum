@@ -16,7 +16,7 @@ class KunenaViewTopic extends KunenaView
 {
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @return mixed|void
 	 *
@@ -38,7 +38,7 @@ class KunenaViewTopic extends KunenaView
 		foreach ($messages as $message)
 		{
 			$user              = KunenaUserHelper::get($message->userid);
-			$response          = new stdClass();
+			$response          = new stdClass;
 			$response->id      = $message->id;
 			$response->message = KunenaHtmlParser::stripBBCode(KunenaForumMessageHelper::get($message->id)->message);
 			$response->author  = $user->username;

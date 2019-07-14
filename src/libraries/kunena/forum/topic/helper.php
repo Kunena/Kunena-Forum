@@ -617,7 +617,7 @@ abstract class KunenaForumTopicHelper
 		// Mark all empty topics as deleted
 		$query  = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_topics', 'tt'))
-			->leftJoin($db->quoteName('#__kunena_messages', 'm'). ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id') . ' AND ' . $db->quoteName('tt.hold') . ' = ' . $db->quoteName('m.hold'))
+			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id') . ' AND ' . $db->quoteName('tt.hold') . ' = ' . $db->quoteName('m.hold'))
 			->set($db->quoteName('tt.hold') . ' = 4')
 			->set($db->quoteName('tt.posts') . ' = 0')
 			->set($db->quoteName('tt.attachments') . ' = 0')

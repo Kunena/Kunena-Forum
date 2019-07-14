@@ -40,7 +40,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		$this->config = KunenaConfig::getInstance();
 		$this->limit  = $this->config->userlist_rows;
 
-		$this->query->leftJoin($this->db->quoteName('#__kunena_users','ku') . ' ON ' . $this->db->quoteName('ku.userid') . ' = ' . $this->db->quoteName('a.id'));
+		$this->query->leftJoin($this->db->quoteName('#__kunena_users', 'ku') . ' ON ' . $this->db->quoteName('ku.userid') . ' = ' . $this->db->quoteName('a.id'));
 	}
 
 	/**

@@ -43,14 +43,14 @@ abstract class KunenaHtmlParser
 		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$query = $db->getQuery(true)
-			->select(array($db->quoteName('code'), $db->quoteName($column, 'file')) )
+			->select(array($db->quoteName('code'), $db->quoteName($column, 'file')))
 			->from($db->quoteName('#__kunena_smileys'));
 
 		if ($emoticonbar == true)
 		{
 			$query->where($db->quoteName('emoticonbar') . ' = 1');
 		}
-		
+
 		$db->setQuery($query);
 
 		try
@@ -68,12 +68,12 @@ abstract class KunenaHtmlParser
 		foreach ($smilies as $smiley)
 		{
 			$smileyProperties = KunenaImage::getImageFileProperties($template->getSmileyPath($smiley->file));
-			
-			$emoticon = new stdClass();
+
+			$emoticon = new stdClass;
 			$emoticon->path = $template->getSmileyPath($smiley->file);
 			$emoticon->width = $smileyProperties->width;
 			$emoticon->height = $smileyProperties->height;
-			
+
 			// We load all smileys in array, so we can sort them
 			$smileyArray [$smiley->code] = $emoticon;
 		}
@@ -84,7 +84,7 @@ abstract class KunenaHtmlParser
 			array_multisort(array_keys($smileyArray), SORT_DESC, $smileyArray);
 			reset($smileyArray);
 		}
-		
+
 		return $smileyArray;
 	}
 

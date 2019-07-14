@@ -291,7 +291,7 @@ class KunenaAccess
 		{
 			$enabled = true;
 			Factory::getDocument()->addScriptDeclaration(
-	"function kShowAccessType(htmlclass, el) {
+				"function kShowAccessType(htmlclass, el) {
 	var selectedvalue = el.find(\":selected\").val();
 	
 	name = selectedvalue.replace(/[^\\w\\d]+/, '-');
@@ -382,7 +382,7 @@ jQuery(document).ready(function ($) {
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-			                                     'title' => $name,);
+												 'title' => $name,);
 		}
 
 		return $list;

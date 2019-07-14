@@ -1500,8 +1500,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$this->setProperties($table->getProperties());
 		$this->params = $params;
 
-		//$cache = Factory::getCache('com_kunena', 'output');
-		//$cache->clean('categories');
+		// $cache = Factory::getCache('com_kunena', 'output');
+		// $cache->clean('categories');
 
 		return $result;
 	}

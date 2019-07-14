@@ -8,7 +8,7 @@
  * @copyright     Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @license       GNU General Public License version 2 or later; see LICENSE
- **@link          https://www.kunena.org
+ * *@link          https://www.kunena.org
  *
  * Taken from Joomla Platform 11.1
  */

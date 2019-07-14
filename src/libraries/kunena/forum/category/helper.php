@@ -348,7 +348,7 @@ abstract class KunenaForumCategoryHelper
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
 			->where('u.user_id IN (' . $userids . ')')
-			->where( $db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
+			->where($db->quoteName('u.category_id') . ' IN (' . $allowed . ')')
 			->where($db->quoteName('u.subscribed') . ' = 1 ' . $where);
 		$db->setQuery($query);
 
@@ -915,7 +915,8 @@ abstract class KunenaForumCategoryHelper
 				c.numPosts = 0,
 				c.last_topic_id = 0,
 				c.last_post_id = 0,
-				c.last_post_time = 0")
+				c.last_post_time = 0"
+			)
 			->where("tt.id IS NULL");
 		$db->setQuery($query);
 

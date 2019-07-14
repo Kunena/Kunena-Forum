@@ -181,7 +181,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 */
 	protected function cleanSocial(&$user, $app)
 	{
-		foreach($user->socialButtons() as $social)
+		foreach ($user->socialButtons() as $social)
 		{
 			$user->$social = str_replace(' ', '', trim($app->input->getString($social, '')));
 		}

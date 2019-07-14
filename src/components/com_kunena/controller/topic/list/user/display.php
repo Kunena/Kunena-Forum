@@ -100,20 +100,20 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		{
 			case 'posted' :
 				$finder
-				->filterByUser($this->user, 'posted')
+					->filterByUser($this->user, 'posted')
 					->order('last_post_id', -1, 'ut');
 				break;
 
 			case 'started' :
-			    $finder->filterByUser($this->user, 'owner');
+				$finder->filterByUser($this->user, 'owner');
 				break;
 
 			case 'favorites' :
-			    $finder->filterByUser($this->user, 'favorited');
+				$finder->filterByUser($this->user, 'favorited');
 				break;
 
 			case 'subscriptions' :
-			    $finder->filterByUser($this->user, 'subscribed');
+				$finder->filterByUser($this->user, 'subscribed');
 				break;
 
 			case 'plugin':
@@ -124,7 +124,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 			default :
 				$finder
-				->filterByUser($this->user, 'involved')
+					->filterByUser($this->user, 'involved')
 					->order('favorite', -1, 'ut');
 				break;
 		}

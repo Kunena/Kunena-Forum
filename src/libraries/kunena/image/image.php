@@ -32,9 +32,9 @@ class KunenaImage extends Joomla\Image\Image
 	 */
 	public static function correctImageOrientation($filename)
 	{
-		$img = new Image();
+		$img = new Image;
 
-		try 
+		try
 		{
 			$img->loadFile($filename);
 		}
@@ -55,7 +55,6 @@ class KunenaImage extends Joomla\Image\Image
 
 				if ($orientation != 1)
 				{
-
 					switch ($orientation)
 					{
 						case 1: // Nothing
@@ -138,7 +137,7 @@ class KunenaImage extends Joomla\Image\Image
 					}
 				}
 			}
-			
+
 			try
 			{
 				$img->toFile($filename);

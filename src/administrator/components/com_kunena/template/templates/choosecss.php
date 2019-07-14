@@ -23,8 +23,8 @@ use Joomla\CMS\Language\Text;
 				</div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
 					<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
@@ -52,8 +52,8 @@ use Joomla\CMS\Language\Text;
 								<tr>
 									<td>
 										<input type="radio" id="cb<?php echo $id; ?>" name="filename"
-										       value="<?php echo $this->escape($file); ?>"
-										       onclick="Joomla.isChecked(this.checked);"/>
+											   value="<?php echo $this->escape($file); ?>"
+											   onclick="Joomla.isChecked(this.checked);"/>
 									</td>
 									<td>
 										<?php echo $this->escape($file); ?>

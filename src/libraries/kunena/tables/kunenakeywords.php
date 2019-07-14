@@ -65,7 +65,7 @@ class TableKunenaKeywords extends KunenaTable
 
 		if (!$this->name)
 		{
-			throw new UnexpectedValueException();
+			throw new UnexpectedValueException;
 		}
 
 		return true;

@@ -265,17 +265,17 @@ class KunenaControllerAnnouncement extends KunenaController
 		$id           = $this->app->input->getInt('id');
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 
-		if ($fields['created'] == NULL)
+		if ($fields['created'] == null)
 		{
 			$fields['created'] = $now->toSql();
 		}
 
-		if ($fields['publish_up'] == NULL)
+		if ($fields['publish_up'] == null)
 		{
 			$fields['publish_up'] = $now->toSql();
 		}
 
-		if ($fields['publish_down'] == NULL)
+		if ($fields['publish_down'] == null)
 		{
 			$fields['publish_down'] = '1000-01-01 00:00:00';
 		}

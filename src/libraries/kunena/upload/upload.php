@@ -715,7 +715,6 @@ class KunenaUpload
 			{
 				throw new RuntimeException("Fileinfo extension not loaded.");
 			}
-			
 
 			if (!$file->isAvatar && stripos($type, 'image/') !== false)
 			{

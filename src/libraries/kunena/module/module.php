@@ -78,7 +78,8 @@ abstract class KunenaModule
 			$hash = md5(serialize($this->params));
 
 			// Disable Cache for now: FIXME
-			/*if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest'))
+			/*
+			if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest'))
 			{
 				return;
 			}*/
@@ -91,7 +92,8 @@ abstract class KunenaModule
 		$this->_display();
 
 		// Disable Cache for now: FIXME
-		/*// Store cached page.
+		/*
+		// Store cached page.
 		if (isset($cache))
 		{
 			$cache->end();

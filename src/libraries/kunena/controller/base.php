@@ -71,7 +71,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return CMSApplicationInterface
 	 * @since Kunena
-	 *@throws Exception
+	 * @throws Exception
 	 */
 	protected function loadApplication()
 	{

@@ -70,15 +70,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		if ($userid < 0)
 		{
-		    $userid = $this->me->userid;
+			$userid = $this->me->userid;
 		}
 		elseif ($userid > 0)
 		{
-		    $userid = KunenaFactory::getUser($userid)->userid;
+			$userid = KunenaFactory::getUser($userid)->userid;
 		}
 		else
 		{
-		    $userid = 0;
+			$userid = 0;
 		}
 
 		$this->setState('user', $userid);

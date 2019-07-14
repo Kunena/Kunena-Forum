@@ -363,7 +363,6 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
-
 		}
 		else
 		{

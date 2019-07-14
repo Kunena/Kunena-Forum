@@ -97,7 +97,7 @@ abstract class KunenaMenuFix
 		$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
 		$query->select('e.element AS component, m.published')
 			->from($db->quoteName('#__menu', 'm'))
-			->leftJoin($db->quoteName('#__extensions','e') . ' ON ' . $db->quoteName('m.component_id') . ' = ' . $db->quoteName('e.extension_id'))
+			->leftJoin($db->quoteName('#__extensions', 'e') . ' ON ' . $db->quoteName('m.component_id') . ' = ' . $db->quoteName('e.extension_id'))
 			->where($db->quoteName('m.parent_id') . ' > 0')
 			->andWhere($db->quoteName('m.client_id') . ' = 0')
 			->order($db->quoteName('m.lft'));

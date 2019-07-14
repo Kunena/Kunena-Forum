@@ -146,7 +146,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
-			->where($db->quoteName('user_id' ) . ' = ' . $db->quote($user->userid))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
 			->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
 		$db->setQuery($query);
 

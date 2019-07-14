@@ -156,7 +156,7 @@ class KunenaForumMessageThankyou extends CMSObject
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users'))
 			->set('thankyou = thankyou+1')
-			->where('userid = ' .$db->quote($message->userid));
+			->where('userid = ' . $db->quote($message->userid));
 		$db->setQuery($query);
 
 		try

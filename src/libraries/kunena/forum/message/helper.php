@@ -100,7 +100,7 @@ abstract class KunenaForumMessageHelper
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
-			->where('m.id IN (' . $idlist .')');
+			->where('m.id IN (' . $idlist . ')');
 		$db->setQuery($query);
 
 		try
@@ -291,11 +291,11 @@ abstract class KunenaForumMessageHelper
 				break;
 			case 'mythanks':
 				$userfield = 'th.userid';
-				$query->innerJoin($db->quoteName('#__kunena_thankyou','th') . ' ON m.id = th.postid');
+				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON m.id = th.postid');
 				break;
 			case 'thankyou':
 				$userfield = 'th.targetuserid';
-				$query->innerJoin($db->quoteName('#__kunena_thankyou','th') . ' ON m.id = th.postid');
+				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON m.id = th.postid');
 				break;
 			case 'recent':
 			default:
@@ -332,7 +332,7 @@ abstract class KunenaForumMessageHelper
 
 		if ($user)
 		{
-			$query->where($db->quoteName($userfield)  . ' = ' . $db->quote($user));
+			$query->where($db->quoteName($userfield) . ' = ' . $db->quote($user));
 		}
 
 		// Negative time means no time
@@ -544,11 +544,12 @@ abstract class KunenaForumMessageHelper
 		$query = $db->getQuery(true);
 		$query->select('m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
-				SUM(mm.time>m.time) AS after_count')
-			->from($db->quoteName('#__kunena_messages' , 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages' , 'mm') . ' ON m.thread = mm.thread')
-			->where('m.id IN (' . $idlist .')')
-			->group( 'm.id, mm.hold');
+				SUM(mm.time>m.time) AS after_count'
+		)
+			->from($db->quoteName('#__kunena_messages', 'm'))
+			->innerJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON m.thread = mm.thread')
+			->where('m.id IN (' . $idlist . ')')
+			->group('m.id, mm.hold');
 		$db->setQuery($query);
 
 		try
@@ -668,11 +669,11 @@ abstract class KunenaForumMessageHelper
 
 		return $results;
 	}
-	
+
 	/**
 	 * Get last IP address used by the user
-	 * 
-	 * @param int $userid
+	 *
+	 * @param   int $userid
 	 * @since 6.0.0
 	 */
 	public static function getLastUserIP(int $userid)
@@ -686,10 +687,10 @@ abstract class KunenaForumMessageHelper
 
 		$query = $db->getQuery(true);
 		$query->select('ip')
-		->from($db->quoteName('#__kunena_messages'))
-		->where('userid=' . $userid)
-		->group('ip')
-		->order('time DESC');
+			->from($db->quoteName('#__kunena_messages'))
+			->where('userid=' . $userid)
+			->group('ip')
+			->order('time DESC');
 		$db->setQuery($query, 0, 1);
 
 		try

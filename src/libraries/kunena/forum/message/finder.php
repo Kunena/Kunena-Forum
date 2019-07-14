@@ -64,7 +64,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where('a.catid IN (' . $list. ')');
+		$this->query->where('a.catid IN (' . $list . ')');
 
 		return $this;
 	}
@@ -101,7 +101,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 			}
 
 			$list = implode(',', $list);
-			$this->query->where('a.catid IN (' . $list. ')');
+			$this->query->where('a.catid IN (' . $list . ')');
 
 			return $this;
 		}

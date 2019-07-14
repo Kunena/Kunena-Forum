@@ -26,26 +26,31 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 * @since Kunena
 	 */
 	public $state;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $me;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $total;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $users;
+
 	/**
 	 * @var
 	 * @since Kunena
 	 */
 	public $pagination;
+
 	/**
 	 * @var string
 	 * @since Kunena

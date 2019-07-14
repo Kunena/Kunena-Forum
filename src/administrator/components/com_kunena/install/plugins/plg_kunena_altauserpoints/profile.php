@@ -72,7 +72,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('u.*', 'ju.username', 'ju.email', 'ju.lastvisitDate'), array(null, null, 'last_login')))
 			->from($db->quoteName('#__alpha_userpoints', 'a'))
-			->innerJoin($db->quoteName('#__users' , 'u') . ' ON u.id = a.userid')
+			->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.userid')
 			->where('a.profileviews > 0')
 			->order('a.profileviews DESC');
 

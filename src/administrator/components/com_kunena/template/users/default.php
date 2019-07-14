@@ -238,7 +238,7 @@ HTMLHelper::_('dropdown.init');
 											<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->id); ?>"
 											   title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo Text::sprintf('COM_USERS_EDIT_USER', $this->escape($user->name)); ?>">
 											<span class="fa fa-pen-square mr-2"
-											      aria-hidden="true"></span><?php echo $this->escape($user->name); ?></a>
+											      aria-hidden="true"></span><?php echo $this->escape($user->username); ?></a>
 											<small>
 												(<?php echo Text::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>
 												)

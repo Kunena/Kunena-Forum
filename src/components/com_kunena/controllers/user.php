@@ -860,65 +860,6 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	/**
-	 * Reports a user to stopforumspam.com database
-	 *
-	 * @param   int     $userid      user
-	 * @param   string  $evidence  evidence
-	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 */
-	protected function report(int $userid, string $evidence = '')
-	{
-		if (!$this->config->stopforumspam_key || !$userid)
-		{
-			return false;
-		}
-
-		$spammer = Factory::getUser($userid);
-
-		$ip = KunenaForumMessageHelper::getLastUserIP($userid);
-
-		if (!empty($ip))
-		{
-			$options = new Joomla\Registry\Registry;
-
-			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
-
-			// Create a 'stream' transport.
-			$http = new Joomla\CMS\Http\Http($options, $transport);
-
-			$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' .
-				$this->config->stopforumspam_key . '&evidence=' . $evidence;
-
-			$response = $http->post('https://www.stopforumspam.com/add', $data);
-
-			if ($response->code == '200')
-			{
-				// Report accepted. There is no need to display the reason
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
-
-				return true;
-			}
-			else
-			{
-				// Report failed or refused
-				$reasons = array();
-				preg_match('/<p>.*<\/p>/', $response->body, $reasons);
-
-				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
-
-				return false;
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
-		}
-	}
-
 	// Internal functions:
 
 	/**
@@ -1372,7 +1313,7 @@ class KunenaControllerUser extends KunenaController
 	 * @return boolean
 	 * @since Kunena
 	 */
-	protected function report($userid = 0, $evidence = null)
+	protected function report(int $userid = 0, string $evidence = null)
 	{
 		if (!$this->config->stopforumspam_key || !$userid)
 		{

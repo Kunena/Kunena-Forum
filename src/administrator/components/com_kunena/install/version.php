@@ -152,7 +152,7 @@ class KunenaVersion
 	 */
 	public static function getCopyrightHTML()
 	{
-		return ': &copy; 2008 - 2019 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org" target = "_blank">'
+		return ': &copy; 2008 - 2019 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
 			. Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
 			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			. Text::_('COM_KUNENA_VERSION_GPL') . '</a>';

@@ -140,6 +140,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$page      = $this->pagination->pagesCurrent;
+		$pages     = $this->pagination->pagesTotal;
 		$pagesText = ($page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$menu_item = $this->app->getMenu()->getActive();

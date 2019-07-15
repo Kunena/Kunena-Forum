@@ -309,14 +309,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										</td>
 									<?php endif; ?>
 								</tr>
-								<div class="modal fade" id="kerror<?php echo $item->id; ?>_form" role="dialog"
+								<div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1" role="dialog"
 								     aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;"
 								     data-backdrop="false">
-									<div class="modal-header">
-										<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">
-											&times;
-										</button>
-										<h3>
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">
 											<?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
 												<span class="icon-warning" aria-hidden="true"></span>
 											<?php else: ?>
@@ -325,24 +324,29 @@ $filterItem = $this->escape($this->state->get('item.id'));
 											Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 
 											ID:<?php echo $item->id; ?>
-										</h3>
-									</div>
-									<div class="modal-body">
-										<div>
-											<textarea style="margin-top: -3000px"
-											          id="report_final<?php echo $item->id; ?>"
-											          for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data); ?></textarea>
-											<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<a href="#" id="link_sel_all<?php echo $item->id; ?>"
+												</h5>
+												<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">
+													&times;
+												</button>
+											</div>
+											<div class="modal-body">
+												<div>
+													<textarea style="margin-top: -3000px"
+														id="report_final<?php echo $item->id; ?>"
+														for="report_final<?php echo $item->id; ?>"><?php echo KunenaHtmlParser::plainBBCode($item->data); ?></textarea>
+													<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<a href="#" id="link_sel_all<?php echo $item->id; ?>"
 										   name="link_sel_all<?php echo $item->id; ?>" type="button"
 										   class="btn btn-small btn-outline-primary"><i
 													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
-										</a>
-										<button class="btn btn-outline-danger" data-dismiss="modal"
+												</a>
+												<button class="btn btn-outline-danger" data-dismiss="modal"
 										        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+											</div>
+										</div>
 									</div>
 								</div>
 								<?php

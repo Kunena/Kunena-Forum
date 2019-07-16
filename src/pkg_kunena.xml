@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension type="package" version="4.40" method="upgrade">
+<extension type="package" version="4.0" method="upgrade">
     <name>Kunena Forum Package</name>
     <packagename>kunena</packagename>
     <version>6.0.0-ALPHA4-DEV</version>
     <versionname>Internal</versionname>
-    <creationDate>2019-06-01</creationDate>
+    <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>
     <authorUrl>https://www.kunena.org</authorUrl>
@@ -21,16 +21,15 @@
         <filename type="component" id="com_kunena">com_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="finder" id="kunena">plg_finder_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="finder">plg_kunena_finder_v@kunenaversion@.zip</filename>
-        <filename type="plugin" group="kunena" id="altauserpoints">plg_kunena_altauserpoints_v@kunenaversion@.zip
-        </filename>
+        <filename type="plugin" group="kunena" id="altauserpoints">plg_kunena_altauserpoints_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="community">plg_kunena_community_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="comprofiler">plg_kunena_comprofiler_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="gravatar">plg_kunena_gravatar_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="joomla">plg_kunena_joomla_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="kunena">plg_kunena_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="uddeim">plg_kunena_uddeim_v@kunenaversion@.zip</filename>
-		<filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
-		<filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
+        <filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
+        <filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
     </files>
 
     <changelogurl>https://update.kunena.org/changelog/6.0.0.xml</changelogurl>

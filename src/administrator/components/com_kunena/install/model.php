@@ -1045,17 +1045,14 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function stepPlugins()
 	{
-		$this->installPlugin('plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('plugins/plg_kunena_altauserpoints', 'kunena', 'altauserpoints', false, 2);
-		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 3);
-		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 4);
-		$this->installPlugin('plugins/plg_kunena_easyprofile', 'kunena', 'easyprofile', false, 5);
-		$this->installPlugin('plugins/plg_kunena_easysocial', 'kunena', 'easysocial', false, 6);
-		$this->installPlugin('plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 7);
-		$this->installPlugin('plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 8);
-		$this->installPlugin('plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 9);
-		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 10);
-		$this->installPlugin('plugins/plg_kunena_finder', 'kunena', 'finder', false, 11);
+		// First change plugin ordering
+		$plugin = $this->loadPlugin('kunena', 'kunena');
+		$plugin->enabled = 1;
+		$plugin->store();
+
+		$plugin = $this->loadPlugin('kunena', 'joomla');
+		$plugin->enabled = 1;
+		$plugin->store();
 
 		if (is_file(JPATH_ROOT . '/plugins/kunena/alphauserpoints/avatar.php'))
 		{

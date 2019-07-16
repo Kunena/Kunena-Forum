@@ -439,7 +439,7 @@
 		<archive destfile="${build_dir}/packages/plg_kunena_easyblog${str.version}" basedir="${tmp_dir}/packages/plg_kunena_easyblog" />
 		<archive destfile="${build_dir}/packages/plg_kunena_easyprofile${str.version}" basedir="${tmp_dir}/packages/plg_kunena_easyprofile" />
 		<archive destfile="${build_dir}/packages/plg_kunena_easysocial${str.version}" basedir="${tmp_dir}/packages/plg_kunena_easysocial" />
-		<archive destfile="${build_dir}/packages/plg_kunena_finder${str.version}" basedir="${tmp_dir}/packages/plg_kunena_findera" />
+		<archive destfile="${build_dir}/packages/plg_kunena_finder${str.version}" basedir="${tmp_dir}/packages/plg_kunena_finder" />
 		<archive destfile="${build_dir}/packages/plg_kunena_gravatar${str.version}" basedir="${tmp_dir}/packages/plg_kunena_gravatar" />
 		<archive destfile="${build_dir}/packages/plg_kunena_joomla${str.version}" basedir="${tmp_dir}/packages/plg_kunena_joomla" />
 		<archive destfile="${build_dir}/packages/plg_kunena_kunena${str.version}" basedir="${tmp_dir}/packages/plg_kunena_kunena" />

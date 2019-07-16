@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension type="package" version="3.4" method="upgrade">
+<extension type="package" version="4.40" method="upgrade">
     <name>Kunena Forum Package</name>
     <packagename>kunena</packagename>
     <version>6.0.0-ALPHA4-DEV</version>
@@ -16,8 +16,6 @@
     <scriptfile>install.php</scriptfile>
 
     <files folder="packages">
-        <filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
-        <filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
         <filename type="library" id="kunena">lib_kunena_v@kunenaversion@.zip</filename>
         <filename type="file" id="kunena_media">kunena_media_v@kunenaversion@.zip</filename>
         <filename type="component" id="com_kunena">com_kunena_v@kunenaversion@.zip</filename>
@@ -31,6 +29,8 @@
         <filename type="plugin" group="kunena" id="joomla">plg_kunena_joomla_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="kunena">plg_kunena_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="uddeim">plg_kunena_uddeim_v@kunenaversion@.zip</filename>
+		<filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
+		<filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
     </files>
 
     <changelogurl>https://update.kunena.org/changelog/6.0.0.xml</changelogurl>

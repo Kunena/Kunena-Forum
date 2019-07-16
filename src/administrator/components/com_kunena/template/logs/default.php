@@ -250,9 +250,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								$target   = KunenaUserHelper::get($item->target_user);
 
 								$document = Factory::getDocument();
-								$document->addScriptDeclaration("window.addEvent('domready', function(){
-										$('link_sel_all" . $item->id . "').addEvent('click', function(e){
-											$('report_final" . $item->id . "').select();
+								// TODO : move this part of javascript outside of foreach
+								$document->addScriptDeclaration("jQuery( document ).ready(function() {
+										jQuery('#link_sel_all" . $item->id . "').click(function() {
+											jQuery('#report_final" . $item->id . "').select();
 											try {
 												var successful = document.execCommand('copy');
 												var msg = successful ? 'successful' : 'unsuccessful';

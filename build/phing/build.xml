@@ -243,11 +243,121 @@
 
 	<target name="build-plugins" depends="build">
 		<echo message="Building Plugins.." />
+		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_finder_kunena"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_altauserpoints" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_community" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_community"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_comprofiler" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_comprofiler"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easyblog" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easyblog"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easyprofile" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easyprofile"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easysocial" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easysocial"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_finder" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_finder"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_gravatar" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_gravatar"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_kunena"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_joomla" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_joomla"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_uddeim"/>
+		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_system_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_quickicon_kunena"/>
+		</copy>
+
+
+		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_finder_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_altauserpoints" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_altauserpoints">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_community" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_community">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_comprofiler" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_comprofiler">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easyblog" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_easyblog">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easyprofile" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_easyprofile">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_easysocial" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_easysocial">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_finder" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_finder">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_gravatar" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_gravatar">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_joomla" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_joomla">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_kunena_uddeim">
+				<include name="**/*.xml"/>
+			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<filterchain refid="filter"/>
@@ -335,6 +445,54 @@
 			<property name="base.directory" value="${tmp_dir}/packages/kunena_media" />
 		</phingcall>
 
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_finder_kunena_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_finder_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_altauserpoints_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_altauserpoints" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_community_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_community" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_comprofiler_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_comprofiler" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easyblog_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easyblog" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easyprofile_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easyprofile" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easysocial_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easysocial" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_finder_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_finder" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_gravatar_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_gravatar" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_joomla_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_joomla" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_kunena_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_uddeim_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_uddeim" />
+		</phingcall>
 		<phingcall target="archive">
 			<property name="destination.file" value="dist/package/distribution/packages/plg_quickicon_kunena_v${xml.version}" />
 			<property name="base.directory" value="${tmp_dir}/packages/plg_quickicon_kunena" />

@@ -90,48 +90,6 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $parent parent
-	 *
-	 * @return boolean
-	 *
-	 * @since version
-	 */
-	public function uninstall($parent)
-	{
-		return true;
-	}
-
-	/**
-	 * @param   string $type   type
-	 * @param   string $parent parent
-	 *
-	 * @return boolean
-	 *
-	 * @since version
-	 */
-	public function preflight($type, $parent)
-	{
-		/** @var JInstallerComponent $parent */
-		$manifest = $parent->getParent()->getManifest();
-
-		// Prevent installation if requirements are not met.
-		if (!$this->checkRequirements($manifest->version))
-		{
-			return false;
-		}
-
-		// Remove old log file before installation.
-		$logFile = Factory::getConfig()->get('log_path') . '/kunena.php';
-
-		if (is_file($logFile))
-		{
-			@unlink($logFile);
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param   string $uri uri
 	 *
 	 * @return string
@@ -214,11 +172,12 @@ EOS;
 	}
 
 	/**
-	 * @param   string $version version
+	 * @param   string  $version  version
 	 *
 	 * @return boolean|integer
 	 *
-	 * @since version
+	 * @since   6.0.0
+	 * @throws Exception
 	 */
 	public function checkRequirements($version)
 	{
@@ -490,5 +449,379 @@ EOS;
 		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
 		$db->setQuery($query);
 		$db->execute();
+	}
+
+	/**
+	 * @param   string  $parent  parent
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function uninstall($parent)
+	{
+		$adminpath = $parent->getParent()->getPath('extension_administrator');
+		$model     = "{$adminpath}/install/model.php";
+
+		if (file_exists($model))
+		{
+			require_once $model;
+			$installer = new KunenaModelInstall;
+			$installer->uninstall();
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param   string  $type    type
+	 * @param   string  $parent  parent
+	 *
+	 * @return boolean
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function preflight($type, $parent)
+	{
+		$parent   = $parent->getParent();
+		$manifest = $parent->getManifest();
+
+		// Prevent installation if requirements are not met.
+		if (!$this->checkRequirements($manifest->version))
+		{
+			return false;
+		}
+
+		$adminPath = $parent->getPath('extension_administrator');
+		$sitePath  = $parent->getPath('extension_site');
+
+		if (is_file($adminPath . '/admin.kunena.php'))
+		{
+			// Kunena 2.0 or older release found, clean up the directories.
+			static $ignoreAdmin = array('index.html', 'kunena.xml', 'archive');
+
+			if (is_file($adminPath . '/install.script.php'))
+			{
+				// Kunena 1.7 or older release..
+				$ignoreAdmin[] = 'install.script.php';
+				$ignoreAdmin[] = 'admin.kunena.php';
+			}
+
+			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
+			$this->deleteFolder($adminPath, $ignoreAdmin);
+			$this->deleteFolder($sitePath, $ignoreSite);
+		}
+
+		// Remove Blue Eagle template on K5.0
+		$oldblue = $sitePath . '/template/blue_eagle';
+
+		if (is_dir($oldblue))
+		{
+			$this->deleteKfolder($sitePath . '/template/blue_eagle');
+		}
+
+		// Delete languages files related to blue eagle in en-gb and others languages
+		if (Folder::exists($sitePath . '/language'))
+		{
+			$kunena_language_folders = Folder::folders($sitePath . '/language');
+
+			foreach ($kunena_language_folders as $folder)
+			{
+				if (File::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+				{
+					File::delete($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				}
+			}
+		}
+
+		// Copy files to new dir for Crypsis
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less'))
+		{
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less');
+
+			if (!empty($file) && !$filenew)
+			{
+				Folder::create($sitePath . '/template/crypsis/assets/less');
+				$src  = $sitePath . '/template/crypsis/less/custom.less';
+				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
+				File::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css'))
+		{
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css');
+
+			if (!empty($file) && !$filenew)
+			{
+				Folder::create($sitePath . '/template/crypsis/assets/css');
+				$src  = $sitePath . '/template/crypsis/css/custom.css';
+				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
+				File::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
+		}
+
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini'))
+		{
+			$file    = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/config/params.ini');
+
+			if (!empty($file) && !$filenew)
+			{
+				Folder::create($sitePath . '/template/crypsis/config');
+				$src  = $sitePath . '/template/crypsis/params.ini';
+				$dest = $sitePath . '/template/crypsis/config/params.ini';
+				File::copy($src, $dest);
+			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
+		}
+
+		// Remove old Crypsis files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsis/template.xml'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsis/css');
+			$this->deleteKfolder($sitePath . '/template/crypsis/images');
+			$this->deleteKfolder($sitePath . '/template/crypsis/less');
+			$this->deleteKfolder($sitePath . '/template/crypsis/media');
+			$this->deleteFile($sitePath . '/template/crypsis/config.xml');
+			$this->deleteFile($sitePath . '/template/crypsis/kunena_tmpl_crypsis.xml');
+			$this->deleteFile($sitePath . '/template/crypsis/template.xml');
+		}
+
+		$language_folders = Folder::folders(JPATH_ROOT . '/language');
+
+		foreach ($language_folders as $folder)
+		{
+			if (File::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			{
+				File::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+			}
+		}
+
+		// Remove old system directory
+		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
+		{
+			if (!is_file(JPATH_ROOT . '/media/kunena/archive/topic_icons/system/topicicons.xml'))
+			{
+				Folder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
+				$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
+				$foldernew = JPATH_ROOT . '/media/kunena/archive/topic_icons/system';
+				Folder::copy($folder, $foldernew);
+				Folder::delete($folder);
+			}
+
+			if (!is_file(JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml'))
+			{
+				Folder::create(JPATH_ROOT . '/media/kunena/topic_icons/systemold');
+				$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+				$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
+				File::copy($file, $filenew);
+			}
+
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
+			$query->update($db->quoteName('#__kunena_categories'))
+				->set($db->quoteName('iconset') . ' = ' . $db->quote('default'))
+				->where($db->quoteName('iconset') . ' = ' . $db->quote('system'));
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		// K5.1 Remove files
+		if (is_file(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin/edit.php'))
+		{
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/template/plugin');
+			$this->deleteKfolder(JPATH_ROOT . '/administrator/components/com_kunena/views/plugin');
+			$this->deleteFile(JPATH_ROOT . '/administrator/components/com_kunena/controllers/plugin.php');
+		}
+
+		if (is_file(JPATH_ROOT . '/media/kunena/js/debug.js'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/media/kunena/js/debug.js');
+		}
+
+		if (is_file(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php'))
+		{
+			$this->deleteFile(JPATH_ROOT . '/libraries/kunena/compat/joomla/image/image.php');
+			$this->deleteKfolder(JPATH_ROOT . '/components/com_kunena/template/crypsis/layouts/topic/edit/editor');
+			$this->deleteFile(JPATH_ROOT . '/components/com_kunena/layout/topic/edit/editor.php');
+		}
+
+		// Copy files to new dir for Crypsis
+		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js'))
+		{
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/js/markitup.editor-min.js');
+		}
+
+		// Prepare installation.
+		$model = "{$adminPath}/install/model.php";
+
+		if (file_exists($model))
+		{
+			require_once $model;
+			$installer = new KunenaModelInstall;
+			$installer->install();
+		}
+
+		return true;
+	}
+
+
+
+
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	public function deleteFolder($path, $ignore = array())
+	{
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
+	}
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	public function deleteFiles($path, $ignore = array())
+	{
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
+
+		if (Folder::exists($path))
+		{
+			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
+			{
+				if (File::exists($file))
+				{
+					File::delete($file);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	public function deleteFolders($path, $ignore = array())
+	{
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
+
+		if (Folder::exists($path))
+		{
+			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
+			{
+				if (Folder::exists($folder))
+				{
+					Folder::delete($folder);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @internal param array $ignore
+	 *
+	 * @param   string  $path  path
+	 *
+	 * @return void
+	 * @since    Kunena
+	 */
+	public function deleteKfolder($path)
+	{
+		Folder::delete($path);
+	}
+
+	/**
+	 * @param   string  $path  path
+	 *
+	 * @return void
+	 * @since Kunena
+	 */
+	public function deleteFile($path)
+	{
+		if (File::exists($path))
+		{
+			File::delete($path);
+		}
+	}
+
+
+	/**
+	 * Converts the site's database tables to support UTF-8 Multibyte.
+	 *
+	 * @return  void
+	 *
+	 * @since   3.5
+	 */
+	public function convertTablesToUtf8mb4()
+	{
+		$db = Factory::getDbo();
+
+		// This is only required for MySQL databases
+		$serverType = $db->getServerType();
+
+		if ($serverType != 'mysql')
+		{
+			return;
+		}
+
+		// Set required conversion status
+		if (!$db->hasUTF8mb4Support())
+		{
+			return;
+		}
+
+		$query = $db->getQuery(true)
+			->select($db->quoteName('default_character_set_name'))
+			->from($db->quoteName('#__kunena_version'));
+		$db->setQuery($query, 0, 1);
+
+		// Nothing to do, saved conversion status from DB is equal to required
+		if ($db->getCollation() == 'utf8mb4_unicode_ci')
+		{
+			return;
+		}
+
+		// Step 1: Drop indexes later to be added again with column lengths limitations at step 2
+		$fileName1 = JPATH_ROOT . '/administrator/components/com_kunena/install/sql/migrate/mysql/utf8mb4-conversion.sql';
+
+		if (is_file($fileName1))
+		{
+			$fileContents1 = @file_get_contents($fileName1);
+			$queries1      = $db->splitSql($fileContents1);
+
+			if (!empty($queries1))
+			{
+				foreach ($queries1 as $query1)
+				{
+					try
+					{
+						$db->setQuery($query1)->execute();
+					}
+					catch (Exception $e)
+					{
+						// If the query fails we will go on. It just means the index to be dropped does not exist.
+					}
+				}
+			}
+		}
 	}
 }

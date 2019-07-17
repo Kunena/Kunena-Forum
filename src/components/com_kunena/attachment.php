@@ -13,9 +13,9 @@
  * A light application to serve attachments to the users. Will only partially initialize Joomla to gain some speed.
  */
 
-if (version_compare(PHP_VERSION, '5.3.1', '<'))
+if (version_compare(PHP_VERSION, '7.2', '<'))
 {
-	die('Your host needs to use PHP 5.3.1 or higher to run this version of Joomla!');
+	die('Your host needs to use PHP 7.2 or higher to run this version of Joomla!');
 }
 
 /*

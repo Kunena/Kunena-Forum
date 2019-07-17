@@ -1040,19 +1040,35 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
+	 * @param   string $group   group
+	 * @param   string $element element
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
+	public function enablePlugin($group, $element)
+	{
+		$plugin = Joomla\CMS\Table\Table::getInstance('extension');
+
+		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
+		{
+			return false;
+		}
+
+		$plugin->enabled = 1;
+
+		return $plugin->store();
+	}
+
+	/**
 	 * @since Kunena
 	 * @throws Exception
 	 */
 	public function stepPlugins()
 	{
-		// First change plugin ordering
-		$plugin = $this->loadPlugin('kunena', 'kunena');
-		$plugin->enabled = 1;
-		$plugin->store();
-
-		$plugin = $this->loadPlugin('kunena', 'joomla');
-		$plugin->enabled = 1;
-		$plugin->store();
+		$this->enablePlugin('kunena', 'kunena');
+		$this->enablePlugin('kunena', 'joomla');
 
 		if (is_file(JPATH_ROOT . '/plugins/kunena/alphauserpoints/avatar.php'))
 		{

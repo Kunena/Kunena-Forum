@@ -47,8 +47,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 */
 	protected function detectExtension()
 	{
-		// Install Kunena 2.0 only into Joomla 3.4
-		return version_compare(JVERSION, '3.4', '>=');
+		// Install Kunena 2.0 only into Joomla 4
+		return version_compare(JVERSION, '4.0', '>=');
 	}
 
 	/**

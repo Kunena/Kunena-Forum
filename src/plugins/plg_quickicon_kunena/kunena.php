@@ -112,12 +112,7 @@ class plgQuickiconKunena extends CMSPlugin
 
 		if (!KunenaForum::installed())
 		{
-			$icon = 'warning';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-warning';
-			}
+			$icon = 'fa fa-warning';
 
 			// Not fully installed
 			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
@@ -127,12 +122,7 @@ class plgQuickiconKunena extends CMSPlugin
 		elseif ($updateInfo === null)
 		{
 			// Unsupported
-			$icon = 'remove';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-remove';
-			}
+			$icon = 'fa fa-remove';
 
 			$img  = $useIcons ? $icon : 'kunena/icons/kunena-logo-48-white.png';
 			$icon = 'kunena/icons/kunena-logo-48-white.png';
@@ -196,11 +186,8 @@ class plgQuickiconKunena extends CMSPlugin
 			$text = Text::_('COM_KUNENA');
 		}
 
-		// Use one line in J!3.0.
-		if (version_compare(JVERSION, '3.0', '>'))
-		{
-			$text = preg_replace('|<br />|', ' - ', $text);
-		}
+		// Use one line in J!4.0.
+		$text = preg_replace('|<br />|', ' - ', $text);
 
 		return array(array(
 			'link'   => Route::_($link),

@@ -73,7 +73,7 @@
 
 		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${project_dir}/build/lib/ant-contrib-1.0b3.jar"/>
 
-		<xmlproperty file="${project_dir}/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${project_dir}/src/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
 		</tstamp>

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\AuthenticationHelper;
 
 /**
  * Class KunenaLogin
@@ -75,9 +76,7 @@ class KunenaLogin
 	 */
 	public static function getTwoFactorMethods()
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
-
-		return count(UsersHelper::getTwoFactorMethods());
+		return count(AuthenticationHelper::getTwoFactorMethods());
 	}
 
 	/**

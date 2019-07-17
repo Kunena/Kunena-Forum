@@ -273,7 +273,6 @@
 		<copy file="${project_dir}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.md" tofile="${build_dir}/README.txt" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/LICENSE.txt" tofile="${build_dir}/LICENSE.txt" overwrite="true" filtering="true" />
-		<copy file="${build_dir}/pkg_kunena.xml" tofile="${project_dir}/${kunena.admin}/kunena.xml" overwrite="true" filtering="true" />
 
 		<!--copy todir="${build_dir}/install" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}/install" />

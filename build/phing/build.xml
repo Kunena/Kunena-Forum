@@ -158,9 +158,6 @@
 		<copy file="LICENSE.txt" tofile="${build_dir}/distribution/LICENSE.txt" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="{project_dir}/pkg_kunena.xml" tofile="{kunena.admin}/kunena.xml" overwrite="true">
-			<filterchain refid="filter"/>
-		</copy>
 
 		<!-- Language pack -->
 		<copy file="${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true">

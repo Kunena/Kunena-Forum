@@ -96,17 +96,17 @@ mklink /d %GitTarget%\components\com_kunena %GitSource%\src\components\com_kunen
 mklink /d %GitTarget%\libraries\kunena %GitSource%\src\libraries\kunena
 mklink /d %GitTarget%\plugins\system\kunena %GitSource%\src\plugins\plg_system_kunena
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\src\plugins\plg_quickicon_kunena
-mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_altauserpoints
-mklink /d %GitTarget%\plugins\kunena\community %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_community
-mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_comprofiler
-mklink /d %GitTarget%\plugins\kunena\easyprofile %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easyprofile
-mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easysocial
-mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_finder
-mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_finder_kunena
-mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_gravatar
-mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_joomla
-mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_kunena
-mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_uddeim
+mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\plugins\kunena\altauserpoints
+mklink /d %GitTarget%\plugins\kunena\community %GitSource%\src\plugins\kunena\community
+mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\plugins\kunena\comprofiler
+mklink /d %GitTarget%\plugins\kunena\easyprofile %GitSource%\src\plugins\kunena\easyprofile
+mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\plugins\kunena\easysocial
+mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\plugins\kunena\finder
+mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\plugins\finder\kunena
+mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\plugins\kunena\gravatar
+mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\plugins\kunena\joomla
+mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\kunena\kunena
+mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\plugins\kunena\uddeim
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 
 pause

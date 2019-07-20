@@ -142,11 +142,11 @@ class KunenaAdminControllerUsers extends KunenaController
 			$this->cleanSocial($user, $this->app);
 			$user->websitename  = $this->app->input->getString('websitename', '');
 			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
-			$user->hideEmail    = $this->app->input->getString('hidemail');
-			$user->showOnline   = $this->app->input->getString('showonline');
-			$user->cansubscribe = $this->app->input->getString('cansubscribe');
-			$user->userlisttime = $this->app->input->getString('userlisttime');
-			$user->socialshare  = $this->app->input->getString('socialshare');
+			$user->hideEmail    = $this->app->input->getInt('hidemail');
+			$user->showOnline   = $this->app->input->getInt('showonline');
+			$user->canSubscribe = $this->app->input->getInt('cansubscribe');
+			$user->userListtime = $this->app->input->getInt('userlisttime');
+			$user->socialshare  = $this->app->input->getInt('socialshare');
 			$user->view         = $newview;
 			$user->ordering     = $neworder;
 			$user->rank         = $newrank;
@@ -277,11 +277,11 @@ class KunenaAdminControllerUsers extends KunenaController
 			$this->cleanSocial($user, $this->app);
 			$user->websitename  = $this->app->input->getString('websitename', '');
 			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
-			$user->hideEmail    = $this->app->input->getString('hidemail');
-			$user->showOnline   = $this->app->input->getString('showonline');
-			$user->cansubscribe = $this->app->input->getString('cansubscribe');
-			$user->userlisttime = $this->app->input->getString('userlisttime');
-			$user->socialshare  = $this->app->input->getString('socialshare');
+			$user->hideEmail    = $this->app->input->getInt('hidemail');
+			$user->showOnline   = $this->app->input->getInt('showonline');
+			$user->canSubscribe = $this->app->input->getInt('cansubscribe');
+			$user->userListtime = $this->app->input->getInt('userlisttime');
+			$user->socialshare  = $this->app->input->getInt('socialshare');
 
 			$user->view     = $newview;
 			$user->ordering = $neworder;

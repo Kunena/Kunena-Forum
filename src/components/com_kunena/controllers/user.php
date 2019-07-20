@@ -588,6 +588,11 @@ class KunenaControllerUser extends KunenaController
 
 		if ($birthdate)
 		{
+			if ($birthdate == '11/30/-0001')
+			{
+				$birthdate = '1901/01/01';
+			}
+
 			$date = Factory::getDate($birthdate);
 
 			$birthdate = $date->format('Y-m-d');

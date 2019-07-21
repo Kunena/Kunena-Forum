@@ -47,18 +47,21 @@
                null="0"/>
         <field name="created"
                type="datetime"
-               null="1"/>
+               null="0"
+               default="1000-01-01 00:00:00"/>
         <field name="published"
                type="tinyint(1)"
                null="0"
                default="0"/>
         <field name="publish_up"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="publish_down"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="ordering"
                type="tinyint(4)"
@@ -199,7 +202,8 @@
                default="0"/>
         <field name="checked_out_time"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="review"
                type="tinyint(4)"
@@ -528,7 +532,8 @@
                null="0"/>
         <field name="polltimetolive"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <key name="PRIMARY"
              unique="1"
@@ -569,7 +574,8 @@
                null="1"/>
         <field name="lasttime"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="lastvote"
                type="int(11)"
@@ -622,8 +628,9 @@
                null="0"
                default="0"/>
         <field name="time"
-               type="DATETIME"
-               null="1"
+               type="datetime"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <key name="PRIMARY"
              unique="1"
@@ -695,7 +702,8 @@
                null="0"/>
         <field name="time"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <key name="postid"
              unique="1"
@@ -1042,14 +1050,16 @@
                default="0"/>
         <field name="expiration"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="created_by"
                type="int(11)"
                null="0"/>
         <field name="created_time"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="reason_private"
                type="text"
@@ -1062,7 +1072,8 @@
                null="1"/>
         <field name="modified_time"
                type="datetime"
-               null="1"
+               null="0"
+               default="1000-01-01 00:00:00"
                />
         <field name="comments"
                type="text"

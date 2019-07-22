@@ -6,13 +6,13 @@
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Component\ComponentHelper;
 
 jimport('joomla.application.component.modellist');
 
@@ -87,7 +87,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 		$this->setState('filter.active', !empty($filter_active));
 
 		// Load the parameters.
-		$params = Joomla\CMS\Component\ComponentHelper::getParams('com_plugins');
+		$params = ComponentHelper::getParams('com_plugins');
 		$this->setState('params', $params);
 
 		// List state information.

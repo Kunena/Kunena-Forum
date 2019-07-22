@@ -24,8 +24,16 @@ jimport('joomla.utilities.date');
  * @since Kunena
  * @property    integer $created_time
  * @property    integer $created_by
+ * @property    integer $modified_by
  * @property    integer $userid
  * @property    integer $id
+ * @property    array   $comments
+ * @property    string  $ip
+ * @property    string  $reason_public
+ * @property    string  $reason_private
+ * @property    integer $modified_time
+ * @property    integer $blocked
+ * @property    string  $comment
  *
  * @property    integer $expiration
  */

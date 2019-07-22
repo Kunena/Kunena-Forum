@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Class KunenaLoginJoomla
@@ -81,7 +83,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRememberMe()
 	{
-		return (bool) Joomla\CMS\Plugin\PluginHelper::isEnabled('system', 'remember');
+		return (bool) PluginHelper::isEnabled('system', 'remember');
 	}
 
 	/**
@@ -108,7 +110,7 @@ class KunenaLoginJoomla
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$usersConfig = ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{

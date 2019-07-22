@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
@@ -289,8 +290,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$menu_item       = $this->app->getMenu()->getActive();
-		$config          = Factory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
+		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
 		if ($menu_item)

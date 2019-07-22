@@ -13,6 +13,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerUserEditUserDisplay
@@ -50,7 +53,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	{
 		parent::before();
 
-		$userParams = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$userParams = ComponentHelper::getParams('com_users');
 
 		// Check if user is allowed to change his name.
 		$this->changeUsername = $userParams->get('change_login_name', 1);
@@ -63,10 +66,10 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
 			Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
 
-			Joomla\CMS\Plugin\PluginHelper::importPlugin('user');
+			PluginHelper::importPlugin('user');
 
-			$registry     = new Joomla\Registry\Registry($this->user->params);
-			$form         = Joomla\CMS\Form\Form::getInstance('com_users.profile', 'frontend');
+			$registry     = new Registry($this->user->params);
+			$form         = Form::getInstance('com_users.profile', 'frontend');
 			$data         = new StdClass;
 			$data->params = $registry->toArray();
 			Factory::getApplication()->triggerEvent('onContentPrepareForm', array($form, $data));

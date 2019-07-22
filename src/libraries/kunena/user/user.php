@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -292,7 +293,7 @@ class KunenaUser extends CMSObject
 			$user = KunenaUserHelper::getMyself();
 		}
 
-		$input     = Factory::getApplication()->input;
+		$input     = $this->app->input;
 		$method    = $input->getInt('userid');
 		$kuser     = KunenaFactory::getUser($method);
 		$config    = KunenaConfig::getInstance();
@@ -2028,8 +2029,7 @@ class KunenaUser extends CMSObject
 
 			if ($rels == 'rel="canonical"')
 			{
-				$config          = Factory::getApplication('site');
-				$componentParams = $config->getParams('com_config');
+				$componentParams = ComponentHelper::getParams('com_config');
 				$robots          = $componentParams->get('robots');
 
 				if ($robots == 'noindex, follow' || $robots == 'noindex, nofollow')

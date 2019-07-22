@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Application\CMSApplicationInterface;
 
 jimport('joomla.application.component.helper');
 
@@ -24,10 +25,10 @@ jimport('joomla.application.component.helper');
 class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
-	 * @var Joomla\CMS\Application\CMSApplication|null
+	 * @var CMSApplicationInterface
 	 * @since Kunena
 	 */
-	public $app = null;
+	protected $app;
 
 	/**
 	 * @var KunenaUser|null
@@ -51,7 +52,6 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->app      = Factory::getApplication();
 		$this->config   = KunenaFactory::getConfig();
 		$this->me       = KunenaUserHelper::getMyself();
 

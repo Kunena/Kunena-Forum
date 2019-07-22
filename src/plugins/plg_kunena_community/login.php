@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
+
 /**
  * Class KunenaLoginCommunity
  * @since Kunena
@@ -59,7 +61,7 @@ class KunenaLoginCommunity
 	 */
 	public function getRegistrationURL()
 	{
-		$usersConfig = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$usersConfig = ComponentHelper::getParams('com_users');
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{

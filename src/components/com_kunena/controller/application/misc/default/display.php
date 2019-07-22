@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -44,8 +45,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		$menu_item = $this->app->getMenu()->getActive();
 
 		$doc             = Factory::getDocument();
-		$config          = Factory::getApplication('site');
-		$componentParams = $config->getParams('com_config');
+		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
 		if ($robots == '')
@@ -122,8 +122,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		parent::before();
 
-		$config       = Factory::getApplication('site');
-		$params       = $config->getParams('com_kunena');
+		$params       = ComponentHelper::getParams('com_kunena');
 		$this->header = $params->get('page_title');
 		$Itemid       = $this->input->getInt('Itemid');
 

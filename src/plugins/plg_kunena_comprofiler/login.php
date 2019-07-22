@@ -11,7 +11,9 @@
  **/
 defined('_JEXEC') or die();
 
+use CBLib\Registry\Registry;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class KunenaLoginComprofiler
@@ -96,7 +98,7 @@ class KunenaLoginComprofiler
 			->where('element = \'mod_cblogin\'')
 			->andWhere('type = \'module\'');
 		$raw_params = $db->loadResult();
-		$params     = new \CBLib\Registry\Registry($raw_params);
+		$params     = new Registry($raw_params);
 
 		return $params->get('remember_enabled', 1);
 	}
@@ -131,7 +133,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework, $ueConfig;
 
-		$usersConfig = Joomla\CMS\Component\ComponentHelper::getParams('com_users');
+		$usersConfig = ComponentHelper::getParams('com_users');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
 			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))

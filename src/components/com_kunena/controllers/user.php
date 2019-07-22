@@ -382,7 +382,7 @@ class KunenaControllerUser extends KunenaController
 		// We only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
 
-		if (Joomla\CMS\Component\ComponentHelper::getParams('com_users')->get('change_login_name', 1))
+		if (ComponentHelper::getParams('com_users')->get('change_login_name', 1))
 		{
 			$allow[] = 'username';
 		}

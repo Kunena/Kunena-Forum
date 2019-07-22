@@ -79,7 +79,7 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string $userlist userlist
+	 * @param   array $userlist userlist
 	 *
 	 * @since Kunena
 	 * @return void

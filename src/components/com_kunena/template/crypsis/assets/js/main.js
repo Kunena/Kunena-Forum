@@ -67,20 +67,10 @@ jQuery(document).ready(function ($) {
 	});
 
 	if ($.fn.datepicker !== undefined) {
-		// Load datepicker for announcement
-		$('#ann-date .input-append.date').datepicker({
+		$('.input-append.date').datepicker({
 			orientation: "top auto",
-			format: "yyyy-mm-dd"
-		});
-
-		$('#ann-date2 .input-append.date').datepicker({
-			orientation: "top auto",
-			format: "yyyy-mm-dd"
-		});
-
-		$('#ann-date3 .input-append.date').datepicker({
-			orientation: "top auto",
-			format: "yyyy-mm-dd"
+			format: "yyyy-mm-dd",
+			language: "kunena"
 		});
 	}
 

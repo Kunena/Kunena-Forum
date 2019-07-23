@@ -67,20 +67,10 @@ jQuery(document).ready(function ($) {
 	});
 
 	if ($.fn.datepicker !== undefined) {
-		// Load datepicker for announcement
-		$('#ann-date .input-group.date').datepicker({
+		$('.input-append.date').datepicker({
 			orientation: "top auto",
-			format: "yyyy-mm-dd"
-		});
-
-		$('#ann-date2 .input-group.date').datepicker({
-			orientation: "top auto",
-			format: "yyyy-mm-dd"
-		});
-
-		$('#ann-date3 .input-group.date').datepicker({
-			orientation: "top auto",
-			format: "yyyy-mm-dd"
+			format: "yyyy-mm-dd",
+			language: "kunena"
 		});
 	}
 
@@ -90,7 +80,7 @@ jQuery(document).ready(function ($) {
 		clearcache.addClass('btn-success');
 		clearcache.html('<span class="glyphicon glyphicon-ok-sign"></span> ' + Joomla.JText._('COM_KUNENA_CLEARED'));
 	});
-	
+
 	$('#modaldeteleallsubmit').click(function() {
 		$('#adminForm').submit();
 	});

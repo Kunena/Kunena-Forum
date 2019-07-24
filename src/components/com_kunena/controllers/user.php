@@ -604,9 +604,9 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = $now->format('Y-m-d');
 		}
 
-		foreach ($user->socialButtons() as $social)
+		foreach ($user->socialButtons() as $key=>$social)
 		{
-			$user->$social = str_replace(' ', '', trim($input->$method->get($social, '', 'string')));
+			$user->$key = str_replace(' ', '', trim($input->$method->get($key, '', 'string')));
 		}
 
 		$user->birthdate        = $birthdate;

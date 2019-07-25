@@ -293,7 +293,7 @@ class KunenaUser extends CMSObject
 			$user = KunenaUserHelper::getMyself();
 		}
 
-		$input     = $this->app->input;
+		$input     = $this->_app->input;
 		$method    = $input->getInt('userid');
 		$kuser     = KunenaFactory::getUser($method);
 		$config    = KunenaConfig::getInstance();

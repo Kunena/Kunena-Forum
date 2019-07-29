@@ -212,29 +212,29 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		{
 			case 'posted' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=posted';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=posted');
 				break;
 			case 'started' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=started';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=started');
 				break;
 			case 'favorites' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=favorites';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=favorites');
 				$actions          = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions');
 				$actions          = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=plugin';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=plugin');
 				break;
 			default :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
-				$canonicalUrl     = 'index.php?option=com_kunena&view=topics&layout=user&mode=default';
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=default');
 		}
 
 		$doc = Factory::getDocument();
@@ -249,7 +249,6 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 					{
 						if ($value['relation'] == 'canonical')
 						{
-							$canonicalUrl               = KunenaRoute::_();
 							$doc->_links[$canonicalUrl] = $value;
 							unset($doc->_links[$key]);
 							break;

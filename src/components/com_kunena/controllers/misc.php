@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
 /**

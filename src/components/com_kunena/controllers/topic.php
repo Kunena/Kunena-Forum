@@ -1792,7 +1792,6 @@ class KunenaControllerTopic extends KunenaController
 		{
 			// Delete message
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
-			$topic   = $message->getTopic();
 			$log     = KunenaLog::LOG_POST_DESTROY;
 			$topic   = KunenaForumTopicHelper::get($target->getTopic());
 

@@ -230,7 +230,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=topics');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=topics');
 				break;
 			case 'sticky' :
 				if (!empty($title) && $pageheading)
@@ -242,7 +242,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=sticky');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=sticky');
 				break;
 			case 'locked' :
 				if (!empty($title) && $pageheading)
@@ -254,7 +254,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=locked');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=locked');
 				break;
 			case 'noreplies' :
 				if (!empty($title) && $pageheading)
@@ -266,7 +266,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=noreplies');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=noreplies');
 				break;
 			case 'unapproved' :
 				if (!empty($title) && $pageheading)
@@ -278,7 +278,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=unapproved');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=unapproved');
 				break;
 			case 'deleted' :
 				if (!empty($title) && $pageheading)
@@ -290,7 +290,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=deleted');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=deleted');
 				break;
 			case 'replies' :
 			default :
@@ -303,7 +303,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 					$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
 
-				$canonicalUrl = KunenaRoute::_('index .php?option=com_kunena&view=topics&mode=replies');
+				$canonicalUrl = KunenaRoute::_('index.php?option=com_kunena&view=topics&mode=replies');
 				break;
 		}
 

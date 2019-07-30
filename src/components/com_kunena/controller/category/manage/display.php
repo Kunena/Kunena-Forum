@@ -75,7 +75,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$header           = Text::_('COM_KUNENA_ADMIN');
 		$this->header     = $header;
 		$this->ktemplate  = KunenaFactory::getTemplate();
-		$this->document   = Factory::getDocument();
+		$doc   = Factory::getDocument();
 	}
 
 	/**

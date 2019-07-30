@@ -107,18 +107,6 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
-			<div class="float-right">
-				<?php /** TODO: New Feature - LABELS
-				 * <span class="label label-info">
-				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-				 * </span>    */ ?>
-				<?php if ($topic->locked != 0) : ?>
-					<span class="label label-warning">
-							<span data-toggle="tooltip"
-							      title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
-						</span>
-				<?php endif; ?>
-			</div>
 		</div>
 
 		<div class="float-left">

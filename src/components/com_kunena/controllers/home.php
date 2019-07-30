@@ -83,7 +83,7 @@ class KunenaControllerHome extends KunenaController
 			}
 
 			// Remove query variables coming from the home menu item
-			$this->app->input->get('defaultmenu', null);
+			$this->app->input->set('defaultmenu', null);
 
 			// Set active menu item to point the real page
 			$menu->setActive($default->id);

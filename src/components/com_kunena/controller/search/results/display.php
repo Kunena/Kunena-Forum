@@ -82,7 +82,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl               = 'index.php?option=com_kunena&view=search';
+						$canonicalUrl               = KunenaRoute::_('index.php?option=com_kunena&view=search');
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;

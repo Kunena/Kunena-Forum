@@ -111,7 +111,7 @@ foreach ($this->sections as $section) :
 									<h3>
 										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
 										<small class="nowrap" id="kcategory-count">
-											<?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?>
+											<span id="kcatcount"><?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?></span>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
 													<sup class="knewchar"> (<?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>

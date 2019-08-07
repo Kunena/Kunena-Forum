@@ -650,7 +650,7 @@ abstract class KunenaUserHelper
 
 		// Update banned state
 		$query = "UPDATE #__kunena_users AS u
-			LEFT JOIN (
+			INNER JOIN (
 				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";

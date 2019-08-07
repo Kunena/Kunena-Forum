@@ -216,8 +216,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->{'discussionUrl'}        = $this->topic->getPermaUrl();
 		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
+		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
+		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
 		$data->author                   = array();
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
@@ -229,6 +232,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp2->{'interactionType'}      = "InteractionCounter";
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
 		$data->interactionStatistic     = $tmp2;
+		$tmp3                           = new CMSObject;
+		$tmp3->{'@type'}                = "ImageObject";
+		$tmp3->{'url'}                  = $this->docImage();
+		$data->publisher                = array();
+		$tmp4                           = new CMSObject;
+		$tmp4->{'@type'}                = "Organization";
+		$tmp4->{'name'}                 = $this->config->board_title;
+		$tmp4->{'logo'}                 = $tmp3;
+		$data->publisher                = $tmp4;
+		$data->mainEntityOfPage         = array();
+		$tmp5                           = new CMSObject;
+		$tmp5->{'@type'}                = "WebPage";
+		$tmp5->{'name'}                 = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->mainEntityOfPage         = $tmp5;
 
 		if ($this->category->allow_ratings && $this->config->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
 		{

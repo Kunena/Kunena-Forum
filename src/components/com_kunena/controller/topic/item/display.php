@@ -218,6 +218,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$data->{'discussionUrl'}        = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
 		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
+		$data->{'datePublished'}        = Factory::getDate($topic->first_post_time)->toISO8601();
+		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
 		$data->author                   = array();
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
@@ -229,6 +231,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp2->{'interactionType'}      = "InteractionCounter";
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
 		$data->interactionStatistic     = $tmp2;
+		$tmp3                           = new CMSObject;
+		$tmp3->{'@type'}                = "ImageObject";
+		$tmp3->{'url'}                  = $this->docImage();
+		$data->publisher                = array();
+		$tmp4                           = new CMSObject;
+		$tmp4->{'@type'}                = "Organization";
+		$tmp4->{'name'}                 = $this->config->board_title;
+		$tmp4->{'logo'}                 = $tmp3;
+		$data->publisher                = $tmp4;
+		$data->mainEntityOfPage         = array();
+		$tmp5                           = new CMSObject;
+		$tmp5->{'@type'}                = "WebPage";
+		$tmp5->{'name'}                 = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->mainEntityOfPage         = $tmp5;
 
 		if ($this->category->allow_ratings && $this->config->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
 		{
@@ -509,12 +525,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 
 		$this->setMetaData('og:description', $first, 'property');
-		$this->setMetaData('og:image', $image, 'property');
+		$this->setMetaData('og:image', 'https://chiripas.com/images/social/chiripas.png', 'property');
 		$this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
 		$this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 		$this->setMetaData('twitter:card', 'summary', 'name');
 		$this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
-		$this->setMetaData('twitter:image', $image, 'property');
+		$this->setMetaData('twitter:image', 'https://chiripas.com/images/social/chiripas.png', 'property');
 		$this->setMetaData('twitter:description', $first);
 
 		$config = Factory::getConfig();

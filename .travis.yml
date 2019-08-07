@@ -2,6 +2,9 @@ language: php
 php:
 - "7.2"
 - "7.3"
+dist: xenial
+services:
+  - mysql
 addons:
   chrome: "stable"
   sonarcloud:
@@ -10,12 +13,6 @@ addons:
         secure: "5236152baa004029e309405ee0af8e30ac1add88"
       branches:
         - "K6.0"
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
 jdk:
   - oraclejdk12
 before_install:

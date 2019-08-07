@@ -43,7 +43,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			<?php
 			if ($this->ktemplate->params->get('labels') != 0)
 			{
-				echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+				echo $this->subLayout('Widget/Label')->set('topic', $topic)->setLayout('default');
 			}
 
 			if ($topic->unread)

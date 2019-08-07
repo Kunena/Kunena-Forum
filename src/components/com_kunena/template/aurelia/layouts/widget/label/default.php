@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 $this->ktemplate = KunenaFactory::getTemplate();
 $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
-$class           = ' class="' . ' label label-' . $icon->labeltype . '"';
+$class           = ' class="' . ' badge badge-' . $icon->labeltype . '"';
 
 if ($topicicontype == 'B3')
 {

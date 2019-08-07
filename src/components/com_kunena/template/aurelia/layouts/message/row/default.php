@@ -35,7 +35,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 		</th>
 	<?php else : ?>
 		<th scope="row" class="hidden-xs-down">
-			<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
+			<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
 		</th>
 	<?php endif; ?>
 	<td>
@@ -53,7 +53,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
+			    echo $this->getTopicLink($topic, $this->message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
 			}
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>

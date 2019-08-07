@@ -1071,7 +1071,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 
 		// Translate plain text "Quote:"
-		$this->default_tag_rules['quote']['plain_start'] = "\n" . Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE') . "\n";
+		$this->default_tag_rules['quote']['plain_start'] = Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE');
 	}
 
 	/**
@@ -1989,7 +1989,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html = '<blockquote class="Quote UserQuote">\n' . $user . '\n<div class="QuoteText">' . $wrote . $content . '</div>\n</blockquote><blockquote>';
+		$html = '<blockquote class="Quote UserQuote">' . $user . '<div class="QuoteText">' . $wrote . $content . '</div></blockquote><blockquote>';
 
 		return $html;
 	}

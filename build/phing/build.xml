@@ -143,7 +143,7 @@
 	<target name="build">
 		<echo message="Building Installer.." />
 		<!-- Move files needed by the installer -->
-		<copy file="pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
+		<copy file="src/pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 		<copy file="${project_dir}/install.php" todir="${build_dir}/distribution" overwrite="true">

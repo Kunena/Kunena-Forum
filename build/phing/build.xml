@@ -45,7 +45,7 @@
 		<not><isset property="base.directory" /></not>
 	</condition>
 
-	<xmlproperty file="pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+	<xmlproperty file="src/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 	<tstamp>
 		<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
 	</tstamp>

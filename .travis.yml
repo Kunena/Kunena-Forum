@@ -25,6 +25,6 @@ script:
   - cd ../
   - mv ./acceptance.suite.yml ./test-install/tests/Codeception/acceptance.suite.yml
   - cd test-install
-  - ./node_modules/.bin/selenium-standalone start
+  - ./node_modules/.bin/selenium-standalone start &
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install
   - ./libraries/vendor/bin/codecept run acceptance ./tests/Codeception/acceptance/install/kunenaCest

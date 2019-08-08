@@ -215,7 +215,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @see   KunenaLayout::getLastPostLink()
 	 * @since Kunena
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20, $follow = true, $canonical = false)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = false)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels  = $category->getChannels();
@@ -229,7 +229,15 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			if (KunenaConfig::getInstance()->disable_re)
+			{
+				$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			}
+			else
+			{
+				$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
+				$content .= KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			}
 		}
 
 		if ($title === null)

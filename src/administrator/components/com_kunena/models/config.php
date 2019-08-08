@@ -530,6 +530,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		// K6.0
 		$lists ['utm_source'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utm_source', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->utm_source);
 
+		$lists ['disable_re'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disable_re', 'class="inputbox" size="1"', 'value', 'text', $this->config->disable_re);
+
 		return $lists;
 	}
 }

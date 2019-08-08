@@ -1340,6 +1340,12 @@ class KunenaConfig extends CMSObject
 	public $autoembedinstagram = 1;
 
 	/**
+	 * @var integer
+	 * @since  K5.1.14
+	 */
+	public $disable_re = 0;
+
+	/**
 	 * @var    integer  Auto embed instagram; select, boolean
 	 * @since  1.0.5
 	 */

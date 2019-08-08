@@ -354,8 +354,15 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if (!$content)
 		{
-			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
-			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
+			if (KunenaConfig::getInstance()->disable_re)
+			{
+				$content = KunenaHtmlParser::parseText($lastTopic->subject, $length);
+			}
+			else
+			{
+				$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
+				$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
+			}
 		}
 
 		if ($title === null)

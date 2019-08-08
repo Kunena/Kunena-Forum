@@ -27,8 +27,8 @@ class KunenaAdminModelConfig extends KunenaModel
 {
 	/**
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getConfiglists()
 	{
@@ -516,17 +516,19 @@ class KunenaAdminModelConfig extends KunenaModel
 		$avatar_type[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_AVATAR_ICONTYPE'));
 		$lists ['avatar_type'] = HTMLHelper::_('select.genericlist', $avatar_type, 'cfg_avatar_type', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatar_type);
 
-		$lists ['sef_redirect']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef_redirect', 'class="inputbox" size="1"', 'value', 'text', $this->config->sef_redirect);
+		$lists ['sef_redirect'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef_redirect', 'class="inputbox" size="1"', 'value', 'text', $this->config->sef_redirect);
 
-		$user_edit_poll           = array();
-		$user_edit_poll[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW'));
-		$user_edit_poll[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW'));
+		$user_edit_poll   = array();
+		$user_edit_poll[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW'));
+		$user_edit_poll[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW'));
 
-		$lists ['allow_user_edit_poll']  = HTMLHelper::_('select.genericlist', $user_edit_poll, 'cfg_allow_edit_poll', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_edit_poll);
+		$lists ['allow_user_edit_poll'] = HTMLHelper::_('select.genericlist', $user_edit_poll, 'cfg_allow_edit_poll', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_edit_poll);
 
 		// K 5.1.2
-		$lists ['use_system_emails']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_use_system_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->use_system_emails);
-		$lists ['autoembedinstagram']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoembedinstagram', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedinstagram);
+		$lists ['use_system_emails']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_use_system_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->use_system_emails);
+		$lists ['autoembedinstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoembedinstagram', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedinstagram);
+
+		$lists ['disable_re'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disable_re', 'class="inputbox" size="1"', 'value', 'text', $this->config->disable_re);
 
 		return $lists;
 	}

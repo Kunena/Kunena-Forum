@@ -229,7 +229,15 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			if (KunenaConfig::getInstance()->disable_re)
+			{
+				$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			}
+			else
+			{
+				$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
+				$content .= KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+			}
 		}
 
 		if ($title === null)

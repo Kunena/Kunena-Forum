@@ -432,6 +432,11 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 														<td><?php echo $this->lists ['quickreply'] ?></td>
 														<td><?php echo Text::_('COM_KUNENA_A_QUICK_REPLY_DESC') ?></td>
 													</tr>
+													<tr <?php if ($this->config->disable_re != 0) : echo 'class="changed"'; endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_DISABLE_RE') ?></td>
+														<td><?php echo $this->lists ['disable_re'] ?></td>
+														<td><?php echo Text::_('COM_KUNENA_DISABLE_RE_DESC') ?></td>
+													</tr>
 													</tbody>
 												</table>
 											</fieldset>

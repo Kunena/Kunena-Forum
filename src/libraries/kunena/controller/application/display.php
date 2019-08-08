@@ -286,7 +286,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		if (!$limitstart)
 		{
-			$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel');
+			$uri = trim(strtok(KunenaRoute::_(), '?'));
+			$this->document->addHeadLink($uri, 'canonical', 'rel');
 		}
 
 		// Initialize breadcrumb.

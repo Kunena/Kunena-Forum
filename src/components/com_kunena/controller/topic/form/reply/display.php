@@ -90,7 +90,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			}
 		}
 
-		$doc->addHeadLink($this->topic->getUrl(), 'canonical');
+		$uri = trim(strtok($this->topic->getUrl(), '?'));
+		$doc->addHeadLink($uri, 'canonical');
 
 		$this->category = $this->topic->getCategory();
 

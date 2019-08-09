@@ -10,6 +10,6 @@ cache:
     - '$HOME/.sonar/cache'
 script:
 # Build
-- vendor/bin/phing -f build/phing/build.xml
+# vendor/bin/phing -f build/phing/build.xml
 # Disable tests for now mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 # Disable tests for now vendor/bin/robo run:tests --use-htaccess

@@ -5,9 +5,8 @@ php:
 - '7.1'
 addons:
   firefox: latest
-cache:
-  directories:
-    - '$HOME/.sonar/cache'
+before_script:
+  - composer install
 script:
 # Build
 # vendor/bin/phing -f build/phing/build.xml

@@ -5,6 +5,7 @@ src/components/com_kunena/site/template/crypsis/css/kunena.css
 src/components/com_kunena/template/crypsis/assets/js/markitup.editor.js
 src/components/com_kunena/template/crypsisb3/assets/js/markitup.editor.js
 src/components/com_kunena/template/blue_eagle5
+src/media/cache/*
 
 # Builds
 build/tmp

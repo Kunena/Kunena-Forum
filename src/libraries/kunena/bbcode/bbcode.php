@@ -1511,10 +1511,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		if ($layout->getPath())
 		{
 			return (string) $layout
-				->set('title', $title)
-				->set('hidden', $hidden)
-				->set('content', $content)
-				->set('params', $params);
+				->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
+				->set('hidden', htmlspecialchars($hidden, ENT_COMPAT, 'UTF-8'))
+				->set('content', htmlspecialchars($content, ENT_COMPAT, 'UTF-8'))
+				->set('params', htmlspecialchars($params, ENT_COMPAT, 'UTF-8'));
 		}
 	}
 

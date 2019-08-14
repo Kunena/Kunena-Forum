@@ -17,6 +17,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 if ($this->config->enableforumjump)
 {
@@ -43,6 +44,7 @@ if ($config->get('displayModule'))
 
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
+	$Itemid      = KunenaRoute::getCategoryItemid($section);
 
 	if ($config->get('displayModule'))
 	{
@@ -51,6 +53,9 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend shadow-lg rounded mt-4 border">
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 0) : ?>
+				<?php if ($this->me->isAdmin()) : ?>
+					<a class="btn btn-outline-primary border btn-sm" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid='. (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::edit(); ?></a>
+				<?php endif;?>
 				<button class="btn btn-outline-primary border btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"

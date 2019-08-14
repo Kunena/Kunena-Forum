@@ -13,9 +13,21 @@ use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Category/Manage');
 
+// Display breadcrumb path to the current category.
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents[] = $content->category;
+
+foreach ($parents as $parent)
+{
+	$this->addBreadcrumb(
+		$parent->displayField('name'),
+		$parent->getUri()
+	);
+}
+
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_CATEGORY_MANAGE'),
-	'index.php?option=com_kunena&view=category&layout=manage'
+	Text::_('COM_KUNENA_EDIT'),
+	$parent->getUri()
 );
 
 echo $content;

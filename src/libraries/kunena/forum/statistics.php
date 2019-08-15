@@ -595,7 +595,7 @@ class KunenaForumStatistics
 		if ($this->topThanks < $limit)
 		{
 			$query = $this->_db->getQuery(true);
-			$query->select($this->_db->quoteName(array('t.targetuserid'), array('id')))
+			$query->select(array('t.targetuserid'), array('id'))
 				->select('COUNT(' . $this->_db->quoteName('t.targetuserid') . ') AS ' . $this->_db->quoteName('count'))
 				->from($this->_db->quoteName(array('#__kunena_thankyou'), array('t')))
 				->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'))

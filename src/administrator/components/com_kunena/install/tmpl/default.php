@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Installer
  * @subpackage      Template
  *
@@ -10,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -17,6 +19,30 @@ use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('bootstrap.framework');
 HTMLHelper::_('jquery.framework');
+
+$document = Factory::getDocument();
+$document->addScriptDeclaration(
+	'
+	jQuery(document).ready(function ($) {
+	jQuery(\'#kunena-toggle\')
+        .click(function (e) {
+          jQuery(\'#kunena-container\')
+            .toggleClass(\'hidden\');
+          e.preventDefault();
+        });
+      jQuery(\'#kunena-component\')
+        .click(function (e) {
+          window.location.href = "' . Route::_('index.php?option=com_kunena', false) . '";
+          e.preventDefault();
+        });
+      jQuery(\'#kunena-installer\')
+        .click(function (e) {
+          window.location.href = \'#Close\';
+          e.preventDefault();
+        });
+      window.kunenainstall();
+	});
+');
 ?>
 <div id="kunena" style="max-width:530px;">
 	<div id="kunena-install">
@@ -48,7 +74,8 @@ HTMLHelper::_('jquery.framework');
 </div>
 <script>
 	window.kunenaAddItems = function (log) {
-		jQuery('#kunena-details').html(log);
+		jQuery('#kunena-details')
+			.html(log);
 	};
 	window.kunenainstall = function () {
 		var kunenaInstall = jQuery('#kunena-install');
@@ -65,7 +92,8 @@ HTMLHelper::_('jquery.framework');
 			error: function (xhr, ajaxOptions, thrownError) {
 				kunenaInstall.html('<h2><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
 				kunenaProgress.addClass('bar-danger');
-				jQuery('#kunena-installer').show();
+				jQuery('#kunena-installer')
+					.show();
 			},
 			beforeSend: function () {
 				kunenaProgress.css('width', '1%');
@@ -86,38 +114,30 @@ HTMLHelper::_('jquery.framework');
 						window.kunenainstall();
 						return;
 					} else {
-						kunenaInstall.find('h2').text('<?php echo Text::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
-						kunenaProgress.parent().removeClass('active');
+						kunenaInstall.find('h2')
+							.text('<?php echo Text::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
+						kunenaProgress.parent()
+							.removeClass('active');
 						kunenaProgress.addClass('bar-success');
-						jQuery('#kunena-component').addClass('btn-outline-success');
+						jQuery('#kunena-component')
+							.addClass('btn-outline-success');
 						window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
 					}
-					jQuery('.kunena-close').removeAttr('disabled');
+					jQuery('.kunena-close')
+						.removeAttr('disabled');
 				} else {
-					kunenaProgress.parent().removeClass('active');
-					kunenaInstall.find('h2').text('<?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
+					kunenaProgress.parent()
+						.removeClass('active');
+					kunenaInstall.find('h2')
+						.text('<?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
 					kunenaDescription.html(json.error);
 					kunenaProgress.addClass('bar-danger');
-					jQuery('#kunena-installer').removeAttr('disabled');
-					jQuery('#kunena-container').removeClass('hidden');
+					jQuery('#kunena-installer')
+						.removeAttr('disabled');
+					jQuery('#kunena-container')
+						.removeClass('hidden');
 				}
 			}
 		});
 	};
-
-	jQuery(document).ready(function () {
-		jQuery('#kunena-toggle').click(function (e) {
-			jQuery('#kunena-container').toggleClass('hidden');
-			e.preventDefault();
-		});
-		jQuery('#kunena-component').click(function (e) {
-			window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
-			e.preventDefault();
-		});
-		jQuery('#kunena-installer').click(function (e) {
-			window.location.href = '#Close';
-			e.preventDefault();
-		});
-		window.kunenainstall();
-	});
 </script>

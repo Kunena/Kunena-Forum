@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\Database\QueryInterface;
+
 /**
  * Class KunenaLogFinder
  *
@@ -130,12 +132,12 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return void
 	 * @since Kunena 5.0
 	 */
-	protected function build(JDatabaseQuery $query)
+	protected function build(QueryInterface $query)
 	{
 	}
 }

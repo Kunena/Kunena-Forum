@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\QueryInterface;
 
 /**
  * Abstract Table Object class
@@ -634,12 +635,12 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 *
-	 * @param   JDatabaseQuery $query query
+	 * @param   QueryInterface $query query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	public static function &loadInstances(JDatabaseQuery $query)
+	public static function &loadInstances(QueryInterface $query)
 	{
 		$db = Factory::getDbo();
 		$db->setQuery($query);

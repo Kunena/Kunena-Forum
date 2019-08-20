@@ -11,6 +11,7 @@
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\QueryInterface;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -233,12 +234,12 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param   JDatabaseQuery  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return void
 	 * @since Kunena
 	 */
-	protected function build(JDatabaseQuery $query)
+	protected function build(QueryInterface $query = null)
 	{
 	}
 

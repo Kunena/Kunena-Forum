@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaForumMessageFinder
@@ -216,12 +217,12 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   JDatabaseQuery $query query
+	 * @param   QueryInterface $query query
 	 *
 	 * @since Kunena
 	 * @return void
 	 */
-	protected function build(JDatabaseQuery $query)
+	protected function build(QueryInterface $query)
 	{
 		if (!empty($this->hold))
 		{

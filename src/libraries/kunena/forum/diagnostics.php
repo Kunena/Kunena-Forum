@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
-use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class KunenaForumDiagnostics
@@ -293,12 +292,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields(Joomla\Database\QueryInterface $query = null)
+	protected static function fields(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -309,7 +308,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_categoryOrphaned()
@@ -320,7 +319,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryOrphaned()
@@ -334,12 +333,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_categoryOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -350,7 +349,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryMissingAlias()
@@ -392,12 +391,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryMissingAlias(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_categoryMissingAlias(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -408,7 +407,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_categoryWrongAlias()
@@ -422,12 +421,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_categoryWrongAlias(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_categoryWrongAlias(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -438,7 +437,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_aliasMissingCategory()
@@ -449,7 +448,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_aliasMissingCategory()
@@ -463,12 +462,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_aliasMissingCategory(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_aliasMissingCategory(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -479,7 +478,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageBodyMissingMessage()
@@ -490,7 +489,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageBodyMissingMessage()
@@ -504,12 +503,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageBodyMissingMessage(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_messageBodyMissingMessage(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -520,7 +519,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageMissingMessageBody()
@@ -531,7 +530,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageMissingMessageBody()
@@ -545,12 +544,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageMissingMessageBody(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_messageMissingMessageBody(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -561,12 +560,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicInSection(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_topicInSection(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -577,7 +576,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicInSection()
@@ -588,7 +587,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicInSection()
@@ -602,12 +601,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingCategory(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_topicMissingCategory(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -618,7 +617,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingCategory()
@@ -629,7 +628,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingCategory()
@@ -643,7 +642,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingMessages()
@@ -654,7 +653,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingMessages()
@@ -668,12 +667,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingMessages(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_topicMissingMessages(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -684,7 +683,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicMissingPoll()
@@ -695,7 +694,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicMissingPoll()
@@ -709,12 +708,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicMissingPoll(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_topicMissingPoll(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -725,7 +724,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_topicPollMismatch()
@@ -736,7 +735,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_topicPollMismatch()
@@ -750,12 +749,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_topicPollMismatch(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_topicPollMismatch(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -766,7 +765,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_movedMissingTopic()
@@ -777,7 +776,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_movedMissingTopic()
@@ -791,12 +790,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_movedMissingTopic(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_movedMissingTopic(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -807,7 +806,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_movedAndMessages()
@@ -818,7 +817,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_movedAndMessages()
@@ -832,12 +831,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_movedAndMessages(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_movedAndMessages(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -848,7 +847,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_messageWrongCategory()
@@ -859,7 +858,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageWrongCategory()
@@ -873,12 +872,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageWrongCategory(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_messageWrongCategory(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -889,7 +888,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_messageOrphaned()
@@ -900,7 +899,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_messageOrphaned()
@@ -914,12 +913,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_messageOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_messageOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -930,7 +929,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_attachmentOrphaned()
@@ -941,7 +940,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_attachmentOrphaned()
@@ -955,12 +954,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_attachmentOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_attachmentOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -971,7 +970,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollOrphaned()
@@ -982,7 +981,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollOrphaned()
@@ -996,12 +995,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_pollOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1012,7 +1011,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollTopicMismatch()
@@ -1023,7 +1022,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollTopicMismatch()
@@ -1037,12 +1036,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollTopicMismatch(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_pollTopicMismatch(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1053,7 +1052,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollOptionOrphaned()
@@ -1064,7 +1063,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollOptionOrphaned()
@@ -1078,12 +1077,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollOptionOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_pollOptionOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1094,7 +1093,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_pollUserOrphaned()
@@ -1105,7 +1104,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_pollUserOrphaned()
@@ -1119,12 +1118,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_pollUserOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_pollUserOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1135,7 +1134,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_thankyouOrphaned()
@@ -1146,7 +1145,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_thankyouOrphaned()
@@ -1160,12 +1159,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_thankyouOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_thankyouOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1176,7 +1175,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userCategoryOrphaned()
@@ -1187,7 +1186,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userCategoryOrphaned()
@@ -1201,12 +1200,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userCategoryOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_userCategoryOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1217,7 +1216,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userReadOrphaned()
@@ -1228,7 +1227,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userReadOrphaned()
@@ -1242,12 +1241,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userReadOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_userReadOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1258,7 +1257,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_userReadWrongCategory()
@@ -1269,7 +1268,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userReadWrongCategory()
@@ -1283,12 +1282,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userReadWrongCategory(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_userReadWrongCategory(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1299,7 +1298,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_userTopicOrphaned()
@@ -1310,7 +1309,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userTopicOrphaned()
@@ -1324,12 +1323,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userTopicOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_userTopicOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1340,7 +1339,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_userTopicWrongCategory()
@@ -1351,7 +1350,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_userTopicWrongCategory()
@@ -1365,12 +1364,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_userTopicWrongCategory(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_userTopicWrongCategory(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1381,7 +1380,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function delete_ratingOrphaned()
@@ -1392,7 +1391,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_ratingOrphaned()
@@ -1407,12 +1406,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_ratingOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_ratingOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1423,7 +1422,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_channelOrphaned()
@@ -1434,7 +1433,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_channelOrphaned()
@@ -1448,12 +1447,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_channelOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_channelOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1464,7 +1463,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_ownerOrphaned()
@@ -1478,7 +1477,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_ownerOrphaned()
@@ -1489,12 +1488,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_ownerOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_ownerOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{
@@ -1505,7 +1504,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function fix_useravatarOrphaned()
@@ -1516,7 +1515,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @return Joomla\Database\QueryInterface
+	 * @return QueryInterface
 	 * @since Kunena
 	 */
 	protected static function query_useravatarOrphaned()
@@ -1530,12 +1529,12 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param   Joomla\Database\QueryInterface  $query  query
+	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
 	 * @since Kunena
 	 */
-	protected static function fields_useravatarOrphaned(Joomla\Database\QueryInterface $query = null)
+	protected static function fields_useravatarOrphaned(QueryInterface $query = null)
 	{
 		if ($query)
 		{

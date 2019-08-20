@@ -222,7 +222,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @since Kunena
 	 * @return void
 	 */
-	protected function build(QueryInterface $query)
+	protected function build(QueryInterface $query = null)
 	{
 		if (!empty($this->hold))
 		{

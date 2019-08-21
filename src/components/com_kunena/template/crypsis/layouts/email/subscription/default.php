@@ -249,7 +249,9 @@ if (!$config->plain_email) :
 {$msg1} {$config->board_title}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
+
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
+
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
 URL: {$this->messageLink}

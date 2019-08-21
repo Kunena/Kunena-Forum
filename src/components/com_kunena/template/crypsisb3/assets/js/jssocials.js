@@ -465,13 +465,6 @@
 			}
 		},
 
-		googleplus: {
-			label: "+1",
-			logo: "fa fa-google",
-			shareUrl: "https://plus.google.com/share?url={url}",
-			countUrl: ""
-		},
-
 		linkedin: {
 			label: "Share",
 			logo: "fa fa-linkedin",

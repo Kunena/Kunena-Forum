@@ -393,7 +393,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 			/*
 			// FIXME:
 			if (isset($active->language) && $active->language != '*') {
-				$language = Factory::getDocument()->getLanguage();
+				$language = Factory::getApplication()->getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
 					$route = KunenaRoute::_(null, false);
 					Log::add("Language redirect from ".Uri::getInstance()->toString(array('path', 'query'))." to {$route}", Log::DEBUG, 'kunena');

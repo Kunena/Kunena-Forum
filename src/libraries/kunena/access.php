@@ -282,6 +282,7 @@ class KunenaAccess
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAccessTypesList($category)
 	{
@@ -290,7 +291,7 @@ class KunenaAccess
 		if (!$enabled)
 		{
 			$enabled = true;
-			Factory::getDocument()->addScriptDeclaration(
+			Factory::getApplication()->getDocument()->addScriptDeclaration(
 				"function kShowAccessType(htmlclass, el) {
 	var selectedvalue = el.find(\":selected\").val();
 	

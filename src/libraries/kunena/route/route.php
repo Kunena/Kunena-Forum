@@ -422,7 +422,7 @@ abstract class KunenaRoute
 		if (self::$search === false)
 		{
 			$user         = KunenaUserHelper::getMyself();
-			$language     = strtolower(Factory::getDocument()->getLanguage());
+			$language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
 			self::$search = false;
 
 			if (KunenaConfig::getInstance()->get('cache_mid'))

@@ -117,7 +117,7 @@ class KunenaModelTopics extends KunenaModel
 		}
 		else
 		{
-			if (Factory::getDocument()->getType() != 'feed')
+			if (Factory::getApplication()->getDocument()->getType() != 'feed')
 			{
 				// Get configuration from menu item.
 				$latestcategory    = $params->get('topics_categories', '');
@@ -170,7 +170,7 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.categories.in', $latestcategory_in);
 
 		// Selection time.
-		if (Factory::getDocument()->getType() != 'feed')
+		if (Factory::getApplication()->getDocument()->getType() != 'feed')
 		{
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)

@@ -367,7 +367,7 @@ class KunenaTemplate extends CMSObject
 			return;
 		}
 
-		return Factory::getDocument()->addScriptDeclaration($content, $type);
+		return Factory::getApplication()->getDocument()->addScriptDeclaration($content, $type);
 	}
 
 	/**
@@ -917,7 +917,7 @@ HTML;
 			return;
 		}
 
-		return Factory::getDocument()->addStyleDeclaration($style);
+		return Factory::getApplication()->getDocument()->addStyleDeclaration($style);
 	}
 
 	/**
@@ -934,7 +934,7 @@ HTML;
 		$stylelink = "<!--[if {$condition}]>\n";
 		$stylelink .= '<link rel="stylesheet" href="' . $url . '" />' . "\n";
 		$stylelink .= "<![endif]-->\n";
-		Factory::getDocument()->addCustomTag($stylelink);
+		Factory::getApplication()->getDocument()->addCustomTag($stylelink);
 	}
 
 	/**
@@ -1071,7 +1071,7 @@ HTML;
 			return;
 		}
 
-		return Factory::getDocument()->addScriptOptions($key, $options, $merge);
+		return Factory::getApplication()->getDocument()->addScriptOptions($key, $options, $merge);
 	}
 
 	/**

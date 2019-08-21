@@ -435,6 +435,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
+		if ($this->app->isClient('site'))
+		{
+			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+		}
+
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -587,7 +592,15 @@ class KunenaAdminControllerCategories extends KunenaController
 	public function save()
 	{
 		$this->_save();
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		if ($this->app->isClient('administrator'))
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+		else
+		{
+			$post_catid = $this->app->input->post->get('catid', '', 'raw');
+			$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $post_catid));
+		}
 	}
 
 	/**

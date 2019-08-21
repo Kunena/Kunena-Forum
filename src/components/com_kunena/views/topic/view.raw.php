@@ -189,7 +189,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayGetrate()
 	{
-		$user = Factory::getUser();
+		$user = Factory::getApplication()->getIdentity();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();

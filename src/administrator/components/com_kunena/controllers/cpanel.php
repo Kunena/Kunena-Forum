@@ -57,7 +57,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	{
 		$updateInfo = null;
 
-		if (KunenaForum::installed() && Factory::getUser()->authorise('core.manage', 'com_installer'))
+		if (KunenaForum::installed() && Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
 			$db         = Factory::getDbo();

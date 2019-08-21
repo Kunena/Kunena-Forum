@@ -543,7 +543,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$users = KunenaUserHelper::loadUsers($cid);
 
-		$my        = Factory::getUser();
+		$my        = Factory::getApplication()->getIdentity();
 		$usernames = array();
 
 		foreach ($users as $user)

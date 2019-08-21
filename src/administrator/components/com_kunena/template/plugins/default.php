@@ -17,7 +17,7 @@ HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 
-$user = Factory::getUser();
+$user = Factory::getApplication()->getIdentity();
 
 ?>
 

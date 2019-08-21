@@ -70,7 +70,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$config = KunenaConfig::getInstance();
 
-		if (!$config->userlist_allowed && Factory::getUser()->guest)
+		if (!$config->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}

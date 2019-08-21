@@ -65,7 +65,7 @@ class KunenaModelSearch extends KunenaModel
 		$value = Factory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);
 
-		if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
+		if (!$this->config->pubprofile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubprofile)
 		{
 			$value = Factory::getApplication()->input->getInt('exactname', 0);
 			$this->setState('query.exactname', $value);
@@ -195,7 +195,7 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
+		if (!$this->config->pubprofile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubprofile)
 		{
 			// User searching
 			$username = $this->getState('query.searchuser');

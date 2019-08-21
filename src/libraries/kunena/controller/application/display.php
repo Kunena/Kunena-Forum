@@ -120,7 +120,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$banned = KunenaUserHelper::getMyself()->isBanned();
 				$userid = $this->input->getInt('userid');
 
-				if (Factory::getUser()->guest && KunenaUserHelper::get($userid)->exists())
+				if (Factory::getApplication()->getIdentity()->guest && KunenaUserHelper::get($userid)->exists())
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');

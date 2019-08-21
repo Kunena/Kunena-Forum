@@ -115,7 +115,7 @@ class KunenaUserBan extends CMSObject
 
 		if (self::$_my === null)
 		{
-			self::$_my = Factory::getUser();
+			self::$_my = Factory::getApplication()->getIdentity();
 		}
 
 		// Always load the data -- if item does not exist: fill empty data
@@ -734,7 +734,7 @@ class KunenaUserBan extends CMSObject
 
 			if (!$this->created_by)
 			{
-				$my               = Factory::getUser();
+				$my               = Factory::getApplication()->getIdentity();
 				$this->created_by = $my->id;
 			}
 		}

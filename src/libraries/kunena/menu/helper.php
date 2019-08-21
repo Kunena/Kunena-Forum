@@ -49,7 +49,7 @@ abstract class KunenaMenuHelper
 
 		// Get active menu item
 		$base   = self::getBase($params);
-		$user   = Factory::getUser();
+		$user   = Factory::getApplication()->getIdentity();
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
 		$key   = 'menu_items' . $params . implode(',', $levels) . '.' . $base->id;

@@ -156,7 +156,7 @@ abstract class JHtmlKunenaGrid
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
-		$userid = Factory::getUser()->get('id');
+		$userid = Factory::getApplication()->getIdentity()->get('id');
 
 		if ($row instanceof Joomla\CMS\Table\Table)
 		{

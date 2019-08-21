@@ -159,7 +159,7 @@ class KunenaSession extends CMSObject
 	{
 		if (!self::$_instance)
 		{
-			$my              = Factory::getUser();
+			$my              = Factory::getApplication()->getIdentity();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 
 			if ($update)

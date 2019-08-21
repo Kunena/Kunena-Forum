@@ -48,7 +48,7 @@ function installSampleData()
 
 	$db       = Factory::getDBO();
 	$posttime = new Joomla\CMS\Date\Date;
-	$my       = Factory::getUser();
+	$my       = Factory::getApplication()->getIdentity();
 	$queries  = array();
 
 	$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES

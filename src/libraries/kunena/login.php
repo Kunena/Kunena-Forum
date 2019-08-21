@@ -261,7 +261,7 @@ class KunenaLogin
 		// Do we need to get the User ID?
 		if (empty($userId))
 		{
-			$userId = Factory::getUser()->id;
+			$userId = Factory::getApplication()->getIdentity()->id;
 		}
 
 		// Has this user turned on TFA on their account?

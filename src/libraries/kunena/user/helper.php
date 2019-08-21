@@ -88,7 +88,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function initialize()
 	{
-		$id        = Factory::getUser()->id;
+		$id        = Factory::getApplication()->getIdentity()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser($id);
 
 		// Initialize avatar if configured.

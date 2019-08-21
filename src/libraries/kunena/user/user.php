@@ -887,7 +887,7 @@ class KunenaUser extends CMSObject
 		$isnew = !$this->_exists;
 
 		$moderator = KunenaUserHelper::getMyself()->isModerator();
-		$my        = Factory::getUser();
+		$my        = Factory::getApplication()->getIdentity();
 
 		if (!$moderator)
 		{
@@ -2009,7 +2009,7 @@ class KunenaUser extends CMSObject
 				$class = $class . ' ' . KunenaTemplate::getInstance()->tooltips();
 			}
 
-			if ($this->userid == Factory::getUser()->id && $avatarLink)
+			if ($this->userid == Factory::getApplication()->getIdentity()->id && $avatarLink)
 			{
 				$link = KunenaFactory::getProfile()->getEditProfileURL($this->userid);
 			}

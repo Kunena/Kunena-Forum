@@ -130,7 +130,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 		{
 			$this->banHistory = KunenaUserBan::getUserHistory($this->message->userid);
 
-			$this->me = KunenaFactory::getUser();
+			$this->me = KunenaFactory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
 			$db    = Factory::getDbo();
@@ -154,7 +154,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$this->banInfo = KunenaUserBan::getInstanceByUserid(Factory::getUser()->id, true);
+		$this->banInfo = KunenaUserBan::getInstanceByUserid(Factory::getApplication()->getIdentity()->id, true);
 	}
 
 	/**

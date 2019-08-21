@@ -99,7 +99,7 @@ class KunenaProfile
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
+		$my     = Factory::getApplication()->getIdentity();
 
 		if ($config->statslink_allowed == 0 && $my->id == 0)
 		{

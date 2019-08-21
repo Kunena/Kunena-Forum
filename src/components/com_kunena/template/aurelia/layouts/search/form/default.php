@@ -76,7 +76,7 @@ $this->addScript('assets/js/search.js');
 					</div>
 				</fieldset>
 
-				<?php if (!$this->config->pubprofile && !Factory::getUser()->guest || $this->config->pubprofile)
+				<?php if (!$this->config->pubprofile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubprofile)
 					:
 					?>
 					<fieldset class="col-md-6">

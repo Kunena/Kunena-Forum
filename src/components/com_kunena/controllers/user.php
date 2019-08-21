@@ -80,7 +80,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (!KunenaFactory::getConfig()->userlist_allowed && Factory::getUser()->guest)
+			if (!KunenaFactory::getConfig()->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
 			{
 				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
@@ -281,7 +281,7 @@ class KunenaControllerUser extends KunenaController
 
 		// Check permission
 		$moderator = KunenaUserHelper::getMyself()->isModerator();
-		$my        = Factory::getUser();
+		$my        = Factory::getApplication()->getIdentity();
 
 		if (!$moderator)
 		{
@@ -299,7 +299,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$userid)
 		{
-			$this->user = Factory::getUser();
+			$this->user = Factory::getApplication()->getIdentity();
 		}
 		else
 		{
@@ -873,7 +873,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function cancel()
 	{
-		$user = KunenaFactory::getUser();
+		$user = KunenaFactory::getApplication()->getIdentity();
 		$this->setRedirect($user->getUrl(false));
 	}
 
@@ -884,7 +884,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function login()
 	{
-		if (!Factory::getUser()->guest || !Session::checkToken('post'))
+		if (!Factory::getApplication()->getIdentity()->guest || !Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -934,7 +934,7 @@ class KunenaControllerUser extends KunenaController
 
 		$login = KunenaLogin::getInstance();
 
-		if (!Factory::getUser()->guest)
+		if (!Factory::getApplication()->getIdentity()->guest)
 		{
 			$login->logoutUser();
 		}

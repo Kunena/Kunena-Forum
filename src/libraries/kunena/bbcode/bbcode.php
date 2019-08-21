@@ -1541,7 +1541,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$me = KunenaUserHelper::getMyself();
 
-		if (!Factory::getUser()->guest)
+		if (!Factory::getApplication()->getIdentity()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hide');
 
@@ -1833,7 +1833,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$articleid = intval($content);
 
 		$config = KunenaFactory::getConfig();
-		$user   = Factory::getUser();
+		$user   = Factory::getApplication()->getIdentity();
 		$site   = Factory::getApplication('site');
 
 		$db    = Factory::getDBO();
@@ -2463,7 +2463,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			if ($attachment->isImage())
 			{
-				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
 				if (!$hide)
 				{
@@ -2472,7 +2472,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 			elseif ($attachment->isVideo())
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
 				if (!$hide)
 				{
@@ -2481,7 +2481,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 			else
 			{
-				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getUser()->id == 0;
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
 				if (!$hide)
 				{
@@ -2617,7 +2617,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			->set('size', 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (Factory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
+		if (Factory::getApplication()->getIdentity()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
 		{
 			// Hide between content from non registered users
 			return (string) $layout
@@ -2707,7 +2707,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)
+		if (Factory::getApplication()->getIdentity()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
 			return (string) $layout->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');

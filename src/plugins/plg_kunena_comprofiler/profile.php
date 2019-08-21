@@ -80,7 +80,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		global $_CB_framework;
 
 		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
+		$my     = Factory::getApplication()->getIdentity();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{

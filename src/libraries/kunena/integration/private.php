@@ -69,7 +69,7 @@ class KunenaPrivate
 	 */
 	public function showIcon($userid)
 	{
-		$my = Factory::getUser();
+		$my = Factory::getApplication()->getIdentity();
 
 		// Don't send messages from/to anonymous and to yourself
 		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
@@ -147,7 +147,7 @@ class KunenaPrivate
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
 	{
-		$my      = Factory::getUser();
+		$my      = Factory::getApplication()->getIdentity();
 		$url     = $this->getURL($userid);
 		$onclick = $this->getOnClick($userid);
 

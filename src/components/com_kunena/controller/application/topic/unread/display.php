@@ -69,7 +69,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 */
 	protected function prepareDocument()
 	{
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
 	}
 }

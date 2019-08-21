@@ -25,7 +25,7 @@ class KunenaAdminTemplate
 	 */
 	public function initialize()
 	{
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/layout.css');
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}

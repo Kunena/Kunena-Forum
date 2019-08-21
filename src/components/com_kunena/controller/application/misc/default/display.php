@@ -44,7 +44,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$doc             = Factory::getDocument();
+		$doc             = Factory::getApplication()->getDocument();
 		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 

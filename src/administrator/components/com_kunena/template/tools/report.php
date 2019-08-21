@@ -14,7 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
 	"
 jQuery(document).ready(function ($) {

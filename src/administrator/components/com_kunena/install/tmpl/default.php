@@ -20,7 +20,7 @@ use Joomla\CMS\Session\Session;
 HTMLHelper::_('bootstrap.framework');
 HTMLHelper::_('jquery.framework');
 
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
 	'
 	jQuery(document).ready(function ($) {

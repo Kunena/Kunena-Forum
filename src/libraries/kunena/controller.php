@@ -343,7 +343,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Get the document object.
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName   = Factory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');

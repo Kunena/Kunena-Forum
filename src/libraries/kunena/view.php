@@ -83,7 +83,7 @@ class KunenaView extends HtmlView
 	public function __construct($config = array())
 	{
 		$name           = isset($config['name']) ? $config['name'] : $this->getName();
-		$this->document = Factory::getDocument();
+		$this->document = Factory::getApplication()->getDocument();
 		$this->document->setBase('');
 		$this->profiler  = KunenaProfiler::instance('Kunena');
 		$this->app       = Factory::getApplication();
@@ -367,7 +367,7 @@ class KunenaView extends HtmlView
 	public function getModulePosition($position)
 	{
 		$html     = '';
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 
 		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{
@@ -389,7 +389,7 @@ class KunenaView extends HtmlView
 	 */
 	public function isModulePosition($position)
 	{
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 
 		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}

@@ -236,7 +236,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = Factory::getDocument();
+		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 

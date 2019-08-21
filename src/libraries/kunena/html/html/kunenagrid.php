@@ -101,7 +101,7 @@ abstract class JHtmlKunenaGrid
 		});';
 
 			// Add the behavior to the document head.
-			$document = Factory::getDocument();
+			$document = Factory::getApplication()->getDocument();
 			$document->addScriptDeclaration($js);
 
 			$loaded = true;

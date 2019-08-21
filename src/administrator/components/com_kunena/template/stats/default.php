@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 $document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
 if (Factory::getLanguage()->isRTL())

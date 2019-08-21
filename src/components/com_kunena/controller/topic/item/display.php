@@ -169,7 +169,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			->find();
 
 		$this->prepareMessages($mesid);
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		if ($this->topic->unread)
 		{
@@ -465,7 +465,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$image = '';
-		$doc   = Factory::getDocument();
+		$doc   = Factory::getApplication()->getDocument();
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'article', 'property');
 		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');

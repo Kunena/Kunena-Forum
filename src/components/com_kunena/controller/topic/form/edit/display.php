@@ -86,7 +86,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		foreach ($doc->_links as $key => $value)

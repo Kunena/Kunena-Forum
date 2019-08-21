@@ -238,7 +238,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				$canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=default');
 		}
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		if (!$start)
 		{

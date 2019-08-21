@@ -187,7 +187,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
-		$doc  = Factory::getDocument();
+		$doc  = Factory::getApplication()->getDocument();
 		$page = $this->pagination->pagesCurrent;
 
 		if ($page > 1)
@@ -230,7 +230,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$categorydesc = $this->category->description;
 
 		$menu_item = $this->app->getMenu()->getActive();
-		$doc       = Factory::getDocument();
+		$doc       = Factory::getApplication()->getDocument();
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
 

@@ -1493,7 +1493,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return '[' . ($default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER')) . ']';
 		}
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
 		$hidden   = ($document instanceof Joomla\CMS\Document\HtmlDocument);
 
@@ -1679,7 +1679,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 
 		// Display only link in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))

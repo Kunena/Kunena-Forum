@@ -20,7 +20,7 @@ HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 HTMLHelper::_('behavior.tabstate');
 
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxsig . '
 jQuery(function($) {

@@ -88,7 +88,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 				return (string) KunenaLayout::factory('Empty');
 			}
 
-			$document = Factory::getDocument();
+			$document = Factory::getApplication()->getDocument();
 			$document->setTitle($e->getResponseStatus());
 			Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			Factory::getApplication()->sendHeaders();
@@ -104,7 +104,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 
 			$title    = '500 Internal Server Error';
-			$document = Factory::getDocument();
+			$document = Factory::getApplication()->getDocument();
 			$document->setTitle($title);
 			Factory::getApplication()->setHeader('Status', $title, true);
 			Factory::getApplication()->sendHeaders();
@@ -175,7 +175,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		if ($this->primary)
 		{
-			$this->document = Factory::getDocument();
+			$this->document = Factory::getApplication()->getDocument();
 		}
 	}
 

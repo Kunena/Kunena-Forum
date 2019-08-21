@@ -17,7 +17,7 @@ $content = $this->execute('User/Edit');
 
 $avatartab = $this->input->getInt('avatartab');
 
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 $document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
 

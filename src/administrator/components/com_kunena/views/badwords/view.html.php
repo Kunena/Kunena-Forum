@@ -33,7 +33,7 @@ class KunenaAdminViewBadwords extends KunenaView
 		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_A_BADWORDS_MANAGER'));
 
 		$this->setToolbar();

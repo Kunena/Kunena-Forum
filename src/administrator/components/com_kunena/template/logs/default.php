@@ -249,7 +249,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								$topic    = KunenaForumTopicHelper::get($item->topic_id);
 								$target   = KunenaUserHelper::get($item->target_user);
 
-								$document = Factory::getDocument();
+								$document = Factory::getApplication()->getDocument();
 								// TODO : move this part of javascript outside of foreach
 								$document->addScriptDeclaration("jQuery( document ).ready(function() {
 										jQuery('#link_sel_all" . $item->id . "').click(function() {

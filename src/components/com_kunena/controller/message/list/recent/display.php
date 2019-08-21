@@ -136,7 +136,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		if (!$start)
 		{

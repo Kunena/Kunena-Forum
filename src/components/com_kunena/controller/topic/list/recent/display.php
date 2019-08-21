@@ -159,7 +159,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		$page = $this->pagination->pagesCurrent;
 
@@ -307,7 +307,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				break;
 		}
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{

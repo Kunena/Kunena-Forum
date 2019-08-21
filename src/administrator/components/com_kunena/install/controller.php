@@ -125,7 +125,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			$view->addTemplatePath(__DIR__ . '/tmpl');
 			$view->setModel($this->model, true);
 			$view->setLayout(Factory::getApplication()->input->getWord('layout', 'default'));
-			$view->document = Factory::getDocument();
+			$view->document = Factory::getApplication()->getDocument();
 			$view->display();
 
 			// Display Toolbar. View must have setToolBar method

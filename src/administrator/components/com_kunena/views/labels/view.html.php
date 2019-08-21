@@ -33,7 +33,7 @@ class KunenaAdminViewLabels extends KunenaView
 		$this->items      = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('Forum Labels'));
 
 		$this->setToolbar();

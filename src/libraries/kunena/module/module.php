@@ -48,7 +48,7 @@ abstract class KunenaModule
 	{
 		$this->module   = $module;
 		$this->params   = $params;
-		$this->document = Factory::getDocument();
+		$this->document = Factory::getApplication()->getDocument();
 	}
 
 	/**

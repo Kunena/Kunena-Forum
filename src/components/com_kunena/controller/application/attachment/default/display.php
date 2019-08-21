@@ -209,6 +209,6 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = Factory::getDocument();
+		$this->document = Factory::getApplication()->getDocument();
 	}
 }

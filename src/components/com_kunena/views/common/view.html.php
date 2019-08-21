@@ -443,7 +443,7 @@ class KunenaViewCommon extends KunenaView
 
 			if (isset($rss_params))
 			{
-				$document = Factory::getDocument();
+				$document = Factory::getApplication()->getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
 				$this->rss = $this->getRSSLink($this->getIcon('krss', Text::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}

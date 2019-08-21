@@ -133,7 +133,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		$doc         = Factory::getDocument();
+		$doc         = Factory::getApplication()->getDocument();
 
 		if ($fontawesome)
 		{
@@ -178,7 +178,7 @@ EOF;
 EOF;
 		}
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->addStyleDeclaration($styles);
 
 		parent::initialize();

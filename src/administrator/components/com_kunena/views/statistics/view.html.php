@@ -56,7 +56,7 @@ class KunenaAdminViewStatistics extends KunenaView
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('Forum Logs'));
 
 		$this->setToolbar();

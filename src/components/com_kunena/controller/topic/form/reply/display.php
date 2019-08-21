@@ -71,7 +71,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$doc = Factory::getDocument();
+		$doc = Factory::getApplication()->getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{

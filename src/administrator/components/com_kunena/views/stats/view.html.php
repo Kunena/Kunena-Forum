@@ -31,7 +31,7 @@ class KunenaAdminViewStats extends KunenaView
 	{
 		JToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 
-		$document = Factory::getDocument();
+		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
 
 		$kunena_stats = KunenaForumStatistics::getInstance();

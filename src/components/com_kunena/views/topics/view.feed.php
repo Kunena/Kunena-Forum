@@ -61,7 +61,7 @@ class KunenaViewTopics extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$this->document->setGenerator('Kunena Forum (Joomla)');
+		$this->document->setGenerator($config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -113,7 +113,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator('Kunena Forum (Joomla)');
+		$this->document->setGenerator($config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -159,7 +159,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator('Kunena Forum (Joomla)');
+		$this->document->setGenerator($config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{

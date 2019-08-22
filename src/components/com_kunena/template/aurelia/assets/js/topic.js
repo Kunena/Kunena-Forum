@@ -103,10 +103,6 @@ jQuery(document).ready(function ($) {
 					label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
 				},
 				{
-					share: "googleplus",
-					label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL')
-				},
-				{
 					share: "linkedin",
 					label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
 				}, {

@@ -287,8 +287,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='9999-12-31 23:59:59'");
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='0000-00-00 00:00:00'");
 
 			try
 			{

@@ -1501,11 +1501,15 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if ($layout->getPath())
 		{
+			$title = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $title);
+			$content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
+			$params = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $params);
+
 			return (string) $layout
-				->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
-				->set('hidden', htmlspecialchars($hidden, ENT_COMPAT, 'UTF-8'))
-				->set('content', htmlspecialchars($content, ENT_COMPAT, 'UTF-8'))
-				->set('params', htmlspecialchars($params, ENT_COMPAT, 'UTF-8'));
+				->set('title', $title)
+				->set('hidden', $hidden)
+				->set('content', $content)
+				->set('params', $params);
 		}
 	}
 

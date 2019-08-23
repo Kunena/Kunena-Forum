@@ -398,10 +398,10 @@ abstract class KunenaForum
 	 *
 	 * </code>
 	 *
-	 * @param   string           $viewName  Name of the view.
-	 * @param   string           $layout    Name of the layout.
-	 * @param   null|string      $template  Name of the template file.
-	 * @param   array|JRegistry  $params    Extra parameters to control the model.
+	 * @param   string                          $viewName  Name of the view.
+	 * @param   string                          $layout    Name of the layout.
+	 * @param   null|string                     $template  Name of the template file.
+	 * @param   array|Joomla\Registry\Registry  $params    Extra parameters to control the model.
 	 *
 	 * @return void
 	 * @since Kunena

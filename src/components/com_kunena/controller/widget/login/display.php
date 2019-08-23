@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerWidgetLoginDisplay
@@ -118,7 +119,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 		$login = KunenaLogin::getInstance();
 
-		$params = new JRegistry($login->getParams());
+		$params = new Registry($login->getParams());
 		$this->plglogin = $params->get('login', '1');
 
 		if (!$login->enabled())

@@ -141,7 +141,7 @@ class KunenaLoginJoomla
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return JRegistry
+	 * @return Joomla\Registry\Registry
 	 * @since Kunena 5.1
 	 */
 	public function getParams()

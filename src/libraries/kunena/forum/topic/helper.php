@@ -414,7 +414,8 @@ abstract class KunenaForumTopicHelper
 				->group($orderby);
 		}
 
-		$db->setQuery($query, $limitstart, $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{

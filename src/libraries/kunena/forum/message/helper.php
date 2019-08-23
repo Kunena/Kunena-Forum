@@ -200,7 +200,8 @@ abstract class KunenaForumMessageHelper
 			->where('m.thread = ' . $db->quote($topic_id))
 			->andWhere('m.hold IN (' . $hold . ')')
 			->order('m.time ' . $ordering);
-		$db->setQuery($query, $start, $limit);
+		$query->setLimit($limit, $start);
+		$db->setQuery($query);
 
 		try
 		{
@@ -383,7 +384,8 @@ abstract class KunenaForumMessageHelper
 			$limitstart = intval($total / $limit) * $limit;
 		}
 
-		$db->setQuery($query, $limitstart, $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{
@@ -691,7 +693,8 @@ abstract class KunenaForumMessageHelper
 			->where('userid=' . $userid)
 			->group('ip')
 			->order('time DESC');
-		$db->setQuery($query, 0, 1);
+		$query->setLimit(1);
+		$db->setQuery($query);
 
 		try
 		{

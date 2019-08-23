@@ -403,7 +403,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('version')->from('#__kunena_version')->order('id');
-		$db->setQuery($query, 0, 1);
+		$query->setLimit(1);
+		$db->setQuery($query);
 		$lists['legacy_urls_version'] = $db->loadResult();
 
 		$options                        = array();

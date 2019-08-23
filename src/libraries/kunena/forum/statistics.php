@@ -433,7 +433,8 @@ class KunenaForumStatistics
 				->group($this->_db->quoteName('pollid'))
 				->having($this->_db->quoteName('count') . ' > 0')
 				->order($this->_db->quoteName('count') . ' DESC');
-			$this->_db->setQuery($query, 0, $limit);
+			$query->setLimit($limit);
+			$this->_db->setQuery($query);
 
 			try
 			{
@@ -608,7 +609,8 @@ class KunenaForumStatistics
 				$query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
-			$this->_db->setQuery($query, 0, $limit);
+			$query->setLimit($limit);
+			$this->_db->setQuery($query);
 
 			try
 			{

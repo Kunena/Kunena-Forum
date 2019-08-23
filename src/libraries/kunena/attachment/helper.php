@@ -565,7 +565,8 @@ abstract class KunenaAttachmentHelper
 			->from($db->quoteName('#__kunena_attachments', 'a'))
 			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
 			->where($db->quoteName('m.id') . ' IS NULL');
-		$db->setQuery($query, 0, 50);
+		$query->setLimit(50);
+		$db->setQuery($query);
 
 		try
 		{
@@ -678,7 +679,8 @@ abstract class KunenaAttachmentHelper
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('userid') . ' = ' . $db->quote($user->userid . $filetype . $orderby));
-		$db->setQuery($query, 0, $params['limit']);
+		$query->setLimit($params['limit']);
+		$db->setQuery($query);
 
 		try
 		{

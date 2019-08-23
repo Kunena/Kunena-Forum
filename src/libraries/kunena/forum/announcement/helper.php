@@ -134,7 +134,8 @@ abstract class KunenaForumAnnouncementHelper
 				->order($db->quoteName('id') . ' DESC');
 		}
 
-		$db->setQuery($query, $start, $limit);
+		$query->setLimit($limit, $start);
+		$db->setQuery($query);
 
 		try
 		{

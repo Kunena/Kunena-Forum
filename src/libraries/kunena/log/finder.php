@@ -117,7 +117,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		$query = clone $this->query;
 		$this->build($query);
 		$query->select($this->db->quoteName('a.*'));
-		$this->db->setQuery($query, $this->start, $this->limit);
+		$query->setLimit($this->limit, $this->start);
+		$this->db->setQuery($query);
 
 		try
 		{

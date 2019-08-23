@@ -40,7 +40,8 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 		$query = clone $this->query;
 		$this->build($query);
 		$query->select('a.*');
-		$this->db->setQuery($query, $this->start, $this->limit);
+		$query->setLimit($this->limit, $this->start);
+		$this->db->setQuery($query);
 
 		try
 		{

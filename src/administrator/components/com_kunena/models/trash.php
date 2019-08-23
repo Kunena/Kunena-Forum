@@ -307,7 +307,9 @@ class KunenaAdminModelTrash extends KunenaModel
 			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 		}
 
-		$db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
+		$query->setLimit($this->getState('list.limit'), $this->getState('list.start'));
+
+		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
 		return KunenaForumMessageHelper::getMessages($ids, 'none');

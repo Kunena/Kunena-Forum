@@ -1623,7 +1623,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		$query = "SELECT userid, avatar FROM `#__kunena_users`
 			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
-		$this->db->setQuery($query, 0, 1023);
+		$query->setLimit(1023);
+		$this->db->setQuery($query);
 
 		try
 		{
@@ -1917,7 +1918,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query->select('COUNT(*)')
 			->from($this->db->quoteName('#__kunena_attachments'))
 			->where('id > ' . $this->db->quote($stats->current) . ' AND hash IS NULL');
-		$this->db->setQuery($query, 0, 251);
+		$query->setLimit(251);
+		$this->db->setQuery($query);
 
 		try
 		{

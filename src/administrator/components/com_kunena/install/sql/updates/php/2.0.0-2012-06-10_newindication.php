@@ -48,8 +48,12 @@ function kunena_200_2012_06_10_newindication($parent)
 		unset($sessions);
 
 		// Then look at users who have read the thread
-		$query = "SELECT userid, readtopics FROM `#__kunena_sessions` WHERE readtopics != '0'";
-		$db->setQuery($query, 0, $limit);
+		$query = $db->getQuery(true)
+			->select(array('userid', 'readtopics'))
+			->from($db->quoteName('#__kunena_sessions'))
+			->where("readtopics != '0'");
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{

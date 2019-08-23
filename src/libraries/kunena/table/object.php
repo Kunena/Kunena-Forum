@@ -260,7 +260,9 @@ abstract class KunenaTableObject
 			$query->where(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
 		}
 
-		static::$db->setQuery($query, 0, 1);
+		$query->setLimit(1);
+
+		static::$db->setQuery($query);
 
 		$row = static::$db->loadAssoc();
 
@@ -858,7 +860,9 @@ abstract class KunenaTableObject
 			$query->where(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
 		}
 
-		static::$db->setQuery($query, 0, 1);
+		$query->setLimit(1);
+
+		static::$db->setQuery($query);
 		static::$db->execute();
 
 		return true;

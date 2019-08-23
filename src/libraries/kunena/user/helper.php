@@ -359,7 +359,8 @@ abstract class KunenaUserHelper
 				$query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
-			$db->setQuery($query, 0, $limit);
+			$query->setLimit($limit);
+			$db->setQuery($query);
 
 			try
 			{

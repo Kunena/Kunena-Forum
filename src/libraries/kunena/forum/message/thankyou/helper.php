@@ -200,7 +200,8 @@ abstract class KunenaForumMessageThankyouHelper
 			->where('s.' . $field . ' = u.id')
 			->group('s.' . $field)
 			->order('countid DESC');
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{
@@ -239,7 +240,8 @@ abstract class KunenaForumMessageThankyouHelper
 			->andWhere('tt.hold = 0')
 			->group('s.postid')
 			->order('countid DESC');
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{
@@ -286,7 +288,8 @@ abstract class KunenaForumMessageThankyouHelper
 			->where('m.hold = 0')
 			->where('tt.hold = 0')
 			->where('t.' . $field . ' = ' . $db->quote(intval($userid)));
-		$db->setQuery($query, (int) $limitstart, (int) $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{

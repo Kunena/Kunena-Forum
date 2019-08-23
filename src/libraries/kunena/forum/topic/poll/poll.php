@@ -279,7 +279,8 @@ class KunenaForumTopicPoll extends CMSObject
 				->from($this->_db->quoteName('#__kunena_polls_users'))
 				->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
 				->order($this->_db->quoteName('lasttime') . ' DESC');
-			$this->_db->setQuery($query, $start, $limit);
+			$query->setLimit($limit, $start);
+			$this->_db->setQuery($query);
 
 			try
 			{

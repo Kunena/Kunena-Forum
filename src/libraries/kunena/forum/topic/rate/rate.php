@@ -234,7 +234,8 @@ class KunenaForumTopicRate extends CMSObject
 		$query->select('*')
 			->from($this->_db->quoteName('#__kunena_rate'))
 			->where($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id));
-		$this->_db->setQuery($query, $start, $limit);
+		$query->setLimit($limit, $start);
+		$this->_db->setQuery($query);
 
 		try
 		{

@@ -75,8 +75,8 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 			->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.userid')
 			->where('a.profileviews > 0')
 			->order('a.profileviews DESC');
-
-		$db->setQuery($query, 0, $limit);
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{

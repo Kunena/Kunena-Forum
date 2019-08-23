@@ -1293,7 +1293,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			->from($db->quoteName('#__kunena_topics', 'tt'))
 			->where('tt.category_id = ' . $this->id . ' ' . $where)
 			->order('tt.last_post_time ASC');
-		$db->setQuery($query, 0, $limit);
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{
@@ -1345,7 +1346,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			->from($db->quoteName('#__kunena_topics', 'tt'))
 			->where('tt.category_id = ' . $this->id . ' AND tt.hold!=2 ' . $where)
 			->order('tt.last_post_time ASC');
-		$db->setQuery($query, 0, $limit);
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{
@@ -1578,7 +1580,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 				->andWhere($db->quoteName('hold') . ' = 0')
 				->andWhere($db->quoteName('moved_id') . ' = 0')
 				->order(array($db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC'));
-			$db->setQuery($query, 0, 1);
+			$query->setLimit(1);
+			$db->setQuery($query);
 
 			try
 			{

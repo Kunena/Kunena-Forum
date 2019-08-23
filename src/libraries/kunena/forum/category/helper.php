@@ -383,7 +383,8 @@ abstract class KunenaForumCategoryHelper
 			->where('u.user_id IN (' . $userids . ') AND u.category_id IN (' . $allowed . ') AND u.subscribed=1 ' . $where)
 			->group('c.id')
 			->order($orderby);
-		$db->setQuery($query, $limitstart, $limit);
+		$query->setLimit($limit, $limitstart);
+		$db->setQuery($query);
 
 		try
 		{

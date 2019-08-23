@@ -81,7 +81,8 @@ class KunenaInstaller
 			->from($db->quoteName('#__kunena_version'))
 			->where($db->quoteName('state') . "=''")
 			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query, 0, 1);
+		$query->setLimit(1);
+		$db->setQuery($query);
 		$version = $db->loadResult();
 
 		return $version;

@@ -75,7 +75,8 @@ class KunenaProfileCommunity extends KunenaProfile
 			->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')
 			->where('cu.view > 0')
 			->order('cu.view DESC');
-		$db->setQuery($query, 0, $limit);
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{

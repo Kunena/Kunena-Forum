@@ -380,7 +380,8 @@ class KunenaUserBan extends CMSObject
 			->where($db->quoteName('b.expiration') . ' = ' . $nullDate)
 			->orWhere($db->quoteName('b.expiration') . ' > ' . $db->quote($now->toSql()))
 			->order($db->quoteName('b.created_time') . ' DESC');
-		$db->setQuery($query, $start, $limit);
+		$query->setLimit($limit, $start);
+		$db->setQuery($query);
 
 		try
 		{

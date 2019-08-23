@@ -241,7 +241,8 @@ class KunenaForumTopicUser extends CMSObject
 				->andWhere($this->_db->quoteName('moved') . ' = 0')
 				->andWhere($this->_db->quoteName('hold') . ' = 0')
 				->group('userid, thread');
-			$this->_db->setQuery($query, 0, 1);
+			$query->setLimit(1);
+			$this->_db->setQuery($query);
 
 			try
 			{

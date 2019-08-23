@@ -158,7 +158,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.user_id');
 		$query->where('cu.hits > 0');
 		$query->order('cu.hits DESC');
-		$db->setQuery($query, 0, $limit);
+		$query->setLimit($limit);
+		$db->setQuery($query);
 
 		try
 		{

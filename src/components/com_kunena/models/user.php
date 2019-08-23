@@ -279,7 +279,8 @@ class KunenaModelUser extends KunenaModel
 				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
 				->where("{$where} {$search}")
 				->order("{$orderby} {$direction}");
-			$db->setQuery($query, $limitstart, $limit);
+			$query->setLimit($limit, $limitstart);
+			$db->setQuery($query);
 
 			try
 			{

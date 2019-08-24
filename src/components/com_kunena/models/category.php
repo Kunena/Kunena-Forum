@@ -136,7 +136,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		if ($this->items === false)
 		{
 			$this->items = array();
-			$user        = KunenaFactory::getApplication()->getIdentity();
+			$user        = Factory::getApplication()->getIdentity();
 			list($total, $categories) = KunenaForumCategoryHelper::getLatestSubscriptions($user->userid);
 			$this->items = $categories;
 		}

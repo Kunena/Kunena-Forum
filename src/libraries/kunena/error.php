@@ -150,7 +150,7 @@ abstract class KunenaError
 			$app->enqueueMessage('Kunena ' . Text::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
 					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
 		}
-		elseif (KunenaFactory::getApplication()->getIdentity()->isAdmin() && Factory::getApplication()->isClient('site'))
+		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
 		{
 			$app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
 		}

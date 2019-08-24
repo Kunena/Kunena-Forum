@@ -873,7 +873,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	public function cancel()
 	{
-		$user = KunenaFactory::getApplication()->getIdentity();
+		$user = Factory::getApplication()->getIdentity();
 		$this->setRedirect($user->getUrl(false));
 	}
 

@@ -694,7 +694,7 @@ class KunenaViewCommon extends KunenaView
 	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{
-		$my = KunenaFactory::getApplication()->getIdentity();
+		$my = Factory::getApplication()->getIdentity();
 
 		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
 		{
@@ -716,7 +716,7 @@ class KunenaViewCommon extends KunenaView
 	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
-		$my = KunenaFactory::getApplication()->getIdentity();
+		$my = Factory::getApplication()->getIdentity();
 
 		if ($name == $this->memberCount)
 		{

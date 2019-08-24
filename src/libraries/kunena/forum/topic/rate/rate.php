@@ -284,7 +284,7 @@ class KunenaForumTopicRate extends CMSObject
 	 */
 	public function getTopicUserRate()
 	{
-		$me = KunenaFactory::getApplication()->getIdentity();
+		$me = KunenaFactory::getUser();
 
 		if ($this->userid == $me->userid)
 		{

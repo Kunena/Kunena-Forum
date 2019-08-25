@@ -107,7 +107,7 @@ class KunenaDate extends Joomla\CMS\Date\Date
 		if (!$offset)
 		{
 			$app = Factory::getApplication();
-			$my  = Factory::getApplication()->getIdentity();
+			$my  = $app->getIdentity();
 
 			if ($my->id)
 			{

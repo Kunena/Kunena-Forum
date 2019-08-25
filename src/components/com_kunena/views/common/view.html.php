@@ -522,7 +522,7 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$my         = Factory::getApplication()->getIdentity();
+		$my         = $this->app->getIdentity();
 		$cache      = Factory::getCache('com_kunena', 'output');
 		$cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
@@ -694,7 +694,7 @@ class KunenaViewCommon extends KunenaView
 	 */
 	public function getStatsLink($name, $class = '', $rel = 'follow')
 	{
-		$my = Factory::getApplication()->getIdentity();
+		$my = KunenaFactory::getUser();
 
 		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
 		{
@@ -716,7 +716,7 @@ class KunenaViewCommon extends KunenaView
 	 */
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
-		$my = Factory::getApplication()->getIdentity();
+		$my = KunenaFactory::getUser();
 
 		if ($name == $this->memberCount)
 		{

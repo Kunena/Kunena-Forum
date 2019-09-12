@@ -22,6 +22,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 {
 	/**
 	 * @var null|uddeIMAPI
+	 * @deprecated  6.0
 	 * @since Kunena
 	 */
 	protected $uddeim = null;

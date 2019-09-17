@@ -198,7 +198,7 @@ abstract class KunenaForumCategoryUserHelper
 			}
 			else
 			{
-				$insertList[] = $db->quote($user->userid) . ', ' . $db->quote($item->category_id) . ', ' . $db->quote($time);
+				$insertList[] = $db->quote($user->userid) . ', ' . $db->quote($item->category_id) . ', ' . $db->quote($time) . ', ' .$db->quote('');
 			}
 		}
 
@@ -228,7 +228,7 @@ abstract class KunenaForumCategoryUserHelper
 			$query = $db->getQuery(true);
 			$query
 				->insert($db->quoteName('#__kunena_user_categories'))
-				->columns('user_id, category_id, allreadtime')
+				->columns('user_id, category_id, allreadtime, params')
 				->values($insertList);
 			$db->setQuery($query);
 

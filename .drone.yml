@@ -13,7 +13,8 @@ steps:
   - name: git clone
     image: docker:git
     commands:
-      - git clone https://github.com/Kunena/Codestyle.git ./vendor/squizlabs/php_codesniffer/src/Standards
+      - git clone https://github.com/Kunena/Codestyle.git ./codestyle
+      - rsync -r ./codestyle/Kunena ./vendor/squizlabs/php_codesniffer/src/Standards
   - name: phpcs
     image: joomlaprojects/docker-images:php7.2
     commands:

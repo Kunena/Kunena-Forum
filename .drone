@@ -1,0 +1,22 @@
+---
+kind: pipeline
+name: default
+
+clone:
+  depth: 42
+
+steps:
+  - name: composer
+    image: joomlaprojects/docker-tools:develop
+    commands:
+      - composer validate --no-check-all --strict
+      - composer install --no-progress --no-suggest
+
+  - name: phpcs
+    image: joomlaprojects/docker-images:php7.2
+    commands:
+      - echo $(date)
+      - ./vendor/bin/phpcs --extensions=php -p --standard=vendor/joomla/coding-standards/Joomla src
+      - echo $(date)
+
+---

@@ -10,14 +10,9 @@ steps:
     commands:
       - composer validate --no-check-all --strict
       - composer install --no-progress --no-suggest
-  - name: git clone
-    image: docker:git
-    commands:
-      - git clone https://github.com/Kunena/Codestyle.git ./codestyle
-      - copy ./codestyle/Kunena ./vendor/squizlabs/php_codesniffer/src/Standards
   - name: phpcs
     image: joomlaprojects/docker-images:php7.2
     commands:
       - echo $(date)
-      - ./vendor/bin/phpcs --extensions=php -p --standard=Kunena ./src
+      - ./vendor/bin/phpcs --extensions=php -p --standard=./vendor/kunena/codestyle/Kunena ./src
       - echo $(date)

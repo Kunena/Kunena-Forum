@@ -20,7 +20,8 @@
     "joomla-projects/joomla-browser": "~4.0@dev",
     "codeception/codeception": "~3.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-    "phing/phing": "2.*"
+    "phing/phing": "2.*",
+    "kunena/codestyle": "dev-master"
   },
   "autoload": {
     "psr-4": {

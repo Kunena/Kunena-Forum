@@ -15,5 +15,6 @@ steps:
     image: joomlaprojects/docker-images:php7.2
     commands:
       - echo $(date)
-      - ./vendor/bin/phpcs --extensions=php -p --standard=vendor/joomla/coding-standards/Joomla src
+      - git clone https://github.com/Kunena/Codestyle.git ./vendor/squizlabs/php_codesniffer/src/Standards
+      - ./vendor/bin/phpcs --extensions=php -p --standard=Kunena ./src
       - echo $(date)

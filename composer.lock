@@ -3154,12 +3154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kunena/Codestyle.git",
-                "reference": "50916020d3b6b86d82a64f2f2035efd1f50c474d"
+                "reference": "2f10b55e24713461ac9e7df7e31ba02d9f6da598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/50916020d3b6b86d82a64f2f2035efd1f50c474d",
-                "reference": "50916020d3b6b86d82a64f2f2035efd1f50c474d",
+                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/2f10b55e24713461ac9e7df7e31ba02d9f6da598",
+                "reference": "2f10b55e24713461ac9e7df7e31ba02d9f6da598",
                 "shasum": ""
             },
             "require": {
@@ -3172,7 +3172,7 @@
                 "GPL-3.0-or-later"
             ],
             "description": "Kunena forum codestyle for joomla",
-            "time": "2019-10-12T21:42:47+00:00"
+            "time": "2019-10-12T23:10:46+00:00"
         },
         {
             "name": "myclabs/deep-copy",

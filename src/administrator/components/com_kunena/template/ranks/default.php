@@ -222,7 +222,7 @@ HTMLHelper::_('behavior.tabstate');
 												</tr>
 												<?php
 											endforeach;
-											            else:
+														else:
 												?>
 											<tr>
 												<td colspan="10">

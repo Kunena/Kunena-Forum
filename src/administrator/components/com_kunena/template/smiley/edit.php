@@ -29,13 +29,13 @@ HTMLHelper::_('behavior.multiselect');
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-			      id="adminForm" name="adminForm">
+				  id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="smilies"/>
 				<input type="hidden" name="task" value="save"/>
 				<?php if ($this->state->get('item.id'))
 					:
 					?><input type="hidden" name="smileyid"
-					         value="<?php echo $this->state->get('item.id') ?>" /><?php
+							 value="<?php echo $this->state->get('item.id') ?>" /><?php
 				endif; ?>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -48,11 +48,11 @@ HTMLHelper::_('behavior.multiselect');
 							</td>
 							<td width="80%">
 								<input class="col-md-2" type="text" name="smiley_code"
-								       value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
+									   value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
 								<img name="smiley_image"
-								     src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
-								     border="0"
-								     alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
+									 src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
+									 border="0"
+									 alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
 							</td>
 						</tr>
 						<tr>

@@ -27,8 +27,8 @@ use Joomla\CMS\Language\Text;
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value="uninstall"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -70,7 +70,7 @@ use Joomla\CMS\Language\Text;
 								<td></td>
 								<td>
 									<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
-									     aria-labelledby="myModalLabel" aria-hidden="true">
+										 aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 												×
@@ -82,16 +82,16 @@ use Joomla\CMS\Language\Text;
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-outline-primary" data-dismiss="modal"
-											        aria-hidden="true">
+													aria-hidden="true">
 												Close
 											</button>
 											<button type="submit"
-											        class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+													class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 										</div>
 									</div>
 
 									<button type="button" class="btn btn-outline-danger" data-toggle="modal"
-									        data-target="#myModal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+											data-target="#myModal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 								</td>
 							</tr>
 						</table>

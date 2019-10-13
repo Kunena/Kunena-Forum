@@ -36,10 +36,10 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query    = "UPDATE `#___kunena_users` SET banned='1000-01-01 00:00:00' WHERE banned='null'";
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -51,7 +51,7 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 
 	$query    = "ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';";
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -60,6 +60,6 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_BANNED_DATETIME_DEFAULT'), 'success' => true);
 }

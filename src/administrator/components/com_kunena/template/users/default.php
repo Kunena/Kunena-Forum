@@ -221,8 +221,10 @@ HTMLHelper::_('dropdown.init');
 						$img_no                   = '<i class="icon-cancel"></i>';
 						$img_yes                  = '<i class="icon-checkmark"></i>';
 
-						if ($this->pagination->total > 0) :
-							foreach ($this->users as $user) :
+						if ($this->pagination->total > 0)
+						:
+							foreach ($this->users as $user)
+							:
 								$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
 								$userBannedTask   = $user->isBanned() ? 'unban' : 'ban';
 								$userModerateTask = $user->isModerator() ? 'unmoderate' : 'moderate';
@@ -293,13 +295,18 @@ HTMLHelper::_('dropdown.init');
 										</a>
 									</td>
 									<td class="center hidden-phone hidden-tablet">
-										<?php if ($user->moderator) : ?>
+										<?php if ($user->moderator)
+										:
+											?>
 											<a class="btn btn-micro active"
 											   href="javascript: void(0);"
 											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
 												<?php echo $img_yes; ?>
 											</a>
-										<?php else : ?>
+										<?php else
+
+										:
+											?>
 											<a class="btn btn-micro active"
 											   href="javascript: void(0);"
 											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
@@ -311,9 +318,7 @@ HTMLHelper::_('dropdown.init');
 								</tr>
 								<?php $i++;
 							endforeach;
-						else
-
-							:
+						else						:
 							?>
 							<tr>
 								<td colspan="10">

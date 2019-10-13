@@ -15,6 +15,11 @@ build/tmp
 releases
 dist/*
 
+# JS/CSS Build #
+node_modules/
+/build/assets_tmp
+/scss-lint-report.xml
+
 # OSX
 .DS_Store
 ._*

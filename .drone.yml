@@ -10,6 +10,10 @@ steps:
     commands:
       - composer validate --no-check-all --strict
       - composer install --no-progress --no-suggest
+  - name: npm
+    image: node:11
+    commands:
+      - npm install selenium-standalone
   - name: phpcs
     image: joomlaprojects/docker-images:php7.2
     commands:

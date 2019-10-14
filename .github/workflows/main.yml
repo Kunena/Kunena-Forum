@@ -1,0 +1,45 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  cs:
+     runs-on: ubuntu-latest  
+     container:
+      image: joomlaprojects/docker-images:php7.2
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1    
+     steps:
+      - uses: actions/checkout@v1
+      - name: phpcs v3
+        run: |
+         echo $(date)
+         ./vendor/bin/phpcs --extensions=php -p --standard=./vendor/kunena/codestyle/Kunena ./src
+         echo $(date) 
+      
+  build:
+    runs-on: ubuntu-latest    
+    container:
+      image: joomlaprojects/docker-tools:develop
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1      
+    steps:
+    - uses: actions/checkout@v1
+    - name: Start CI Tests
+      run: echo Tests started for Kunena Forum
+    - name: Composer & Npm Install
+      run: |
+       composer validate --no-check-all --strict
+       composer install --no-progress --no-suggest
+       npm install selenium-standalone
+       

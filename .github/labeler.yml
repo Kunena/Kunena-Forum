@@ -1,0 +1,11 @@
+6.0:
+- './*'
+Aurelia:
+- './src/components/com_kunena/template/aurelia/*'
+backend:
+- './src/administrator/components/com_kunena/*'
+Codeception tests:
+- './tests/*'
+- './codeception.yml'
+documentation:
+- './docs/*'

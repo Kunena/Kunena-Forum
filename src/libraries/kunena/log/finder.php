@@ -138,7 +138,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @return void
 	 * @since Kunena 5.0
 	 */
-	protected function build(QueryInterface $query)
+	protected function build(QueryInterface $query = NULL)
 	{
 	}
 }

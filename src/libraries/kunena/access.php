@@ -383,7 +383,7 @@ jQuery(document).ready(function ($) {
 			$id                          = $category->access;
 			$name                        = $this->getGroupName($accesstype, $id);
 			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name,);
+												 'title' => $name, );
 		}
 
 		return $list;

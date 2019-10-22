@@ -419,7 +419,7 @@ abstract class KunenaForumTopicUserHelper
 			$where  = 'AND m.thread=' . (int) $topicids;
 			$where2 = 'AND ut.topic_id=' . (int) $topicids;
 			$where3 = 'topic_id=' . (int) $topicids;
-			;
+
 		}
 		else
 		{
@@ -495,7 +495,7 @@ abstract class KunenaForumTopicUserHelper
 				"favorite = 0",
 				"subscribed = 0",
 				"params = ''",
-				"{$where3}"]
+				"{$where3}", ]
 			);
 
 		$db->setQuery($query);

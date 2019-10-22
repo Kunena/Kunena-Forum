@@ -198,7 +198,7 @@ abstract class KunenaForumCategoryUserHelper
 			}
 			else
 			{
-				$insertList[] = $db->quote($user->userid) . ', ' . $db->quote($item->category_id) . ', ' . $db->quote($time) . ', ' .$db->quote('');
+				$insertList[] = $db->quote($user->userid) . ', ' . $db->quote($item->category_id) . ', ' . $db->quote($time) . ', ' . $db->quote('');
 			}
 		}
 

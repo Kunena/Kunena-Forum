@@ -10,8 +10,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Language\Text;
-
 require_once __DIR__ . '/kunena.php';
 
 /**

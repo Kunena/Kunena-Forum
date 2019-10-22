@@ -380,7 +380,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				'filter_allow_polls' => $this->getState('filter.allow_polls'),
 				'filter_review'      => $this->getState('filter.review'),
 				'filter_anonymous'   => $this->getState('filter.anonymous'),
-				'action'             => 'admin',);
+				'action'             => 'admin', );
 
 			$catid      = $this->getState('item.id', 0);
 			$categories = array();

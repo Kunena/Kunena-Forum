@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 class KunenaViewTopics extends KunenaView
 {
-
 	/**
 	 * @param   null $tpl
 	 *
@@ -21,7 +20,7 @@ class KunenaViewTopics extends KunenaView
 	 * @since version
 	 * @throws Exception
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 55);
 
@@ -60,7 +59,7 @@ class KunenaViewTopics extends KunenaView
 
 		$json2 = array(
 			'Count'  => $count,
-			'Topics' => $list
+			'Topics' => $list,
 		);
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

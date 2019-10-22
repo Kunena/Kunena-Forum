@@ -195,6 +195,6 @@ class plgQuickiconKunena extends CMSPlugin
 			'text'   => $text,
 			'icon'   => $icon,
 			'access' => array('core.manage', 'com_kunena'),
-			'id'     => 'com_kunena_icon'));
+			'id'     => 'com_kunena_icon', ));
 	}
 }

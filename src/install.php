@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 
 /**
  * Kunena package installer script.
+ *
  * @since Kunena
  */
 class Pkg_KunenaInstallerScript
@@ -39,11 +40,11 @@ class Pkg_KunenaInstallerScript
 			'8.0' => '8.0',
 			'5.7' => '5.7',
 			'5.6' => '5.6',
-			'0'   => '5.7' // Preferred version
+			'0'   => '5.7', // Preferred version
 		),
 		'Joomla!' => array(
-			'4.0'  => '4.0.0-alpha8-dev',
-			'0'    => '4.0.0-alpha8-dev', // Preferred version
+			'4.0' => '4.0.0-alpha8-dev',
+			'0'   => '4.0.0-alpha8-dev', // Preferred version
 		),
 	);
 
@@ -56,7 +57,7 @@ class Pkg_KunenaInstallerScript
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 *
@@ -68,7 +69,7 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 *
@@ -80,7 +81,7 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $parent parent
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 *
@@ -92,7 +93,7 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $uri uri
+	 * @param   string  $uri  uri
 	 *
 	 * @return string
 	 *
@@ -104,8 +105,8 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string  $type   type
-	 * @param   string  $parent parent
+	 * @param   string  $type    type
+	 * @param   string  $parent  parent
 	 *
 	 * @return boolean
 	 *
@@ -141,8 +142,8 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $group   group
-	 * @param   string $element element
+	 * @param   string  $group    group
+	 * @param   string  $element  element
 	 *
 	 * @return boolean
 	 *
@@ -200,8 +201,8 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $name    name
-	 * @param   string $version version
+	 * @param   string  $name     name
+	 * @param   string  $version  version
 	 *
 	 * @return boolean
 	 *
@@ -244,8 +245,8 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $name  name
-	 * @param   array  $types types
+	 * @param   string  $name   name
+	 * @param   array   $types  types
 	 *
 	 * @return boolean
 	 *
@@ -267,7 +268,7 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   array $extensions extensions
+	 * @param   array  $extensions  extensions
 	 *
 	 * @return integer
 	 *
@@ -293,7 +294,7 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $version version
+	 * @param   string  $version  version
 	 *
 	 * @return boolean
 	 *
@@ -335,7 +336,7 @@ class Pkg_KunenaInstallerScript
 			->select($db->quoteName('version'))
 			->from($db->quoteName($table))
 			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query,0, 1);
+		$db->setQuery($query, 0, 1);
 		$installed = $db->loadResult();
 
 		if (!$installed)
@@ -664,10 +665,6 @@ class Pkg_KunenaInstallerScript
 		return true;
 	}
 
-
-
-
-
 	/**
 	 * @param   string  $path    path
 	 * @param   array   $ignore  ignore
@@ -753,7 +750,6 @@ class Pkg_KunenaInstallerScript
 			File::delete($path);
 		}
 	}
-
 
 	/**
 	 * Converts the site's database tables to support UTF-8 Multibyte.

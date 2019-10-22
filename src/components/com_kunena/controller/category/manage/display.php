@@ -16,6 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Filesystem\Folder;
+
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
@@ -205,7 +206,6 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		}
 
 		$lists ['category_iconset'] = HTMLHelper::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox form-control" size="1"', 'value', 'text', $value);
-
 
 		$this->lists = $lists;
 	}

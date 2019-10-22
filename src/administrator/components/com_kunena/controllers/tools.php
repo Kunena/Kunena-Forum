@@ -745,7 +745,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_messages'))
 				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
-				->where("subject LIKE {$db->quote($re_string.'%')}");
+				->where("subject LIKE {$db->quote($re_string . '%')}");
 
 			$db->setQuery($query);
 

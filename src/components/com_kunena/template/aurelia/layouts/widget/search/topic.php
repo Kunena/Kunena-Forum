@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+
 $this->addScript('assets/js/search.js');
 
 $childforums = (int) (!isset($this->childforums) || $this->childforums);

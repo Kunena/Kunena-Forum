@@ -407,7 +407,7 @@ abstract class KunenaUserHelper
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select($db->quoteName('m.*'))
-			->from($db->quoteName('#__usergroups',  'ug1'))
+			->from($db->quoteName('#__usergroups', 'ug1'))
 			->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ' . $db->quoteName('ug2.lft') . $recurs . $db->quoteName('ug1.lft') . ' AND ' . $db->quoteName('ug1.rgt') . $recurs . $db->quoteName('ug2.rgt'))
 			->innerJoin($db->quoteName('#__user_usergroup_map', 'm') . ' ON ' . $db->quoteName('ug2.id') . ' = ' . $db->quoteName('m.group_id'));
 

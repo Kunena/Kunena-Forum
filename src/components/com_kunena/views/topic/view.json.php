@@ -14,7 +14,6 @@ use Joomla\CMS\Factory;
 
 class KunenaViewTopic extends KunenaView
 {
-
 	/**
 	 * @param   null $tpl
 	 *
@@ -23,7 +22,7 @@ class KunenaViewTopic extends KunenaView
 	 * @since version
 	 * @throws Exception
 	 */
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$id                        = Factory::getApplication()->input->getInt('id');
 		$topic                     = KunenaForumTopicHelper::get($id);
@@ -51,7 +50,7 @@ class KunenaViewTopic extends KunenaView
 
 		$json2 = array(
 			'Count'    => $topic,
-			'Messages' => $list
+			'Messages' => $list,
 		);
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

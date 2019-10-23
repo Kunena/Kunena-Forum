@@ -1312,7 +1312,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param   int     $user      user
+	 * @param   int     $userid
 	 * @param   string  $evidence  evidence
 	 *
 	 * @return boolean

@@ -106,6 +106,7 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategory()
 	{

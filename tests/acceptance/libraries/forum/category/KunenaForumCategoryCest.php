@@ -22,7 +22,8 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return KunenaForumCategory
 	 * @since Kunena
- 	 */
+	 * @throws Exception
+	 */
 	public function testNew()
 	{
 		$category = new KunenaForumCategory();
@@ -44,6 +45,11 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 * @depends      testNew
 	 * @dataProvider providerLoad
 	 * @depends      PostingTest::testCreateCategories
+	 *
+	 * @param $catid
+	 * @param $exists
+	 *
+	 * @throws Exception
 	 */
 	public function testLoad($catid, $exists)
 	{
@@ -72,9 +78,10 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test category creation
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory  $category
 	 *
 	 * @return KunenaForumCategory
+	 * @throws Exception
 	 * @depends testNew
 	 */
 	public function testCreate(KunenaForumCategory $category)
@@ -98,7 +105,9 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 *
 	 * @depends testCreate
 	 * @depends PostingTest::testCreateCategories
-	 */
+	 * @param   KunenaForumCategory  $category
+	 * @throws Exception
+*/
 	public function testGetUserInfo(KunenaForumCategory $category)
 	{
 		$catuser = $category->getUserInfo(42);
@@ -128,7 +137,11 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider providerGetChildren
 	 * @depends      PostingTest::testCreateCategories
-	 */
+	 * @param $id
+	 * @param $level
+	 * @param $expected
+	 * @throws Exception
+*/
 	public function testGetChildren($id, $level, $expected)
 	{
 		$category = KunenaForumCategory::getInstance($id);
@@ -148,9 +161,10 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test addModerator()
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory  $category
 	 *
 	 * @return KunenaForumCategory
+	 * @throws Exception
 	 * @depends testCreate
 	 */
 	public function testAddModerator(KunenaForumCategory $category)
@@ -174,9 +188,10 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test removeModerator()
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory  $category
 	 *
 	 * @return KunenaForumCategory
+	 * @throws Exception
 	 * @depends testAddModerator
 	 */
 	public function testRemoveModerator(KunenaForumCategory $category)
@@ -245,8 +260,9 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test delete()
 	 *
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory  $category
 	 *
+	 * @throws Exception
 	 * @depends testRemoveModerator
 	 */
 	public function testDelete(KunenaForumCategory $category)

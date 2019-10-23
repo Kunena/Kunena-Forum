@@ -14,9 +14,9 @@ class ConfigurationKunenaCest
 	/**
 	 * Install Kunena
 	 *
-	 * @param AcceptanceTester $I
+	 * @param   AcceptanceTester  $I
 	 *
-	 * @return InstallKunenaSetupCest
+	 * @return void
 	 */
 	public function ConfigurationKunena(\AcceptanceTester $I)
 	{

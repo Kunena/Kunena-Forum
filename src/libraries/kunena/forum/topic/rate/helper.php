@@ -31,13 +31,15 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param   null $identifier identifier
-	 * @param   bool $reload     reload
-	 *
-	 * @return KunenaForumTopicRate The rate object.
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
 	 *
+	 * @param   bool  $reload      reload
+	 *
+	 * @param   null  $identifier  identifier
+	 *
+	 * @return KunenaForumTopicRate The rate object.
 	 * @since     5.0
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{

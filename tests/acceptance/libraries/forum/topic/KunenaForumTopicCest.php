@@ -17,9 +17,11 @@ class KunenaForumTopicCest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Test new KunenaForumTopic()
+	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
- 	 */
+	 * @throws Exception
+	 */
 	public function testNew()
 	{
 		$topic = new KunenaForumTopic();
@@ -34,9 +36,10 @@ class KunenaForumTopicCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test topic creation
 	 *
-	 * @param KunenaForumTopic $topic
+	 * @param   KunenaForumTopic  $topic
 	 *
-	 * @return KunenaForumTopic
+	 * @return void
+	 * @throws Exception
 	 * @depends testNew
 	 */
 	public function testCreate(KunenaForumTopic $topic)

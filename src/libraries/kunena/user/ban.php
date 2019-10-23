@@ -105,6 +105,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   null  $identifier  identifier
 	 *
 	 * @since     Kunena
+	 * @throws Exception
 	 */
 	public function __construct($identifier = null)
 	{

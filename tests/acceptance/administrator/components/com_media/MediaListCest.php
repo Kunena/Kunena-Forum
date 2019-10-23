@@ -55,9 +55,10 @@ class MediaListCest
 	/**
 	 * Runs before every test
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
 	 * @since   4.0.0
+	 * @throws Exception
 	 */
 	public function _before(\Step\Acceptance\Administrator\Media $I)
 	{
@@ -70,9 +71,10 @@ class MediaListCest
 	/**
 	 * Runs after every test
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
 	 * @since   4.0.0
+	 * @throws Exception
 	 */
 	public function _after(\Step\Acceptance\Administrator\Media $I)
 	{
@@ -101,9 +103,10 @@ class MediaListCest
 	/**
 	 * Test that it shows then joomla default media files and folders
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I
+	 * @param   \Step\Acceptance\Administrator\Media  $I
 	 *
 	 * @since   4.0.0
+	 * @throws Exception
 	 */
 	public function showsDefaultFilesAndFolders(\Step\Acceptance\Administrator\Media $I)
 	{
@@ -117,9 +120,10 @@ class MediaListCest
 	/**
 	 * Test that it shows then joomla default media files and folders
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I
+	 * @param   \Step\Acceptance\Administrator\Media  $I
 	 *
 	 * @since   4.0.0
+	 * @throws Exception
 	 */
 	public function showsFilesAndFoldersOfASubdirectoryWhenOpenedUsingDeepLink(\Step\Acceptance\Administrator\Media $I)
 	{
@@ -133,8 +137,9 @@ class MediaListCest
 	/**
 	 * Test that it is possible to select a single file
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function selectSingleFile(\Step\Acceptance\Administrator\Media $I)
@@ -149,8 +154,9 @@ class MediaListCest
 	/**
 	 * Test that it is possible to select a single file
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function selectSingleFolder(\Step\Acceptance\Administrator\Media $I)
@@ -165,8 +171,9 @@ class MediaListCest
 	/**
 	 * Test that it is possible to select an image and see the information in the infobar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function selectMultipleItems(\Step\Acceptance\Administrator\Media $I)
@@ -182,8 +189,9 @@ class MediaListCest
 	/**
 	 * Test that its possible to navigate to a subfolder using double click
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I
+	 * @param   \Step\Acceptance\Administrator\Media  $I
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function navigateUsingDoubleClickOnFolder(\Step\Acceptance\Administrator\Media $I)
@@ -200,8 +208,9 @@ class MediaListCest
 	/**
 	 * Test that its possible to navigate to a subfolder using tree
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I
+	 * @param   \Step\Acceptance\Administrator\Media  $I
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function navigateUsingTree(\Step\Acceptance\Administrator\Media $I)
@@ -218,8 +227,9 @@ class MediaListCest
 	/**
 	 * Test that its possible to navigate to a subfolder using breadcrumb
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I
+	 * @param   \Step\Acceptance\Administrator\Media  $I
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function navigateUsingBreadcrumb(\Step\Acceptance\Administrator\Media $I)
@@ -236,8 +246,9 @@ class MediaListCest
 	/**
 	 * Test the upload of a single file using toolbar button.
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function uploadSingleFileUsingToolbarButton(\Step\Acceptance\Administrator\Media $I)
@@ -258,8 +269,9 @@ class MediaListCest
 	 * @skip    We need to skip this test, because of a bug in acceptPopup in chrome.
 	 *          Its throws an Facebook\WebDriver\Exception\UnexpectedAlertOpenException and does not accept the popup
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function uploadExistingFileUsingToolbarButton(\Step\Acceptance\Administrator\Media $I)
@@ -283,8 +295,9 @@ class MediaListCest
 	/**
 	 * Test the create folder using toolbar button.
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function createFolderUsingToolbarButton(\Step\Acceptance\Administrator\Media $I)
@@ -313,8 +326,9 @@ class MediaListCest
 	 *
 	 * @skip    Skipping until bug is resolved in media manager
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function createExistingFolderUsingToolbar(\Step\Acceptance\Administrator\Media $I)
@@ -335,8 +349,9 @@ class MediaListCest
 	/**
 	 * Test delete single file using toolbar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function deleteSingleFileUsingToolbar(\Step\Acceptance\Administrator\Media $I)
@@ -362,8 +377,9 @@ class MediaListCest
 	/**
 	 * Test toggle info bar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function deleteSingleFolder(\Step\Acceptance\Administrator\Media $I)
@@ -388,8 +404,9 @@ class MediaListCest
 	/**
 	 * Test check all items
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function deleteMultipleFiles(\Step\Acceptance\Administrator\Media $I)
@@ -420,8 +437,9 @@ class MediaListCest
 	/**
 	 * Test rename a file
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function renameFile(\Step\Acceptance\Administrator\Media $I)
@@ -449,8 +467,9 @@ class MediaListCest
 	 *
 	 * @skip    Skipping until bug is resolved in media manager
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function renameFileToExistingFile(\Step\Acceptance\Administrator\Media $I)
@@ -479,8 +498,9 @@ class MediaListCest
 	/**
 	 * Test rename a file
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function renameFolder(\Step\Acceptance\Administrator\Media $I)
@@ -508,8 +528,9 @@ class MediaListCest
 	 *
 	 * @skip    Skipping until bug is resolved in media manager
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function renameFolderToExistingFolder(\Step\Acceptance\Administrator\Media $I)
@@ -539,8 +560,9 @@ class MediaListCest
 	/**
 	 * Test preview using double click on image
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function showPreviewUsingDoubleClickOnImage(\Step\Acceptance\Administrator\Media $I)
@@ -559,8 +581,9 @@ class MediaListCest
 	/**
 	 * Test preview using action menu
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function showPreviewUsingClickOnActionMenu(\Step\Acceptance\Administrator\Media $I)
@@ -579,8 +602,9 @@ class MediaListCest
 	/**
 	 * Test close the preview modal
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function closePreviewModalUsingCloseButton(\Step\Acceptance\Administrator\Media $I)
@@ -599,8 +623,9 @@ class MediaListCest
 	/**
 	 * Test close the preview modal
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function closePreviewModalUsingEscapeKey(\Step\Acceptance\Administrator\Media $I)
@@ -618,8 +643,9 @@ class MediaListCest
 	/**
 	 * Test rename a file
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function openImageEditorUsingActionMenu(\Step\Acceptance\Administrator\Media $I)
@@ -634,8 +660,9 @@ class MediaListCest
 	/**
 	 * Test toggle info bar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function toggleInfoBar(\Step\Acceptance\Administrator\Media $I)
@@ -652,8 +679,9 @@ class MediaListCest
 	/**
 	 * Test show file information in infobar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function showFileInformationInInfobar(\Step\Acceptance\Administrator\Media $I)
@@ -670,8 +698,9 @@ class MediaListCest
 	/**
 	 * Test show folder information in infobar
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function showFolderInformationInInfobar(\Step\Acceptance\Administrator\Media $I)
@@ -688,8 +717,9 @@ class MediaListCest
 	/**
 	 * Test resize the thumbnails
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function resizeThumbnails(\Step\Acceptance\Administrator\Media $I)
@@ -721,8 +751,9 @@ class MediaListCest
 	/**
 	 * Test table view
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function toggleListViewUsingToolbarButton(\Step\Acceptance\Administrator\Media $I)
@@ -743,8 +774,9 @@ class MediaListCest
 	/**
 	 * Test check all items
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function selectAllItemsUsingToolbarButton(\Step\Acceptance\Administrator\Media $I)
@@ -759,8 +791,9 @@ class MediaListCest
 	/**
 	 * Test that the app state is synced with session storage
 	 *
-	 * @param   \Step\Acceptance\Administrator\Media $I Acceptance Helper Object
+	 * @param   \Step\Acceptance\Administrator\Media  $I  Acceptance Helper Object
 	 *
+	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function synchronizeAppStateWithSessionStorage(\Step\Acceptance\Administrator\Media $I)

@@ -66,6 +66,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	/**
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAnnouncement()
 	{

@@ -244,25 +244,13 @@ class KunenaView extends HtmlView
 
 		switch ((int) $code)
 		{
-			case 400:
-				$app->sendHeaders();
-				break;
 			case 401:
-				$app->sendHeaders();
-				break;
-			case 403:
-				$app->sendHeaders();
-				break;
-			case 404:
-				$app->sendHeaders();
-				break;
-			case 410:
-				$app->sendHeaders();
-				break;
-			case 500:
-				$app->sendHeaders();
-				break;
 			case 503:
+			case 500:
+			case 410:
+			case 404:
+			case 403:
+			case 400:
 				$app->sendHeaders();
 				break;
 			default:
@@ -359,10 +347,11 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   mixed $position position
+	 * @param   mixed  $position  position
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getModulePosition($position)
 	{
@@ -382,10 +371,11 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   mixed $position position
+	 * @param   mixed  $position  position
 	 *
 	 * @return integer
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isModulePosition($position)
 	{

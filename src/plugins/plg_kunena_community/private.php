@@ -75,6 +75,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getOnClick($userid)
 	{

@@ -328,10 +328,11 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param   string $filename Original filename.
+	 * @param   string  $filename  Original filename.
 	 *
 	 * @return string     Protected filename.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getProtectedFilename($filename = null)
 	{

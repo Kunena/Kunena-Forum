@@ -52,11 +52,9 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return void
-	 * @throws Exception
-	 * @throws null
-	 * @throws void
+	 * @return KunenaExceptionAuthorise
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

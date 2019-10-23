@@ -561,6 +561,8 @@ class KunenaUser extends CMSObject
 	 * @param   string|int  $sizex  sizex
 	 * @param   int         $sizey  sizey
 	 *
+	 * @param   string      $online
+	 *
 	 * @return string
 	 * @since Kunena
 	 * @throws Exception

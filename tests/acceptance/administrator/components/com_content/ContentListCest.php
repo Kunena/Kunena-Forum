@@ -99,25 +99,26 @@ class ContentListCest
 	 * @since   4.0.0
 	 */
 	/**
-	public function markArticleAsFeaturedUsingToolbarButton(\Step\Acceptance\Administrator\Content $I)
-	{
-		$I->wantToTest('that it is possible to mark an article as featured using toolbar button.');
-
-		$testArticle = [
-			'title'     => 'Test Article',
-			'alias'     => 'test-article',
-			'introtext' => 'Test Article Introtext',
-			'fulltext'  => 'Test Article Fulltext',
-			'state'     => 1,
-			'featured'  => 0
-		];
-		$I->haveInDatabase('content', $testArticle);
-
-		$I->amOnPage(ContentListPage::$url);
-		$I->see($testArticle['title']);
-		$I->see('Alias: ' . $testArticle['alias']);
-	}
-*/
+	 * public function markArticleAsFeaturedUsingToolbarButton(\Step\Acceptance\Administrator\Content $I)
+	 * {
+	 * $I->wantToTest('that it is possible to mark an article as featured using toolbar button.');
+	 *
+	 * $testArticle = [
+	 * 'title'     => 'Test Article',
+	 * 'alias'     => 'test-article',
+	 * 'introtext' => 'Test Article Introtext',
+	 * 'fulltext'  => 'Test Article Fulltext',
+	 * 'state'     => 1,
+	 * 'featured'  => 0
+	 * ];
+	 * $I->haveInDatabase('content', $testArticle);
+	 *
+	 * $I->amOnPage(ContentListPage::$url);
+	 * $I->see($testArticle['title']);
+	 * $I->see('Alias: ' . $testArticle['alias']);
+	 * }
+	 * @param   \Step\Acceptance\Administrator\Content  $I
+	 */
 	/*
 	 * TODO Feature article using inline button
 	 * TODO Unfeature article using toolbar button

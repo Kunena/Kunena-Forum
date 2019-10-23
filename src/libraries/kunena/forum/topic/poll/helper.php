@@ -27,11 +27,12 @@ abstract class KunenaForumTopicPollHelper
 	/**
 	 * Returns KunenaForumTopic object.
 	 *
-	 * @param   int  $identifier The poll to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   int   $identifier  The poll to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{

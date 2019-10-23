@@ -256,13 +256,14 @@ class Number extends Node implements \ArrayAccess
         return implode('*', $numerators) . (count($denominators) ? '/' . implode('*', $denominators) : '');
     }
 
-    /**
-     * Output number
-     *
-     * @param \Leafo\ScssPhp\Compiler $compiler
-     *
-     * @return string
-     */
+	/**
+	 * Output number
+	 *
+	 * @param   \Leafo\ScssPhp\Compiler  $compiler
+	 *
+	 * @return string
+	 * @throws \Leafo\ScssPhp\Exception\CompilerException
+	 */
     public function output(Compiler $compiler = null)
     {
         $dimension = round($this->dimension, static::$precision);

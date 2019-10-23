@@ -311,6 +311,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategory()
 	{

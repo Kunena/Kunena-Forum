@@ -463,6 +463,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to put readable correctly the kunena template params
 	 *
+	 * @param $params
+	 *
 	 * @return    string
 	 * @since 5.1.1
 	 */

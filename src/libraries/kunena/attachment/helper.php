@@ -34,11 +34,12 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Returns KunenaAttachment object.
 	 *
-	 * @param   int  $identifier The attachment to load - Can be only an integer.
-	 * @param   bool $reload     reloaded
+	 * @param   int   $identifier  The attachment to load - Can be only an integer.
+	 * @param   bool  $reload      reloaded
 	 *
 	 * @return KunenaAttachment
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{

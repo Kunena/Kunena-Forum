@@ -721,6 +721,8 @@ abstract class KunenaUserHelper
 	/**
 	 * Return is the user IP is ipv6 or not
 	 *
+	 * @param $ip
+	 *
 	 * @return boolean
 	 * @since 6.0.0
 	 */

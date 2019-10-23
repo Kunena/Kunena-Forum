@@ -43,6 +43,7 @@ abstract class KunenaModule
 	 * @param   Joomla\Registry\Registry  $params  params
 	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($module, $params)
 	{

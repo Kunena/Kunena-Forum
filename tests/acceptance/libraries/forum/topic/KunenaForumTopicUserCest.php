@@ -36,6 +36,7 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	 * Test topic user creation
 	 *
 	 * @return KunenaForumTopicUser
+	 * @throws Exception
 	 */
 	public function testCreate()
 	{
@@ -65,9 +66,10 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test load()
 	 *
-	 * @param KunenaForumTopicUser $topicuser
+	 * @param   KunenaForumTopicUser  $topicuser
 	 *
-	 * @return KunenaForumTopicUser
+	 * @return void
+	 * @throws Exception
 	 * @depends testCreate
 	 */
 	public function testLoad(KunenaForumTopicUser $topicuser)
@@ -83,9 +85,10 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test getInstance()
 	 *
-	 * @param KunenaForumTopicUser $topicuser
+	 * @param   KunenaForumTopicUser  $topicuser
 	 *
 	 * @return KunenaForumTopicUser
+	 * @throws Exception
 	 * @depends testCreate
 	 */
 	public function testGetInstance(KunenaForumTopicUser $topicuser)
@@ -115,8 +118,9 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test save()
 	 *
-	 * @param KunenaForumTopicUser $topicuser
+	 * @param   KunenaForumTopicUser  $topicuser
 	 *
+	 * @throws Exception
 	 * @depends testGetInstance
 	 */
 	public function testSave(KunenaForumTopicUser $topicuser)
@@ -133,8 +137,9 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test delete()
 	 *
-	 * @param KunenaForumTopicUser $topicuser
+	 * @param   KunenaForumTopicUser  $topicuser
 	 *
+	 * @throws Exception
 	 * @depends testGetInstance
 	 */
 	public function testDelete(KunenaForumTopicUser $topicuser)

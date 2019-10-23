@@ -31,6 +31,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function renderPosition()
 	{

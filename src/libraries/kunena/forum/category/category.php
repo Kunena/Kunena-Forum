@@ -243,6 +243,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -283,7 +284,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   boolean  $value  True for subscribe, false for unsubscribe.
 	 * @param   mixed    $user   user
 	 *
-	 * @return void
+	 * @return bool
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -694,6 +695,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return Joomla\CMS\Uri\Uri
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUri($category = null, $action = null)
 	{
@@ -979,6 +981,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getParent()
 	{

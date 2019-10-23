@@ -926,6 +926,7 @@ HTML;
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{

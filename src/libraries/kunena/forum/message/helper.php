@@ -463,11 +463,12 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * Returns KunenaForumMessage object.
 	 *
-	 * @param   null $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   null  $identifier  The message to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumMessage    The message object.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -675,8 +676,11 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * Get last IP address used by the user
 	 *
-	 * @param   int $userid
+	 * @param   int  $userid
+	 *
+	 * @return bool|mixed
 	 * @since 6.0.0
+	 * @throws Exception
 	 */
 	public static function getLastUserIP(int $userid)
 	{

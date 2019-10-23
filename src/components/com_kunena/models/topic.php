@@ -119,6 +119,7 @@ class KunenaModelTopic extends KunenaModel
 	/**
 	 * @return KunenaForumCategory
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategory()
 	{

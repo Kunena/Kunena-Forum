@@ -66,6 +66,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

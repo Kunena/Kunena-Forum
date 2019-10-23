@@ -60,6 +60,7 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function behavior()
 	{
@@ -153,6 +154,7 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{

@@ -2311,6 +2311,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check if the IP, username or email adress given are blacklisted
 	 *
+	 * @param $message
+	 *
 	 * @return boolean
 	 * @since 6.0.0
 	 */

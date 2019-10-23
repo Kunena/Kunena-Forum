@@ -102,6 +102,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumAnnouncement
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -221,21 +222,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 				return KunenaHtmlParser::parseBBCode($this->description, '', '', '', 'announcement_description');
 			case 'created_by':
 				return $this->getAuthor()->getLink();
-			case 'created':
-				if (!$mode)
-				{
-					$mode = 'date_today';
-				}
-
-				return $this->getCreationDate()->toKunena($mode);
 			case 'publish_up':
-				if (!$mode)
-				{
-					$mode = 'date_today';
-				}
-
-				return $this->getCreationDate()->toKunena($mode);
 			case 'publish_down':
+			case 'created':
 				if (!$mode)
 				{
 					$mode = 'date_today';

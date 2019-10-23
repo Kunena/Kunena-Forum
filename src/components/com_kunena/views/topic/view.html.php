@@ -253,11 +253,12 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
-	 * @throws null
+	 * @return bool
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function DisplayCreate($tpl = null)
 	{
@@ -348,11 +349,12 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
-	 * @throws null
+	 * @return bool
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function DisplayReply($tpl = null)
 	{

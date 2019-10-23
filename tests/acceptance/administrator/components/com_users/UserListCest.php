@@ -28,11 +28,12 @@ class UserListCest
 	/**
 	 * Create a user
 	 *
-	 * @param   \Step\Acceptance\Administrator\Admin  $I The AcceptanceTester Object
-	 *
-	 * @since   3.7.3
+	 * @param   \Step\Acceptance\Administrator\Admin  $I  The AcceptanceTester Object
 	 *
 	 * @return  void
+	 * @since   3.7.3
+	 *
+	 * @throws Exception
 	 */
 	public function createUser(\Step\Acceptance\Administrator\Admin $I)
 	{
@@ -63,13 +64,14 @@ class UserListCest
 	/**
 	 * Edit a user
 	 *
-	 * @param   \Step\Acceptance\Administrator\Admin $I  The AcceptanceTester Object
+	 * @param   \Step\Acceptance\Administrator\Admin  $I  The AcceptanceTester Object
 	 *
+	 * @return  void
 	 * @since   3.7.3
 	 *
 	 * @depends createUser
 	 *
-	 * @return  void
+	 * @throws Exception
 	 */
 	public function editUser(\Step\Acceptance\Administrator\Admin $I)
 	{

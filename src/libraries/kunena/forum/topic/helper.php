@@ -32,6 +32,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{

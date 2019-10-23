@@ -131,15 +131,16 @@ class Parser
         throw new ParserException("$msg: $loc");
     }
 
-    /**
-     * Parser buffer
-     *
-     * @api
-     *
-     * @param string $buffer
-     *
-     * @return \Leafo\ScssPhp\Block
-     */
+	/**
+	 * Parser buffer
+	 *
+	 * @api
+	 *
+	 * @param   string  $buffer
+	 *
+	 * @return \Leafo\ScssPhp\Block
+	 * @throws ParserException
+	 */
     public function parse($buffer)
     {
         // strip BOM (byte order marker)
@@ -238,45 +239,46 @@ class Parser
         return $selector;
     }
 
-    /**
-     * Parse a single chunk off the head of the buffer and append it to the
-     * current parse environment.
-     *
-     * Returns false when the buffer is empty, or when there is an error.
-     *
-     * This function is called repeatedly until the entire document is
-     * parsed.
-     *
-     * This parser is most similar to a recursive descent parser. Single
-     * functions represent discrete grammatical rules for the language, and
-     * they are able to capture the text that represents those rules.
-     *
-     * Consider the function Compiler::keyword(). (All parse functions are
-     * structured the same.)
-     *
-     * The function takes a single reference argument. When calling the
-     * function it will attempt to match a keyword on the head of the buffer.
-     * If it is successful, it will place the keyword in the referenced
-     * argument, advance the position in the buffer, and return true. If it
-     * fails then it won't advance the buffer and it will return false.
-     *
-     * All of these parse functions are powered by Compiler::match(), which behaves
-     * the same way, but takes a literal regular expression. Sometimes it is
-     * more convenient to use match instead of creating a new function.
-     *
-     * Because of the format of the functions, to parse an entire string of
-     * grammatical rules, you can chain them together using &&.
-     *
-     * But, if some of the rules in the chain succeed before one fails, then
-     * the buffer position will be left at an invalid state. In order to
-     * avoid this, Compiler::seek() is used to remember and set buffer positions.
-     *
-     * Before parsing a chain, use $s = $this->seek() to remember the current
-     * position into $s. Then if a chain fails, use $this->seek($s) to
-     * go back where we started.
-     *
-     * @return boolean
-     */
+	/**
+	 * Parse a single chunk off the head of the buffer and append it to the
+	 * current parse environment.
+	 *
+	 * Returns false when the buffer is empty, or when there is an error.
+	 *
+	 * This function is called repeatedly until the entire document is
+	 * parsed.
+	 *
+	 * This parser is most similar to a recursive descent parser. Single
+	 * functions represent discrete grammatical rules for the language, and
+	 * they are able to capture the text that represents those rules.
+	 *
+	 * Consider the function Compiler::keyword(). (All parse functions are
+	 * structured the same.)
+	 *
+	 * The function takes a single reference argument. When calling the
+	 * function it will attempt to match a keyword on the head of the buffer.
+	 * If it is successful, it will place the keyword in the referenced
+	 * argument, advance the position in the buffer, and return true. If it
+	 * fails then it won't advance the buffer and it will return false.
+	 *
+	 * All of these parse functions are powered by Compiler::match(), which behaves
+	 * the same way, but takes a literal regular expression. Sometimes it is
+	 * more convenient to use match instead of creating a new function.
+	 *
+	 * Because of the format of the functions, to parse an entire string of
+	 * grammatical rules, you can chain them together using &&.
+	 *
+	 * But, if some of the rules in the chain succeed before one fails, then
+	 * the buffer position will be left at an invalid state. In order to
+	 * avoid this, Compiler::seek() is used to remember and set buffer positions.
+	 *
+	 * Before parsing a chain, use $s = $this->seek() to remember the current
+	 * position into $s. Then if a chain fails, use $this->seek($s) to
+	 * go back where we started.
+	 *
+	 * @return boolean
+	 * @throws ParserException
+	 */
     protected function parseChunk()
     {
         $s = $this->seek();
@@ -1446,13 +1448,13 @@ class Parser
         return false;
     }
 
-    /**
-     * Parse function call
-     *
-     * @param array $out
-     *
-     * @return boolean
-     */
+	/**
+	 * Parse function call
+	 *
+	 * @param $func
+	 *
+	 * @return boolean
+	 */
     protected function func(&$func)
     {
         $s = $this->seek();
@@ -1540,13 +1542,14 @@ class Parser
         return true;
     }
 
-    /**
-     * Parse mixin/function definition  argument list
-     *
-     * @param array $out
-     *
-     * @return boolean
-     */
+	/**
+	 * Parse mixin/function definition  argument list
+	 *
+	 * @param   array  $out
+	 *
+	 * @return boolean
+	 * @throws ParserException
+	 */
     protected function argumentDef(&$out)
     {
         $s = $this->seek();
@@ -1675,13 +1678,12 @@ class Parser
         return false;
     }
 
-    /**
-     * Parse number with unit
-     *
-     * @param array $out
-     *
-     * @return boolean
-     */
+	/**
+	 * Parse number with unit
+	 *
+	 * @param $unit
+	 * @return boolean
+	 */
     protected function unit(&$unit)
     {
         if ($this->match('([0-9]*(\.)?[0-9]+)([%a-zA-Z]+)?', $m)) {
@@ -2372,15 +2374,20 @@ class Parser
         return $value;
     }
 
-    /**
-     * @deprecated
-     *
-     * {@internal
-     *     advance counter to next occurrence of $what
-     *     $until - don't include $what in advance
-     *     $allowNewline, if string, will be used as valid char set
-     * }}
-     */
+	/**
+	 * @deprecated
+	 *
+	 * {@internal
+	 *     advance counter to next occurrence of $what
+	 *     $until - don't include $what in advance
+	 *     $allowNewline, if string, will be used as valid char set
+	 * }}
+	 * @param         $what
+	 * @param         $out
+	 * @param   bool  $until
+	 * @param   bool  $allowNewline
+	 * @return bool
+	 */
     protected function to($what, &$out, $until = false, $allowNewline = false)
     {
         if (is_string($allowNewline)) {
@@ -2448,13 +2455,13 @@ class Parser
         }
     }
 
-    /**
-     * Get source line number and column (given character position in the buffer)
-     *
-     * @param integer $pos
-     *
-     * @return integer
-     */
+	/**
+	 * Get source line number and column (given character position in the buffer)
+	 *
+	 * @param   integer  $pos
+	 *
+	 * @return array
+	 */
     private function getSourcePosition($pos)
     {
         $low = 0;

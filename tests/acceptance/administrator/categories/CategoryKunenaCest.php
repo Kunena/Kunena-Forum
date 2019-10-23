@@ -14,9 +14,9 @@ class CategoryKunenaCest
 	/**
 	 * Install Kunena
 	 *
-	 * @param AcceptanceTester $I
+	 * @param   AcceptanceTester  $I
 	 *
-	 * @return InstallKunenaCategoryCest
+	 * @return void
 	 */
 	public function addKunenaCategorySection(\AcceptanceTester $I)
 	{
@@ -47,9 +47,9 @@ class CategoryKunenaCest
 	/**
 	 * Install Kunena
 	 *
-	 * @param AcceptanceTester $I
+	 * @param   AcceptanceTester  $I
 	 *
-	 * @return InstallKunenaCategoryCest
+	 * @return void
 	 */
 	public function addKunenaCategoryCategory(\AcceptanceTester $I)
 	{
@@ -80,9 +80,9 @@ class CategoryKunenaCest
 	/**
 	 * Install Kunena
 	 *
-	 * @param AcceptanceTester $I
+	 * @param   AcceptanceTester  $I
 	 *
-	 * @return InstallKunenaCategoryCest
+	 * @return void
 	 */
 	public function addKunenaCategorySubCategory(\AcceptanceTester $I)
 	{
@@ -113,9 +113,9 @@ class CategoryKunenaCest
 	/**
 	 * Install Kunena
 	 *
-	 * @param AcceptanceTester $I
+	 * @param   AcceptanceTester  $I
 	 *
-	 * @return InstallKunenaCategoryCest
+	 * @return void
 	 */
 	public function addKunenaCategoryRemove(\AcceptanceTester $I)
 	{

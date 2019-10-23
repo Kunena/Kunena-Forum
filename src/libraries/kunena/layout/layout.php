@@ -265,17 +265,8 @@ class KunenaLayout extends KunenaLayoutBase
 					case 'first':
 						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 						break;
-					case 'last':
-						if (!KunenaUserHelper::getMyself()->userid && KunenaConfig::getInstance()->teaser)
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
-						}
-						else
-						{
-							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
-						}
-						break;
 					case 'unread':
+					case 'last':
 						if (!KunenaUserHelper::getMyself()->userid && KunenaConfig::getInstance()->teaser)
 						{
 							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);

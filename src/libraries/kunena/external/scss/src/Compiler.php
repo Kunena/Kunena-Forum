@@ -167,16 +167,17 @@ class Compiler
         $this->sourceNames = [];
     }
 
-    /**
-     * Compile scss
-     *
-     * @api
-     *
-     * @param string $code
-     * @param string $path
-     *
-     * @return string
-     */
+	/**
+	 * Compile scss
+	 *
+	 * @api
+	 *
+	 * @param   string  $code
+	 * @param   string  $path
+	 *
+	 * @return string
+	 * @throws CompilerException
+	 */
     public function compile($code, $path = null)
     {
         $this->indentLevel    = -1;
@@ -330,11 +331,13 @@ class Compiler
         return $out;
     }
 
-    /**
-     * Compile root
-     *
-     * @param \Leafo\ScssPhp\Block $rootBlock
-     */
+	/**
+	 * Compile root
+	 *
+	 * @param   \Leafo\ScssPhp\Block  $rootBlock
+	 *
+	 * @throws \Exception
+	 */
     protected function compileRoot(Block $rootBlock)
     {
         $this->rootBlock = $this->scope = $this->makeOutputBlock(Type::T_ROOT);
@@ -673,11 +676,12 @@ class Compiler
         return $out;
     }
 
-    /**
-     * Compile media
-     *
-     * @param \Leafo\ScssPhp\Block $media
-     */
+	/**
+	 * Compile media
+	 *
+	 * @param   \Leafo\ScssPhp\Block  $media
+	 * @throws \Exception
+	 */
     protected function compileMedia(Block $media)
     {
         $this->pushEnv($media);
@@ -983,12 +987,13 @@ class Compiler
         return false;
     }
 
-    /**
-     * Compile keyframe block
-     *
-     * @param \Leafo\ScssPhp\Block $block
-     * @param array                $selectors
-     */
+	/**
+	 * Compile keyframe block
+	 *
+	 * @param   \Leafo\ScssPhp\Block  $block
+	 * @param   array                 $selectors
+	 * @throws \Exception
+	 */
     protected function compileKeyframeBlock(Block $block, $selectors)
     {
         $env = $this->pushEnv($block);
@@ -1011,12 +1016,13 @@ class Compiler
         $this->popEnv();
     }
 
-    /**
-     * Compile nested block
-     *
-     * @param \Leafo\ScssPhp\Block $block
-     * @param array                $selectors
-     */
+	/**
+	 * Compile nested block
+	 *
+	 * @param   \Leafo\ScssPhp\Block  $block
+	 * @param   array                 $selectors
+	 * @throws \Exception
+	 */
     protected function compileNestedBlock(Block $block, $selectors)
     {
         $this->pushEnv($block);
@@ -1031,24 +1037,25 @@ class Compiler
         $this->popEnv();
     }
 
-    /**
-     * Recursively compiles a block.
-     *
-     * A block is analogous to a CSS block in most cases. A single SCSS document
-     * is encapsulated in a block when parsed, but it does not have parent tags
-     * so all of its children appear on the root level when compiled.
-     *
-     * Blocks are made up of selectors and children.
-     *
-     * The children of a block are just all the blocks that are defined within.
-     *
-     * Compiling the block involves pushing a fresh environment on the stack,
-     * and iterating through the props, compiling each one.
-     *
-     * @see Compiler::compileChild()
-     *
-     * @param \Leafo\ScssPhp\Block $block
-     */
+	/**
+	 * Recursively compiles a block.
+	 *
+	 * A block is analogous to a CSS block in most cases. A single SCSS document
+	 * is encapsulated in a block when parsed, but it does not have parent tags
+	 * so all of its children appear on the root level when compiled.
+	 *
+	 * Blocks are made up of selectors and children.
+	 *
+	 * The children of a block are just all the blocks that are defined within.
+	 *
+	 * Compiling the block involves pushing a fresh environment on the stack,
+	 * and iterating through the props, compiling each one.
+	 *
+	 * @see Compiler::compileChild()
+	 *
+	 * @param   \Leafo\ScssPhp\Block  $block
+	 * @throws \Exception
+	 */
     protected function compileBlock(Block $block)
     {
         $env = $this->pushEnv($block);
@@ -1321,14 +1328,16 @@ class Compiler
         }
     }
 
-    /**
-     * Compile children and throw exception if unexpected @return
-     *
-     * @param array                                $stms
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $out
-     *
-     * @throws \Exception
-     */
+	/**
+	 * Compile children and throw exception if unexpected
+	 *
+	 * @param   array                                 $stms
+	 * @param   \Leafo\ScssPhp\Formatter\OutputBlock  $out
+	 *
+	 * @return void
+	 *
+	 * @throws CompilerException
+	 */
     protected function compileChildrenNoReturn($stms, OutputBlock $out)
     {
         foreach ($stms as $stm) {
@@ -1559,14 +1568,15 @@ class Compiler
         return false;
     }
 
-    /**
-     * Compile child; returns a value to halt execution
-     *
-     * @param array                                $child
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $out
-     *
-     * @return array
-     */
+	/**
+	 * Compile child; returns a value to halt execution
+	 *
+	 * @param   array                                 $child
+	 * @param   \Leafo\ScssPhp\Formatter\OutputBlock  $out
+	 *
+	 * @return array
+	 * @throws CompilerException
+	 */
     protected function compileChild($child, OutputBlock $out)
     {
         $this->sourceIndex  = isset($child[Parser::SOURCE_INDEX]) ? $child[Parser::SOURCE_INDEX] : null;
@@ -1968,14 +1978,14 @@ class Compiler
         return [Type::T_STRING, '', $content];
     }
 
-    /**
-     * Is truthy?
-     *
-     * @param array $value
-     *
-     * @return array
-     */
-    protected function isTruthy($value)
+	/**
+	 * Is truthy?
+	 *
+	 * @param   array  $value
+	 *
+	 * @return bool
+	 */
+	protected function isTruthy($value)
     {
         return $value !== static::$false && $value !== static::$null;
     }
@@ -2435,15 +2445,16 @@ class Compiler
         return $this->reduce($right, true);
     }
 
-    /**
-     * Compare colors
-     *
-     * @param string $op
-     * @param array  $left
-     * @param array  $right
-     *
-     * @return array
-     */
+	/**
+	 * Compare colors
+	 *
+	 * @param   string  $op
+	 * @param   array   $left
+	 * @param   array   $right
+	 *
+	 * @return array
+	 * @throws CompilerException
+	 */
     protected function opColorColor($op, $left, $right)
     {
         $out = [Type::T_COLOR];
@@ -2662,23 +2673,24 @@ class Compiler
         return $thing ? static::$true : static::$false;
     }
 
-    /**
-     * Compiles a primitive value into a CSS property value.
-     *
-     * Values in scssphp are typed by being wrapped in arrays, their format is
-     * typically:
-     *
-     *     array(type, contents [, additional_contents]*)
-     *
-     * The input is expected to be reduced. This function will not work on
-     * things like expressions and variables.
-     *
-     * @api
-     *
-     * @param array $value
-     *
-     * @return string
-     */
+	/**
+	 * Compiles a primitive value into a CSS property value.
+	 *
+	 * Values in scssphp are typed by being wrapped in arrays, their format is
+	 * typically:
+	 *
+	 *     array(type, contents [, additional_contents]*)
+	 *
+	 * The input is expected to be reduced. This function will not work on
+	 * things like expressions and variables.
+	 *
+	 * @api
+	 *
+	 * @param   array  $value
+	 *
+	 * @return string
+	 * @throws CompilerException
+	 */
     public function compileValue($value)
     {
         $value = $this->reduce($value);
@@ -3149,17 +3161,18 @@ class Compiler
         $env->store[$name] = $value;
     }
 
-    /**
-     * Get variable
-     *
-     * @api
-     *
-     * @param string                              $name
-     * @param boolean                             $shouldThrow
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
-     *
-     * @return mixed
-     */
+	/**
+	 * Get variable
+	 *
+	 * @api
+	 *
+	 * @param   string                               $name
+	 * @param   boolean                              $shouldThrow
+	 * @param   \Leafo\ScssPhp\Compiler\Environment  $env
+	 *
+	 * @return mixed
+	 * @throws CompilerException
+	 */
     public function get($name, $shouldThrow = true, Environment $env = null)
     {
         $normalizedName = $this->normalizeName($name);
@@ -3427,12 +3440,13 @@ class Compiler
         $this->registeredFeatures[$name] = true;
     }
 
-    /**
-     * Import file
-     *
-     * @param string $path
-     * @param array  $out
-     */
+	/**
+	 * Import file
+	 *
+	 * @param   string  $path
+	 * @param   array   $out
+	 * @throws \Exception
+	 */
     protected function importFile($path, $out)
     {
         // see if tree is cached
@@ -3516,16 +3530,16 @@ class Compiler
         $this->encoding = $encoding;
     }
 
-    /**
-     * Ignore errors?
-     *
-     * @api
-     *
-     * @param boolean $ignoreErrors
-     *
-     * @return \Leafo\ScssPhp\Compiler
-     */
-    public function setIgnoreErrors($ignoreErrors)
+	/**
+	 * Ignore errors?
+	 *
+	 * @api
+	 *
+	 * @param   boolean  $ignoreErrors
+	 *
+	 * @return void
+	 */
+	public function setIgnoreErrors($ignoreErrors)
     {
         $this->ignoreErrors = $ignoreErrors;
     }
@@ -3586,15 +3600,16 @@ class Compiler
         return file_exists($name) && is_file($name);
     }
 
-    /**
-     * Call SCSS @function
-     *
-     * @param string $name
-     * @param array  $argValues
-     * @param array  $returnValue
-     *
-     * @return boolean Returns true if returnValue is set; otherwise, false
-     */
+	/**
+	 * Call SCSS @function
+	 *
+	 * @param   string  $name
+	 * @param   array   $argValues
+	 * @param   array   $returnValue
+	 *
+	 * @return boolean Returns true if returnValue is set; otherwise, false
+	 * @throws \Exception
+	 */
     protected function callScssFunction($name, $argValues, &$returnValue)
     {
         $func = $this->get(static::$namespaces['function'] . $name, false);
@@ -4832,13 +4847,14 @@ class Compiler
         return $args[$max[0]];
     }
 
-    /**
-     * Helper to normalize args containing numbers
-     *
-     * @param array $args
-     *
-     * @return array
-     */
+	/**
+	 * Helper to normalize args containing numbers
+	 *
+	 * @param   array  $args
+	 *
+	 * @return array
+	 * @throws CompilerException
+	 */
     protected function getNormalizedNumbers($args)
     {
         $unit = null;

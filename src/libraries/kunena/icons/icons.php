@@ -958,10 +958,12 @@ class KunenaIcons
 	/**
 	 * Return the picture icon
 	 *
+	 * @param   bool  $big
+	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since K5.0
+	 * @throws Exception
 	 */
 	public static function picture($big = false)
 	{
@@ -994,6 +996,7 @@ class KunenaIcons
 	/**
 	 * Return the file icon
 	 *
+	 * @param   bool  $big
 	 * @return string
 	 *
 	 * @throws Exception

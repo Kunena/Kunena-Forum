@@ -581,6 +581,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getMessagesByTopic($topic_id)
 	{
@@ -614,6 +615,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @return integer
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getAccessLevel($item)
 	{

@@ -141,13 +141,13 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Executes a specific Selenium System Tests in your machine
 	 *
-	 * @param string $seleniumPath   Optional path to selenium-standalone-server-x.jar
-	 * @param string $pathToTestFile Optional name of the test to be run
-	 * @param string $suite          Optional name of the suite containing the tests, Acceptance by default.
+	 * @param   string  $pathToTestFile  Optional name of the test to be run
+	 * @param   string  $suite           Optional name of the suite containing the tests, Acceptance by default.
 	 *
 	 * @return mixed
 	 * @since Kunena
- 	 */
+	 * @throws ReflectionException
+	 */
 	public function runTest($pathToTestFile = null, $suite = 'acceptance')
 	{
 		$this->runSelenium();

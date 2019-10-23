@@ -49,7 +49,7 @@ namespace Nbbc;
 
 /**
  * A parser that converts BBCode formatted strings into HTML.
- * 
+ *
  * This file implements the New BBCode parser.  Usage is simple: Just create
  * a BBCode object, and then call $bbcode->Parse() with a string containing
  * BBCode, and it returns HTML.
@@ -1077,7 +1077,7 @@ REGEX;
     $hostRegex # host
     (?:
         (?=[/?#]) # the part after the domain must be one of these characters
-        [@a-zA-Z0-9!#-'*-.:;\/;?-z~=]*[a-zA-Z0-9#/=]
+        [@a-zA-Z0-9!#-'*-.:;\/?-z~=]*[a-zA-Z0-9#/=]
     )? # path, query string etc
 )
 REGEX;

@@ -173,7 +173,7 @@ html {
 
 .wysibb .wysibb-toolbar .wysibb-toolbar-container .wysibb-toolbar-btn .fonticon {
 	color: #333;
-	font-family: 'WysiBBiconFont';
+	font-family: 'WysiBBiconFont', sans-serif;
 	font-size: 18px;
 	line-height: 28px;
 	text-shadow: 0 1px 0 #fff;

@@ -377,45 +377,7 @@ jQuery(document).ready(function ($) {
 			}
 		}
 
-		if (!$list)
-		{
-			// Legacy support.
-			$id                          = $category->access;
-			$name                        = $this->getGroupName($accesstype, $id);
-			$list["{$accesstype}.{$id}"] = array('type'  => 'joomla.level', 'id' => $id,
-												 'title' => $name, );
-		}
-
 		return $list;
-	}
-
-	/**
-	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
-	 *
-	 * @param   string  $accesstype  Access type.
-	 * @param   mixed   $id          Group id.
-	 *
-	 * @return string|void
-	 *
-	 * @since      Kunena
-	 * @deprecated 6.0.0
-	 */
-	public function getGroupName($accesstype, $id)
-	{
-		if (!isset($this->accesstypes[$accesstype]))
-		{
-			return Text::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
-		}
-
-		foreach ($this->accesstypes[$accesstype] as $access)
-		{
-			if (method_exists($access, 'getGroupName'))
-			{
-				return $access->getGroupName($accesstype, $id);
-			}
-		}
-
-		return;
 	}
 
 	/**

@@ -1854,37 +1854,6 @@ HTML;
 	}
 
 	/**
-	 * Legacy template support.
-	 *
-	 * @param   string  $search  search
-	 *
-	 * @return array
-	 * @since      Kunena
-	 * @deprecated K4.0
-	 */
-	public function mapLegacyView($search)
-	{
-		if (!isset($this->map))
-		{
-			$file = JPATH_SITE . '/' . $this->getFile('mapping.php');
-
-			if (is_file($file))
-			{
-				include $file;
-			}
-		}
-
-		$search = rtrim($search, '_');
-
-		if (isset($this->map[$search]))
-		{
-			return $this->map[$search];
-		}
-
-		return array($search, 'default');
-	}
-
-	/**
 	 * Set the category iconset value
 	 *
 	 * @param   string  $iconset  iconset

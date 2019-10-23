@@ -392,22 +392,4 @@ class KunenaLayout extends KunenaLayoutBase
 
 		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $con);
 	}
-
-	/**
-	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
-	 *
-	 * @param   KunenaView  $view  view
-	 *
-	 * @return $this
-	 * @since      4.0
-	 *
-	 * @since      Kunena
-	 * @deprecated 5.0
-	 */
-	public function setLegacy(KunenaView $view = null)
-	{
-		$this->legacy = $view;
-
-		return $this;
-	}
 }

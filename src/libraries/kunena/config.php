@@ -120,13 +120,6 @@ class KunenaConfig extends CMSObject
 	public $avataroncat = 0;
 
 	/**
-	 * @var    string  Category image path; input, text
-	 * @since      1.0.0
-	 * @deprecated 4.0
-	 */
-	public $catimagepath = 'category_images';
-
-	/**
 	 * @var    integer  Show child category icon; select, boolean
 	 * @since  1.0.0
 	 */

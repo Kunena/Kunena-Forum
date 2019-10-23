@@ -655,46 +655,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return KunenaForumMessage
 	 *
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public function getMessage()
 	{
 		return KunenaForumMessageHelper::get($this->mesid);
-	}
-
-	/**
-	 * @param   string $action action
-	 * @param   mixed  $user   user
-	 * @param   bool   $silent silent
-	 *
-	 * @return boolean
-	 * @throws null
-	 * @deprecated K4.0
-	 * @since      Kunena
-	 */
-	public function authorise($action = 'read', $user = null, $silent = false)
-	{
-		if ($user === null)
-		{
-			$user = KunenaUserHelper::getMyself();
-		}
-		elseif (!($user instanceof KunenaUser))
-		{
-			$user = KunenaUserHelper::get($user);
-		}
-
-		$exception = $this->tryAuthorise($action, $user, false);
-
-		if ($silent === false && $exception)
-		{
-			$this->setError($exception->getMessage());
-		}
-
-		if ($silent !== null)
-		{
-			return !$exception;
-		}
-
-		return $exception ? $exception->getMessage() : null;
 	}
 
 	/**

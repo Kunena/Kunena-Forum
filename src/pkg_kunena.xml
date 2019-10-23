@@ -27,7 +27,6 @@
         <filename type="plugin" group="kunena" id="gravatar">plg_kunena_gravatar_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="joomla">plg_kunena_joomla_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="kunena">plg_kunena_kunena_v@kunenaversion@.zip</filename>
-        <filename type="plugin" group="kunena" id="uddeim">plg_kunena_uddeim_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
     </files>

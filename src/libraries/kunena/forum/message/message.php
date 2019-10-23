@@ -1296,31 +1296,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
-	 * @param   bool|int|array $ids ids
-	 *
-	 * @deprecated K4.0
-	 * @since      Kunena
-	 * @throws Exception
-	 * @throws null
-	 * @return void
-	 */
-	public function removeAttachment($ids)
-	{
-		if ($ids === false)
-		{
-			$ids = array_keys($this->getAttachments());
-		}
-		elseif (!is_array($ids))
-		{
-			$ids = array((int) $ids);
-		}
-
-		$this->removeAttachments($ids);
-	}
-
-	/**
-	 * Remove listed attachments from the message.
-	 *
 	 * @param   array $ids ids
 	 *
 	 * @since  K4.0

@@ -44,7 +44,7 @@ class OutputBlock
     public $children;
 
     /**
-     * @var \Leafo\ScssPhp\Formatter\OutputBlock
+     * @var OutputBlock
      */
     public $parent;
 

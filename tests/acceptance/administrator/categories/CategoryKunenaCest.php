@@ -18,7 +18,7 @@ class CategoryKunenaCest
 	 *
 	 * @return void
 	 */
-	public function addKunenaCategorySection(\AcceptanceTester $I)
+	public function addKunenaCategorySection(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
@@ -51,7 +51,7 @@ class CategoryKunenaCest
 	 *
 	 * @return void
 	 */
-	public function addKunenaCategoryCategory(\AcceptanceTester $I)
+	public function addKunenaCategoryCategory(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->comment('Add new category');
@@ -84,7 +84,7 @@ class CategoryKunenaCest
 	 *
 	 * @return void
 	 */
-	public function addKunenaCategorySubCategory(\AcceptanceTester $I)
+	public function addKunenaCategorySubCategory(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->comment('Add new subcategory');
@@ -117,7 +117,7 @@ class CategoryKunenaCest
 	 *
 	 * @return void
 	 */
-	public function addKunenaCategoryRemove(\AcceptanceTester $I)
+	public function addKunenaCategoryRemove(AcceptanceTester $I)
 	{
 		//$I->doAdministratorLogin();
 		//$I->comment('Add new subcategory');

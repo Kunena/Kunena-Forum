@@ -24,7 +24,7 @@ ALTER TABLE `#__kunena_categories` MODIFY COLUMN `checked_out_time` datetime NOT
 
 UPDATE `#__kunena_announcement`
 SET checked_out_time='1000-01-01 00:00:00'
-WHERE checked_out_time = '0000-00-00 00:00:00'
+WHERE checked_out_time = '0000-00-00 00:00:00';
 
 ALTER TABLE `#__kunena_polls_users` MODIFY COLUMN `lasttime` datetime NOT NULL default
   '1000-01-01 00:00:00';

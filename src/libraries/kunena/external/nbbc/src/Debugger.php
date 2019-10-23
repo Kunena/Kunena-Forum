@@ -23,7 +23,7 @@ namespace Nbbc;
 //-----------------------------------------------------------------------------
 //
 //  Copyright (c) 2008-9, the Phantom Inker.  All rights reserved.
-//  
+//
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions
@@ -56,6 +56,8 @@ namespace Nbbc;
 //
 //-----------------------------------------------------------------------------
 
+use DateTime;
+
 class Debugger {
     public static $level = 9;
     public static $debug = 1;
@@ -72,7 +74,7 @@ class Debugger {
                 $string .= "\n";
             }
 
-            $date = new \DateTime();
+            $date = new DateTime();
             $string = '['.$date->format('Y-m-d H:i:s.u').'] '.$string;
 
             if (static::$log_file) {

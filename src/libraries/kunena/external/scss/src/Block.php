@@ -24,7 +24,7 @@ class Block
     public $type;
 
     /**
-     * @var \Leafo\ScssPhp\Block
+     * @var Block
      */
     public $parent;
 

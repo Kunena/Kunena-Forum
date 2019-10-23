@@ -380,7 +380,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$parent->isAuthorised('reply');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'notice');
 
@@ -439,7 +439,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$this->message->isAuthorised('edit');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'notice');
 

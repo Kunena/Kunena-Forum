@@ -744,7 +744,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				{
 					$attachment->save();
 				}
-				catch (\Exception $e)
+				catch (Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
 				}
@@ -758,7 +758,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				{
 					$attachment->tryAuthorise('createimage', null, false);
 				}
-				catch (\Exception $e)
+				catch (Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
 				}
@@ -769,7 +769,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				{
 					$attachment->tryAuthorise('createfile', null, false);
 				}
-				catch (\Exception $e)
+				catch (Exception $e)
 				{
 					$app->enqueueMessage($e->getMessage(), 'error');
 				}
@@ -779,7 +779,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$attachment->save();
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$app->enqueueMessage($e->getMessage(), 'error');
 			}

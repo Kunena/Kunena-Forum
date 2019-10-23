@@ -112,6 +112,7 @@ class KunenaAccessComprofiler
 
 	/**
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function loadGroups()
 	{
@@ -181,6 +182,7 @@ class KunenaAccessComprofiler
 
 	/**
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function loadCategories()
 	{

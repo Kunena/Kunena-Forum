@@ -306,7 +306,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @param   \JForm  $form   A form object.
+	 * @param   JForm   $form   A form object.
 	 * @param   mixed   $data   The data expected for the form.
 	 * @param   string  $group  Form group.
 	 *
@@ -314,7 +314,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @since   1.6
 	 * @throws    Exception if there is an error in the form event.
 	 */
-	protected function preprocessForm(\JForm $form, $data, $group = 'content')
+	protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
 		$folder  = $this->getState('item.folder');
 		$element = $this->getState('item.element');

@@ -225,7 +225,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$this->me->userid == $target->userid && $this->me->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'notice');
 			$this->setRedirectBack();
@@ -239,7 +239,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$target->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'notice');
 			$this->setRedirectBack();
@@ -323,7 +323,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$success;
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$errors++;
 			$this->app->enqueueMessage($e->getMessage(), 'error');
@@ -743,7 +743,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$success;
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -979,7 +979,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$me->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1018,7 +1018,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$me->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}

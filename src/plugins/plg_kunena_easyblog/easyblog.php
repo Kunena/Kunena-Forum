@@ -67,7 +67,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return \KunenaAvatarEasyblog|null
+	 * @return KunenaAvatarEasyblog|null
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()
@@ -85,7 +85,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return \KunenaProfileEasyblog|null
+	 * @return KunenaProfileEasyblog|null
 	 * @since Kunena
 	 */
 	public function onKunenaGetProfile()

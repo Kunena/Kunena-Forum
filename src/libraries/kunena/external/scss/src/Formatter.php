@@ -62,7 +62,7 @@ abstract class Formatter
     public $keepSemicolons;
 
     /**
-     * @var \Leafo\ScssPhp\Formatter\OutputBlock
+     * @var OutputBlock
      */
     protected $currentBlock;
 
@@ -77,7 +77,7 @@ abstract class Formatter
     protected $currentColumn;
 
     /**
-     * @var \Leafo\ScssPhp\SourceMap\SourceMapGenerator
+     * @var SourceMapGenerator
      */
     protected $sourceMapGenerator;
 
@@ -136,7 +136,7 @@ abstract class Formatter
     /**
      * Output lines inside a block
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param   OutputBlock  $block
      */
     protected function blockLines(OutputBlock $block)
     {
@@ -154,7 +154,7 @@ abstract class Formatter
     /**
      * Output block selectors
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param   OutputBlock  $block
      */
     protected function blockSelectors(OutputBlock $block)
     {
@@ -168,7 +168,7 @@ abstract class Formatter
     /**
      * Output block children
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param   OutputBlock  $block
      */
     protected function blockChildren(OutputBlock $block)
     {
@@ -180,7 +180,7 @@ abstract class Formatter
     /**
      * Output non-empty block
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param   OutputBlock  $block
      */
     protected function block(OutputBlock $block)
     {
@@ -222,8 +222,8 @@ abstract class Formatter
      *
      * @api
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock             $block              An abstract syntax tree
-     * @param \Leafo\ScssPhp\SourceMap\SourceMapGenerator|null $sourceMapGenerator Optional source map generator
+     * @param   OutputBlock              $block               An abstract syntax tree
+     * @param   SourceMapGenerator|null  $sourceMapGenerator  Optional source map generator
      *
      * @return string
      */

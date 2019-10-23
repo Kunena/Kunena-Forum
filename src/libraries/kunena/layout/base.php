@@ -581,19 +581,20 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Set the object properties based on a named array/hash.
 	 *
+	 * @see     set()
+	 *
 	 * @param   mixed $properties Either an associative array or another object.
 	 *
 	 * @return KunenaLayout|KunenaLayoutBase
 	 *
-	 * @see     set()
-	 * @throws \InvalidArgumentException
 	 * @since   Kunena
+	 * @throws InvalidArgumentException
 	 */
 	public function setProperties($properties)
 	{
 		if (!is_array($properties) && !is_object($properties))
 		{
-			throw new \InvalidArgumentException('Parameter should be either array or an object.');
+			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}
 
 		foreach ((array) $properties as $k => $v)

@@ -8,6 +8,7 @@
  */
 
 use Page\Acceptance\Administrator\UserListPage;
+use Step\Acceptance\Administrator\Admin;
 
 /**
  * Administrator User Tests
@@ -28,14 +29,14 @@ class UserListCest
 	/**
 	 * Create a user
 	 *
-	 * @param   \Step\Acceptance\Administrator\Admin  $I  The AcceptanceTester Object
+	 * @param   Admin  $I  The AcceptanceTester Object
 	 *
 	 * @return  void
 	 * @since   3.7.3
 	 *
 	 * @throws Exception
 	 */
-	public function createUser(\Step\Acceptance\Administrator\Admin $I)
+	public function createUser(Admin $I)
 	{
 		$I->comment('I am going to create a user');
 		$I->doAdministratorLogin();
@@ -64,7 +65,7 @@ class UserListCest
 	/**
 	 * Edit a user
 	 *
-	 * @param   \Step\Acceptance\Administrator\Admin  $I  The AcceptanceTester Object
+	 * @param   Admin  $I  The AcceptanceTester Object
 	 *
 	 * @return  void
 	 * @since   3.7.3
@@ -73,7 +74,7 @@ class UserListCest
 	 *
 	 * @throws Exception
 	 */
-	public function editUser(\Step\Acceptance\Administrator\Admin $I)
+	public function editUser(Admin $I)
 	{
 		$I->comment('I am going to edit a user');
 		$I->doAdministratorLogin();

@@ -11,6 +11,7 @@
 
 namespace Leafo\ScssPhp\Node;
 
+use ArrayAccess;
 use Leafo\ScssPhp\Compiler;
 use Leafo\ScssPhp\Node;
 use Leafo\ScssPhp\Type;
@@ -26,7 +27,7 @@ use Leafo\ScssPhp\Type;
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
-class Number extends Node implements \ArrayAccess
+class Number extends Node implements ArrayAccess
 {
     /**
      * @var integer
@@ -100,7 +101,7 @@ class Number extends Node implements \ArrayAccess
      *
      * @param array $units
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     public function coerce($units)
     {
@@ -123,7 +124,7 @@ class Number extends Node implements \ArrayAccess
     /**
      * Normalize number
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     public function normalize()
     {

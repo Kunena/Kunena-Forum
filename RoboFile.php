@@ -6,7 +6,13 @@
  * Or do: $ composer update, and afterwards you will be able to execute robo like $ php vendor/bin/robo
  *
  * @see http://robo.li/
+ * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  */
+
+use Joomla\Jorobo\Tasks\loadTasks;
+use Robo\Tasks;
 
 require_once 'vendor/autoload.php';
 
@@ -15,11 +21,11 @@ if (!defined('JPATH_BASE'))
 	define('JPATH_BASE', __DIR__);
 }
 
-class RoboFile extends \Robo\Tasks
+class RoboFile extends Tasks
 {
 	// Load tasks from composer, see composer.json
 	use \joomla_projects\robo\loadTasks;
-	use \Joomla\Jorobo\Tasks\loadTasks;
+	use loadTasks;
 
 	/**
 	 * File extension for executables
@@ -339,7 +345,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Get (optional) configuration from an external file
 	 *
-	 * @return \stdClass|null
+	 * @return stdClass|null
 	 */
 	public function getConfiguration()
 	{

@@ -113,8 +113,8 @@ class KunenaGravatar
 	 *
 	 * @return KunenaGravatar
 	 *
-	 * @throws \InvalidArgumentException
 	 * @since Kunena
+	 * @throws InvalidArgumentException
 	 */
 	public function setAvatarSize($size)
 	{
@@ -277,8 +277,8 @@ class KunenaGravatar
 	 *
 	 * @return KunenaGravatar
 	 *
-	 * @throws \InvalidArgumentException
 	 * @since Kunena
+	 * @throws InvalidArgumentException
 	 */
 	public function setMaxRating($rating)
 	{
@@ -317,8 +317,8 @@ class KunenaGravatar
 	 *
 	 * @return KunenaGravatar
 	 *
-	 * @throws \InvalidArgumentException
 	 * @since Kunena
+	 * @throws InvalidArgumentException
 	 */
 	public function setDefaultImage($image)
 	{

@@ -11,6 +11,8 @@
 
 namespace Leafo\ScssPhp;
 
+use ArrayAccess;
+use Exception;
 use Leafo\ScssPhp\Base\Range;
 use Leafo\ScssPhp\Block;
 use Leafo\ScssPhp\Colors;
@@ -18,10 +20,12 @@ use Leafo\ScssPhp\Compiler\Environment;
 use Leafo\ScssPhp\Exception\CompilerException;
 use Leafo\ScssPhp\Formatter\OutputBlock;
 use Leafo\ScssPhp\Node;
+use Leafo\ScssPhp\Node\Number;
 use Leafo\ScssPhp\SourceMap\SourceMapGenerator;
 use Leafo\ScssPhp\Type;
 use Leafo\ScssPhp\Parser;
 use Leafo\ScssPhp\Util;
+use stdClass;
 
 /**
  * The scss compiler and parser.
@@ -129,7 +133,7 @@ class Compiler
     protected $sourceMapOptions = [];
 
     /**
-     * @var string|\Leafo\ScssPhp\Formatter
+     * @var string|Formatter
      */
     protected $formatter = 'Leafo\ScssPhp\Formatter\Nested';
 
@@ -137,7 +141,7 @@ class Compiler
     protected $rootBlock;
 
     /**
-     * @var \Leafo\ScssPhp\Compiler\Environment
+     * @var Environment
      */
     protected $env;
     protected $scope;
@@ -280,7 +284,7 @@ class Compiler
      *
      * @param array     $target
      * @param array     $origin
-     * @param \stdClass $block
+     * @param stdClass $block
      */
     protected function pushExtends($target, $origin, $block)
     {
@@ -306,7 +310,7 @@ class Compiler
      * @param string $type
      * @param array  $selectors
      *
-     * @return \Leafo\ScssPhp\Formatter\OutputBlock
+     * @return OutputBlock
      */
     protected function makeOutputBlock($type, $selectors = null)
     {
@@ -336,7 +340,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $rootBlock
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function compileRoot(Block $rootBlock)
     {
@@ -375,8 +379,8 @@ class Compiler
     /**
      * Flatten selectors
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
-     * @param string                               $parentKey
+     * @param   OutputBlock  $block
+     * @param string         $parentKey
      */
     protected function flattenSelectors(OutputBlock $block, $parentKey = null)
     {
@@ -680,7 +684,7 @@ class Compiler
 	 * Compile media
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $media
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function compileMedia(Block $media)
     {
@@ -735,9 +739,9 @@ class Compiler
     /**
      * Media parent
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $scope
+     * @param   OutputBlock  $scope
      *
-     * @return \Leafo\ScssPhp\Formatter\OutputBlock
+     * @return OutputBlock
      */
     protected function mediaParent(OutputBlock $scope)
     {
@@ -947,7 +951,7 @@ class Compiler
      * @param array   $envs
      * @param integer $without
      *
-     * @return \Leafo\ScssPhp\Compiler\Environment
+     * @return Environment
      */
     private function filterWithout($envs, $without)
     {
@@ -992,7 +996,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function compileKeyframeBlock(Block $block, $selectors)
     {
@@ -1021,7 +1025,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function compileNestedBlock(Block $block, $selectors)
     {
@@ -1054,7 +1058,7 @@ class Compiler
 	 * @see Compiler::compileChild()
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function compileBlock(Block $block)
     {
@@ -1312,8 +1316,8 @@ class Compiler
     /**
      * Compile children and return result
      *
-     * @param array                                $stms
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $out
+     * @param array          $stms
+     * @param   OutputBlock  $out
      *
      * @return array
      */
@@ -1331,8 +1335,8 @@ class Compiler
 	/**
 	 * Compile children and throw exception if unexpected
 	 *
-	 * @param   array                                 $stms
-	 * @param   \Leafo\ScssPhp\Formatter\OutputBlock  $out
+	 * @param   array        $stms
+	 * @param   OutputBlock  $out
 	 *
 	 * @return void
 	 *
@@ -1571,8 +1575,8 @@ class Compiler
 	/**
 	 * Compile child; returns a value to halt execution
 	 *
-	 * @param   array                                 $child
-	 * @param   \Leafo\ScssPhp\Formatter\OutputBlock  $out
+	 * @param   array        $child
+	 * @param   OutputBlock  $out
 	 *
 	 * @return array
 	 * @throws CompilerException
@@ -1810,7 +1814,7 @@ class Compiler
                         break;
                     }
 
-                    $this->set($for->var, new Node\Number($start, $unit));
+                    $this->set($for->var, new Number($start, $unit));
                     $start += $d;
 
                     $ret = $this->compileChildren($for->children, $out);
@@ -1903,8 +1907,8 @@ class Compiler
                          ?: $this->get(static::$namespaces['special'] . 'content', false, $this->env);
 
                 if (! $content) {
-                    $content = new \stdClass();
-                    $content->scope = new \stdClass();
+                    $content = new stdClass();
+                    $content->scope = new stdClass();
                     $content->children = $this->storeEnv->parent->block->children;
                     break;
                 }
@@ -2032,7 +2036,7 @@ class Compiler
      * @param array   $value
      * @param boolean $inExp
      *
-     * @return array|\Leafo\ScssPhp\Node\Number
+     * @return array|Number
      */
     protected function reduce($value, $inExp = false)
     {
@@ -2149,10 +2153,10 @@ class Compiler
                 if ($exp[0] === Type::T_NUMBER) {
                     switch ($op) {
                         case '+':
-                            return new Node\Number($exp[1], $exp[2]);
+                            return new Number($exp[1], $exp[2]);
 
                         case '-':
-                            return new Node\Number(-$exp[1], $exp[2]);
+                            return new Number(-$exp[1], $exp[2]);
                     }
                 }
 
@@ -2195,7 +2199,7 @@ class Compiler
 
             case Type::T_STRING:
                 foreach ($value[2] as &$item) {
-                    if (is_array($item) || $item instanceof \ArrayAccess) {
+                    if (is_array($item) || $item instanceof ArrayAccess) {
                         $item = $this->reduce($item);
                     }
                 }
@@ -2307,11 +2311,11 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     protected function opAddNumberNumber($left, $right)
     {
-        return new Node\Number($left[1] + $right[1], $left[2]);
+        return new Number($left[1] + $right[1], $left[2]);
     }
 
     /**
@@ -2320,11 +2324,11 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     protected function opMulNumberNumber($left, $right)
     {
-        return new Node\Number($left[1] * $right[1], $left[2]);
+        return new Number($left[1] * $right[1], $left[2]);
     }
 
     /**
@@ -2333,11 +2337,11 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     protected function opSubNumberNumber($left, $right)
     {
-        return new Node\Number($left[1] - $right[1], $left[2]);
+        return new Number($left[1] - $right[1], $left[2]);
     }
 
     /**
@@ -2346,7 +2350,7 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return array|\Leafo\ScssPhp\Node\Number
+     * @return array|Number
      */
     protected function opDivNumberNumber($left, $right)
     {
@@ -2354,7 +2358,7 @@ class Compiler
             return [Type::T_STRING, '', [$left[1] . $left[2] . '/' . $right[1] . $right[2]]];
         }
 
-        return new Node\Number($left[1] / $right[1], $left[2]);
+        return new Number($left[1] / $right[1], $left[2]);
     }
 
     /**
@@ -2363,11 +2367,11 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     protected function opModNumberNumber($left, $right)
     {
-        return new Node\Number($left[1] % $right[1], $left[2]);
+        return new Number($left[1] % $right[1], $left[2]);
     }
 
     /**
@@ -2650,13 +2654,13 @@ class Compiler
      * @param array $left
      * @param array $right
      *
-     * @return \Leafo\ScssPhp\Node\Number
+     * @return Number
      */
     protected function opCmpNumberNumber($left, $right)
     {
         $n = $left[1] - $right[1];
 
-        return new Node\Number($n ? $n / abs($n) : 0, '');
+        return new Number($n ? $n / abs($n) : 0, '');
     }
 
     /**
@@ -2713,7 +2717,7 @@ class Compiler
                 $b = round($b);
 
                 if (count($value) === 5 && $value[4] !== 1) { // rgba
-                    $a = new Node\Number($value[4], '');
+                    $a = new Number($value[4], '');
 
                     return 'rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $a . ')';
                 }
@@ -2874,7 +2878,7 @@ class Compiler
         $parts = [];
 
         foreach ($string[2] as $part) {
-            if (is_array($part) || $part instanceof \ArrayAccess) {
+            if (is_array($part) || $part instanceof ArrayAccess) {
                 $parts[] = $this->compileValue($part);
             } else {
                 $parts[] = $part;
@@ -2910,7 +2914,7 @@ class Compiler
     /**
      * Find the final set of selectors
      *
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param   Environment  $env
      *
      * @return array
      */
@@ -2983,8 +2987,8 @@ class Compiler
     /**
      * Multiply media
      *
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
-     * @param array                               $childQueries
+     * @param   Environment  $env
+     * @param array          $childQueries
      *
      * @return array
      */
@@ -3024,7 +3028,7 @@ class Compiler
     /**
      * Convert env linked list to stack
      *
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param   Environment  $env
      *
      * @return array
      */
@@ -3042,7 +3046,7 @@ class Compiler
      *
      * @param array $envs
      *
-     * @return \Leafo\ScssPhp\Compiler\Environment
+     * @return Environment
      */
     private function extractEnv($envs)
     {
@@ -3059,7 +3063,7 @@ class Compiler
      *
      * @param \Leafo\ScssPhp\Block $block
      *
-     * @return \Leafo\ScssPhp\Compiler\Environment
+     * @return Environment
      */
     protected function pushEnv(Block $block = null)
     {
@@ -3085,7 +3089,7 @@ class Compiler
     /**
      * Get store environment
      *
-     * @return \Leafo\ScssPhp\Compiler\Environment
+     * @return Environment
      */
     protected function getStoreEnv()
     {
@@ -3095,10 +3099,10 @@ class Compiler
     /**
      * Set variable
      *
-     * @param string                              $name
-     * @param mixed                               $value
-     * @param boolean                             $shadow
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param string         $name
+     * @param mixed          $value
+     * @param boolean        $shadow
+     * @param   Environment  $env
      */
     protected function set($name, $value, $shadow = false, Environment $env = null)
     {
@@ -3118,9 +3122,9 @@ class Compiler
     /**
      * Set existing variable
      *
-     * @param string                              $name
-     * @param mixed                               $value
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param string         $name
+     * @param mixed          $value
+     * @param   Environment  $env
      */
     protected function setExisting($name, $value, Environment $env)
     {
@@ -3152,9 +3156,9 @@ class Compiler
     /**
      * Set raw variable
      *
-     * @param string                              $name
-     * @param mixed                               $value
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param string         $name
+     * @param mixed          $value
+     * @param   Environment  $env
      */
     protected function setRaw($name, $value, Environment $env)
     {
@@ -3166,9 +3170,9 @@ class Compiler
 	 *
 	 * @api
 	 *
-	 * @param   string                               $name
-	 * @param   boolean                              $shouldThrow
-	 * @param   \Leafo\ScssPhp\Compiler\Environment  $env
+	 * @param   string       $name
+	 * @param   boolean      $shouldThrow
+	 * @param   Environment  $env
 	 *
 	 * @return mixed
 	 * @throws CompilerException
@@ -3218,8 +3222,8 @@ class Compiler
     /**
      * Has variable?
      *
-     * @param string                              $name
-     * @param \Leafo\ScssPhp\Compiler\Environment $env
+     * @param string         $name
+     * @param   Environment  $env
      *
      * @return boolean
      */
@@ -3351,7 +3355,7 @@ class Compiler
      */
     public function setNumberPrecision($numberPrecision)
     {
-        Node\Number::$precision = $numberPrecision;
+        Number::$precision = $numberPrecision;
     }
 
     /**
@@ -3445,7 +3449,7 @@ class Compiler
 	 *
 	 * @param   string  $path
 	 * @param   array   $out
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function importFile($path, $out)
     {
@@ -3551,7 +3555,7 @@ class Compiler
      *
      * @param string $msg Message with optional sprintf()-style vararg parameters
      *
-     * @throws \Leafo\ScssPhp\Exception\CompilerException
+     * @throws CompilerException
      */
     public function throwError($msg)
     {
@@ -3574,7 +3578,7 @@ class Compiler
      *
      * @param string $name
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function handleImportLoop($name)
     {
@@ -3608,7 +3612,7 @@ class Compiler
 	 * @param   array   $returnValue
 	 *
 	 * @return boolean Returns true if returnValue is set; otherwise, false
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     protected function callScssFunction($name, $argValues, &$returnValue)
     {
@@ -3760,7 +3764,7 @@ class Compiler
      * @param array $argDef
      * @param array $argValues
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function applyArguments($argDef, $argValues)
     {
@@ -3877,11 +3881,11 @@ class Compiler
      *
      * @param mixed $value
      *
-     * @return array|\Leafo\ScssPhp\Node\Number
+     * @return array|Number
      */
     private function coerceValue($value)
     {
-        if (is_array($value) || $value instanceof \ArrayAccess) {
+        if (is_array($value) || $value instanceof ArrayAccess) {
             return $value;
         }
 
@@ -3894,7 +3898,7 @@ class Compiler
         }
 
         if (is_numeric($value)) {
-            return new Node\Number($value, '');
+            return new Number($value, '');
         }
 
         if ($value === '') {
@@ -4074,7 +4078,7 @@ class Compiler
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function assertMap($value)
     {
@@ -4096,7 +4100,7 @@ class Compiler
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function assertList($value)
     {
@@ -4116,7 +4120,7 @@ class Compiler
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function assertColor($value)
     {
@@ -4136,7 +4140,7 @@ class Compiler
      *
      * @return integer|float
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function assertNumber($value)
     {
@@ -4599,7 +4603,7 @@ class Compiler
         $color = $this->assertColor($args[0]);
         $hsl = $this->toHSL($color[1], $color[2], $color[3]);
 
-        return new Node\Number($hsl[1], 'deg');
+        return new Number($hsl[1], 'deg');
     }
 
     protected static $libSaturation = ['color'];
@@ -4608,7 +4612,7 @@ class Compiler
         $color = $this->assertColor($args[0]);
         $hsl = $this->toHSL($color[1], $color[2], $color[3]);
 
-        return new Node\Number($hsl[2], '%');
+        return new Number($hsl[2], '%');
     }
 
     protected static $libLightness = ['color'];
@@ -4617,7 +4621,7 @@ class Compiler
         $color = $this->assertColor($args[0]);
         $hsl = $this->toHSL($color[1], $color[2], $color[3]);
 
-        return new Node\Number($hsl[3], '%');
+        return new Number($hsl[3], '%');
     }
 
     protected function adjustHsl($color, $idx, $amount)
@@ -4784,7 +4788,7 @@ class Compiler
     protected static $libPercentage = ['value'];
     protected function libPercentage($args)
     {
-        return new Node\Number($this->coercePercent($args[0]) * 100, '%');
+        return new Number($this->coercePercent($args[0]) * 100, '%');
     }
 
     protected static $libRound = ['value'];
@@ -4792,7 +4796,7 @@ class Compiler
     {
         $num = $args[0];
 
-        return new Node\Number(round($num[1]), $num[2]);
+        return new Number(round($num[1]), $num[2]);
     }
 
     protected static $libFloor = ['value'];
@@ -4800,7 +4804,7 @@ class Compiler
     {
         $num = $args[0];
 
-        return new Node\Number(floor($num[1]), $num[2]);
+        return new Number(floor($num[1]), $num[2]);
     }
 
     protected static $libCeil = ['value'];
@@ -4808,7 +4812,7 @@ class Compiler
     {
         $num = $args[0];
 
-        return new Node\Number(ceil($num[1]), $num[2]);
+        return new Number(ceil($num[1]), $num[2]);
     }
 
     protected static $libAbs = ['value'];
@@ -4816,7 +4820,7 @@ class Compiler
     {
         $num = $args[0];
 
-        return new Node\Number(abs($num[1]), $num[2]);
+        return new Number(abs($num[1]), $num[2]);
     }
 
     protected function libMin($args)
@@ -5199,7 +5203,7 @@ class Compiler
 
         $result = strpos($stringContent, $substringContent);
 
-        return $result === false ? static::$null : new Node\Number($result + 1, '');
+        return $result === false ? static::$null : new Number($result + 1, '');
     }
 
     protected static $libStrInsert = ['string', 'insert', 'index'];
@@ -5224,7 +5228,7 @@ class Compiler
         $string = $this->coerceString($args[0]);
         $stringContent = $this->compileStringContent($string);
 
-        return new Node\Number(strlen($stringContent), '');
+        return new Number(strlen($stringContent), '');
     }
 
     protected static $libStrSlice = ['string', 'start-at', 'end-at'];
@@ -5362,10 +5366,10 @@ class Compiler
                 return;
             }
 
-            return new Node\Number(mt_rand(1, $n), '');
+            return new Number(mt_rand(1, $n), '');
         }
 
-        return new Node\Number(mt_rand(1, mt_getrandmax()), '');
+        return new Number(mt_rand(1, mt_getrandmax()), '');
     }
 
     protected function libUniqueId()

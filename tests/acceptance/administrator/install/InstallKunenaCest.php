@@ -18,7 +18,7 @@ class InstallKunenaCest
 	 *
 	 * @return void
 	 */
-	public function installKunena(\AcceptanceTester $I)
+	public function installKunena(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->amOnPage('/administrator/index.php?option=com_installer');

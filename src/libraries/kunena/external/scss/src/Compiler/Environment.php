@@ -11,6 +11,8 @@
 
 namespace Leafo\ScssPhp\Compiler;
 
+use Leafo\ScssPhp\Block;
+
 /**
  * Compiler environment
  *
@@ -19,12 +21,12 @@ namespace Leafo\ScssPhp\Compiler;
 class Environment
 {
     /**
-     * @var \Leafo\ScssPhp\Block
+     * @var Block
      */
     public $block;
 
     /**
-     * @var \Leafo\ScssPhp\Compiler\Environment
+     * @var Environment
      */
     public $parent;
 

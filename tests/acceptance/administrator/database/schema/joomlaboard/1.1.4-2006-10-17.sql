@@ -107,9 +107,9 @@ CREATE TABLE IF NOT EXISTS `#__sb_smileys` (
 	PRIMARY KEY	(`id`)
 ) AUTO_INCREMENT=1;
 
-TRUNCATE #__sb_smileys;
+TRUNCATE `#__sb_smileys`;
 
-INSERT INTO `#__sb_smileys` VALUES 
+INSERT INTO `#__sb_smileys` VALUES
 	(1, 'B)', 'cool.png', 'cool-grey.png', 1),
 	(8, ';)', 'wink.png', 'wink-grey.png', 1),
 	(3, ':)', 'smile.png', 'smile-grey.png', 1),

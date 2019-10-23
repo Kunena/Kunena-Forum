@@ -11,11 +11,13 @@
 
 namespace Leafo\ScssPhp\Exception;
 
+use Exception;
+
 /**
  * Server Exception
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
-class ServerException extends \Exception
+class ServerException extends Exception
 {
 }

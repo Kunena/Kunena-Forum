@@ -33,6 +33,7 @@ class KunenaIntegrationActivity
 
 	/**
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct()
 	{

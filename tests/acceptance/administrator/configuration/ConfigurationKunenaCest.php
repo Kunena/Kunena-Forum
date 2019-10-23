@@ -18,7 +18,7 @@ class ConfigurationKunenaCest
 	 *
 	 * @return void
 	 */
-	public function ConfigurationKunena(\AcceptanceTester $I)
+	public function ConfigurationKunena(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 		$I->comment('Improve basic setup to max settings');

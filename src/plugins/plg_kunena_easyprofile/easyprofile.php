@@ -66,7 +66,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return \KunenaAvatarEasyprofile|void
+	 * @return KunenaAvatarEasyprofile|void
 	 * @since Kunena
 	 */
 	public function onKunenaGetAvatar()

@@ -11,6 +11,7 @@
 
 namespace Leafo\ScssPhp;
 
+use Exception;
 use Leafo\ScssPhp\Block;
 use Leafo\ScssPhp\Compiler;
 use Leafo\ScssPhp\Exception\ParserException;
@@ -116,7 +117,7 @@ class Parser
      *
      * @param string $msg
      *
-     * @throws \Leafo\ScssPhp\Exception\ParserException
+     * @throws ParserException
      */
     public function throwParseError($msg = 'parse error')
     {
@@ -755,7 +756,7 @@ class Parser
      *
      * @return \Leafo\ScssPhp\Block
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function popBlock()
     {

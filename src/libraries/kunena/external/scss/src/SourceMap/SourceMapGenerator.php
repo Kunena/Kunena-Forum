@@ -61,7 +61,7 @@ class SourceMapGenerator
     /**
      * The base64 VLQ encoder
      *
-     * @var \Leafo\ScssPhp\SourceMap\Base64VLQEncoder
+     * @var Base64VLQEncoder
      */
     protected $encoder;
 

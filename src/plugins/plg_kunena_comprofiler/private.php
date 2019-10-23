@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use \CBLib\Application\Application;
+use CBLib\Language\CBTxt;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -70,7 +71,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			{
 				if (is_array($res))
 				{
-					$html .= '<a href="' . cbSef($res["url"]) . '" title="' . \CBLib\Language\CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
+					$html .= '<a href="' . cbSef($res["url"]) . '" title="' . CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
 				}
 			}
 		}

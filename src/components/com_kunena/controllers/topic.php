@@ -410,7 +410,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$category->isAuthorised('topic.create');
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'notice');
 				$this->setRedirectBack();
@@ -429,7 +429,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$parent->isAuthorised('reply');
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'notice');
 				$this->setRedirectBack();
@@ -923,7 +923,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$message->isAuthorised('edit');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage($e->getMessage(), 'notice');
@@ -1020,7 +1020,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$message->publish(KunenaForum::DELETED);
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'notice');
 			}
@@ -1054,7 +1054,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$message->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage($e->getMessage(), 'error');

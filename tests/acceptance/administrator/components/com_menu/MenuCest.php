@@ -27,7 +27,7 @@ class MenuCest
 	 *
 	 * @return  void
 	 */
-	public function createNewMenu(\AcceptanceTester $I)
+	public function createNewMenu(AcceptanceTester $I)
 	{
 		$I->comment('I am going to create a menu');
 		$I->doAdministratorLogin();

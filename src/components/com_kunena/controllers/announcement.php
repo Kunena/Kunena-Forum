@@ -68,7 +68,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->isAuthorised('edit');
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 			}
@@ -77,7 +77,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->save();
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
@@ -133,7 +133,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->isAuthorised('edit');
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 			}
@@ -142,7 +142,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->save();
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
@@ -205,7 +205,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->isAuthorised('delete');
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 			}
@@ -214,7 +214,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				$announcement->delete();
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
@@ -286,7 +286,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement->isAuthorised($id ? 'edit' : 'create');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
@@ -298,7 +298,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement->save();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();

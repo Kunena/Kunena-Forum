@@ -11,6 +11,8 @@
 
 namespace Leafo\ScssPhp\SourceMap;
 
+use Exception;
+
 /**
  * Base64 VLQ Encoder
  *
@@ -129,7 +131,7 @@ class Base64VLQEncoder
 	 * @param   string  $aValue  The value to encode
 	 *
 	 * @return string The encoded value
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function encode($aValue)
     {
@@ -156,7 +158,7 @@ class Base64VLQEncoder
 	 * @param   string  $encoded  The encoded value to decode
 	 *
 	 * @return integer The decoded value
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function decode($encoded)
     {
@@ -192,12 +194,12 @@ class Base64VLQEncoder
      *
      * @return string
      *
-     * @throws \Exception If the number is invalid
+     * @throws Exception If the number is invalid
      */
     public function base64Encode($number)
     {
         if ($number < 0 || $number > 63) {
-            throw new \Exception(sprintf('Invalid number "%s" given. Must be between 0 and 63.', $number));
+            throw new Exception(sprintf('Invalid number "%s" given. Must be between 0 and 63.', $number));
         }
 
         return $this->intToCharMap[$number];
@@ -210,12 +212,12 @@ class Base64VLQEncoder
      *
      * @return integer
      *
-     * @throws \Exception If the number is invalid
+     * @throws Exception If the number is invalid
      */
     public function base64Decode($char)
     {
         if (! array_key_exists($char, $this->charToIntMap)) {
-            throw new \Exception(sprintf('Invalid base 64 digit "%s" given.', $char));
+            throw new Exception(sprintf('Invalid base 64 digit "%s" given.', $char));
         }
 
         return $this->charToIntMap[$char];

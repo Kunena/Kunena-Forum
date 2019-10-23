@@ -9,6 +9,7 @@
 
 use Page\Acceptance\Administrator\ContentFormPage;
 use Page\Acceptance\Administrator\ContentListPage;
+use Step\Acceptance\Administrator\Content;
 
 /**
  * Tests for com_content list view
@@ -45,11 +46,11 @@ class ContentListCest
 	/**
 	 * Test create a new arcticle
 	 *
-	 * @param   \Step\Acceptance\Administrator\Content $I
+	 * @param   Content $I
 	 *
 	 * @since   4.0.0
 	 */
-	public function createNewArticleUsingToolbarButton(\Step\Acceptance\Administrator\Content $I)
+	public function createNewArticleUsingToolbarButton(Content $I)
 	{
 		$I->wantToTest('that it is possible to create a new articles using "new" toolbar button.');
 		$I->amOnPage(ContentListPage::$url);
@@ -64,11 +65,11 @@ class ContentListCest
 	 * @skip    Fix: [PDOException] SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '0000-00-00 00:00:00' for column 'created' at row 1
 	 *          on drone
 	 *
-	 * @param   \Step\Acceptance\Administrator\Content $I
+	 * @param   Content $I
 	 *
 	 * @since   4.0.0
 	 */
-	public function seeArticlesInList(\Step\Acceptance\Administrator\Content $I)
+	public function seeArticlesInList(Content $I)
 	{
 		$I->wantToTest('that articles are displayed in the list.');
 
@@ -94,7 +95,7 @@ class ContentListCest
 	/**
 	 * Test feature articles
 	 *
-	 * @param   \Step\Acceptance\Administrator\Content $I
+	 * @param   Content $I
 	 *
 	 * @since   4.0.0
 	 */
@@ -117,7 +118,7 @@ class ContentListCest
 	 * $I->see($testArticle['title']);
 	 * $I->see('Alias: ' . $testArticle['alias']);
 	 * }
-	 * @param   \Step\Acceptance\Administrator\Content  $I
+	 * @param   Content  $I
 	 */
 	/*
 	 * TODO Feature article using inline button
@@ -159,7 +160,7 @@ class ContentListCest
 	 * Paginate articles
 	*/
 
-	public function Article(\Step\Acceptance\Administrator\Content $I)
+	public function Article(Content $I)
 	{
 		/**
 		$I->featureArticle($this->articleTitle);

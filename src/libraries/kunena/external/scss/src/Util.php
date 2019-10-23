@@ -25,14 +25,14 @@ class Util
      * Asserts that `value` falls within `range` (inclusive), leaving
      * room for slight floating-point errors.
      *
-     * @param string                    $name  The name of the value. Used in the error message.
-     * @param \Leafo\ScssPhp\Base\Range $range Range of values.
-     * @param array                     $value The value to check.
-     * @param string                    $unit  The unit of the value. Used in error reporting.
+     * @param string   $name   The name of the value. Used in the error message.
+     * @param   Range  $range  Range of values.
+     * @param array    $value  The value to check.
+     * @param string   $unit   The unit of the value. Used in error reporting.
      *
      * @return mixed `value` adjusted to fall within range, if it was outside by a floating-point margin.
      *
-     * @throws \Leafo\ScssPhp\Exception\RangeException
+     * @throws RangeException
      */
     public static function checkRange($name, Range $range, $value, $unit = '')
     {

@@ -11,11 +11,13 @@
 
 namespace Leafo\ScssPhp\Exception;
 
+use Exception;
+
 /**
  * Range exception
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
-class RangeException extends \Exception
+class RangeException extends Exception
 {
 }

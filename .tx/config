@@ -105,12 +105,6 @@ source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_k
 source_lang = en-GB
 minimum_perc = 0
 
-[Kunena.admin-plg_kunena_uddeim-sys]
-file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_uddeim.sys.ini
-source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_uddeim.sys.ini
-source_lang = en-GB
-minimum_perc = 0
-
 [Kunena.site-com_kunena-controllers]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.controllers.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.controllers.ini

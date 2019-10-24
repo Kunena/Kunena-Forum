@@ -275,9 +275,6 @@
 		<copy todir="${tmp_dir}/packages/plg_kunena_joomla" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_kunena_joomla"/>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_uddeim"/>
-		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_system_kunena"/>
 		</copy>
@@ -349,12 +346,6 @@
 		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${project_dir}/plugins/plg_kunena_kunena">
-				<include name="**/*.xml"/>
-			</fileset>
-		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true">
-			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/plugins/plg_kunena_uddeim">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -487,10 +478,6 @@
 		<phingcall target="archive">
 			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_kunena_v${xml.version}" />
 			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_kunena" />
-		</phingcall>
-		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_uddeim_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_uddeim" />
 		</phingcall>
 		<phingcall target="archive">
 			<property name="destination.file" value="dist/package/distribution/packages/plg_quickicon_kunena_v${xml.version}" />

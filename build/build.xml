@@ -155,9 +155,6 @@
 		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
 			<fileset dir="${project_dir}/src/plugins/plg_kunena_kunena"/>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true">
-			<fileset dir="${project_dir}/src/plugins/plg_kunena_uddeim"/>
-		</copy>
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
 			<fileset dir="${project_dir}/src/plugins/plg_quickicon_kunena"/>
 		</copy>
@@ -248,11 +245,6 @@
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/src/plugins/plg_kunena_kunena">
-				<include name="**/*.xml"/>
-			</fileset>
-		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_uddeim" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/src/plugins/plg_kunena_uddeim">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -444,7 +436,6 @@
 		<archive destfile="${build_dir}/packages/plg_kunena_gravatar${str.version}" basedir="${tmp_dir}/packages/plg_kunena_gravatar" />
 		<archive destfile="${build_dir}/packages/plg_kunena_joomla${str.version}" basedir="${tmp_dir}/packages/plg_kunena_joomla" />
 		<archive destfile="${build_dir}/packages/plg_kunena_kunena${str.version}" basedir="${tmp_dir}/packages/plg_kunena_kunena" />
-		<archive destfile="${build_dir}/packages/plg_kunena_uddeim${str.version}" basedir="${tmp_dir}/packages/plg_kunena_uddeim" />
 		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
 		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />

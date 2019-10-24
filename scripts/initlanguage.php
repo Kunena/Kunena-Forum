@@ -36,7 +36,6 @@ $files = array(
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_gravatar.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_joomla.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_kunena.sys.ini',
-	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_uddeim.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_system_kunena.sys.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.controllers.ini',

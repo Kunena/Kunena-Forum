@@ -10,8 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 $message  = $this->message;
 $template = KunenaTemplate::getInstance();
@@ -167,7 +169,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 					</div>
 				</div>
 			<?php endif; ?>
-			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
+			<a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id .'&Itemid=' . KunenaRoute::getItemID())?>"
 			   role="button" class="btn btn-outline-primary border btn-small btn-link float-right"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 			<br/>

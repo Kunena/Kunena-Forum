@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 jimport('joomla.form.formfield');
 
@@ -36,7 +37,7 @@ class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField
 	{
 		if (!class_exists('KunenaForum') || !KunenaForum::installed())
 		{
-			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
+			echo '<a href="' . Route::_('index.php?option=com_kunena') . '">PLEASE COMPLETE KUNENA INSTALLATION</a>';
 
 			return '';
 		}

@@ -313,7 +313,13 @@ abstract class KunenaForum
 			}
 			else
 			{
-				self::$version = strtoupper('@kunenaversion@');
+				$db    = Factory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('version')->from('#__kunena_version')->order('id');
+				$query->setLimit(1);
+				$db->setQuery($query);
+
+				self::$version = $db->loadResult();
 			}
 		}
 		else

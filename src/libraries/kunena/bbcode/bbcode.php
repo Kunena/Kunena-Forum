@@ -205,11 +205,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				if ($uri->isSSL())
 				{
-					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube-nocookie.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 				else
 				{
-					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube-nocookie.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 			}
 		}
@@ -2248,7 +2248,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 			'vimeo' => array('iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', ''),
 
-			'youtube' => array('iframe', 425, 355, 0, 0, 'https://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
+			'youtube' => array('iframe', 425, 355, 0, 0, 'https://www.youtube-nocookie.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
 
 			'youku' => array('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
 

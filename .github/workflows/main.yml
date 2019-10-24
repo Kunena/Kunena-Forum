@@ -1,0 +1,16 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Start CI Tests
+      run: echo Tests started for Kunena Forum
+    - name: Composer & Npm Install
+      run: |
+       composer validate --no-check-all --strict
+       composer install --no-progress --no-suggest
+       npm install selenium-standalone

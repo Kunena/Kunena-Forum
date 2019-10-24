@@ -155,10 +155,9 @@
             "description": "Symfony polyfill for ctype functions",
             "homepage": "https://symfony.com",
             "keywords": [
-                "compatibility",
-                "ctype",
-                "polyfill",
-                "portable"
+                "config",
+                "configuration",
+                "options"
             ],
             "time": "2019-02-06T07:57:58+00:00"
         },
@@ -197,7 +196,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
+                    "Symfony\\Component\\Stopwatch\\": ""
                 },
                 "exclude-from-classmap": [
                     "/Tests/"
@@ -217,7 +216,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony Yaml Component",
+            "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
             "time": "2019-04-06T14:04:46+00:00"
         }

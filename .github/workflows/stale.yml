@@ -2,7 +2,7 @@ name: Mark stale issues and pull requests
 
 on:
   schedule:
-  - cron: "0 * * * *"
+  - cron: 0 2 * * 1-5
 
 jobs:
   stale:
@@ -13,7 +13,11 @@ jobs:
     - uses: actions/stale@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale issue message'
+        stale-issue-message: 'This issue is stale because it has been open 30 days with no activity.'
+        days-before-stale: 30
+        days-before-close: 9999999
+        stale-pr-message: 'This pr is stale because it has been open 30 days with no activity. We are looking at it how we can include your code changes.'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
+        exempt-issue-label: '6.0'
+        exempt-pr-label: '6.0'

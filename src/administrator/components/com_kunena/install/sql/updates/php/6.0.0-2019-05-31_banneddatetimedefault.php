@@ -42,11 +42,11 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 
 	try
 	{
-	    $db->execute();
+		$db->execute();
 	}
 	catch (Exception $e)
 	{
-	    throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
 	$query    = "ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';";

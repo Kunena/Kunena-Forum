@@ -206,7 +206,7 @@ HTMLHelper::_('dropdown.init');
 									</tr>
 									<?php
 								endforeach;
-								            else:
+											else:
 									?>
 								<tr>
 									<td colspan="10">

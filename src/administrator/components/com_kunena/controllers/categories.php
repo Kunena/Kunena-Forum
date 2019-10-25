@@ -592,6 +592,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	public function save()
 	{
 		$this->_save();
+
 		if ($this->app->isClient('administrator'))
 		{
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

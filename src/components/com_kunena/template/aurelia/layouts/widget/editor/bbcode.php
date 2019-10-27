@@ -20,6 +20,7 @@ $this->addScript('markitup.editor.js');
 $this->addScript('markitup.set.js');
 $this->addStyleSheet('jquery.atwho.css');
 $this->addStyleSheet('markitup.css');
+$this->addScript('pollcheck.js');
 
 echo $this->subLayout('Widget/Datepicker');
 

@@ -79,10 +79,10 @@ jQuery(document).ready(function ($) {
 			var catid = $('select#postcatid option').filter(':selected').val();
 			var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 			if (pollcategoriesid[catid] !== undefined) {
-				$('.pollbutton').hide();
+				$('.pollbutton').show();
 			}
 			else {
-				$('.pollbutton').show();
+				$('.pollbutton').hide();
 			}
 		});
 	}

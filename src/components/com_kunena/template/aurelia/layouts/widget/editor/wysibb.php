@@ -19,6 +19,7 @@ echo $this->subLayout('Widget/Datepicker');
 $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
 $this->addStyleSheet('jquery.atwho.css');
+$this->addScript('pollcheck.js');
 
 Text::script('COM_KUNENA_WYSIBB_EDITOR_BOLD');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_ITALIC');

@@ -111,8 +111,6 @@ $editor          = $this->ktemplate->params->get('editor');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // If polls are enabled, load also poll JavaScript.
-$this->addScript('pollcheck.js');
-
 if ($this->config->pollenabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');

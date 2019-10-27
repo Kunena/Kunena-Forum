@@ -472,64 +472,6 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   string $view     view
-	 * @param   string $layout   layout
-	 * @param   null   $template template
-	 *
-	 * @return KunenaLayout|KunenaView|void
-	 * @since Kunena
-	 * @throws Exception
-	 */
-	public function displayTemplateFile($view, $layout, $template = null)
-	{
-		// HMVC legacy support.
-		list($name, $override) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$template}");
-		$hmvc = KunenaLayout::factory($name)->setLayout($override);
-
-		if ($hmvc->getPath())
-		{
-			return $hmvc->setLegacy($this);
-		}
-
-		// Old code.
-		if (!isset($this->_path['template_' . $view]))
-		{
-			$this->_path['template_' . $view] = $this->_path['template'];
-
-			foreach ($this->_path['template_' . $view] as &$dir)
-			{
-				$dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
-			}
-		}
-
-		if ($template)
-		{
-			$template = '_' . $template;
-		}
-
-		$file = "{$layout}{$template}.php";
-		$file = KunenaPath::find($this->_path['template_' . $view], $file);
-
-		if (!is_file($file))
-		{
-			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
-		}
-
-		ob_start();
-		include $file;
-		$output = ob_get_contents();
-		ob_end_clean();
-
-		if (JDEBUG || $this->config->get('debug'))
-		{
-			$output = trim($output);
-			$output = "\n<!-- START {$file} -->\n{$output}\n<!-- END {$file} -->\n";
-		}
-
-		echo $output;
-	}
-
-	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
 	 * @param   string $tpl        The name of the template source file ...
@@ -544,23 +486,7 @@ class KunenaView extends HtmlView
 	{
 		KUNENA_PROFILER ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		// HMVC legacy support.
-		$view   = $this->getName();
 		$layout = $this->getLayout();
-		list($name, $override) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$tpl}");
-		$hmvc = KunenaLayout::factory($name)->setLayout($override);
-
-		if ($hmvc->getPath())
-		{
-			if ($hmvcParams)
-			{
-				$hmvc->setProperties($hmvcParams);
-			}
-
-			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-			return $hmvc->setLegacy($this);
-		}
 
 		// Create the template file name based on the layout
 		$file = isset($tpl) ? $layout . '_' . $tpl : $layout;

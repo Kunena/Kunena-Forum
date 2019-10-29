@@ -13,7 +13,14 @@ defined('_JEXEC') or die;
 // [url="www.kunena.org" target="_blank"]Kunena.org[/url]
 
 // Display URL.
-$target = ' target="' . $this->escape($this->target) . '"';
+if ($this->target)
+{
+	$target = ' target="' . $this->escape($this->target) . '"';
+}
+else
+{
+	$target = ' target="_blank"';
+}
 
 if (!$this->internal)
 {

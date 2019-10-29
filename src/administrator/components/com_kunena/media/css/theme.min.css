@@ -8433,23 +8433,3 @@ hr {
 .swal-modal .swal-footer {
 	text-align: center
 }
-
-@media (prefers-color-scheme: dark) {
-	#subhead,
-	body .container-main:after,
-	body .container-main:before,
-	body,
-	.header,
-	.header .page-title,
-	button,
-	a,
-	a:hover,
-	a:active,
-	a:visited,
-	.card.proj-t-card,
-	.card.proj-t-card.comp-card { background:  #333 !important; color: white !important; }
-	.card {
-		border:2px solid #108193 !important;
-	}
-}
-

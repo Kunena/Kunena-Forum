@@ -408,18 +408,6 @@ HTMLHelper::_('behavior.tabstate');
 														<td><?php echo $this->lists ['listcat_show_moderators'] ?></td>
 														<td><?php echo Text::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?></td>
 													</tr>
-													<tr <?php if ($this->config->catimagepath != 'category_images')
-													:
-														echo 'class="changed"';
-														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_CATIMAGEPATH_LEGACY') ?></td>
-														<td>
-															<input type="text" class="form-control"
-																   name="cfg_catimagepath"
-																   value="<?php echo $this->escape($this->config->catimagepath) ?>"/>
-														</td>
-														<td><?php echo Text::_('COM_KUNENA_CATIMAGEPATH_LEGACY_DESC') ?></td>
-													</tr>
 													<tr <?php if ($this->config->showchildcaticon != 1)
 													:
 														echo 'class="changed"';

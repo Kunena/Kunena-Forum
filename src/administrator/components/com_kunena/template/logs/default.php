@@ -310,24 +310,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										</td>
 									<?php endif; ?>
 								</tr>
-								<div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1" role="dialog"
-									 aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;"
-									 data-backdrop="false">
+
+								<div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title">
-											<?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
+												<h5 class="modal-title" id="exampleModalLabel"><?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
 												<span class="icon-warning" aria-hidden="true"></span>
 											<?php else: ?>
 												<span class="icon-edit" aria-hidden="true"></span>
 											<?php endif; ?>
 											Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 
-											ID:<?php echo $item->id; ?>
-												</h5>
-												<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">
-													&times;
+											ID:<?php echo $item->id; ?></h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
@@ -340,12 +337,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 											</div>
 											<div class="modal-footer">
 												<a href="#" id="link_sel_all<?php echo $item->id; ?>"
-										   name="link_sel_all<?php echo $item->id; ?>" type="button"
-										   class="btn btn-small btn-outline-primary"><i
+													name="link_sel_all<?php echo $item->id; ?>" type="button"
+													class="btn btn-small btn-outline-primary"><i
 													class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
 												</a>
-												<button class="btn btn-outline-danger" data-dismiss="modal"
-												aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+												<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 											</div>
 										</div>
 									</div>

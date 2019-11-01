@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 	<?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_ALERTBOX_DESC') ?>
 </div>
 
-<
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
@@ -69,29 +68,29 @@ use Joomla\CMS\Language\Text;
 							<tr>
 								<td></td>
 								<td>
-									<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
-										 aria-labelledby="myModalLabel" aria-hidden="true">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-												×
-											</button>
-											<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h3>
-										</div>
-										<div class="modal-body">
-											<p><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_DESC') ?></p>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-outline-primary" data-dismiss="modal"
-													aria-hidden="true">
-												Close
-											</button>
-											<button type="submit"
-													class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+									<button type="button" class="btn btn-outline-danger" data-toggle="modal"
+											data-target="#modalconfirmuninstall"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+											
+									<div class="modal fade" id="modalconfirmuninstall" tabindex="-1" role="dialog" aria-labelledby="modalconfirmuninstalLabel" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="modalconfirmuninstalLabel"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_DESC') ?></p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_CLOSE') ?></button>
+													<button type="submit" class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+												</div>
+											</div>
 										</div>
 									</div>
 
-									<button type="button" class="btn btn-outline-danger" data-toggle="modal"
-											data-target="#myModal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 								</td>
 							</tr>
 						</table>

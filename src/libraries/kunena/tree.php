@@ -63,7 +63,11 @@ class KunenaTree implements Iterator
 	 */
 	protected $heap = null;
 
-	//	protected $_count = null;
+	/**
+	 * @since Kunena
+	 * @var null
+	 */
+	protected $_count = null;
 
 	/**
 	 * @param   mixed  $items  items

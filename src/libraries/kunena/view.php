@@ -336,10 +336,11 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   mixed $position position
+	 * @param   mixed  $position  position
 	 *
 	 * @return void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayModulePosition($position)
 	{
@@ -559,13 +560,14 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
-	 * @param   null                $content  content
-	 * @param   null                $title    title
-	 * @param   null                $class    class
+	 * @param   KunenaForumCategory  $category  category
+	 * @param   null                 $content   content
+	 * @param   null                 $title     title
+	 * @param   null                 $class     class
 	 *
 	 * @return mixed
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{

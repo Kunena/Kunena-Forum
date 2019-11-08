@@ -70,8 +70,6 @@ abstract class KunenaModule
 		// Use caching also for registered users if enabled.
 		if ($this->params->get('owncache', 0))
 		{
-			// @var $cache Joomla\CMS\Cache\CacheControllerOutput
-
 			$cache = Factory::getCache('com_kunena', 'output');
 
 			$me = Factory::getApplication()->getIdentity();

@@ -141,6 +141,7 @@ abstract class KunenaFactory
 	 *
 	 * @return KunenaIntegrationActivity
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getActivityIntegration()
 	{

@@ -34,7 +34,6 @@ use Joomla\Image\Image;
  * @property string $comment
  * @property int    $inline
  * @property string $typeAlias
- *
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
  *
@@ -180,12 +179,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $caption;
 
 	/**
-	 * @param   mixed $identifier identifier
-	 * @param   bool  $reload     reload
+	 * @param   mixed  $identifier  identifier
+	 * @param   bool   $reload      reload
 	 *
 	 * @return KunenaAttachment
 	 *
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{

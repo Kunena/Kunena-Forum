@@ -254,11 +254,14 @@ abstract class KunenaAttachmentHelper
 			}
 		}
 
-		foreach ($results as $id => $instance)
+		if (!empty($results))
 		{
-			$instance = self::get($id);
-			self::$_instances [$id]                  = $instance;
-			self::$_messages [$instance->mesid][$id] = $instance;
+			foreach ($results as $id => $instance)
+			{
+				$instance = self::get($id);
+				self::$_instances [$id]                  = $instance;
+				self::$_messages [$instance->mesid][$id] = $instance;
+			}
 		}
 
 		unset($results);
@@ -694,15 +697,18 @@ abstract class KunenaAttachmentHelper
 
 		$list = array();
 
-		foreach ($results as $instance)
+		if (!empty($results))
 		{
-			if (!isset(self::$_instances[$instance->id]))
+			foreach ($results as $instance)
 			{
-				self::$_instances [$instance->id]                  = $instance;
-				self::$_messages [$instance->mesid][$instance->id] = $instance;
-			}
+				if (!isset(self::$_instances[$instance->id]))
+				{
+					self::$_instances [$instance->id]                  = $instance;
+					self::$_messages [$instance->mesid][$instance->id] = $instance;
+				}
 
-			$list[] = self::$_instances[$instance->id];
+				$list[] = self::$_instances[$instance->id];
+			}
 		}
 
 		return $list;

@@ -267,6 +267,7 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * @return KunenaForumTopic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopic()
 	{

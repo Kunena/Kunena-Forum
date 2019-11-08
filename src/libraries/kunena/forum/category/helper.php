@@ -496,11 +496,7 @@ abstract class KunenaForumCategoryHelper
 	 */
 	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
 	{
-		if ($groupids === false)
-		{
-			// Continue
-		}
-		elseif (is_array($groupids))
+		if (is_array($groupids))
 		{
 			$groupids = array_unique($groupids);
 		}

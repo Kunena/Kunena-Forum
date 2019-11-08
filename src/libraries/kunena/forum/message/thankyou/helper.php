@@ -116,9 +116,12 @@ abstract class KunenaForumMessageThankyouHelper
 			self::$_instances [$id] = new KunenaForumMessageThankyou($id);
 		}
 
-		foreach ($results as $result)
+		if (!empty($results))
 		{
-			self::$_instances [$result->postid]->_add($result->userid, $result->time);
+			foreach ($results as $result)
+			{
+				self::$_instances [$result->postid]->_add($result->userid, $result->time);
+			}
 		}
 
 		unset($results);

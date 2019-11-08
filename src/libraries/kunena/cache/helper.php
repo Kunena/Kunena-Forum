@@ -45,8 +45,6 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearKunena()
 	{
-		// @var Joomla\CMS\Cache\Cache|Joomla\CMS\Cache\CacheController $cache
-
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 	}
@@ -58,8 +56,6 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearSystem()
 	{
-		// @var Joomla\CMS\Cache\Cache|Joomla\CMS\Cache\CacheController $cache
-
 		$cache = Factory::getCache();
 		$cache->clean('_system');
 	}

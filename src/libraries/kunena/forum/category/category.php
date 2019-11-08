@@ -424,11 +424,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$this->_channels['none'] = array();
 
-			if ($this->published != 1 || $this->parent_id == 0 || (!$this->numTopics && $this->locked))
-			{
-				// Unpublished categories and sections do not have channels
-			}
-			elseif (empty($this->channels) || $this->channels == $this->id)
+			if (empty($this->channels) || $this->channels == $this->id)
 			{
 				// No channels defined
 				$this->_channels['none'][$this->id] = $this;
@@ -464,8 +460,6 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 			foreach ($this->_channels['none'] as $channel)
 			{
-				// @var KunenaForumCategory $channel
-
 				if (($channel->id == $this->id && $action == 'read') || $channel->isAuthorised($action, null, false))
 				{
 					$this->_channels[$action][$channel->id] = $channel;
@@ -510,7 +504,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user    user
 	 * @param   bool        $throw   throw
 	 *
-	 * @return KunenaExceptionAuthorise|null
+	 * @return KunenaExceptionAuthorise|boolean
 	 * @since  K4.0
 	 * @throws null
 	 */

@@ -54,9 +54,12 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 
 		$instances = array();
 
-		foreach ($results as $id => $result)
+		if (!empty($results))
 		{
-			$instances[$id] = KunenaAttachmentHelper::get($id);
+			foreach ($results as $id => $result)
+			{
+				$instances[$id] = KunenaAttachmentHelper::get($id);
+			}
 		}
 
 		$instances = new KunenaCollection($instances);

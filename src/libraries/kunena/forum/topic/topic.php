@@ -185,6 +185,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return KunenaForumTopic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reset = false)
 	{
@@ -1093,8 +1094,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @return  KunenaForumTopic  Returns this topic or move target if this was moved.
 	 *
 	 * @since  K4.0
-	 * @throws  RuntimeException  If there is a redirect loop on moved_id.
-	 *
+	 * @throws Exception
 	 */
 	public function getTopic()
 	{
@@ -2119,6 +2119,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getPoll()
 	{

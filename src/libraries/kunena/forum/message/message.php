@@ -147,11 +147,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Returns KunenaForumMessage object.
 	 *
-	 * @param   int  $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   int   $identifier  The message to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumMessage
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -221,6 +222,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumTopic
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopic()
 	{
@@ -1034,6 +1036,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @return KunenaForumMessage
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getParent()
 	{

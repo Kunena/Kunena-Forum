@@ -458,13 +458,7 @@ abstract class KunenaForum
 
 		$view = new $view(array('base_path' => KPATH_SITE));
 
-		// @var KunenaView $view
-
-		if ($params instanceof Joomla\Registry\Registry)
-		{
-			// Do nothing
-		}
-		else
+		if (!($params instanceof Joomla\Registry\Registry))
 		{
 			$params = new Joomla\Registry\Registry($params);
 		}
@@ -473,9 +467,6 @@ abstract class KunenaForum
 
 		// Push the model into the view (as default).
 		$model = new $model;
-
-		// @var KunenaModel $model
-
 		$model->initialize($params);
 		$view->setModel($model, true);
 

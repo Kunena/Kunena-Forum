@@ -147,6 +147,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @return KunenaForumTopicPoll
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reset = false)
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Forum.Announcement
  *
@@ -29,6 +30,7 @@ use Joomla\CMS\Session\Session;
  * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
+ *
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
@@ -117,8 +119,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return boolean
 	 * @since Kunena
-	 * @throws Exception
 	 * @throws null
+	 * @throws Exception
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{

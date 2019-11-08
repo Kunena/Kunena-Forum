@@ -22,7 +22,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The application object.
 	 *
-	 * @var    Joomla\CMS\Application\BaseApplication|JSite
+	 * @var    Joomla\CMS\Application\BaseApplication
 	 * @since Kunena
 	 */
 	protected $app;

@@ -216,13 +216,16 @@ abstract class KunenaForumMessageHelper
 		$order    = ($ordering == 'ASC') ? 1 : -1;
 		$list     = array();
 
-		foreach ($results as $id => $result)
+		if (!empty($results))
 		{
-			$instance = new KunenaForumMessage($result);
-			$instance->exists(true);
-			self::$_instances [$id]             = $instance;
-			$list[$orderbyid ? $id : $location] = $instance;
-			$location                           += $order;
+			foreach ($results as $id => $result)
+			{
+				$instance = new KunenaForumMessage($result);
+				$instance->exists(true);
+				self::$_instances [$id]             = $instance;
+				$list[$orderbyid ? $id : $location] = $instance;
+				$location                           += $order;
+			}
 		}
 
 		unset($results);
@@ -400,12 +403,15 @@ abstract class KunenaForumMessageHelper
 
 		$messages = array();
 
-		foreach ($results as $result)
+		if (!empty($results))
 		{
-			$instance = new KunenaForumMessage($result);
-			$instance->exists(true);
-			self::$_instances [$instance->id] = $instance;
-			$messages[$instance->id]          = $instance;
+			foreach ($results as $result)
+			{
+				$instance = new KunenaForumMessage($result);
+				$instance->exists(true);
+				self::$_instances [$instance->id] = $instance;
+				$messages[$instance->id]          = $instance;
+			}
 		}
 
 		unset($results);
@@ -564,19 +570,22 @@ abstract class KunenaForumMessageHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-		foreach ($results as $result)
+		if (!empty($results))
 		{
-			$instance = self::$_location [$result->id];
-
-			if (!isset($instance->id))
+			foreach ($results as $result)
 			{
-				$instance->id                    = $result->id;
-				$instance->category_id           = $result->category_id;
-				$instance->topic_id              = $result->topic_id;
-				self::$_location [$instance->id] = $instance;
-			}
+				$instance = self::$_location [$result->id];
 
-			$instance->hold[$result->hold] = array('before' => $result->before_count, 'after' => $result->after_count);
+				if (!isset($instance->id))
+				{
+					$instance->id                    = $result->id;
+					$instance->category_id           = $result->category_id;
+					$instance->topic_id              = $result->topic_id;
+					self::$_location [$instance->id] = $instance;
+				}
+
+				$instance->hold[$result->hold] = array('before' => $result->before_count, 'after' => $result->after_count);
+			}
 		}
 	}
 

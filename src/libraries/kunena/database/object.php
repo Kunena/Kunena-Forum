@@ -168,7 +168,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 		}
 
 		// Include the Kunena plugins for the on save events.
-
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
@@ -299,7 +298,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 		$table->exists($this->_exists);
 
 		// Include the Kunena plugins for the on save events.
-
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.

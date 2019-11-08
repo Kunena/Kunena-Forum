@@ -45,7 +45,6 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 
 		// Trigger the onFinderAfterSave event.
 		Factory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
-
 	}
 
 	/**
@@ -73,7 +72,6 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 
 		// Trigger the onFinderBeforeSave event.
 		Factory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
-
 	}
 
 	/**

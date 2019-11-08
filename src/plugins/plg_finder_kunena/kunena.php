@@ -508,12 +508,13 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Method to get the URL for the item. The URL is how we look up the link
 	 * in the Finder index.
 	 *
-	 * @param   mixed  $id        The id of the item.
-	 * @param   mixed  $extension Unused.
-	 * @param   string $view      View name.
+	 * @param   mixed   $id         The id of the item.
+	 * @param   mixed   $extension  Unused.
+	 * @param   string  $view       View name.
 	 *
 	 * @return    string        The URL of the item.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getUrl($id, $extension, $view)
 	{

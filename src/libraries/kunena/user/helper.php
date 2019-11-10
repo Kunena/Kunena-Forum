@@ -730,4 +730,45 @@ abstract class KunenaUserHelper
 	{
 		return IpHelper::isIPv6($ip);
 	}
+	
+	/**
+	 * $data array with username, ip, email, apikey, evidence
+	 * $type add ou just call api
+	 */
+	public static function storeCheckStopforumspam($data = array(), $type)
+	{
+		$options = new Joomla\Registry\Registry;
+
+		$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new Joomla\CMS\Http\Http($options, $transport);
+
+		if ($type=='add')
+		{
+			$datatosend = 'username=' . $data['username'] . '&ip_addr=' . $data['ip'] . '&email=' . $data['email'] . '&api_key=' .
+				$data['stopforumspam_key'] . '&evidence=' . $data['evidence'];
+
+			$response = $http->post('https://www.stopforumspam.com/add', $datatosend);
+		}
+		elseif (type=='api')
+		{
+			$datatosend = 'username=' . $data['username'] . '&ip_addr=' . $data['ip'] . '&email=' . $data['email'];
+
+			$response = $http->post('https://www.stopforumspam.com/api', $datatosend);
+		}
+		else
+		{
+			return false;
+		}
+
+		if ($response->code == '200')
+		{
+			return $response;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

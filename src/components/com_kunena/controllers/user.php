@@ -1334,19 +1334,16 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($ip))
 		{
-			$options = new Joomla\Registry\Registry;
+			$data = array();
+			$data['username'] = $spammer->username;
+			$data['ip'] = $ip;
+			$data['email'] = $spammer->email;
+			$data['stopforumspam_key'] = $this->config->stopforumspam_key;
+			$data['evidence'] = $evidence;
 
-			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
 
-			// Create a 'stream' transport.
-			$http = new Joomla\CMS\Http\Http($options, $transport);
-
-			$data = 'username=' . $spammer->username . '&ip_addr=' . $ip . '&email=' . $spammer->email . '&api_key=' .
-				$this->config->stopforumspam_key . '&evidence=' . $evidence;
-
-			$response = $http->post('https://www.stopforumspam.com/add', $data);
-
-			if ($response->code == '200')
+			if ($result!=false)
 			{
 				// Report accepted. There is no need to display the reason
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
@@ -1357,7 +1354,7 @@ class KunenaControllerUser extends KunenaController
 			{
 				// Report failed or refused
 				$reasons = array();
-				preg_match('/<p>.*<\/p>/', $response->body, $reasons);
+				preg_match('/<p>.*<\/p>/', $result->body, $reasons);
 
 				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');

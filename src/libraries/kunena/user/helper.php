@@ -734,8 +734,12 @@ abstract class KunenaUserHelper
 	}
 	
 	/**
-	 * $data array with username, ip, email, apikey, evidence
-	 * $type add ou just call api
+	 * Method to send data about spammer or to check if user is blacklisted in stopforumspam database
+	 * 
+	 * @param $data array with username, ip, email, apikey, evidence
+	 * @param $type add ou just call api
+	 * 
+	 * @since 6.0.0
 	 */
 	public static function storeCheckStopforumspam($data = array(), $type)
 	{
@@ -755,7 +759,7 @@ abstract class KunenaUserHelper
 		}
 		elseif (type=='api')
 		{
-			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key']);
+			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email']);
 
 			$response = $http->post('https://www.stopforumspam.com/api', $datatosend);
 		}

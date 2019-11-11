@@ -11,8 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
-
 /**
  * Icons Model for Kunena
  *
@@ -32,8 +30,6 @@ class KunenaAdminModelIcons extends Joomla\CMS\MVC\Model\ListModel
 	 */
 	public function __construct($config = array())
 	{
-		$this->me = KunenaUserHelper::getMyself();
-
 		parent::__construct();
 	}
 }

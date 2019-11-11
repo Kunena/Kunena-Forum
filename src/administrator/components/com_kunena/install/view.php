@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * The HTML Kunena configuration view.
+ *
  * @since Kunena
  */
 class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
@@ -28,12 +29,12 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	/**
 	 * Method to display the view.
 	 *
-	 * @param   string $tpl A template file to load.
+	 * @param   string  $tpl  A template file to load.
 	 *
-	 * @return    mixed    JError object on failure, void on success.
+	 * @return    Exception|void    Exception on failure, void on success.
 	 *
-	 * @throws    object    JError
 	 * @since    1.6
+	 * @throws    Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -71,14 +72,13 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	{
 		// Set the titlebar text
 		JToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . Text::_('COM_KUNENA_INSTALLER'), 'kunena.png');
-
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws KunenaSchemaException
 	 * @return void
+	 * @since Kunena
+	 * @throws KunenaSchemaException
+	 * @throws Exception
 	 */
 	public function displaySchema()
 	{
@@ -103,10 +103,10 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws KunenaSchemaException
 	 * @return void
+	 * @since Kunena
+	 * @throws KunenaSchemaException
+	 * @throws Exception
 	 */
 	public function displaySchemaDiff()
 	{

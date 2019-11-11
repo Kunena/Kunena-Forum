@@ -11,8 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-jimport('joomla.filesystem.archive');
-
 use Joomla\Archive\Archive;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;

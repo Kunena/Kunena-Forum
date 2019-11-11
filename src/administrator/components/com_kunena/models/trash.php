@@ -15,8 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-jimport('joomla.application.component.model');
-
 /**
  * Trash Model for Kunena
  *
@@ -381,7 +379,6 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	public function getNavigation()
 	{
-		jimport('joomla.html.pagination');
 		$navigation = new Joomla\CMS\Pagination\Pagination($this->getState('list.total'),
 			$this->getState('list.start'), $this->getState('list.limit')
 		);

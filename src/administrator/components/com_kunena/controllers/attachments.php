@@ -25,7 +25,6 @@ class KunenaAdminControllerAttachments extends KunenaController
 	/**
 	 * @var null|string
 	 * @since    2.0.0-BETA2
-	 *
 	 */
 	protected $baseurl = null;
 

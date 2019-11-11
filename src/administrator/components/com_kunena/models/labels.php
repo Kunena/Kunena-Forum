@@ -11,8 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
-
 /**
  * Labels Model for Kunena
  *
@@ -32,8 +30,6 @@ class KunenaAdminModelLabels extends Joomla\CMS\MVC\Model\ListModel
 	 */
 	public function __construct($config = array())
 	{
-		$this->me = KunenaUserHelper::getMyself();
-
 		parent::__construct();
 	}
 }

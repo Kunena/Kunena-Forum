@@ -14,8 +14,6 @@ use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Class KunenaAdminModelPlugins
  * @since Kunena
@@ -239,14 +237,14 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 				' a.enabled, a.access, a.ordering'
 			)
 		);
-		$query->from($db->quoteName('#__extensions') . ' AS a');
+		$query->from($db->quoteName('#__extensions', 'a'));
 
 		$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-		$query->where($db->quoteName('folder') . '= ' . $db->quote('kunena'));
+		$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');
-		$query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+		$query->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
 
 		// Join over the asset groups.
 		$query->select('ag.title AS access_level');

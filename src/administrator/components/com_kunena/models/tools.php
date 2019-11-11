@@ -17,7 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.application.component.model');
 require_once __DIR__ . '/cpanel.php';
 
 /**
@@ -500,7 +499,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$query = $db->getQuery(true);
 		$query->select('template')
 			->from($db->quoteName('#__template_styles'))
-			->where('client_id=0 AND home=1');
+			->where('client_id = 0 AND home = 1');
 		$db->setQuery($query);
 
 		try

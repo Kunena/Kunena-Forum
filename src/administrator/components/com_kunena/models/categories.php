@@ -17,9 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.application.component.model');
-jimport('joomla.html.pagination');
-
 /**
  * Categories Model for Kunena
  *

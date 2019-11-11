@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaVersion
+ *
  * @since Kunena
  */
 class KunenaVersion
@@ -22,8 +23,8 @@ class KunenaVersion
 	/**
 	 * Get warning for unstable releases
 	 *
-	 * @param   string $msg Message to be shown containing two %s parameters for version (2.0.0RC) and version type
-	 *                      (GIT, RC, BETA etc)
+	 * @param   string  $msg  Message to be shown containing two %s parameters for version (2.0.0RC) and version type
+	 *                        (GIT, RC, BETA etc)
 	 *
 	 * @return    string    Warning message
 	 * @since    1.6
@@ -100,7 +101,7 @@ class KunenaVersion
 	/**
 	 * Get version information from database
 	 *
-	 * @param    string    Kunena table prefix
+	 * @param   string  Kunena table prefix
 	 *
 	 * @return    object    Version table
 	 * @since    1.6
@@ -173,6 +174,7 @@ class KunenaVersion
 
 /**
  * Class KunenaVersionException
+ *
  * @since Kunena
  */
 class KunenaVersionException extends Exception

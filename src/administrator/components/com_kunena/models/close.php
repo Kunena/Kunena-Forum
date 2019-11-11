@@ -11,8 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
-
 /**
  * Close Model for Kunena
  *

@@ -225,7 +225,6 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
-	 *
 	 */
 	public function apply()
 	{
@@ -631,7 +630,6 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 		else
 		{
-			jimport('joomla.utilities.date');
 			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
@@ -692,7 +690,6 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 		else
 		{
-			jimport('joomla.utilities.date');
 			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
@@ -885,7 +882,6 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 		else
 		{
-			jimport('joomla.utilities.date');
 			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();
@@ -946,7 +942,6 @@ class KunenaAdminControllerUsers extends KunenaController
 		}
 		else
 		{
-			jimport('joomla.utilities.date');
 			$now = new Joomla\CMS\Date\Date;
 			$ban->setExpiration($now);
 			$success = $ban->save();

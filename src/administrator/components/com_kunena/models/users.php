@@ -16,8 +16,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\QueryInterface;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Users Model for Kunena
  *
@@ -232,10 +230,10 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 				'a.id'
 			)
 		);
-		$query->from('#__users AS a');
+		$query->from($db->quoteName('#__users', 'a'));
 
 		// Join over the users for the linked user.
-		$query->join('LEFT', '#__kunena_users AS ku ON a.id=ku.userid');
+		$query->join('LEFT', $db->quoteName('#__kunena_users', 'ku') . ' ON a.id = ku.userid');
 
 		// Filter by search.
 		$search = $this->getState('filter.search');

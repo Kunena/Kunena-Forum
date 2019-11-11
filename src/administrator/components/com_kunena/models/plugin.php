@@ -6,16 +6,12 @@
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Form\Form;
-
-jimport('joomla.application.component.modeladmin');
 
 /**
  * Plugin model.
@@ -268,7 +264,6 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
 		// Get the dispatcher and load the users plugins.
-
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.

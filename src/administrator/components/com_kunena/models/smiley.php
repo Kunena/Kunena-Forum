@@ -15,8 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Smiley Model for Kunena
  *
@@ -85,7 +83,7 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_smileys'))
-				->where('id=' . $db->quote($id));
+				->where('id = ' . $db->quote($id));
 			$db->setQuery($query);
 
 			try

@@ -18,9 +18,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.filesystem.path');
-jimport('joomla.filesystem.archive');
-
 define('KUNENA_INSTALLER_PATH', __DIR__);
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
 define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE . '/components/' . basename(KUNENA_INSTALLER_ADMINPATH));
@@ -535,7 +532,6 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 				// Older versions installed language files into main folders
 
 				// Those files need to be removed to bring language up to date!
-				jimport('joomla.filesystem.folder');
 				$files = Folder::files($installdir, '\.ini$');
 
 				foreach ($files as $filename)
@@ -810,7 +806,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Method to uninstall the Kunena media during uninstall process
 	 *
-	 * @param           $type
+	 * @param   string  $type
 	 * @param   string  $element  Name of the package or of the component
 	 *
 	 * @return int
@@ -822,8 +818,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$query = $this->db->getQuery(true);
 		$query->select($this->db->quoteName('extension_id'));
 		$query->from($this->db->quoteName('#__extensions'));
-		$query->where($this->db->quoteName('type') . "='" . $type . "'");
-		$query->where($this->db->quoteName('element') . "='" . $element . "'");
+		$query->where($this->db->quoteName('type') . ' = ' . $type);
+		$query->where($this->db->quoteName('element') . ' = ' . $element);
 		$this->db->setQuery($query);
 		$id = $this->db->loadResult();
 
@@ -831,8 +827,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param          $path
-	 * @param   array  $ignore
+	 * @param   string  $path
+	 * @param   array   $ignore
 	 *
 	 * @since Kunena
 	 */
@@ -853,8 +849,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param          $path
-	 * @param   array  $ignore
+	 * @param   string  $path
+	 * @param   array   $ignore
 	 *
 	 * @since Kunena
 	 */
@@ -875,8 +871,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param          $path
-	 * @param   array  $ignore
+	 * @param   string  $path
+	 * @param   array   $ignore
 	 *
 	 * @since Kunena
 	 */
@@ -2797,10 +2793,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	// also insert old version if not in the table
 
 	/**
-	 * @param           $version
-	 * @param           $versiondate
-	 * @param           $versionname
-	 * @param   string  $state
+	 * @param   integer  $version
+	 * @param   integer  $versiondate
+	 * @param   integer  $versionname
+	 * @param   string   $state
 	 *
 	 * @since Kunena
 	 * @throws KunenaInstallerException
@@ -2826,8 +2822,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param         $prefix
-	 * @param   bool  $reload
+	 * @param   string  $prefix
+	 * @param   bool    $reload
 	 *
 	 * @return mixed
 	 *
@@ -2864,7 +2860,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @param $prefix
+	 * @param   string  $prefix
 	 *
 	 * @since Kunena
 	 * @throws KunenaInstallerException

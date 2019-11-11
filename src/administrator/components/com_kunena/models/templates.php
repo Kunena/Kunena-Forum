@@ -13,9 +13,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
-jimport('joomla.application.component.modeladmin');
-jimport('joomla.html.pagination');
-
 /**
  * Templates Model for Kunena
  *

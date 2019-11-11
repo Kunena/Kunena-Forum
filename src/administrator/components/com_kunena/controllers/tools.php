@@ -243,7 +243,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query->insert($db->quoteName('#__kunena_users') . '(userid, showOnline)')
 				->select('a.id AS userid, 1 AS showOnline')
 				->from($db->quoteName('#__users', 'a'))
-				->leftJoin($db->quoteName('#__kunena_users', 'b') . ' ON b.userid=a.id')
+				->leftJoin($db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . ' = ' . $db->quoteName('a.id'))
 				->where('b.userid IS NULL');
 			$db->setQuery($query);
 
@@ -263,13 +263,12 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdel)
 		{
-			// TODO :  need to find the correct way to convert this query to use JDatabaseQuery
-			$db->setQuery(
-				"DELETE a
-				FROM #__kunena_users AS a
-				LEFT JOIN #__users AS b ON a.userid=b.id
-				WHERE b.username IS NULL"
-			);
+			$query = $db->getQuery(true);
+			$query->delete($db->quoteName('a'))
+				->from($db->quoteName('#__kunena_users', 'a'))
+				->leftJoin($db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . ' = ' . $db->quoteName('b.id'))
+				->where('b.username IS NULL');
+			$db->setQuery($query);
 
 			try
 			{
@@ -287,7 +286,12 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='0000-00-00 00:00:00'");
+			$query = $db->getQuery(true);
+			$query->delete($db->quoteName('a'))
+				->from($db->quoteName('#__kunena_users', 'a'))
+				->leftJoin($db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . ' = ' . $db->quoteName('b.id'))
+				->where($db->quoteName('banned') . ' IS NULL');
+			$db->setQuery($query);
 
 			try
 			{
@@ -327,8 +331,8 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_messages', 'm'))
 				->innerJoin($db->quoteName('#__users', 'u'))
-				->set('m.name = u.' . $queryName)
-				->where('m.userid = u.id');
+				->set($db->quoteName('m.name') . ' = ' . $db->quoteName('u.' . $queryName))
+				->where($db->quoteName('m.userid') . ' = ' . $db->quoteName('u.id'));
 
 			$db->setQuery($query);
 

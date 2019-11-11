@@ -184,12 +184,10 @@ class KunenaAdminViewLogs extends KunenaView
 	{
 		// Set the titlebar text
 		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-
 		JToolbarHelper::spacer();
 		JToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
-
 	}
 
 	/**

@@ -14,8 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Smileys Model for Kunena
  *
@@ -118,7 +116,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 			)
 		);
 
-		$query->from('#__kunena_smileys AS a');
+		$query->from($db->quoteName('#__kunena_smileys', 'a'));
 
 		$filter = $this->getState('filter.code');
 

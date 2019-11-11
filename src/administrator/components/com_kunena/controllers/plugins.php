@@ -38,7 +38,6 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @since    2.0
 	 * @throws Exception
-	 *
 	 */
 	public function __construct($config = array())
 	{

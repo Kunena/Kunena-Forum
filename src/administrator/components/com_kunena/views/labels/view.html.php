@@ -51,6 +51,5 @@ class KunenaAdminViewLabels extends KunenaView
 
 		// Set the titlebar text
 		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_LABELS_MANAGER'));
-
 	}
 }

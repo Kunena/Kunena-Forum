@@ -15,8 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-jimport('joomla.application.component.model');
-
 /**
  * User Model for Kunena
  *
@@ -39,7 +37,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$query = $db->getQuery(true);
 		$query->select('topic_id AS thread')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where('user_id=' . $userid . ' AND subscribed=1');
+			->where('user_id = ' . $userid . ' AND subscribed=1');
 		$db->setQuery($query);
 
 		try
@@ -97,7 +95,7 @@ class KunenaAdminModelUser extends KunenaModel
 		$query = $db->getQuery(true);
 		$query->select('ip')
 			->from($db->quoteName('#__kunena_messages'))
-			->where('userid=' . $userid)
+			->where('userid = ' . $userid)
 			->group('ip');
 		$db->setQuery($query);
 
@@ -120,7 +118,7 @@ class KunenaAdminModelUser extends KunenaModel
 			$query  = $db->getQuery(true);
 			$query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
 				->from($db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid=u.id')
+				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid = u.id')
 				->where('m.ip IN (' . $iplist . ')')
 				->group('m.userid,m.ip');
 			$db->setQuery($query);

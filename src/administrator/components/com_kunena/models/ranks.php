@@ -14,8 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Ranks Model for Kunena
  *
@@ -125,7 +123,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 			)
 		);
 
-		$query->from('#__kunena_ranks AS a');
+		$query->from($db->quoteName('#__kunena_ranks', 'a'));
 
 		// Filter by access level.
 		$filter = $this->getState('filter.title');

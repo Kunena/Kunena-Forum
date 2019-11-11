@@ -12,8 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 
-jimport('joomla.application.component.model');
-
 /**
  * Statistics Model for Kunena
  *
@@ -129,7 +127,7 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 		if (!empty($filter))
 		{
 			$filter = $db->quote('%' . $db->escape($filter, true) . '%');
-			$finder->innerJoin('#__users AS u ON u.id=a.' . $field);
+			$finder->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = a.' . $field);
 			$finder->where('u.username', 'LIKE', $filter, false);
 		}
 

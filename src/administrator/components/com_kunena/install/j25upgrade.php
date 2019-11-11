@@ -63,6 +63,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		require_once KPATH_ADMIN . '/install/schema.php';
+
 		$schema = new KunenaModelSchema;
 		$tables = $schema->getSchemaTables('');
 

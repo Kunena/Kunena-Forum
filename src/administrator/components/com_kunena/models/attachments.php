@@ -14,8 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Attachments Model for Kunena
  *

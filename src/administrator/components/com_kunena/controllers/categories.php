@@ -32,7 +32,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * @var null|string
 	 * @since    2.0.0-BETA2
-	 *
 	 */
 	protected $baseurl2 = null;
 
@@ -906,7 +905,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since  K3.0
 	 * @throws null
-	 *
 	 */
 	protected function orderUpDown($id, $direction)
 	{

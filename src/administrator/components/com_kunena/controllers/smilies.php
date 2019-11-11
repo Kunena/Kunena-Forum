@@ -220,7 +220,6 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 */
 	public function remove()
 	{
-		jimport('joomla.utilities.arrayhelper');
 		$db = Factory::getDbo();
 
 		if (!Session::checkToken('post'))

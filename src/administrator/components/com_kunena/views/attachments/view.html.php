@@ -49,7 +49,6 @@ class KunenaAdminViewAttachments extends KunenaView
 		$this->listDirection    = $this->escape($this->state->get('list.direction'));
 
 		return parent::display($tpl);
-
 	}
 
 	/**
@@ -89,7 +88,6 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 * @return    array
 	 * @since Kunena
-	 *
 	 */
 	protected function getSortDirectionFields()
 	{

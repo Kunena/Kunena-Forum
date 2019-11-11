@@ -84,11 +84,9 @@ class KunenaAdminControllerConfig extends KunenaController
 			return;
 		}
 
-		$properties = $this->config->getProperties();
-
+		$properties  = $this->config->getProperties();
 		$post_config = $this->app->input->post->getArray();
 
-		// TODO: fix deprecated value
 		foreach ($post_config as $postsetting => $postvalue)
 		{
 			if (Joomla\String\StringHelper::strpos($postsetting, 'cfg_') === 0)

@@ -148,7 +148,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 		{
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__update_sites'))
-				->set($db->quoteName('enabled') . '=1')
+				->set($db->quoteName('enabled') . ' = 1')
 				->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
 			$db->setQuery($query);
 			$db->execute();

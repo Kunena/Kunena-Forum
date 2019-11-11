@@ -34,9 +34,6 @@ function kunena_160_2010_05_30_attachments($parent)
 		return null;
 	}
 
-	// Import filesystem libraries.
-	jimport('joomla.filesystem.folder');
-
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
 	$db->setQuery($query);
 
@@ -104,6 +101,15 @@ function kunena_160_2010_05_30_attachments($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
+
+	/*$query = $db->getQuery(true);
+	$query->insert($db->quoteName('#__kunena_attachments') . ' (mesid, userid, folder, filetype, filename)')
+		->select("a.mesid, m.userid,
+					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,
+					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
+					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename")
+	->from($db->quoteName('#__kunena_attachments_bak', 'a'))
+	->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id');*/
 
 	$query = "INSERT INTO `#__kunena_attachments` (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,

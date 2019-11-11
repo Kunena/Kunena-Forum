@@ -2693,7 +2693,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$this->tables ['kunena_'] [$newtable] = $newtable;
 
 		// And copy data into it
-		$sql = "INSERT INTO " . $this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable);
+		$sql = $this->db->getQuery(true);
+		$sql->insert($this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable));
 		$this->db->setQuery($sql);
 
 		try
@@ -2803,13 +2804,15 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
 	{
-		$this->db->setQuery("INSERT INTO `" . $this->db->getPrefix() . "kunena_version` SET
-			`version` = {$this->db->quote($version)},
-			`versiondate` = {$this->db->quote($versiondate)},
-			`installdate` = CURDATE(),
-			`versionname` = {$this->db->quote($versionname)},
-			`build` = {$this->db->quote($version)},
-			`state` = {$this->db->quote($state)}");
+		$sql = $this->db->getQuery(true);
+		$sql->insert($this->db->quoteName($this->db->getPrefix() . 'kunena_version'))
+			->set($this->db->quoteName('version') . ' = ' . $this->db->quote($version))
+			->set($this->db->quoteName('versiondate') . ' = ' . $this->db->quote($versiondate))
+			->set($this->db->quoteName('installdate') . ' = ' . KunenaDate::getInstance('now'))
+			->set($this->db->quoteName('versionname') . ' = ' . $this->db->quote($versionname))
+			->set($this->db->quoteName('build') . ' = ' . $this->db->quote($version))
+			->set($this->db->quoteName('state') . ' = ' . $this->db->quote($state));
+		$this->db->setQuery($sql);
 
 		try
 		{

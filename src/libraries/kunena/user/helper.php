@@ -617,6 +617,12 @@ abstract class KunenaUserHelper
 	{
 		$db = Factory::getDBO();
 
+		/*$query = $db->getQuery(true);
+		$query->insert($db->quoteName('#__kunena_users') . ' (userid, posts)')
+			->select("user_id AS userid, SUM(posts) AS posts")
+			->from($db->quoteName('#__kunena_user_topics'))
+			->group('user_id' . ' ON DUPLICATE KEY UPDATE posts = VALUES(posts)');*/
+
 		// Update user post count
 		$query = "INSERT INTO #__kunena_users (userid, posts)
 				SELECT user_id AS userid, SUM(posts) AS posts
@@ -732,7 +738,7 @@ abstract class KunenaUserHelper
 	{
 		return IpHelper::isIPv6($ip);
 	}
-	
+
 	/**
 	 * Method to send data about spammer or to check if user is blacklisted in stopforumspam database
 	 * 

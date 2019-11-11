@@ -159,7 +159,10 @@ abstract class KunenaForumTopicUserHelper
 			if (isset($results[$id]))
 			{
 				$instance = new KunenaForumTopicUser;
-				$instance->bind($results[$id]);
+				if (!empty($results))
+				{
+					$instance->bind($results[$id]);
+				}
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
 			}
@@ -223,9 +226,12 @@ abstract class KunenaForumTopicUserHelper
 
 		$list = array();
 
-		foreach ($results as $result)
+		if (!empty($results))
 		{
-			$list[$result->topic_id][$result->user_id] = $result->{$value};
+			foreach ($results as $result)
+			{
+				$list[$result->topic_id][$result->user_id] = $result->{$value};
+			}
 		}
 
 		return $list;
@@ -442,14 +448,12 @@ abstract class KunenaForumTopicUserHelper
 		// Create the base subQuery select statement.
 		$subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->where($db->quoteName('m.userid') . '>0 AND ' . $db->quoteName('m.moved') . '=0 ' . $where)
+			->where($db->quoteName('m.userid') . ' > 0 AND ' . $db->quoteName('m.moved') . ' = 0 ' . $where)
 			->group('m.userid, m.thread');
 
 		// Create the base insert statement.
-		$query = "INSERT INTO `#__kunena_user_topics` (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`)
-			{$subQuery}
-			ON DUPLICATE KEY UPDATE `category_id`=VALUES(`category_id`), `posts`=VALUES(`posts`), `last_post_id`=VALUES(`last_post_id`)";
-
+		$query->insert($db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
+			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)');
 		$db->setQuery($query);
 
 		try

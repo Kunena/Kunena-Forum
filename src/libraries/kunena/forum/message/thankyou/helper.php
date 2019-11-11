@@ -343,7 +343,7 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * Recount thank yous.
+	 * Recount thank you's.
 	 *
 	 * @return boolean|integer    Number of rows is successful, false on error.
 	 * @throws Exception
@@ -361,9 +361,7 @@ abstract class KunenaForumMessageThankyouHelper
 			->from($db->quoteName('#__kunena_thankyou'))
 			->group($db->quoteName('targetuserid'));
 
-		$query = "INSERT INTO #__kunena_users (userid, thankyou)" .
-		$subquery . "ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
-
+		$query->insert($db->quoteName('#__kunena_users') . ' (userid, thankyou) ' . $subquery . ' ON DUPLICATE KEY UPDATE thankyou = VALUES(thankyou)');
 		$db->setQuery($query);
 
 		try

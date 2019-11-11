@@ -15,6 +15,8 @@ KunenaUserHelper::initialize();
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\IpHelper;
+use Joomla\Http\Http;
+use Joomla\Http\Transport\Stream as StreamTransport;
 
 /**
  * Class KunenaUserHelper
@@ -737,23 +739,23 @@ abstract class KunenaUserHelper
 	 */
 	public static function storeCheckStopforumspam($data = array(), $type)
 	{
-		$options = new Joomla\Registry\Registry;
+		$options = array();
 
-		$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+		$transport = new StreamTransport($options);
 
 		// Create a 'stream' transport.
-		$http = new Joomla\CMS\Http\Http($options, $transport);
+		$http = new Http($options, $transport);
 
+		// TODO : prevent to do a request with a private or local IP
 		if ($type=='add')
 		{
-			$datatosend = 'username=' . $data['username'] . '&ip_addr=' . $data['ip'] . '&email=' . $data['email'] . '&api_key=' .
-				$data['stopforumspam_key'] . '&evidence=' . $data['evidence'];
+			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key'], 'evidence' => $data['evidence']);
 
 			$response = $http->post('https://www.stopforumspam.com/add', $datatosend);
 		}
 		elseif (type=='api')
 		{
-			$datatosend = 'username=' . $data['username'] . '&ip_addr=' . $data['ip'] . '&email=' . $data['email'];
+			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key']);
 
 			$response = $http->post('https://www.stopforumspam.com/api', $datatosend);
 		}

@@ -298,7 +298,7 @@ abstract class JHtmlKunenaGrid
 		if ($bootstrap && $topicicontype == 'B2')
 		{
 			$html[] = '<a class="btn btn-micro ' . $active . '" ';
-			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="' . $title . '">';
 			$html[] = '<i class="icon-' . $class . '">';
 			$html[] = '</i>';
@@ -322,7 +322,7 @@ abstract class JHtmlKunenaGrid
 			}
 
 			$html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
-			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="' . $title . '">';
 			$html[] = '<i class="glyphicon glyphicon-' . $class . '">';
 			$html[] = '</i>';
@@ -351,7 +351,7 @@ abstract class JHtmlKunenaGrid
 			}
 
 			$html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
-			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="' . $title . '">';
 			$html[] = '<i class="fa fa-' . $class . '" aria-hidden="true">';
 			$html[] = '</i>';
@@ -380,7 +380,7 @@ abstract class JHtmlKunenaGrid
 			}
 
 			$html[] = '<a class="grid_' . $task . ' hasTip" alt="' . $alt . '"';
-			$html[] = ' href="#" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' href="#" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = 'title="' . $title . '">';
 			$html[] = $img;
 			$html[] = '</a>';

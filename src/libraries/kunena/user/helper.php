@@ -776,6 +776,24 @@ abstract class KunenaUserHelper
 
 		if ($response->code == '200')
 		{
+			if ($this->config->log_moderation)
+			{
+				$log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
+
+				KunenaLog::log(
+					KunenaLog::TYPE_ACTION,
+					$log,
+					array(
+						'user_ip_reported' => $data['ip'],
+						'username_reported' => $data['username'],
+						'email_reported' => $data['email'],
+					),
+					null,
+					null,
+					null
+				);
+			}
+
 			return $response;
 		}
 		else

@@ -137,6 +137,11 @@ class KunenaLog
 	const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
 
 	/**
+	 * @since Kunena 6.0
+	 */
+	const LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
+	
+	/**
 	 * @since Kunena
 	 */
 	// Const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';

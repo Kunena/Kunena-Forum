@@ -728,7 +728,7 @@ class KunenaUserBan extends CMSObject
 		if (!$this->id)
 		{
 			// If we have new ban, add creation date and user if they do not exist
-			if (!$this->created_time)
+			if ($this->created_time=='1000-01-01 00:00:00')
 			{
 				$now                = new Date;
 				$this->created_time = $now->toSql();

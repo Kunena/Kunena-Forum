@@ -37,6 +37,7 @@
         <folder>menu</folder>
         <folder>module</folder>
         <folder>pagination</folder>
+        <folder>private</folder>
         <folder>path</folder>
         <folder>response</folder>
         <folder>request</folder>

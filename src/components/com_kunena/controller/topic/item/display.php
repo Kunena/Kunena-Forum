@@ -170,6 +170,29 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->prepareMessages($mesid);
 		$doc = Factory::getApplication()->getDocument();
+		
+		if ($this->me->exists())
+		{
+			$pmFinder = new KunenaPrivateMessageFinder;
+			$pmFinder->filterByMessageIds(array_keys($this->messages))->order('id');
+			if (!$this->me->isModerator($this->category))
+			{
+				$pmFinder->filterByUser($this->me);
+			}
+			$pms = $pmFinder->find();
+			foreach ($pms as $pm)
+			{
+				$posts = $pm->params->get('receivers.posts');
+				foreach ($posts as $post)
+				{
+					if (!isset($this->messages[$post]->pm))
+					{
+						$this->messages[$post]->pm = array();
+					}
+				}
+				$this->messages[$post]->pm[$pm->id] = $pm;
+			}
+		}
 
 		if ($this->topic->unread)
 		{

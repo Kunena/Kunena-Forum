@@ -142,19 +142,19 @@ class KunenaLog
 	const LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
 	
 	/**
-	 * @since Kunena
+	 * @since Kunena 6.0
 	 */
-	// Const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
+	Const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 6.0
 	 */
-	// Const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
+	Const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
 	/**
-	 * @since Kunena
+	 * @since Kunena 6.0
 	 */
-	// Const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
+	Const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
 
 	/**
 	 * @since Kunena 5.0

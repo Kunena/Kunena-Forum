@@ -387,6 +387,7 @@ class KunenaControllerTopic extends KunenaController
 			'poll_options'      => $this->app->input->post->get('polloptionsID', array(), 'array'),
 			'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
 			'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
+			'private'           => (string) $this->app->input->getRaw('private'),
 			'rating'            => 0,
 			'params'            => '',
 		);
@@ -614,10 +615,17 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!$text)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
-			$this->setRedirectBack();
+			if (trim($fields['private'])) {
+				// Allow empty message if private message part has been filled up.
+				$message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}]";
+			}
+			else
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
+				$this->setRedirectBack();
 
-			return;
+				return;
+			}
 		}
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
@@ -730,6 +738,9 @@ class KunenaControllerTopic extends KunenaController
 				$this->app->enqueueMessage($topic->getError(), 'notice');
 			}
 		}
+
+		// Post Private message
+		$this->postPrivate($message);
 
 		$message->sendNotification();
 
@@ -1176,6 +1187,9 @@ class KunenaControllerTopic extends KunenaController
 				}
 			}
 		}
+
+		// Edit Private message.
+		$this->editPrivate($message);
 
 		$activity->onAfterEdit($message);
 
@@ -2399,5 +2413,88 @@ class KunenaControllerTopic extends KunenaController
 			return false;
 		}
 
+	}
+	
+	/**
+	 * Save private data from message
+	 *
+	 * @param KunenaForumMessage $message
+	 */
+	protected function postPrivate(KunenaForumMessage $message)
+	{
+		if (!$this->me->userid) return;
+		$body = (string) $this->input->getRaw('private');
+		$attachIds = $this->input->get('attachment_private', array(), 'array');
+		if (!trim($body) && !$attachIds) return;
+		$moderator = $this->me->isModerator($message->getCategory());
+		$parent = $message->getParent();
+		$author = $message->getAuthor();
+		$pAuthor = $parent->getAuthor();
+		$private = new KunenaPrivateMessage;
+		$private->author_id = $author->userid;
+		$private->subject = $message->subject;
+		$private->body = $body;
+		// Attach message.
+		$private->posts()->add($message->id);
+		// Attach author of the message.
+		if ($author->exists()) $private->users()->add($author->userid);
+		if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory())))
+		{
+			// Attach receiver (but only if moderator either posted or replied parent post).
+			if ($pAuthor->exists()) $private->users()->add($pAuthor->userid);
+		}
+		$private->attachments()->setMapped($attachIds);
+		if (!$private->save())
+		{
+			$this->app->enqueueMessage($private->getError(), 'notice');
+		}
+		else
+		{
+			KunenaLog::log(
+				KunenaLog::TYPE_ACTION,
+				KunenaLog::LOG_PRIVATE_POST_CREATE,
+				array('id' => $private->id, 'mesid' => $message->id),
+				$message->getCategory(),
+				$message->getTopic(),
+				$pAuthor
+			);
+		}
+	}
+
+	/**
+	 * Load private data information when edit message
+	 *
+	 * @param KunenaForumMessage $message
+	 */
+	protected function editPrivate(KunenaForumMessage $message)
+	{
+		if (!$this->me->userid) return;
+		$body = (string) $this->input->getRaw('private');
+		$attachIds = $this->input->get('attachment_private', array(), 'array');
+		$finder = new KunenaPrivateMessageFinder;
+		$finder
+		->filterByMessage($message)
+		->where('parent_id', '=', 0)
+		->where('author_id', '=', $message->userid)
+		->order('id')
+		->limit(1);
+		$private = $finder->firstOrNew();
+		if (!$private->exists())
+		{
+			$this->postPrivate($message);
+			return;
+		}
+		$private->subject = $message->subject;
+		$private->body = $body;
+		$private->attachments()->setMapped($attachIds);
+		$private->check();
+		if (!$private->body && !$private->attachments)
+		{
+			$private->delete();
+		}
+		if (!$private->save())
+		{
+			$this->app->enqueueMessage($private->getError(), 'notice');
+		}
 	}
 }

@@ -181,11 +181,15 @@ abstract class KunenaDatabaseObject extends CMSObject
 		}
 
 		// Store the data.
-		if (!$table->store())
+		try
 		{
-			$this->setError($table->getError());
-
+			$table->store();
+		}
+		catch (Exception $e)
+		{
 			return $this->_saving = false;
+
+			throw new Exception($e->getMessage());
 		}
 
 		// If item was created, load the object.

@@ -2449,21 +2449,23 @@ class KunenaControllerTopic extends KunenaController
 
 		$private->attachments()->setMapped($attachIds);
 
-		if (!$private->save())
+		try
 		{
-			$this->app->enqueueMessage($private->getError(), 'notice');
+			$private->save();
 		}
-		else
+		catch (Exception $e)
 		{
-			KunenaLog::log(
-				KunenaLog::TYPE_ACTION,
-				KunenaLog::LOG_PRIVATE_POST_CREATE,
-				array('id' => $private->id, 'mesid' => $message->id),
-				$message->getCategory(),
-				$message->getTopic(),
-				$pAuthor
-			);
+			KunenaError::displayDatabaseError($e);
 		}
+		
+		KunenaLog::log(
+			KunenaLog::TYPE_ACTION,
+			KunenaLog::LOG_PRIVATE_POST_CREATE,
+			array('id' => $private->id, 'mesid' => $message->id),
+			$message->getCategory(),
+			$message->getTopic(),
+			$pAuthor
+		);
 	}
 
 	/**

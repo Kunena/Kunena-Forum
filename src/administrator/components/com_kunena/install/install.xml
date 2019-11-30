@@ -717,9 +717,9 @@
 	<table name="kunena_private_user_map">
 		<field primary_key="yes" name="private_id" type="int(11)" null="0"/>
 		<field primary_key="yes" name="user_id" type="int(11)" null="0"/>
-		<field name="read_at" type="datetime" null="0"/>
-		<field name="replied_at" type="datetime" null="0"/>
-		<field name="deleted_at" type="datetime" null="0"/>
+		<field name="read_at" type="datetime" null="0" default="1000-01-01 00:00:00"/>
+		<field name="replied_at" type="datetime" null="0" default="1000-01-01 00:00:00"/>
+		<field name="deleted_at" type="datetime" null="0" default="1000-01-01 00:00:00"/>
 		<key name="PRIMARY" unique="1" columns="private_id,user_id"/>
 		<key name="user_id" columns="user_id"/>
 	</table>

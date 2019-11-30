@@ -61,6 +61,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		if ($this->me->exists())
 		{
+			$pmFinder = new KunenaPrivateMessageFinder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 			if (!$this->me->isModerator($this->category))
 			{

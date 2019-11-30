@@ -71,7 +71,7 @@ if ($topic->locked)
 		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $topic)->set('config', $this->config); ?>
 	</h1>
 
-	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+	<div id="topic-actions-top"><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
 	<div class="pull-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
@@ -146,7 +146,7 @@ if ($topic->locked)
 			->setLayout('topic'); ?>
 	</div>
 
-	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+	<div id="topic-actions-bottom"><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
 	<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 		<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>

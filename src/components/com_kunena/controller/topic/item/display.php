@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
@@ -180,9 +181,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$pmFinder->filterByUser($this->me);
 			}
 			$pms = $pmFinder->find();
+
 			foreach ($pms as $pm)
 			{
-				$posts = $pm->params->get('receivers.posts');
+				$registry = new Registry($pm->params);
+				$posts = $registry->get('receivers.posts');
+
 				foreach ($posts as $post)
 				{
 					if (!isset($this->messages[$post]->pm))

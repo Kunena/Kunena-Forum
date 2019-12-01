@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerTopicFormHistoryDisplay
@@ -70,7 +71,9 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 			$pms = $pmFinder->find();
 			foreach ($pms as $pm)
 			{
-				$posts = $pm->params->get('receivers.posts');
+			    $registry = new Registry($pm->params);
+			    $posts = $registry->get('receivers.posts');
+
 				foreach ($posts as $post)
 				{
 					if (!isset($messages[$post]->pm))

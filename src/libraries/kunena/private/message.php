@@ -9,6 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
+use Joomla\Registry\Registry;
+
 /**
  * Private message.
  *
@@ -38,7 +41,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		{
 			parent::__construct($properties);
 		}
-		$this->params = new Joomla\Registry\Registry($this->params);
 	}
 
 	/**
@@ -92,6 +94,8 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 	public function check()
 	{
+		$this->params = new Registry($this->params);
+
 		if (!is_null($this->_attachments))
 		{
 			$attachments = array_values($this->_attachments->getMapped());

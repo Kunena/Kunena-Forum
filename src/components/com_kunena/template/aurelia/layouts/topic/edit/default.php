@@ -327,7 +327,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			}
 			else
 			{
-				echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
+				echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('privateMessage', $this->privateMessage)->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
 			} ?>
 		</div>
 

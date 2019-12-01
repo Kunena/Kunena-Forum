@@ -136,14 +136,14 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			// Update message contents.
 			$this->message->edit($saved);
 		}
-		
+
 		$finder = new KunenaPrivateMessageFinder;
 		$finder
-		->filterByMessage($this->message)
-		->where('parent_id', '=', 0)
-		->where('author_id', '=', $this->message->userid)
-		->order('id')
-		->limit(1);
+			->filterByMessage($this->message)
+			->where('parent_id', '=', 0)
+			->where('author_id', '=', $this->message->userid)
+			->order('id')
+			->limit(1);
 		$this->privateMessage = $finder->firstOrNew();
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 

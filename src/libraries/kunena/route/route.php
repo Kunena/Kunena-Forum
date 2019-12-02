@@ -545,7 +545,7 @@ abstract class KunenaRoute
 
 		if (!isset($cache[$item->id]))
 		{
-			$params = $item->params;
+			$params = $item->getParams();
 			$catids = $params->get('catids', array());
 
 			if (!is_array($catids))

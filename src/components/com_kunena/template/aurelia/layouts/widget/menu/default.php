@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 	foreach ($this->list as $i => &$item)
 	{
 		// Exclude item with menu item option set to exclude from menu modules
-		if ($item->params->get('menu_show', 1) == 0)
+		if ($item->getParams()->get('menu_show', 1) == 0)
 		{
 			continue;
 		}
@@ -88,7 +88,7 @@ defined('_JEXEC') or die;
 
 		echo '<li' . $class . ' >';
 
-		$item->menu_image = $item->params->get('menu_image');
+		$item->menu_image = $item->getParams()->get('menu_image');
 
 		// Render the menu item.
 		if ($item->type == 'separator')

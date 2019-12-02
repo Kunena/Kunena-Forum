@@ -213,7 +213,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 
-		$params      = Factory::getApplication()->getMenu()->getActive()->params;
+		$params      = Factory::getApplication()->getMenu()->getActive()->getParams();
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
@@ -371,7 +371,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
+			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');

@@ -467,7 +467,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			KunenaError::displayDatabaseError($e);
+			throw new Exception($e->getMessage());
 
 			return false;
 		}

@@ -314,11 +314,15 @@ abstract class KunenaDatabaseObject extends CMSObject
 			return false;
 		}
 
-		if (!$table->delete())
+		try
 		{
-			$this->setError($table->getError());
-
+			$table->delete();
+		}
+		catch (Exception $e)
+		{
 			return false;
+
+			throw new Exception($e->getMessage());
 		}
 
 		$this->_exists = false;

@@ -292,7 +292,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
+			$params             = $menu_item->getParams();
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');

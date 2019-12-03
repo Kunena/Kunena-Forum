@@ -3148,6 +3148,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			return '';
 		}
+		
+		// Do nothing if there isn't a private message
+		if(!$bbcode->parent->pm)
+		{
+			return '';
+		}
 
 		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
@@ -3161,6 +3167,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			$message_userid = $bbcode->parent->userid;
 		}
+		
+		$pm = '';
+
+		foreach($bbcode->parent->pm as $privatemessage)
+		{
+			$pm =  $privatemessage->displayField('body');
+		}
 
 		if (($me->userid && $message_userid == $me->userid) || $moderator)
 		{
@@ -3170,7 +3183,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			{
 				return (string) $layout
 				->set('me', $me)
-				->set('content', $content)
+				->set('content', $pm)
 				->set('params', $params);
 			}
 		}

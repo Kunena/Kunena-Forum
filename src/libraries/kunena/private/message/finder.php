@@ -89,8 +89,18 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		$query = $this->db->getQuery(true);
 		$query->select('*')->from('#__kunena_private')->where('id IN('.implode(',', $ids).')');
 		$this->db->setQuery($query);
-		$results = $this->db->loadObjectList('id', 'KunenaPrivateMessage');
+		$results = $this->db->loadObjectList('id');
 
-		return $results;
+		$_instances = array();
+		
+		foreach ($results as $id => $instance)
+		{
+			$pm_instance = new KunenaPrivateMessage;
+			$pm_instance->load($id);
+			$pm_instance->id          = $id;
+			$_instances [$id] = $pm_instance;
+		}
+		
+		return $_instances;
 	}
 } 

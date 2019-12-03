@@ -2804,15 +2804,22 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
 	{
-		$sql = $this->db->getQuery(true);
-		$sql->insert($this->db->quoteName($this->db->getPrefix() . 'kunena_version'))
-			->set($this->db->quoteName('version') . ' = ' . $this->db->quote($version))
-			->set($this->db->quoteName('versiondate') . ' = ' . $this->db->quote($versiondate))
-			->set($this->db->quoteName('installdate') . ' = ' . KunenaDate::getInstance('now'))
-			->set($this->db->quoteName('versionname') . ' = ' . $this->db->quote($versionname))
-			->set($this->db->quoteName('build') . ' = ' . $this->db->quote($version))
-			->set($this->db->quoteName('state') . ' = ' . $this->db->quote($state));
-		$this->db->setQuery($sql);
+		$query = $this->db->getQuery(true);
+
+		// Insert columns.
+		$columns = array('version', 'versiondate', 'installdate', 'versionname', 'build', 'state');
+		
+		// Insert values.
+		$values = array($this->db->quote($version), $this->db->quote($versiondate), $this->db->quote(Factory::getDate('now')->toSql()), $this->db->quote($versionname), $this->db->quote($version), $this->db->quote($state));
+		
+		// Prepare the insert query.
+		$query
+		->insert($this->db->quoteName($this->db->getPrefix() . 'kunena_version'))
+		->columns($this->db->quoteName($columns))
+		->values(implode(',', $values));
+		
+		// Set the query using our newly populated query object and execute it.
+		$this->db->setQuery($query);
 
 		try
 		{

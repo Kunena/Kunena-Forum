@@ -181,11 +181,15 @@ abstract class KunenaDatabaseObject extends CMSObject
 		}
 
 		// Store the data.
-		if (!$table->store())
+		try
 		{
-			$this->setError($table->getError());
-
+			$table->store();
+		}
+		catch (Exception $e)
+		{
 			return $this->_saving = false;
+
+			throw new Exception($e->getMessage());
 		}
 
 		// If item was created, load the object.
@@ -310,11 +314,15 @@ abstract class KunenaDatabaseObject extends CMSObject
 			return false;
 		}
 
-		if (!$table->delete())
+		try
 		{
-			$this->setError($table->getError());
-
+			$table->delete();
+		}
+		catch (Exception $e)
+		{
 			return false;
+
+			throw new Exception($e->getMessage());
 		}
 
 		$this->_exists = false;

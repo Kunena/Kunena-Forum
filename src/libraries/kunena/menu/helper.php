@@ -75,7 +75,7 @@ abstract class KunenaMenuHelper
 				{
 					$item->parent = false;
 
-					if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parent_id && $item->params->get('menu_show', 1) == 1)
+					if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parent_id && $item->getParams()->get('menu_show', 1) == 1)
 					{
 						$items[$lastitem]->parent = true;
 					}
@@ -90,7 +90,7 @@ abstract class KunenaMenuHelper
 					}
 
 					// Exclude item with menu item option set to exclude from menu modules
-					if (($item->params->get('menu_show', 1) == 0) || in_array($item->parent_id, $hidden_parents))
+					if (($item->getParams()->get('menu_show', 1) == 0) || in_array($item->parent_id, $hidden_parents))
 					{
 						$hidden_parents[] = $item->id;
 						unset($items[$i]);
@@ -131,7 +131,7 @@ abstract class KunenaMenuHelper
 							break;
 
 						case 'alias':
-							$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
+							$item->flink = 'index.php?Itemid=' . $item->getParams()->get('aliasoptions');
 							break;
 
 						default:
@@ -141,7 +141,7 @@ abstract class KunenaMenuHelper
 
 					if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 					{
-						$item->flink = Route::_($item->flink, true, $item->params->get('secure'));
+					    $item->flink = Route::_($item->flink, true, $item->getParams()->get('secure'));
 					}
 					else
 					{
@@ -151,12 +151,12 @@ abstract class KunenaMenuHelper
 					// We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
 					// when the cause of that is found the argument should be removed
 					$item->title          = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-					$item->anchor_css     = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-					$item->anchor_title   = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-					$item->anchor_rel     = htmlspecialchars($item->params->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
-					$item->menu_image     = $item->params->get('menu_image', '') ?
-						htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
-					$item->menu_image_css = htmlspecialchars($item->params->get('menu_image_css', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_css     = htmlspecialchars($item->getParams()->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_title   = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->anchor_rel     = htmlspecialchars($item->getParams()->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
+					$item->menu_image     = $item->getParams()->get('menu_image', '') ?
+					htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+					$item->menu_image_css = htmlspecialchars($item->getParams()->get('menu_image_css', ''), ENT_COMPAT, 'UTF-8', false);
 				}
 
 				if (isset($items[$lastitem]))

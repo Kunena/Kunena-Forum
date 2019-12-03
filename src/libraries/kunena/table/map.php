@@ -447,7 +447,7 @@ class KunenaTableMap
 				$query = $this->_db->getQuery(true)
 					->insert($this->_db->quoteName($this->_tbl))
 					->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)))
-					->values($this->_db->quote($values));
+					->values($values);
 				$this->_db->setQuery($query);
 				$this->_db->execute();
 			}

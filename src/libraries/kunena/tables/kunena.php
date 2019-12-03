@@ -165,11 +165,26 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 		if ($this->exists())
 		{
-			$result = $this->updateObject($updateNulls);
+			
+			try
+			{
+				$result = $this->updateObject($updateNulls);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
+			}
 		}
 		else
 		{
-			$result = $this->insertObject();
+			try
+			{
+				$result = $this->insertObject();
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
+			}
 		}
 
 		if (!$result)
@@ -292,7 +307,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			KunenaError::displayDatabaseError($e);
+			throw new Exception($e->getMessage());
 
 			return false;
 		}
@@ -366,7 +381,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			KunenaError::displayDatabaseError($e);
+			throw new Exception($e->getMessage());
 
 			return false;
 		}
@@ -452,7 +467,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			KunenaError::displayDatabaseError($e);
+			throw new Exception($e->getMessage());
 
 			return false;
 		}

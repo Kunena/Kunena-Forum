@@ -2810,7 +2810,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			`installdate` = CURDATE(),
 			`versionname` = {$this->db->quote($versionname)},
 			`build` = {$this->db->quote($version)},
-			`state` = {$this->db->quote($state)}");*/
+			`state` = {$this->db->quote($state)}");
 
 		try
 		{

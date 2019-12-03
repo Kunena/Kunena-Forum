@@ -18,7 +18,7 @@ use Joomla\CMS\Uri\Uri;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
-HTMLHelper::_('behavior.tabstate');
+
 ?>
 
 <div id="kunena" class="container-fluid">

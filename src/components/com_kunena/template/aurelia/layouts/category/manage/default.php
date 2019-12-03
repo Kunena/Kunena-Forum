@@ -19,7 +19,7 @@ use Joomla\CMS\Uri\Uri;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
-HTMLHelper::_('behavior.tabstate');
+
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 

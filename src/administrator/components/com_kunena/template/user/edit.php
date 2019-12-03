@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
-HTMLHelper::_('behavior.tabstate');
+
 
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(

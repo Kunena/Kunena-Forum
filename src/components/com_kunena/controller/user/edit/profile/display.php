@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
@@ -31,9 +32,9 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare profile form items.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -71,8 +72,8 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

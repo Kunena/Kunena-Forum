@@ -23,7 +23,9 @@ if ($this->category->allow_ratings && $this->config->ratingenabled) :
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=getrate&format=raw'); ?>"/>
 	<input type="hidden" id="krating_submit_url" name="url"
 	       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=rate&topic_id=' . $this->topic->id . '&format=raw'); ?>"/>
-	<div id="krating" title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>" class="hasTooltip">
+	<div id="krating"
+	     title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>"
+	     class="hasTooltip">
 		<p class="unseen element-invisible"></p>
 	</div>
 <?php endif;

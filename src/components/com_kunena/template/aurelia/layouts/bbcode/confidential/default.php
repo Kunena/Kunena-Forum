@@ -10,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 // [confidential]For moderators only[/confidential]

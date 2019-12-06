@@ -28,6 +28,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since       Kunena
 	 */
 	public function __construct($params)

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    HTML
  *
@@ -16,25 +17,26 @@ use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class JHtmlKunenaForum
+ *
  * @since Kunena
  */
 abstract class JHtmlKunenaForum
 {
 	/**
-	 * @param   string $name      name
-	 * @param   mixed  $parent    parent
-	 * @param   array  $options   options
-	 * @param   array  $params    params
-	 * @param   null   $attribs   attribs
-	 * @param   string $key       key
-	 * @param   string $text      text
-	 * @param   array  $selected  selected
-	 * @param   bool   $idtag     idtag
-	 * @param   bool   $translate translate
+	 * @param   string  $name       name
+	 * @param   mixed   $parent     parent
+	 * @param   array   $options    options
+	 * @param   array   $params     params
+	 * @param   null    $attribs    attribs
+	 * @param   string  $key        key
+	 * @param   string  $text       text
+	 * @param   array   $selected   selected
+	 * @param   bool    $idtag      idtag
+	 * @param   bool    $translate  translate
 	 *
 	 * @return string|void
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
@@ -204,16 +206,17 @@ abstract class JHtmlKunenaForum
 	/**
 	 * Creates link pointing to a Kunena page
 	 *
-	 * @param   mixed  $uri        Kunena URI, either as string, Joomla\CMS\Uri\Uri or array
-	 * @param   string $content    content
-	 * @param   string $title      Link title
-	 * @param   string $class      Link class
-	 * @param   string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
-	 * @param   mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
+	 * @param   mixed   $uri         Kunena URI, either as string, Joomla\CMS\Uri\Uri or array
+	 * @param   string  $content     content
+	 * @param   string  $title       Link title
+	 * @param   string  $class       Link class
+	 * @param   string  $rel         Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
+	 * @param   mixed   $attributes  Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a',
+	 *                               'lang'=>'en')
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
@@ -273,10 +276,10 @@ abstract class JHtmlKunenaForum
 	}
 
 	/**
-	 * @param   string $name        name
-	 * @param   mixed  $options     options
-	 * @param   array  $selected    selected
-	 * @param   null   $class_input input
+	 * @param   string  $name         name
+	 * @param   mixed   $options      options
+	 * @param   array   $selected     selected
+	 * @param   null    $class_input  input
 	 *
 	 * @return string
 	 * @since Kunena

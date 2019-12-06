@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Image
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Helper class for image manipulation.
+ *
  * @since Kunena
  */
 class KunenaImageHelper
@@ -22,14 +24,14 @@ class KunenaImageHelper
 	/**
 	 * Create new re-sized version of the original image.
 	 *
-	 * @param   string $file      Incoming file
-	 * @param   string $folder    Folder for the new image.
-	 * @param   string $filename  Filename for the new image.
-	 * @param   int    $maxWidth  Maximum width for the image.
-	 * @param   int    $maxHeight Maximum height for the image.
-	 * @param   int    $quality   Quality for the file (1-100).
-	 * @param   int    $scale     See available KunenaImage constants.
-	 * @param   int    $crop      Define if you want crop the image.
+	 * @param   string  $file       Incoming file
+	 * @param   string  $folder     Folder for the new image.
+	 * @param   string  $filename   Filename for the new image.
+	 * @param   int     $maxWidth   Maximum width for the image.
+	 * @param   int     $maxHeight  Maximum height for the image.
+	 * @param   int     $quality    Quality for the file (1-100).
+	 * @param   int     $scale      See available KunenaImage constants.
+	 * @param   int     $crop       Define if you want crop the image.
 	 *
 	 * @return boolean    True on success.
 	 * @since Kunena

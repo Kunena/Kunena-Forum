@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Integration
  *
@@ -17,6 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class KunenaAccess
+ *
  * @since Kunena
  */
 class KunenaAccess

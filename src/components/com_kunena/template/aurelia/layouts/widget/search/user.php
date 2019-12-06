@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Search
  *
@@ -27,11 +28,11 @@ $state = $this->state;
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group search">
-				<label for="kusersearch"></label>
-				<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"
-				       value="<?php echo $this->escape($state); ?>"
-				       placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
-				<span class="input-group-append">
+			<label for="kusersearch"></label>
+			<input id="kusersearch" class="form-control input-sm search-query" type="text" name="search"
+			       value="<?php echo $this->escape($state); ?>"
+			       placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
+			<span class="input-group-append">
 					<button class="btn btn-light border" type="submit">
 						<?php echo KunenaIcons::search(); ?>
 					</button>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Categories
  * Provides access to the #__kunena_categories table
+ *
  * @since Kunena
  */
 class TableKunenaCategories extends KunenaTable
@@ -232,7 +234,7 @@ class TableKunenaCategories extends KunenaTable
 	public $topictemplate = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -242,12 +244,12 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id    id
-	 * @param   bool $reset reset
+	 * @param   null  $id     id
+	 * @param   bool  $reset  reset
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -308,8 +310,8 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   mixed  $array  array
-	 * @param   string $ignore ignore
+	 * @param   mixed   $array   array
+	 * @param   string  $ignore  ignore
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -345,8 +347,8 @@ class TableKunenaCategories extends KunenaTable
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{
@@ -380,11 +382,11 @@ class TableKunenaCategories extends KunenaTable
 	// Check if given forum is one of its own childs
 
 	/**
-	 * @param   integer $id id
+	 * @param   integer  $id  id
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function isChild($id)
 	{
@@ -440,7 +442,7 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param   string $where where
+	 * @param   string  $where  where
 	 *
 	 * @return boolean|mixed
 	 * @since Kunena

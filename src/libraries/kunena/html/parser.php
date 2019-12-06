@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      HTML
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaHtmlParser
+ *
  * @since Kunena
  */
 abstract class KunenaHtmlParser
@@ -31,12 +33,12 @@ abstract class KunenaHtmlParser
 	public static $relative = true;
 
 	/**
-	 * @param   bool $grayscale   grayscale
-	 * @param   bool $emoticonbar emoticonbar
+	 * @param   bool  $grayscale    grayscale
+	 * @param   bool  $emoticonbar  emoticonbar
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
@@ -69,9 +71,9 @@ abstract class KunenaHtmlParser
 		{
 			$smileyProperties = KunenaImage::getImageFileProperties($template->getSmileyPath($smiley->file));
 
-			$emoticon = new stdClass;
-			$emoticon->path = $template->getSmileyPath($smiley->file);
-			$emoticon->width = $smileyProperties->width;
+			$emoticon         = new stdClass;
+			$emoticon->path   = $template->getSmileyPath($smiley->file);
+			$emoticon->width  = $smileyProperties->width;
 			$emoticon->height = $smileyProperties->height;
 
 			// We load all smileys in array, so we can sort them
@@ -89,13 +91,13 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $txt    text
-	 * @param   int    $len    len
-	 * @param   string $target target
+	 * @param   string  $txt     text
+	 * @param   int     $len     len
+	 * @param   string  $target  target
 	 *
 	 * @return mixed|string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function parseText($txt, $len = 0, $target = 'title')
 	{
@@ -117,7 +119,7 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $string string
+	 * @param   string  $string  string
 	 *
 	 * @return string
 	 * @since Kunena
@@ -128,18 +130,18 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $content content
-	 * @param   string $target  target
+	 * @param   string  $content  content
+	 * @param   string  $target   target
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
-		$config        = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-		$events        = (int) $config->get('jcontentevents', false);
-		$event_target  = (array) $config->get('jcontentevent_target', array());
+		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events       = (int) $config->get('jcontentevents', false);
+		$event_target = (array) $config->get('jcontentevent_target', array());
 
 		$name   = '';
 		$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
@@ -167,15 +169,15 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $txt     text
-	 * @param   null   $parent  parent
-	 * @param   int    $len     len
-	 * @param   string $context context
-	 * @param   string $target  target
+	 * @param   string  $txt      text
+	 * @param   null    $parent   parent
+	 * @param   int     $len      len
+	 * @param   string  $context  context
+	 * @param   string  $target   target
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
 	{
@@ -200,13 +202,13 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $txt    text
-	 * @param   int    $len    len
-	 * @param   string $target target
+	 * @param   string  $txt     text
+	 * @param   int     $len     len
+	 * @param   string  $target  target
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function plainBBCode($txt, $len = 0, $target = 'message')
 	{
@@ -225,14 +227,14 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param   string $txt    text
-	 * @param   int    $len    len
-	 * @param   bool   $html   html
-	 * @param   string $target target
+	 * @param   string  $txt     text
+	 * @param   int     $len     len
+	 * @param   bool    $html    html
+	 * @param   string  $target  target
 	 *
 	 * @return string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function stripBBCode($txt, $len = 0, $html = true, $target = 'message')
 	{

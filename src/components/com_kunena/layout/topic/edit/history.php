@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Layout.Topic
  *
@@ -20,8 +21,8 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get the anchor link with number
 	 *
-	 * @param   int $mesid    The Id of the message
-	 * @param   int $replycnt The number of replies
+	 * @param   int  $mesid     The Id of the message
+	 * @param   int  $replycnt  The number of replies
 	 *
 	 * @return string
 	 * @since Kunena
@@ -43,10 +44,10 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get anchor link on the same page
 	 *
-	 * @param   int    $anchor The anchor number
-	 * @param   string $name   The name for the link
-	 * @param   string $rel    The rel attribute for the link
-	 * @param   string $class  The class attribute for the link
+	 * @param   int     $anchor  The anchor number
+	 * @param   string  $name    The name for the link
+	 * @param   string  $rel     The rel attribute for the link
+	 * @param   string  $class   The class attribute for the link
 	 *
 	 * @return string
 	 * @since Kunena

@@ -4,9 +4,9 @@
  *
  * @copyright 2012-2018 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.github.io/scssphp
+ * @link      http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp\Formatter;
@@ -20,26 +20,26 @@ use Leafo\ScssPhp\Formatter;
  */
 class Compact extends Formatter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct()
-    {
-        $this->indentLevel = 0;
-        $this->indentChar = '';
-        $this->break = '';
-        $this->open = ' {';
-        $this->close = "}\n\n";
-        $this->tagSeparator = ',';
-        $this->assignSeparator = ':';
-        $this->keepSemicolons = true;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct()
+	{
+		$this->indentLevel     = 0;
+		$this->indentChar      = '';
+		$this->break           = '';
+		$this->open            = ' {';
+		$this->close           = "}\n\n";
+		$this->tagSeparator    = ',';
+		$this->assignSeparator = ':';
+		$this->keepSemicolons  = true;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function indentStr()
-    {
-        return ' ';
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function indentStr()
+	{
+		return ' ';
+	}
 }

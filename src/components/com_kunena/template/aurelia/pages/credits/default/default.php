@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Pages.Credits
  *
@@ -9,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $content = $this->execute('Credits');

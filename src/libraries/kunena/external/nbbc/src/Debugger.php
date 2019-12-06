@@ -2,7 +2,7 @@
 /**
  * @copyright Copyright (C) 2008-10, Sean Werkema. All rights reserved.
  * @copyright 2016 Vanilla Forums Inc. (changes only)
- * @license BSDv2
+ * @license   BSDv2
  */
 
 namespace Nbbc;
@@ -58,46 +58,57 @@ namespace Nbbc;
 
 use DateTime;
 
-class Debugger {
-    public static $level = 9;
-    public static $debug = 1;
-    public static $info = 2;
-    public static $warning = 3;
-    public static $error = 4;
+class Debugger
+{
+	public static $level = 9;
+	public static $debug = 1;
+	public static $info = 2;
+	public static $warning = 3;
+	public static $error = 4;
 
-    // File to log messages to
-    public static $log_file = '';
+	// File to log messages to
+	public static $log_file = '';
 
-    public static function log($level, $string) {
-        if ($level >= static::$level) {
-            if (strpos($string, "\n") === false) {
-                $string .= "\n";
-            }
+	public static function log($level, $string)
+	{
+		if ($level >= static::$level)
+		{
+			if (strpos($string, "\n") === false)
+			{
+				$string .= "\n";
+			}
 
-            $date = new DateTime();
-            $string = '['.$date->format('Y-m-d H:i:s.u').'] '.$string;
+			$date   = new DateTime();
+			$string = '[' . $date->format('Y-m-d H:i:s.u') . '] ' . $string;
 
-            if (static::$log_file) {
-                file_put_contents(static::$log_file, $string, FILE_APPEND);
-            } else {
-                echo $string;
-            }
-        }
-    }
+			if (static::$log_file)
+			{
+				file_put_contents(static::$log_file, $string, FILE_APPEND);
+			}
+			else
+			{
+				echo $string;
+			}
+		}
+	}
 
-    public static function debug($string) {
-        static::log(static::$debug, $string);
-    }
+	public static function debug($string)
+	{
+		static::log(static::$debug, $string);
+	}
 
-    public static function info($string) {
-        static::log(static::$info, $string);
-    }
+	public static function info($string)
+	{
+		static::log(static::$info, $string);
+	}
 
-    public static function warning($string) {
-        static::log(static::$warning, $string);
-    }
+	public static function warning($string)
+	{
+		static::log(static::$warning, $string);
+	}
 
-    public static function error($string) {
-        static::log(static::$error, $string);
-    }
+	public static function error($string)
+	{
+		static::log(static::$error, $string);
+	}
 }

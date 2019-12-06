@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -27,8 +28,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 	 * Prepare user's topic list.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()

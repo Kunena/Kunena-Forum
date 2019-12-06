@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Forum.Menu
  *
@@ -18,6 +19,7 @@ KunenaMenuFix::initialize();
 
 /**
  * Class KunenaMenuFix
+ *
  * @since Kunena
  */
 abstract class KunenaMenuFix
@@ -84,8 +86,8 @@ abstract class KunenaMenuFix
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function load()
 	{
@@ -137,8 +139,8 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	protected static function build()
 	{
@@ -197,7 +199,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @param   StdClass $item item
+	 * @param   StdClass  $item  item
 	 *
 	 * @return object|boolean
 	 * @since Kunena
@@ -245,8 +247,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function fixLegacy()
 	{
@@ -275,7 +277,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @param   integer $itemid itemid
+	 * @param   integer  $itemid  itemid
 	 *
 	 * @return boolean
 	 * @since Kunena

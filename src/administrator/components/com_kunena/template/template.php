@@ -16,6 +16,7 @@ use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAdminTemplate
+ *
  * @since Kunena
  */
 class KunenaAdminTemplate
@@ -34,9 +35,9 @@ class KunenaAdminTemplate
 	/**
 	 * Get template paths.
 	 *
-	 * @param   string     $path     path
+	 * @param   string      $path      path
 	 *
-	 * @param   bool|false $fullpath fullpath
+	 * @param   bool|false  $fullpath  fullpath
 	 *
 	 * @return array
 	 * @since Kunena
@@ -57,7 +58,7 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject $item The current pagination object
+	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *

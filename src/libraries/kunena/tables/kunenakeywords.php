@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -15,6 +16,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Keywords Table
  * Provides access to the #__kunena_keywords table
+ *
  * @since Kunena
  */
 class TableKunenaKeywords extends KunenaTable
@@ -44,7 +46,7 @@ class TableKunenaKeywords extends KunenaTable
 	public $total_count = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */

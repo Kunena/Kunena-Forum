@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Collection
  *
@@ -12,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Item Collection.
+ *
  * @since Kunena
  */
 class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
@@ -27,7 +29,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Create a new collection.
 	 *
-	 * @param   array $items Initial items to be added into the collection.
+	 * @param   array  $items  Initial items to be added into the collection.
 	 *
 	 * @since Kunena
 	 */
@@ -72,7 +74,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a filter over each of the items.
 	 *
-	 * @param   Closure $callback callback
+	 * @param   Closure  $callback  callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -85,7 +87,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Execute a callback over each item.
 	 *
-	 * @param   Closure $callback callback
+	 * @param   Closure  $callback  callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -100,7 +102,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a map over each of the items.
 	 *
-	 * @param   Closure $callback callback
+	 * @param   Closure  $callback  callback
 	 *
 	 * @return KunenaCollection
 	 * @since Kunena
@@ -135,7 +137,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Determine if an item exists at an offset.
 	 *
-	 * @param   mixed $key key
+	 * @param   mixed  $key  key
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -148,7 +150,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get an item at a given offset.
 	 *
-	 * @param   mixed $key key
+	 * @param   mixed  $key  key
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -161,8 +163,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Set the item at a given offset.
 	 *
-	 * @param   mixed $key   key
-	 * @param   mixed $value value
+	 * @param   mixed  $key    key
+	 * @param   mixed  $value  value
 	 *
 	 * @return void
 	 * @since Kunena
@@ -182,7 +184,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Unset the item at a given offset.
 	 *
-	 * @param   string $key key
+	 * @param   string  $key  key
 	 *
 	 * @return void
 	 * @since Kunena

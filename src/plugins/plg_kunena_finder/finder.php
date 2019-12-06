@@ -24,13 +24,13 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * Message is passed by reference, but after the save, so no changes will be saved.
 	 * Method is called right after the Message is saved
 	 *
-	 * @param   string $context The context of the message passed to the plugin (added in 1.6)
-	 * @param   object $table   A Table object containing the message
-	 * @param   bool   $isNew   If the message has just been created
+	 * @param   string  $context  The context of the message passed to the plugin (added in 1.6)
+	 * @param   object  $table    A Table object containing the message
+	 * @param   bool    $isNew    If the message has just been created
 	 *
-	 * @throws Exception
-	 * @since    2.5
 	 * @return void
+	 * @since    2.5
+	 * @throws Exception
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
@@ -51,13 +51,13 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * Finder before save message method
 	 * Method is called right before the content is saved
 	 *
-	 * @param   string $context The context of the content passed to the plugin (added in 1.6)
-	 * @param   object $table   A Table object containing the message
-	 * @param   bool   $isNew   If the message is just about to be created
+	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6)
+	 * @param   object  $table    A Table object containing the message
+	 * @param   bool    $isNew    If the message is just about to be created
 	 *
-	 * @throws Exception
-	 * @since   2.5
 	 * @return void
+	 * @since   2.5
+	 * @throws Exception
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
@@ -77,12 +77,12 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param   string $context The context of the content passed to the plugin (added in 1.6)
-	 * @param   object $table   A Table object containing the message
+	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6)
+	 * @param   object  $table    A Table object containing the message
 	 *
-	 * @throws Exception
-	 * @since   2.5
 	 * @return void
+	 * @since   2.5
+	 * @throws Exception
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
@@ -101,12 +101,12 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param   string $context The context of the content passed to the plugin (added in 1.6)
-	 * @param   object $table   A Table object containing the message
+	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6)
+	 * @param   object  $table    A Table object containing the message
 	 *
-	 * @throws Exception
-	 * @since   2.5
 	 * @return void
+	 * @since   2.5
+	 * @throws Exception
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{

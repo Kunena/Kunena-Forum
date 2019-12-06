@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.

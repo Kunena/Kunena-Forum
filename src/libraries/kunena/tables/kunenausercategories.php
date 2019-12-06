@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Categories Table
  * Provides access to the #__kunena_user_categories table
+ *
  * @since Kunena
  */
 class TableKunenaUserCategories extends KunenaTable
@@ -58,7 +60,7 @@ class TableKunenaUserCategories extends KunenaTable
 	public $params = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -69,8 +71,8 @@ class TableKunenaUserCategories extends KunenaTable
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{

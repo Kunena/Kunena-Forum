@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.Poll
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaForumTopicPollHelper
+ *
  * @since Kunena
  */
 abstract class KunenaForumTopicPollHelper
@@ -57,8 +59,8 @@ abstract class KunenaForumTopicPollHelper
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function recount()
 	{

@@ -73,8 +73,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * By default language files are also loaded from the parent templates.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadLanguage()
 	{
@@ -92,8 +92,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function initialize()
 	{
@@ -183,11 +183,11 @@ EOF;
 	}
 
 	/**
-	 * @param        $link
-	 * @param        $name
-	 * @param        $scope
-	 * @param        $type
-	 * @param   null $id id
+	 * @param         $link
+	 * @param         $name
+	 * @param         $scope
+	 * @param         $type
+	 * @param   null  $id  id
 	 *
 	 * @return string
 	 * @since Kunena
@@ -233,8 +233,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $name
-	 * @param   string $title title
+	 * @param           $name
+	 * @param   string  $title  title
 	 *
 	 * @return string
 	 * @since Kunena
@@ -245,8 +245,8 @@ HTML;
 	}
 
 	/**
-	 * @param          $image
-	 * @param   string $alt alt
+	 * @param           $image
+	 * @param   string  $alt  alt
 	 *
 	 * @return string
 	 * @since Kunena

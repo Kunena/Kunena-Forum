@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Statistics
  *
@@ -9,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 ?>
@@ -53,59 +55,59 @@ use Joomla\CMS\Language\Text;
 	<?php endforeach; ?>
 	<?php
 	if ($this->config->showgenstats) : ?>
-	<div class="card">
-		<h3 class="card-header">
-			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
-		</h3>
+		<div class="card">
+			<h3 class="card-header">
+				<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
+			</h3>
 
-		<div class="card-body">
-			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
-			<b>
+			<div class="card-body">
+				<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
+				<b>
 
-				<?php if ($this->userlistUrl)
-					:
-					?>
-					<a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a>
-				<?php else
-					:
-					?>
-					<?php echo $this->memberCount; ?>
-				<?php endif; ?>
+					<?php if ($this->userlistUrl)
+						:
+						?>
+						<a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a>
+					<?php else
+						:
+						?>
+						<?php echo $this->memberCount; ?>
+					<?php endif; ?>
 
-			</b>
+				</b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
-			<b><?php echo $this->latestMemberLink ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
+				<b><?php echo $this->latestMemberLink ?></b>
 
-			<br/>
+				<br/>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
-			<b><?php echo (int) $this->messageCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
+				<b><?php echo (int) $this->messageCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
-			<b><?php echo (int) $this->topicCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
+				<b><?php echo (int) $this->topicCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
-			<b><?php echo (int) $this->sectionCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
+				<b><?php echo (int) $this->sectionCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
-			<b><?php echo (int) $this->categoryCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
+				<b><?php echo (int) $this->categoryCount; ?></b>
 
-			<br/>
+				<br/>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
-			<b><?php echo (int) $this->todayTopicCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
+				<b><?php echo (int) $this->todayTopicCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
-			<b><?php echo (int) $this->yesterdayTopicCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
+				<b><?php echo (int) $this->yesterdayTopicCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
-			<b><?php echo (int) $this->todayReplyCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
+				<b><?php echo (int) $this->todayReplyCount; ?></b>
 
-			<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
-			<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
+				<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
+				<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
+			</div>
 		</div>
-	</div>
 	<?php endif; ?>
 
 </div>

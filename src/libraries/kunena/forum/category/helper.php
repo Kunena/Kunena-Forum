@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Category
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumCategoryHelper
+ *
  * @since Kunena
  */
 abstract class KunenaForumCategoryHelper
@@ -39,6 +41,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * Initialize class.
+	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception

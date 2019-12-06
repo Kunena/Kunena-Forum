@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Libraries
  * @subpackage    Log
  *
@@ -26,15 +27,15 @@ class KunenaLogEntry
 	public $data;
 
 	/**
-	 * @param   mixed               $type      type
-	 * @param   mixed               $operation operation
-	 * @param   mixed               $data      data
-	 * @param   KunenaForumCategory $category  category
-	 * @param   KunenaForumTopic    $topic     topic
-	 * @param   KunenaUser          $user      user
+	 * @param   mixed                $type       type
+	 * @param   mixed                $operation  operation
+	 * @param   mixed                $data       data
+	 * @param   KunenaForumCategory  $category   category
+	 * @param   KunenaForumTopic     $topic      topic
+	 * @param   KunenaUser           $user       user
 	 *
-	 * @throws Exception
 	 * @since Kunena 5.0
+	 * @throws Exception
 	 */
 	public function __construct(
 		$type,

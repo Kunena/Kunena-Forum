@@ -4,9 +4,9 @@
  *
  * @copyright 2012-2018 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.github.io/scssphp
+ * @link      http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp;
@@ -18,23 +18,23 @@ namespace Leafo\ScssPhp;
  */
 abstract class Node
 {
-    /**
-     * @var string
-     */
-    public $type;
+	/**
+	 * @var string
+	 */
+	public $type;
 
-    /**
-     * @var integer
-     */
-    public $sourceIndex;
+	/**
+	 * @var integer
+	 */
+	public $sourceIndex;
 
-    /**
-     * @var integer
-     */
-    public $sourceLine;
+	/**
+	 * @var integer
+	 */
+	public $sourceLine;
 
-    /**
-     * @var integer
-     */
-    public $sourceColumn;
+	/**
+	 * @var integer
+	 */
+	public $sourceColumn;
 }

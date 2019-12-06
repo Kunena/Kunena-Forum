@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Statistics
  *
@@ -36,8 +37,8 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -114,8 +115,8 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

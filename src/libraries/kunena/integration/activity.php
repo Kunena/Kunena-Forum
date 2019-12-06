@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Integration
  *
@@ -70,8 +71,8 @@ class KunenaIntegrationActivity
 	/**
 	 * Method magical to call the right method in plugin integration
 	 *
-	 * @param   string $method    Name of method to call
-	 * @param   array  $arguments Arguments need to be passed to the method
+	 * @param   string  $method     Name of method to call
+	 * @param   array   $arguments  Arguments need to be passed to the method
 	 *
 	 * @return mixed
 	 * @since Kunena

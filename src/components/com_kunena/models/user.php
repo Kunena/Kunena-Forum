@@ -79,8 +79,8 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getQueryWhere()
 	{
@@ -160,8 +160,8 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTotal()
 	{
@@ -189,8 +189,8 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCount()
 	{
@@ -224,8 +224,8 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getItems()
 	{

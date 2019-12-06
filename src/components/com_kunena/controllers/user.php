@@ -609,13 +609,13 @@ class KunenaControllerUser extends KunenaController
 			$user->$key = str_replace(' ', '', trim($input->$method->get($key, '', 'string')));
 		}
 
-		$user->birthdate        = $birthdate;
-		$user->location         = trim($input->$method->get('location', '', 'string'));
-		$user->gender           = $input->$method->get('gender', 0, 'int');
+		$user->birthdate = $birthdate;
+		$user->location  = trim($input->$method->get('location', '', 'string'));
+		$user->gender    = $input->$method->get('gender', 0, 'int');
 
-		$user->websitename      = $input->$method->get('websitename', '', 'string');
-		$user->websiteurl       = $input->$method->get('websiteurl', '', 'string');
-		$user->signature        = $input->$method->get('signature', '', 'raw');
+		$user->websitename = $input->$method->get('websitename', '', 'string');
+		$user->websiteurl  = $input->$method->get('websiteurl', '', 'string');
+		$user->signature   = $input->$method->get('signature', '', 'raw');
 
 		// Save avatar from gallery
 		$avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');
@@ -799,19 +799,19 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($DelProfileInfo))
 		{
-			$user->personalText     = '';
-			$user->birthdate        = $birthdate;
-			$user->location         = '';
-			$user->gender           = 0;
+			$user->personalText = '';
+			$user->birthdate    = $birthdate;
+			$user->location     = '';
+			$user->gender       = 0;
 
 			foreach ($user->socialButtons() as $social)
 			{
 				$user->$social = '';
 			}
 
-			$user->websitename      = '';
-			$user->websiteurl       = '';
-			$user->signature        = '';
+			$user->websitename = '';
+			$user->websiteurl  = '';
+			$user->signature   = '';
 			$user->save();
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
 		}
@@ -1334,16 +1334,16 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($ip))
 		{
-			$data = array();
-			$data['username'] = $spammer->username;
-			$data['ip'] = $ip;
-			$data['email'] = $spammer->email;
+			$data                      = array();
+			$data['username']          = $spammer->username;
+			$data['ip']                = $ip;
+			$data['email']             = $spammer->email;
 			$data['stopforumspam_key'] = $this->config->stopforumspam_key;
-			$data['evidence'] = $evidence;
+			$data['evidence']          = $evidence;
 
 			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
 
-			if ($result!=false)
+			if ($result != false)
 			{
 				// Report accepted. There is no need to display the reason
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));

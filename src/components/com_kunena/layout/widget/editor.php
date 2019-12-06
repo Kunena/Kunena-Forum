@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Layout.widget
  *
@@ -25,8 +26,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Get geshi code types.
 	 *
 	 * @return array|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getCodeTypes()
 	{
@@ -70,8 +71,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Define javascript variables to show or disable some bbcode buttons
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getBBcodesEnabled()
 	{

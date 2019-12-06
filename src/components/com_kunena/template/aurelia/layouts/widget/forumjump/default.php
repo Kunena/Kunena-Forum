@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Widget
  *
@@ -16,7 +17,7 @@ $catid = Factory::getApplication()->input->getInt('catid', 0);
 ?>
 <script>
 	jQuery(function ($) {
-		$("#jumpto option[value=<?php echo $catid ;?>]").prop("selected", "selected");
+		$("#jumpto option[value=<?php echo $catid;?>]").prop("selected", "selected");
 	})
 </script>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" id="jumpto" name="jumpto" method="post"

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Bans
  * Provides access to the #__kunena_users_banned table
+ *
  * @since Kunena
  */
 class TableKunenaUserBans extends Joomla\CMS\Table\Table
@@ -110,7 +112,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	public $params = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -120,12 +122,12 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   integer $userid userid
-	 * @param   int     $mode   mode
+	 * @param   integer  $userid  userid
+	 * @param   int      $mode    mode
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
@@ -140,7 +142,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 			return false;
 		}
 
-		$now = new Joomla\CMS\Date\Date;
+		$now      = new Joomla\CMS\Date\Date;
 		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
 
 		// Load the user data.
@@ -153,7 +155,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 			$where = '';
 		}
 
-		$query  = $this->_db->getQuery(true);
+		$query = $this->_db->getQuery(true);
 		$query->select('*')
 			->from($this->_db->quoteName($this->_tbl))
 			->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($userid) . ' ' . $where)
@@ -186,8 +188,8 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   mixed $data   data
-	 * @param   array $ignore ignore
+	 * @param   mixed  $data    data
+	 * @param   array  $ignore  ignore
 	 *
 	 * @return void
 	 * @since Kunena
@@ -208,12 +210,12 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   integer $ip   ip
-	 * @param   int     $mode mode
+	 * @param   integer  $ip    ip
+	 * @param   int      $mode  mode
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
@@ -228,7 +230,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 			return false;
 		}
 
-		$now = new Joomla\CMS\Date\Date;
+		$now      = new Joomla\CMS\Date\Date;
 		$nullDate = $this->_db->getNullDate() ? $this->_db->quote($this->_db->getNullDate()) : 'NULL';
 
 		// Load the user data.
@@ -242,7 +244,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 			$where = '';
 		}
 
-		$query  = $this->_db->getQuery(true);
+		$query = $this->_db->getQuery(true);
 		$query->select('*')
 			->from($this->_db->quoteName($this->_tbl))
 			->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($ip) . ' ' . $where)
@@ -276,8 +278,8 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{

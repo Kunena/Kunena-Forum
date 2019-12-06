@@ -128,8 +128,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLastestCategories()
 	{
@@ -146,9 +146,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|boolean|KunenaForumCategory[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getCategories()
 	{
@@ -252,7 +252,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$catlist = implode(',', $modcats);
 				$db      = Factory::getDBO();
-				$query = $db->getQuery(true);
+				$query   = $db->getQuery(true);
 				$query->select('catid, COUNT(*) AS count')
 					->from($db->quoteName('#__kunena_messages'))
 					->where('catid IN (' . $catlist . ') AND hold=1');
@@ -320,9 +320,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getTopics()
 	{
@@ -340,7 +340,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'  => $hold,
-				'moved' => $moved, );
+				'moved' => $moved,);
 
 			switch ($topic_ordering)
 			{
@@ -403,8 +403,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTotal()
@@ -419,8 +419,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTopicActions()
@@ -506,8 +506,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getModerators()
 	{

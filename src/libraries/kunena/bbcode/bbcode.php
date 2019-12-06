@@ -1501,9 +1501,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if ($layout->getPath())
 		{
-			$title = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $title);
+			$title   = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $title);
 			$content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
-			$params = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $params);
+			$params  = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $params);
 
 			return (string) $layout
 				->set('title', $title)

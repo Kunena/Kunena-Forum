@@ -26,8 +26,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the options of the topic
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getTopicOptions()
@@ -50,7 +50,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$db     = Factory::getDbo();
 		$params = array(
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", );
+			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ",);
 		list($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)

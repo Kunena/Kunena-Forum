@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message.Thankyou
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Kunena Forum Message Thank You Helper Class
+ *
  * @since 2.0
  */
 abstract class KunenaForumMessageThankyouHelper
@@ -27,8 +29,8 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Cleanup
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -36,12 +38,12 @@ abstract class KunenaForumMessageThankyouHelper
 	}
 
 	/**
-	 * @param   int  $identifier The message to load - Can be only an integer.
-	 * @param   bool $reload     reload
+	 * @param   int   $identifier  The message to load - Can be only an integer.
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumMessageThankyou|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier, $reload = false)
 	{
@@ -70,11 +72,11 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Load users who have given thank you to listed messages.
 	 *
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -130,12 +132,12 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get total number of Thank yous.
 	 *
-	 * @param   int $starttime Starting time as unix timestamp.
-	 * @param   int $endtime   Ending time as unix timestamp.
+	 * @param   int  $starttime  Starting time as unix timestamp.
+	 * @param   int  $endtime    Ending time as unix timestamp.
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTotal($starttime = null, $endtime = null)
 	{
@@ -178,13 +180,13 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get users with most thank yous received / given.
 	 *
-	 * @param   bool $target     target
-	 * @param   int  $limitstart limitstart
-	 * @param   int  $limit      limit
+	 * @param   bool  $target      target
+	 * @param   int   $limitstart  limitstart
+	 * @param   int   $limit       limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTopUsers($target = true, $limitstart = 0, $limit = 10)
 	{
@@ -221,19 +223,19 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get messages with most thank yous given.
 	 *
-	 * @param   int $limitstart limitstart
-	 * @param   int $limit      limit
+	 * @param   int  $limitstart  limitstart
+	 * @param   int  $limit       limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = Factory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
-		$query = $db->getQuery(true);
+		$query      = $db->getQuery(true);
 		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
 			->from($db->quoteName('#__kunena_thankyou', 's'))
 			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON s.postid = m.id')
@@ -261,14 +263,14 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get messages where a user received / gave thank you.
 	 *
-	 * @param   int  $userid     userid
-	 * @param   bool $target     target
-	 * @param   int  $limitstart limitstart
-	 * @param   int  $limit      limit
+	 * @param   int   $userid      userid
+	 * @param   bool  $target      target
+	 * @param   int   $limitstart  limitstart
+	 * @param   int   $limit       limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
@@ -282,7 +284,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
-		$query = $db->getQuery(true);
+		$query      = $db->getQuery(true);
 		$query->select('m.catid, m.thread, m.id')
 			->from($db->quoteName('#__kunena_thankyou', 't'))
 			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON m.id = t.postid')
@@ -311,8 +313,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @return boolean|integer    Number of rows is successful, false on error.
 	 *
-	 * @throws Exception
 	 * @since K2.0
+	 * @throws Exception
 	 */
 	public static function recountThankyou()
 	{
@@ -346,15 +348,15 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Recount thank you's.
 	 *
 	 * @return boolean|integer    Number of rows is successful, false on error.
-	 * @throws Exception
 	 * @since K2.0
+	 * @throws Exception
 	 */
 	public static function recount()
 	{
 		$db = Factory::getDBO();
 
 		// Update user thankyou count
-		$query = $db->getQuery(true);
+		$query    = $db->getQuery(true);
 		$subquery = $db->getQuery(true);
 
 		$subquery->select('targetuserid AS userid, COUNT(*) AS thankyou')
@@ -383,11 +385,11 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Return thank yous for the given messages.
 	 *
-	 * @param   bool|array|int $ids ids
+	 * @param   bool|array|int  $ids  ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getByMessage($ids = false)
 	{

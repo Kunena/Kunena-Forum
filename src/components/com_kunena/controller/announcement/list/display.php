@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Announcement
  *
@@ -42,9 +43,9 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 * Prepare announcement list display.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -87,8 +88,8 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

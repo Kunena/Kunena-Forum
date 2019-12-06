@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
@@ -23,8 +24,8 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function exists()
 	{
@@ -36,8 +37,8 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @return void
 	 *
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{

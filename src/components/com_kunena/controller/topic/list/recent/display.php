@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -27,8 +28,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare recent topics list.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()
@@ -331,8 +332,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

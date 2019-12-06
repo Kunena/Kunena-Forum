@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -54,9 +55,9 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -139,8 +140,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

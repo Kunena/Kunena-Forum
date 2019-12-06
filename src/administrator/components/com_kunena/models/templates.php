@@ -222,6 +222,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

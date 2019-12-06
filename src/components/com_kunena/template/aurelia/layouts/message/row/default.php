@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Message
  *
@@ -9,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $this->addStyleSheet('rating.css');
@@ -53,7 +55,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			}
 			else
 			{
-			    echo $this->getTopicLink($topic, $this->message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, $this->message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false);
 			}
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -20,6 +21,7 @@ jimport('joomla.application.component.helper');
 
 /**
  * Class KunenaController
+ *
  * @since Kunena
  */
 class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
@@ -43,7 +45,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	public $config = null;
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -70,8 +72,8 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param   string $prefix prefix
-	 * @param   mixed  $config config
+	 * @param   string  $prefix  prefix
+	 * @param   mixed   $config  config
 	 *
 	 * @return KunenaController
 	 * @since Kunena
@@ -174,7 +176,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * messages = [array|null]: Array of enqueue'd messages.
 	 * data = [mixed]: The response data.
 	 *
-	 * @param   string $task Task to be run.
+	 * @param   string  $task  Task to be run.
 	 *
 	 * @return void
 	 * @since Kunena
@@ -291,7 +293,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Execute task (slightly modified from Joomla).
 	 *
-	 * @param   string $task task
+	 * @param   string  $task  task
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -327,9 +329,9 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean    $cachable  If true, the view output will be cached
-	 * @param   array|bool $urlparams An array of safe url parameters and their variable types, for valid values see
-	 *                                {@link Joomla\CMS\Filter\InputFilter::clean()}.
+	 * @param   boolean     $cachable   If true, the view output will be cached
+	 * @param   array|bool  $urlparams  An array of safe url parameters and their variable types, for valid values see
+	 *                                  {@link Joomla\CMS\Filter\InputFilter::clean()}.
 	 *
 	 * @return  Joomla\CMS\MVC\Controller\BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
@@ -450,7 +452,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * @param   string $var The output to escape.
+	 * @param   string  $var  The output to escape.
 	 *
 	 * @return string The escaped value.
 	 * @since Kunena
@@ -493,8 +495,8 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * If there's no referrer or it's external, Kunena will return to the default page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param   string $default default
-	 * @param   string $anchor  anchor
+	 * @param   string  $default  default
+	 * @param   string  $anchor   anchor
 	 *
 	 * @return void
 	 * @since Kunena

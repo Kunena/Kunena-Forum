@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Category
  *
@@ -341,7 +342,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				// Get pending messages.
 				$catlist = implode(',', array_keys($moderate));
 				$db      = Factory::getDbo();
-				$query = $db->getQuery(true);
+				$query   = $db->getQuery(true);
 				$query->select('catid, COUNT(*) AS count')
 					->from($db->quoteName('#__kunena_messages'))
 					->where('catid IN (' . $catlist . ') AND hold=1')

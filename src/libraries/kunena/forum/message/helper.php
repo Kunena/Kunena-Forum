@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Kunena Forum Message Helper Class
+ *
  * @since Kunena
  */
 abstract class KunenaForumMessageHelper
@@ -31,13 +33,13 @@ abstract class KunenaForumMessageHelper
 	protected static $_location = array();
 
 	/**
-	 * @param   bool|array|int $ids       ids
-	 * @param   string         $authorise authorise
+	 * @param   bool|array|int  $ids        ids
+	 * @param   string          $authorise  authorise
 	 *
 	 * @return KunenaForumMessage[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public static function getMessages($ids = false, $authorise = 'read')
 	{
@@ -71,11 +73,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -96,7 +98,7 @@ abstract class KunenaForumMessageHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query  = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
@@ -130,16 +132,16 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   mixed  $topic     topic
-	 * @param   int    $start     start
-	 * @param   int    $limit     limit
-	 * @param   string $ordering  ordering
-	 * @param   int    $hold      hold
-	 * @param   bool   $orderbyid orderbyid
+	 * @param   mixed   $topic      topic
+	 * @param   int     $start      start
+	 * @param   int     $limit      limit
+	 * @param   string  $ordering   ordering
+	 * @param   int     $hold       hold
+	 * @param   bool    $orderbyid  orderbyid
 	 *
 	 * @return KunenaForumMessage[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -179,16 +181,16 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   int    $topic_id  topic id
-	 * @param   int    $start     start
-	 * @param   int    $limit     limit
-	 * @param   string $ordering  ordering
-	 * @param   int    $hold      hold
-	 * @param   bool   $orderbyid orderbyid
+	 * @param   int     $topic_id   topic id
+	 * @param   int     $start      start
+	 * @param   int     $limit      limit
+	 * @param   string  $ordering   ordering
+	 * @param   int     $hold       hold
+	 * @param   bool    $orderbyid  orderbyid
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -234,15 +236,15 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   bool|array|int $categories categories
-	 * @param   int            $limitstart limitstart
-	 * @param   int            $limit      limit
-	 * @param   array          $params     params
+	 * @param   bool|array|int  $categories  categories
+	 * @param   int             $limitstart  limitstart
+	 * @param   int             $limit       limit
+	 * @param   array           $params      params
 	 *
 	 * @return array
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -420,13 +422,13 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   int         $mesid     mesid
-	 * @param   null|string $direction direction
-	 * @param   null|array  $hold      hold
+	 * @param   int          $mesid      mesid
+	 * @param   null|string  $direction  direction
+	 * @param   null|array   $hold       hold
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
 	{
@@ -508,11 +510,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array|string $mesids mesid
+	 * @param   array|string  $mesids  mesid
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -550,7 +552,7 @@ abstract class KunenaForumMessageHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query  = $db->getQuery(true);
 		$query->select('m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count'
@@ -591,8 +593,9 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
-	 * @since Kunena
+	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -601,11 +604,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   bool|array|int $topicids topicids
+	 * @param   bool|array|int  $topicids  topicids
 	 *
 	 * @return boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function recount($topicids = false)
 	{
@@ -625,7 +628,7 @@ abstract class KunenaForumMessageHelper
 		}
 
 		// Update catid in all messages
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON tt.id = m.thread')
 			->set('m.catid = tt.category_id ' . $where);
@@ -646,11 +649,11 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since 5.0.3
+	 * @throws Exception
 	 */
 	public static function getMessagesByTopics(array $ids)
 	{

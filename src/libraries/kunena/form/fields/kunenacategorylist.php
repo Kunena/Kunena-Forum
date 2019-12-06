@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Form
  *
@@ -18,6 +19,7 @@ jimport('joomla.form.formfield');
 
 /**
  * Class Joomla\CMS\Form\FormField|KunenaCategoryList
+ *
  * @since Kunena
  */
 class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField

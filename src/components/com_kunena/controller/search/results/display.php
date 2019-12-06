@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Search
  *
@@ -48,9 +49,9 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare search results display.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -104,8 +105,8 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

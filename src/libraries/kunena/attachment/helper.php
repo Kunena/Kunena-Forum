@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Attachment
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Filesystem\File;
 
 /**
  * Kunena Attachment Helper Class
+ *
  * @since Kunena
  */
 abstract class KunenaAttachmentHelper
@@ -73,12 +75,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   bool|array|int $ids       ids
-	 * @param   string         $authorise authorise
+	 * @param   bool|array|int  $ids        ids
+	 * @param   string          $authorise  authorise
 	 *
 	 * @return KunenaAttachment[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getById($ids = false, $authorise = 'read')
@@ -117,11 +119,11 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadById(array $ids)
 	{
@@ -175,11 +177,11 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param   bool|string $ids ids
+	 * @param   bool|string  $ids  ids
 	 *
 	 * @return KunenaAttachment[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getNumberAttachments($ids = false)
 	{
@@ -201,11 +203,11 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   array $ids ids
+	 * @param   array  $ids  ids
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadByMessage(array $ids)
 	{
@@ -258,7 +260,7 @@ abstract class KunenaAttachmentHelper
 		{
 			foreach ($results as $id => $instance)
 			{
-				$instance = self::get($id);
+				$instance                                = self::get($id);
 				self::$_instances [$id]                  = $instance;
 				self::$_messages [$instance->mesid][$id] = $instance;
 			}
@@ -268,12 +270,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   bool|array|int $ids       ids
-	 * @param   string         $authorise authorise
+	 * @param   bool|array|int  $ids        ids
+	 * @param   string          $authorise  authorise
 	 *
 	 * @return KunenaAttachment[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getByMessage($ids = false, $authorise = 'read')
 	{
@@ -331,15 +333,15 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Find filename which isn't already taken in the filesystem.
 	 *
-	 * @param   string $folder    Relative path from JPATH_ROOT.
-	 * @param   string $basename  Filename without extension.
-	 * @param   string $extension File extension.
-	 * @param   bool   $protected True to randomize the filename. If not given, uses Kunena configuration setting.
+	 * @param   string  $folder     Relative path from JPATH_ROOT.
+	 * @param   string  $basename   Filename without extension.
+	 * @param   string  $extension  File extension.
+	 * @param   bool    $protected  True to randomize the filename. If not given, uses Kunena configuration setting.
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since  K4.0
+	 * @throws Exception
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
 	{
@@ -354,8 +356,7 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			}
-			while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -387,12 +388,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category category
-	 * @param   null  $user     user
+	 * @param   mixed  $category  category
+	 * @param   null   $user      user
 	 *
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getExtensions($category, $user = null)
 	{
@@ -408,12 +409,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category category
-	 * @param   mixed $user     user
+	 * @param   mixed  $category  category
+	 * @param   mixed  $user      user
 	 *
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getImageExtensions($category = null, $user = null)
 	{
@@ -484,12 +485,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $category category
-	 * @param   mixed $user     user
+	 * @param   mixed  $category  category
+	 * @param   mixed  $user      user
 	 *
 	 * @return array|boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getFileExtensions($category = null, $user = null)
 	{
@@ -557,14 +558,14 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function cleanup()
 	{
 		// Find up to 50 orphan attachments and delete them
-		$db     = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
 		$query->select('a.*')
 			->from($db->quoteName('#__kunena_attachments', 'a'))
 			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
@@ -596,7 +597,7 @@ abstract class KunenaAttachmentHelper
 
 		$ids = implode(',', array_keys($results));
 		unset($results);
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('id') . 'IN (' . $ids . ')');
 		$db->setQuery($query);
@@ -618,10 +619,10 @@ abstract class KunenaAttachmentHelper
 	 * The first 8 characters of the filename, followed by three dots
 	 * and the last 5 character of the filename.
 	 *
-	 * @param   string $filename Filename to be shortened.
-	 * @param   int    $front    front
-	 * @param   int    $back     back
-	 * @param   string $filler   filler
+	 * @param   string  $filename  Filename to be shortened.
+	 * @param   int     $front     front
+	 * @param   int     $back      back
+	 * @param   string  $filler    filler
 	 *
 	 * @return string
 	 * @since Kunena
@@ -643,12 +644,12 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param   mixed $user   user
-	 * @param   array $params params
+	 * @param   mixed  $user    user
+	 * @param   array  $params  params
 	 *
 	 * @return KunenaAttachment[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getByUserid($user, array $params)
 	{
@@ -679,7 +680,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$db    = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
 			->where($db->quoteName('userid') . ' = ' . $db->quote($user->userid . $filetype . $orderby));
@@ -718,8 +719,8 @@ abstract class KunenaAttachmentHelper
 	 * Load the total count of attachments
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since K5.1
+	 * @throws Exception
 	 */
 	public static function getTotalAttachments()
 	{
@@ -747,7 +748,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Check if mime type is image.
 	 *
-	 * @param   string $mime mime
+	 * @param   string  $mime  mime
 	 *
 	 * @return  boolean  True if mime is image.
 	 * @since Kunena

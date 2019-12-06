@@ -89,8 +89,8 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getAnnouncements()
 	{
@@ -117,8 +117,8 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getannouncementActions()
 	{

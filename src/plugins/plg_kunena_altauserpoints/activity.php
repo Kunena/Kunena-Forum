@@ -46,8 +46,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function onAfterPost($message)
@@ -118,8 +118,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param          $plugin_function
-	 * @param   string $spc spc
+	 * @param           $plugin_function
+	 * @param   string  $spc  spc
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -132,8 +132,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function onAfterReply($message)
@@ -178,12 +178,12 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor   actor
-	 * @param   int $target  target
-	 * @param   int $message message
+	 * @param   int  $actor    actor
+	 * @param   int  $target   target
+	 * @param   int  $message  message
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -273,11 +273,11 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $userid userid
+	 * @param   int  $userid  userid
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserPoints($userid)
 	{
@@ -286,8 +286,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 			return false;
 		}
 
-		$_db = Factory::getDBO();
-		$query  = $_db->getQuery();
+		$_db   = Factory::getDBO();
+		$query = $_db->getQuery();
 		$query->select($_db->quoteName('points'))
 			->from($_db->quoteName('#__alpha_userpoints'))
 			->where($_db->quoteName('userid') . ' = ' . $_db->quote((int) $userid));

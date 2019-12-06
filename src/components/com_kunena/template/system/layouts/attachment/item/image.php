@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
-$name     = preg_replace('/.html/', '', $attachment->getUrl());
+$name = preg_replace('/.html/', '', $attachment->getUrl());
 
 if (!$attachment->isImage())
 {
@@ -34,7 +34,8 @@ if ($config->lightbox == 1)
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $attachment->width; ?>"
+		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?>
+		     width="<?php echo $attachment->width; ?>"
 		     height="<?php echo $attachment->height; ?>"
 		     alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>

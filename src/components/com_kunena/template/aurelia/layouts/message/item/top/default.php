@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Message
  *
@@ -9,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $message              = $this->message;
@@ -88,7 +90,7 @@ else
 	echo KunenaLayout::factory('Widget/Button')
 		->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
 		                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-		                      'modal' => 'modal', 'pullright' => 'pullright', ));
+		                      'modal' => 'modal', 'pullright' => 'pullright',));
 	if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
 		     aria-hidden="true" data-backdrop="false">

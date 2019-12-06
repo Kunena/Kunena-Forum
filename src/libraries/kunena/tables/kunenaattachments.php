@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Attachments Table
  * Provides access to the #__kunena_attachments table
+ *
  * @since Kunena
  */
 class TableKunenaAttachments extends KunenaTable
@@ -94,7 +96,7 @@ class TableKunenaAttachments extends KunenaTable
 	public $inline = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -105,8 +107,8 @@ class TableKunenaAttachments extends KunenaTable
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{

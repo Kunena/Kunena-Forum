@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -39,9 +40,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 *
 	 * @return boolean
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -195,8 +196,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -206,7 +207,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($menu_item)
 		{
-		    $params             = $menu_item->getParams();
+			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');

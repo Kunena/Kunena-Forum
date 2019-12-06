@@ -66,7 +66,7 @@ abstract class KunenaForumTopicRateHelper
 	/**
 	 * Return sum of all rates given to a topics by all users
 	 *
-	 * @param   integer $id id
+	 * @param   integer  $id  id
 	 *
 	 * @return float
 	 * @since Kunena
@@ -86,7 +86,7 @@ abstract class KunenaForumTopicRateHelper
 	/**
 	 * Return sum of all rates given to a topics by all users
 	 *
-	 * @param   integer $id id
+	 * @param   integer  $id  id
 	 *
 	 * @return float
 	 * @since Kunena
@@ -106,9 +106,9 @@ abstract class KunenaForumTopicRateHelper
 	/**
 	 * Return rate by id and userid
 	 *
-	 * @param   integer $id id
+	 * @param   integer  $id  id
 	 *
-	 * @param           $userid
+	 * @param            $userid
 	 *
 	 * @return float
 	 * @since Kunena

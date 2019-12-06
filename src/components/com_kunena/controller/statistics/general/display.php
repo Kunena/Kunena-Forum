@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Statistics
  *
@@ -32,8 +33,8 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()
@@ -74,8 +75,8 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

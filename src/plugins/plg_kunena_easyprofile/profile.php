@@ -16,6 +16,7 @@ use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaProfileEasyprofile
+ *
  * @since Kunena
  */
 class KunenaProfileEasyprofile extends KunenaProfile
@@ -39,12 +40,12 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -77,8 +78,8 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml xhtml
+	 * @param         $userid
+	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -89,9 +90,9 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param           $userid
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @since Kunena

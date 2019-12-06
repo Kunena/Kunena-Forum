@@ -15,6 +15,7 @@ use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAvatarCommunity
+ *
  * @since Kunena
  */
 class KunenaAvatarCommunity extends KunenaAvatar
@@ -69,8 +70,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

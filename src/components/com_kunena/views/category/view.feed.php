@@ -16,15 +16,16 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Category View
+ *
  * @since Kunena
  */
 class KunenaViewCategory extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -81,8 +82,8 @@ class KunenaViewCategory extends KunenaView
 	 * @param $userid
 	 * @param $username
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Table
  *
@@ -15,6 +16,7 @@ use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class KunenaTableMap
+ *
  * @since Kunena
  */
 class KunenaTableMap
@@ -64,10 +66,10 @@ class KunenaTableMap
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
 	 *
-	 * @param   string          $table  Name of the table to model.
-	 * @param   string          $key    Name of the primary key field in the table.
-	 * @param   string          $mapped Name of the mapped key field in the table.
-	 * @param   JDatabaseDriver $db     JDatabaseDriver object.
+	 * @param   string           $table   Name of the table to model.
+	 * @param   string           $key     Name of the primary key field in the table.
+	 * @param   string           $mapped  Name of the mapped key field in the table.
+	 * @param   JDatabaseDriver  $db      JDatabaseDriver object.
 	 *
 	 * @since Kunena
 	 */
@@ -98,8 +100,8 @@ class KunenaTableMap
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
-	 * @throws  UnexpectedValueException
 	 * @since Kunena
+	 * @throws  UnexpectedValueException
 	 */
 	public function getFields()
 	{
@@ -145,9 +147,9 @@ class KunenaTableMap
 	/**
 	 * Method to get the database table name for the class.
 	 *
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getTableName
 	 * @return  string  The name of the database table being modeled.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getTableName
 	 * @since   Kunena
 	 */
 	public function getTableName()
@@ -158,9 +160,9 @@ class KunenaTableMap
 	/**
 	 * Method to get the primary key field name for the table.
 	 *
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getKeyName
 	 * @return  string  The name of the primary key for the table.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getKeyName
 	 * @since   Kunena
 	 */
 	public function getKeyName()
@@ -182,9 +184,9 @@ class KunenaTableMap
 	/**
 	 * Method to get the JDatabaseDriver object.
 	 *
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
 	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
 	 * @since   Kunena
 	 */
 	public function getDbo()
@@ -206,7 +208,7 @@ class KunenaTableMap
 	/**
 	 * Method to set the primary key.
 	 *
-	 * @param   int $id Set value for the primary key.
+	 * @param   int  $id  Set value for the primary key.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -232,7 +234,7 @@ class KunenaTableMap
 	/**
 	 * Method to add relation.
 	 *
-	 * @param   int $id Add Id.
+	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -250,11 +252,12 @@ class KunenaTableMap
 	/**
 	 * Method to set the JDatabaseDriver object.
 	 *
-	 * @param   JDatabaseDriver $db A JDatabaseDriver object to be used by the table object.
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
+	 *
+	 * @param   JDatabaseDriver  $db  A JDatabaseDriver object to be used by the table object.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
 	 * @since   Kunena
 	 */
 	public function setDbo(JDatabaseDriver $db)
@@ -269,14 +272,16 @@ class KunenaTableMap
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed $src    An associative array or object to bind to the Joomla\CMS\Table\Table instance.
-	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/bind
+	 *
+	 * @param   mixed  $ignore  An optional array or space separated list of properties to ignore while binding.
+	 *
+	 * @param   mixed  $src     An associative array or object to bind to the Joomla\CMS\Table\Table instance.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/bind
-	 * @throws  InvalidArgumentException
 	 * @since   Kunena
+	 * @throws  InvalidArgumentException
 	 */
 	public function bind($src, $ignore = array())
 	{
@@ -340,13 +345,13 @@ class KunenaTableMap
 	 * Method to provide a shortcut to binding, checking and storing a Joomla\CMS\Table\Table
 	 * instance to the database table.
 	 *
-	 * @param   array $map    An array of mapped Ids.
-	 * @param   array $filter Touch only these filtered items.
+	 * @param   array  $map     An array of mapped Ids.
+	 * @param   array  $filter  Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @throws  UnexpectedValueException
 	 * @since Kunena
+	 * @throws  UnexpectedValueException
 	 */
 	public function save(array $map = null, array $filter = null)
 	{
@@ -373,14 +378,14 @@ class KunenaTableMap
 	/**
 	 * Method to set the mapped value.
 	 *
-	 * @param   array $list Set array of mapped objects.
+	 * @param   array  $list  Set array of mapped objects.
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function setMapped(array $list)
 	{
-		$list = ArrayHelper::toInteger($list);
+		$list                       = ArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
 	}
 
@@ -390,9 +395,9 @@ class KunenaTableMap
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/check
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/check
 	 * @since   Kunena
 	 */
 	public function check()
@@ -403,13 +408,14 @@ class KunenaTableMap
 	/**
 	 * Method to store mapped rows in the database from the Joomla\CMS\Table\Table instance properties.
 	 *
-	 * @param   array $filter Touch only these filtered items.
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/store
+	 *
+	 * @param   array  $filter  Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/store
-	 * @throws  UnexpectedValueException
 	 * @since   Kunena
+	 * @throws  UnexpectedValueException
 	 */
 	public function store(array $filter = null)
 	{
@@ -482,16 +488,18 @@ class KunenaTableMap
 	 * Method to load all mapped values from the database by primary key and bind the fields
 	 * to the Joomla\CMS\Table\Table instance properties.
 	 *
-	 * @param   mixed   $keys    An optional primary key value to load the row by, or an array of fields to match.  If
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/load
+	 *
+	 * @param   boolean  $reset  True to reset the default values before loading the new row.
+	 *
+	 * @param   mixed    $keys   An optional primary key value to load the row by, or an array of fields to match.  If
 	 *                           not set the instance property value is used.
-	 * @param   boolean $reset   True to reset the default values before loading the new row.
 	 *
 	 * @return  boolean  True if successful. False if no rows were found.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/load
-	 * @throws  RuntimeException
-	 * @throws  UnexpectedValueException
 	 * @since   Kunena
+	 * @throws  UnexpectedValueException
+	 * @throws  RuntimeException
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -553,9 +561,9 @@ class KunenaTableMap
 	 * definition. It will ignore the primary key as well as any private class
 	 * properties.
 	 *
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/reset
 	 * @return  void
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/reset
 	 * @since   Kunena
 	 */
 	public function reset()
@@ -574,14 +582,15 @@ class KunenaTableMap
 	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
-	 * @param   int|array $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the
-	 *                        instance property value is used.
+	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/delete
+	 *
+	 * @param   int|array  $pk  An optional primary key value (or array of key=>value pairs) to delete.  If not set the
+	 *                          instance property value is used.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/delete
-	 * @throws  UnexpectedValueException
 	 * @since   Kunena
+	 * @throws  UnexpectedValueException
 	 */
 	public function delete($pk = null)
 	{
@@ -635,7 +644,7 @@ class KunenaTableMap
 	/**
 	 * Method to remove relation.
 	 *
-	 * @param   int $id Add Id.
+	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -657,8 +666,8 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @throws  RuntimeException
 	 * @since Kunena
+	 * @throws  RuntimeException
 	 */
 	protected function _lock()
 	{

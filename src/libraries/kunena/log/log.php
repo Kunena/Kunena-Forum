@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Libraries
  * @subpackage    Log
  *
@@ -140,7 +141,7 @@ class KunenaLog
 	 * @since Kunena 6.0
 	 */
 	const LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
-	
+
 	/**
 	 * @since Kunena
 	 */
@@ -363,16 +364,16 @@ class KunenaLog
 	/**
 	 * Log new entry.
 	 *
-	 * @param   int                 $type      Log entry type.
-	 * @param   string              $operation Performed operation.
-	 * @param   string|array        $data      JSON encoded string.
-	 * @param   KunenaForumCategory $category  Target category.
-	 * @param   KunenaForumTopic    $topic     Target topic.
-	 * @param   KunenaUser          $user      Target user.
+	 * @param   int                  $type       Log entry type.
+	 * @param   string               $operation  Performed operation.
+	 * @param   string|array         $data       JSON encoded string.
+	 * @param   KunenaForumCategory  $category   Target category.
+	 * @param   KunenaForumTopic     $topic      Target topic.
+	 * @param   KunenaUser           $user       Target user.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena 5.0
+	 * @throws Exception
 	 */
 	public static function log(
 		$type,
@@ -389,7 +390,7 @@ class KunenaLog
 	/**
 	 * Add a KunenaLogEntry entry to the Kunena log.
 	 *
-	 * @param   KunenaLogEntry $entry An instance of an entry to be logged.
+	 * @param   KunenaLogEntry  $entry  An instance of an entry to be logged.
 	 *
 	 * @return void
 	 * @since Kunena 5.0

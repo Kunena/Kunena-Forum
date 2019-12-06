@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message.Thankyou
  *
@@ -17,11 +18,11 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaForumMessageThankyou
  *
- * @property int    $postid
+ * @since Kunena
  * @property int    $userid
  * @property int    $targetuserid
  * @property string $time
- * @since Kunena
+ * @property int    $postid
  */
 class KunenaForumMessageThankyou extends CMSObject
 {
@@ -38,9 +39,10 @@ class KunenaForumMessageThankyou extends CMSObject
 	protected $users = array();
 
 	/**
-	 * @param   int $id id
-	 *
 	 * @internal
+	 *
+	 * @param   int  $id  id
+	 *
 	 * @since Kunena
 	 */
 	public function __construct($id)
@@ -49,12 +51,12 @@ class KunenaForumMessageThankyou extends CMSObject
 	}
 
 	/**
-	 * @param   null $identifier identifier
-	 * @param   bool $reload     reload
+	 * @param   null  $identifier  identifier
+	 * @param   bool  $reload      reload
 	 *
 	 * @return KunenaForumMessageThankyou
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -62,11 +64,11 @@ class KunenaForumMessageThankyou extends CMSObject
 	}
 
 	/**
-	 * @param   int    $userid userid
-	 * @param   string $time   time
+	 * @param   int     $userid  userid
+	 * @param   string  $time    time
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -76,11 +78,11 @@ class KunenaForumMessageThankyou extends CMSObject
 	/**
 	 * Save thank you.
 	 *
-	 * @param   mixed $user user
+	 * @param   mixed  $user  user
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save($user)
 	{
@@ -133,7 +135,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	/**
 	 * Check if the user has already said thank you.
 	 *
-	 * @param   int $userid userid
+	 * @param   int  $userid  userid
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -144,11 +146,11 @@ class KunenaForumMessageThankyou extends CMSObject
 	}
 
 	/**
-	 * @param   KunenaForumMessage $message message
+	 * @param   KunenaForumMessage  $message  message
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
@@ -175,6 +177,7 @@ class KunenaForumMessageThankyou extends CMSObject
 
 	/**
 	 * Get all users who have given thank you to this message.
+	 *
 	 * @return array List of userid=>time.
 	 * @since Kunena
 	 */
@@ -186,11 +189,11 @@ class KunenaForumMessageThankyou extends CMSObject
 	/**
 	 * Delete thank you from the database.
 	 *
-	 * @param   mixed $user user
+	 * @param   mixed  $user  user
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function delete($user)
 	{

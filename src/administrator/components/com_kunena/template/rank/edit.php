@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      Ranks
  *
@@ -29,13 +30,13 @@ HTMLHelper::_('behavior.multiselect');
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-				  id="adminForm" name="adminForm">
+			      id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="ranks"/>
 				<input type="hidden" name="task" value="save"/>
 				<?php if ($this->state->get('item.id'))
 					:
 					?><input type="hidden" name="rankid"
-							 value="<?php echo $this->state->get('item.id') ?>" /><?php
+					         value="<?php echo $this->state->get('item.id') ?>" /><?php
 				endif; ?>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -49,7 +50,7 @@ HTMLHelper::_('behavior.multiselect');
 							</td>
 							<td width="80%">
 								<input class="post" type="text" name="rank_title"
-									   value="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
+								       value="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -63,14 +64,14 @@ HTMLHelper::_('behavior.multiselect');
 									:
 									?>
 									<img name="rank_image" src="" border="0"
-										 alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
+									     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
 								<?php else
 									:
 									?>
 									<img name="rank_image"
-										 src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
-										 border="0"
-										 alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : 'rank' ?>"/>
+									     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
+									     border="0"
+									     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : 'rank' ?>"/>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -80,7 +81,7 @@ HTMLHelper::_('behavior.multiselect');
 							</td>
 							<td>
 								<input class="post" type="text" name="rank_min"
-									   value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>"/>
+								       value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>"/>
 							</td>
 						</tr>
 						<tr>

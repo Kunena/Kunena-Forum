@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Forum.Announcement
  *
@@ -113,8 +114,8 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db       = Factory::getDBO();
-		$nowDate  = $db->quote(Factory::getDate()->toSql());
+		$db      = Factory::getDBO();
+		$nowDate = $db->quote(Factory::getDate()->toSql());
 
 		if ($filter)
 		{

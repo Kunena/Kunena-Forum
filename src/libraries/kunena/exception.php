@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -11,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Exception class definition for the Kunena Framework.
+ *
  * @since Kunena
  */
 class KunenaException extends Exception

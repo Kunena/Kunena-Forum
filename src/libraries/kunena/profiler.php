@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -13,30 +14,31 @@ jimport('joomla.error.profiler');
 
 /**
  * Class KunenaProfiler
+ *
  * @since Kunena
  */
 class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 {
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $_kstart = array();
 
 	/**
-	 * @since Kunena
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected $_heap = array();
 
 	/**
-	 * @param   string $prefix string
+	 * @param   string  $prefix  string
 	 *
 	 * @return KunenaProfiler
 	 *
@@ -55,7 +57,7 @@ class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 	}
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return void
 	 * @since Kunena
@@ -68,7 +70,7 @@ class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 	}
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return float
 	 * @since Kunena
@@ -81,7 +83,7 @@ class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 	}
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -122,8 +124,8 @@ class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 	}
 
 	/**
-	 * @param   array  $array    array
-	 * @param   string $property property
+	 * @param   array   $array     array
+	 * @param   string  $property  property
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -144,24 +146,25 @@ class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
 
 /**
  * Class KunenaProfilerItem
+ *
  * @since Kunena
  */
 class KunenaProfilerItem
 {
 	/**
-	 * @since Kunena
 	 * @var array|KunenaProfilerItem[]
+	 * @since Kunena
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $start = array();
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @since Kunena
 	 */
@@ -174,7 +177,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return KunenaProfilerItem
 	 * @since Kunena
@@ -226,7 +229,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   boolean $starttime start time
+	 * @param   boolean  $starttime  start time
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -240,7 +243,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   boolean $stoptime stop time
+	 * @param   boolean  $stoptime  stop time
 	 *
 	 * @return float
 	 * @since Kunena
@@ -261,7 +264,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   float $delta delta
+	 * @param   float  $delta  delta
 	 *
 	 * @return void
 	 * @since Kunena

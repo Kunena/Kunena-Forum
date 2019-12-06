@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Categories
  *
@@ -28,12 +29,12 @@ class KunenaLayoutPage extends KunenaLayout
 	 *    echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
 	 * </code>
 	 *
-	 * @param   mixed  $paths String or array of strings.
-	 * @param   string $base  Base path.
+	 * @param   mixed   $paths  String or array of strings.
+	 * @param   string  $base   Base path.
 	 *
 	 * @return  KunenaLayout
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function factory($paths, $base = 'pages')
 	{
@@ -106,9 +107,9 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Execute main MVC triad to get the current layout.
 	 *
-	 * @param   mixed $path    path
-	 * @param   mixed $input   input
-	 * @param   mixed $options options
+	 * @param   mixed  $path     path
+	 * @param   mixed  $input    input
+	 * @param   mixed  $options  options
 	 *
 	 * @return  KunenaLayout
 	 * @since Kunena
@@ -122,9 +123,9 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Get main MVC triad from current layout.
 	 *
-	 * @param   mixed $path    path
-	 * @param   mixed $input   input
-	 * @param   mixed $options options
+	 * @param   mixed  $path     path
+	 * @param   mixed  $input    input
+	 * @param   mixed  $options  options
 	 *
 	 * @return  KunenaControllerDisplay
 	 * @since Kunena
@@ -138,13 +139,13 @@ class KunenaLayoutPage extends KunenaLayout
 	/**
 	 * Add path to breadcrumbs.
 	 *
-	 * @param   string $text   text
-	 * @param   string $uri    uri
-	 * @param   bool   $ignore ignore
+	 * @param   string  $text    text
+	 * @param   string  $uri     uri
+	 * @param   bool    $ignore  ignore
 	 *
 	 * @return $this
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      Templates
  *
@@ -30,14 +31,14 @@ HTMLHelper::_('dropdown.init');
 				</div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-					  method="post" id="adminForm" name="adminForm">
+				      method="post" id="adminForm" name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit"
-							   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+						       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 
@@ -65,25 +66,28 @@ HTMLHelper::_('dropdown.init');
 							<tr>
 								<td>
 									<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>"
-										   name="cid[]"
-										   value="<?php echo $this->escape($row->directory); ?>"
-										   onclick="Joomla.isChecked(this.checked);"/>
+									       name="cid[]"
+									       value="<?php echo $this->escape($row->directory); ?>"
+									       onclick="Joomla.isChecked(this.checked);"/>
 								</td>
 								<td>
 									<?php $img_path = Uri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
 									<span class="editlinktip hasTip"
-										  title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=templates&layout=edit&name=' . $this->escape($row->directory)); ?>" title="<?php echo $this->escape($row->name); ?>">
+									      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=templates&layout=edit&name=' . $this->escape($row->directory)); ?>"
+										   title="<?php echo $this->escape($row->name); ?>">
 													<?php echo $this->escape($row->name); ?></a>
 							</span>
 								</td>
 								<td class="center">
 									<?php if ($row->published == 1) : ?>
-										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span class="icon-featured"></span></a>
+										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span
+													class="icon-featured"></span></a>
 									<?php else : ?>
 										<a href="javascript: void(0);"
 										   onclick="return Joomla.listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-											<span class="icon-featured pl-2" title="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></span>
+											<span class="icon-featured pl-2"
+											      title="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></span>
 										</a>
 									<?php endif; ?>
 								</td>
@@ -128,7 +132,7 @@ HTMLHelper::_('dropdown.init');
 							<td style="width: 7%;">
 								<?php $img_path = Uri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
 								<span class="editlinktip hasTip"
-									  title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								      title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 									<a href="https://www.kunena.org/download/templates/product/blue-eagle-5"
 									   target="_blank"
 									   rel="noopener noreferrer">Blue Eagle 5</a>
@@ -155,7 +159,7 @@ HTMLHelper::_('dropdown.init');
 							</td>
 							<td style="width: 7%;">
 								<span class="editlinktip hasTip"
-									  title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="https://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								      title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="https://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 									<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates"
 									   target="_blank" rel="noopener noreferrer">9themestore.com</a>
 								</span>

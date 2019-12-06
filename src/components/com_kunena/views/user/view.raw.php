@@ -17,15 +17,16 @@ use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Users View
+ *
  * @since Kunena
  */
 class KunenaViewUser extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayList($tpl = null)
 	{
@@ -61,11 +62,11 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * Method to return list of users by ajax request for userlist and search user
 	 *
-	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since K4.0
+	 * @throws Exception
 	 */
 	public function displayListMention($tpl = null)
 	{
@@ -100,8 +101,8 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * Return the list of files for the avatar gallery selected by the user
 	 *
-	 * @since K5.0
 	 * @return void
+	 * @since K5.0
 	 * @throws Exception
 	 */
 	public function displayGalleryimages()

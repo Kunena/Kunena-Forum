@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum
  *
@@ -16,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaForumStatistics
+ *
  * @since Kunena
  */
 class KunenaForumStatistics
@@ -183,8 +185,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @return KunenaForumStatistics
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance()
 	{
@@ -197,12 +199,12 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $force force
+	 * @param   bool  $force  force
 	 *
+	 * @return void
+	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
-	 * @since Kunena
-	 * @return void
 	 */
 	public function loadAll($force = false)
 	{
@@ -213,11 +215,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $force force
+	 * @param   bool  $force  force
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadGeneral($force = false)
 	{
@@ -307,7 +309,7 @@ class KunenaForumStatistics
 			$todaystart     = strtotime(date('Y-m-d'));
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
-			$query  = $this->_db->getQuery(true);
+			$query = $this->_db->getQuery(true);
 			$query->select('SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' = 0) AS ' . $this->_db->quote('todayTopicCount') . ',
 				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('todayReplyCount') . ',
 				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' . $this->_db->quoteName('time') . ' < ' . $this->_db->quote($todaystart) . '  AND ' . $this->_db->quoteName('parent') . ' = 0 ) AS ' . $this->_db->quote('yesterdayTopicCount') . ',
@@ -341,12 +343,12 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $override override
+	 * @param   bool  $override  override
 	 *
-	 * @throws Exception
+	 * @return void
 	 * @since Kunena
 	 * @throws null
-	 * @return void
+	 * @throws Exception
 	 */
 	public function loadTopicStats($override = false)
 	{
@@ -372,11 +374,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array|KunenaForumTopic[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function loadTopTopics($limit = 0)
@@ -412,12 +414,12 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function loadTopPolls($limit = 0)
 	{
@@ -425,8 +427,8 @@ class KunenaForumStatistics
 
 		if ($this->topPolls < $limit)
 		{
-			$db = Factory::getDBO();
-			$query  = $db->getQuery(true);
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
 			$query->select($this->_db->quoteName('poll.threadid', 'id') . ', SUM(' . $this->_db->quoteName('opt.votes') . ') AS ' . $this->_db->quoteName('count'))
 				->from($db->quoteName('#__kunena_polls_options', 'opt'))
 				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . ' ON ' . $this->_db->quoteName('poll.id') . ' = ' . $this->_db->quoteName('opt.pollid'))
@@ -472,11 +474,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   bool $override override
+	 * @param   bool  $override  override
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadUserStats($override = false)
 	{
@@ -509,11 +511,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadTopPosters($limit = 0)
 	{
@@ -546,11 +548,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadTopProfiles($limit = 0)
 	{
@@ -583,11 +585,11 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function loadTopThankyous($limit = 0)
 	{

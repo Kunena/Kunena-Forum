@@ -24,9 +24,9 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 	/**
 	 * Method to create an input in fonction of name given
 	 *
-	 * @param   string $name       Name of input to create
-	 * @param   string $attributes Attibutes to be added to input
-	 * @param   int    $id         Id to be added to the input
+	 * @param   string  $name        Name of input to create
+	 * @param   string  $attributes  Attibutes to be added to input
+	 * @param   int     $id          Id to be added to the input
 	 *
 	 * @return string
 	 * @since Kunena

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    BBCode
  *
@@ -24,13 +25,13 @@ use Joomla\CMS\Language\Text;
 class KunenaBbcodeEditor
 {
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $editor_elements = array();
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -42,7 +43,7 @@ class KunenaBbcodeEditor
 	}
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @return KunenaBbcodeEditor
 	 * @since Kunena
@@ -63,9 +64,9 @@ class KunenaBbcodeEditor
 	/**
 	 * Inserts a button or another element at the specified location. See insertElements for details.
 	 *
-	 * @param   mixed $element element
-	 * @param   null  $pos     pos
-	 * @param   mixed $where   where
+	 * @param   mixed  $element  element
+	 * @param   null   $pos      pos
+	 * @param   mixed  $where    where
 	 *
 	 * @return void
 	 * @since Kunena
@@ -84,9 +85,9 @@ class KunenaBbcodeEditor
 	 * inserted after/before the element named $where. If NULL is specified then it is inserted after
 	 * all other elements.
 	 *
-	 * @param   mixed $elements elements
-	 * @param   null  $pos      pos
-	 * @param   mixed $where    where
+	 * @param   mixed  $elements  elements
+	 * @param   null   $pos       pos
+	 * @param   mixed  $where     where
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -194,8 +195,8 @@ class KunenaBbcodeEditor
 	/**
 	 * Parses an XML description of the buttons into the internal object representation.
 	 *
-	 * @param   SimpleXMLElement $xml         The XML object to parse
-	 * @param   string           $parseMethod The parse method name to call
+	 * @param   SimpleXMLElement  $xml          The XML object to parse
+	 * @param   string            $parseMethod  The parse method name to call
 	 *
 	 * @return array
 	 * @since Kunena
@@ -236,20 +237,21 @@ class KunenaBbcodeEditor
 
 /**
  * Class KunenaBbcodeEditorElement
+ *
  * @since Kunena
  */
 abstract class KunenaBbcodeEditorElement
 {
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	public $name;
 
 	/**
 	 * Constructor for the base class for editor elements.
 	 *
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @since Kunena
 	 */
@@ -264,7 +266,7 @@ abstract class KunenaBbcodeEditorElement
 	 * @static
 	 * @abstract
 	 *
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return void
 	 * @since Kunena
@@ -277,54 +279,55 @@ abstract class KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorButton
+ *
  * @since Kunena
  */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $tag;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $config;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $title;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $alt;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $class;
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $actions = array();
 
 	/**
 	 * Create a button that can be added to the BBCode Editor.
 	 *
-	 * @param   string $name  name
-	 * @param   string $class class
-	 * @param   string $tag   tag
-	 * @param   string $title title
-	 * @param   string $alt   alt
+	 * @param   string  $name   name
+	 * @param   string  $class  class
+	 * @param   string  $tag    tag
+	 * @param   string  $title  title
+	 * @param   string  $alt    alt
 	 *
 	 * @since Kunena
 	 */
@@ -339,7 +342,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return KunenaBbcodeEditorButton
 	 * @since Kunena
@@ -754,9 +757,9 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Add a new display action. This can be used to show a button specific action area.
 	 *
-	 * @param   mixed  $selection selection
-	 * @param   string $class     class
-	 * @param   null   $tag       tag
+	 * @param   mixed   $selection  selection
+	 * @param   string  $class      class
+	 * @param   null    $tag        tag
 	 *
 	 * @return void
 	 * @since Kunena
@@ -774,14 +777,14 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Specify what code should be inserted when the user presses the button.
 	 *
-	 * @param   null $repeat       repeat
-	 * @param   null $empty_before empty
-	 * @param   null $empty_after  empty
-	 * @param   null $start        start
-	 * @param   null $end          end
-	 * @param   null $before       before
-	 * @param   null $after        after
-	 * @param   null $tag          tag
+	 * @param   null  $repeat        repeat
+	 * @param   null  $empty_before  empty
+	 * @param   null  $empty_after   empty
+	 * @param   null  $start         start
+	 * @param   null  $end           end
+	 * @param   null  $before        before
+	 * @param   null  $after         after
+	 * @param   null  $tag           tag
 	 *
 	 * @since Kunena
 	 */
@@ -812,7 +815,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Open the specified URL when the button is pressed.
 	 *
-	 * @param   string $url url
+	 * @param   string  $url  url
 	 *
 	 * @return void
 	 * @since Kunena
@@ -827,6 +830,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorSeparator
+ *
  * @since Kunena
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
@@ -834,7 +838,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	/**
 	 * Parse XML for separator editor part
 	 *
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return KunenaBbcodeEditorSeparator
 	 * @since Kunena

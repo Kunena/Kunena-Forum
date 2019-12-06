@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Template
  *
@@ -29,11 +30,11 @@ abstract class KunenaTemplateHelper
 	/**
 	 * isDefault
 	 *
-	 * @param   string $template template
+	 * @param   string  $template  template
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function isDefault($template)
 	{
@@ -46,7 +47,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * parseXmlFiles
 	 *
-	 * @param   null $templateBaseDir template
+	 * @param   null  $templateBaseDir  template
 	 *
 	 * @return array
 	 * @since Kunena
@@ -95,8 +96,8 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
-	 * @param   string $templateDir     template dir
-	 * @param   string $templateBaseDir template basedir
+	 * @param   string  $templateDir      template dir
+	 * @param   string  $templateBaseDir  template basedir
 	 *
 	 * @return boolean|stdClass
 	 * @since Kunena
@@ -130,7 +131,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * parseKunenaInstallFile
 	 *
-	 * @param   string $path path
+	 * @param   string  $path  path
 	 *
 	 * @return boolean|stdClass
 	 * @since Kunena
@@ -188,7 +189,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * Check if aurelia template can be used on Joomla! version used
 	 *
-	 * @param   string $templatename The name of template which needs to be checked
+	 * @param   string  $templatename  The name of template which needs to be checked
 	 *
 	 * @return boolean
 	 * @since Kunena

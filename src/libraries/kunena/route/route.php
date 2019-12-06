@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Route
  *
@@ -24,6 +25,7 @@ KunenaRoute::initialize();
 
 /**
  * Class KunenaRoute
+ *
  * @since Kunena
  */
 abstract class KunenaRoute
@@ -162,11 +164,11 @@ abstract class KunenaRoute
 	protected static $filtered = array();
 
 	/**
-	 * @param   bool $object object
+	 * @param   bool  $object  object
 	 *
 	 * @return boolean|Joomla\CMS\Uri\Uri|null|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function current($object = false)
@@ -191,11 +193,11 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri uri
+	 * @param   null  $uri  uri
 	 *
 	 * @return boolean|Joomla\CMS\Uri\Uri|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected static function prepare($uri = null)
@@ -316,12 +318,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Joomla\CMS\Uri\Uri $uri uri
+	 * @param   Joomla\CMS\Uri\Uri  $uri  uri
 	 *
 	 * @return integer
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected static function setItemID(Joomla\CMS\Uri\Uri $uri)
 	{
@@ -411,9 +413,9 @@ abstract class KunenaRoute
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	protected static function build()
 	{
@@ -493,7 +495,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed $item item
+	 * @param   mixed  $item  item
 	 *
 	 * @return null
 	 * @since Kunena
@@ -528,8 +530,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed   $item  item
-	 * @param   integer $catid catid
+	 * @param   mixed    $item   item
+	 * @param   integer  $catid  catid
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -566,8 +568,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item item
-	 * @param   Joomla\CMS\Uri\Uri $uri  uri
+	 * @param   mixed               $item  item
+	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -608,12 +610,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item item
-	 * @param   Joomla\CMS\Uri\Uri $uri  url
+	 * @param   mixed               $item  item
+	 * @param   Joomla\CMS\Uri\Uri  $uri   url
 	 *
 	 * @return integer
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected static function checkCategory($item, Joomla\CMS\Uri\Uri $uri)
 	{
@@ -641,8 +643,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item item
-	 * @param   Joomla\CMS\Uri\Uri $uri  uri
+	 * @param   mixed               $item  item
+	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
 	 *
 	 * @return integer
 	 * @since Kunena
@@ -670,12 +672,12 @@ abstract class KunenaRoute
 	 * If there's no referrer or it's external, Kunena will return default page.
 	 * Also referrers back to tasks are removed.
 	 *
-	 * @param   string $default Default page to return into.
-	 * @param   string $anchor  Anchor (location in the page).
+	 * @param   string  $default  Default page to return into.
+	 * @param   string  $anchor   Anchor (location in the page).
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getReferrer($default = null, $anchor = null)
@@ -723,13 +725,13 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri   uri
-	 * @param   bool $xhtml xhtml
-	 * @param   int  $ssl   ssl
+	 * @param   null  $uri    uri
+	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $ssl    ssl
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
@@ -793,12 +795,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Joomla\CMS\Uri\Uri $uri    uri
-	 * @param   bool                $object object
+	 * @param   Joomla\CMS\Uri\Uri  $uri     uri
+	 * @param   bool                $object  object
 	 *
 	 * @return Joomla\CMS\Uri\Uri|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function normalize($uri = null, $object = false)
@@ -839,9 +841,9 @@ abstract class KunenaRoute
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public static function cacheLoad()
 	{
@@ -866,9 +868,9 @@ abstract class KunenaRoute
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	public static function cacheStore()
 	{
@@ -893,8 +895,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   string $string  string
-	 * @param   null   $default default
+	 * @param   string  $string   string
+	 * @param   null    $default  default
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -922,7 +924,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   string $alias alias
+	 * @param   string  $alias  alias
 	 *
 	 * @return array
 	 * @since Kunena
@@ -959,9 +961,9 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function initialize()
 	{
@@ -1052,8 +1054,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -1062,12 +1064,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
-	 * @param   bool                $xhtml    xhtml
+	 * @param   KunenaForumCategory  $category  category
+	 * @param   bool                 $xhtml     xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
@@ -1076,11 +1078,11 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return array|boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
@@ -1089,11 +1091,11 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   null $uri uri
+	 * @param   null  $uri  uri
 	 *
 	 * @return array|boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getItemID($uri = null)
@@ -1126,9 +1128,9 @@ abstract class KunenaRoute
 	 * Fix itemid when there is no item id.
 	 *
 	 * @return array|boolean|integer
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena 5.1
+	 * @throws null
+	 * @throws Exception
 	 */
 	public static function fixMissingItemID()
 	{
@@ -1146,14 +1148,14 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumTopic    $topic    topic
-	 * @param   bool                $xhtml    xhtml
-	 * @param   null                $action   actions
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumTopic     $topic     topic
+	 * @param   bool                 $xhtml     xhtml
+	 * @param   null                 $action    actions
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
@@ -1167,14 +1169,14 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumMessage  $message  message
-	 * @param   bool                $xhtml    xhtml
-	 * @param   KunenaForumTopic    $topic    topic
-	 * @param   KunenaForumCategory $category category
+	 * @param   KunenaForumMessage   $message   message
+	 * @param   bool                 $xhtml     xhtml
+	 * @param   KunenaForumTopic     $topic     topic
+	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
@@ -1194,12 +1196,12 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaUser $user  user
-	 * @param   bool       $xhtml xhtml
+	 * @param   KunenaUser  $user   user
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
@@ -1211,7 +1213,7 @@ abstract class KunenaRoute
 	 * This method implements unicode slugs instead of transliteration.
 	 * It has taken from Joomla 1.7.3 with the difference that urls are not lower case.
 	 *
-	 * @param   string $string String to process
+	 * @param   string  $string  String to process
 	 *
 	 * @return  string  Processed string
 	 * @since Kunena

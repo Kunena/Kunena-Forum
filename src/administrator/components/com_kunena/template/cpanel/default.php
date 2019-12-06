@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      CPanel
  *
@@ -54,7 +55,8 @@ use Joomla\CMS\Router\Route;
 								</div>
 							</div>
 							<div class="row align-items-center text-center">
-								<div class="col pl-5"><img src="components/com_kunena/media/icons/kunena_logo.png" style="width: 70%"/></div>
+								<div class="col pl-5"><img src="components/com_kunena/media/icons/kunena_logo.png"
+								                           style="width: 70%"/></div>
 								<div class="col">
 									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6></div>
 							</div>
@@ -92,7 +94,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 										</a>
 									</h6>
@@ -103,8 +105,9 @@ use Joomla\CMS\Router\Route;
 									<i class="fas fa-list-alt bg-cyan"></i>
 								</div>
 								<span class="pt-badge bg-cyan">
-									<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories&layout=create');?>">
-										<i class="fas fa-plus" style="width: 12px;height: 12px;margin-top: -40px;font-size: 12px"></i>
+									<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories&layout=create'); ?>">
+										<i class="fas fa-plus"
+										   style="width: 12px;height: 12px;margin-top: -40px;font-size: 12px"></i>
 									</a>
 								</span>
 							</div>
@@ -117,7 +120,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=users');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=users'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 										</a>
 									</h6>
@@ -137,7 +140,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=attachments');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=attachments'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
@@ -157,7 +160,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=smilies');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=smilies'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 										</a>
 									</h6>
@@ -177,7 +180,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=config');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=config'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
 										</a>
 									</h6>
@@ -197,7 +200,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=statistics');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=statistics'); ?>">
 											<?php echo Text::_('COM_KUNENA_MENU_STATISTICS') ?>
 										</a>
 									</h6>
@@ -217,7 +220,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=templates');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=templates'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
 										</a>
 									</h6>
@@ -237,7 +240,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=ranks');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=ranks'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 										</a>
 									</h6>
@@ -257,7 +260,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=plugins');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=plugins'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
 										</a>
 									</h6>
@@ -277,7 +280,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=trash');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=trash'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
 										</a>
 									</h6>
@@ -297,7 +300,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=logs');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=logs'); ?>">
 											<?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
 										</a>
 									</h6>
@@ -317,7 +320,7 @@ use Joomla\CMS\Router\Route;
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="mb-25">
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=tools');?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=tools'); ?>">
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
 										</a>
 									</h6>

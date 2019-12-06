@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaMigratorJoomlaboard
+ *
  * @since Kunena
  */
 class KunenaMigratorJoomlaboard

@@ -18,6 +18,7 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Kunena Access Control for CommunityBuilder
+ *
  * @since Kunena
  */
 class KunenaAccessComprofiler

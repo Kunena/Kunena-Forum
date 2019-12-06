@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
@@ -36,8 +37,8 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * Prepare Kunena user settings.
 	 *
 	 * @return void
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -134,8 +135,8 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -183,7 +184,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Escape text for HTML.
 	 *
-	 * @param   string $string String to be escaped.
+	 * @param   string  $string  String to be escaped.
 	 *
 	 * @return  string
 	 * @since Kunena

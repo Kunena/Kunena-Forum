@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Category
  *
@@ -70,8 +71,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 *
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -215,8 +216,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function prepareDocument()

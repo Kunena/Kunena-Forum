@@ -18,9 +18,9 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array|null
- * @throws Exception
- * @throws KunenaInstallerException
  * @since Kunena
+ * @throws KunenaInstallerException
+ * @throws Exception
  */
 function kunena_160_2010_05_30_timezone($parent)
 {

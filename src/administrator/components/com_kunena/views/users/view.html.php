@@ -23,6 +23,7 @@ class KunenaAdminViewUsers extends KunenaView
 {
 	/**
 	 * DisplayDefault
+	 *
 	 * @since Kunena
 	 */
 	public function displayDefault()

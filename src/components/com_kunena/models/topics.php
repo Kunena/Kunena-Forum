@@ -223,9 +223,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getTopics()
 	{
@@ -356,7 +356,7 @@ class KunenaModelTopics extends KunenaModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where, );
+			'where'     => $where,);
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -416,7 +416,7 @@ class KunenaModelTopics extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions, );
+			'subscribed' => $subscriptions,);
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -478,11 +478,11 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @param   array $userlist userlist
-	 * @param   array $postlist postlist
+	 * @param   array  $userlist  userlist
+	 * @param   array  $postlist  postlist
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{
@@ -517,9 +517,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return boolean
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getMessages()
 	{
@@ -637,9 +637,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return array|null
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getPostActions()
 	{

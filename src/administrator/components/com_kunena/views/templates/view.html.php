@@ -17,6 +17,7 @@ use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Templates view for Kunena backend
+ *
  * @since Kunena
  */
 class KunenaAdminViewTemplates extends KunenaView
@@ -217,7 +218,7 @@ class KunenaAdminViewTemplates extends KunenaView
 			fclose($fp);
 		}
 
-		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
+		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
 		$this->files = Folder::files($this->dir, '\.css$', false, false);
 		$this->display();
 	}

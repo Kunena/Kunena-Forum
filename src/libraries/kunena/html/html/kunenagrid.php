@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    HTML
  *
@@ -20,6 +21,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Utility class for creating HTML Grids
+ *
  * @since Kunena
  */
 abstract class JHtmlKunenaGrid

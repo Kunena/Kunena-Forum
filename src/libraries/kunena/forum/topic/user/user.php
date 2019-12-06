@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.User
  *
@@ -16,6 +17,7 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaForumTopicUser
  *
+ * @since Kunena
  * @property int    $user_id
  * @property int    $topic_id
  * @property int    $category_id
@@ -25,7 +27,6 @@ use Joomla\CMS\Object\CMSObject;
  * @property int    $favorite
  * @property int    $subscribed
  * @property string $params
- * @since Kunena
  */
 class KunenaForumTopicUser extends CMSObject
 {
@@ -42,12 +43,14 @@ class KunenaForumTopicUser extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @param   mixed $topic topic
-	 * @param   mixed $user  user
-	 *
-	 * @throws Exception
 	 * @internal
+	 *
+	 * @param   mixed  $user   user
+	 *
+	 * @param   mixed  $topic  topic
+	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -70,8 +73,8 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * Method to get the topics table object.
 	 *
-	 * @param   string $type   Topics table name to be used.
-	 * @param   string $prefix Topics table prefix to be used.
+	 * @param   string  $type    Topics table name to be used.
+	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
 	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
 	 * @since Kunena
@@ -92,9 +95,9 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @param   mixed $id     id
-	 * @param   mixed $user   user
-	 * @param   bool  $reload reload
+	 * @param   mixed  $id      id
+	 * @param   mixed  $user    user
+	 * @param   bool   $reload  reload
 	 *
 	 * @return KunenaForumTopicUser
 	 * @since Kunena
@@ -106,8 +109,8 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 * @throws Exception
 	 */
 	public function reset()
@@ -119,12 +122,12 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * Method to load a KunenaForumTopicUser object by id.
 	 *
-	 * @param   int   $topic_id Topic id to be loaded.
-	 * @param   mixed $user     user
+	 * @param   int    $topic_id  Topic id to be loaded.
+	 * @param   mixed  $user      user
 	 *
 	 * @return boolean    True on success
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($topic_id = null, $user = null)
 	{
@@ -189,7 +192,7 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|bool $exists exists
+	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -207,12 +210,12 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @param   KunenaForumMessage $message   message
-	 * @param   int                $postDelta postdelta
+	 * @param   KunenaForumMessage  $message    message
+	 * @param   int                 $postDelta  postdelta
 	 *
 	 * @return boolean|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function update(KunenaForumMessage $message = null, $postDelta = 0)
 	{
@@ -275,11 +278,11 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @param   array $data   data
-	 * @param   array $ignore ignore
+	 * @param   array  $data    data
+	 * @param   array  $ignore  ignore
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function bind(array $data, array $ignore = array())
 	{
@@ -290,11 +293,11 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * Method to save the KunenaForumTopicUser object to the database.
 	 *
-	 * @param   bool $updateOnly Save the object only if not a new topic.
+	 * @param   bool  $updateOnly  Save the object only if not a new topic.
 	 *
 	 * @return boolean    True on success.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save($updateOnly = false)
 	{

@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAccessCommunity
+ *
  * @since Kunena
  */
 class KunenaAccessCommunity

@@ -18,8 +18,8 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array
- * @throws Exception
  * @since Kunena
+ * @throws Exception
  */
 function kunena_200_2011_12_14_aliases($parent)
 {
@@ -115,10 +115,10 @@ function kunena_200_2011_12_14_aliases($parent)
 }
 
 /**
- * @param       $type
- * @param       $item
- * @param       $alias
- * @param   int $state state
+ * @param        $type
+ * @param        $item
+ * @param        $alias
+ * @param   int  $state  state
  *
  * @return boolean
  * @since Kunena
@@ -143,9 +143,9 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 }
 
 /**
- * @param       $category
- * @param       $alias
- * @param   int $state state
+ * @param        $category
+ * @param        $alias
+ * @param   int  $state  state
  *
  * @return boolean
  * @since Kunena

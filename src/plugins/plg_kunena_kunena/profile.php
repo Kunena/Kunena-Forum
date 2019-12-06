@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaProfileKunena
+ *
  * @since Kunena
  */
 class KunenaProfileKunena extends KunenaProfile
@@ -36,12 +37,12 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -58,11 +59,11 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -106,12 +107,12 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml xhtml
+	 * @param         $userid
+	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
@@ -122,14 +123,14 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param               $user
-	 * @param   string      $task      task
-	 * @param   bool        $xhtml     xhtml
-	 * @param   bool|string $avatarTab avatarTab
+	 * @param                $user
+	 * @param   string       $task       task
+	 * @param   bool         $xhtml      xhtml
+	 * @param   bool|string  $avatarTab  avatarTab
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')

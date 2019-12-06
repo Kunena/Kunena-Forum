@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
@@ -109,8 +110,8 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 * Prepare login display.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()
@@ -119,7 +120,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 		$login = KunenaLogin::getInstance();
 
-		$params = new Registry($login->getParams());
+		$params         = new Registry($login->getParams());
 		$this->plglogin = $params->get('login', '1');
 
 		if (!$login->enabled())

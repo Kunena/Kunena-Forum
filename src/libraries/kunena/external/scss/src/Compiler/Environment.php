@@ -4,9 +4,9 @@
  *
  * @copyright 2012-2018 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.github.io/scssphp
+ * @link      http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp\Compiler;
@@ -20,23 +20,23 @@ use Leafo\ScssPhp\Block;
  */
 class Environment
 {
-    /**
-     * @var Block
-     */
-    public $block;
+	/**
+	 * @var Block
+	 */
+	public $block;
 
-    /**
-     * @var Environment
-     */
-    public $parent;
+	/**
+	 * @var Environment
+	 */
+	public $parent;
 
-    /**
-     * @var array
-     */
-    public $store;
+	/**
+	 * @var array
+	 */
+	public $store;
 
-    /**
-     * @var integer
-     */
-    public $depth;
+	/**
+	 * @var integer
+	 */
+	public $depth;
 }

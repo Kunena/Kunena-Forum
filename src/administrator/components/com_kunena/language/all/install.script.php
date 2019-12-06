@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Installer
  *
  * @copyright     Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -14,12 +15,13 @@ use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Class pkg_kunena_languagesInstallerScript
+ *
  * @since Kunena
  */
 class pkg_kunena_languagesInstallerScript
 {
 	/**
-	 * @param   Joomla\CMS\Installer\Adapter\FileAdapter $parent parent
+	 * @param   Joomla\CMS\Installer\Adapter\FileAdapter  $parent  parent
 	 *
 	 * @since Kunena
 	 */
@@ -35,12 +37,12 @@ class pkg_kunena_languagesInstallerScript
 	}
 
 	/**
-	 * @param   string                                    $type   type
-	 * @param   Joomla\CMS\Installer\Adapter\FileAdapter $parent parent
+	 * @param   string                                    $type    type
+	 * @param   Joomla\CMS\Installer\Adapter\FileAdapter  $parent  parent
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function preflight($type, $parent)
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Integration
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaAvatar
+ *
  * @since Kunena
  */
 class KunenaAvatar
@@ -44,11 +46,11 @@ class KunenaAvatar
 	public $css = false;
 
 	/**
-	 * @param   null $integration integration
+	 * @param   null  $integration  integration
 	 *
 	 * @return boolean|KunenaAvatar
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -79,10 +81,10 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   array $userlist userlist
+	 * @param   array  $userlist  userlist
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function load($userlist)
 	{
@@ -98,14 +100,14 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string $user  user
-	 * @param   string $class class
-	 * @param   int    $sizex sizex
-	 * @param   int    $sizey sizey
+	 * @param   string  $user   user
+	 * @param   string  $class  class
+	 * @param   int     $sizex  sizex
+	 * @param   int     $sizey  sizey
 	 *
 	 * @return string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
@@ -132,12 +134,12 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   int $sizex sizex
-	 * @param   int $sizey sizey
+	 * @param   int  $sizex  sizex
+	 * @param   int  $sizey  sizey
 	 *
 	 * @return StdClass
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
@@ -157,13 +159,13 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string $user  user
-	 * @param   int    $sizex sizex
-	 * @param   int    $sizey sizey
+	 * @param   string  $user   user
+	 * @param   int     $sizex  sizex
+	 * @param   int     $sizey  sizey
 	 *
 	 * @return string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
@@ -182,9 +184,9 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string  $user  user
-	 * @param   integer $sizex sizex
-	 * @param   integer $sizey sizey
+	 * @param   string   $user   user
+	 * @param   integer  $sizex  sizex
+	 * @param   integer  $sizey  sizey
 	 *
 	 * @return string
 	 * @since Kunena

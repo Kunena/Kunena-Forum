@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatarGravatar
+ *
  * @since Kunena
  */
 class KunenaAvatarGravatar extends KunenaAvatar
@@ -38,8 +39,8 @@ class KunenaAvatarGravatar extends KunenaAvatar
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getEditURL()
@@ -53,8 +54,8 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

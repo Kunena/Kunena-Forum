@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Attachments view for Kunena backend
+ *
  * @since Kunena
  */
 class KunenaAdminViewAttachments extends KunenaView
@@ -86,6 +87,7 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	/**
 	 * Returns an array of review filter options.
+	 *
 	 * @return    array
 	 * @since Kunena
 	 */

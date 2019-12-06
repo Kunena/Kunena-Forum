@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaForumTopicHelper
+ *
  * @since Kunena
  */
 abstract class KunenaForumTopicHelper
@@ -398,7 +400,7 @@ abstract class KunenaForumTopicHelper
 		// Get items
 		if ($whereuser)
 		{
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
 				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
@@ -407,7 +409,7 @@ abstract class KunenaForumTopicHelper
 		}
 		else
 		{
-			$query  = $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
 				->from($db->quoteName('#__kunena_topics', 'tt'))
 				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id') . ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid))
@@ -568,6 +570,7 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
+	 *
 	 * @return void
 	 * @since Kunena
 	 */
@@ -617,7 +620,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		// Mark all empty topics as deleted
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_topics', 'tt'))
 			->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id') . ' AND ' . $db->quoteName('tt.hold') . ' = ' . $db->quoteName('m.hold'))
 			->set($db->quoteName('tt.hold') . ' = 4')
@@ -757,8 +760,8 @@ abstract class KunenaForumTopicHelper
 		{
 			$idstr = implode(",", $ids);
 
-			$db = Factory::getDBO();
-			$query  = $db->getQuery(true);
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
 			$query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
 				->from($db->quoteName('#__kunena_messages', 'm'))
 				->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))

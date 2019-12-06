@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
@@ -16,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaControllerApplicationDisplay
+ *
  * @since Kunena
  */
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
@@ -64,8 +66,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return Joomla\CMS\Layout\BaseLayout
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function execute()
@@ -213,10 +215,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
 	 * @return void
+	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -298,8 +300,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function exists()
 	{
@@ -315,11 +317,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @param   int $code code
+	 * @param   int  $code  code
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function setResponseStatus($code = 404)
 	{
@@ -367,9 +369,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
 	 * @throws Exception
-	 * @return void
 	 */
 	protected function after()
 	{
@@ -392,8 +394,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	final public function poweredBy()
 	{

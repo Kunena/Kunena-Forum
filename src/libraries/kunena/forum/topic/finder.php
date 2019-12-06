@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Forum.Topic
  *
@@ -15,6 +16,7 @@ use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaForumTopicFinder
+ *
  * @since Kunena
  */
 class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
@@ -39,6 +41,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

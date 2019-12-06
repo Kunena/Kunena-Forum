@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -66,9 +67,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -265,11 +266,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare messages for display.
 	 *
-	 * @param   int $mesid Selected message Id.
+	 * @param   int  $mesid  Selected message Id.
 	 *
 	 * @return  void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareMessages($mesid)
 	{
@@ -338,12 +339,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Change ordering of the displayed messages and apply threading.
 	 *
-	 * @param   int   $parent Parent Id.
-	 * @param   array $indent Indent for the current object.
+	 * @param   int    $parent  Parent Id.
+	 * @param   array  $indent  Indent for the current object.
 	 *
 	 * @return  array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
@@ -434,9 +435,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * After render update topic data for the user.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function after()
 	{
@@ -458,8 +459,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function prepareDocument()
@@ -596,9 +597,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		if ($menu_item)
 		{
-		    $params          = $menu_item->getParams();
+			$params          = $menu_item->getParams();
 			$params_keywords = $params->get('menu-meta_keywords');
-			$headerText = KunenaHtmlParser::stripBBCode($this->topic->subject, 0, true);
+			$headerText      = KunenaHtmlParser::stripBBCode($this->topic->subject, 0, true);
 			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))
@@ -640,8 +641,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function docImage()

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Upload
  *
@@ -38,7 +39,7 @@ class KunenaUpload
 	/**
 	 * Get new instance of upload class.
 	 *
-	 * @param   array $extensions List of allowed file extensions.
+	 * @param   array  $extensions  List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
 	 * @since Kunena
@@ -58,7 +59,7 @@ class KunenaUpload
 	/**
 	 * Add file extensions to allowed list.
 	 *
-	 * @param   array $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
+	 * @param   array  $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -84,11 +85,11 @@ class KunenaUpload
 	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
-	 * @param   array $options Upload options.
+	 * @param   array  $options  Upload options.
 	 *
 	 * @return array Updated options.
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	public function ajaxUpload(array $options)
 	{
@@ -350,11 +351,11 @@ class KunenaUpload
 	/**
 	 * Split filename by valid extension.
 	 *
-	 * @param   string $filename Name of the file.
+	 * @param   string  $filename  Name of the file.
 	 *
 	 * @return array  File parts: list($name, $extension).
-	 * @throws RuntimeException
 	 * @since Kunena
+	 * @throws RuntimeException
 	 */
 	public function splitFilename($filename = null)
 	{
@@ -394,7 +395,7 @@ class KunenaUpload
 	/**
 	 * Check for upload errors.
 	 *
-	 * @param   array $file Entry from $_FILES array.
+	 * @param   array  $file  Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
 	 * @since Kunena
@@ -449,11 +450,11 @@ class KunenaUpload
 	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
 	 * and Php configuration
 	 *
-	 * @param   int $filesize The size of avatar in bytes
+	 * @param   int  $filesize  The size of avatar in bytes
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkFileSizeAvatar($filesize)
 	{
@@ -475,7 +476,7 @@ class KunenaUpload
 	/**
 	 * Convert value into bytes.
 	 *
-	 * @param   string $value Value, for example: 1G, 10M, 120k...
+	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return integer  Value in bytes.
 	 * @since Kunena
@@ -491,11 +492,11 @@ class KunenaUpload
 	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration
 	 * and PHP configuration
 	 *
-	 * @param   int $filesize The size of file in bytes
+	 * @param   int  $filesize  The size of file in bytes
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
@@ -520,11 +521,11 @@ class KunenaUpload
 	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
 	 * configuration and PHP configuration
 	 *
-	 * @param   int $filesize The size of file in bytes
+	 * @param   int  $filesize  The size of file in bytes
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function checkFileSizeImageAttachment($filesize)
 	{
@@ -564,7 +565,7 @@ class KunenaUpload
 	/**
 	 * Return AJAX response in JSON.
 	 *
-	 * @param   mixed $content content
+	 * @param   mixed  $content  content
 	 *
 	 * @return string
 	 * @since Kunena
@@ -602,8 +603,7 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+			} while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
@@ -621,13 +621,13 @@ class KunenaUpload
 	/**
 	 * Upload file by passing it by HTML input
 	 *
-	 * @param   array  $fileInput   The file object returned by Joomla\CMS\Input\Input
-	 * @param   string $destination The path of destination of file uploaded
-	 * @param   string $type        The type of file uploaded: attachment or avatar
+	 * @param   array   $fileInput    The file object returned by Joomla\CMS\Input\Input
+	 * @param   string  $destination  The path of destination of file uploaded
+	 * @param   string  $type         The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
@@ -754,10 +754,10 @@ class KunenaUpload
 	/**
 	 * Convert into human readable format bytes to kB, MB, GB
 	 *
-	 * @param   integer $bytes      size in bytes
-	 * @param   string  $force_unit a definitive unit
-	 * @param   string  $format     the return string format
-	 * @param   boolean $si         whether to use SI prefixes or IEC
+	 * @param   integer  $bytes       size in bytes
+	 * @param   string   $force_unit  a definitive unit
+	 * @param   string   $format      the return string format
+	 * @param   boolean  $si          whether to use SI prefixes or IEC
 	 *
 	 * @return string
 	 * @since Kunena

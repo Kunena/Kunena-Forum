@@ -19,10 +19,10 @@ defined('_JEXEC') or die();
 class KunenaControllerCommon extends KunenaController
 {
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($config = array())
 	{

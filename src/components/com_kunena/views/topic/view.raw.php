@@ -16,6 +16,7 @@ use Joomla\CMS\Uri\Uri;
 
 /**
  * Topic View
+ *
  * @since Kunena
  */
 class KunenaViewTopic extends KunenaView
@@ -184,6 +185,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * Load global rate for the topic
+	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */

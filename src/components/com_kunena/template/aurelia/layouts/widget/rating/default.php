@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Rating
  *
@@ -21,7 +22,9 @@ if ($this->config->ratingenabled && $this->category->allow_ratings) :
 	Text::script('COM_KUNENA_RATING_WARNING_LABEL');
 
 	if ($this->topic->rating) : ?>
-		<div id="krating-top" title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>" class="hasTooltip">
+		<div id="krating-top"
+		     title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>"
+		     class="hasTooltip">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>
 				<li class="c-rating__item <?php echo $this->topic->rating >= 2 ? 'is-active' : ''; ?>"

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.User
  *
@@ -9,6 +10,7 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Language\Text;
 
 $tabs = $this->getTabs();
@@ -49,7 +51,8 @@ echo $this->subLayout('User/Item/Summary')
 	<ul class="nav nav-tabs">
 		<?php foreach ($tabs as $name => $tab) : ?>
 			<li class="nav-item">
-				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>  href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
+						href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
 			</li>
 		<?php endforeach; ?>
 	</ul>

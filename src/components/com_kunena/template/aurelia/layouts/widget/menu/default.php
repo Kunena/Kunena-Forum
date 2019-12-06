@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Widget
  *
@@ -133,7 +134,7 @@ defined('_JEXEC') or die;
 						if ($item->menu_image_css)
 						{
 							$image_attributes['class'] = $item->menu_image_css;
-							$linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
+							$linktype                  = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
 						}
 						else
 						{
@@ -149,7 +150,7 @@ defined('_JEXEC') or die;
 					if ($item->browserNav == 1)
 					{
 						$attributes['target'] = '_blank';
-						$attributes['rel'] = 'noopener noreferrer';
+						$attributes['rel']    = 'noopener noreferrer';
 
 						if ($item->anchor_rel == 'nofollow')
 						{

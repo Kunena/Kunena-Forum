@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
@@ -38,9 +39,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return void
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
 	 * @since Kunena
+	 * @throws KunenaExceptionAuthorise
+	 * @throws RuntimeException
 	 * @throws null
 	 */
 	public function execute()
@@ -73,9 +74,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function display()
 	{
@@ -199,8 +200,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Prepare attachment display.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

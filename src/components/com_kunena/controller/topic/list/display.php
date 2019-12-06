@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -54,12 +55,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Prepare topics by pre-loading needed information.
 	 *
-	 * @param   array $userIds List of additional user Ids to be loaded.
-	 * @param   array $mesIds  List of additional message Ids to be loaded.
+	 * @param   array  $userIds  List of additional user Ids to be loaded.
+	 * @param   array  $mesIds   List of additional message Ids to be loaded.
 	 *
 	 * @return  void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
 	{
@@ -125,8 +126,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -208,12 +209,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
-	 * @param   array $topics  topics
-	 * @param   array $actions actions
+	 * @param   array  $topics   topics
+	 * @param   array  $actions  actions
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
 	{
@@ -272,12 +273,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
-	 * @param   array $messages messages
-	 * @param   array $actions  actions
+	 * @param   array  $messages  messages
+	 * @param   array  $actions   actions
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{

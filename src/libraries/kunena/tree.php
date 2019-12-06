@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -11,69 +12,70 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena Tree Class
+ *
  * @since Kunena
  */
 class KunenaTree implements Iterator
 {
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $_instances = array();
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $_tree = array();
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $_parents = array();
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $_levels = array();
 
 	/**
-	 * @since Kunena
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_id = null;
 
 	/**
-	 * @since Kunena
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_parent = null;
 
 	/**
-	 * @since Kunena
 	 * @var null|string
+	 * @since Kunena
 	 */
 	protected $_level = null;
 
 	/**
-	 * @since Kunena
 	 * @var null
+	 * @since Kunena
 	 */
 	protected $heap = null;
 
 	/**
-	 * @since Kunena
 	 * @var null
+	 * @since Kunena
 	 */
 	protected $_count = null;
 
 	/**
-	 * @param   mixed  $items  items
-	 * @param   string $id     id
-	 * @param   string $parent parent
-	 * @param   string $level  level
+	 * @param   mixed   $items   items
+	 * @param   string  $id      id
+	 * @param   string  $parent  parent
+	 * @param   string  $level   level
 	 *
 	 * @since Kunena
 	 */
@@ -88,7 +90,7 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   mixed $items items
+	 * @param   mixed  $items  items
 	 *
 	 * @return void
 	 * @since Kunena
@@ -221,7 +223,7 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   mixed $id id
+	 * @param   mixed  $id  id
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -232,7 +234,7 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   int $parent parent
+	 * @param   int  $parent  parent
 	 *
 	 * @return array
 	 * @since Kunena
@@ -248,9 +250,9 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   int   $parent_id  parent id
-	 * @param   array $itemIndent itemindent
-	 * @param   bool  $gap        gap
+	 * @param   int    $parent_id   parent id
+	 * @param   array  $itemIndent  itemindent
+	 * @param   bool   $gap         gap
 	 *
 	 * @return array
 	 * @since Kunena

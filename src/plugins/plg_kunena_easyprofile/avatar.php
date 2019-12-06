@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaAvatarEasyprofile
+ *
  * @since Kunena
  */
 class KunenaAvatarEasyprofile extends KunenaAvatar
@@ -54,8 +55,8 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

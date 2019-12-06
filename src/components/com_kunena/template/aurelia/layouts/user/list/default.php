@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.User
  *
@@ -187,13 +188,15 @@ $this->addScript('assets/js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_joindate) : ?>
-					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>" class="col-md-2 hidden-xs-down">
+					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>"
+					    class="col-md-2 hidden-xs-down">
 						<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : ?>
-					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>" class="col-md-2 hidden-xs-down">
+					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>"
+					    class="col-md-2 hidden-xs-down">
 						<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -18,6 +19,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Messages
  * Provides access to the #__kunena_messages table
+ *
  * @since Kunena
  */
 class TableKunenaMessages extends KunenaTable
@@ -149,7 +151,7 @@ class TableKunenaMessages extends KunenaTable
 	public $message = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -159,12 +161,12 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id    id
-	 * @param   bool $reset reset
+	 * @param   null  $id     id
+	 * @param   bool  $reset  reset
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -228,8 +230,8 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -281,12 +283,13 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @param   boolean $updateNulls has no effect.
+	 * @see   KunenaTable::store()
+	 *
+	 * @param   boolean  $updateNulls  has no effect.
 	 *
 	 * @return boolean
-	 * @throws Exception
-	 * @see   KunenaTable::store()
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function store($updateNulls = false)
 	{

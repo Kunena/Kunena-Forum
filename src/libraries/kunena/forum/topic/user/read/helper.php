@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.User.Read
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaForumTopicUserReadHelper
+ *
  * @since Kunena
  */
 abstract class KunenaForumTopicUserReadHelper
@@ -33,13 +35,13 @@ abstract class KunenaForumTopicUserReadHelper
 	/**
 	 * Returns KunenaForumTopicUserRead object.
 	 *
-	 * @param   mixed $topic  User topic to load.
-	 * @param   mixed $user   user
-	 * @param   bool  $reload reload
+	 * @param   mixed  $topic   User topic to load.
+	 * @param   mixed  $user    user
+	 * @param   bool   $reload  reload
 	 *
 	 * @return KunenaForumTopicUserRead
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($topic = null, $user = null, $reload = false)
 	{
@@ -71,12 +73,12 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   bool|array $ids  ids
-	 * @param   mixed      $user user
+	 * @param   bool|array  $ids   ids
+	 * @param   mixed       $user  user
 	 *
 	 * @return KunenaForumTopicUserRead[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTopics($ids = false, $user = null)
 	{
@@ -117,12 +119,12 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   array      $ids  ids
-	 * @param   KunenaUser $user user
+	 * @param   array       $ids   ids
+	 * @param   KunenaUser  $user  user
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
@@ -143,7 +145,7 @@ abstract class KunenaForumTopicUserReadHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -178,12 +180,12 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old old
-	 * @param   KunenaForumTopic $new new
+	 * @param   KunenaForumTopic  $old  old
+	 * @param   KunenaForumTopic  $new  new
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function move($old, $new)
 	{
@@ -227,12 +229,12 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old old
-	 * @param   KunenaForumTopic $new new
+	 * @param   KunenaForumTopic  $old  old
+	 * @param   KunenaForumTopic  $new  new
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function merge($old, $new)
 	{
@@ -279,11 +281,11 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   int $id id
+	 * @param   int  $id  id
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function reloadTopic($id)
 	{
@@ -294,7 +296,7 @@ abstract class KunenaForumTopicUserReadHelper
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db     = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
@@ -329,8 +331,8 @@ abstract class KunenaForumTopicUserReadHelper
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function recount()
 	{
@@ -356,18 +358,18 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param   int $days days
+	 * @param   int  $days  days
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function purge($days = 365)
 	{
 		// Purge items that are older than x days (defaulting to a year)
 		$db        = Factory::getDBO();
 		$timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
-		$query = $db->getQuery(true);
+		$query     = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_user_read'))
 			->where($db->quoteName('time') . ' < ' . $db->quote($timestamp));
 		$db->setQuery($query);

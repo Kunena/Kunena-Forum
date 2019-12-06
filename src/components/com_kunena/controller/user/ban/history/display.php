@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
@@ -54,8 +55,8 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 *
 	 * @return void
 	 *
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -76,8 +77,8 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

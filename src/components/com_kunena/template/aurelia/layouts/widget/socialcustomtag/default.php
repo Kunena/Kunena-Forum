@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Widget
  *
@@ -14,7 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists())
 {
-        return false;
+	return false;
 }
 
 $this->ktemplate = KunenaFactory::getTemplate();

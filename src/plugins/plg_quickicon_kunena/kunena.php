@@ -18,6 +18,7 @@ use Joomla\CMS\Router\Route;
 
 /**
  * Class plgQuickiconKunena
+ *
  * @since       Kunena
  */
 class plgQuickiconKunena extends CMSPlugin
@@ -27,9 +28,10 @@ class plgQuickiconKunena extends CMSPlugin
 	 *
 	 * @param $subject
 	 * @param $config
+	 *
 	 * @since       Kunena
 	 */
-	public function __construct(& $subject, $config)
+	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
 		if (!class_exists('KunenaForum'))
@@ -46,11 +48,11 @@ class plgQuickiconKunena extends CMSPlugin
 	/**
 	 * Display Kunena backend icon in Joomla 2.5+
 	 *
-	 * @param   string $context context
+	 * @param   string  $context  context
 	 *
 	 * @return array|null
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onGetIcons($context)
 	{
@@ -195,6 +197,6 @@ class plgQuickiconKunena extends CMSPlugin
 			'text'   => $text,
 			'icon'   => $icon,
 			'access' => array('core.manage', 'com_kunena'),
-			'id'     => 'com_kunena_icon', ));
+			'id'     => 'com_kunena_icon',));
 	}
 }

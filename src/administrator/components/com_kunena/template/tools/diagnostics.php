@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      SyncUsers
  *
@@ -22,8 +23,8 @@ use Joomla\CMS\Session\Session;
 			<div class="card card-block bg-faded p-2">
 
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-					  method="post" id="adminForm"
-					  name="adminForm">
+				      method="post" id="adminForm"
+				      name="adminForm">
 					<input type="hidden" name="task" value="diagnostics"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 

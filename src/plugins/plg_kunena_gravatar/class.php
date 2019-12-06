@@ -11,9 +11,9 @@
  *
  * @package   gravatarlib
  * @author    emberlabs.org
+ * @copyright gravatar
  * @license   MIT License
  * @link      https://github.com/emberlabs/gravatarlib
- * @copyright gravatar
  * @since     Kunena
  */
 
@@ -69,12 +69,13 @@ class KunenaGravatar
 
 	/**
 	 * Extra attributes to the IMG tag like ALT, CLASS, STYLE...
+	 *
 	 * @since Kunena
 	 */
 	protected $extra = "";
 
 	/**
-	 * @param   string $email email
+	 * @param   string  $email  email
 	 *
 	 * @since Kunena
 	 */
@@ -84,7 +85,7 @@ class KunenaGravatar
 	}
 
 	/**
-	 * @param   string $email email
+	 * @param   string  $email  email
 	 *
 	 * @return void $email
 	 * @since Kunena
@@ -97,7 +98,7 @@ class KunenaGravatar
 	/**
 	 * Define extras html attributes to be added into the HTML
 	 *
-	 * @param   string $extra extra
+	 * @param   string  $extra  extra
 	 *
 	 * @since Kunena
 	 */
@@ -109,7 +110,7 @@ class KunenaGravatar
 	/**
 	 * Set the avatar size to use.
 	 *
-	 * @param   integer $size - The avatar size to use, must be less than 512 and greater than 0.
+	 * @param   integer  $size  - The avatar size to use, must be less than 512 and greater than 0.
 	 *
 	 * @return KunenaGravatar
 	 *
@@ -154,8 +155,8 @@ class KunenaGravatar
 	/**
 	 * Build the avatar URL based on the provided email address.
 	 *
-	 * @param   bool|string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash
-	 *                                  stored already)
+	 * @param   bool|string  $hash_email  - Should we hash the $email variable? (Useful if the email address has a hash
+	 *                                    stored already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.
 	 * @since Kunena
@@ -237,7 +238,7 @@ class KunenaGravatar
 	/**
 	 * Get the email hash to use (after cleaning the string).
 	 *
-	 * @param   string $email - The email to get the hash for.
+	 * @param   string  $email  - The email to get the hash for.
 	 *
 	 * @return string - The hashed form of the email, post cleaning.
 	 * @since Kunena
@@ -273,7 +274,7 @@ class KunenaGravatar
 	/**
 	 * Set the maximum allowed rating for avatars.
 	 *
-	 * @param   string $rating - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
+	 * @param   string  $rating  - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
 	 *
 	 * @return KunenaGravatar
 	 *
@@ -312,8 +313,8 @@ class KunenaGravatar
 	/**
 	 * Set the default image to use for avatars.
 	 *
-	 * @param   mixed $image - The default image to use. Use boolean false for the gravatar default, a string containing
-	 *                       a valid image URL, or a string specifying a recognized gravatar "default".
+	 * @param   mixed  $image  - The default image to use. Use boolean false for the gravatar default, a string
+	 *                         containing a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
 	 * @return KunenaGravatar
 	 *
@@ -358,6 +359,7 @@ class KunenaGravatar
 
 	/**
 	 * toString
+	 *
 	 * @since Kunena
 	 */
 	public function __toString()

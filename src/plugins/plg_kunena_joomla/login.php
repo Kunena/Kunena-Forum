@@ -18,6 +18,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Class KunenaLoginJoomla
+ *
  * @since Kunena
  */
 class KunenaLoginJoomla

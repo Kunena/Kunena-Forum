@@ -23,8 +23,8 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Constructor of plgKunenaAltaUserPoints class
 	 *
-	 * @param   object &$subject The object to observe
-	 * @param   array  $config   An optional associative array of configuration settings.
+	 * @param   object &$subject  The object to observe
+	 * @param   array   $config   An optional associative array of configuration settings.
 	 *
 	 * @since Kunena
 	 */
@@ -42,7 +42,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'altauserpoints'))
 			{
-				$db = Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('altauserpoints'));

@@ -16,6 +16,7 @@ use Joomla\CMS\Router\Route;
 
 /**
  * Class KunenaAvatarAltaUserPoints
+ *
  * @since Kunena
  */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
@@ -61,14 +62,14 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $class class
-	 * @param   int    $sizex sizex
-	 * @param   int    $sizey sizey
+	 * @param           $user
+	 * @param   string  $class  class
+	 * @param   int     $sizex  sizex
+	 * @param   int     $sizey  sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{

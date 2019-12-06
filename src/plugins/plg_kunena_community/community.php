@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class plgKunenaCommunity
+ *
  * @since Kunena
  */
 class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
@@ -43,7 +44,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
 			{
-				$db = Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName('#__extensions'));
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));
@@ -69,8 +70,8 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 *
 	 * @return KunenaAccess|KunenaAccessCommunity|void
 	 *
-	 * @todo  Should we remove category ACL integration?
 	 * @since Kunena
+	 * @todo  Should we remove category ACL integration?
 	 */
 	public function onKunenaGetAccessControl()
 	{

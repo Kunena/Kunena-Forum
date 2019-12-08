@@ -3148,12 +3148,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			return '';
 		}
-		
-		// Do nothing if there isn't a private message
-		if(!$bbcode->parent->pm)
-		{
-			return '';
-		}
 
 		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
@@ -3167,12 +3161,18 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			$message_userid = $bbcode->parent->userid;
 		}
-		
-		$pm = '';
 
-		foreach($bbcode->parent->pm as $privatemessage)
+		// Set variable to avoid issue where isn't a private message
+		if(!isset($bbcode->parent->pm))
 		{
-			$pm =  $privatemessage->displayField('body');
+			$pm = '';
+		}
+		else
+		{
+			foreach($bbcode->parent->pm as $privatemessage)
+			{
+				$pm =  $privatemessage->displayField('body');
+			}
 		}
 
 		if (($me->userid && $message_userid == $me->userid) || $moderator)

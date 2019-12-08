@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
@@ -47,8 +48,8 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	 * Prepare statistics box display.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()

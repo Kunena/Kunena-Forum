@@ -13,13 +13,14 @@ defined('_JEXEC') or die();
 
 /**
  * Class plgKunenaJoomla
+ *
  * @since Kunena
  */
 class plgKunenaJoomla extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
-	 * @param   object $subject subject
-	 * @param   array  $config  config
+	 * @param   object  $subject  subject
+	 * @param   array   $config   config
 	 *
 	 * @since Kunena
 	 */

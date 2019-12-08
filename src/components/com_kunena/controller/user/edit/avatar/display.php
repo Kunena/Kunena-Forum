@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
@@ -70,8 +71,8 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 *
 	 * @return void
 	 *
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -100,8 +101,8 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -111,7 +112,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar gallery directories.
 	 *
-	 * @param   string $path Absolute path for the gallery.
+	 * @param   string  $path  Absolute path for the gallery.
 	 *
 	 * @return  array|string[]  List of directories.
 	 * @since Kunena
@@ -148,7 +149,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get files from selected gallery.
 	 *
-	 * @param   string $path Absolute path for the gallery.
+	 * @param   string  $path  Absolute path for the gallery.
 	 *
 	 * @return  array
 	 * @since Kunena

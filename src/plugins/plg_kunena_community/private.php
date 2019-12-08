@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaPrivateCommunity
+ *
  * @since Kunena
  */
 class KunenaPrivateCommunity extends KunenaPrivate

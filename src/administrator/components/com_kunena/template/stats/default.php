@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      Stats
  *
@@ -103,9 +104,9 @@ if (Factory::getLanguage()->isRTL())
 							</td>
 							<td>
 								<img class="kstats-bar"
-									 src="<?php echo Uri::root(true) . '/media/kunena/images/bar.png' ?>"
-									 alt="stats" height="15"
-									 width="<?php echo $item->percent ?>%"/>
+								     src="<?php echo Uri::root(true) . '/media/kunena/images/bar.png' ?>"
+								     alt="stats" height="15"
+								     width="<?php echo $item->percent ?>%"/>
 							</td>
 							<td>
 								<?php echo $item->count ?>

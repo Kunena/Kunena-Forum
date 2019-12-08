@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      File
  *
@@ -18,7 +19,7 @@ defined('_JEXEC') or die;
 class KunenaFile
 {
 	/**
-	 * @param   string $file file
+	 * @param   string  $file  file
 	 *
 	 * @return boolean|mixed|string
 	 * @since Kunena

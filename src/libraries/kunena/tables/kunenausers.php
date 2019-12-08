@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Tables
  *
@@ -25,6 +26,7 @@ class TableKunenaUsers extends KunenaTable
 {
 	/**
 	 * User ID
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -74,6 +76,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Signature
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -81,6 +84,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Is moderator?
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -88,6 +92,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Banned until timestamp
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -95,6 +100,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Ordering of posts
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -102,6 +108,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User post count
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -109,6 +116,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Avatar image file
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -116,6 +124,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User karma
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -129,6 +138,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Kunena Group ID
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -136,6 +146,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Kunena Profile hits
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -143,6 +154,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Personal text
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -150,6 +162,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Gender
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -157,6 +170,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Birthdate
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -164,6 +178,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User Location
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -171,6 +186,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Name of web site
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -178,6 +194,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * URL to web site
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -185,6 +202,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User rank
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -192,6 +210,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Hide Email address
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -199,6 +218,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Show online
+	 *
 	 * @var integer
 	 * @since Kunena
 	 **/
@@ -206,6 +226,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * ICQ ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -213,6 +234,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * YIM ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -220,6 +242,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Microsoft ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -227,6 +250,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * SKYPE ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -234,6 +258,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * TWITTER ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -241,6 +266,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * FACEBOOK ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 **/
@@ -248,6 +274,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Google ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -255,6 +282,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Github ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -262,6 +290,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * MYSPACE ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -269,6 +298,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * LINKEDIN ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -276,6 +306,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * FRIENDFEED ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -283,6 +314,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * $DIGG ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -290,6 +322,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * BLOGSPOT ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -297,6 +330,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * FLICKR ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -304,6 +338,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * BEBO ID
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -311,6 +346,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Thankyou count
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -318,6 +354,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * canSubscribe
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -325,6 +362,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * userListtime
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -332,6 +370,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Status
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -339,6 +378,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Status Text
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -346,6 +386,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Instagram
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -353,6 +394,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * QQ
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -360,6 +402,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Qzone
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -367,6 +410,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Weibo
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -374,6 +418,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Wechat
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -381,6 +426,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Apple
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -388,6 +434,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Vk
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -395,6 +442,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * telegram
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -402,6 +450,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * social
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -409,6 +458,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * odnoklassniki
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -416,6 +466,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * what's app
+	 *
 	 * @var integer
 	 * @since Kunena 6.0.0
 	 */
@@ -423,6 +474,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * what's app
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -430,6 +482,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Linkedin company
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
@@ -437,13 +490,14 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Youtube
+	 *
 	 * @var integer
 	 * @since Kunena
 	 */
 	public $youtube = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -453,12 +507,12 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @param   null $userid userid
-	 * @param   bool $reset  reset
+	 * @param   null  $userid  userid
+	 * @param   bool  $reset   reset
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($userid = null, $reset = true)
 	{
@@ -486,7 +540,7 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Load the user data.
-		$query  = $this->_db->getQuery(true);
+		$query = $this->_db->getQuery(true);
 		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
 			->from($this->_db->quoteName('#__users', 'u'))
 			->leftJoin($this->_db->quoteName($this->_tbl, 'ku') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('ku.userid'))
@@ -524,8 +578,8 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function reset()
 	{
@@ -539,8 +593,8 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @param   mixed $data   data
-	 * @param   array $ignore ignore
+	 * @param   mixed  $data    data
+	 * @param   array  $ignore  ignore
 	 *
 	 * @return void
 	 * @since Kunena

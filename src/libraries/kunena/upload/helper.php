@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Upload
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Kunena Upload Backend Helper Class
+ *
  * @since Kunena
  */
 class KunenaUploadHelper
@@ -33,9 +35,9 @@ class KunenaUploadHelper
 	}
 
 	/**
-	 * @param   mixed  $file         file
-	 * @param   string $uploadfolder upload
-	 * @param   string $format       format
+	 * @param   mixed   $file          file
+	 * @param   string  $uploadfolder  upload
+	 * @param   string  $format        format
 	 *
 	 * @return mixed|void
 	 * @since Kunena

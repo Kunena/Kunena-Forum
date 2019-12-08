@@ -41,8 +41,8 @@ class KunenaModelSearch extends KunenaModel
 	protected $messages = false;
 
 	/**
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function populateState()
 	{
@@ -305,9 +305,9 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return boolean|integer
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getTotal()
 	{
@@ -361,9 +361,9 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return array|boolean
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function getResults()
 	{
@@ -454,8 +454,8 @@ class KunenaModelSearch extends KunenaModel
 	{
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-						  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '', );
+		                  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '',);
 
 		$url_params = '';
 		$state      = $this->getState();
@@ -486,16 +486,16 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @param          $view
-	 * @param   string $searchword searchword
-	 * @param   int    $limitstart limitstart
-	 * @param   int    $limit      limit
-	 * @param   string $params     params
-	 * @param   bool   $xhtml      xhtml
+	 * @param           $view
+	 * @param   string  $searchword  searchword
+	 * @param   int     $limitstart  limitstart
+	 * @param   int     $limit       limit
+	 * @param   string  $params      params
+	 * @param   bool    $xhtml       xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)

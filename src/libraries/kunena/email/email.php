@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Email
  *
@@ -14,17 +15,18 @@ use Joomla\CMS\Log\Log;
 
 /**
  * Class KunenaEmail
+ *
  * @since Kunena
  */
 abstract class KunenaEmail
 {
 	/**
-	 * @param   Joomla\CMS\Mail\Mail $mail      mail
-	 * @param   array                 $receivers receivers
+	 * @param   Joomla\CMS\Mail\Mail  $mail       mail
+	 * @param   array                 $receivers  receivers
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function send($mail, array $receivers)
 	{

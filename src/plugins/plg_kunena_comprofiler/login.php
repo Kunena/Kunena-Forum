@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class KunenaLoginComprofiler
+ *
  * @since Kunena
  */
 class KunenaLoginComprofiler

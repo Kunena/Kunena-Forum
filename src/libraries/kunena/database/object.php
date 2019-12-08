@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Object
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaDatabaseObject
+ *
  * @since Kunena
  */
 abstract class KunenaDatabaseObject extends CMSObject
@@ -89,9 +91,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * This method optionally takes an array of properties to ignore or allow when binding.
 	 *
-	 * @param   array   $src     An associative array or object to bind to the Joomla\CMS\Table\Table instance.
-	 * @param   array   $fields  An optional array list of properties to ignore / include only while binding.
-	 * @param   boolean $include True to include only listed fields, false to ignore listed fields.
+	 * @param   array    $src      An associative array or object to bind to the Joomla\CMS\Table\Table instance.
+	 * @param   array    $fields   An optional array list of properties to ignore / include only while binding.
+	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
 	 * @since Kunena
@@ -116,12 +118,12 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Returns the global object.
 	 *
-	 * @param   int     $identifier Object identifier to load.
-	 * @param   boolean $reload     Force object reload from the database.
+	 * @param   int      $identifier  Object identifier to load.
+	 * @param   boolean  $reload      Force object reload from the database.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -336,7 +338,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Returns true if the object exists in the database.
 	 *
-	 * @param   boolean $exists Internal parameter to change state.
+	 * @param   boolean  $exists  Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
 	 * @since Kunena

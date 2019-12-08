@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -68,9 +69,9 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -129,7 +130,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 		if ($this->message)
 		{
 			$this->banHistory = KunenaUserBan::getUserHistory($this->message->userid);
-			$this->me = Factory::getApplication()->getIdentity();
+			$this->me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
 			$db    = Factory::getDbo();
@@ -161,8 +162,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -170,7 +171,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
+			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');

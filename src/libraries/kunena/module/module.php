@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Module
  *
@@ -15,12 +16,14 @@ use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaModule
+ *
  * @since Kunena
  */
 abstract class KunenaModule
 {
 	/**
 	 * CSS file to be loaded.
+	 *
 	 * @var string
 	 * @since Kunena
 	 */
@@ -54,6 +57,7 @@ abstract class KunenaModule
 
 	/**
 	 * Display module contents.
+	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception
@@ -101,6 +105,7 @@ abstract class KunenaModule
 
 	/**
 	 * Internal module function to display module contents.
+	 *
 	 * @return void
 	 * @since Kunena
 	 */

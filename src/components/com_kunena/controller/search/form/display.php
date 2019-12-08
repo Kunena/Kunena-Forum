@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Search
  *
@@ -37,9 +38,9 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare search form display.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -85,8 +86,8 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -114,7 +115,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 
 		if ($menu_item)
 		{
-		    $params             = $menu_item->getParams();
+			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');

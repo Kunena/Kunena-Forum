@@ -16,15 +16,16 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Topics View
+ *
  * @since Kunena
  */
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function displayDefault($tpl = null)
@@ -57,10 +58,10 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function displayUser($tpl = null)
@@ -92,10 +93,10 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function displayPosts($tpl = null)
@@ -221,8 +222,8 @@ class KunenaViewTopics extends KunenaView
 	 * @param $matches
 	 *
 	 * @return mixed|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function fillTopicInfo($matches)

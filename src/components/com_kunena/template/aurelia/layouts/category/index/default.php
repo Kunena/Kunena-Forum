@@ -24,8 +24,8 @@ if ($this->config->enableforumjump)
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 }
 
-$mmm    = 0;
-$config = $this->ktemplate->params;
+$mmm        = 0;
+$config     = $this->ktemplate->params;
 
 if ($config->get('socialshare') == 1)
 {
@@ -44,7 +44,7 @@ if ($config->get('displayModule'))
 
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
-	$Itemid      = KunenaRoute::getCategoryItemid($section);
+	$Itemid = KunenaRoute::getCategoryItemid($section);
 
 	if ($config->get('displayModule'))
 	{
@@ -54,8 +54,9 @@ foreach ($this->sections as $section) :
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
-					<a class="btn btn-outline-primary border btn-sm" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::edit(); ?></a>
-				<?php endif;?>
+					<a class="btn btn-outline-primary border btn-sm"
+					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::edit(); ?></a>
+				<?php endif; ?>
 				<button class="btn btn-outline-primary border btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"

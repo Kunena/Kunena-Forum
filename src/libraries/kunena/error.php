@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -14,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaError
+ *
  * @since Kunena
  */
 abstract class KunenaError

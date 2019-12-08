@@ -13,12 +13,13 @@ defined('_JEXEC') or die();
 
 /**
  * Category View
+ *
  * @since Kunena
  */
 class KunenaViewCategory extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
 	 * @since Kunena
 	 */

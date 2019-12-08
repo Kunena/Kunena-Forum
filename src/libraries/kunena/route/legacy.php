@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Route
  *
@@ -19,6 +20,7 @@ require_once KPATH_SITE . '/router.php';
 
 /**
  * Class KunenaRouteLegacy
+ *
  * @since Kunena
  */
 abstract class KunenaRouteLegacy
@@ -75,7 +77,7 @@ abstract class KunenaRouteLegacy
 	);
 
 	/**
-	 * @param   string $view view
+	 * @param   string  $view  view
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -91,11 +93,11 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
-	 * @param   mixed $item item
+	 * @param   mixed  $item  item
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function convertMenuItem($item)
 	{
@@ -141,12 +143,12 @@ abstract class KunenaRouteLegacy
 	}
 
 	/**
-	 * @param   string $uri       uri
-	 * @param   int    $showstart showstart
+	 * @param   string  $uri        uri
+	 * @param   int     $showstart  showstart
 	 *
 	 * @return boolean|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function convert($uri, $showstart = 1)
 	{

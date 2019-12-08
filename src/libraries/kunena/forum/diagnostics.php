@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum
  *
@@ -15,6 +16,7 @@ use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaForumDiagnostics
+ *
  * @since Kunena
  */
 abstract class KunenaForumDiagnostics
@@ -381,7 +383,7 @@ abstract class KunenaForumDiagnostics
 
 		$list = (array) $db->loadObjectList();
 
-		$ids   = new stdClass;
+		$ids = new stdClass;
 
 		foreach ($list as $item)
 		{

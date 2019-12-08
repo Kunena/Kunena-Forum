@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Topic
  *
@@ -64,7 +65,7 @@ if ($topic->locked)
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
 		{
-		    echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+			echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
 		}
 		?>
 		<?php echo $topic->displayField('subject'); ?>

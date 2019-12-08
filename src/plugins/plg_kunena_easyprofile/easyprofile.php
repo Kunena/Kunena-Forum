@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class plgKunenaEasyprofile
+ *
  * @since Kunena
  */
 class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
@@ -42,7 +43,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyprofile'))
 			{
-				$db = Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName('#__extensions'));
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('easyprofile'));

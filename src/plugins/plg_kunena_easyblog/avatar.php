@@ -15,6 +15,7 @@ use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAvatarEasyblog
+ *
  * @since Kunena
  */
 class KunenaAvatarEasyblog extends KunenaAvatar
@@ -39,8 +40,8 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getEditURL()
@@ -54,8 +55,8 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

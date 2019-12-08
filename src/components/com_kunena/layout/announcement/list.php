@@ -27,8 +27,8 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 	 * @see   KunenaCompatLayoutBase::getOptions()
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getOptions()
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Logs
  *
@@ -47,8 +48,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				</div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=statistics'); ?>"
-					  method="post" name="adminForm"
-					  id="adminForm">
+				      method="post" name="adminForm"
+				      id="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
 					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
@@ -62,32 +63,32 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						</div>
 						<div class="btn-group pull-left">
 							<button class="btn btn-outline-primary tip" type="submit"
-									title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
+							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 										class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 							</button>
 							<button class="btn btn-outline-primary tip" type="button"
-									title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
-									onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
+							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+							        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 							</button>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
-								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+							       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
-								   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
+							       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 							<select name="directionTable" id="directionTable" class="input-medium"
-									onchange="Joomla.orderTable()">
+							        onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
 							<label for="sortTable"
-								   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
+							       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
@@ -179,7 +180,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										:
 										?>
 										<button class="btn btn-outline-primary" type="button"
-												onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 									<?php endif; ?>
 								</span>
 									</div>

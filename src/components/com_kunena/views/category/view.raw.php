@@ -15,15 +15,16 @@ use Joomla\CMS\Factory;
 
 /**
  * Category View
+ *
  * @since Kunena
  */
 class KunenaViewCategory extends KunenaView
 {
 	/**
-	 * @param   null $tpl tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

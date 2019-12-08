@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Topics
  * Provides access to the #__kunena_topics table
+ *
  * @since Kunena
  */
 class TableKunenaTopics extends KunenaTable
@@ -160,7 +162,7 @@ class TableKunenaTopics extends KunenaTable
 	public $params = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -170,12 +172,12 @@ class TableKunenaTopics extends KunenaTable
 	}
 
 	/**
-	 * @param   null $id    id
-	 * @param   bool $reset reset
+	 * @param   null  $id     id
+	 * @param   bool  $reset  reset
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($id = null, $reset = true)
 	{

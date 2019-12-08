@@ -33,12 +33,12 @@ else
 if ($attachment->isImage())
 {
 	if ($attachment->getPath()) :
-	?>
-	<a href="<?php echo $name; ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
-		     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
-	</a>
+		?>
+		<a href="<?php echo $name; ?>"
+		   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+			<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
+			     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+		</a>
 	<?php
 	else:
 		echo KunenaIcons::picture();

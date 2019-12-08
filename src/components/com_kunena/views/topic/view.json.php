@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 class KunenaViewTopic extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null  $tpl
 	 *
 	 * @return mixed|void
 	 *

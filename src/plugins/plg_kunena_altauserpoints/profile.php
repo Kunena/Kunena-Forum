@@ -30,7 +30,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * KunenaProfileAltaUserPoints constructor.
 	 *
-	 * @param   mixed $params params
+	 * @param   mixed  $params  params
 	 *
 	 * @since Kunena
 	 */
@@ -40,12 +40,12 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -61,7 +61,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array|boolean
 	 * @since Kunena
@@ -91,23 +91,23 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   mixed $view   view
-	 * @param   mixed $params params
+	 * @param   mixed  $view    view
+	 * @param   mixed  $params  params
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
 	/**
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param   integer  $userid  userid
+	 * @param   bool     $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
@@ -115,13 +115,13 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   mixed  $user  user
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param   mixed   $user   user
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{

@@ -25,8 +25,8 @@ class KunenaLayoutUserEdit extends KunenaLayout
 	 * Method to get tabs for edit profile
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTabsEdit()
 	{

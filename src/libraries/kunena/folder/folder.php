@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Folder
  *
@@ -22,10 +23,10 @@ class KunenaFolder
 	/**
 	 * Create index.html file into the given folder, if it doesn't exist.
 	 *
-	 * @param   string $folder folder
+	 * @param   string  $folder  folder
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function createIndex($folder)
 	{

@@ -20,6 +20,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Class plgSystemKunena
+ *
  * @since Kunena
  */
 class plgSystemKunena extends CMSPlugin

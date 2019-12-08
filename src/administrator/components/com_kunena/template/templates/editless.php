@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      Templates
  *
@@ -24,8 +25,8 @@ use Joomla\CMS\Language\Text;
 				</div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-					  method="post" id="adminForm"
-					  name="adminForm">
+				      method="post" id="adminForm"
+				      name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
 					<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
@@ -44,7 +45,7 @@ use Joomla\CMS\Language\Text;
 							<tr>
 								<td>
 									<textarea class="input-xxlarge" cols="110" rows="25"
-											  name="filecontent"><?php echo $this->content; ?></textarea>
+									          name="filecontent"><?php echo $this->content; ?></textarea>
 								</td>
 							</tr>
 						</table>

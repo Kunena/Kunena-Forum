@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Category.User
  *
@@ -16,13 +17,13 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaForumCategoryUser
  *
- * @property int    $user_id
+ * @since Kunena
  * @property int    $category_id
  * @property int    $role
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
- * @since Kunena
+ * @property int    $user_id
  */
 class KunenaForumCategoryUser extends CMSObject
 {
@@ -39,12 +40,14 @@ class KunenaForumCategoryUser extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @param   int   $category category
-	 * @param   mixed $user     user
-	 *
-	 * @throws Exception
 	 * @internal
+	 *
+	 * @param   mixed  $user      user
+	 *
+	 * @param   int    $category  category
+	 *
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct($category = 0, $user = null)
 	{
@@ -68,8 +71,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @param   string $type   The categories table name to be used
-	 * @param   string $prefix The categories table prefix to be used
+	 * @param   string  $type    The categories table name to be used
+	 * @param   string  $prefix  The categories table prefix to be used
 	 *
 	 * @return Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
 	 * @since Kunena
@@ -90,9 +93,9 @@ class KunenaForumCategoryUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|int $id     id
-	 * @param   mixed    $user   user
-	 * @param   bool     $reload reload
+	 * @param   null|int  $id      id
+	 * @param   mixed     $user    user
+	 * @param   bool      $reload  reload
 	 *
 	 * @return KunenaForumCategoryUser
 	 * @since Kunena
@@ -114,11 +117,11 @@ class KunenaForumCategoryUser extends CMSObject
 	}
 
 	/**
-	 * @param   array $data   data
-	 * @param   array $ignore ignore
+	 * @param   array  $data    data
+	 * @param   array  $ignore  ignore
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -129,11 +132,11 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * Method to save the KunenaForumCategoryUser object to the database.
 	 *
-	 * @param   bool $updateOnly Save the object only if not a new category.
+	 * @param   bool  $updateOnly  Save the object only if not a new category.
 	 *
 	 * @return boolean    True on success
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -181,12 +184,12 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * Method to load a KunenaForumCategoryUser object by id.
 	 *
-	 * @param   null|int $category_id The category id to be loaded.
-	 * @param   mixed    $user        The user to be loaded.
+	 * @param   null|int  $category_id  The category id to be loaded.
+	 * @param   mixed     $user         The user to be loaded.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function load($category_id = null, $user = null)
 	{
@@ -246,7 +249,7 @@ class KunenaForumCategoryUser extends CMSObject
 	}
 
 	/**
-	 * @param   null|bool $exists True/false will change the state of the object.
+	 * @param   null|bool  $exists  True/false will change the state of the object.
 	 *
 	 * @return boolean
 	 * @since Kunena

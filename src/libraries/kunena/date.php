@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -16,13 +17,14 @@ jimport('joomla.utilities.date');
 
 /**
  * Class KunenaDate
+ *
  * @since Kunena
  */
 class KunenaDate extends Joomla\CMS\Date\Date
 {
 	/**
-	 * @param   string $date date
-	 * @param   null   $tz   tz
+	 * @param   string  $date  date
+	 * @param   null    $tz    tz
 	 *
 	 * @return KunenaDate
 	 * @since Kunena
@@ -44,10 +46,10 @@ class KunenaDate extends Joomla\CMS\Date\Date
 	}
 
 	/**
-	 * @param   string $mode   mode
-	 * @param   string $title  title
-	 * @param   bool   $offset offset
-	 * @param   string $class  class
+	 * @param   string  $mode    mode
+	 * @param   string  $title   title
+	 * @param   bool    $offset  offset
+	 * @param   string  $class   class
 	 *
 	 * @return string
 	 * @since Kunena
@@ -59,8 +61,8 @@ class KunenaDate extends Joomla\CMS\Date\Date
 	}
 
 	/**
-	 * @param   string $mode   mode
-	 * @param   bool   $offset offset
+	 * @param   string  $mode    mode
+	 * @param   bool    $offset  offset
 	 *
 	 * @return string
 	 * @since Kunena
@@ -175,7 +177,7 @@ class KunenaDate extends Joomla\CMS\Date\Date
 			'w' => array(Text::_('COM_KUNENA_DATE_WEEK'), Text::_('COM_KUNENA_DATE_WEEKS')),
 			'd' => array(Text::_('COM_KUNENA_DATE_DAY'), Text::_('COM_KUNENA_DATE_DAYS')),
 			'h' => array(Text::_('COM_KUNENA_DATE_HOUR'), Text::_('COM_KUNENA_DATE_HOURS')),
-			'i' => array(Text::_('COM_KUNENA_DATE_MINUTE'), Text::_('COM_KUNENA_DATE_MINUTES')), );
+			'i' => array(Text::_('COM_KUNENA_DATE_MINUTE'), Text::_('COM_KUNENA_DATE_MINUTES')),);
 
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;

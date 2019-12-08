@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.User
  *
@@ -46,8 +47,8 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 * Load user form.
 	 *
 	 * @return void
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
 	 */
 	protected function before()
 	{
@@ -85,8 +86,8 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

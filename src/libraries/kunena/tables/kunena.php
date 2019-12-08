@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -12,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaTable
+ *
  * @since Kunena
  */
 abstract class KunenaTable extends Joomla\CMS\Table\Table
@@ -165,7 +167,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 		if ($this->exists())
 		{
-			
+
 			try
 			{
 				$result = $this->updateObject($updateNulls);
@@ -205,7 +207,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	}
 
 	/**
-	 * @param   null $exists exists
+	 * @param   null  $exists  exists
 	 *
 	 * @return boolean
 	 * @since Kunena

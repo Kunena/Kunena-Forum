@@ -19,6 +19,7 @@ jimport('joomla.utilities.string');
 
 /**
  * Class KunenaActivityCommunity
+ *
  * @since Kunena
  */
 class KunenaActivityCommunity extends KunenaActivity
@@ -96,8 +97,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return mixed|string|void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	private function buildContent($message)
 	{
@@ -157,8 +158,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onAfterReply($message)
 	{
@@ -228,9 +229,9 @@ class KunenaActivityCommunity extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor   actor
-	 * @param   int $target  target
-	 * @param   int $message message
+	 * @param   int  $actor    actor
+	 * @param   int  $target   target
+	 * @param   int  $message  message
 	 *
 	 * @since Kunena
 	 */

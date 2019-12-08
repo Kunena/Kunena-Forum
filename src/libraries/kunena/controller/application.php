@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
@@ -12,16 +13,17 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaControllerApplication
+ *
  * @since Kunena
  */
 abstract class KunenaControllerApplication extends KunenaControllerDisplay
 {
 	/**
-	 * @param   mixed $view    view
-	 * @param   mixed $subview subview
-	 * @param   mixed $task    task
-	 * @param   mixed $input   input
-	 * @param   mixed $app     app
+	 * @param   mixed  $view     view
+	 * @param   mixed  $subview  subview
+	 * @param   mixed  $task     task
+	 * @param   mixed  $input    input
+	 * @param   mixed  $app      app
 	 *
 	 * @return mixed
 	 * @since Kunena

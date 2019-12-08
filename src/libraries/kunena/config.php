@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -19,6 +20,7 @@ use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaConfig
+ *
  * @since Kunena
  */
 class KunenaConfig extends CMSObject
@@ -1431,7 +1433,7 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @param   mixed $properties properties
+	 * @param   mixed  $properties  properties
 	 *
 	 * @return void
 	 * @since Kunena
@@ -1443,6 +1445,7 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * Messages per page
+	 *
 	 * @return void
 	 * @since Kunena
 	 */
@@ -1500,7 +1503,7 @@ class KunenaConfig extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   string $name Name of the plugin
+	 * @param   string  $name  Name of the plugin
 	 *
 	 * @return Joomla\Registry\Registry
 	 *

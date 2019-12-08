@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
@@ -46,13 +47,13 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   Joomla\Input\Input                     $input   The input object.
-	 * @param   Joomla\CMS\Application\BaseApplication $app     The application object.
-	 * @param   Joomla\Registry\Registry|array         $options Array Joomla\Registry\Registry object with the
-	 *                                                           options to load.
+	 * @param   Joomla\Input\Input                      $input    The input object.
+	 * @param   Joomla\CMS\Application\BaseApplication  $app      The application object.
+	 * @param   Joomla\Registry\Registry|array          $options  Array Joomla\Registry\Registry object with the
+	 *                                                            options to load.
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct(Joomla\Input\Input $input = null, $app = null, $options = null)
 	{
@@ -110,7 +111,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Set the options.
 	 *
-	 * @param   mixed $options Array / Joomla\Registry\Registry object with the options to load.
+	 * @param   mixed  $options  Array / Joomla\Registry\Registry object with the options to load.
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
@@ -153,9 +154,9 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  mixed
 	 *
-	 * @throws  LogicException
-	 * @throws  RuntimeException
 	 * @since Kunena
+	 * @throws  RuntimeException
+	 * @throws  LogicException
 	 */
 	abstract public function execute();
 
@@ -195,12 +196,12 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Unserialize the controller.
 	 *
-	 * @param   string $input The serialized controller.
+	 * @param   string  $input  The serialized controller.
 	 *
 	 * @return JController|KunenaControllerBase
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function unserialize($input)
 	{

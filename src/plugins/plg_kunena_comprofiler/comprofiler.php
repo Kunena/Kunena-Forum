@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class plgKunenaComprofiler
+ *
  * @since Kunena
  */
 class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
@@ -32,8 +33,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param $subject
 	 * @param $config
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -52,7 +53,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler'))
 			{
-				$db = Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName('#__extensions'));
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('comprofiler'));
@@ -84,12 +85,12 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @param        $type
-	 * @param   null $view   view
-	 * @param   null $params params
+	 * @param         $type
+	 * @param   null  $view    view
+	 * @param   null  $params  params
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
 	{
@@ -111,13 +112,13 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @param       $context
-	 * @param       $item
-	 * @param       $params
-	 * @param   int $page page
+	 * @param        $context
+	 * @param        $item
+	 * @param        $params
+	 * @param   int  $page  page
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
 	{

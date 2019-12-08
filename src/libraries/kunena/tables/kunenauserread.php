@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -17,6 +18,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena User Read Table
  * Provides access to the #__kunena_user_read table
+ *
  * @since Kunena
  */
 class TableKunenaUserRead extends KunenaTable
@@ -52,7 +54,7 @@ class TableKunenaUserRead extends KunenaTable
 	public $time = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */
@@ -63,8 +65,8 @@ class TableKunenaUserRead extends KunenaTable
 
 	/**
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function check()
 	{

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaIntegrationComprofiler
+ *
  * @since Kunena
  */
 class KunenaIntegrationComprofiler
@@ -47,8 +48,8 @@ class KunenaIntegrationComprofiler
 	 * @param $event
 	 * @param $params
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function trigger($event, &$params)
 	{

@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class KunenaAdminModelPlugins
+ *
  * @since Kunena
  */
 class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel

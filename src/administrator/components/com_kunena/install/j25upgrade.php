@@ -12,12 +12,13 @@ defined('_JEXEC') or die();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
+ *
  * @since Kunena
  */
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 	/**
-	 * @param   null $step step
+	 * @param   null  $step  step
 	 *
 	 * @since Kunena
 	 */
@@ -56,8 +57,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @return    array    List of tables without prefix
 	 *
-	 * @throws Exception
 	 * @since    1.6.4
+	 * @throws Exception
 	 */
 	protected function getCopyTables()
 	{
@@ -80,7 +81,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param   string $table table
+	 * @param   string  $table  table
 	 *
 	 * @return    boolean Ready (true/false)
 	 *
@@ -147,7 +148,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * A hook to be able to modify params prior as they are converted to JSON.
 	 *
-	 * @param   object $object A reference to the parameters as an object.
+	 * @param   object  $object  A reference to the parameters as an object.
 	 *
 	 * @return    void
 	 *

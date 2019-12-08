@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Users
  * @subpackage      Categories
  *
@@ -15,8 +16,8 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
-	  name="settingFormModal"
-	  id="settingFormModal">
+      name="settingFormModal"
+      id="settingFormModal">
 	<div class="modal hide fade" id="settingModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -35,7 +36,7 @@ use Joomla\CMS\Language\Text;
 						<?php echo Text::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-outline-primary" type="submit"
-							onclick="document.getElementById('settingFormModal').submit();">
+					        onclick="document.getElementById('settingFormModal').submit();">
 						<?php echo Text::_('JSUBMIT'); ?>
 					</button>
 				</div>

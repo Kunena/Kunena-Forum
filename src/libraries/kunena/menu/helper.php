@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Menu
  *
@@ -17,13 +18,14 @@ use Joomla\CMS\Language\Multilanguage;
 
 /**
  * Class KunenaMenuHelper
+ *
  * @since Kunena
  */
 abstract class KunenaMenuHelper
 {
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanCache()
 	{
@@ -35,12 +37,13 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @param   Joomla\Registry\Registry $params The module options.
+	 * @see        modules/mod_menu/helper.php
+	 *
+	 * @param   Joomla\Registry\Registry  $params  The module options.
 	 *
 	 * @return    array
-	 * @throws Exception
-	 * @see        modules/mod_menu/helper.php
 	 * @since      Kunena
+	 * @throws Exception
 	 */
 	public static function getList(&$params)
 	{
@@ -141,7 +144,7 @@ abstract class KunenaMenuHelper
 
 					if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 					{
-					    $item->flink = Route::_($item->flink, true, $item->getParams()->get('secure'));
+						$item->flink = Route::_($item->flink, true, $item->getParams()->get('secure'));
 					}
 					else
 					{
@@ -155,7 +158,7 @@ abstract class KunenaMenuHelper
 					$item->anchor_title   = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
 					$item->anchor_rel     = htmlspecialchars($item->getParams()->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
 					$item->menu_image     = $item->getParams()->get('menu_image', '') ?
-					htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+						htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 					$item->menu_image_css = htmlspecialchars($item->getParams()->get('menu_image_css', ''), ENT_COMPAT, 'UTF-8', false);
 				}
 
@@ -176,12 +179,12 @@ abstract class KunenaMenuHelper
 	/**
 	 * Get base menu item.
 	 *
-	 * @param   Joomla\Registry\Registry &$params The module options.
+	 * @param   Joomla\Registry\Registry &$params  The module options.
 	 *
 	 * @return  object
 	 *
-	 * @throws Exception
 	 * @since    3.0.2
+	 * @throws Exception
 	 */
 	public static function getBase(&$params)
 	{
@@ -207,12 +210,12 @@ abstract class KunenaMenuHelper
 	/**
 	 * Get active menu item.
 	 *
-	 * @param   Joomla\Registry\Registry &$params The module options.
+	 * @param   Joomla\Registry\Registry &$params  The module options.
 	 *
 	 * @return  object
 	 *
-	 * @throws Exception
 	 * @since    3.0.2
+	 * @throws Exception
 	 */
 	public static function getActive(&$params)
 	{
@@ -225,9 +228,9 @@ abstract class KunenaMenuHelper
 	 * Get default menu item (home page) for current language.
 	 *
 	 * @return  object
-	 * @throws Exception
 	 * @since       Kunena
 	 *
+	 * @throws Exception
 	 */
 	public static function getDefault()
 	{

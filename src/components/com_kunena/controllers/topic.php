@@ -2332,8 +2332,8 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	protected function checkIfBlacklisted($message)
 	{
-		$ip = $message->ip;
-		$name = $message->name;
+		$ip    = $message->ip;
+		$name  = $message->name;
 		$email = $message->email;
 
 		// Prepare the request to stopforumspam

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
@@ -15,6 +16,7 @@ use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaForumMessageFinder
+ *
  * @since Kunena
  */
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
@@ -39,6 +41,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -55,11 +58,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * It is very important to use this or category filter. Otherwise messages from unauthorized categories will be
 	 * included to the search results.
 	 *
-	 * @param   KunenaUser $user user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return $this
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function filterByUserAccess(KunenaUser $user)
 	{
@@ -78,7 +81,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $messages->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param   array $categories categories
+	 * @param   array  $categories  categories
 	 *
 	 * @return $this|void
 	 * @since Kunena
@@ -111,8 +114,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
+	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -140,8 +143,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * posted = User has posted the message.
 	 *
-	 * @param   KunenaUser $user   user
-	 * @param   string     $action Action or negation of the action (!action).
+	 * @param   KunenaUser  $user    user
+	 * @param   string      $action  Action or negation of the action (!action).
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -187,7 +190,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param   array $hold List of hold states to display.
+	 * @param   array  $hold  List of hold states to display.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -202,12 +205,12 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get messages.
 	 *
-	 * @param   string $access Kunena action access control check.
+	 * @param   string  $access  Kunena action access control check.
 	 *
 	 * @return array|KunenaForumMessage[]
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function find($access = 'read')
 	{
@@ -217,17 +220,17 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   QueryInterface $query query
+	 * @param   QueryInterface  $query  query
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	protected function build(QueryInterface $query = null)
 	{
 		if (!empty($this->hold))
 		{
 			$this->hold = ArrayHelper::toInteger($this->hold, 0);
-			$hold = implode(',', $this->hold);
+			$hold       = implode(',', $this->hold);
 			$query->where('a.hold IN (' . $hold . ')');
 		}
 	}

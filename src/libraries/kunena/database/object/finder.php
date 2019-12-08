@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Database
  *
@@ -18,6 +19,7 @@ defined('_JEXEC') or die;
 
 /**
  * Class KunenaDatabaseObjectFinder
+ *
  * @since Kunena
  */
 abstract class KunenaDatabaseObjectFinder
@@ -68,6 +70,7 @@ abstract class KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 *
 	 * @since Kunena
 	 */
 	public function __construct()
@@ -186,8 +189,8 @@ abstract class KunenaDatabaseObjectFinder
 					$db = $this->db;
 					array_walk(
 						$value, function (&$item) use ($db) {
-							$item = $db->quote($item);
-						}
+						$item = $db->quote($item);
+					}
 					);
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");

@@ -17,6 +17,7 @@ require_once dirname(__FILE__) . '/integration.php';
 
 /**
  * Class KunenaProfileComprofiler
+ *
  * @since Kunena
  */
 class KunenaProfileComprofiler extends KunenaProfile
@@ -43,8 +44,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param $event
 	 * @param $params
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function trigger($event, &$params)
 	{
@@ -68,12 +69,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -91,13 +92,13 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param          $user
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param           $user
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return boolean|string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -136,18 +137,18 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-				'forumSideProfile', array('kunena', $view, $view->profile->userid,
-				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params), )
-			)
+			'forumSideProfile', array('kunena', $view, $view->profile->userid,
+				array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params),)
+		)
 		);
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -174,8 +175,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml xhtml
+	 * @param         $userid
+	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return string
 	 * @since Kunena

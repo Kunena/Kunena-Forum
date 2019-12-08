@@ -47,7 +47,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryIcon($category)
 	{
-		$template     = KunenaFactory::getTemplate();
+		$template    = KunenaFactory::getTemplate();
 		$caticonpath = $template->params->get('DefaultCategoryicon');
 
 		if ($category->getNewCount())
@@ -58,7 +58,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-			    return KunenaIcons::caticon($caticonpath, true, true);
+				return KunenaIcons::caticon($caticonpath, true, true);
 			}
 		}
 		else
@@ -69,7 +69,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-			    return KunenaIcons::caticon($caticonpath, false, true);
+				return KunenaIcons::caticon($caticonpath, false, true);
 			}
 		}
 	}

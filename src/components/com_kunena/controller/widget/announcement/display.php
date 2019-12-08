@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
@@ -33,8 +34,8 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 	 * Prepare announcement box display.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

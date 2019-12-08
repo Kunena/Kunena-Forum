@@ -28,6 +28,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since       Kunena
 	 *
 	 */
@@ -37,9 +38,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param      $command
-	 * @param      $message
-	 * @param   null $target target
+	 * @param         $command
+	 * @param         $message
+	 * @param   null  $target  target
 	 *
 	 * @return mixed
 	 * @since       Kunena
@@ -54,8 +55,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param      $command
-	 * @param   null $target target
+	 * @param         $command
+	 * @param   null  $target  target
 	 *
 	 * @return mixed
 	 * @since       Kunena
@@ -71,6 +72,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
 	 * @since       Kunena
 	 */
 	public function onAfterPost($message)
@@ -100,13 +102,14 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * After a person replies a topic
 	 *
-	 * @since     1.3
-	 * @access    public
+	 * @internal  param $string
 	 *
 	 * @param $message
 	 *
+	 * @since     1.3
+	 * @access    public
+	 *
 	 * @throws Exception
-	 * @internal  param $string
 	 */
 	public function onAfterReply($message)
 	{
@@ -160,14 +163,15 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * Get a list of subscribers for a thread
 	 *
-	 * @since     5.0
-	 * @access    public
+	 * @internal  param $string
 	 *
 	 * @param $message
 	 *
 	 * @return array|boolean
+	 * @since     5.0
+	 * @access    public
+	 *
 	 * @throws Exception
-	 * @internal  param $string
 	 */
 	public function getSubscribers($message)
 	{
@@ -240,9 +244,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param   int $actor actor
-	 * @param   int $target target
-	 * @param   int $message message
+	 * @param   int  $actor    actor
+	 * @param   int  $target   target
+	 * @param   int  $message  message
 	 *
 	 * @since       Kunena
 	 *

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -33,8 +34,8 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 * Prepare reply history display.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

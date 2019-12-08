@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Layout.Topic
  *
@@ -68,9 +69,9 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 * Define javascript variables to show or disable some bbcode buttons
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since       Kunena
 	 *
+	 * @throws Exception
 	 */
 	public function getBBcodesEnabled()
 	{

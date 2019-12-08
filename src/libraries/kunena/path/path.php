@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Path
  *
@@ -75,7 +76,7 @@ class KunenaPath extends JPath
 	/**
 	 * Checks if path is writable either by the server or by FTP.
 	 *
-	 * @param   string $path paths
+	 * @param   string  $path  paths
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -93,7 +94,7 @@ class KunenaPath extends JPath
 	/**
 	 * Method to determine if script owns the path.
 	 *
-	 * @param   string $path Path to check ownership.
+	 * @param   string  $path  Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
 	 * @since Kunena

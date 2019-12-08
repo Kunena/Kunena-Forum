@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Category
  *
@@ -50,9 +51,9 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -61,7 +62,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		require_once KPATH_SITE . '/models/category.php';
 		$this->model = new KunenaModelCategory(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state   = $this->model->getState();
+		$this->state = $this->model->getState();
 
 		$me = KunenaUserHelper::getMyself();
 
@@ -147,8 +148,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

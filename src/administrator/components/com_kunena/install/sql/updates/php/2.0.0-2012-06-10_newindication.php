@@ -18,9 +18,9 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array
- * @throws Exception
- * @throws KunenaInstallerException
  * @since Kunena
+ * @throws KunenaInstallerException
+ * @throws Exception
  */
 function kunena_200_2012_06_10_newindication($parent)
 {
@@ -135,8 +135,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		}
 
 		unset($users);
-	}
-	while ($sessions);
+	} while ($sessions);
 
 	// Update missing information
 	$query = "UPDATE `#__kunena_user_read` AS ur

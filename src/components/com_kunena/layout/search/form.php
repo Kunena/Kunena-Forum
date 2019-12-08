@@ -24,8 +24,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display the list to choose between posts or titles
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -42,8 +42,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to get the date list
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -67,8 +67,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose into the new dates or the older dates
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -85,8 +85,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose how to sort the results
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -111,8 +111,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose the order
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -129,8 +129,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to choose the limit of the list
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -138,7 +138,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	public function displayLimitList($id, $attributes = 'class="form-control"')
 	{
 		// Limit value list
-		$options   = array();
+		$options = array();
 
 		if ($this->config->messages_per_page_search != 5 && $this->config->messages_per_page_search != 10 &&
 			$this->config->messages_per_page_search != 15 && $this->config->messages_per_page_search != 20)
@@ -160,8 +160,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list of categories
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 * @since Kunena
@@ -182,9 +182,9 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to create an input in function of name given
 	 *
-	 * @param   string $name       Name of input to create
-	 * @param   string $attributes Attibutes to be added to input
-	 * @param   int    $id         Id to be added to the input
+	 * @param   string  $name        Name of input to create
+	 * @param   string  $attributes  Attibutes to be added to input
+	 * @param   int     $id          Id to be added to the input
 	 *
 	 * @return string
 	 * @since Kunena

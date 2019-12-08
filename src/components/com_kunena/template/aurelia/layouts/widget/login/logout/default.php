@@ -162,20 +162,20 @@ $config         = KunenaFactory::getTemplate()->params;
 							</div>
 						<?php endif ?>
 						<?php if ($this->plglogin): ?>
-						<div class="dropdown-divider"></div>
-						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
-						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
-						      id="logout-form" class="form-inline">
-							<div>
-								<button class="btn btn-link" name="submit" type="submit">
-									<?php echo KunenaIcons::out(); ?>
-									<?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
-								</button>
-							</div>
-							<input type="hidden" name="view" value="user"/>
-							<input type="hidden" name="task" value="logout"/>
-							<?php echo HTMLHelper::_('form.token'); ?>
-						</form>
+							<div class="dropdown-divider"></div>
+							<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
+							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
+							      id="logout-form" class="form-inline">
+								<div>
+									<button class="btn btn-link" name="submit" type="submit">
+										<?php echo KunenaIcons::out(); ?>
+										<?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
+									</button>
+								</div>
+								<input type="hidden" name="view" value="user"/>
+								<input type="hidden" name="task" value="logout"/>
+								<?php echo HTMLHelper::_('form.token'); ?>
+							</form>
 						<?php endif ?>
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
 					<?php endif ?>
@@ -209,7 +209,7 @@ $config         = KunenaFactory::getTemplate()->params;
 			$("#status-form").submit();
 		});
 
-		$("btn_statustext") .click(function() {
+		$("btn_statustext").click(function () {
 			$("#status-text-form").submit();
 		});
 	});

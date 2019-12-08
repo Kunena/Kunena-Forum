@@ -18,14 +18,14 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array
- * @throws Exception
  * @since Kunena
+ * @throws Exception
  */
 function kunena_600_2019_05_31_banneddatetimedefault($parent)
 {
-	$db  = Factory::getDbo();
+	$db = Factory::getDbo();
 
-	$query    = "UPDATE `#___kunena_users` SET banned='9999-12-31 23:59:59' WHERE banned='0000-00-00 00:00:00'";
+	$query = "UPDATE `#___kunena_users` SET banned='9999-12-31 23:59:59' WHERE banned='0000-00-00 00:00:00'";
 	$db->setQuery($query);
 
 	try
@@ -37,7 +37,7 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	$query    = "UPDATE `#___kunena_users` SET banned='1000-01-01 00:00:00' WHERE banned='null'";
+	$query = "UPDATE `#___kunena_users` SET banned='1000-01-01 00:00:00' WHERE banned='null'";
 	$db->setQuery($query);
 
 	try
@@ -49,7 +49,7 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	$query    = "ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';";
+	$query = "ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';";
 	$db->setQuery($query);
 
 	try

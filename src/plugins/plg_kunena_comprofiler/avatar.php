@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatarComprofiler
+ *
  * @since Kunena
  */
 class KunenaAvatarComprofiler extends KunenaAvatar
@@ -62,8 +63,8 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

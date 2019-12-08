@@ -18,15 +18,15 @@ use Joomla\CMS\Uri\Uri;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
-HTMLHelper::_('behavior.tabstate');
+
 ?>
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
-				  method="post" id="adminForm"
-				  name="adminForm">
+			      method="post" id="adminForm"
+			      name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -44,16 +44,16 @@ HTMLHelper::_('behavior.tabstate');
 												<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INFO'); ?> </a>
 										</li>
 										<?php foreach ($this->form->getFieldsets() as $fieldset)
-										:
-	?>
+											:
+											?>
 											<?php if ($fieldset->name != 'template')
 											:
-	?>
-												<li class="nav-item">
-													<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
-													   data-toggle="tab"><?php echo Text::_($fieldset->name); ?></a>
-												</li>
-											<?php endif; ?>
+											?>
+											<li class="nav-item">
+												<a class="nav-link" href="#tab_<?php echo $fieldset->name; ?>"
+												   data-toggle="tab"><?php echo Text::_($fieldset->name); ?></a>
+											</li>
+										<?php endif; ?>
 										<?php endforeach; ?>
 									</ul>
 									<div class="tab-content">
@@ -82,15 +82,15 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 
-													if (is_file($path))
-													:
-	?>
+														if (is_file($path))
+															:
+															?>
 															<div>
 																<img
 																		src="<?php echo Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
 																		alt="<?php echo $this->escape($this->templatename); ?>"/>
 															</div>
-													<?php endif; ?>
+														<?php endif; ?>
 														<div><?php echo Text::_($this->details->description); ?></div>
 													</td>
 												</tr>
@@ -98,30 +98,30 @@ HTMLHelper::_('behavior.tabstate');
 										</div>
 
 										<?php foreach ($this->form->getFieldsets() as $fieldset)
-										:
-	?>
+											:
+											?>
 											<div class="tab-pane" id="tab_<?php echo $fieldset->name; ?>">
 												<table class="table table-bordered table-striped">
 													<?php foreach ($this->form->getFieldset($fieldset->name) as $field)
-													:
-	?>
+														:
+														?>
 														<?php if ($field->hidden)
 														:
-	?>
-															<tr style="display: none">
-																<td class="paramlist_key"><?php echo $field->label; ?></td>
-																<td class="paramlist_value"><?php echo $field->input; ?></td>
-															</tr>
-														<?php else
+														?>
+														<tr style="display: none">
+															<td class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php else
 
-		:
-	?>
-															<tr>
-																<td width="40%"
-																	class="paramlist_key"><?php echo $field->label; ?></td>
-																<td class="paramlist_value"><?php echo $field->input; ?></td>
-															</tr>
-														<?php endif; ?>
+														:
+														?>
+														<tr>
+															<td width="40%"
+															    class="paramlist_key"><?php echo $field->label; ?></td>
+															<td class="paramlist_value"><?php echo $field->input; ?></td>
+														</tr>
+													<?php endif; ?>
 													<?php endforeach; ?>
 												</table>
 											</div>

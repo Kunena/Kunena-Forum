@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
@@ -27,6 +28,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 *
 	 * @since Kunena 5.0
 	 */
 	public function __construct()

@@ -37,12 +37,12 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since K2.0
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -59,9 +59,9 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param          $userid
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param           $userid
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @since K2.0
@@ -88,8 +88,8 @@ class KunenaProfileEasyblog extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   bool $xhtml xhtml
+	 * @param         $userid
+	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return boolean
 	 * @since K2.0

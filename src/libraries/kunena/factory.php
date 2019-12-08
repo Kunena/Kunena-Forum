@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -13,6 +14,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaFactory
+ *
  * @since Kunena
  */
 abstract class KunenaFactory
@@ -28,7 +30,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @return KunenaTemplate
 	 * @since Kunena
@@ -60,9 +62,9 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   int  $id     The user to load - Can be an integer or string - If string, it is converted to Id
-	 *                       automatically.
-	 * @param   bool $reload reload
+	 * @param   int   $id      The user to load - Can be an integer or string - If string, it is converted to Id
+	 *                         automatically.
+	 * @param   bool  $reload  reload
 	 *
 	 * @return KunenaUser
 	 * @since Kunena
@@ -78,7 +80,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param   array|bool $update An array containing session options
+	 * @param   array|bool  $update  An array containing session options
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
@@ -95,7 +97,7 @@ abstract class KunenaFactory
 	}
 
 	/**
-	 * @param   boolean $session null
+	 * @param   boolean  $session  null
 	 *
 	 * @return void
 	 * @since Kunena
@@ -167,8 +169,8 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param   string $file   file
-	 * @param   string $client client
+	 * @param   string  $file    file
+	 * @param   string  $client  client
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -229,8 +231,8 @@ abstract class KunenaFactory
 	}
 
 	/**
-	 * @param   string $lang     language
-	 * @param   string $filename filename
+	 * @param   string  $lang      language
+	 * @param   string  $filename  filename
 	 *
 	 * @return boolean
 	 * @since Kunena

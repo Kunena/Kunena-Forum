@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum
  *
@@ -20,6 +21,7 @@ use Joomla\CMS\Log\Log;
  *
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
  * is compatible with the current version.
+ *
  * @since Kunena
  */
 abstract class KunenaForum

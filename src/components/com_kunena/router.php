@@ -38,8 +38,8 @@ class KunenaRouter extends RouterBase
 	 * @param $query
 	 *
 	 * @return array Segments
-	 * @throws Exception
 	 * @since Kunena 6.0
+	 * @throws Exception
 	 */
 	public function build(&$query)
 	{
@@ -285,8 +285,8 @@ class KunenaRouter extends RouterBase
 	 * @param $segments
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena 6.0
+	 * @throws Exception
 	 */
 	public function parse(&$segments)
 	{

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      User
  *
@@ -12,6 +13,7 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaUserFinder
+ *
  * @since Kunena
  */
 class KunenaUserFinder extends KunenaDatabaseObjectFinder
@@ -30,6 +32,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 
 	/**
 	 * Constructor.
+	 *
 	 * @since Kunena
 	 * @throws Exception
 	 */
@@ -46,9 +49,9 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on registration or last visit date.
 	 *
-	 * @param   Joomla\CMS\Date\Date $starting Starting date or null if older than ending date.
-	 * @param   Joomla\CMS\Date\Date $ending   Ending date or null if newer than starting date.
-	 * @param   bool                  $register True = registration date, False = last visit date.
+	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
+	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
+	 * @param   bool                  $register  True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -74,7 +77,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   array $ignore ignore
+	 * @param   array  $ignore  ignore
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -106,7 +109,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   string $search search
+	 * @param   string  $search  search
 	 *
 	 * @return $this
 	 * @since Kunena
@@ -132,8 +135,8 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return array|KunenaUser[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function find()
 	{

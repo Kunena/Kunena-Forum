@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Widget
  *
@@ -15,7 +16,7 @@ if ($this->me->socialshare == 0 && $this->me->exists())
 	return false;
 }
 
-$socialtheme     = $this->ktemplate->params->get('socialtheme');
+$socialtheme = $this->ktemplate->params->get('socialtheme');
 $this->addStyleSheet('jssocials.css');
 $this->addStyleSheet('jssocials-theme-' . $socialtheme . '.css');
 $this->addScript('jssocials.js');

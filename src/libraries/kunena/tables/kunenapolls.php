@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
@@ -15,6 +16,7 @@ require_once __DIR__ . '/kunena.php';
 /**
  * Kunena Polls
  * Provides access to the #__kunena_polls table
+ *
  * @since Kunena
  */
 class TableKunenaPolls extends KunenaTable
@@ -44,7 +46,7 @@ class TableKunenaPolls extends KunenaTable
 	public $polltimetolive = null;
 
 	/**
-	 * @param   JDatabaseDriver $db Database driver
+	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena
 	 */

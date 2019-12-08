@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -14,31 +15,32 @@ use Joomla\CMS\Object\CMSObject;
 
 /**
  * Class KunenaSession
+ *
  * @since Kunena
  */
 class KunenaSession extends CMSObject
 {
 	/**
-	 * @since Kunena
 	 * @var mixed
+	 * @since Kunena
 	 */
 	private static $_instance;
 
 	/**
-	 * @since Kunena
 	 * @var boolean
+	 * @since Kunena
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @since Kunena
 	 * @var boolean
+	 * @since Kunena
 	 */
 	protected $_sessiontimeout = false;
 
 	/**
-	 * @since Kunena
 	 * @var integer|string
+	 * @since Kunena
 	 */
 	protected $allreadtime;
 
@@ -61,7 +63,7 @@ class KunenaSession extends CMSObject
 	public $readtopics;
 
 	/**
-	 * @param   mixed|null $identifier identifier
+	 * @param   mixed|null  $identifier  identifier
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -94,7 +96,7 @@ class KunenaSession extends CMSObject
 	 *
 	 * @access    public
 	 *
-	 * @param   int $userid The user id of the user to load
+	 * @param   int  $userid  The user id of the user to load
 	 *
 	 * @return    boolean            True on success
 	 * @since     1.5
@@ -126,8 +128,8 @@ class KunenaSession extends CMSObject
 	 *
 	 * @access    public
 	 *
-	 * @param   string $type   The session table name to be used
-	 * @param   string $prefix The session table prefix to be used
+	 * @param   string  $type    The session table name to be used
+	 * @param   string  $prefix  The session table prefix to be used
 	 *
 	 * @return    object    The session table object
 	 * @since     1.5
@@ -148,8 +150,8 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @param   bool $update update
-	 * @param   null $userid userid
+	 * @param   bool  $update  update
+	 * @param   null  $userid  userid
 	 *
 	 * @return KunenaSession
 	 * @since Kunena
@@ -210,7 +212,7 @@ class KunenaSession extends CMSObject
 	 *
 	 * @access    public
 	 *
-	 * @param   boolean $updateOnly Save the object only if not a new session
+	 * @param   boolean  $updateOnly  Save the object only if not a new session
 	 *
 	 * @return    boolean True on success
 	 * @since     1.5
@@ -268,7 +270,7 @@ class KunenaSession extends CMSObject
 
 		if ($userCategory->allreadtime != $this->allreadtime)
 		{
-			$userCategory->params = '';
+			$userCategory->params      = '';
 			$userCategory->allreadtime = $this->allreadtime;
 			$userCategory->save();
 		}

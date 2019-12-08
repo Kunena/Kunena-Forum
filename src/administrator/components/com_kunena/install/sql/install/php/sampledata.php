@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KText
+ *
  * @since Kunena
  */
 class KText
@@ -35,8 +36,8 @@ class KText
 
 /**
  * @return integer
- * @throws KunenaInstallerException
  * @since Kunena
+ * @throws KunenaInstallerException
  */
 function installSampleData()
 {

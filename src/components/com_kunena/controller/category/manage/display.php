@@ -73,8 +73,8 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 *
 	 * @return KunenaExceptionAuthorise|void
 	 *
-	 * @throws Exception
 	 * @since Kunena 5.1
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -160,7 +160,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$cat_params = array('sections' => 1, 'catid' => 0);
 
 		$lists                     = array();
 		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
@@ -214,8 +214,8 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena 5.1
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -225,8 +225,8 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
+			$params       = $menu_item->params;
+			$params_title = $params->get('page_title');
 
 			if (!empty($params_title))
 			{

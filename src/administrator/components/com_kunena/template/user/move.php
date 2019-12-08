@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Administrator.Template
  * @subpackage      Users
  *
@@ -19,7 +20,7 @@ use Joomla\CMS\Language\Text;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-				  id="adminForm" name="adminForm">
+			      id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="users"/>
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="boxchecked" value="1"/>

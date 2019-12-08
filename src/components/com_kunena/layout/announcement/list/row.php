@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Layout.Announcement.List
  *
@@ -53,8 +54,8 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to display an announcement field
 	 *
-	 * @param   string $name The name of the field
-	 * @param   string $mode Define the way to display the date on the field
+	 * @param   string  $name  The name of the field
+	 * @param   string  $mode  Define the way to display the date on the field
 	 *
 	 * @return boolean
 	 * @since Kunena

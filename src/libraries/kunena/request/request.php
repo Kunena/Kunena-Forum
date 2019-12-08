@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Categories
  *
@@ -35,9 +36,9 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string              $path    Controller path.
-	 * @param   Joomla\Input\Input $input   input
-	 * @param   mixed               $options options
+	 * @param   string              $path     Controller path.
+	 * @param   Joomla\Input\Input  $input    input
+	 * @param   mixed               $options  options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @since Kunena

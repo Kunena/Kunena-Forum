@@ -108,8 +108,8 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Method to get the rate table object.
 	 *
-	 * @param   string $type   Polls table name to be used.
-	 * @param   string $prefix Polls table prefix to be used.
+	 * @param   string  $type    Polls table name to be used.
+	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
 	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
 	 * @since Kunena
@@ -149,13 +149,13 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Perform insert the rate into table
 	 *
-	 * @param   string $user user
-	 *
-	 * @return boolean|Joomla\CMS\Response\JsonResponse
-	 * @throws Exception
 	 * @internal param int $userid
 	 *
+	 * @param   string  $user  user
+	 *
+	 * @return boolean|Joomla\CMS\Response\JsonResponse
 	 * @since    2.0
+	 * @throws Exception
 	 */
 	public function save($user)
 	{
@@ -222,12 +222,12 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Get the users to check which one are already rated the topic
 	 *
-	 * @param   int $start start
-	 * @param   int $limit limit
+	 * @param   int  $start  start
+	 * @param   int  $limit  limit
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -254,11 +254,11 @@ class KunenaForumTopicRate extends CMSObject
 	}
 
 	/**
-	 * @param   integer $userid userid
-	 * @param   integer $time   time
+	 * @param   integer  $userid  userid
+	 * @param   integer  $time    time
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function _add($userid, $time)
 	{
@@ -266,10 +266,11 @@ class KunenaForumTopicRate extends CMSObject
 	}
 
 	/**
-	 * @param   int $userid userid
+	 * @internal param int $pid
+	 *
+	 * @param   int  $userid  userid
 	 *
 	 * @return boolean userid if hes in table else empty
-	 * @internal param int $pid
 	 * @since    2.0
 	 */
 	public function exists($userid)
@@ -279,8 +280,9 @@ class KunenaForumTopicRate extends CMSObject
 
 	/**
 	 * Get rate for the specified topic and user
-	 * @since Kunena
+	 *
 	 * @return mixed
+	 * @since Kunena
 	 * @throws Exception
 	 */
 	public function getTopicUserRate()

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Forum.Topic
  *
@@ -846,6 +847,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * Increase hit counter for this topic.
+	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception

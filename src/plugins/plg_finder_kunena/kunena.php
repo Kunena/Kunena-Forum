@@ -21,6 +21,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 
 /**
  * Finder adapter for com_kunena.
+ *
  * @since Kunena
  */
 class plgFinderKunena extends FinderIndexerAdapter
@@ -78,9 +79,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * This event is fired before the data is actually saved so we are going
 	 * to queue the item to be indexed later.
 	 *
-	 * @param   string                  $context The context of the content passed to the plugin.
-	 * @param   Joomla\CMS\Table\Table $row     A Joomla\CMS\Table\Table object
-	 * @param   boolean                 $isNew   If the content is just about to be created
+	 * @param   string                  $context  The context of the content passed to the plugin.
+	 * @param   Joomla\CMS\Table\Table  $row      A Joomla\CMS\Table\Table object
+	 * @param   boolean                 $isNew    If the content is just about to be created
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -104,9 +105,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to determine if the access level of an item changed.
 	 *
-	 * @param   string                  $context The context of the content passed to the plugin.
-	 * @param   Joomla\CMS\Table\Table $row     A Joomla\CMS\Table\Table object
-	 * @param   boolean                 $isNew   If the content has just been created
+	 * @param   string                  $context  The context of the content passed to the plugin.
+	 * @param   Joomla\CMS\Table\Table  $row      A Joomla\CMS\Table\Table object
+	 * @param   boolean                 $isNew    If the content has just been created
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -158,8 +159,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Since Messages are getting deleted in process of deleting categories or messages, we
 	 * delete the finderresults before those objects are deleted.
 	 *
-	 * @param   string                  $context The context of the action being performed.
-	 * @param   Joomla\CMS\Table\Table $table   A Joomla\CMS\Table\Table object containing the record to be deleted
+	 * @param   string                  $context  The context of the action being performed.
+	 * @param   Joomla\CMS\Table\Table  $table    A Joomla\CMS\Table\Table object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -198,8 +199,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to remove the link information for items that have been deleted.
 	 *
-	 * @param   string                  $context The context of the action being performed.
-	 * @param   Joomla\CMS\Table\Table $table   A Joomla\CMS\Table\Table object containing the record to be deleted
+	 * @param   string                  $context  The context of the action being performed.
+	 * @param   Joomla\CMS\Table\Table  $table    A Joomla\CMS\Table\Table object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -281,12 +282,12 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to index an item. The item must be a FinderIndexerResult object.
 	 *
-	 * @param   FinderIndexerResult $item The item to index as an FinderIndexerResult object.
+	 * @param   FinderIndexerResult  $item  The item to index as an FinderIndexerResult object.
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception on database error.
 	 * @since Kunena
+	 * @throws  Exception on database error.
 	 */
 	protected function index(FinderIndexerResult $item)
 	{
@@ -384,7 +385,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to get a content item to index.
 	 *
-	 * @param   integer $id The id of the content item.
+	 * @param   integer  $id  The id of the content item.
 	 *
 	 * @return  FinderIndexerResult  A FinderIndexerResult object.
 	 *
@@ -411,15 +412,15 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to get a list of content items to index.
 	 *
-	 * @param   integer        $offset The list offset.
-	 * @param   integer        $limit  The list limit.
-	 * @param   JDatabaseQuery $sql    A JDatabaseQuery object. [optional]
+	 * @param   integer         $offset  The list offset.
+	 * @param   integer         $limit   The list limit.
+	 * @param   JDatabaseQuery  $sql     A JDatabaseQuery object. [optional]
 	 *
 	 * @return  array  An array of FinderIndexerResult objects.
 	 *
-	 * @throws Exception on database error.
-	 * @throws null
 	 * @since   2.5
+	 * @throws null
+	 * @throws Exception on database error.
 	 */
 	protected function getItems($offset, $limit, $sql = null)
 	{
@@ -460,8 +461,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $message
 	 *
 	 * @return FinderIndexerResult
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function createIndexerResult($message)
@@ -527,8 +528,8 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Method to translate the native content states into states that the
 	 * indexer can use.
 	 *
-	 * @param   integer $item     The item state.
-	 * @param   integer $category The category state. [optional]
+	 * @param   integer  $item      The item state.
+	 * @param   integer  $category  The category state. [optional]
 	 *
 	 * @return  integer  The translated indexer state.
 	 *
@@ -553,9 +554,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * @param $cat_id
 	 *
 	 * @return mixed
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function getMessagesByCategory($cat_id)
 	{

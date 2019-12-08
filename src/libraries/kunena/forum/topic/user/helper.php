@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.User
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Kunena Forum Topic User Helper Class
+ *
  * @since Kunena
  */
 abstract class KunenaForumTopicUserHelper
@@ -33,13 +35,13 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * Returns KunenaForumTopicUser object.
 	 *
-	 * @param   KunenaForumTopic|int|null $topic  topic
-	 * @param   mixed                     $user   user
-	 * @param   bool                      $reload reload
+	 * @param   KunenaForumTopic|int|null  $topic   topic
+	 * @param   mixed                      $user    user
+	 * @param   bool                       $reload  reload
 	 *
 	 * @return KunenaForumTopicUser
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($topic = null, $user = null, $reload = false)
 	{
@@ -66,12 +68,12 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   bool|array $ids  ids
-	 * @param   mixed      $user user
+	 * @param   bool|array  $ids   ids
+	 * @param   mixed       $user  user
 	 *
 	 * @return KunenaForumTopicUser[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTopics($ids = false, $user = null)
 	{
@@ -112,12 +114,12 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   array      $ids  ids
-	 * @param   KunenaUser $user user
+	 * @param   array       $ids   ids
+	 * @param   KunenaUser  $user  user
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user)
 	{
@@ -138,7 +140,7 @@ abstract class KunenaForumTopicUserHelper
 
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -178,12 +180,12 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * Get all user ids who have participated to the given topics.
 	 *
-	 * @param   array|KunenaForumTopic[] $topics topics
-	 * @param   string                   $value  Row to pick up as value.
+	 * @param   array|KunenaForumTopic[]  $topics  topics
+	 * @param   string                    $value   Row to pick up as value.
 	 *
 	 * @return array List of [topic][userid] = value.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getUserIds(array $topics, $value = 'user_id')
 	{
@@ -238,12 +240,12 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old old
-	 * @param   KunenaForumTopic $new new
+	 * @param   KunenaForumTopic  $old  old
+	 * @param   KunenaForumTopic  $new  new
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function move($old, $new)
 	{
@@ -287,12 +289,12 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   KunenaForumTopic $old old
-	 * @param   KunenaForumTopic $new new
+	 * @param   KunenaForumTopic  $old  old
+	 * @param   KunenaForumTopic  $new  new
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function merge($old, $new)
 	{
@@ -342,11 +344,11 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   int $id id
+	 * @param   int  $id  id
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function reloadTopic($id)
 	{
@@ -392,8 +394,9 @@ abstract class KunenaForumTopicUserHelper
 
 	/**
 	 * Free up memory by cleaning up all cached items.
-	 * @since Kunena
+	 *
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -402,13 +405,13 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param   bool|array|int $topicids topicids
-	 * @param   int            $start    start
-	 * @param   int            $end      end
+	 * @param   bool|array|int  $topicids  topicids
+	 * @param   int             $start     start
+	 * @param   int             $end       end
 	 *
 	 * @return boolean|integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)
 	{
@@ -443,7 +446,7 @@ abstract class KunenaForumTopicUserHelper
 
 		// Create missing user topics and update post count and last post if there are posts by that user
 		$subQuery = $db->getQuery(true);
-		$query = $db->getQuery(true);
+		$query    = $db->getQuery(true);
 
 		// Create the base subQuery select statement.
 		$subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
@@ -495,11 +498,11 @@ abstract class KunenaForumTopicUserHelper
 		$query = $db->getQuery(true)
 			->delete("#__kunena_user_topics")
 			->where(["posts = 0",
-				"owner = 0",
-				"favorite = 0",
-				"subscribed = 0",
-				"params = ''",
-				"{$where3}", ]
+					"owner = 0",
+					"favorite = 0",
+					"subscribed = 0",
+					"params = ''",
+					"{$where3}",]
 			);
 
 		$db->setQuery($query);

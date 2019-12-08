@@ -18,8 +18,8 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array|null
- * @throws KunenaInstallerException
  * @since Kunena
+ * @throws KunenaInstallerException
  */
 function kunena_160_2010_05_30_polls($parent)
 {

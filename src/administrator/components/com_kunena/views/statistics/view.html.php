@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator
  * @subpackage    Views
  *
@@ -16,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Statistics view for Kunena backend
+ *
  * @since Kunena
  */
 class KunenaAdminViewStatistics extends KunenaView

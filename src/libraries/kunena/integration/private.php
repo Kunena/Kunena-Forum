@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Integration
  *
@@ -15,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaPrivate
+ *
  * @since Kunena
  */
 class KunenaPrivate

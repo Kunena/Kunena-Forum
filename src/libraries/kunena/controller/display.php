@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
@@ -16,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaControllerDisplay
+ *
  * @since Kunena
  */
 abstract class KunenaControllerDisplay extends KunenaControllerBase
@@ -164,6 +166,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * Executed before display.
+	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception
@@ -220,6 +223,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * Executed after display.
+	 *
 	 * @return void
 	 * @since Kunena
 	 * @throws Exception
@@ -234,6 +238,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
+	 *
 	 * @return boolean|void
 	 * @since Kunena
 	 * @throws Exception

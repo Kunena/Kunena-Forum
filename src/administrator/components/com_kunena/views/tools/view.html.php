@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * About view for Kunena cpanel
+ *
  * @since Kunena
  */
 class KunenaAdminViewTools extends KunenaView

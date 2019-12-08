@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 /**
  * Class KunenaAvatarEasySocial
+ *
  * @since       Kunena
  */
 class KunenaAvatarEasySocial extends KunenaAvatar

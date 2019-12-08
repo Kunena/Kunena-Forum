@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Integration
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaProfile
+ *
  * @since Kunena
  */
 class KunenaProfile
@@ -25,11 +27,11 @@ class KunenaProfile
 	protected static $instance = false;
 
 	/**
-	 * @param   null $integration integration
+	 * @param   null  $integration  integration
 	 *
 	 * @return boolean|KunenaProfile
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -60,11 +62,11 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function getTopHits($limit = 0)
 	{
@@ -77,7 +79,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
 	 * @since Kunena
@@ -88,12 +90,12 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
@@ -110,45 +112,45 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool   $xhtml  xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 	}
 
 	/**
-	 * @param   string $user  user
-	 * @param   string $task  task
-	 * @param   bool   $xhtml xhtml
+	 * @param   string  $user   user
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 	}
 
 	/**
-	 * @param   int   $view   view
-	 * @param   mixed $params params
+	 * @param   int    $view    view
+	 * @param   mixed  $params  params
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
 	/**
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param   integer  $userid  userid
+	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

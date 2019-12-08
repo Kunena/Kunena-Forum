@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -16,66 +17,67 @@ use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * Kunena View Class
+ *
  * @since Kunena
  */
 class KunenaView extends HtmlView
 {
 	/**
-	 * @since Kunena
 	 * @var Joomla\CMS\Document\Document|null
+	 * @since Kunena
 	 */
 	public $document = null;
 
 	/**
-	 * @since Kunena
 	 * @var Joomla\CMS\Application\CMSApplication|null
+	 * @since Kunena
 	 */
 	public $app = null;
 
 	/**
-	 * @since Kunena
 	 * @var KunenaUser|null
+	 * @since Kunena
 	 */
 	public $me = null;
 
 	/**
-	 * @since Kunena
 	 * @var KunenaConfig|null
+	 * @since Kunena
 	 */
 	public $config = null;
 
 	/**
-	 * @since Kunena
 	 * @var boolean
+	 * @since Kunena
 	 */
 	public $embedded = false;
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $templatefiles = array();
 
 	/**
-	 * @since Kunena
 	 * @var null
+	 * @since Kunena
 	 */
 	public $teaser = null;
 
 	/**
-	 * @since Kunena
 	 * @var integer
+	 * @since Kunena
 	 */
 	protected $inLayout = 0;
 
 	/**
-	 * @since Kunena
 	 * @var integer
+	 * @since Kunena
 	 */
 	protected $_row = 0;
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -138,8 +140,8 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   null $layout layout
-	 * @param   null $tpl    tmpl
+	 * @param   null  $layout  layout
+	 * @param   null  $tpl     tmpl
 	 *
 	 * @return mixed|void
 	 * @since Kunena
@@ -225,8 +227,8 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   array $messages messages
-	 * @param   int   $code     code
+	 * @param   array  $messages  messages
+	 * @param   int    $code      code
 	 *
 	 * @return void
 	 * @since Kunena
@@ -275,7 +277,7 @@ class KunenaView extends HtmlView
 	/**
 	 * Method to display title in page
 	 *
-	 * @param   string $title Show the title on the browser
+	 * @param   string  $title  Show the title on the browser
 	 *
 	 * @return void
 	 * @since Kunena
@@ -318,7 +320,7 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   array $errors errors
+	 * @param   array  $errors  errors
 	 *
 	 * @return void
 	 * @since Kunena
@@ -386,9 +388,9 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   string $text   text
-	 * @param   int    $len    len
-	 * @param   mixed  $parent parent
+	 * @param   string  $text    text
+	 * @param   int     $len     len
+	 * @param   mixed   $parent  parent
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -411,9 +413,9 @@ class KunenaView extends HtmlView
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
-	 * @param   string $layout     layout
-	 * @param   string $tpl        tmpl
-	 * @param   array  $hmvcParams params
+	 * @param   string  $layout      layout
+	 * @param   string  $tpl         tmpl
+	 * @param   array   $hmvcParams  params
 	 *
 	 * @return void
 	 * @since Kunena
@@ -475,9 +477,9 @@ class KunenaView extends HtmlView
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string $tpl        The name of the template source file ...
-	 *                             automatically searches the template paths and compiles as needed.
-	 * @param   array  $hmvcParams Extra parameters for HMVC.
+	 * @param   string  $tpl         The name of the template source file ...
+	 *                               automatically searches the template paths and compiles as needed.
+	 * @param   array   $hmvcParams  Extra parameters for HMVC.
 	 *
 	 * @return string|void The output of the the template script.
 	 * @since Kunena
@@ -585,12 +587,12 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @param   KunenaForumTopic         $topic    topic
-	 * @param   null                     $action   action
-	 * @param   null                     $content  content
-	 * @param   null                     $title    title
-	 * @param   null                     $class    class
-	 * @param   KunenaForumCategory|null $category category
+	 * @param   KunenaForumTopic          $topic     topic
+	 * @param   null                      $action    action
+	 * @param   null                      $content   content
+	 * @param   null                      $title     title
+	 * @param   null                      $class     class
+	 * @param   KunenaForumCategory|null  $category  category
 	 *
 	 * @return mixed
 	 * @since Kunena

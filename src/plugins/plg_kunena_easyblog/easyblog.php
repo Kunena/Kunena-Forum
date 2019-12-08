@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class plgKunenaEasyblog
+ *
  * @since Kunena
  */
 class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
@@ -43,7 +44,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 		{
 			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'easyblog'))
 			{
-				$db = Factory::getDBO();
+				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$query->update('`#__extensions`');
 				$query->where($db->quoteName('element') . ' = ' . $db->quote('easyblog'));

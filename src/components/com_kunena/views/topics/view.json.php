@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param   null $tpl
+	 * @param   null  $tpl
 	 *
 	 * @return mixed|void
 	 *

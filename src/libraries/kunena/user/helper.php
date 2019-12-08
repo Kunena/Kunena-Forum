@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      User
  *
@@ -74,8 +75,8 @@ abstract class KunenaUserHelper
 	protected static $_me = null;
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 */
 	public static function cleanup()
 	{
@@ -84,8 +85,8 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
 	 * @throws Exception
 	 */
 	public static function initialize()
@@ -99,12 +100,12 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int    $id   id
-	 * @param   string $name name
+	 * @param   int     $id    id
+	 * @param   string  $name  name
 	 *
 	 * @return KunenaUser
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getAuthor($id, $name)
 	{
@@ -135,13 +136,13 @@ abstract class KunenaUserHelper
 	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @param   mixed $identifier The user to load - Can be an integer or string - If string, it is converted to ID
-	 *                            automatically.
-	 * @param   bool  $reload     Reload user from database.
+	 * @param   mixed  $identifier  The user to load - Can be an integer or string - If string, it is converted to ID
+	 *                              automatically.
+	 * @param   bool   $reload      Reload user from database.
 	 *
 	 * @return KunenaUser
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -199,11 +200,11 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   array $userids userids
+	 * @param   array  $userids  userids
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function loadUsers(array $userids = array())
 	{
@@ -273,8 +274,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getLastId()
 	{
@@ -288,8 +289,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTotalCount()
 	{
@@ -335,11 +336,11 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTopPosters($limit = 0)
 	{
@@ -380,14 +381,14 @@ abstract class KunenaUserHelper
 	/**
 	 * Method returns a list of users with their user groups.
 	 *
-	 * @param   array   $groupIds  List of Group Ids (null for all).
-	 * @param   array   $userIds   List of User Ids (null for all).
-	 * @param   boolean $recursive Recursively include all child groups (optional)
+	 * @param   array    $groupIds   List of Group Ids (null for all).
+	 * @param   array    $userIds    List of User Ids (null for all).
+	 * @param   boolean  $recursive  Recursively include all child groups (optional)
 	 *
 	 * @return  array
+	 * @since 5.0
 	 * @throws  BadMethodCallException  If first two parameters are both null.
 	 *
-	 * @since 5.0
 	 */
 	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false)
 	{
@@ -453,8 +454,8 @@ abstract class KunenaUserHelper
 	 * Get the number of users online
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getOnlineCount()
 	{
@@ -507,8 +508,8 @@ abstract class KunenaUserHelper
 	 * Get the list of users online by giving list of userid
 	 *
 	 * @return array
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getOnlineUsers()
 	{
@@ -556,11 +557,11 @@ abstract class KunenaUserHelper
 	/**
 	 * Returns the status of a user. If as session exists, we can return the type of status the user set.
 	 *
-	 * @param   mixed $user The user object to get the status
+	 * @param   mixed  $user  The user object to get the status
 	 *
 	 * @return integer
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getStatus($user)
 	{
@@ -610,8 +611,8 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
-	 * @throws Exception
 	 * @since K5.1
+	 * @throws Exception
 	 */
 	public static function recount()
 	{
@@ -650,8 +651,8 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
-	 * @throws Exception
 	 * @since K5.1
+	 * @throws Exception
 	 */
 	public static function recountBanned()
 	{
@@ -684,15 +685,15 @@ abstract class KunenaUserHelper
 	/**
 	 * @return boolean|integer
 	 *
-	 * @throws Exception
 	 * @since K5.1
+	 * @throws Exception
 	 */
 	public static function recountPostsNull()
 	{
 		$db = Factory::getDBO();
 
 		// If user has no user_topics, set posts into 0
-		$query  = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users', 'u'))
 			->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
 			->set($db->quoteName('u.posts') . ' = 0')
@@ -741,11 +742,13 @@ abstract class KunenaUserHelper
 
 	/**
 	 * Method to send data about spammer or to check if user is blacklisted in stopforumspam database
-	 * 
-	 * @param $data array with username, ip, email, apikey, evidence
-	 * @param $type add ou just call api
-	 * 
+	 *
+	 * @param $data array  With username, ip, email, api key, evidence
+	 * @param $type string Add ou just call api
+	 *
+	 * @return bool|\Joomla\Http\Response
 	 * @since 6.0.0
+	 * @throws Exception
 	 */
 	public static function storeCheckStopforumspam($data = array(), $type)
 	{
@@ -757,13 +760,13 @@ abstract class KunenaUserHelper
 		$http = new Http($options, $transport);
 
 		// TODO : prevent to do a request with a private or local IP
-		if ($type=='add')
+		if ($type == 'add')
 		{
 			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key'], 'evidence' => $data['evidence']);
 
 			$response = $http->post('https://www.stopforumspam.com/add', $datatosend);
 		}
-		elseif (type=='api')
+		elseif ($type == 'api')
 		{
 			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email']);
 
@@ -776,7 +779,7 @@ abstract class KunenaUserHelper
 
 		if ($response->code == '200')
 		{
-			if ($this->config->log_moderation)
+			if (KunenaConfig::getInstance()->log_moderation)
 			{
 				$log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
 
@@ -784,9 +787,9 @@ abstract class KunenaUserHelper
 					KunenaLog::TYPE_ACTION,
 					$log,
 					array(
-						'user_ip_reported' => $data['ip'],
+						'user_ip_reported'  => $data['ip'],
 						'username_reported' => $data['username'],
-						'email_reported' => $data['email'],
+						'email_reported'    => $data['email'],
 					),
 					null,
 					null,

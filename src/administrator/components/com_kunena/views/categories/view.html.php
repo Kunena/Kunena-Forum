@@ -17,6 +17,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * About view for Kunena backend
+ *
  * @since Kunena
  */
 class KunenaAdminViewCategories extends KunenaView

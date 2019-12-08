@@ -18,8 +18,8 @@ use Joomla\CMS\Language\Text;
  * @param $parent
  *
  * @return array|null
- * @throws Exception
  * @since Kunena
+ * @throws Exception
  */
 function kunena_200_2012_06_10_pubwrite($parent)
 {

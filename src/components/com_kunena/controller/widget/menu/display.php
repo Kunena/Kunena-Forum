@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Widget
  *
@@ -75,8 +76,8 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	 * Prepare menu display.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function before()
 	{

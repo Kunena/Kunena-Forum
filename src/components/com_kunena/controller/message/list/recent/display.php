@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Message
  *
@@ -37,9 +38,9 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 * Prepare category list display.
 	 *
 	 * @return void
-	 * @throws Exception
-	 * @throws null
 	 * @since Kunena
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function before()
 	{
@@ -279,8 +280,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 *
 	 * @return void
 	 *
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

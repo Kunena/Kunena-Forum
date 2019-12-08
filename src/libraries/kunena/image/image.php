@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Image
  *
@@ -17,6 +18,7 @@ use Joomla\Image\Image;
 
 /**
  * Helper class for image manipulation.
+ *
  * @since Kunena
  */
 class KunenaImage extends Joomla\Image\Image
@@ -24,11 +26,11 @@ class KunenaImage extends Joomla\Image\Image
 	/**
 	 * Correct Image Orientation
 	 *
-	 * @since  K5.0
-	 *
-	 * @param   string $filename filename
+	 * @param   string  $filename  filename
 	 *
 	 * @return void
+	 * @since  K5.0
+	 *
 	 */
 	public static function correctImageOrientation($filename)
 	{
@@ -45,9 +47,9 @@ class KunenaImage extends Joomla\Image\Image
 
 		if (function_exists('exif_read_data'))
 		{
-			$angle  = 0;
-			$exif   = @exif_read_data($filename);
-			$flip   = '';
+			$angle = 0;
+			$exif  = @exif_read_data($filename);
+			$flip  = '';
 
 			if ($exif && isset($exif['Orientation']))
 			{
@@ -58,43 +60,43 @@ class KunenaImage extends Joomla\Image\Image
 					switch ($orientation)
 					{
 						case 1: // Nothing
-							$angle  = 0;
-							$flip = 0;
+							$angle = 0;
+							$flip  = 0;
 							break;
 
 						case 2: // Horizontal flip
-							$angle  = 0;
-							$flip = 1;
+							$angle = 0;
+							$flip  = 1;
 							break;
 
 						case 3: // 180 rotate left
-							$angle  = 180;
-							$flip = 0;
+							$angle = 180;
+							$flip  = 0;
 							break;
 
 						case 4: // Vertical flip
-							$angle  = 0;
-							$flip = 2;
+							$angle = 0;
+							$flip  = 2;
 							break;
 
 						case 5: // Vertical flip + 90 rotate
-							$angle  = 90;
-							$flip = 2;
+							$angle = 90;
+							$flip  = 2;
 							break;
 
 						case 6: // 270 rotate left
-							$angle  = 270;
-							$flip = 0;
+							$angle = 270;
+							$flip  = 0;
 							break;
 
 						case 7: // Horizontal flip + 90 rotate
-							$angle  = 90;
-							$flip = 1;
+							$angle = 90;
+							$flip  = 1;
 							break;
 
 						case 8: // 90 rotate left
-							$angle  = 90;
-							$flip = 0;
+							$angle = 90;
+							$flip  = 0;
 							break;
 					}
 				}

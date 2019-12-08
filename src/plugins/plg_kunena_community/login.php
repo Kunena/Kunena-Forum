@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * Class KunenaLoginCommunity
+ *
  * @since Kunena
  */
 class KunenaLoginCommunity

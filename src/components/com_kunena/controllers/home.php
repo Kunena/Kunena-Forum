@@ -32,9 +32,9 @@ class KunenaControllerHome extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
-	 * @throws Exception
-	 * @throws null
 	 * @since K1.0
+	 * @throws null
+	 * @throws Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

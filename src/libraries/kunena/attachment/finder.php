@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Attachment
  *
@@ -27,8 +28,8 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return array|KunenaCollection
-	 * @throws Exception|void
 	 * @since Kunena
+	 * @throws Exception|void
 	 */
 	public function find()
 	{

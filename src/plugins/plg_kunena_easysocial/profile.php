@@ -27,6 +27,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * KunenaProfileEasySocial constructor.
 	 *
 	 * @param $params
+	 *
 	 * @since       Kunena
 	 */
 	public function __construct($params)
@@ -35,12 +36,12 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   bool $xhtml xhtml
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since       Kunena
+	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -56,9 +57,9 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param        $userid
-	 * @param   string $task task
-	 * @param   bool $xhtml xhtml
+	 * @param           $userid
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return string
 	 * @since       Kunena
@@ -101,7 +102,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   int $limit limit
+	 * @param   int  $limit  limit
 	 *
 	 * @return array|void
 	 * @since       Kunena
@@ -113,6 +114,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
 	 * @since       Kunena
 	 */
 	public function showProfile($view, &$params)
@@ -171,8 +173,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param      $userid
-	 * @param   bool $xhtml xhtml
+	 * @param         $userid
+	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return mixed
 	 * @since       Kunena

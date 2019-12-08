@@ -19,7 +19,7 @@ use Joomla\CMS\Uri\Uri;
 HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
-HTMLHelper::_('behavior.tabstate');
+
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
@@ -234,7 +234,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 													<td width="50%"><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 												</tr>
 												<tr>
-													<td width="20%"><?php echo Text::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:
+													<td width="20%"><?php echo Text::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>
+														:
 													</td>
 													<td width="30%"><?php echo $this->lists['channels']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
@@ -293,7 +294,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 												<tr>
 													<th width="20%"><?php echo Text::_('COM_KUNENA_USERNAME'); ?></th>
 													<th width="30%"><?php echo Text::_('COM_KUNENA_USRL_REALNAME'); ?></th>
-													<th width="50%" class="col-md-1"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+													<th width="50%"
+													    class="col-md-1"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
 												</tr>
 												</thead>
 

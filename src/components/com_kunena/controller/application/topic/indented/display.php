@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
@@ -21,8 +22,8 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function exists()
 	{
@@ -35,8 +36,8 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 * Change topic layout to indented.
 	 *
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 * @throws null
 	 */
 	protected function before()

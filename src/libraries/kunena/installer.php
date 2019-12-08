@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
@@ -13,6 +14,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaInstaller
+ *
  * @since Kunena
  */
 class KunenaInstaller
@@ -32,7 +34,7 @@ class KunenaInstaller
 	/**
 	 * Check if we are allowed to downgrade from the new to the old version.
 	 *
-	 * @param   string $version version
+	 * @param   string  $version  version
 	 *
 	 * @return  boolean|void  True if version can be safely downgraded.
 	 * @since Kunena
@@ -75,8 +77,8 @@ class KunenaInstaller
 		}
 
 		// Get installed version.
-		$db = Factory::getDBO();
-		$query  = $db->getQuery(true);
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
 		$query->select('version')
 			->from($db->quoteName('#__kunena_version'))
 			->where($db->quoteName('state') . "=''")
@@ -91,9 +93,9 @@ class KunenaInstaller
 	/**
 	 * Detect if table exists in the database.
 	 *
-	 * @param   string $table  Table name to be found.
-	 * @param   string $prefix Database prefix.
-	 * @param   bool   $reload Reload all tables.
+	 * @param   string  $table   Table name to be found.
+	 * @param   string  $prefix  Database prefix.
+	 * @param   bool    $reload  Reload all tables.
 	 *
 	 * @return boolean  True if the table exists in the database.
 	 * @since Kunena
@@ -127,10 +129,10 @@ class KunenaInstaller
 	/**
 	 * Get column type in the table.
 	 *
-	 * @param   string  $table  Table name to be found.
-	 * @param   string  $column Table column to be searched.
-	 * @param   string  $prefix Database prefix.
-	 * @param   boolean $reload Reload all tables.
+	 * @param   string   $table   Table name to be found.
+	 * @param   string   $column  Table column to be searched.
+	 * @param   string   $prefix  Database prefix.
+	 * @param   boolean  $reload  Reload all tables.
 	 *
 	 * @return boolean|null Column type or NULL if either table or column does not exist.
 	 * @since Kunena

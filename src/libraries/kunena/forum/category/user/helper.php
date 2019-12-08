@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Category.User
  *
@@ -14,6 +15,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaForumCategoryUserHelper
+ *
  * @since Kunena
  */
 abstract class KunenaForumCategoryUserHelper
@@ -27,13 +29,13 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Get an instance of KunenaForumCategoryUser object.
 	 *
-	 * @param   null|int $category The category id to load.
-	 * @param   mixed    $user     The user id to load - Can be only an integer.
-	 * @param   bool     $reload   Reload objects from the database.
+	 * @param   null|int  $category  The category id to load.
+	 * @param   mixed     $user      The user id to load - Can be only an integer.
+	 * @param   bool      $reload    Reload objects from the database.
 	 *
 	 * @return KunenaForumCategoryUser    The user category object.
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function get($category = null, $user = null, $reload = false)
 	{
@@ -62,12 +64,12 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Get categories for a specific user.
 	 *
-	 * @param   bool|array|int $ids  The category ids to load.
-	 * @param   mixed          $user The user id to load.
+	 * @param   bool|array|int  $ids   The category ids to load.
+	 * @param   mixed           $user  The user id to load.
 	 *
 	 * @return KunenaForumCategoryUser[]
-	 * @throws Exception
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getCategories($ids = false, $user = null)
 	{
@@ -111,12 +113,12 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Load categories for a specific user.
 	 *
-	 * @param   array      $ids  The category ids to load.
-	 * @param   KunenaUser $user user
+	 * @param   array       $ids   The category ids to load.
+	 * @param   KunenaUser  $user  user
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected static function loadCategories(array $ids, KunenaUser $user)
 	{
@@ -172,12 +174,12 @@ abstract class KunenaForumCategoryUserHelper
 	}
 
 	/**
-	 * @param   array $ids  ids
-	 * @param   null  $user users
+	 * @param   array  $ids   ids
+	 * @param   null   $user  users
 	 *
-	 * @throws Exception
-	 * @since Kunena
 	 * @return void
+	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function markRead(array $ids, $user = null)
 	{

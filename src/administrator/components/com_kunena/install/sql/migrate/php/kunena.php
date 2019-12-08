@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Class KunenaMigratorKunena
+ *
  * @since Kunena
  */
 class KunenaMigratorKunena

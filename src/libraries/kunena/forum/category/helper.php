@@ -88,7 +88,7 @@ abstract class KunenaForumCategoryHelper
 
 		try
 		{
-			$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
+			$instances = (array) $db->loadObjectList('id');
 		}
 		catch (JDatabaseExceptionExecuting $e)
 		{
@@ -97,10 +97,17 @@ abstract class KunenaForumCategoryHelper
 			return false;
 		}
 
-		// TODO: remove this by adding level into table
-		self::buildTree($instances);
-		$heap = array(0);
+		foreach($instances as $id => $instance)
+		{
+			$kunenacategory = KunenaForumCategoryHelper::get($id);
 
+			$cat_instances [$id] = $kunenacategory;
+		}
+
+		// TODO: remove this by adding level into table
+		self::buildTree($cat_instances);
+		$heap = array(0);
+		
 		while (($parent = array_shift($heap)) !== null)
 		{
 			foreach (self::$_tree [$parent] as $id => $children)
@@ -110,13 +117,13 @@ abstract class KunenaForumCategoryHelper
 					array_push($heap, $id);
 				}
 
-				$instances[$id]->level = $parent ? $instances[$parent]->level + 1 : 0;
+				$cat_instances[$id]->level = $parent ? $cat_instances[$parent]->level + 1 : 0;
 			}
 		}
-
+		
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		return $instances;
+		
+		return $cat_instances;
 	}
 
 	/**

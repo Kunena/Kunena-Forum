@@ -42,6 +42,21 @@ use Joomla\Image\Image;
  */
 class KunenaAttachment extends KunenaDatabaseObject
 {
+	// Higher protection level means that the attachment is visible to less people.
+	// Protection level can be checked as bitmask: PROTECTION_ACL + PROTECTION_FRIENDS.
+	// To filter out attachments when doing a database query, you can use:
+	// Visible for author = value < PROTECTION_AUTHOR * 2
+	// TODO: Implement these
+	const PROTECTION_NONE = 0;
+	const PROTECTION_PUBLIC = 1;
+	const PROTECTION_ACL = 2;
+	const PROTECTION_FRIENDS = 4;
+	const PROTECTION_MODERATORS = 8;
+	const PROTECTION_ADMINS = 16;
+	const PROTECTION_PRIVATE = 32;
+	const PROTECTION_AUTHOR = 64;
+	const PROTECTION_UNPUBLISHED = 128;
+
 	/**
 	 * @var string
 	 * @since Kunena
@@ -621,30 +636,48 @@ class KunenaAttachment extends KunenaDatabaseObject
 			throw new InvalidArgumentException(Text::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 		}
 
-		// Load message authorisation.
-		$exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
-
-		// Check authorisation.
-		if (!$exception)
+		// Start by checking if attachment is protected.
+		$exception = !$this->protected
+			? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->id ? 403 : 401);
+		// TODO: Add support for PROTECTION_PUBLIC
+		// Currently we only support ACL checks, not public attachments.
+		if ($exception && $this->mesid && $this->protected & (self::PROTECTION_PUBLIC + self::PROTECTION_ACL))
 		{
-			foreach (self::$actions[$action] as $function)
-			{
-				$authFunction = 'authorise' . $function;
-				$exception    = $this->$authFunction($user);
-
-				if ($exception)
-				{
-					break;
-				}
-			}
+			// Load message authorisation.
+			$exception = $this->getMessage()->tryAuthorise('attachment.'.$action, $user, false);
 		}
 
+		// TODO: Add support for PROTECTION_FRIENDS
+		// TODO: Add support for PROTECTION_MODERATORS
+		// TODO: Add support for PROTECTION_ADMINS
+		// Check if attachment is private.
+		if ($exception && $this->protected & self::PROTECTION_PRIVATE)
+		{
+			$exception = $this->authorisePrivate($action, $user);
+		}
+		// Check author access.
+		if ($exception && $this->protected & self::PROTECTION_AUTHOR)
+		{
+			$exception = $user->exists() && $user->id == $this->userid
+				? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
+		}
+		if ($exception) {
+			// Hide original exception behind no access.
+			$exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $exception);
+		} else {
+			// Check authorisation action.
+			foreach (self::$actions[$action] as $function)
+			{
+				$authFunction = 'authorise'.$function;
+				$exception = $this->$authFunction($user);
+				if ($exception) break;
+			}
+		}
 		// Throw or return the exception.
 		if ($throw && $exception)
 		{
 			throw $exception;
 		}
-
 		return $exception;
 	}
 
@@ -861,6 +894,57 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		return $this->save();
+	}
+
+	/**
+	 * Check is an attachment is private
+	 * 
+	 * @param unknown $action
+	 * @param KunenaUser $user
+	 * @return KunenaExceptionAuthorise|NULL
+	 * @since Kunena 6.0
+	 */
+	protected function authorisePrivate($action, KunenaUser $user)
+	{
+		if (!$user->exists())
+		{
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
+		}
+
+		if ($action == 'create')
+		{
+			return null;
+		}
+
+		// Need to load private message (for now allow only one private message per attachment).
+		$map = JTable::getInstance('KunenaPrivateAttachmentMap', 'Table');
+		$map->load(array('attachment_id' => $this->id));
+		$finder = new KunenaPrivateMessageFinder();
+		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
+		if (!$private->exists())
+		{
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+		}
+
+		if (in_array($user->userid, $private->users()->getMapped()))
+		{
+			// Yes, I have access..
+			return null;
+		}
+		else
+		{
+			$messages = KunenaForumMessageHelper::getMessages($private->posts()->getMapped());
+			foreach ($messages as $message)
+			{
+				if ($user->isModerator($message->getCategory()))
+				{
+					// Yes, I have access..
+					return null;
+				}
+			}
+		}
+
+		return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 	}
 
 	/**

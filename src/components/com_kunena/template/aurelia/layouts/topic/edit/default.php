@@ -60,6 +60,7 @@ Text::script('COM_KUNENA_EDITOR_TWEET');
 Text::script('COM_KUNENA_EDITOR_INSTAGRAM');
 Text::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
 Text::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
+Text::script('COM_KUNENA_EDITOR_SET_SECURE');
 Text::script('COM_KUNENA_EDITOR_COLOR_BLACK');
 Text::script('COM_KUNENA_EDITOR_COLOR_ORANGE');
 Text::script('COM_KUNENA_EDITOR_COLOR_RED');
@@ -101,6 +102,7 @@ $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config
 $this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 $this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
+$this->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
 
 $suffix = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix');
 $this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
@@ -380,6 +382,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							        style="display:none;">
 								<?php echo KunenaIcons::cancel(); ?>
 								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
+							</button>
+							<button id="set-secure-all" class="btn btn-outline-primary" type="submit"
+							        style="display:none;">
+								<?php echo KunenaIcons::secure(); ?>
+								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
 							</button>
 							<div class="clearfix"></div>
 							<br/>

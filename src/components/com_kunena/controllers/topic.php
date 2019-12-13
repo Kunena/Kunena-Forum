@@ -2414,11 +2414,12 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 	}
-	
+
 	/**
 	 * Save private data from message
 	 *
 	 * @param KunenaForumMessage $message
+	 * @since Kunena 6.0
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
 	{
@@ -2472,6 +2473,7 @@ class KunenaControllerTopic extends KunenaController
 	 * Load private data information when edit message
 	 *
 	 * @param KunenaForumMessage $message
+	 * @since Kunena 6.0
 	 */
 	protected function editPrivate(KunenaForumMessage $message)
 	{

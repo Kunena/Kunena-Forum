@@ -200,6 +200,20 @@ jQuery(function ($) {
 					//TODO: handle the error of ajax request
 				});
 		});
+	
+	var setsecureButton = $('<button>')
+	.addClass("btn btn-primary")
+	.html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_SET_SECURE'))
+	.on('click', function (e) {
+		// Make sure the button click doesn't submit the form:
+		e.preventDefault();
+		e.stopPropagation();
+
+		var $this = $(this),
+			data = $this.data();
+
+		$('#kattach-list').append('<input id="kattachs-private-' + data.result.data.id + '" type="hidden" name="attachment_private[' + data.result.data.id + ']" value="' + data.result.data.id + '" />');
+	});
 
 	var removeInline = $('<button>')
 		.addClass("btn btn-primary")
@@ -341,6 +355,7 @@ jQuery(function ($) {
 
 			$('#remove-all').show();
 			$('#insert-all').show();
+			$('#set-secure-all').show();
 
 			var filecoutntmp = Object.keys(data['files']).length + fileCount;
 
@@ -434,6 +449,8 @@ jQuery(function ($) {
 			{
 				data.context.append(removeInline.clone(true).data(data));
 			}
+			
+			data.context.append(setsecureButton.clone(true).data(data));
 		}
 		else if (data.result.message) {
 			$('#form_submit_button').prop('disabled', false);

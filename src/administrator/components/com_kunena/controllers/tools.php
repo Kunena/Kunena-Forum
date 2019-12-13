@@ -240,12 +240,14 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($useradd)
 		{
 			$query = $db->getQuery(true);
-			$query->insert($db->quoteName('#__kunena_users') . '(userid, showOnline)')
-				->select('a.id AS userid, 1 AS showOnline')
-				->from($db->quoteName('#__users', 'a'))
-				->leftJoin($db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . ' = ' . $db->quoteName('a.id'))
-				->where('b.userid IS NULL');
-			$db->setQuery($query);
+			// TODO: need to find a way to make this query working with JdatabaseQuery
+			$db->setQuery(
+				"INSERT INTO #__kunena_users (userid, showOnline)
+				SELECT a.id AS userid, 1 AS showOnline
+				FROM #__users AS a
+				LEFT JOIN #__kunena_users AS b ON b.userid=a.id
+				WHERE b.userid IS NULL"
+			);
 
 			try
 			{
@@ -264,11 +266,13 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdel)
 		{
 			$query = $db->getQuery(true);
-			$query->delete($db->quoteName('a'))
-				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . ' = ' . $db->quoteName('b.id'))
-				->where('b.username IS NULL');
-			$db->setQuery($query);
+			// TODO: need to find a way to make this query working with JdatabaseQuery
+			$db->setQuery(
+				"DELETE a
+				FROM #__kunena_users AS a
+				LEFT JOIN #__users AS b ON a.userid=b.id
+				WHERE b.username IS NULL"
+			);
 
 			try
 			{
@@ -287,11 +291,8 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdellife)
 		{
 			$query = $db->getQuery(true);
-			$query->delete($db->quoteName('a'))
-				->from($db->quoteName('#__kunena_users', 'a'))
-				->leftJoin($db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . ' = ' . $db->quoteName('b.id'))
-				->where($db->quoteName('banned') . ' IS NULL');
-			$db->setQuery($query);
+			// TODO: need to find a way to make this query working with JdatabaseQuery
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
 
 			try
 			{

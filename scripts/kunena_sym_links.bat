@@ -57,7 +57,6 @@ IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\find
 IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
-IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
 echo Put back kunena.xml file in place to allow to uninstall kunena
 Md %GitTarget%\administrator\components\com_kunena
 Copy %GitSource%\src\administrator\components\com_kunena\kunena.xml %GitTarget%\administrator\components\com_kunena
@@ -93,7 +92,6 @@ IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\find
 IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
-IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
 echo Delete existing directories for Kunena-Addons
 IF exist %GitTarget%\modules\mod_kunenalatest ( rmdir /S/q %GitTarget%\modules\mod_kunenalatest )
 IF exist %GitTarget%\modules\mod_kunenalogin ( rmdir /S/q %GitTarget%\modules\mod_kunenalogin )
@@ -118,7 +116,6 @@ mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\plugins\plg_kunena_k
 mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\plugins\plg_kunena_gravatar
 mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\plugins\plg_kunena_joomla
 mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\plg_kunena_kunena
-mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\plugins\plg_kunena_uddeim
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 echo Make symbolic links for Kunena-Addons
 IF exist %GitSource%\modules\kunenalatest ( mklink /d %GitTarget%\modules\mod_kunenalatest %GitSource%\modules\kunenalatest )

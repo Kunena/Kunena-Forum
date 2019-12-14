@@ -34,14 +34,14 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 			<div class="controls tabs shadow-textarea">
 				<ul id="tabs_kunena_editor" class="nav nav-tabs">
 					<li class="nav-link active"><a href="#write"
-					                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
+					                               data-toggle="tab"><i class="fa fa-pencil-alt"></i> <?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
 					</li>
 					<li class="nav-link"><a href="#preview"
-					                        data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
-					<li class="nav-link"><a id="tab-private" href="#secure_reply" data-toggle="tab"><i class="icon-locked"></i><?php echo Text::_('COM_KUNENA_EDITOR_SECURE_REPLY_TAB') ?></a></li>
+					                        data-toggle="tab"><i class="fa fa-desktop"></i> <?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
+					<li class="nav-link"><a id="tab-private" href="#secure_reply" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo Text::_('COM_KUNENA_EDITOR_SECURE_REPLY_TAB') ?></a></li>
 				</ul>
 				<textarea class="md-textarea form-control" name="message" id="editor" rows="12" tabindex="7"
-				          placeholder="<?php echo 'Enter secure reply' ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+				          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 					{
 						echo $this->message->getCategory()->topictemplate;
 					}

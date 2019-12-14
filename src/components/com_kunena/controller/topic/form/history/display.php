@@ -41,12 +41,12 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	{
 		parent::before();
 
-		$id = $this->input->getInt('id');
+		$id       = $this->input->getInt('id');
 		$this->me = KunenaUserHelper::getMyself();
 
-		$this->topic   = KunenaForumTopicHelper::get($id);
+		$this->topic    = KunenaForumTopicHelper::get($id);
 		$this->category = $this->topic->getCategory();
-		$this->history = KunenaForumMessageHelper::getMessagesByTopic(
+		$this->history  = KunenaForumMessageHelper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
@@ -57,7 +57,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		foreach ($this->history as $message)
 		{
-			$messages[$message->id] = $message;
+			$messages[$message->id]           = $message;
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
 
@@ -72,8 +72,8 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 			$pms = $pmFinder->find();
 			foreach ($pms as $pm)
 			{
-			    $registry = new Registry($pm->params);
-			    $posts = $registry->get('receivers.posts');
+				$registry = new Registry($pm->params);
+				$posts    = $registry->get('receivers.posts');
 
 				foreach ($posts as $post)
 				{
@@ -87,7 +87,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		}
 
 		$this->history = $messages;
-		
+
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events

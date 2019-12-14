@@ -172,7 +172,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->prepareMessages($mesid);
 		$doc = Factory::getApplication()->getDocument();
-		
+
 		if ($this->me->exists())
 		{
 			$pmFinder = new KunenaPrivateMessageFinder;
@@ -186,7 +186,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			foreach ($pms as $pm)
 			{
 				$registry = new Registry($pm->params);
-				$posts = $registry->get('receivers.posts');
+				$posts    = $registry->get('receivers.posts');
 
 				foreach ($posts as $post)
 				{

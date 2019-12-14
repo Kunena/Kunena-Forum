@@ -180,8 +180,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		{
 			$this->poll = $this->topic->getPoll();
 		}
-		
-		$this->privateMessage = new KunenaPrivateMessage;
+
+		$this->privateMessage       = new KunenaPrivateMessage;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);

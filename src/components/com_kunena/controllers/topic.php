@@ -615,7 +615,8 @@ class KunenaControllerTopic extends KunenaController
 
 		if (!$text)
 		{
-			if (trim($fields['private'])) {
+			if (trim($fields['private']))
+			{
 				// Allow empty message if private message part has been filled up.
 				$message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}]";
 			}
@@ -2418,25 +2419,26 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Save private data from message
 	 *
-	 * @param KunenaForumMessage $message
+	 * @param   KunenaForumMessage  $message
+	 *
 	 * @since Kunena 6.0
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
 	{
 		if (!$this->me->userid) return;
 
-		$body = (string) $this->input->getRaw('private');
+		$body      = (string) $this->input->getRaw('private');
 		$attachIds = $this->input->get('attachment_private', array(), 'array');
 		if (!trim($body) && !$attachIds) return;
 
-		$moderator = $this->me->isModerator($message->getCategory());
-		$parent = $message->getParent();
-		$author = $message->getAuthor();
-		$pAuthor = $parent->getAuthor();
-		$private = new KunenaPrivateMessage;
+		$moderator          = $this->me->isModerator($message->getCategory());
+		$parent             = $message->getParent();
+		$author             = $message->getAuthor();
+		$pAuthor            = $parent->getAuthor();
+		$private            = new KunenaPrivateMessage;
 		$private->author_id = $author->userid;
-		$private->subject = $message->subject;
-		$private->body = $body;
+		$private->subject   = $message->subject;
+		$private->body      = $body;
 		// Attach message.
 		$private->posts()->add($message->id);
 		// Attach author of the message.
@@ -2458,7 +2460,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			KunenaError::displayDatabaseError($e);
 		}
-		
+
 		KunenaLog::log(
 			KunenaLog::TYPE_ACTION,
 			KunenaLog::LOG_PRIVATE_POST_CREATE,
@@ -2472,22 +2474,23 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Load private data information when edit message
 	 *
-	 * @param KunenaForumMessage $message
+	 * @param   KunenaForumMessage  $message
+	 *
 	 * @since Kunena 6.0
 	 */
 	protected function editPrivate(KunenaForumMessage $message)
 	{
 		if (!$this->me->userid) return;
 
-		$body = (string) $this->input->getRaw('private');
+		$body      = (string) $this->input->getRaw('private');
 		$attachIds = $this->input->get('attachment_private', array(), 'array');
-		$finder = new KunenaPrivateMessageFinder;
+		$finder    = new KunenaPrivateMessageFinder;
 		$finder
-		->filterByMessage($message)
-		->where('parent_id', '=', 0)
-		->where('author_id', '=', $message->userid)
-		->order('id')
-		->limit(1);
+			->filterByMessage($message)
+			->where('parent_id', '=', 0)
+			->where('author_id', '=', $message->userid)
+			->order('id')
+			->limit(1);
 		$private = $finder->firstOrNew();
 
 		if (!$private->exists())
@@ -2498,7 +2501,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$private->subject = $message->subject;
-		$private->body = $body;
+		$private->body    = $body;
 		$private->attachments()->setMapped($attachIds);
 		$private->check();
 

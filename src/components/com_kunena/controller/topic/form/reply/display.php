@@ -131,8 +131,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->action = 'post';
-		
-		$this->privateMessage = new KunenaPrivateMessage;
+
+		$this->privateMessage       = new KunenaPrivateMessage;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);

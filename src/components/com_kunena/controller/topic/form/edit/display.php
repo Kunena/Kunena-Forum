@@ -145,7 +145,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			->where('author_id', '=', $this->message->userid)
 			->order('id')
 			->limit(1);
-		$this->privateMessage = $finder->firstOrNew();
+		$this->privateMessage       = $finder->firstOrNew();
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
 		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);

@@ -1036,7 +1036,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'allow'    => ['colortext' => '/^[\w\d.-_]*$/'],
 			'content'  => BBCode::BBCODE_PROHIBIT,
 		],
-		'private' => [
+		'private'      => [
 			'mode'          => BBCode::BBCODE_MODE_LIBRARY,
 			'method'        => 'DoPrivate',
 			'class'         => 'block',
@@ -3110,10 +3110,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 		}
 	}
-	
+
 	/**
 	 * Hnadle private bbcode tag in the message
-	 * 
+	 *
 	 * @param   mixed  $bbcode   bbcode
 	 * @param   mixed  $action   action
 	 * @param   mixed  $name     name
@@ -3136,7 +3136,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			return "[{$name}]{$content}";
 		}
- 
+
 		// Display nothing in activity streams etc..
 		if (!empty($bbcode->parent->forceSecure))
 		{
@@ -3163,15 +3163,15 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 
 		// Set variable to avoid issue where isn't a private message
-		if(!isset($bbcode->parent->pm))
+		if (!isset($bbcode->parent->pm))
 		{
 			$pm = '';
 		}
 		else
 		{
-			foreach($bbcode->parent->pm as $privatemessage)
+			foreach ($bbcode->parent->pm as $privatemessage)
 			{
-				$pm =  $privatemessage->displayField('body');
+				$pm = $privatemessage->displayField('body');
 			}
 		}
 
@@ -3182,9 +3182,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			if ($layout->getPath())
 			{
 				return (string) $layout
-				->set('me', $me)
-				->set('content', $pm)
-				->set('params', $params);
+					->set('me', $me)
+					->set('content', $pm)
+					->set('params', $params);
 			}
 		}
 		else

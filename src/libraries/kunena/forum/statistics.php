@@ -296,10 +296,10 @@ class KunenaForumStatistics
 		}
 
 		$count = [
-			'sections' => $this->sectionCount,
+			'sections'   => $this->sectionCount,
 			'categories' => $this->categoryCount,
-			'topics' => $this->topicCount,
-			'messages' => $this->messageCount,
+			'topics'     => $this->topicCount,
+			'messages'   => $this->messageCount,
 		];
 
 		return $count;

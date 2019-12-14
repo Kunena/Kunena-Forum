@@ -97,9 +97,9 @@ abstract class KunenaForumCategoryHelper
 			return false;
 		}
 
-		foreach($instances as $id => $instance)
+		foreach ($instances as $id => $instance)
 		{
-			$kunenacategory = KunenaForumCategoryHelper::get($id);
+			$kunenacategory      = KunenaForumCategoryHelper::get($id);
 			$cat_instances [$id] = $kunenacategory;
 		}
 

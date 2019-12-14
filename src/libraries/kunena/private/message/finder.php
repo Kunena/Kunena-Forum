@@ -1,14 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Private
+ *
+ * @package       Kunena.Framework
+ * @subpackage    Private
  *
  * @copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
 /**
  * Private message finder.
  */
@@ -59,7 +61,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		else
 		{
 			$this->query->innerJoin('#__kunena_private_post_map AS pm ON a.id=pm.private_id');
-			$this->query->where("pm.message_id IN (".implode(',', $ids).")");
+			$this->query->where("pm.message_id IN (" . implode(',', $ids) . ")");
 		}
 
 		return $this;
@@ -78,7 +80,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	public function firstOrNew()
 	{
 		$results = $this->find();
-		$first = array_pop($results);
+		$first   = array_pop($results);
 
 		return $first ? $first : new KunenaPrivateMessage;
 	}
@@ -87,20 +89,20 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		if (empty($ids)) return array();
 		$query = $this->db->getQuery(true);
-		$query->select('*')->from('#__kunena_private')->where('id IN('.implode(',', $ids).')');
+		$query->select('*')->from('#__kunena_private')->where('id IN(' . implode(',', $ids) . ')');
 		$this->db->setQuery($query);
 		$results = $this->db->loadObjectList('id');
 
 		$_instances = array();
-		
+
 		foreach ($results as $id => $instance)
 		{
 			$pm_instance = new KunenaPrivateMessage;
 			$pm_instance->load($id);
-			$pm_instance->id          = $id;
+			$pm_instance->id  = $id;
 			$_instances [$id] = $pm_instance;
 		}
-		
+
 		return $_instances;
 	}
-} 
+}

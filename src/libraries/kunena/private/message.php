@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Private
+ *
+ * @package       Kunena.Framework
+ * @subpackage    Private
  *
  * @copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,13 +16,13 @@ use Joomla\Registry\Registry;
 /**
  * Private message.
  *
- * @property int $id
- * @property int $parent_id
- * @property int $author_id
- * @property int $created_at
- * @property int $attachments
- * @property string $subject
- * @property string $body
+ * @property int       $id
+ * @property int       $parent_id
+ * @property int       $author_id
+ * @property int       $created_at
+ * @property int       $attachments
+ * @property string    $subject
+ * @property string    $body
  * @property JRegistry $params
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
@@ -44,13 +45,14 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $field
+	 * @param   string  $field
 	 *
 	 * @return int|string
 	 */
 	public function displayField($field)
 	{
-		switch ($field) {
+		switch ($field)
+		{
 			case 'id':
 				return intval($this->id);
 			case 'subject':
@@ -64,7 +66,8 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 	public function attachments()
 	{
-		if (is_null($this->_attachments)) {
+		if (is_null($this->_attachments))
+		{
 			$this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
 			$this->_attachments->load($this->id);
 		}
@@ -74,7 +77,8 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 	public function posts()
 	{
-		if (is_null($this->_posts)) {
+		if (is_null($this->_posts))
+		{
 			$this->_posts = new KunenaTableMap('#__kunena_private_post_map', 'private_id', 'message_id');
 			$this->_posts->load($this->id);
 		}
@@ -84,7 +88,8 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 	public function users()
 	{
-		if (is_null($this->_users)) {
+		if (is_null($this->_users))
+		{
 			$this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
 			$this->_users->load($this->id);
 		}
@@ -98,7 +103,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 		if (!is_null($this->_attachments))
 		{
-			$attachments = array_values($this->_attachments->getMapped());
+			$attachments       = array_values($this->_attachments->getMapped());
 			$this->attachments = count($attachments);
 			$this->params->set('attachments', $attachments);
 		}
@@ -116,16 +121,17 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		return parent::check();
 	}
 
- 	/**
+	/**
 	 * Save changes in the relations.
 	 *
 	 * @return void
 	 */
-	protected function saveInternal() {
+	protected function saveInternal()
+	{
 		if (!is_null($this->_attachments))
 		{
 			$this->_attachments->setKey($this->id)->save();
-			$ids = $this->_attachments->getMapped();
+			$ids         = $this->_attachments->getMapped();
 			$attachments = KunenaAttachmentHelper::getById($ids, 'none');
 			foreach ($attachments as $attachment)
 			{
@@ -147,14 +153,15 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 
 	/**
 	 * Delete attachments
-	 * 
+	 *
 	 * @see KunenaDatabaseObject::delete()
 	 */
-	public function delete() {
+	public function delete()
+	{
 		$attachments = $this->attachments()->delete();
-		$posts = $this->posts()->delete();
-		$users = $this->users()->delete();
+		$posts       = $this->posts()->delete();
+		$users       = $this->users()->delete();
 
 		return parent::delete();
 	}
-} 
+}

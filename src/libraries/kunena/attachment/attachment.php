@@ -644,7 +644,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		if ($exception && $this->mesid && $this->protected & (self::PROTECTION_PUBLIC + self::PROTECTION_ACL))
 		{
 			// Load message authorisation.
-			$exception = $this->getMessage()->tryAuthorise('attachment.'.$action, $user, false);
+			$exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
 		}
 
 		// TODO: Add support for PROTECTION_FRIENDS
@@ -661,15 +661,18 @@ class KunenaAttachment extends KunenaDatabaseObject
 			$exception = $user->exists() && $user->id == $this->userid
 				? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
 		}
-		if ($exception) {
+		if ($exception)
+		{
 			// Hide original exception behind no access.
 			$exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $exception);
-		} else {
+		}
+		else
+		{
 			// Check authorisation action.
 			foreach (self::$actions[$action] as $function)
 			{
-				$authFunction = 'authorise'.$function;
-				$exception = $this->$authFunction($user);
+				$authFunction = 'authorise' . $function;
+				$exception    = $this->$authFunction($user);
 				if ($exception) break;
 			}
 		}
@@ -678,6 +681,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		{
 			throw $exception;
 		}
+
 		return $exception;
 	}
 
@@ -898,9 +902,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * Check is an attachment is private
-	 * 
-	 * @param unknown $action
-	 * @param KunenaUser $user
+	 *
+	 * @param   unknown     $action
+	 * @param   KunenaUser  $user
+	 *
 	 * @return KunenaExceptionAuthorise|NULL
 	 * @since Kunena 6.0
 	 */
@@ -919,7 +924,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Need to load private message (for now allow only one private message per attachment).
 		$map = JTable::getInstance('KunenaPrivateAttachmentMap', 'Table');
 		$map->load(array('attachment_id' => $this->id));
-		$finder = new KunenaPrivateMessageFinder();
+		$finder  = new KunenaPrivateMessageFinder();
 		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
 		if (!$private->exists())
 		{

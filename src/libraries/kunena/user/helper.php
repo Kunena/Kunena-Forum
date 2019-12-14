@@ -336,6 +336,33 @@ abstract class KunenaUserHelper
 	}
 
 	/**
+	 * @return integer
+	 * @since Kunena 6.0.0
+	 * @throws Exception
+	 */
+	public static function getTotalRanks()
+	{
+		$total = 0;
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(*)')
+			->from($db->quoteName('#__kunena_ranks'));
+		$db->setQuery($query);
+
+		try
+		{
+			$total = $db->setQuery($query)->loadResult();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+
+		return (int) $total;
+	}
+
+	/**
 	 * @param   int  $limit  limit
 	 *
 	 * @return array

@@ -52,6 +52,7 @@ JLoader::register('KunenaView', KPATH_FRAMEWORK . '/view.php');
 JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/integration/avatar.php');
 JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/integration/private.php');
 JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/integration/profile.php');
+JLoader::register('KunenaPlugins', KPATH_FRAMEWORK . '/integration/plugins.php');
 JLoader::register('KunenaForumAnnouncement', KPATH_FRAMEWORK . '/forum/announcement/announcement.php');
 JLoader::register('KunenaForumCategory', KPATH_FRAMEWORK . '/forum/category/category.php');
 JLoader::register('KunenaForumCategoryUser', KPATH_FRAMEWORK . '/forum/category/user/user.php');

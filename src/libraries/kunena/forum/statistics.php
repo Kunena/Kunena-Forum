@@ -294,6 +294,44 @@ class KunenaForumStatistics
 				}
 			}
 		}
+
+		$count = [
+			'sections' => $this->sectionCount,
+			'categories' => $this->categoryCount,
+			'topics' => $this->topicCount,
+			'messages' => $this->messageCount,
+		];
+
+		return $count;
+	}
+
+	/**
+	 *
+	 * @return array
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public static function getTotalEmoticons()
+	{
+		$smilies = null;
+
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query
+			->select('COUNT(*)')
+			->from($db->quoteName('#__kunena_smileys'));
+		$db->setQuery($query);
+
+		try
+		{
+			$smilies = $db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $smilies;
 	}
 
 	/**

@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
 ?>
 <div id="kunena" class="container-fluid">
 	<div class="row">
@@ -54,11 +53,14 @@ use Joomla\CMS\Router\Route;
 									<h6 class="mb-0 text-cyan">Last Check: Today</h6>
 								</div>
 							</div>
-							<div class="row align-items-center text-center">
-								<div class="col pl-5"><img src="components/com_kunena/media/icons/kunena_logo.png"
-								                           style="width: 70%"/></div>
+							<div class="row align-items-center">
+								<div class="col pl-5">
+									<img src="components/com_kunena/media/icons/kunena_logo.png" style="width: 70%"/>
+								</div>
 								<div class="col">
-									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6></div>
+									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>
+									<h6 class="mb-0 text-cyan"><?php echo strtoupper(KunenaForum::versionDate()); ?></h6>
+								</div>
 							</div>
 							<h6 class="pt-badge bg-cyan"><i class="fas fa-check text-white f-18"></i></h6>
 						</div>
@@ -98,7 +100,10 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">20 / 330</h3>
+									<h3 class="fw-700 text-cyan">
+										<?php $count = KunenaForumStatistics::getInstance()->loadCategoryCount();
+										echo $count['sections'] . ' / ' . $count['categories'];?>
+									</h3>
 									<p class="mb-0">Last Edit: Welcome</p>
 								</div>
 								<div class="col-auto">
@@ -114,6 +119,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -124,8 +130,10 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">30,564</h3>
-									<p class="mb-0">May 23 - June 01 (2017)</p>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount();?></h3>
+									<p class="mb-0"><?php $lastid = KunenaUserHelper::getLastId();
+										$user =  KunenaUser::getInstance($lastid)->registerDate;
+										echo KunenaDate::getInstance($user)->toKunena('ago');?></p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-users bg-cyan"></i>
@@ -134,6 +142,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -144,7 +153,7 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">423</h3>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaAttachmentHelper::getTotalAttachments();?></h3>
 									<p class="mb-0">photo.png (topic id: 44343)</p>
 								</div>
 								<div class="col-auto">
@@ -154,6 +163,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -164,8 +174,8 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">426</h3>
-									<p class="mb-0">Icons</p>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaForumStatistics::getTotalEmoticons()?></h3>
+									<p class="mb-0"><?php echo Text::_('COM_KUNENA_EDITOR_SMILIES') ?></p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-grin-squint-tears bg-cyan"></i>
@@ -174,6 +184,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-12">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -184,8 +195,8 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"> .</h3>
-									<p class="mb-0"> .</p>
+									<h3 class="fw-700 text-cyan">&nbsp;</h3>
+									<p class="mb-0">&nbsp;</p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-edit bg-cyan"></i>
@@ -194,6 +205,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -204,8 +216,8 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_MENU_STATISTICS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">.</h3>
-									<p class="mb-0">Items</p>
+									<h3 class="fw-700 text-cyan">&nbsp;</h3>
+									<p class="mb-0">&nbsp;</p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-chart-bar bg-cyan"></i>
@@ -214,6 +226,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -224,7 +237,7 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">1</h3>
+									<h3 class="fw-700 text-cyan"><?php echo count(KunenaTemplate::getInstance()->getTemplatePaths()) ;?></h3>
 									<p class="mb-0">Installed</p>
 								</div>
 								<div class="col-auto">
@@ -234,6 +247,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -244,8 +258,8 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">12</h3>
-									<p class="mb-0">Items</p>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalRanks();?></h3>
+									<p class="mb-0">Groups</p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-bars bg-cyan"></i>
@@ -254,6 +268,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-12">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">
@@ -264,8 +279,8 @@ use Joomla\CMS\Router\Route;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan">13</h3>
-									<p class="mb-0">Items</p>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaIntegrationPlugins::getTotalPlugins();?></h3>
+									<p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></p>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-plug bg-cyan"></i>
@@ -274,6 +289,7 @@ use Joomla\CMS\Router\Route;
 						</div>
 					</div>
 				</div>
+
 				<div class="col-xl-3 col-md-6">
 					<div class="card proj-t-card comp-card">
 						<div class="card-body">

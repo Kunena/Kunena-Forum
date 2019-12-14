@@ -566,6 +566,37 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the secure icon
+	 *
+	 * @return string
+	 *
+	 * @since K6.0
+	 * @throws Exception
+	 */
+	public static function secure()
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-shield-alt" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-shield" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-shield" aria-hidden="true"></span>';
+		}
+
+		return '<i class="icon icon-shield" aria-hidden="true"></i>';
+	}
+
+	/**
 	 * Return the cancel icon
 	 *
 	 * @return string

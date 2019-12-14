@@ -138,6 +138,16 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			$this->message->edit($saved);
 		}
 
+		$finder = new KunenaPrivateMessageFinder;
+		$finder
+			->filterByMessage($this->message)
+			->where('parent_id', '=', 0)
+			->where('author_id', '=', $this->message->userid)
+			->order('id')
+			->limit(1);
+		$this->privateMessage = $finder->firstOrNew();
+		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
+
 		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = false;
 		$this->canSubscribe         = false;

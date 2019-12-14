@@ -45,15 +45,20 @@ jQuery(document).ready(function ($) {
 
 	$('#tabs_kunena_editor a:first').tab('show');
 
-	$('#tabs_kunena_editor a:last').click(function (e) {
+	$('#tabs_kunena_editor a[href="#preview"]').click(function (e) {
+		$('a[href="#write"]').parents('li,ul').removeClass('active');
+		$('a[href="#secure_reply"]').parents('li,ul').removeClass('active');
+		$('a[href="#preview"]').parents('li,ul').addClass('active');
 		e.preventDefault();
-
+		
 		var preview = $("#kbbcode-preview");
 		var message = $("#editor");
+		var message_private = $("#editor-private");
 
 		preview.css('display', 'block');
 
 		message.hide();
+		message_private.hide();
 
 		kPreviewHelper();
 
@@ -61,14 +66,34 @@ jQuery(document).ready(function ($) {
 		var height = message.css('height');
 		preview.css('height', height);
 	});
+	
+	$('#tabs_kunena_editor a:last').click(function (e) {
+		$('a[href="#write"]').parents('li,ul').removeClass('active');
+		$('a[href="#preview"]').parents('li,ul').removeClass('active');
+		$('a[href="#secure_reply"]').parents('li,ul').addClass('active');
+		e.preventDefault();
 
-	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
+		var message = $("#editor");
+		var message_private = $("#editor-private");
+
+		message.hide();
+		message_private.show();
 		$('#kbbcode-preview').hide();
+
+		console.log('click on last');
+	});
+
+	$('#tabs_kunena_editor a[href="#write"]').click(function (e) {
+		$('a[href="#preview"]').parents('li,ul').removeClass('active');
+		$('a[href="#secure_reply"]').parents('li,ul').removeClass('active');
+		$('a[href="#write"]').parents('li,ul').addClass('active');
+		$('#kbbcode-preview').hide();
+		$("#editor-private").hide();
 		editor.css('display', 'inline-block');
 		$('#markItUpeditor').css('display', 'inline-block');
 	});
 
-	$('#tabs_kunena_editor a:last').click(function (e) {
+	$('#tabs_kunena_editor a[href="#preview"]').click(function (e) {
 		editor.hide();
 		$('#markItUpeditor').hide();
 	});
@@ -171,7 +196,7 @@ jQuery(document).ready(function ($) {
 
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
-		$("#editor").attr('required', 'required');
+
 		localStorage.removeItem('copyKunenaeditor');
 	});
 

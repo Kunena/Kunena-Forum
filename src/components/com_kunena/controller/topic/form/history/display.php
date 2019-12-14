@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerTopicFormHistoryDisplay
@@ -41,8 +42,10 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		parent::before();
 
 		$id = $this->input->getInt('id');
+		$this->me = KunenaUserHelper::getMyself();
 
 		$this->topic   = KunenaForumTopicHelper::get($id);
+		$this->category = $this->topic->getCategory();
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
@@ -54,9 +57,37 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		foreach ($this->history as $message)
 		{
+			$messages[$message->id] = $message;
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
 
+		if ($this->me->exists())
+		{
+			$pmFinder = new KunenaPrivateMessageFinder;
+			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
+			if (!$this->me->isModerator($this->category))
+			{
+				$pmFinder->filterByUser($this->me);
+			}
+			$pms = $pmFinder->find();
+			foreach ($pms as $pm)
+			{
+			    $registry = new Registry($pm->params);
+			    $posts = $registry->get('receivers.posts');
+
+				foreach ($posts as $post)
+				{
+					if (!isset($messages[$post]->pm))
+					{
+						$messages[$post]->pm = array();
+					}
+					$messages[$post]->pm[$pm->id] = $pm;
+				}
+			}
+		}
+
+		$this->history = $messages;
+		
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events

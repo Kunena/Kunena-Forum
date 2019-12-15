@@ -1218,7 +1218,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($menu_item)
 		{
-			$params             = $menu_item->params; // Get the params
+			$params             = $menu_item->getParams(); // Get the params
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');

@@ -449,7 +449,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 			if (!empty($registry->params))
 			{
-				$registry->loadString($menu_item->params);
+				$registry->loadString($menu_item->getParams());
 			}
 
 			$params             = $registry->loadString($menu_item->getParams());

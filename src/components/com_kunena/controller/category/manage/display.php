@@ -225,7 +225,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 		if ($menu_item)
 		{
-			$params       = $menu_item->params;
+			$params       = $menu_item->getParams();
 			$params_title = $params->get('page_title');
 
 			if (!empty($params_title))

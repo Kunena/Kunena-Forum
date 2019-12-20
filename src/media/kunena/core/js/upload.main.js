@@ -127,6 +127,23 @@ jQuery(function ($) {
 		fileCount = 0;
 	});
 
+	$('#set-secure-all').on('click', function (e) {
+		e.preventDefault();
+
+		var child = $('#kattach-list').find('input');
+
+		child.each(function (i, el) {
+			var elem = $(el);
+
+			if (!elem.attr('id').match("[a-z]{8}")) {
+				var attachid = elem.attr('id').match("[0-9]{1,8}");
+				var filename = elem.attr('placeholder');
+
+				$('#kattach-list').append('<input id="kattachs-private-' + attachid + '" type="hidden" name="attachment_private[' + attachid + ']" value="' + attachid + '" />');
+			}
+		});
+	});
+
 	$('#insert-all').on('click', function (e) {
 		e.preventDefault();
 
@@ -211,6 +228,9 @@ jQuery(function ($) {
 
 		var $this = $(this),
 			data = $this.data();
+
+		$(this).removeClass('btn-primary');
+		$(this).addClass('btn-success');
 
 		$('#kattach-list').append('<input id="kattachs-private-' + data.result.data.id + '" type="hidden" name="attachment_private[' + data.result.data.id + ']" value="' + data.result.data.id + '" />');
 	});

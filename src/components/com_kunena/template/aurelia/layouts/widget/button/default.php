@@ -32,7 +32,7 @@ $icon    = $this->icon;
 
 <a <?php echo $id; ?> class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name; ?>"
                       href="<?php echo $this->url; ?>" rel="nofollow"
-                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
+                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?> data-toggle="modal" data-target="#exampleModal">
 	<?php
 	if (!empty($icon))
 		:
@@ -41,3 +41,24 @@ $icon    = $this->icon;
 	<?php endif; ?>
 	<?php echo $label; ?>
 </a>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm delete topic</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

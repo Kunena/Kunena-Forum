@@ -358,7 +358,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if ($fields === true)
 		{
 			$user             = KunenaFactory::getUser($this->userid);
-			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
+			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su', '/\[PRIVATE=(.*?)\]/su');
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" . $text . "[/quote]";

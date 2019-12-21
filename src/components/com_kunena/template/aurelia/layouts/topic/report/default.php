@@ -16,10 +16,6 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<h4>
-	<?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
-</h4>
-
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
 	<input type="hidden" name="view" value="topic"/>
 	<input type="hidden" name="task" value="report"/>
@@ -57,7 +53,7 @@ use Joomla\CMS\Language\Text;
 			<div class="controls">
 				<input class="btn btn-outline-primary" type="submit" name="Submit"
 				       value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-				<button class="btn btn-outline-primary border" data-dismiss="modal" aria-hidden="true">
+				<button type="button" class="btn btn-secondary border" data-dismiss="modal" aria-hidden="true">
 					<?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>

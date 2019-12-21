@@ -97,7 +97,14 @@ else
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h5 class="modal-title" id="reportModalLabel">
+							<?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
 						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 					</div>
 				</div>

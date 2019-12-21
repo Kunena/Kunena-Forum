@@ -400,64 +400,67 @@ class KunenaBbcode extends NBBC_BBCode
 			(?:
 				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
 				|
-				[^\s`!()\[\]{};:\'"\.,<>?¬´¬ª‚Äú‚Äù‚Äò‚Äô]
+				[^\s`!()\[\]{};:\'"\.,<>?´ªìîëí]
 			)
 		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 		$output = array();
 
-		foreach ($search as $index => $token)
+		if ($search !== FALSE)
 		{
-			if ($index & 1)
+			foreach ($search as $index => $token)
 			{
-				if (preg_match("/^(https?|ftp|mailto):/ui", $token))
+				if ($index & 1)
 				{
-					// Protocol has been provided, so just use it as-is.
-					$url = $token;
-				}
-				else
-				{
-					// Add scheme to emails and raw domain URLs.
-					$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
-				}
-
-				// Never start URL from the middle of text (except for punctuation).
-				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?¬´¬ª‚Äú‚Äù‚Äò‚Äô]$#u', $search[$index - 1]);
-				$invalid |= !$this->IsValidURL($url, true);
-
-				// We have a full, complete, and properly-formatted URL, with protocol.
-				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = Joomla\Uri\UriHelper::parse_url($url);
-
-				if (!$invalid && substr($url, 0, 7) == 'mailto:')
-				{
-					$email = StringHelper::substr($url, 7);
-
-					if ($this->canCloakEmail($params))
+					if (preg_match("/^(https?|ftp|mailto):/ui", $token))
 					{
-						$output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
+						// Protocol has been provided, so just use it as-is.
+						$url = $token;
 					}
 					else
 					{
-						$output[$index] = $email;
+						// Add scheme to emails and raw domain URLs.
+						$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
 					}
-				}
-				elseif ($invalid || empty($params['host']) || !empty($params['pass']))
-				{
-					$output[$index - 1] .= $token;
-					$output[$index]     = '';
+
+					// Never start URL from the middle of text (except for punctuation).
+					$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?´ªìîëí]$#u', $search[$index - 1]);
+					$invalid |= !$this->IsValidURL($url, true);
+
+					// We have a full, complete, and properly-formatted URL, with protocol.
+					// Now we need to apply the $this->url_pattern template to turn it into HTML.
+					$params = Joomla\Uri\UriHelper::parse_url($url);
+
+					if (!$invalid && substr($url, 0, 7) == 'mailto:')
+					{
+						$email = StringHelper::substr($url, 7);
+
+						if ($this->canCloakEmail($params))
+						{
+							$output[$index] = HTMLHelper::_('email.cloak', $email, $this->IsValidEmail($email));
+						}
+						else
+						{
+							$output[$index] = $email;
+						}
+					}
+					elseif ($invalid || empty($params['host']) || !empty($params['pass']))
+					{
+						$output[$index - 1] .= $token;
+						$output[$index]     = '';
+					}
+					else
+					{
+						$params['url']  = $url;
+						$params['link'] = $url;
+						$params['text'] = $token;
+						$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+					}
 				}
 				else
 				{
-					$params['url']  = $url;
-					$params['link'] = $url;
-					$params['text'] = $token;
-					$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+					$output[$index] = $token;
 				}
-			}
-			else
-			{
-				$output[$index] = $token;
 			}
 		}
 

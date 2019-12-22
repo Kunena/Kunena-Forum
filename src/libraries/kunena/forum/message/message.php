@@ -1317,12 +1317,18 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
 
 		$attachs        = new StdClass;
+		$attachs->inline = 0;
 		$attachs->image = 0;
 		$attachs->file  = 0;
 		$attachs->total = 0;
 
 		foreach ($attachments as $attach)
 		{
+			if ($attach->inline)
+			{
+				$attachs->inline = $attach->inline + 1;
+			}
+
 			if ($attach->isImage())
 			{
 				$attachs->image = $attachs->image + 1;

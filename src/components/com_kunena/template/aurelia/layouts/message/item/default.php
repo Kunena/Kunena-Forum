@@ -105,19 +105,24 @@ $list = array();
 	<div class="cart pb-3 pd-3">
 		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<div class="card-body kattach">
+		<?php if ($attachs->inline): 
+		echo Text::_('COM_KUNENA_ATTACHMENTS_INSERTED_IN_MESSAGE');
+		endif; ?>
 			<ul class="thumbnails" style="list-style:none;">
-				<?php foreach ($attachments as $attachment) : ?>
-					<?php if ($attachment->isAudio()) :
-						echo $attachment->getLayout()->render('audio'); ?>
-					<?php elseif ($attachment->isVideo()) :
-						echo $attachment->getLayout()->render('video'); ?>
-					<?php else : ?>
-						<li class="col-md-3 text-center">
-							<div class="thumbnail">
-								<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-								<?php echo $attachment->getLayout()->render('textlink'); ?>
-							</div>
-						</li>
+				<?php foreach ($attachments as $attachment) :
+					if (!$attachment->inline): ?>
+						<?php if ($attachment->isAudio()) :
+							echo $attachment->getLayout()->render('audio'); ?>
+						<?php elseif ($attachment->isVideo()) :
+							echo $attachment->getLayout()->render('video'); ?>
+						<?php else : ?>
+							<li class="col-md-3 text-center">
+								<div class="thumbnail">
+									<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+									<?php echo $attachment->getLayout()->render('textlink'); ?>
+								</div>
+							</li>
+						<?php endif; ?>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</ul>

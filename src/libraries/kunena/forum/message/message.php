@@ -380,12 +380,40 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function sendNotification($url = null)
 	{
-		$config = KunenaFactory::getConfig();
+	    if ($this->hold > 1)
+	    {
+	        return false;
+	    }
+	    
+	    $config = KunenaFactory::getConfig();
+	    
+	    if (!$config->get('send_emails'))
+	    {
+	        return false;
+	    }
+	    
+	    $this->urlNotification = $url;
+	    //Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
+	    static::notificationCloseConnection();
+	    Factory::getApplication()->RegisterEvent( 'onAfterRespond', array($this, 'notificationPost') );
+	}
 
-		if (!$config->get('send_emails'))
-		{
-			return false;
-		}
+	static
+	public
+	function notificationCloseConnection( ){
+	    $app = Factory::getApplication();
+	    $app->setHeader('Connection', 'close' );
+	}
+	
+	public 
+	function notificationPost( )
+	{
+	    // here is after respod sends. so close connection to leave browser, and
+	    // continue to work
+	    flush();
+	    Factory::getApplication()->getSession()->close();
+
+	    $url = $this->urlNotification;
 
 		if ($this->hold > 1)
 		{

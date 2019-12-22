@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Log\Log;
 
 /**
  * Class KunenaForumMessage
@@ -413,6 +414,10 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	    flush();
 	    Factory::getApplication()->getSession()->close();
 
+	    //restore app input context
+	    Factory::getApplication()->input->set('message', $this);
+	    $config = KunenaFactory::getConfig();
+
 	    $url = $this->urlNotification;
 
 		if ($this->hold > 1)
@@ -516,20 +521,37 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 
+			$ok = true;
+			$start_time = microtime(true);
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))
 			{
 				$this->attachEmailBody($mail, 1, $subject, $url, $once);
-				KunenaEmail::send($mail, $receivers[1]);
+				$ok = KunenaEmail::send($mail, $receivers[1]);
 			}
 
 			// Send email to all moderators.
 			if (!empty($receivers[0]))
 			{
 				$this->attachEmailBody($mail, 0, $subject, $url, $once);
-				KunenaEmail::send($mail, $receivers[0]);
+				if (! KunenaEmail::send($mail, $receivers[0]) )
+				    $ok = false;
 			}
-
+			$end_time = microtime(true);
+			
+			$time_secs = ($end_time-$start_time);
+			$mid       = $this->thread;
+			$recv_amount = count($receivers[1]) + count($receivers[0]);
+			Log::add(  "$recv_amount subscriptions for msg $mid sent for $time_secs[ms]"
+			    , Log::DEBUG, 'kunena');
+			KunenaLog::log( ($ok)? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR, 
+			          KunenaLog::LOG_TOPIC_NOTIFY, 
+			         "$recv_amount subscriptions sent for $time_secs sec" ,
+    			    $this->catid,
+    			    $this->thread,
+			        KunenaUserHelper::getMyself()->userid
+			    );
+			
 			// Update subscriptions.
 			if ($once && $sentusers)
 			{

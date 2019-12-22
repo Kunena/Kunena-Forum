@@ -93,16 +93,18 @@ $list = array();
 	<div class="kattach">
 		<h5 style="display: none;"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
-			<?php foreach ($attachments as $attachment) : ?>
-				<?php if ($attachment->isAudio() && !$attachment->inline) :
-					echo $attachment->getLayout()->render('audio'); ?>
-				<?php elseif ($attachment->isVideo() && !$attachment->inline) :
-					echo $attachment->getLayout()->render('video'); ?>
-				<?php elseif (!$attachment->inline) : ?>
-					<li class="span3 center">
-						<div
+			<?php foreach ($attachments as $attachment) :
+				if (!$attachment->inline) : ?>
+					<?php if ($attachment->isAudio()) :
+						echo $attachment->getLayout()->render('audio'); ?>
+					<?php elseif ($attachment->isVideo()) :
+						echo $attachment->getLayout()->render('video'); ?>
+					<?php else : ?>
+						<li class="span3 center">
+							<div
 								class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>
-					</li>
+						</li>
+					<?php endif; ?>
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>

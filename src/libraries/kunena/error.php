@@ -187,6 +187,9 @@ abstract class KunenaError
 	{
 		if (error_reporting() == 0 || !strstr($errfile, 'kunena'))
 		{
+		    if (strpos ( $errstr, "mail()") !== FALSE ){
+		        return KunenaEmail::on_mail_error($errno, $errstr, $errfile, $errline);
+		    }
 			return false;
 		}
 

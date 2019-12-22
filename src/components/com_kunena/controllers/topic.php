@@ -574,14 +574,16 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
+		if ( $this->config->url_subject_topic ) {
 		$url_subject = $this->checkURLInSubject($message->subject);
 
-		if ($url_subject && $this->config->url_subject_topic)
+		if ($url_subject)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
 			$this->setRedirectBack();
 
 			return;
+		}
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.

@@ -28,7 +28,14 @@ abstract class KunenaEmail
 	 */
 	public static function send($mail, array $receivers)
 	{
-		$config = KunenaFactory::getConfig();
+	    if (isset(static::$mailer_error_status))
+	    {
+	        //mailer is broken, so prevent any sendings
+	        Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
+	        return false;
+	    }
+
+	    $config = KunenaFactory::getConfig();
 
 		if (!empty($config->email_recipient_count))
 		{
@@ -59,7 +66,6 @@ abstract class KunenaEmail
 		$chunks = array_chunk($receivers, $email_recipient_count);
 
 		$success = true;
-
 		foreach ($chunks as $emails)
 		{
 			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')
@@ -80,15 +86,56 @@ abstract class KunenaEmail
 
 			try
 			{
-				$mail->Send();
+				$result = $mail->Send();
+				if ($result === false)
+				    // mail is turned off, or broken
+				    return false;
+
+			    if ( is_subclass_of ($result, 'Exception') ){
+			        // mail send is failed
+			        $success = false;
+			    }
 			}
 			catch (Exception $e)
 			{
-				$success = false;
+			    $success = false;
 				Log::add($e->getMessage(), Log::ERROR, 'kunena');
 			}
+
+			//if ( is_subclass_of (static::$mailer_error_status, 'MailerBrokenException' ) )
+			if (isset(static::$mailer_error_status))
+			{
+			    //mailer is broken, so prevent any sendings 
+			    $success = false;
+			    break;
+			}
+
 		}
 
 		return $success;
 	}
+
+	public
+	static 
+	function on_mail_error($errno, $errstr, $errfile, $errline){
+	    if ( strpos ( $errstr, "mail(): Failed to connect to mailserver") !== FALSE ){
+	        static::$mailer_error_status = new MailerBrokenException(
+	            $errstr, $errno, Log::ERROR, $errfile, $errline 
+	            ) ; 
+	        Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
+	    }
+	    return false;
+	}
+
+	/*  provides object with error exception definition
+	 * */
+	public 
+	static $mailer_error_status = NULL;
+}
+
+class MailerBrokenException extends ErrorException{
+    public
+    function errorMessage(){
+        return "$this->code - $$this->message\n at: $$this->file:$$this->line";
+    }
 }

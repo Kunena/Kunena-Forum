@@ -495,6 +495,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$subject     = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
+			$user = Factory::getUser();
 			$mail = Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
@@ -502,15 +503,33 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))
 			{
-				$this->attachEmailBody($mail, 1, $subject, $url, $once);
-				KunenaEmail::send($mail, $receivers[1]);
+				$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
+				$mailer->addTemplateData(
+					array(
+						'mail'       => $mail,
+						'subject'    => $subject,
+						'message'    => $this,
+						'messageUrl' => $url,
+						'once'       => $once
+					)
+				);
+				KunenaEmail::send($mailer, $receivers[1]);
 			}
 
 			// Send email to all moderators.
 			if (!empty($receivers[0]))
 			{
-				$this->attachEmailBody($mail, 0, $subject, $url, $once);
-				KunenaEmail::send($mail, $receivers[0]);
+				$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
+				$mailer->addTemplateData(
+					array(
+						'mail'       => $mail,
+						'subject'    => $subject,
+						'message'    => $this,
+						'messageUrl' => $url,
+						'once'       => $once
+					)
+				);
+				KunenaEmail::send($mailer, $receivers[0]);
 			}
 
 			// Update subscriptions.
@@ -580,37 +599,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$uri = Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
 
 		return $uri;
-	}
-
-	/**
-	 * @param   Joomla\CMS\Mail\Mail  $mail          mail
-	 * @param   int                   $subscription  subscription
-	 * @param   string                $subject       subject
-	 * @param   string                $url           url
-	 * @param   bool                  $once          once
-	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 */
-	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
-	{
-		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
-			->set('mail', $mail)
-			->set('subject', $subject)
-			->set('message', $this)
-			->set('messageUrl', $url)
-			->set('once', $once);
-
-		try
-		{
-			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
-		}
-		catch (Exception $e)
-		{
-		}
-
-		$mail->setBody($msg);
 	}
 
 	/**

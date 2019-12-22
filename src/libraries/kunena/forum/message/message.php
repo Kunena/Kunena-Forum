@@ -545,7 +545,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$time_secs = ($end_time-$start_time);
 			$mid       = $this->thread;
 			$recv_amount = count($receivers[1]) + count($receivers[0]);
-			Log::add(  "$recv_amount subscriptions for msg $mid sent for $time_secs[ms]"
+			Log::add(  "$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]"
 			    , Log::DEBUG, 'kunena');
 			KunenaLog::log( ($ok)? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR, 
 			          KunenaLog::LOG_TOPIC_NOTIFY, 

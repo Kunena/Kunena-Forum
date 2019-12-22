@@ -338,7 +338,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
-			if ($fields === true)
+			if (isset($fields['subject']))
 			{
 				$topic->subject = $fields['subject'];
 			}
@@ -355,7 +355,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$message->hold = $category->review ? (int) !$category->isAuthorised('moderate', $user) : 0;
 		}
 
-		if ($fields === true)
+		if ($fields['quote'] === true)
 		{
 			$user             = KunenaFactory::getUser($this->userid);
 			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su', '/\[PRIVATE=(.*?)\]/su');

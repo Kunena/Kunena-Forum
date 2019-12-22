@@ -92,20 +92,22 @@ $list = array();
 <?php endif; ?>
 <?php if (!empty($attachments)) : ?>
 	<div class="kattach">
-		<h5> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<h5 style="display: none;"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
-			<?php foreach ($attachments as $attachment) : ?>
-				<?php if ($attachment->isAudio()) :
-					echo $attachment->getLayout()->render('audio'); ?>
-				<?php elseif ($attachment->isVideo()) :
-					echo $attachment->getLayout()->render('video'); ?>
-				<?php else : ?>
-					<li class="col-md-3 text-center">
-						<div class="thumbnail">
-							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-							<?php echo $attachment->getLayout()->render('textlink'); ?>
-						</div>
-					</li>
+			<?php foreach ($attachments as $attachment) : 
+				if (!$attachment->inline) :?>
+					<?php if ($attachment->isAudio()) :
+						echo $attachment->getLayout()->render('audio'); ?>
+					<?php elseif ($attachment->isVideo()) :
+						echo $attachment->getLayout()->render('video'); ?>
+					<?php else : ?>
+						<li class="col-md-3 text-center">
+							<div class="thumbnail">
+								<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+								<?php echo $attachment->getLayout()->render('textlink'); ?>
+							</div>
+						</li>
+					<?php endif; ?>
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>

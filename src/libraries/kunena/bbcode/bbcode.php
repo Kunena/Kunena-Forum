@@ -1995,7 +1995,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html = '<blockquote class="Quote UserQuote">' . $user . '<div class="QuoteText">' . $wrote . $content . '</div></blockquote>';
+		$html = '<blockquote class="Quote UserQuote"><div class="QuoteText">' . $wrote . $content . '</div></blockquote>';
 
 		return $html;
 	}

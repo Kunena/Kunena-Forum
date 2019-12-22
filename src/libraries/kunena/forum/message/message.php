@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Mail\MailTemplate;
 
 /**
  * Class KunenaForumMessage

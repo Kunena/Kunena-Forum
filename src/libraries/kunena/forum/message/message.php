@@ -395,7 +395,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	    
 	    $this->urlNotification = $url;
 	    //Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
-	    static::notificationCloseConnection();
 	    Factory::getApplication()->RegisterEvent( 'onAfterRespond', array($this, 'notificationPost') );
 	}
 
@@ -409,10 +408,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	public 
 	function notificationPost( )
 	{
-	    // here is after respod sends. so close connection to leave browser, and
-	    // continue to work
-	    flush();
-	    Factory::getApplication()->getSession()->close();
 
 	    //restore app input context
 	    Factory::getApplication()->input->set('message', $this);
@@ -477,10 +472,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mailsubs,
 			$mailmods,
 			$mailadmins,
-			KunenaUserHelper::getMyself()->userid
+		    $this->userid
 		);
 
-		if ($emailToList)
+		if (empty($emailToList))
+		    return true;
+
 		{
 			if (!$config->getEmail())
 			{
@@ -521,6 +518,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 
+			// here is after respod sends. so close connection to leave browser, and
+			// continue to work
+			static::notificationCloseConnection();
+			Factory::getApplication()->getSession()->close();
+			flush();
+
 			$ok = true;
 			$start_time = microtime(true);
 			// Send email to all subscribers.
@@ -547,9 +550,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			KunenaLog::log( ($ok)? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR, 
 			          KunenaLog::LOG_TOPIC_NOTIFY, 
 			         "$recv_amount subscriptions sent for $time_secs sec" ,
-    			    $this->catid,
-    			    $this->thread,
-			        KunenaUserHelper::getMyself()->userid
+    			    $this->getCategory(),
+    			    $this->getTopic(),
+    			    KunenaFactory::getUser($this->userid)
 			    );
 			
 			// Update subscriptions.

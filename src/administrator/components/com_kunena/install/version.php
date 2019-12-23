@@ -4,7 +4,7 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright      Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
@@ -147,12 +147,12 @@ class KunenaVersion
 	/**
 	 * Retrieve copyright information as string.
 	 *
-	 * @return string "© 2008 - 2019 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @return string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	 * @since Kunena
 	 */
 	public static function getCopyrightHTML()
 	{
-		return ': &copy; 2008 - 2019 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
+		return ': &copy; 2008 - 2020 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
 			. Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
 			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			. Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
@@ -161,7 +161,7 @@ class KunenaVersion
 	/**
 	 * Retrieve installed Kunena version, copyright and license as string.
 	 *
-	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2019 Copyright: Kunena Team. All rights reserved. |
+	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
 	 *                License: GNU General Public License"
 	 * @since Kunena
 	 */

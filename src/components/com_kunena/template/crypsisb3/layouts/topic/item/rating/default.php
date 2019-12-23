@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 
 <?php if ($this->category->allow_ratings && $this->config->ratingenabled)
 	:
-	
+
 	$this->addStyleSheet('assets/css/rating.css');
 	$this->addScript('assets/js/rating.js');
 	$this->addScript('assets/js/krating.js');

@@ -1206,7 +1206,7 @@ abstract class KunenaRoute
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
-		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
 	}
 
 	/**

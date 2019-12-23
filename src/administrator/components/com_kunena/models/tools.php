@@ -76,6 +76,24 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 	/**
 	 * @var null
+	 * @since Kunena 6.0
+	 */
+	protected $openssl = null;
+
+	/**
+	 * @var null
+	 * @since Kunena 6.0
+	 */
+	protected $json = null;
+
+	/**
+	 * @var null
+	 * @since Kunena 6.0
+	 */
+	protected $fileinfo = null;
+
+	/**
+	 * @var null
 	 * @since Kunena
 	 */
 	protected $maxExecTime = null;
@@ -251,10 +269,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	{
 		$kunena_db = Factory::getDBO();
 
+		$this->getPhpExtensions();
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' (Server type: ' . $kunena_db->getServerType().  ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
@@ -263,6 +282,61 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
+	}
+
+	/**
+	 * Check if php extensions needed by kunena are right loaded
+	 * 
+	 * @return string
+	 * @since Kunena 6.0
+	 */
+	protected function getPhpExtensions()
+	{
+		if (extension_loaded('mbstring'))
+		{
+			$this->mbstring = '[u]mbstring:[/u] Enabled';
+		}
+		else
+		{
+			$this->mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('gd'))
+		{
+			$gd_info          = gd_info();
+			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
+		}
+		else
+		{
+			$this->gd_support = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('openssl'))
+		{
+			$this->openssl = '[u]openssl:[/u] Enabled';
+		}
+		else
+		{
+			$this->openssl = '[u]openssl:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('fileinfo'))
+		{
+			$this->fileinfo = '[u]fileinfo:[/u] Enabled';
+		}
+		else
+		{
+			$this->fileinfo = '[u]fileinfo:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('json'))
+		{
+			$this->json = '[u]json:[/u] Enabled';
+		}
+		else
+		{
+			$this->json = '[u]json:[/u] [color=#FF0000]Not installed[/color]';
+		}
 	}
 
 	/**
@@ -276,6 +350,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	protected function getReportData()
 	{
+
 		if (!$this->app->get('smtpuser'))
 		{
 			$this->jconfig_smtpuser = 'Empty';
@@ -319,25 +394,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		else
 		{
 			$this->htaccess = 'Missing';
-		}
-
-		if (extension_loaded('mbstring'))
-		{
-			$this->mbstring = '[u]mbstring:[/u] Enabled';
-		}
-		else
-		{
-			$this->mbstring = '[u]mbstring:[/u] ❌ [color=#FF0000]Not installed[/color]';
-		}
-
-		if (extension_loaded('gd'))
-		{
-			$gd_info          = gd_info();
-			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
-		}
-		else
-		{
-			$this->gd_support = '[u]GD:[/u] ❌ [color=#FF0000]Not installed[/color]';
 		}
 
 		$this->maxExecTime       = ini_get('max_execution_time');
@@ -414,7 +470,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$thirdparty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
-		$thirdparty['uddeim']    = $this->getExtensionVersion('com_uddeim', 'UddeIM');
 
 		foreach ($thirdparty as $id => $item)
 		{
@@ -634,7 +689,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -644,7 +699,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
-								$collation .= $table . ' ❌ [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
+								$collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
 							}
 						}
 					}
@@ -654,7 +709,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		if (empty($collation))
 		{
-			$collation = '✔ The collation of your table fields are correct';
+			$collation = '[color=green]The collation of your table fields are correct[/color]';
 		}
 
 		return $collation;
@@ -801,7 +856,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugins_list = array('finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena');
 		$plugin_final = array();
 
 		foreach ($plugins_list as $name => $desc)
@@ -850,10 +905,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		$kunena_db = Factory::getDBO();
 
 		$this->getReportData();
+		$this->getPhpExtensions();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
 			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' (Server type: ' . $kunena_db->getServerType().  ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess

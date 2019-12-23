@@ -117,21 +117,55 @@ class KunenaControllerTopic extends KunenaController
 
 		$attach_id = $this->input->getInt('file_id', 0);
 		$instance  = KunenaAttachmentHelper::get($attach_id);
+		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
+		$attachs_id = explode(',',$attachs_id);
+
+		if($attach_id > 0)
+		{
+			$instance  = KunenaAttachmentHelper::get($attach_id);
+		}
+		else
+		{
+			$instances  = KunenaAttachmentHelper::getById($attachs_id);
+		}
+
 		$response  = array();
 
 		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
-			if ($instance->inline)
+			if($attach_id > 0)
 			{
-				$response['result'] = $instance->setInline(0);
-				$response['value']  = 0;
+				if ($instance->inline)
+				{
+					$response['result'] = $instance->setInline(0);
+					$response['value']  = 0;
+				}
+				else
+				{
+					$response['result'] = $instance->setInline(1);
+					$response['value']  = 1;
+				}
+
+				unset($instance);
 			}
 			else
 			{
-				$response['result'] = $instance->setInline(1);
-				$response['value']  = 1;
+				foreach($instances as $instance)
+				{
+					if ($instance->inline)
+					{
+						$response['result'] = $instance->setInline(0);
+						$response['value']  = 0;
+					}
+					else
+					{
+						$response['result'] = $instance->setInline(1);
+						$response['value']  = 1;
+					}
+				}
+
+				unset($instances);
 			}
-			unset($instance);
 		}
 		else
 		{

@@ -19,7 +19,6 @@ In addition we recommend the following PHP settings:
 
     max_execution_time     >= 30
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
-    safe_mode               = off
     allow_url_fopen         = on
     upload_max_filesize    >= 12M
     GD Library (>=2.0), fileinfo, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets

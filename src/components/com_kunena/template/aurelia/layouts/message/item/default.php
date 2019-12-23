@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Message
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -105,7 +105,7 @@ $list = array();
 	<div class="cart pb-3 pd-3">
 		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<div class="card-body kattach">
-		<?php if ($attachs->inline): 
+		<?php if ($attachs->inline):
 		echo Text::_('COM_KUNENA_ATTACHMENTS_INSERTED_IN_MESSAGE');
 		endif; ?>
 			<ul class="thumbnails" style="list-style:none;">

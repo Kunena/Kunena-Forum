@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright     Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright     Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
 		$('a[href="#secure_reply"]').parents('li,ul').removeClass('active');
 		$('a[href="#preview"]').parents('li,ul').addClass('active');
 		e.preventDefault();
-		
+
 		var preview = $("#kbbcode-preview");
 		var message = $("#editor");
 		var message_private = $("#editor-private");
@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
 		var height = message.css('height');
 		preview.css('height', height);
 	});
-	
+
 	$('#tabs_kunena_editor a:last').click(function (e) {
 		$('a[href="#write"]').parents('li,ul').removeClass('active');
 		$('a[href="#preview"]').parents('li,ul').removeClass('active');

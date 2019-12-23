@@ -5,7 +5,7 @@
  * @package         Kunena.Framework
  * @subpackage      Pagination
  *
- * @copyright       Copyright (C) 2008 - 2019 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @copyright       Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org

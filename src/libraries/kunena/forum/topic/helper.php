@@ -405,7 +405,7 @@ abstract class KunenaForumTopicHelper
 				->from($db->quoteName('#__kunena_user_topics', 'ut'))
 				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
 				->where($where)
-				->group($orderby);
+				->order($orderby);
 		}
 		else
 		{
@@ -414,7 +414,7 @@ abstract class KunenaForumTopicHelper
 				->from($db->quoteName('#__kunena_topics', 'tt'))
 				->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id') . ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid))
 				->where($where)
-				->group($orderby);
+				->order($orderby);
 		}
 
 		$query->setLimit($limit, $limitstart);

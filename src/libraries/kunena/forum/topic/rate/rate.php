@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Forum Topic Rate Class
@@ -242,7 +243,7 @@ class KunenaForumTopicRate extends CMSObject
 		{
 			$users = (array) $this->_db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

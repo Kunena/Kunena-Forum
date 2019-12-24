@@ -20,6 +20,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Nbbc\BBCode;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
@@ -1890,10 +1891,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 		else
 		{
-			require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 			$article->slug    = !empty($article->alias) ? ($article->id . ':' . $article->alias) : $article->id;
 			$article->catslug = !empty($article->category_alias) ? ($article->catid . ':' . $article->category_alias) : $article->catid;
-			$url              = Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
+			$url              = Route::_(RouteHelper::getArticleRoute($article->slug, $article->catslug));
 
 			if (!$default)
 			{

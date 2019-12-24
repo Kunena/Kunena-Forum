@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumTopicUser
@@ -251,7 +252,7 @@ class KunenaForumTopicUser extends CMSObject
 			{
 				$info = $this->_db->loadAssocList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 

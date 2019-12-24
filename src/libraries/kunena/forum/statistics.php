@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumStatistics
@@ -361,7 +362,7 @@ class KunenaForumStatistics
 			{
 				$counts = $this->_db->loadObject();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -480,7 +481,7 @@ class KunenaForumStatistics
 			{
 				$polls = (array) $this->_db->loadObjectList('id');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -656,7 +657,7 @@ class KunenaForumStatistics
 			{
 				$this->topThanks = (array) $this->_db->loadObjectList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}

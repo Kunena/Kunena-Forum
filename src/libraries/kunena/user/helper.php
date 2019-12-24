@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\Utilities\IpHelper;
 use Joomla\Http\Http;
 use Joomla\Http\Transport\Stream as StreamTransport;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaUserHelper
@@ -239,7 +240,7 @@ abstract class KunenaUserHelper
 			{
 				$results = $db->loadAssocList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -326,7 +327,7 @@ abstract class KunenaUserHelper
 			{
 				list(self::$_total, self::$_lastid) = $db->loadRow();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -353,7 +354,7 @@ abstract class KunenaUserHelper
 		{
 			$total = $db->setQuery($query)->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -396,7 +397,7 @@ abstract class KunenaUserHelper
 			{
 				self::$_topposters = (array) $db->loadObjectList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -518,7 +519,7 @@ abstract class KunenaUserHelper
 			{
 				$count = $db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -572,7 +573,7 @@ abstract class KunenaUserHelper
 			{
 				self::$_online = (array) $db->loadObjectList('userid');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -663,7 +664,7 @@ abstract class KunenaUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -697,7 +698,7 @@ abstract class KunenaUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -731,7 +732,7 @@ abstract class KunenaUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

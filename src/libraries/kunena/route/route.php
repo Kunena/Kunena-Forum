@@ -17,8 +17,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.filter.output');
-
 KunenaRoute::initialize();
 
 /**

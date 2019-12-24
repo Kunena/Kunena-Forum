@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Trash Model for Kunena
@@ -287,7 +288,7 @@ class KunenaAdminModelTrash extends KunenaModel
 			$total = (int) $db->loadResult();
 			$this->setState('list.total', $total);
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage());
 

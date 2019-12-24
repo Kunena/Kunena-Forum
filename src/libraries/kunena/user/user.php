@@ -20,6 +20,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Access\Access;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaUser
@@ -1361,7 +1362,7 @@ class KunenaUser extends CMSObject
 			{
 				self::$_ranks = $this->_db->loadObjectList('rank_id');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}

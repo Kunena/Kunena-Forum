@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 require_once KPATH_ADMIN . '/models/categories.php';
 
@@ -262,7 +263,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				{
 					$pending = $db->loadAssocList();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}

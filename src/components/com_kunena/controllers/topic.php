@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Topic Controller
@@ -533,7 +534,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$count = $db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}

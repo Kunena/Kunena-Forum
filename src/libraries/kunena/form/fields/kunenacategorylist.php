@@ -14,15 +14,14 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
 
 /**
  * Class Joomla\CMS\Form\FormField|KunenaCategoryList
  *
  * @since Kunena
  */
-class JFormFieldKunenaCategoryList extends Joomla\CMS\Form\FormField
+class JFormFieldKunenaCategoryList extends FormField
 {
 	/**
 	 * @var string

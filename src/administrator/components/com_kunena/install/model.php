@@ -17,6 +17,8 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Component\ComponentHelper;
 
 define('KUNENA_INSTALLER_PATH', __DIR__);
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
@@ -1652,7 +1654,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if ($file)
 			{
-				$file = JPath::clean($file, '/');
+				$file = Path::clean($file, '/');
 				// Make sure to copy only supported fileformats
 				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
 
@@ -1971,7 +1973,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if ($file)
 			{
-				$file     = JPath::clean($file, '/');
+				$file     = Path::clean($file, '/');
 				$destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
 
 				if (File::exists($destfile))
@@ -2952,12 +2954,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function createMenuJ25($menu, $submenu)
 	{
-		jimport('joomla.utilities.string');
-		jimport('joomla.application.component.helper');
-
 		$config = KunenaFactory::getConfig();
 
-		$component_id = Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena')->id;
+		$component_id = ComponentHelper::getComponent('com_kunena')->id;
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";

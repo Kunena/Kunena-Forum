@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Date\Date;
 
 // This file contains initial sample data for the forum
 
@@ -45,10 +46,8 @@ function installSampleData()
 
 	// $debug = $lang->setDebug(false);
 
-	jimport('joomla.utilities.date');
-
 	$db       = Factory::getDBO();
-	$posttime = new Joomla\CMS\Date\Date;
+	$posttime = new Date;
 	$my       = Factory::getApplication()->getIdentity();
 	$queries  = array();
 

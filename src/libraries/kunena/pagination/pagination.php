@@ -143,10 +143,6 @@ class KunenaPagination
 	 */
 	public function __construct($total, $limitstart, $limit, $prefix = '')
 	{
-		// Workaround for J!2.5:
-		jimport('joomla.html.pagination');
-		class_exists('Joomla\CMS\Pagination\Pagination');
-
 		// Value/type checking.
 		$this->total      = (int) $total;
 		$this->limitstart = (int) max($limitstart, 0);

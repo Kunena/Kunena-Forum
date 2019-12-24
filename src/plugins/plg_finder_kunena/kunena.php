@@ -13,8 +13,7 @@ defined('_JEXEC') or die('');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
-
-jimport('joomla.application.component.helper');
+use Joomla\CMS\Component\ComponentHelper;
 
 // Load the base adapter.
 require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapter.php';
@@ -292,7 +291,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	protected function index(FinderIndexerResult $item)
 	{
 		// Check if the extension is enabled
-		if (Joomla\CMS\Component\ComponentHelper::isEnabled($this->extension) == false)
+		if (ComponentHelper::isEnabled($this->extension) == false)
 		{
 			return;
 		}

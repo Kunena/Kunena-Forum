@@ -110,8 +110,6 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayTopicIcons()
 	{
-		jimport('joomla.filesystem.folder');
-
 		$catid = $this->app->input->getInt('catid', 0);
 
 		$category         = KunenaForumCategoryHelper::get($catid);

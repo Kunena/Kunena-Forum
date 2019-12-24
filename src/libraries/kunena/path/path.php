@@ -13,8 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
-
-jimport('joomla.filesystem.path');
+use Joomla\CMS\Filesystem\Path;
 
 /**
  * Class KunenaPath
@@ -22,7 +21,7 @@ jimport('joomla.filesystem.path');
  * @see   JPath
  * @since Kunena
  */
-class KunenaPath extends JPath
+class KunenaPath extends Path
 {
 	/**
 	 * @var null

@@ -133,7 +133,6 @@ class KunenaAdminViewTemplates extends KunenaView
 	{
 		$this->setToolBarChooseless();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
-		jimport('joomla.filesystem.folder');
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
 

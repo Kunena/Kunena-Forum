@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * The Kunena Installer Controller
@@ -271,12 +272,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 
 		if (class_exists('KunenaForum') && !KunenaForum::isDev())
 		{
-			jimport('joomla.application.component.helper');
-			jimport('joomla.filesystem.folder');
-			jimport('joomla.filesystem.file');
-
 			$installer = new Joomla\CMS\Installer\Installer;
-			$component = Joomla\CMS\Component\ComponentHelper::getComponent('com_kunena');
+			$component = ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
 			if (Folder::exists(KPATH_MEDIA))

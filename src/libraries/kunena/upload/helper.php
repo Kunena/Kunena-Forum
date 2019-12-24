@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Filesystem\Path;
 
 /**
  * Kunena Upload Backend Helper Class
@@ -45,8 +47,7 @@ class KunenaUploadHelper
 	public static function upload($file, $uploadfolder, $format)
 	{
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
+		ClientHelper::setCredentialsFromRequest('ftp');
 
 		// Make the filename safe
 		$file['name'] = File::makeSafe($file['name']);
@@ -63,7 +64,7 @@ class KunenaUploadHelper
 
 		if (isset($file['name']))
 		{
-			$filepath = JPath::clean($uploadfolder . '/' . strtolower($file['name']));
+			$filepath = Path::clean($uploadfolder . '/' . strtolower($file['name']));
 
 			if (File::exists($filepath))
 			{

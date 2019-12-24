@@ -12,15 +12,14 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-
-jimport('joomla.utilities.date');
+use Joomla\CMS\Date\Date;
 
 /**
  * Class KunenaDate
  *
  * @since Kunena
  */
-class KunenaDate extends Joomla\CMS\Date\Date
+class KunenaDate extends Date
 {
 	/**
 	 * @param   string  $date  date

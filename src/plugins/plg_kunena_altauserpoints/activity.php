@@ -15,8 +15,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
-jimport('joomla.utilities.string');
-
 /**
  * KunenaActivityAltaUserPoints class to handle activity integration with AltaUserPoints
  *

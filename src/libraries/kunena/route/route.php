@@ -17,8 +17,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.environment.uri');
-jimport('joomla.html.parameter');
 jimport('joomla.filter.output');
 
 KunenaRoute::initialize();
@@ -232,13 +230,13 @@ abstract class KunenaRoute
 			$item = self::$menu[intval($uri)];
 			$uri  = Uri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
-		elseif ($uri instanceof Joomla\CMS\Uri\Uri)
+		elseif ($uri instanceof Uri)
 		{
 			// Nothing to do
 		}
 		else
 		{
-			$uri = new Joomla\CMS\Uri\Uri((string) $uri);
+			$uri = new Uri((string) $uri);
 		}
 
 		$option = $uri->getVar('option');
@@ -325,7 +323,7 @@ abstract class KunenaRoute
 	 * @throws null
 	 * @throws Exception
 	 */
-	protected static function setItemID(Joomla\CMS\Uri\Uri $uri)
+	protected static function setItemID(Uri $uri)
 	{
 		static $candidates = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -575,7 +573,7 @@ abstract class KunenaRoute
 	 * @since Kunena
 	 * @throws null
 	 */
-	protected static function checkItem($item, Joomla\CMS\Uri\Uri $uri)
+	protected static function checkItem($item, Uri $uri)
 	{
 		$authorise = self::$menus->authorise($item->id);
 

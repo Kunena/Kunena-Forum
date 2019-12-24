@@ -18,8 +18,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Image\Image;
-
-jimport('joomla.utilities.date');
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Access\Access;
 
 /**
  * Class KunenaUser
@@ -1645,8 +1645,8 @@ class KunenaUser extends CMSObject
 			return true;
 		}
 
-		$expiration = new Joomla\CMS\Date\Date($this->banned);
-		$now        = new Joomla\CMS\Date\Date;
+		$expiration = new Date($this->banned);
+		$now        = new Date;
 
 		if ($expiration->toUnix() > $now->toUnix() && $expiration->toUnix() < '9999-12-31 23:59:59')
 		{
@@ -1663,8 +1663,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function GetUserGroup($userid)
 	{
-		jimport('joomla.access.access');
-		$groups = Joomla\CMS\Access\Access::getGroupsByUser($userid, false);
+		$groups = Access::getGroupsByUser($userid, false);
 
 		$groupid_list = implode(',', $groups);
 
@@ -1862,8 +1861,8 @@ class KunenaUser extends CMSObject
 	 */
 	public function bannedDate()
 	{
-		$ban = new Joomla\CMS\Date\Date($this->banned);
-		$now = new Joomla\CMS\Date\Date;
+		$ban = new Date($this->banned);
+		$now = new Date;
 
 		return $ban->toUnix() > $now->toUnix();
 	}

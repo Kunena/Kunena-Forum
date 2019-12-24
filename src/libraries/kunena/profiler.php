@@ -10,14 +10,14 @@
  **/
 defined('_JEXEC') or die();
 
-jimport('joomla.error.profiler');
+use Joomla\CMS\Profiler\Profiler;
 
 /**
  * Class KunenaProfiler
  *
  * @since Kunena
  */
-class KunenaProfiler extends Joomla\CMS\Profiler\Profiler
+class KunenaProfiler extends Profiler
 {
 	/**
 	 * @var array

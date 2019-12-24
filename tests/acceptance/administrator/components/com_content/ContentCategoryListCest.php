@@ -19,11 +19,25 @@ class ContentCategoryListCest
 		$this->categoryTitle = 'Category title';
 	}
 
+	/**
+	 * @param   AcceptanceTester  $I
+	 *
+	 *
+	 * @since version
+	 */
 	public function _before(AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
 	}
 
+	/**
+	 * @param   AcceptanceTester  $I
+	 * @param                     $scenario
+	 *
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function Category(AcceptanceTester $I, $scenario)
 	{
 		$I = new CategoryStep($scenario);

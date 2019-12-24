@@ -17,6 +17,9 @@ if (!class_exists('JLoader'))
 }
 
 // Define Kunena framework path.
+/**
+ *
+ */
 define('KPATH_FRAMEWORK', __DIR__);
 
 // Register the Joomla compatibility layer.

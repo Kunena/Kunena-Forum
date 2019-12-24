@@ -20,9 +20,21 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Component\ComponentHelper;
 
+/**
+ *
+ */
 define('KUNENA_INSTALLER_PATH', __DIR__);
+/**
+ *
+ */
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
+/**
+ *
+ */
 define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE . '/components/' . basename(KUNENA_INSTALLER_ADMINPATH));
+/**
+ *
+ */
 define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE . '/media/kunena');
 
 /**

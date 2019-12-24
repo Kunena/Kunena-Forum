@@ -66,6 +66,10 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 */
 	public $me;
 
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $state = null;
 
 	/**

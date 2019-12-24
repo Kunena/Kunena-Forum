@@ -20,10 +20,27 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaPrivatePostMap extends KunenaTable
 {
+	/**
+	 * @var bool
+	 * @since version
+	 */
 	protected $_autoincrement = false;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $private_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $message_id = null;
 
+	/**
+	 * TableKunenaPrivatePostMap constructor.
+	 *
+	 * @param $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_private_post_map', array('private_id', 'message_id'), $db);

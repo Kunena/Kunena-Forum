@@ -20,10 +20,27 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaPrivateAttachmentMap extends KunenaTable
 {
+	/**
+	 * @var bool
+	 * @since version
+	 */
 	protected $_autoincrement = false;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $private_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $attachment_id = null;
 
+	/**
+	 * TableKunenaPrivateAttachmentMap constructor.
+	 *
+	 * @param $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_private_attachment_map', array('private_id', 'attachment_id'), $db);

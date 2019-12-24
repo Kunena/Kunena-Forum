@@ -27,11 +27,34 @@ use Joomla\Registry\Registry;
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
 {
+	/**
+	 * @var string
+	 * @since version
+	 */
 	protected $_table = 'KunenaPrivate';
+	/**
+	 * @var
+	 * @since version
+	 */
 	protected $_attachments;
+	/**
+	 * @var
+	 * @since version
+	 */
 	protected $_posts;
+	/**
+	 * @var
+	 * @since version
+	 */
 	protected $_users;
 
+	/**
+	 * KunenaPrivateMessage constructor.
+	 *
+	 * @param   null  $properties
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($properties = null)
 	{
 		if (!empty($this->id))
@@ -64,6 +87,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		return '';
 	}
 
+	/**
+	 *
+	 * @return KunenaTableMap
+	 *
+	 * @since version
+	 */
 	public function attachments()
 	{
 		if (is_null($this->_attachments))
@@ -75,6 +104,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		return $this->_attachments;
 	}
 
+	/**
+	 *
+	 * @return KunenaTableMap
+	 *
+	 * @since version
+	 */
 	public function posts()
 	{
 		if (is_null($this->_posts))
@@ -86,6 +121,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		return $this->_posts;
 	}
 
+	/**
+	 *
+	 * @return KunenaTableMap
+	 *
+	 * @since version
+	 */
 	public function users()
 	{
 		if (is_null($this->_users))
@@ -97,6 +138,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		return $this->_users;
 	}
 
+	/**
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
 	public function check()
 	{
 		$this->params = new Registry($this->params);

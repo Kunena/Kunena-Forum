@@ -15,6 +15,10 @@ defined('_JEXEC') or die ();
  */
 class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	static public $topic = null;
 
 	/**

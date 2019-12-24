@@ -22,5 +22,9 @@ defined('_JEXEC') or die();
  */
 class KunenaPrivateMessageUser extends KunenaDatabaseObject
 {
+	/**
+	 * @var string
+	 * @since version
+	 */
 	protected $_table = 'KunenaPrivateUserMap';
 }

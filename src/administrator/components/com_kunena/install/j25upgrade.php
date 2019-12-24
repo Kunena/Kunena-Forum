@@ -33,6 +33,9 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		if (!defined('JVERSION'))
 		{
 			$version = new JVersion;
+			/**
+			 *
+			 */
 			define('JVERSION', $version->getShortVersion());
 		}
 

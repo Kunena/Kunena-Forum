@@ -22,6 +22,10 @@ use Joomla\CMS\Uri\Uri;
  */
 class KunenaActivityEasySocial extends KunenaActivity
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $params = null;
 
 	/**

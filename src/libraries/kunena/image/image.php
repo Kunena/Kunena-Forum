@@ -11,7 +11,13 @@
  **/
 defined('_JEXEC') or die;
 
+/**
+ *
+ */
 define('MIME_GIF', 'image/gif');
+/**
+ *
+ */
 define('MIME_PNG', 'image/png');
 
 use Joomla\Image\Image;

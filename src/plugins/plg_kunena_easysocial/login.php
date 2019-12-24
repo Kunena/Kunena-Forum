@@ -20,6 +20,10 @@ use Joomla\CMS\Component\ComponentHelper;
  */
 class KunenaLoginEasySocial
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $params = null;
 
 	/**

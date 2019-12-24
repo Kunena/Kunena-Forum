@@ -1,4 +1,11 @@
 <?php
+/**
+ * @param $path
+ *
+ * @return array
+ *
+ * @since version
+ */
 function getTranslations($path)
 {
 	$languages = array();

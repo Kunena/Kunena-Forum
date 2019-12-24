@@ -12,6 +12,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 
+/**
+ * @package     ${NAMESPACE}
+ *
+ * @since       version
+ */
 class KunenaViewTopic extends KunenaView
 {
 	/**

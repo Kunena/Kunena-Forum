@@ -22,6 +22,13 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	 */
 	protected $table = '#__kunena_private';
 
+	/**
+	 * @param   KunenaUser  $user
+	 *
+	 * @return $this
+	 *
+	 * @since version
+	 */
 	public function filterByUser(KunenaUser $user)
 	{
 		if (!$user->userid)
@@ -37,6 +44,13 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param   KunenaForumMessage  $message
+	 *
+	 * @return $this
+	 *
+	 * @since version
+	 */
 	public function filterByMessage(KunenaForumMessage $message)
 	{
 		if (!$message->id)
@@ -52,6 +66,13 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param   array  $ids
+	 *
+	 * @return $this
+	 *
+	 * @since version
+	 */
 	public function filterByMessageIds(array $ids)
 	{
 		if (empty($ids))
@@ -77,6 +98,13 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		return $this->load(parent::find());
 	}
 
+	/**
+	 *
+	 * @return KunenaPrivateMessage|mixed
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	public function firstOrNew()
 	{
 		$results = $this->find();
@@ -85,6 +113,14 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		return $first ? $first : new KunenaPrivateMessage;
 	}
 
+	/**
+	 * @param   array  $ids
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function load(array $ids)
 	{
 		if (empty($ids)) return array();

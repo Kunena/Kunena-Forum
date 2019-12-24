@@ -139,6 +139,14 @@ foreach ($files as $filename => $fkeys)
 	saveLang($keys, $fkeys, $translations, $filestrings, $filename, $header);
 }
 
+/**
+ * @param           $dir
+ * @param   string  $filter
+ *
+ * @return array
+ *
+ * @since version
+ */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 {
 	$checklist = array();
@@ -166,13 +174,28 @@ function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 	return $checklist;
 }
 
-function strprefix( $s1, $s2 )
+/**
+ * @param $s1
+ * @param $s2
+ *
+ * @return false|string
+ *
+ * @since version
+ */
+function strprefix($s1, $s2 )
 {
 	$prefix = $s1 ^ $s2;
 
 	return substr($s1, 0, strlen($prefix) - strlen(ltrim($prefix, chr(0))));
 }
 
+/**
+ * @param $filename
+ *
+ * @return mixed
+ *
+ * @since version
+ */
 function findStrings($filename)
 {
 	$file = file_get_contents("$filename");
@@ -181,6 +204,17 @@ function findStrings($filename)
 	return $matches[0];
 }
 
+/**
+ * @param $keys
+ * @param $fkeys
+ * @param $translations
+ * @param $filestrings
+ * @param $outfile
+ * @param $header
+ *
+ *
+ * @since version
+ */
 function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $header)
 {
 	$out = $header;
@@ -262,6 +296,13 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	fclose($fp);
 }
 
+/**
+ * @param $files
+ *
+ * @return array
+ *
+ * @since version
+ */
 function loadTranslations($files)
 {
 	$translations = array();

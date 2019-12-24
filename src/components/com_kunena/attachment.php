@@ -21,6 +21,9 @@ if (version_compare(PHP_VERSION, '7.2', '<'))
 /*
  * Constant that is checked in included files to prevent direct access.
  */
+/**
+ *
+ */
 define('_JEXEC', 1);
 
 use Joomla\Application\Web\WebClient;
@@ -30,6 +33,9 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 
 // Set base directory. This should usually work even with symbolic linked Kunena.
+/**
+ *
+ */
 define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
 
 // Define Joomla constants.

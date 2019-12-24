@@ -19,22 +19,55 @@ if (defined('KUNENA_LOADED'))
 }
 
 // Manually enable code profiling by setting value to 1
+/**
+ *
+ */
 define('KUNENA_PROFILER', 0);
 
 // Component name amd database prefix
+/**
+ *
+ */
 define('KUNENA_COMPONENT_NAME', 'com_kunena');
+/**
+ *
+ */
 define('KUNENA_COMPONENT_LOCATION', 'components');
+/**
+ *
+ */
 define('KUNENA_NAME', substr(KUNENA_COMPONENT_NAME, 4));
 
 // Component paths
+/**
+ *
+ */
 define('KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_COMPONENT_NAME);
+/**
+ *
+ */
 define('KPATH_SITE', JPATH_ROOT . '/' . KPATH_COMPONENT_RELATIVE);
+/**
+ *
+ */
 define('KPATH_ADMIN', JPATH_ADMINISTRATOR . '/' . KPATH_COMPONENT_RELATIVE);
+/**
+ *
+ */
 define('KPATH_MEDIA', JPATH_ROOT . '/media/' . KUNENA_NAME);
 
 // URLs
+/**
+ *
+ */
 define('KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME);
+/**
+ *
+ */
 define('KURL_SITE', Uri::Root() . KPATH_COMPONENT_RELATIVE . '/');
+/**
+ *
+ */
 define('KURL_MEDIA', Uri::Root() . 'media/' . KUNENA_NAME . '/');
 
 $libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
@@ -50,4 +83,7 @@ if (Factory::getApplication()->isClient('site'))
 }
 
 // Kunena has been initialized
+/**
+ *
+ */
 define('KUNENA_LOADED', 1);

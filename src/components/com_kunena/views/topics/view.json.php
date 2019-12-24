@@ -10,6 +10,11 @@
  **/
 defined('_JEXEC') or die;
 
+/**
+ * @package     ${NAMESPACE}
+ *
+ * @since       version
+ */
 class KunenaViewTopics extends KunenaView
 {
 	/**

@@ -23,13 +23,45 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaPrivate extends KunenaTable
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $parent_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $author_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $created_at = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $attachments = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $subject = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $body = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $params = null;
 
 	/**

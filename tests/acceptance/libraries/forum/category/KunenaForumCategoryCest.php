@@ -15,6 +15,10 @@ defined('_JEXEC') or die ();
  */
 class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	static protected $category = null;
 
 	/**
@@ -65,6 +69,12 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($catid, $category->id, 'Check that category id is correct');
 	}
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
 	public function providerLoad()
 	{
 		return array(
@@ -148,6 +158,12 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 		$this->assertThat(array_keys($category->getChildren($level)), $this->equalTo($expected), 'Check category children');
 	}
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
 	public function providerGetChildren()
 	{
 		return array(

@@ -21,6 +21,10 @@ use Joomla\CMS\Factory;
  */
 class KunenaProfileEasySocial extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $params = null;
 
 	/**

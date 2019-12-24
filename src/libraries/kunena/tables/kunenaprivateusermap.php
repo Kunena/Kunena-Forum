@@ -20,13 +20,42 @@ require_once(__DIR__ . '/kunena.php');
  */
 class TableKunenaPrivateUserMap extends KunenaTable
 {
+	/**
+	 * @var bool
+	 * @since version
+	 */
 	protected $_autoincrement = false;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $private_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $user_id = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $read_at = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $replied_at = null;
+	/**
+	 * @var null
+	 * @since version
+	 */
 	public $deleted_at = null;
 
+	/**
+	 * TableKunenaPrivateUserMap constructor.
+	 *
+	 * @param $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_private_user_map', array('private_id', 'user_id'), $db);

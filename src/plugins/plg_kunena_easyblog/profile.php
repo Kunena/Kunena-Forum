@@ -22,6 +22,10 @@ use Joomla\CMS\Router\Route;
  */
 class KunenaProfileEasyblog extends KunenaProfile
 {
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $params = null;
 
 	/**

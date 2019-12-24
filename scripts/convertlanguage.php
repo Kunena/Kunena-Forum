@@ -65,6 +65,14 @@ foreach ($languages as $language)
 	}
 }
 
+/**
+ * @param           $dir
+ * @param   string  $filter
+ *
+ * @return array
+ *
+ * @since version
+ */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 {
 	$checklist = array();
@@ -92,6 +100,13 @@ function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 	return $checklist;
 }
 
+/**
+ * @param $file
+ *
+ * @return array
+ *
+ * @since version
+ */
 function loadTranslations($file)
 {
 	if (!is_file($file))
@@ -110,6 +125,13 @@ function loadTranslations($file)
 	return $strings;
 }
 
+/**
+ * @param $infile
+ * @param $outfile
+ *
+ *
+ * @since version
+ */
 function saveLang($infile, $outfile)
 {
 	$contents = file_get_contents($infile);
@@ -131,6 +153,13 @@ function saveLang($infile, $outfile)
 	fclose($fp);
 }
 
+/**
+ * @param $matches
+ *
+ * @return string
+ *
+ * @since version
+ */
 function translate($matches)
 {
 	global $translations;

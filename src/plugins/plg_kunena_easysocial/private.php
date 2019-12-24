@@ -20,8 +20,16 @@ use Joomla\CMS\Language\Text;
  */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
+	/**
+	 * @var bool
+	 * @since version
+	 */
 	protected $loaded = false;
 
+	/**
+	 * @var null
+	 * @since version
+	 */
 	protected $params = null;
 
 	/**

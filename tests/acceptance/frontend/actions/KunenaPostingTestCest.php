@@ -15,8 +15,20 @@ defined('_JEXEC') or die ();
  */
 class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var array
+	 * @since version
+	 */
 	static public $category = array();
+	/**
+	 * @var array
+	 * @since version
+	 */
 	static public $topic = array();
+	/**
+	 * @var array
+	 * @since version
+	 */
 	static public $message = array();
 
 	/**
@@ -130,6 +142,12 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		$this->checkCategory($target);
 	}
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
 	public function providerMovingTopicsToCategory()
 	{
 		return array(
@@ -165,6 +183,12 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		$this->checkUser(42);
 	}
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
 	public function providerMovingTopicsToTopic()
 	{
 		return array(
@@ -174,6 +198,12 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		);
 	}
 
+	/**
+	 * @param $category
+	 *
+	 *
+	 * @since version
+	 */
 	protected function checkCategory($category)
 	{
 		$db = JFactory::getDBO();
@@ -190,6 +220,14 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($last_topic ? $last_topic->last_post_id : 0, $category->last_post_id, 'Check that last post is right');
 	}
 
+	/**
+	 * @param $topic
+	 * @param $user
+	 *
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkTopic($topic, $user)
 	{
 		if ($topic->moved_id) return;
@@ -215,6 +253,13 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(intval($count->userposts), $topic->getUserInfo($user->userid)->posts, 'Check that user topic post count is right');
 	}
 
+	/**
+	 * @param $user
+	 *
+	 *
+	 * @since version
+	 * @throws Exception
+	 */
 	protected function checkUser($user)
 	{
 		$user = KunenaFactory::getUser($user);

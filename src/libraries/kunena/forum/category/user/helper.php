@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumCategoryUserHelper
@@ -150,7 +151,7 @@ abstract class KunenaForumCategoryUserHelper
 		{
 			$results = (array) $db->loadAssocList('category_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -219,7 +220,7 @@ abstract class KunenaForumCategoryUserHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -238,7 +239,7 @@ abstract class KunenaForumCategoryUserHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}

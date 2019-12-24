@@ -13,6 +13,7 @@
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\QueryInterface;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -227,7 +228,7 @@ abstract class KunenaDatabaseObjectFinder
 		{
 			$results = (array) $this->db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -274,7 +275,7 @@ abstract class KunenaDatabaseObjectFinder
 		{
 			$count = (int) $this->db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

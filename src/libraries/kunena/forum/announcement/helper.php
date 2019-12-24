@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumAnnouncementHelper
@@ -142,7 +143,7 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$results = (array) $db->loadAssocList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -207,7 +208,7 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$total = (int) $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

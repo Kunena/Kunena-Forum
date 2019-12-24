@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumDiagnostics
@@ -84,7 +85,7 @@ abstract class KunenaForumDiagnostics
 			{
 				return (int) $db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -122,7 +123,7 @@ abstract class KunenaForumDiagnostics
 			{
 				return (array) $db->loadAssocList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -152,7 +153,7 @@ abstract class KunenaForumDiagnostics
 			{
 				return (bool) $db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -220,7 +221,7 @@ abstract class KunenaForumDiagnostics
 			{
 				return (bool) $db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}

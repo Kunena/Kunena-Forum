@@ -53,7 +53,9 @@ else
 	   rel="canonical">#<?php echo $this->numLink; ?></a>
 	<span class="visible-xs"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 </small>
+
 <div class="clear-fix"></div>
+
 <div class="horizontal-message">
 	<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $this->message->getState(); ?>">
 		<div class="kmessage">
@@ -83,95 +85,127 @@ else
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
-	<?php if ($this->config->reportmsg && $this->me->exists()) :
-		if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
+	<?php if ($this->config->reportmsg && $this->me->exists()) : ?>
+		<div class="report pb-5">
+			<?php echo KunenaLayout::factory('Widget/Button')
+				->setProperties(array('url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+				                      'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
+				                      'modal' => 'modal', 'pullright' => 'pullright',)); ?>
+		</div>
+		<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
-			     data-backdrop="false" style="display: none;">
-				<div class="modal-dialog">
+			     aria-hidden="true" data-backdrop="false" style="display: none;">
+				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h5 class="modal-title" id="reportModalLabel">
+								<?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
 							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="clearfix"></div>
 		<?php endif; ?>
 	<?php endif; ?>
-	<?php if (!empty($attachments)) : ?>
-		<div class="kattach">
-			<h5> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-			<ul class="thumbnails">
-				<?php foreach ($attachments as $attachment) : ?>
-					<li class="col-md-3 center">
-						<div class="thumbnail">
-							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-							<?php echo $attachment->getLayout()->render('textlink'); ?>
-						</div>
-					</li>
-				<?php endforeach; ?>
-			</ul>
+	<?php if (!empty($attachments) && $attachs->inline != $attachs->total || !empty($attachments) && $message->isAuthorised('edit')) : ?>
+		<div class="cart pb-3 pd-3">
+			<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+			<div class="card-body kattach">
+				<ul class="thumbnails" style="list-style:none;">
+					<?php foreach ($attachments as $attachment) :
+						if (!$attachment->inline): ?>
+							<?php if ($attachment->isAudio()) :
+								echo $attachment->getLayout()->render('audio'); ?>
+							<?php elseif ($attachment->isVideo()) :
+								echo $attachment->getLayout()->render('video'); ?>
+							<?php else : ?>
+								<li class="col-md-3 text-center">
+									<div class="thumbnail">
+										<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+										<?php echo $attachment->getLayout()->render('textlink'); ?>
+									</div>
+								</li>
+							<?php endif; ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
+			</div>
 		</div>
 		<div class="clearfix"></div>
-	<?php elseif ($attachs->total > 0 && !$this->me->exists())
-		:
-		if ($attachs->image > 0 && !$this->config->showimgforguest)
+	<?php elseif ($attachs->total > 0 && !$this->me->exists()) :
+
+	if ($attachs->image > 0 && !$this->config->showimgforguest)
+	{
+		if ($attachs->image > 1)
 		{
-			if ($attachs->image > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-			}
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 		}
-
-		if ($attachs->file > 0 && !$this->config->showfileforguest)
+		else
 		{
-			if ($attachs->file > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-			}
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
 		}
-	endif; ?>
+	}
 
-	<?php
-	if ($message->modified_by && $this->config->editmarkup)
-		:
-		$dateshown = $datehover = '';
-
-		if ($message->modified_time)
+	if ($attachs->file > 0 && !$this->config->showfileforguest)
+	{
+		if ($attachs->file > 1)
 		{
-			$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-			$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
+endif; ?>
+
+<?php if ($message->modified_by && $this->config->editmarkup) :
+	$dateshown = $datehover = '';
+
+	if ($message->modified_time)
+	{
+		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
+		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+	}
+	?>
+	<div class="alert alert-info hidden-xs-down" <?php echo $datehover ?>>
+		<?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
+		<?php if ($message->modified_reason)
+		{
+			echo Text::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
 		} ?>
-		<div class="alert alert-info hidden-xs-down" <?php echo $datehover ?>>
-			<?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
-			<?php
-			if ($message->modified_reason)
-			{
-				echo Text::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);
-			} ?>
-		</div>
-	<?php endif; ?>
+	</div>
+<?php endif; ?>
 
-	<?php if (!empty($this->thankyou))
-		:
-		?>
-		<div class="kmessage-thankyou">
-			<?php
-			echo Text::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-
-			if ($this->more_thankyou)
+<?php if (!empty($this->thankyou)) : ?>
+	<div class="kmessage-thankyou">
+		<?php
+		foreach ($this->thankyou as $userid => $thank)
+		{
+			if (!empty($this->thankyou_delete[$userid]))
 			{
-				echo Text::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+				$list[] = $thank . ' <a title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
+					. $this->thankyou_delete[$userid] . '">' . KunenaIcons::cancel() . '</a>';
 			}
-			?>
-		</div>
-	<?php endif; ?>
+			else
+			{
+				$list[] = $thank;
+			}
+		}
+
+		echo KunenaIcons::thumbsup() . Text::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
+		if ($this->more_thankyou)
+		{
+			echo Text::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+		}
+		?>
+	</div>
+<?php endif;?>
 </div>

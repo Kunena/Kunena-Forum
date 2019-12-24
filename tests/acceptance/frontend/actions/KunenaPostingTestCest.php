@@ -128,6 +128,8 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param $topic_id
 	 * @param $target_id
+	 *
+	 * @throws Exception
 	 */
 	public function testMovingTopicsToCategory($topic_id, $target_id)
 	{
@@ -163,7 +165,8 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 * @depends      testMovingTopicsToCategory
 	 * @param $topic_id
 	 * @param $target_id
-*/
+	 * @throws Exception
+	 */
 	public function testMovingTopicsToTopic($topic_id, $target_id)
 	{
 		$topic   = self::$topic[$topic_id];

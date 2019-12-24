@@ -1317,6 +1317,7 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{

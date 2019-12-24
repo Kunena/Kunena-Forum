@@ -108,8 +108,9 @@ class KunenaForumTopicUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test getTopic()
 	 *
-	 * @param KunenaForumTopicUser $topicuser
+	 * @param   KunenaForumTopicUser  $topicuser
 	 *
+	 * @throws Exception
 	 * @depends testGetInstance
 	 */
 	public function testGetTopic(KunenaForumTopicUser $topicuser)

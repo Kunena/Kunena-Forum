@@ -25,6 +25,7 @@ class KunenaIntegrationPlugins
 	 *
 	 * @return boolean Codename.
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public static function getTotalPlugins()
 	{

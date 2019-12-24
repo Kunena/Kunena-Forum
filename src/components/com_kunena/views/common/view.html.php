@@ -587,6 +587,7 @@ class KunenaViewCommon extends KunenaView
 	 *
 	 * @return mixed|string
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	public function fillLoginBoxInfo($matches)
 	{

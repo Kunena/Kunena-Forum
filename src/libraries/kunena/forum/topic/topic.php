@@ -2104,6 +2104,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return KunenaExceptionAuthorise|void
 	 * @since Kunena
+	 * @throws Exception
 	 */
 	protected function authorisePoll(KunenaUser $user)
 	{

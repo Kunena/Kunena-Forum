@@ -129,7 +129,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$instance  = KunenaAttachmentHelper::get($attach_id);
 		}
-		else 
+		else
 		{
 			$instances  = KunenaAttachmentHelper::getById($attachs_id);
 		}
@@ -2454,6 +2454,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param   KunenaForumMessage  $message
 	 *
 	 * @since Kunena 6.0
+	 * @throws Exception
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
 	{
@@ -2509,6 +2510,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param   KunenaForumMessage  $message
 	 *
 	 * @since Kunena 6.0
+	 * @throws Exception
 	 */
 	protected function editPrivate(KunenaForumMessage $message)
 	{

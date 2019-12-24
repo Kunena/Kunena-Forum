@@ -71,6 +71,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 * @param   string  $field
 	 *
 	 * @return int|string
+	 * @throws Exception
 	 */
 	public function displayField($field)
 	{
@@ -172,6 +173,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 * Save changes in the relations.
 	 *
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function saveInternal()
 	{

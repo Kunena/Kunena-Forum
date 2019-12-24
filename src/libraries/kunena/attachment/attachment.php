@@ -935,6 +935,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
 	 * @since Kunena 6.0
+	 * @throws Exception
 	 */
 	protected function authorisePrivate($action, KunenaUser $user)
 	{

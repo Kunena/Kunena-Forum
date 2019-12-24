@@ -181,6 +181,7 @@ class Compiler
 	 *
 	 * @return string
 	 * @throws CompilerException
+	 * @throws Exception\ParserException
 	 */
 	public function compile($code, $path = null)
 	{
@@ -832,6 +833,8 @@ class Compiler
 	 * Compile directive
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
+	 *
+	 * @throws CompilerException
 	 */
 	protected function compileDirective(Block $block)
 	{
@@ -856,6 +859,7 @@ class Compiler
 	 * Compile at-root
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
+	 * @throws CompilerException
 	 */
 	protected function compileAtRoot(Block $block)
 	{
@@ -1268,6 +1272,7 @@ class Compiler
 	 * @param   array  $part
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function evalSelectorPart($part)
 	{
@@ -1387,6 +1392,7 @@ class Compiler
 	 * @param   array  $piece
 	 *
 	 * @return string
+	 * @throws CompilerException
 	 */
 	protected function compileSelectorPart($piece)
 	{
@@ -1447,6 +1453,7 @@ class Compiler
 	 * @param   OutputBlock  $out
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function compileChildren($stms, OutputBlock $out)
 	{
@@ -1492,6 +1499,7 @@ class Compiler
 	 * @param   array  $queryList
 	 *
 	 * @return string
+	 * @throws CompilerException
 	 */
 	protected function compileMediaQuery($queryList)
 	{
@@ -1695,6 +1703,7 @@ class Compiler
 	 * @param   boolean  $once
 	 *
 	 * @return boolean
+	 * @throws CompilerException
 	 */
 	protected function compileImport($rawPath, $out, $once = false)
 	{
@@ -2257,6 +2266,7 @@ class Compiler
 	 * @param   boolean  $inExp
 	 *
 	 * @return array|Number
+	 * @throws CompilerException
 	 */
 	protected function reduce($value, $inExp = false)
 	{
@@ -2472,6 +2482,7 @@ class Compiler
 	 * @param   array   $argValues
 	 *
 	 * @return array|null
+	 * @throws Exception
 	 */
 	private function fncall($name, $argValues)
 	{
@@ -2519,6 +2530,7 @@ class Compiler
 	 * @param   array  $value
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	public function normalizeValue($value)
 	{
@@ -2788,6 +2800,7 @@ class Compiler
 	 * @param   array   $right
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function opColorNumber($op, $left, $right)
 	{
@@ -2808,6 +2821,7 @@ class Compiler
 	 * @param   array   $right
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function opNumberColor($op, $left, $right)
 	{
@@ -2827,6 +2841,7 @@ class Compiler
 	 * @param   array  $right
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function opEq($left, $right)
 	{
@@ -2849,6 +2864,7 @@ class Compiler
 	 * @param   array  $right
 	 *
 	 * @return array
+	 * @throws CompilerException
 	 */
 	protected function opNeq($left, $right)
 	{
@@ -3146,6 +3162,7 @@ class Compiler
 	 * @param   array  $list
 	 *
 	 * @return string
+	 * @throws CompilerException
 	 */
 	protected function flattenList($list)
 	{
@@ -3158,6 +3175,7 @@ class Compiler
 	 * @param   array  $string
 	 *
 	 * @return string
+	 * @throws CompilerException
 	 */
 	protected function compileStringContent($string)
 	{
@@ -3554,6 +3572,7 @@ class Compiler
 	 * @param   Environment  $env
 	 *
 	 * @return boolean
+	 * @throws CompilerException
 	 */
 	protected function has($name, Environment $env = null)
 	{
@@ -4470,6 +4489,7 @@ class Compiler
 	 * @param   array  $value
 	 *
 	 * @return array|null
+	 * @throws CompilerException
 	 */
 	protected function coerceString($value)
 	{

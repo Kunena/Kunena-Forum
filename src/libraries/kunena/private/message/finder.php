@@ -92,6 +92,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	 * Get private messages.
 	 *
 	 * @return array|KunenaPrivateMessage[]
+	 * @throws Exception
 	 */
 	public function find()
 	{

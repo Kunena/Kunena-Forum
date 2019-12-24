@@ -100,8 +100,9 @@ class KunenaForumCategoryUserCest extends PHPUnit_Framework_TestCase
 	/**
 	 * Test getCategory()
 	 *
-	 * @param KunenaForumCategoryUser $categoryuser
+	 * @param   KunenaForumCategoryUser  $categoryuser
 	 *
+	 * @throws Exception
 	 * @depends testGetInstance
 	 */
 	public function testGetCategory(KunenaForumCategoryUser $categoryuser)

@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class ComponentKunenaControllerTopicModerateDisplay
@@ -147,7 +148,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			{
 				$this->replies = $db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 

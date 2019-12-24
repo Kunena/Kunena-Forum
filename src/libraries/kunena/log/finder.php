@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\Database\QueryInterface;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaLogFinder
@@ -126,7 +127,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 		{
 			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

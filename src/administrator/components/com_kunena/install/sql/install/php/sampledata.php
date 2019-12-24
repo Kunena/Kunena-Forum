@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Date\Date;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 // This file contains initial sample data for the forum
 
@@ -217,7 +218,7 @@ function installSampleData()
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 			}
@@ -239,7 +240,7 @@ function installSampleData()
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -250,7 +251,7 @@ function installSampleData()
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 				}
@@ -270,7 +271,7 @@ function installSampleData()
 	{
 		$db->execute();
 	}
-	catch (JDatabaseExceptionExecuting $e)
+	catch (ExecutionFailureException $e)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}

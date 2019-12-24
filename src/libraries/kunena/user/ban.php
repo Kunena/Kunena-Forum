@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaUserBan
@@ -387,7 +388,7 @@ class KunenaUserBan extends CMSObject
 		{
 			$results = $db->loadAssocList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -434,7 +435,7 @@ class KunenaUserBan extends CMSObject
 		{
 			$results = $db->loadAssocList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

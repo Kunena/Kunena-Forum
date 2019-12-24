@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Attachment Helper Class
@@ -577,7 +578,7 @@ abstract class KunenaAttachmentHelper
 		{
 			$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -606,7 +607,7 @@ abstract class KunenaAttachmentHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

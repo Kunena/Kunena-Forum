@@ -18,6 +18,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -353,7 +354,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				{
 					$pending = $db->loadAssocList();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}

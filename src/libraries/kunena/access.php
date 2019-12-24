@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaAccess
@@ -166,7 +167,7 @@ class KunenaAccess
 		{
 			$this->storeRoles((array) $db->loadObjectList());
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -946,7 +947,7 @@ jQuery(document).ready(function ($) {
 			{
 				$userids = (array) $db->loadObjectList();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -1011,7 +1012,7 @@ jQuery(document).ready(function ($) {
 		{
 			$userids = (array) $db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

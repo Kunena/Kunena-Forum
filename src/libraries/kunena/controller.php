@@ -17,8 +17,6 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Application\CMSApplicationInterface;
 
-jimport('joomla.application.component.helper');
-
 /**
  * Class KunenaController
  *

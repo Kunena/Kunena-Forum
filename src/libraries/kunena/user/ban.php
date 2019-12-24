@@ -17,8 +17,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Table\Table;
 
-jimport('joomla.utilities.date');
-
 /**
  * Class KunenaUserBan
  *

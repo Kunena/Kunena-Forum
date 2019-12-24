@@ -21,8 +21,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 
-jimport('joomla.html.parameter');
-
 /**
  * Kunena Users Table Class
  * Provides access to the #__kunena_users table

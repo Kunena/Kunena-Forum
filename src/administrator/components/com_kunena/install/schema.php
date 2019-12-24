@@ -17,8 +17,6 @@ DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN . '/install/upgrade/upgrade.xml
 DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><schema></schema>');
 DEFINE('KUNENA_INPUT_DATABASE', '_DB_');
 
-jimport('joomla.application.component.model');
-
 /**
  * Install Model for Kunena
  *

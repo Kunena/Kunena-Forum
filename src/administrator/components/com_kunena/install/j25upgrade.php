@@ -215,9 +215,6 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-		// Need to initialize application
-		jimport('joomla.environment.uri');
-
 		// Get component object
 		$component = Joomla\CMS\Table\Table::getInstance('extension', 'Joomla\CMS\Table\Table', array('dbo' => $this->db_new));
 		$component->load(array('type' => 'component', 'element' => $this->name));

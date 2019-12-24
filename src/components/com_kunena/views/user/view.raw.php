@@ -111,8 +111,6 @@ class KunenaViewUser extends KunenaView
 
 		$gallery_name = $this->app->input->get('gallery_name', null, 'string');
 
-		jimport('joomla.filesystem.folder');
-
 		$list_files = Folder::files(JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name);
 
 		foreach ($list_files as $key => $file)

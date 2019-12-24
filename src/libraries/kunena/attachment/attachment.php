@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\Image\Image;
+use Joomla\CMS\Table\Table;
 
 /**
  * Class KunenaAttachment
@@ -711,7 +712,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function upload($key = 'kattachment', $catid = null)
 	{
-		jimport('joomla.filesystem.folder');
 		$config    = KunenaFactory::getConfig();
 		$input     = Factory::getApplication()->input;
 		$fileInput = $input->files->get($key, null, 'raw');
@@ -903,7 +903,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check is an attachment is private
 	 *
-	 * @param   unknown     $action
+	 * @param   string      $action
 	 * @param   KunenaUser  $user
 	 *
 	 * @return KunenaExceptionAuthorise|NULL
@@ -922,7 +922,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		// Need to load private message (for now allow only one private message per attachment).
-		$map = JTable::getInstance('KunenaPrivateAttachmentMap', 'Table');
+		$map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
 		$map->load(array('attachment_id' => $this->id));
 		$finder  = new KunenaPrivateMessageFinder();
 		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();

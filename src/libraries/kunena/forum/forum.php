@@ -227,7 +227,6 @@ abstract class KunenaForum
 		$cache->setLifeTime($config->get('cache_time', 60));
 
 		// Setup error logging.
-		jimport('joomla.error.log');
 		$options    = array('logger' => 'w3c', 'text_file' => 'kunena.php');
 		$categories = array('kunena');
 		$levels     = JDEBUG || $config->debug ? Log::ALL :

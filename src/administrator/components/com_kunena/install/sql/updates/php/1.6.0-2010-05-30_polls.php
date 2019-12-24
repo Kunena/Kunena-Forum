@@ -23,8 +23,6 @@ use Joomla\CMS\Language\Text;
  */
 function kunena_160_2010_05_30_polls($parent)
 {
-	// Import filesystem libraries.
-	jimport('joomla.filesystem.folder');
 	$db = Factory::getDbo();
 
 	$upgraded = false;

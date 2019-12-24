@@ -21,8 +21,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Nbbc\BBCode;
 
-jimport('joomla.utilities.string');
-
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
@@ -2876,7 +2874,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
-		jimport('joomla.filesystem.folder');
 		$config          = KunenaFactory::getConfig();
 		$uri             = Uri::getInstance();
 		$consumer_key    = trim($config->twitter_consumer_key);

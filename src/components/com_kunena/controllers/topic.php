@@ -2210,7 +2210,6 @@ class KunenaControllerTopic extends KunenaController
 					$mailsubject .= $topic->subject;
 				}
 
-				jimport('joomla.environment.uri');
 				$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
 				$mail = Joomla\CMS\Mail\Mail::getInstance();

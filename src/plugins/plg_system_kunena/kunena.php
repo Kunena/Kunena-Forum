@@ -42,8 +42,6 @@ class plgSystemKunena extends CMSPlugin
 			return;
 		}
 
-		jimport('joomla.application.component.helper');
-
 		// Check if Kunena component is installed/enabled
 		if (!ComponentHelper::isEnabled('com_kunena'))
 		{

@@ -1729,7 +1729,7 @@ class lessc
 			list($number, $newUnit) = $arg[2];
 
 			return array("number", $this->assertNumber($number),
-				$this->compileValue($this->lib_e($newUnit)),);
+				$this->compileValue($this->lib_e($newUnit)));
 		}
 		else
 		{
@@ -4191,7 +4191,7 @@ class lessc_parser
 				if ($this->literal("/") && $this->value($rhs))
 				{
 					$out = array("list", "",
-						array($out, array("keyword", "/"), $rhs),);
+						array($out, array("keyword", "/"), $rhs));
 				}
 				else
 				{

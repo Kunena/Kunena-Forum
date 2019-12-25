@@ -341,7 +341,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'  => $hold,
-				'moved' => $moved,);
+				'moved' => $moved);
 
 			switch ($topic_ordering)
 			{

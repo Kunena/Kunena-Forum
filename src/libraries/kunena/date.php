@@ -176,7 +176,7 @@ class KunenaDate extends Date
 			'w' => array(Text::_('COM_KUNENA_DATE_WEEK'), Text::_('COM_KUNENA_DATE_WEEKS')),
 			'd' => array(Text::_('COM_KUNENA_DATE_DAY'), Text::_('COM_KUNENA_DATE_DAYS')),
 			'h' => array(Text::_('COM_KUNENA_DATE_HOUR'), Text::_('COM_KUNENA_DATE_HOURS')),
-			'i' => array(Text::_('COM_KUNENA_DATE_MINUTE'), Text::_('COM_KUNENA_DATE_MINUTES')),);
+			'i' => array(Text::_('COM_KUNENA_DATE_MINUTE'), Text::_('COM_KUNENA_DATE_MINUTES')));
 
 		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick   = 0;

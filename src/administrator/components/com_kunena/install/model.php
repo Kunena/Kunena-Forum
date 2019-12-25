@@ -130,7 +130,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 		// TODO: move to migration
 		$this->_kVersions = array(
-			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null),);
+			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		// TODO: move to migration
 		$this->_fbVersions = array(
@@ -144,13 +144,13 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			      'table'     => 'fb_users', 'column' => 'uhits',),
 			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15',
 			      'table'     => 'fb_messages',),
-			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null),);
+			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		// TODO: move to migration
 		$this->_sbVersions = array(
 			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '1000-01-01',
 			      'table'     => 'sb_messages',),
-			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null),);
+			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		$this->steps = array(
 			array('step' => '', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_INSTALL')),
@@ -158,7 +158,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			array('step' => 'Plugins', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_PLUGINS')),
 			array('step' => 'Database', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_DATABASE')),
 			array('step' => 'Finish', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_FINISH')),
-			array('step' => '', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_COMPLETE')),);
+			array('step' => '', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_COMPLETE')));
 	}
 
 	/**
@@ -2923,7 +2923,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function createMenu()
 	{
 		$menu    = array('name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
-		                 'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => array('catids' => 0),);
+		                 'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => array('catids' => 0));
 		$submenu = array(
 			'index'     => array('name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
 			                     'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => array(),),
@@ -3014,7 +3014,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		                   'menu-meta_description' => '',
 		                   'menu-meta_keywords'    => '',
 		                   'robots'                => '',
-		                   'secure'                => 0,);
+		                   'secure'                => 0);
 
 		$gparams = new Joomla\Registry\Registry($paramdata);
 

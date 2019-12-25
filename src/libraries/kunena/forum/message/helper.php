@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Forum Message Helper Class
@@ -109,7 +110,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$results = (array) $db->loadAssocList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -209,7 +210,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$results = (array) $db->loadAssocList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -371,7 +372,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$total = (int) $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -396,7 +397,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$results = $db->loadAssocList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -567,7 +568,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$results = (array) $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -638,7 +639,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -677,7 +678,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$results = (array) $db->loadAssocList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -716,7 +717,7 @@ abstract class KunenaForumMessageHelper
 		{
 			$ip = $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

@@ -133,7 +133,7 @@ abstract class KunenaError
 	/**
 	 * Return different error if it's an admin or a simple user
 	 *
-	 * @param   Exception|JDatabaseExceptionExecuting  $exception  exception
+	 * @param   Exception| Joomla\Database\Exception\ExecutionFailureException  $exception  exception
 	 *
 	 * @return void
 	 * @since 5.0

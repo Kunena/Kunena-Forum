@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumTopicPoll
@@ -196,7 +197,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->options = (array) $this->_db->loadObjectList('id');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -255,7 +256,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->usercount = (int) $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -288,7 +289,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -321,7 +322,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->mytime[$user->userid] = $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -434,7 +435,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->_db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -466,7 +467,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->_db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -518,7 +519,7 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			$this->mylastvoteId = $this->_db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -550,7 +551,7 @@ class KunenaForumTopicPoll extends CMSObject
 			{
 				$this->myvotes[$user->userid] = $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -589,7 +590,7 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -655,7 +656,7 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -670,7 +671,7 @@ class KunenaForumTopicPoll extends CMSObject
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -768,7 +769,7 @@ class KunenaForumTopicPoll extends CMSObject
 				{
 					$this->_db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}
@@ -802,7 +803,7 @@ class KunenaForumTopicPoll extends CMSObject
 				{
 					$this->_db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}
@@ -820,7 +821,7 @@ class KunenaForumTopicPoll extends CMSObject
 				{
 					$this->_db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}

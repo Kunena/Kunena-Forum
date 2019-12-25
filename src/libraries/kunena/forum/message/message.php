@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Mail\MailTemplate;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumMessage
@@ -550,7 +551,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}
@@ -877,7 +878,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -1467,7 +1468,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$lastPostTime = $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -1500,7 +1501,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$id = $this->_db->loadResult();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 

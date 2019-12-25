@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\AuthenticationHelper;
+use Joomla\Component\Users\Administrator\Model\UserModel;
 
 /**
  * Class KunenaLogin
@@ -248,10 +249,6 @@ class KunenaLogin
 	 */
 	public function isTFAEnabled($userId = null)
 	{
-		// Include the necessary user model and helper
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/Model/UserModel.php';
-
 		// Is TFA globally turned off?
 		$twoFactorMethods = UsersHelper::getTwoFactorMethods();
 
@@ -267,7 +264,7 @@ class KunenaLogin
 		}
 
 		// Has this user turned on TFA on their account?
-		$model     = new UsersModelUser;
+		$model     = new UserModel;
 		$otpConfig = $model->getOtpConfig($userId);
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));

@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 KunenaMenuFix::initialize();
 
@@ -111,7 +112,7 @@ abstract class KunenaMenuFix
 		{
 			self::$items = $db->loadObjectList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			throw new Exception(Text::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}

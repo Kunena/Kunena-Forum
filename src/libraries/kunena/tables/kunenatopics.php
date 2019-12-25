@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -215,7 +216,7 @@ class TableKunenaTopics extends KunenaTable
 		{
 			$data = $this->_db->loadAssoc();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

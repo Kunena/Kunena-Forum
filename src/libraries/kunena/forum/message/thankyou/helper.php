@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Forum Message Thank You Helper Class
@@ -108,7 +109,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$results = (array) $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -169,7 +170,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$results = (int) $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -212,7 +213,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$results = (array) $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -252,7 +253,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$results = (array) $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -300,7 +301,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$results = (array) $db->loadObjectList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -332,7 +333,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -370,7 +371,7 @@ abstract class KunenaForumMessageThankyouHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

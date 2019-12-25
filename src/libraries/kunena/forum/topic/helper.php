@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumTopicHelper
@@ -208,7 +209,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$results = (array) $db->loadAssocList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -377,7 +378,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$total = (int) $db->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -424,7 +425,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$results = (array) $db->loadAssocList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -509,7 +510,7 @@ abstract class KunenaForumTopicHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -557,7 +558,7 @@ abstract class KunenaForumTopicHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -643,7 +644,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -665,7 +666,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -706,7 +707,7 @@ abstract class KunenaForumTopicHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -778,7 +779,7 @@ abstract class KunenaForumTopicHelper
 			{
 				$topiclist = (array) $db->loadObjectList('id');
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 

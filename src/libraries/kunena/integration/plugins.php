@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaIntegrationActivity
@@ -41,7 +42,7 @@ class KunenaIntegrationPlugins
 		{
 			$total = $db->setQuery($query)->loadResult();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}

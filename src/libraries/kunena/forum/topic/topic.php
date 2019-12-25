@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumTopic
@@ -449,7 +450,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -481,7 +482,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				$result = $this->_db->loadAssoc();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -504,7 +505,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				{
 					$result = $this->_db->loadAssoc();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 
@@ -583,7 +584,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				{
 					$first = $db->loadObject();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}
@@ -616,7 +617,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				{
 					$last = $db->loadObject();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 				}
@@ -791,7 +792,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				{
 					$db->execute();
 				}
-				catch (JDatabaseExceptionExecuting $e)
+				catch (ExecutionFailureException $e)
 				{
 					KunenaError::displayDatabaseError($e);
 
@@ -1898,7 +1899,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				$this->_db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -1931,7 +1932,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -1947,7 +1948,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

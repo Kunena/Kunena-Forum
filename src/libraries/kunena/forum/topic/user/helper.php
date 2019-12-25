@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena Forum Topic User Helper Class
@@ -151,7 +152,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$results = (array) $db->loadAssocList('topic_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -221,7 +222,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$results = (array) $db->loadRowList();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -262,7 +263,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -328,7 +329,7 @@ abstract class KunenaForumTopicUserHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -370,7 +371,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$results = (array) $db->loadAssocList('user_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -463,7 +464,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -485,7 +486,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -511,7 +512,7 @@ abstract class KunenaForumTopicUserHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

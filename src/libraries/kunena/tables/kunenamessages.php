@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -207,7 +208,7 @@ class TableKunenaMessages extends KunenaTable
 		{
 			$data = $this->_db->loadAssoc();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -330,7 +331,7 @@ class TableKunenaMessages extends KunenaTable
 		{
 			$this->_db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

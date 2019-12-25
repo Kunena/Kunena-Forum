@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumTopicUserReadHelper
@@ -156,7 +157,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			$results = (array) $db->loadAssocList('topic_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -202,7 +203,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -265,7 +266,7 @@ abstract class KunenaForumTopicUserReadHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 
@@ -307,7 +308,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			$results = (array) $db->loadAssocList('user_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -347,7 +348,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -378,7 +379,7 @@ abstract class KunenaForumTopicUserReadHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

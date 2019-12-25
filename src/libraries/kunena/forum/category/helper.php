@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumCategoryHelper
@@ -90,7 +91,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$instances = (array) $db->loadObjectList('id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -199,7 +200,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$subscribed = (array) $db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -399,7 +400,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$subscribed = (array) $db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -469,7 +470,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$newlist = (array) $db->loadObjectList('category_id');
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -903,7 +904,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -930,7 +931,7 @@ abstract class KunenaForumCategoryHelper
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 
@@ -977,7 +978,7 @@ abstract class KunenaForumCategoryHelper
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 

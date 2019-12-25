@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Class KunenaForumCategory
@@ -799,7 +800,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -1298,7 +1299,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$ids = $db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -1351,7 +1352,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$ids = $db->loadColumn();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
@@ -1430,7 +1431,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			{
 				$db->execute();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -1585,7 +1586,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			{
 				$topic = $db->loadObject();
 			}
-			catch (JDatabaseExceptionExecuting $e)
+			catch (ExecutionFailureException $e)
 			{
 				KunenaError::displayDatabaseError($e);
 			}
@@ -1789,7 +1790,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		{
 			$db->execute();
 		}
-		catch (JDatabaseExceptionExecuting $e)
+		catch (ExecutionFailureException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 

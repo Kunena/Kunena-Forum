@@ -30,7 +30,6 @@ use Joomla\CMS\Session\Session;
  * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
- *
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {

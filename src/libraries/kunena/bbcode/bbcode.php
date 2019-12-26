@@ -395,7 +395,7 @@ class KunenaBbcode extends Nbbc\BBCode
 
 		$output = array();
 
-		if ($search !== FALSE)
+		if ($search !== false)
 		{
 			foreach ($search as $index => $token)
 			{

@@ -30,7 +30,6 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $params
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function __construct($params)
 	{
@@ -41,7 +40,6 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $userlist
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function load($userlist)
 	{
@@ -58,7 +56,6 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	/**
 	 * @return mixed
 	 * @since       Kunena
-	 *
 	 */
 	public function getEditURL()
 	{

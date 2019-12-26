@@ -145,17 +145,17 @@ class KunenaLog
 	/**
 	 * @since Kunena 6.0
 	 */
-	Const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
+	const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
 	/**
 	 * @since Kunena 6.0
 	 */
-	Const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
+	const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
 	/**
 	 * @since Kunena 6.0
 	 */
-	Const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
+	const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
 
 	/**
 	 * @since Kunena 5.0

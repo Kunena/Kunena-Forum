@@ -101,7 +101,6 @@ abstract class KunenaFactory
 	 *
 	 * @return void
 	 * @since Kunena
-	 *
 	 */
 	public static function setSession($session)
 	{

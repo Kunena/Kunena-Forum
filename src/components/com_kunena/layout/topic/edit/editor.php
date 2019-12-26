@@ -19,7 +19,6 @@ use Joomla\CMS\Filesystem\Folder;
  * KunenaLayoutTopicEditEditor
  *
  * @since  K4.0
- *
  */
 class KunenaLayoutTopicEditEditor extends KunenaLayout
 {

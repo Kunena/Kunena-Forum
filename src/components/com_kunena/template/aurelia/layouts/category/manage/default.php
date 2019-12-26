@@ -20,7 +20,6 @@ HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 
-
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
 Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');

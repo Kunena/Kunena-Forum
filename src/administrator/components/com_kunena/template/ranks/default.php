@@ -18,7 +18,6 @@ HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 
-
 ?>
 
 <script type="text/javascript">

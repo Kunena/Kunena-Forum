@@ -36,7 +36,6 @@ class KunenaImage extends Joomla\Image\Image
 	 *
 	 * @return void
 	 * @since  K5.0
-	 *
 	 */
 	public static function correctImageOrientation($filename)
 	{

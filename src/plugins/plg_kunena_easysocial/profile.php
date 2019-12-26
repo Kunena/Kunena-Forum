@@ -182,7 +182,6 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return mixed
 	 * @since       Kunena
-	 *
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

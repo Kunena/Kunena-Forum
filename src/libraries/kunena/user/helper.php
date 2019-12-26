@@ -359,7 +359,6 @@ abstract class KunenaUserHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-
 		return (int) $total;
 	}
 
@@ -416,7 +415,6 @@ abstract class KunenaUserHelper
 	 * @return  array
 	 * @since 5.0
 	 * @throws  BadMethodCallException  If first two parameters are both null.
-	 *
 	 */
 	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false)
 	{

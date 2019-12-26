@@ -32,7 +32,6 @@ class KunenaLoginEasySocial
 	 * @param $params
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function __construct($params)
 	{
@@ -42,7 +41,6 @@ class KunenaLoginEasySocial
 	/**
 	 * @return mixed
 	 * @since       Kunena
-	 *
 	 */
 	public function getLoginURL()
 	{
@@ -52,7 +50,6 @@ class KunenaLoginEasySocial
 	/**
 	 * @return mixed
 	 * @since       Kunena
-	 *
 	 */
 	public function getLogoutURL()
 	{

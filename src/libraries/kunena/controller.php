@@ -296,7 +296,6 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @return mixed
 	 * @since Kunena
 	 * @throws Exception
-	 *
 	 */
 	protected function executeTask($task)
 	{

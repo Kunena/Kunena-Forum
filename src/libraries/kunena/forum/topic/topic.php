@@ -1963,7 +1963,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return integer
 	 * @since Kunena 5.1.3
-	 *
 	 */
 	public function getReviewCount()
 	{

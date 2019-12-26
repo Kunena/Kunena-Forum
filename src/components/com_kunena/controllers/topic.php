@@ -26,7 +26,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
  * @property int id
  * @property int mesid
  * @property int return
- *
  */
 class KunenaControllerTopic extends KunenaController
 {
@@ -123,7 +122,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$attach_id = $this->input->getInt('file_id', 0);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
-		$attachs_id = explode(',',$attachs_id);
+		$attachs_id = explode(',', $attachs_id);
 
 		if($attach_id > 0)
 		{

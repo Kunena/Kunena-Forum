@@ -58,7 +58,6 @@ class KunenaAdminViewPlugins extends KunenaView
 	 *
 	 * @return void The HTML code for the select tag
 	 * @since   K1.6
-	 *
 	 */
 	protected function setToolbar()
 	{

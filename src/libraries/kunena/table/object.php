@@ -840,7 +840,6 @@ abstract class KunenaTableObject
 	 * @return  boolean  True on success.
 	 * @since  K4.0
 	 * @throws UnexpectedValueException
-	 *
 	 */
 	public function delete($keys = null)
 	{

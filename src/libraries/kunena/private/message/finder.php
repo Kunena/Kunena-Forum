@@ -100,7 +100,6 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 *
 	 * @return KunenaPrivateMessage|mixed
 	 *
 	 * @since version

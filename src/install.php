@@ -377,8 +377,6 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 *
-	 *
 	 * @return void
 	 * @since version
 	 * @throws Exception

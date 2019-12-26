@@ -307,7 +307,6 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 *
 	 * @return array
 	 * @since Kunena
 	 * @throws Exception

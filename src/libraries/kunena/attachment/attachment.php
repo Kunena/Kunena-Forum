@@ -39,7 +39,6 @@ use Joomla\CMS\Table\Table;
  * @property string $typeAlias
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
- *
  */
 class KunenaAttachment extends KunenaDatabaseObject
 {

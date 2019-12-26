@@ -34,7 +34,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param $params
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function __construct($params)
 	{
@@ -48,7 +47,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return mixed
 	 * @since       Kunena
-	 *
 	 */
 	public function assignBadge($command, $message, $target = null)
 	{
@@ -253,7 +251,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int  $message  message
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -279,7 +276,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param $target
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -290,7 +286,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param $topic
 	 *
 	 * @since       Kunena
-	 *
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

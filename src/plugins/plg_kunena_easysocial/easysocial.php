@@ -38,7 +38,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @return void|boolean
 	 * @since       Kunena
-	 *
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -94,7 +93,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @return KunenaProfile
 	 * @since       Kunena
-	 *
 	 */
 	public function onKunenaGetProfile()
 	{

@@ -89,7 +89,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @return KunenaTableMap
 	 *
 	 * @since version
@@ -106,7 +105,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @return KunenaTableMap
 	 *
 	 * @since version
@@ -123,7 +121,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @return KunenaTableMap
 	 *
 	 * @since version
@@ -140,7 +137,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @return bool
 	 *
 	 * @since version

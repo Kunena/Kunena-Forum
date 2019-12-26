@@ -320,7 +320,6 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @return integer    New topics count.
 	 * @since Kunena
 	 * @todo  Currently new topics needs to be calculated manually, make it automatic.
-	 *
 	 */
 	public function getNewCount($count = null)
 	{

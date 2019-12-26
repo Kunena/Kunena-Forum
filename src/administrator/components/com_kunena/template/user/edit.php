@@ -19,7 +19,6 @@ HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 
-
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxsig . '

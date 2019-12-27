@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -226,9 +227,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
 			{
-				$ktemplate     = KunenaFactory::getTemplate();
-				$topicicontype = $ktemplate->params->get('topicicontype');
-
 				if ($topicicontype == 'B2')
 				{
 					$this->messageButtons->set('thankyou',
@@ -268,9 +266,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 			{
-				$ktemplate     = KunenaFactory::getTemplate();
-				$topicicontype = $ktemplate->params->get('topicicontype');
-
 				if ($topicicontype == 'B2')
 				{
 					$this->messageButtons->set('unthankyou',
@@ -310,9 +305,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			if ($me->isModerator($this->topic->getCategory()) || $this->config->user_report
 				|| !$this->config->user_report && $me->userid != $this->message->userid)
 			{
-				$ktemplate     = KunenaFactory::getTemplate();
-				$topicicontype = $ktemplate->params->get('topicicontype');
-
 				if ($topicicontype == 'B2')
 				{
 					$icon = 'icon icon-flag';
@@ -586,7 +578,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			}
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}

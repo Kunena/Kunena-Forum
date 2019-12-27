@@ -66,9 +66,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$this->template     = KunenaFactory::getTemplate();
 		$this->topicButtons = new CMSObject;
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$fullactions     = $this->ktemplate->params->get('fullactions');
-		$topicicontype   = $this->ktemplate->params->get('topicicontype');
+		$fullactions     = $this->template->params->get('fullactions');
+		$topicicontype   = $this->template->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 

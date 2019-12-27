@@ -46,7 +46,6 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	{
 		parent::before();
 
-		$catid = $this->input->getInt('catid');
 		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 		$quote = $this->input->getBool('quote', false);
@@ -129,7 +128,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
-		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote ? array('quote' => $quote) : $quote);
+		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : array('quote' => $quote));
 		$this->action = 'post';
 
 		$this->privateMessage       = new KunenaPrivateMessage;

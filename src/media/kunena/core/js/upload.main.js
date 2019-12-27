@@ -235,7 +235,7 @@ jQuery(function ($) {
 		});
 	
 	var setsecureButton = $('<button>')
-	.addClass("btn btn-primary")
+	.addClass("btn btn-info")
 	.html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_SET_SECURE'))
 	.on('click', function (e) {
 		// Make sure the button click doesn't submit the form:
@@ -245,10 +245,22 @@ jQuery(function ($) {
 		var $this = $(this),
 			data = $this.data();
 
-		$(this).removeClass('btn-primary');
-		$(this).addClass('btn-success');
+		var file_id = 0;
+		if (Joomla.getOptions('com_kunena.kunena_upload_files_action')== 'post' ) {
+			file_id = data.result.data.id;
+		}
+		else
+		{
+			file_id = data.file_id;
+		}
 
-		$('#kattach-list').append('<input id="kattachs-private-' + data.result.data.id + '" type="hidden" name="attachment_private[' + data.result.data.id + ']" value="' + data.result.data.id + '" />');
+		$(this).removeClass('btn-info');
+		$(this).addClass('btn-success');
+		
+		$(this).html();
+		$(this).html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
+
+		$('#kattach-list').append('<input id="kattachs-private-' + file_id + '" type="hidden" name="attachment_private[' + file_id + ']" value="' + file_id + '" />');
 	});
 
 	var removeInline = $('<button>')
@@ -543,6 +555,18 @@ jQuery(function ($) {
 
 						object.append(insertButton.clone(true).data(file));
 						object.append(removeButton.clone(true).data(data));
+						
+						if (file.protected == 0)
+						{
+							object.append(setsecureButton.clone(true).data(data));
+						}
+						else {
+							var securebuttonclone = setsecureButton.clone(true).data(data);
+							securebuttonclone.removeClass('btn-primary');
+							securebuttonclone.addClass('btn-success');
+							securebuttonclone.html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
+							object.append(securebuttonclone);
+						}
 
 						if (file.inline === true)
 						{

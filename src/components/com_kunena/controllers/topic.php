@@ -45,7 +45,7 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * Get attachments attached to a message with AJAX.
+	 * Get attachments on edit which was attached to a message with AJAX.
 	 *
 	 * @return void
 	 * @since Kunena
@@ -71,17 +71,18 @@ class KunenaControllerTopic extends KunenaController
 
 		foreach ($attachments as $attach)
 		{
-			$object          = new stdClass;
-			$object->id      = $attach->id;
-			$object->size    = round($attach->size / '1024', 0);
-			$object->name    = $attach->filename;
-			$object->folder  = $attach->folder;
-			$object->caption = $attach->caption;
-			$object->type    = $attach->filetype;
-			$object->path    = $attach->getUrl();
-			$object->image   = $attach->isImage();
-			$object->inline  = $attach->isInline();
-			$list['files'][] = $object;
+			$object             = new stdClass;
+			$object->id         = $attach->id;
+			$object->size       = round($attach->size / '1024', 0);
+			$object->name       = $attach->filename;
+			$object->protected  = $attach->protected;
+			$object->folder     = $attach->folder;
+			$object->caption    = $attach->caption;
+			$object->type       = $attach->filetype;
+			$object->path       = $attach->getUrl();
+			$object->image      = $attach->isImage();
+			$object->inline     = $attach->isInline();
+			$list['files'][]    = $object;
 		}
 
 		header('Content-type: application/json');
@@ -1058,26 +1059,34 @@ class KunenaControllerTopic extends KunenaController
 		}
 		elseif (!$text)
 		{
-			// Reload message (we don't want to change it).
-			$message->load();
-
-			try
+			if (trim($fields['private']))
 			{
-				$message->publish(KunenaForum::DELETED);
-			}
-			catch (Exception $e)
+				// Allow empty message if private message part has been filled up.
+				$message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}]";
+			} 
+			else
 			{
-				$this->app->enqueueMessage($e->getMessage(), 'notice');
+				// Reload message (we don't want to change it).
+				$message->load();
+
+				try
+				{
+					$message->publish(KunenaForum::DELETED);
+				}
+				catch (Exception $e)
+				{
+					$this->app->enqueueMessage($e->getMessage(), 'notice');
+				}
+
+				if ($message->publish(KunenaForum::DELETED))
+				{
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
+				}
+
+				$this->setRedirect($message->getUrl($this->return, false));
+
+				return;
 			}
-
-			if ($message->publish(KunenaForum::DELETED))
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
-			}
-
-			$this->setRedirect($message->getUrl($this->return, false));
-
-			return;
 		}
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
@@ -2536,17 +2545,31 @@ class KunenaControllerTopic extends KunenaController
 
 		$private->subject = $message->subject;
 		$private->body    = $body;
-		$private->attachments()->setMapped($attachIds);
-		$private->check();
+
+		if (!empty($attachIds))
+		{
+			$private->attachments()->setMapped($attachIds);
+		}
 
 		if (!$private->body && !$private->attachments)
 		{
-			$private->delete();
+			try
+			{
+				$private->delete();
+			}
+			catch (Exception $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
-		if (!$private->save())
+		try
 		{
-			$this->app->enqueueMessage($private->getError(), 'notice');
+			$private->save();
+		}
+		catch (Exception $e)
+		{
+			KunenaError::displayDatabaseError($e);
 		}
 	}
 }

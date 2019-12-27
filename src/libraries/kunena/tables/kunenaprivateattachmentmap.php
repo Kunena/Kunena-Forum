@@ -25,11 +25,13 @@ class TableKunenaPrivateAttachmentMap extends KunenaTable
 	 * @since version
 	 */
 	protected $_autoincrement = false;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $private_id = null;
+
 	/**
 	 * @var null
 	 * @since version

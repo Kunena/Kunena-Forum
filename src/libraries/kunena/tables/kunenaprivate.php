@@ -28,36 +28,43 @@ class TableKunenaPrivate extends KunenaTable
 	 * @since version
 	 */
 	public $id = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $parent_id = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $author_id = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $created_at = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $attachments = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $subject = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $body = null;
+
 	/**
 	 * @var null
 	 * @since version
@@ -88,13 +95,11 @@ class TableKunenaPrivate extends KunenaTable
 		$this->subject = trim($this->subject);
 		if (!$this->subject)
 		{
-			// TODO: translate
 			throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_PRIVATE_ERROR_NO_SUBJECT'));
 		}
 
 		if (!$this->body && !$this->attachments)
 		{
-			// TODO: translate
 			throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_PRIVATE_ERROR_NO_BODY'));
 		}
 

@@ -25,26 +25,31 @@ class TableKunenaPrivateUserMap extends KunenaTable
 	 * @since version
 	 */
 	protected $_autoincrement = false;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $private_id = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $user_id = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $read_at = null;
+
 	/**
 	 * @var null
 	 * @since version
 	 */
 	public $replied_at = null;
+
 	/**
 	 * @var null
 	 * @since version

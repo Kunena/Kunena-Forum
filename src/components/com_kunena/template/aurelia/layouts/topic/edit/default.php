@@ -60,6 +60,7 @@ Text::script('COM_KUNENA_EDITOR_TWEET');
 Text::script('COM_KUNENA_EDITOR_INSTAGRAM');
 Text::script('COM_KUNENA_EDITOR_SOUNDCLOUD');
 Text::script('COM_KUNENA_EDITOR_REMOVE_INLINE');
+Text::script('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED');
 Text::script('COM_KUNENA_EDITOR_SET_SECURE');
 Text::script('COM_KUNENA_EDITOR_COLOR_BLACK');
 Text::script('COM_KUNENA_EDITOR_COLOR_ORANGE');
@@ -99,6 +100,7 @@ $this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('in
 $this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinline&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+$this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
 $this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 $this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());

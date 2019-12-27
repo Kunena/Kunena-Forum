@@ -14,16 +14,17 @@ defined('_JEXEC') or die('');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Component\ComponentHelper;
-
-// Load the base adapter.
-require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapter.php';
+use Joomla\Component\Finder\Administrator\Indexer\Adapter;
+use Joomla\Component\Finder\Administrator\Indexer\Indexer;
+use Joomla\Component\Finder\Administrator\Indexer\Result;
+use Joomla\Component\Finder\Administrator\Indexer\Helper;
 
 /**
  * Finder adapter for com_kunena.
  *
  * @since Kunena
  */
-class plgFinderKunena extends FinderIndexerAdapter
+class plgFinderKunena extends Adapter
 {
 	/**
 	 * The plugin identifier.
@@ -237,7 +238,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		Log::add('FinderIndexerAdapter::onBuildIndex', Log::INFO);
 
 		// Get the indexer and adapter state.
-		$iState = FinderIndexer::getState();
+		$iState = Indexer::getState();
 		$aState = $iState->pluginState[$this->context];
 
 		// Check the progress of the indexer and the adapter.
@@ -270,7 +271,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 			// Update the indexer state.
 			$aState['offset']                    = $item->id;
 			$iState->pluginState[$this->context] = $aState;
-			FinderIndexer::setState($iState);
+			Indexer::setState($iState);
 		}
 
 		unset($items, $item);
@@ -281,14 +282,14 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to index an item. The item must be a FinderIndexerResult object.
 	 *
-	 * @param   FinderIndexerResult  $item  The item to index as an FinderIndexerResult object.
+	 * @param   Result  $item  The item to index as an FinderIndexerResult object.
 	 *
 	 * @return  void
 	 *
 	 * @since Kunena
 	 * @throws  Exception on database error.
 	 */
-	protected function index(FinderIndexerResult $item)
+	protected function index(Result $item)
 	{
 		// Check if the extension is enabled
 		if (ComponentHelper::isEnabled($this->extension) == false)
@@ -297,7 +298,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		}
 
 		// Add the meta-data processing instructions.
-		$item->addInstruction(FinderIndexer::META_CONTEXT, 'author');
+		$item->addInstruction(Indexer::META_CONTEXT, 'author');
 
 		// Add the type taxonomy data.
 		$item->addTaxonomy('Type', 'Forum Post');
@@ -315,7 +316,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		$item->addTaxonomy('Language', $item->language);
 
 		// Get content extras.
-		FinderIndexerHelper::getContentExtras($item);
+		Helper::getContentExtras($item);
 
 		// Index the item.
 		$this->indexer->index($item);
@@ -386,7 +387,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @param   integer  $id  The id of the content item.
 	 *
-	 * @return  FinderIndexerResult  A FinderIndexerResult object.
+	 * @return  Result  A FinderIndexerResult object.
 	 *
 	 * @since   2.5
 	 * @throws  Exception on database error.
@@ -413,9 +414,9 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @param   integer         $offset  The list offset.
 	 * @param   integer         $limit   The list limit.
-	 * @param   JDatabaseQuery  $sql     A JDatabaseQuery object. [optional]
+	 * @param   QueryInterface  $sql     A QueryInterface object. [optional]
 	 *
-	 * @return  array  An array of FinderIndexerResult objects.
+	 * @return  array  An array of Result objects.
 	 *
 	 * @since   2.5
 	 * @throws null
@@ -459,7 +460,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * @param $message
 	 *
-	 * @return FinderIndexerResult
+	 * @return Result
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
@@ -467,7 +468,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	protected function createIndexerResult($message)
 	{
 		// Convert the item to a result object.
-		$item        = new FinderIndexerResult;
+		$item        = new Result;
 		$item->id    = $message->id;
 		$item->catid = $message->catid;
 
@@ -477,7 +478,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 		// Build the necessary url, route, path and alias information.
 		$item->url   = $this->getUrl($message->id, $this->extension, $this->layout);
 		$item->route = $item->url . '&Itemid=' . KunenaRoute::getItemId($item->url);
-		$item->path  = FinderIndexerHelper::getContentPath($item->url);
+		$item->path  = Helper::getContentPath($item->url);
 		$item->alias = KunenaRoute::stringURLSafe($message->subject);
 
 		// Set body context.

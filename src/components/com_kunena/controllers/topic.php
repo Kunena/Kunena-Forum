@@ -422,6 +422,7 @@ class KunenaControllerTopic extends KunenaController
 			'private'           => (string) $this->app->input->getRaw('private'),
 			'rating'            => 0,
 			'params'            => '',
+			'quote'             => 0,
 		);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);

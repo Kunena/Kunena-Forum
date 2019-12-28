@@ -21,8 +21,8 @@ use Joomla\CMS\Log\Log;
 abstract class KunenaEmail
 {
 	/**
-	 * @param   Joomla\CMS\Mail\Mail  $mail       mail
-	 * @param   array                 $receivers  receivers
+	 * @param   Joomla\CMS\Mail\MailTemplate  $mail       mail
+	 * @param   array                         $receivers  receivers
 	 *
 	 * @return boolean
 	 * @since Kunena

@@ -99,10 +99,10 @@ foreach ($this->sections as $section) :
 								<div class="p-2"></div>
 							</td>
 							<td colspan="7">
-								<div class="p-2"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+								<div class="p-2"><?php echo Text::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 							</td>
 							<td colspan="4">
-								<div class="p-2"><?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?></div>
+								<div class="p-2"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></div>
 							</td>
 						</tr>
 					<?php endif; ?>

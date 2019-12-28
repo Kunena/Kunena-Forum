@@ -35,7 +35,7 @@
 					} else {
 						$this.find('.progress').removeClass('active').children('.bar').addClass('bar-warning');
 						if (!('error' in data)) {
-							$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT'));
+							$this.find('.modal-error').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_ABORT'));
 						}
 					}
 					$this.find('.recount-close').removeAttr('disabled');
@@ -44,22 +44,22 @@
 					var $this = $(this);
 					if (status === 'error' && error) {
 						$this.find('.modal-header h3').text(xhr.status + ' ' + error);
-						$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
+						$this.find('.modal-body p').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
 						$this.find('.modal-error').html(xhr.responseText);
 					} else if (status === 'timeout') {
-						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER'));
-						$this.find('.modal-error').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY'));
+						$this.find('.modal-header h3').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_HEADER'));
+						$this.find('.modal-error').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_TIMEOUT_BODY'));
 					} else if (status === 'abort') {
-						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER'));
-						$this.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
+						$this.find('.modal-header h3').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_CANCEL_HEADER'));
+						$this.find('.modal-body p').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
 						$this.find('.modal-error').text(error);
 					} else if (status === 'parsererror') {
-						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER'));
+						$this.find('.modal-header h3').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER'));
 						$this.find('.modal-body p').text(error);
 						$this.find('.modal-error').html(xhr.responseText);
 					} else {
-						$this.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER'));
-						$this.find('.modal-error').text(error ? error : Joomla.JText._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY'));
+						$this.find('.modal-header h3').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER'));
+						$this.find('.modal-error').text(error ? error : Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY'));
 					}
 					$this.find('.progress').removeClass('active').children('.bar').addClass('bar-danger');
 					$this.find('.recount-close').removeAttr('disabled');
@@ -77,8 +77,8 @@
 			e.preventDefault();
 
 			$target.find('.progress').addClass('active').find('.bar').attr('class', '').addClass('bar').css('width', '1%');
-			$target.find('.modal-header h3').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_START_HEADER'));
-			$target.find('.modal-body p').text(Joomla.JText._('COM_KUNENA_AJAXMODAL_START_BODY'));
+			$target.find('.modal-header h3').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_START_HEADER'));
+			$target.find('.modal-body p').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_START_BODY'));
 			$target.find('.modal-error').text('');
 			$target.find('.recount-close').attr('disabled', 'disabled');
 

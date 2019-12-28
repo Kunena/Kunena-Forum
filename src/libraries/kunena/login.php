@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\Component\Users\Administrator\Model\UserModel;
+use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 
 /**
  * Class KunenaLogin

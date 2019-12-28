@@ -1328,7 +1328,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			if ($attach->inline)
 			{
-				$attachs->inline = $attach->inline + 1;
+				$attachs->inline = $attachs->inline + 1;
 			}
 
 			if ($attach->isImage())

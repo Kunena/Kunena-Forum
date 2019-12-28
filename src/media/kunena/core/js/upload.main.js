@@ -142,6 +142,12 @@ jQuery(function ($) {
 				$('#kattach-list').append('<input id="kattachs-private-' + attachid + '" type="hidden" name="attachment_private[' + attachid + ']" value="' + attachid + '" />');
 			}
 		});
+
+		$('#files .btn.btn-info').each(function () {
+			$('#files .btn.btn-info').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-info');
+			$('#files .btn.btn-success').html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_ATTACHMENT_IS_SECURED'));
+		});
 	});
 
 	$('#insert-all').on('click', function (e) {
@@ -285,17 +291,20 @@ jQuery(function ($) {
 				}
 			}
 
+			var editor_text = $('#editor').val();
+
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id + '&editor_text=' + editor_text,
 				type: 'POST'
 			})
-				.done(function (data) {
-					data.inline = 0;
-					$this.hide();
-				})
-				.fail(function () {
-					//TODO: handle the error of ajax request
-				});
+			.done(function (data) {
+				data.inline = 0;
+				$this.hide();
+				$('#editor').val(data.text_prepared);
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
 		});
 
 	var removeButton = $('<button/>')

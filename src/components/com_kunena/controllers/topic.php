@@ -108,7 +108,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @since Kunena 5.1
 	 * @throws Exception
 	 */
-	public function removeinline()
+	public function setinlinestatus()
 	{
 		// Only support JSON requests.
 		if ($this->input->getWord('format', 'html') != 'json')
@@ -123,7 +123,6 @@ class KunenaControllerTopic extends KunenaController
 
 		$attach_id = $this->input->getInt('file_id', 0);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
-		$attachs_id = explode(',', $attachs_id);
 
 		if($attach_id > 0)
 		{
@@ -131,6 +130,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
+			$attachs_id = explode(',', $attachs_id);
 			$instances  = KunenaAttachmentHelper::getById($attachs_id);
 		}
 
@@ -140,6 +140,12 @@ class KunenaControllerTopic extends KunenaController
 		{
 			if($attach_id > 0)
 			{
+				$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+				$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
+				$replace          = '';
+				$text             = preg_replace($find, $replace, $editor_text);
+				$response['text_prepared'] = $text;
+ 
 				if ($instance->inline)
 				{
 					$response['result'] = $instance->setInline(0);

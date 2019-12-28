@@ -505,6 +505,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))
 			{
+				$app    = Factory::getApplication();
 				$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
 				$mailer->addTemplateData(
 					array(

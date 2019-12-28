@@ -100,7 +100,7 @@ $list = array();
 		<div class="clearfix"></div>
 	<?php endif; ?>
 <?php endif; ?>
-<?php if (!empty($attachments) && $attachs->inline != $attachs->total) : ?>
+<?php if (!empty($attachments) && $attachs->readable) : ?>
 	<div class="cart pb-3 pd-3">
 		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<div class="card-body kattach">

@@ -1318,11 +1318,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
 
-		$attachs         = new StdClass;
-		$attachs->inline = 0;
-		$attachs->image  = 0;
-		$attachs->file   = 0;
-		$attachs->total  = 0;
+		$attachs           = new StdClass;
+		$attachs->inline   = 0;
+		$attachs->image    = 0;
+		$attachs->file     = 0;
+		$attachs->total    = 0;
+		$attachs->readable = 0;
 
 		foreach ($attachments as $attach)
 		{
@@ -1341,6 +1342,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 
 			$attachs->total = $attachs->total + 1;
+
+			if ($attach->isAuthorised('read'))
+			{
+				if (!$attach->inline)
+				{
+					$attachs->readable = $attachs->readable + 1;
+				}
+			}
 		}
 
 		return $attachs;

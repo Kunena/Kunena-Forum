@@ -115,7 +115,7 @@ else
 		<div class="clearfix"></div>
 	<?php endif; ?>
 <?php endif; ?>
-<?php if (!empty($attachments) && $attachs->inline != $attachs->total || !empty($attachments) && $message->isAuthorised('edit')) : ?>
+<?php if (!empty($attachments) && $attachs->inline != $attachs->total) : ?>
 	<div class="cart pb-3 pd-3">
 		<h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<div class="card-body kattach">

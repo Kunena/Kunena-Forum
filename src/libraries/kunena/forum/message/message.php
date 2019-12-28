@@ -501,11 +501,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mail = Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
+			$app = Factory::getApplication();
 
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))
 			{
-				$app    = Factory::getApplication();
 				$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
 				$mailer->addTemplateData(
 					array(
@@ -1318,11 +1318,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
 
-		$attachs        = new StdClass;
+		$attachs         = new StdClass;
 		$attachs->inline = 0;
-		$attachs->image = 0;
-		$attachs->file  = 0;
-		$attachs->total = 0;
+		$attachs->image  = 0;
+		$attachs->file   = 0;
+		$attachs->total  = 0;
 
 		foreach ($attachments as $attach)
 		{

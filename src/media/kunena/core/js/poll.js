@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
 
 		var polldiv = $('<div></div>').attr('class', 'polloption').appendTo('#kbbcode-poll-options');
 
-		var label = $('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
+		var label = $('<label>').text(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
 		polldiv.append(label);
 
 		newInput = document.createElement('input');

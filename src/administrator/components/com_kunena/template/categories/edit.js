@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
 
 				box.removeClass("valid icon-ok");
 				box.addClass("invalid icon icon-remove");
-				box.html(Joomla.JText._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS'));
+				box.html(Joomla.Text._('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS'));
 			}
 			else {
 				input_alias.addClass("inputbox");

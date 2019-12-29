@@ -124,19 +124,24 @@ class KunenaControllerTopic extends KunenaController
 		$attach_id = $this->input->getInt('file_id', 0);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
 
+		$instance_userid = 0;
+
 		if($attach_id > 0)
 		{
 			$instance  = KunenaAttachmentHelper::get($attach_id);
+			$instance_userid = $instance->userid;
 		}
 		else
 		{
 			$attachs_id = explode(',', $attachs_id);
 			$instances  = KunenaAttachmentHelper::getById($attachs_id);
+			$attachment = array_pop($instances);
+			$instance_userid = $attachment->userid;
 		}
 
 		$response  = array();
 
-		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
 			if($attach_id > 0)
 			{

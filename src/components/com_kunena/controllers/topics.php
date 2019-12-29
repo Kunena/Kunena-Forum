@@ -98,11 +98,8 @@ class KunenaControllerTopics extends KunenaController
 				}
 
 				$db    = Factory::getDBO();
-				$query = $db->getQuery(true)
-					->delete('a.*')
-					->from($db->quoteName('#__kunena_attachments', 'a'))
-					->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid=m.id')
-					->where('m.id IS NULL');
+				// TODO : need to find the correct way to convert this query to use 
+				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
 
 				try

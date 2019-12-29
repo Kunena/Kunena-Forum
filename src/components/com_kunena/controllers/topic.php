@@ -135,7 +135,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$attachs_id = explode(',', $attachs_id);
 			$instances  = KunenaAttachmentHelper::getById($attachs_id);
-			$attachment = array_pop($instances);
+			$attachment = $instances[] = array_pop($instances); 
 			$instance_userid = $attachment->userid;
 		}
 

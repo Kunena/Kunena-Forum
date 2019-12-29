@@ -13,6 +13,7 @@ namespace Leafo\ScssPhp\Node;
 
 use ArrayAccess;
 use Leafo\ScssPhp\Compiler;
+use Leafo\ScssPhp\Exception\CompilerException;
 use Leafo\ScssPhp\Node;
 use Leafo\ScssPhp\Type;
 
@@ -287,10 +288,10 @@ class Number extends Node implements ArrayAccess
 	/**
 	 * Output number
 	 *
-	 * @param   \Leafo\ScssPhp\Compiler  $compiler
+	 * @param   Compiler  $compiler
 	 *
 	 * @return string
-	 * @throws \Leafo\ScssPhp\Exception\CompilerException
+	 * @throws CompilerException
 	 */
 	public function output(Compiler $compiler = null)
 	{

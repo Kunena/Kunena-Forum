@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 KunenaUserHelper::initialize();
 
+use Joomla\Http\Response;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\IpHelper;
@@ -772,7 +773,7 @@ abstract class KunenaUserHelper
 	 * @param $data array  With username, ip, email, api key, evidence
 	 * @param $type string Add ou just call api
 	 *
-	 * @return bool|\Joomla\Http\Response
+	 * @return bool|Response
 	 * @since 6.0.0
 	 * @throws Exception
 	 */

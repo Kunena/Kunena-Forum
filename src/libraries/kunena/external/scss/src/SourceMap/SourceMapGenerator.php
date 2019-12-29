@@ -11,6 +11,7 @@
 
 namespace Leafo\ScssPhp\SourceMap;
 
+use Exception;
 use Leafo\ScssPhp\Exception\CompilerException;
 
 /**
@@ -238,7 +239,7 @@ class SourceMapGenerator
 	 * Generates the mappings string
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function generateMappings()
 	{

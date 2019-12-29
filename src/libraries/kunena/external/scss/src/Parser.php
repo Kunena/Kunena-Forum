@@ -168,7 +168,6 @@ class Parser
 
 		while ($this->parseChunk())
 		{
-			;
 		}
 
 		if ($this->count !== strlen($this->buffer))
@@ -2224,7 +2223,7 @@ class Parser
 
 			while ($this->literal(','))
 			{
-				; // ignore extra
+				// ignore extra
 			}
 		}
 

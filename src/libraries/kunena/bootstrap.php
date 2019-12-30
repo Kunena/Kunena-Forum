@@ -31,7 +31,7 @@ JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 // Give access to all Kunena tables.
 Joomla\CMS\Table\Table::addIncludePath(KPATH_FRAMEWORK . '/tables');
 
-// Give access to all Kunena JHtml functions.
+// Give access to all Kunena HTMLHelper functions.
 Joomla\CMS\HTML\HTMLHelper::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 
 // Give access to all Kunena form fields.

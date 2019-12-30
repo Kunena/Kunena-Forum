@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Aurelia template.
@@ -97,9 +98,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		JHtml::_('bootstrap.tooltip');
+		HTMLHelper::_('bootstrap.tooltip');
 
-		JHtml::_('bootstrap.renderModal');
+		HTMLHelper::_('bootstrap.renderModal');
 
 		$this->addScript('assets/js/main.js');
 

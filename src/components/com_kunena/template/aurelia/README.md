@@ -22,7 +22,7 @@ Custom language files for the template.
 
 ## ./widgets
 
-Template files for widgets. Widgets are simple standalone objects like JHtml.
+Template files for widgets. Widgets are simple standalone objects like HTMLHelper.
 
 ## ./layouts
 

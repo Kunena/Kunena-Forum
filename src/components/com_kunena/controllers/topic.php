@@ -214,6 +214,16 @@ class KunenaControllerTopic extends KunenaController
 
 		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
+			$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+
+			if (!empty($editor_text) && $instance->inline)
+			{
+				$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
+				$replace          = '';
+				$text             = preg_replace($find, $replace, $editor_text);
+				$success['text_prepared'] = $text;
+			}
+
 			$success['result'] = $instance->delete();
 			unset($instance);
 		}

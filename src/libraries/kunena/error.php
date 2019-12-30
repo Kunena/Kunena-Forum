@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright      Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
@@ -14,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Class KunenaError
+ *
  * @since Kunena
  */
 abstract class KunenaError
@@ -102,8 +104,8 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param   string $msg   msg
-	 * @param   string $where where
+	 * @param   string  $msg    msg
+	 * @param   string  $where  where
 	 *
 	 * @return void
 	 * @since Kunena
@@ -119,8 +121,8 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param   string $msg   msg
-	 * @param   string $where where
+	 * @param   string  $msg    msg
+	 * @param   string  $where  where
 	 *
 	 * @return void
 	 * @since Kunena
@@ -138,7 +140,7 @@ abstract class KunenaError
 	/**
 	 * Return different error if it's an admin or a simple user
 	 *
-	 * @param   void $exception exception
+	 * @param   void  $exception  exception
 	 *
 	 * @return void
 	 * @since 5.0
@@ -155,7 +157,7 @@ abstract class KunenaError
 
 		if (Factory::getApplication()->isClient('administrator'))
 		{
-		    $app->enqueueMessage('Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage(), 'error');
+			$app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
 		}
 		elseif (!JDEBUG && !KunenaFactory::getConfig()->debug && !self::$admin)
 		{
@@ -164,21 +166,21 @@ abstract class KunenaError
 		}
 		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
 		{
-		    $app->enqueueMessage('Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage(), 'error');
+			$app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
 		}
 		else
 		{
 			$app->enqueueMessage('Kunena ' . Text::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
 		}
 
-		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, 'Exception throw at line '  . $exception->getLine(). ' in file '.$exception->getFile(). ' with message '.$exception->getMessage());
+		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, 'Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage());
 	}
 
 	/**
-	 * @param   string $errno   errorno
-	 * @param   string $errstr  errorstr
-	 * @param   string $errfile errorfile
-	 * @param   string $errline errorline
+	 * @param   string  $errno    errorno
+	 * @param   string  $errstr   errorstr
+	 * @param   string  $errfile  errorfile
+	 * @param   string  $errline  errorline
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -187,6 +189,11 @@ abstract class KunenaError
 	{
 		if (error_reporting() == 0 || !strstr($errfile, 'kunena'))
 		{
+			if (strpos($errstr, "mail()") !== false)
+			{
+				return KunenaEmail::on_mail_error($errno, $errstr, $errfile, $errline);
+			}
+
 			return false;
 		}
 
@@ -236,7 +243,7 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @param   mixed $debug debug
+	 * @param   mixed  $debug  debug
 	 *
 	 * @return void
 	 * @since Kunena

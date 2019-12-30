@@ -1308,6 +1308,14 @@ class KunenaControllerUser extends KunenaController
 
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
+					if ($attachment->inline)
+					{
+						$find             = array('/\[attachment='.$id.'\](.*?)\[\/attachment\]/su');
+						$replace          = '';
+						$text             = preg_replace($find, $replace, $message->message);
+						$message->message = $text;
+					}
+
 					$message->save();
 
 					if ($topic->attachments > 0)

@@ -20,6 +20,8 @@ use Joomla\CMS\Log\Log;
  */
 abstract class KunenaEmail
 {
+	public static $mailer_error_status = null;
+
 	/**
 	 * @param   Joomla\CMS\Mail\MailTemplate  $mail       mail
 	 * @param   array                         $receivers  receivers
@@ -30,6 +32,14 @@ abstract class KunenaEmail
 	 */
 	public static function send($mail, array $receivers)
 	{
+		if (isset(static::$mailer_error_status))
+		{
+			// Mailer is broken, so prevent any sendings
+			Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
+
+			return false;
+		}
+
 		$config = KunenaFactory::getConfig();
 
 		if (!empty($config->email_recipient_count))
@@ -82,15 +92,65 @@ abstract class KunenaEmail
 
 			try
 			{
-				$mail->Send();
+				$result = $mail->Send();
+
+				if ($result === false)
+				{
+					// Mail is turned off, or broken
+					return false;
+				}
+
+				if (is_subclass_of($result, 'Exception'))
+				{
+					// Mail send is failed
+					$success = false;
+				}
 			}
 			catch (Exception $e)
 			{
 				$success = false;
 				Log::add($e->getMessage(), Log::ERROR, 'kunena');
 			}
+
+			if (isset(static::$mailer_error_status))
+			{
+				$success = false;
+				break;
+			}
 		}
 
 		return $success;
+	}
+
+	/**
+	 * @param $errno
+	 * @param $errstr
+	 * @param $errfile
+	 * @param $errline
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
+	public static function on_mail_error($errno, $errstr, $errfile, $errline)
+	{
+		if (strpos($errstr, "mail(): Failed to connect to mailserver") !== false)
+		{
+			static::$mailer_error_status = new MailerBrokenException(
+				$errstr, $errno, Log::ERROR, $errfile, $errline
+			);
+
+			Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
+		}
+
+		return false;
+	}
+}
+
+class MailerBrokenException extends ErrorException
+{
+	public function errorMessage()
+	{
+		return "$this->code - $$this->message\n at: $$this->file:$$this->line";
 	}
 }

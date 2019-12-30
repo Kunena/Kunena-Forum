@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Mail\MailTemplate;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\CMS\Log\Log;
 
 /**
  * Class KunenaForumMessage
@@ -386,19 +387,56 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @param   null|string  $url  url
 	 *
-	 * @return boolean|null
+	 * @return boolean|void
 	 * @since Kunena
 	 * @throws Exception
 	 * @throws null
 	 */
 	public function sendNotification($url = null)
 	{
+		if ($this->hold > 1)
+		{
+			return false;
+		}
+
 		$config = KunenaFactory::getConfig();
 
 		if (!$config->get('send_emails'))
 		{
 			return false;
 		}
+
+		$this->urlNotification = $url;
+
+		// Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
+		Factory::getApplication()->RegisterEvent('onAfterRespond', array($this, 'notificationPost'));
+	}
+
+	/**
+	 * @since version
+	 * @throws Exception
+	 * @since Kunena 6.0
+	 * @return void
+	 */
+	public static function notificationCloseConnection()
+	{
+		$app = Factory::getApplication();
+		$app->setHeader('Connection', 'close');
+	}
+
+	/**
+	 * @return boolean
+	 *
+	 * @since version
+	 * @throws \PHPMailer\PHPMailer\Exception
+	 */
+	public function notificationPost()
+	{
+		// Restore app input context
+		Factory::getApplication()->input->set('message', $this);
+		$config = KunenaFactory::getConfig();
+
+		$url = $this->urlNotification;
 
 		if ($this->hold > 1)
 		{
@@ -457,10 +495,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mailsubs,
 			$mailmods,
 			$mailadmins,
-			KunenaUserHelper::getMyself()->userid
+			$this->userid
 		);
 
-		if ($emailToList)
+		if (empty($emailToList))
+		{
+			return true;
+		}
+		else
 		{
 			if (!$config->getEmail())
 			{
@@ -503,6 +545,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mail->setSender(array($config->getEmail(), $mailsender));
 			$app = Factory::getApplication();
 
+			// Here is after respond sends. so close connection to leave browser, and
+			// continue to work
+			static::notificationCloseConnection();
+			$app->getSession()->close();
+			flush();
+
+			$ok         = true;
+			$start_time = microtime(true);
+
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))
 			{
@@ -516,7 +567,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 						'once'       => $once
 					)
 				);
-				KunenaEmail::send($mailer, $receivers[1]);
+
+				$ok = KunenaEmail::send($mailer, $receivers[1]);
 			}
 
 			// Send email to all moderators.
@@ -532,8 +584,27 @@ class KunenaForumMessage extends KunenaDatabaseObject
 						'once'       => $once
 					)
 				);
-				KunenaEmail::send($mailer, $receivers[0]);
+
+				if (!KunenaEmail::send($mailer, $receivers[0]))
+				{
+					$ok = false;
+				}
 			}
+
+			$end_time = microtime(true);
+
+			$time_secs   = ($end_time - $start_time);
+			$mid         = $this->thread;
+			$recv_amount = count($receivers[1]) + count($receivers[0]);
+
+			Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
+			KunenaLog::log(($ok) ? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR,
+				KunenaLog::LOG_TOPIC_NOTIFY,
+				"$recv_amount subscriptions sent for $time_secs sec",
+				$this->getCategory(),
+				$this->getTopic(),
+				KunenaFactory::getUser($this->userid)
+			);
 
 			// Update subscriptions.
 			if ($once && $sentusers)
@@ -605,6 +676,38 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 *
+	 * @param   \Joomla\CMS\Mail\Mail  $mail          mail
+	 * @param   int                    $subscription  subscription
+	 * @param   string                 $subject       subject
+	 * @param   string                 $url           url
+	 * @param   bool                   $once          once
+	 *
+	 * @return void
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
+	{
+		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+			->set('mail', $mail)
+			->set('message', $this)
+			->set('messageUrl', $url)
+			->set('once', $once);
+
+		try
+		{
+			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+		}
+		catch (Exception $e)
+		{
+		}
+
+		$mail->setBody($msg);
+	}
+
+	/**
+	 *
 	 * @param   int  $value  value
 	 *
 	 * @return boolean
@@ -1295,11 +1398,34 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
+	 * @param   bool|int|array  $ids  ids
+	 *
+	 * @return void
+	 * @since      Kunena
+	 * @throws Exception
+	 * @deprecated K4.0
+	 */
+	public function removeAttachment($ids)
+	{
+		if ($ids === false)
+		{
+			$ids = array_keys($this->getAttachments());
+		}
+		elseif (!is_array($ids))
+		{
+			$ids = array((int) $ids);
+		}
+
+		$this->removeAttachments($ids);
+	}
+
+	/**
+	 * Remove listed attachments from the message.
+	 *
 	 * @param   array  $ids  ids
 	 *
 	 * @return void
 	 * @since  K4.0
-	 * @throws null
 	 * @throws Exception
 	 */
 	public function removeAttachments(array $ids)

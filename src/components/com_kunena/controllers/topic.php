@@ -71,18 +71,18 @@ class KunenaControllerTopic extends KunenaController
 
 		foreach ($attachments as $attach)
 		{
-			$object             = new stdClass;
-			$object->id         = $attach->id;
-			$object->size       = round($attach->size / '1024', 0);
-			$object->name       = $attach->filename;
-			$object->protected  = $attach->protected;
-			$object->folder     = $attach->folder;
-			$object->caption    = $attach->caption;
-			$object->type       = $attach->filetype;
-			$object->path       = $attach->getUrl();
-			$object->image      = $attach->isImage();
-			$object->inline     = $attach->isInline();
-			$list['files'][]    = $object;
+			$object            = new stdClass;
+			$object->id        = $attach->id;
+			$object->size      = round($attach->size / '1024', 0);
+			$object->name      = $attach->filename;
+			$object->protected = $attach->protected;
+			$object->folder    = $attach->folder;
+			$object->caption   = $attach->caption;
+			$object->type      = $attach->filetype;
+			$object->path      = $attach->getUrl();
+			$object->image     = $attach->isImage();
+			$object->inline    = $attach->isInline();
+			$list['files'][]   = $object;
 		}
 
 		header('Content-type: application/json');
@@ -121,36 +121,36 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$attach_id = $this->input->getInt('file_id', 0);
+		$attach_id  = $this->input->getInt('file_id', 0);
+		$instance   = KunenaAttachmentHelper::get($attach_id);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
+		$attachs_id = explode(',', $attachs_id);
 
-		$instance_userid = 0;
-
-		if($attach_id > 0)
+		if ($attach_id > 0)
 		{
-			$instance  = KunenaAttachmentHelper::get($attach_id);
+			$instance        = KunenaAttachmentHelper::get($attach_id);
 			$instance_userid = $instance->userid;
 		}
 		else
 		{
-			$attachs_id = explode(',', $attachs_id);
-			$instances  = KunenaAttachmentHelper::getById($attachs_id);
-			$attachment = $instances[] = array_pop($instances); 
+			$attachs_id      = explode(',', $attachs_id);
+			$instances       = KunenaAttachmentHelper::getById($attachs_id);
+			$attachment      = $instances[] = array_pop($instances);
 			$instance_userid = $attachment->userid;
 		}
 
-		$response  = array();
+		$response = array();
 
 		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
-			if($attach_id > 0)
+			if ($attach_id > 0)
 			{
-				$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
-				$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
-				$replace          = '';
-				$text             = preg_replace($find, $replace, $editor_text);
+				$editor_text               = $this->app->input->get->get('editor_text', '', 'raw');
+				$find                      = array('/\[attachment=' . $attach_id . '\](.*?)\[\/attachment\]/su');
+				$replace                   = '';
+				$text                      = preg_replace($find, $replace, $editor_text);
 				$response['text_prepared'] = $text;
- 
+
 				if ($instance->inline)
 				{
 					$response['result'] = $instance->setInline(0);
@@ -166,7 +166,7 @@ class KunenaControllerTopic extends KunenaController
 			}
 			else
 			{
-				foreach($instances as $instance)
+				foreach ($instances as $instance)
 				{
 					if ($instance->inline)
 					{
@@ -640,14 +640,17 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		$url_subject = $this->checkURLInSubject($message->subject);
-
-		if ($url_subject && $this->config->url_subject_topic)
+		if ($this->config->url_subject_topic)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
-			$this->setRedirectBack();
+			$url_subject = $this->checkURLInSubject($message->subject);
 
-			return;
+			if ($url_subject)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
+				$this->setRedirectBack();
+
+				return;
+			}
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.
@@ -945,6 +948,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @since Kunena
 	 * @throws null
 	 * @throws Exception
+	 * @return void
 	 */
 	public function edit()
 	{
@@ -1074,7 +1078,7 @@ class KunenaControllerTopic extends KunenaController
 			{
 				// Allow empty message if private message part has been filled up.
 				$message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}]";
-			} 
+			}
 			else
 			{
 				// Reload message (we don't want to change it).
@@ -1275,6 +1279,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @since Kunena
 	 * @throws null
 	 * @throws Exception
+	 * @return void
 	 */
 	public function thankyou()
 	{
@@ -1288,6 +1293,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @since Kunena
 	 * @throws null
 	 * @throws Exception
+	 * @return void
 	 */
 	protected function setThankyou($type)
 	{

@@ -218,7 +218,7 @@ class KunenaIcons
 	 * @since K5.0
 	 * @throws Exception
 	 */
-	public static function members()
+	public static function members($size = 32)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -240,7 +240,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'B4')
 		{
-			return '<img src="media/kunena/core/svg/people.svg" alt="">';
+			return '<img src="media/kunena/core/svg/people.svg" alt="" width="' . $size . '" height="' . $size . '">';
 		}
 
 		return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
@@ -480,7 +480,7 @@ class KunenaIcons
 	 * @since K5.0
 	 * @throws Exception
 	 */
-	public static function stats()
+	public static function stats($size = 32)
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
@@ -502,7 +502,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'B4')
 		{
-			return '<img src="media/kunena/core/svg/bar-chart.svg" alt="">';
+			return '<img src="media/kunena/core/svg/bar-chart.svg" alt="" width="' . $size . '" height="' . $size . '">';
 		}
 
 		return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
@@ -1578,7 +1578,21 @@ class KunenaIcons
 
 		if ($topicicontype == 'B4')
 		{
-			return '<img class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" >';
+			if (!$categoryicon)
+			{
+				if ($newchar)
+				{
+					return '<img src="media/kunena/core/svg/folder-fill.svg" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" width="32" height="32">';
+				}
+				else
+				{
+					return '<img src="media/kunena/core/svg/folder.svg" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" width="32" height="32">';
+				}
+			}
+			else
+			{
+				return '<img class="' . $categoryicon . $newchar . '" src="media/kunena/core/svg/' . $categoryicon .'.svg" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" width="32" height="32">';
+			}
 		}
 
 		if ($topicicontype == 'image')

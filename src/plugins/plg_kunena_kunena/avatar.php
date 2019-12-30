@@ -67,6 +67,11 @@ class KunenaAvatarKunena extends KunenaAvatar
 		$avatar = $user->avatar;
 		$config = KunenaFactory::getConfig();
 
+		if (empty($avatar))
+		{
+			return KURL_MEDIA . "core/svg/person.svg";
+		}
+
 		$path     = KPATH_MEDIA . "/avatars";
 		$origPath = "{$path}/{$avatar}";
 

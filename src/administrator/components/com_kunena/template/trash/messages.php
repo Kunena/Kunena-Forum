@@ -20,7 +20,7 @@ HTMLHelper::_('dropdown.init');
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function () {
+	orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
@@ -91,7 +91,7 @@ HTMLHelper::_('dropdown.init');
 								<label for="directionTable"
 								       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 								<select name="directionTable" id="directionTable" class="input-medium"
-								        onchange="Joomla.orderTable()">
+								        onchange="orderTable()">
 									<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 								</select>
@@ -100,7 +100,7 @@ HTMLHelper::_('dropdown.init');
 								<label for="sortTable"
 								       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 								<select name="sortTable" id="sortTable" class="input-medium"
-								        onchange="Joomla.orderTable()">
+								        onchange="orderTable()">
 									<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 								</select>

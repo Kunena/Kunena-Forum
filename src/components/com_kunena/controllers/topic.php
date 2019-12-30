@@ -122,9 +122,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attach_id  = $this->input->getInt('file_id', 0);
-		$instance   = KunenaAttachmentHelper::get($attach_id);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
-		$attachs_id = explode(',', $attachs_id);
 
 		if ($attach_id > 0)
 		{

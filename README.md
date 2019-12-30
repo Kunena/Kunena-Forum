@@ -27,7 +27,7 @@ In addition we recommend the following PHP settings:
 *Kunena* requires the following Joomla settings:
 
     * Bootstrap 2 compatible template (Crypsis Template)
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 5.0
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena 5.1
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 

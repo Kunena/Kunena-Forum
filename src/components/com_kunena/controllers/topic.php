@@ -25,10 +25,10 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaControllerTopic extends KunenaController
 {
 	/**
-	 * @param   array  $config  config
+	 * @param   array $config config
 	 *
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function __construct($config = array())
 	{
@@ -43,8 +43,8 @@ class KunenaControllerTopic extends KunenaController
 	 * Get attachments attached to a message with AJAX.
 	 *
 	 * @return void
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 * @throws null
 	 */
 	public function loadattachments()
@@ -99,8 +99,8 @@ class KunenaControllerTopic extends KunenaController
 	 * Set inline to 1 on the attachment object.
 	 *
 	 * @return void
-	 * @since Kunena 5.1
 	 * @throws Exception
+	 * @since Kunena 5.1
 	 */
 	public function setinline()
 	{
@@ -206,8 +206,8 @@ class KunenaControllerTopic extends KunenaController
 	 * Remove files with AJAX.
 	 *
 	 * @return void
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function removeattachments()
 	{
@@ -266,8 +266,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Upload files with AJAX.
 	 *
-	 * @since Kunena
 	 * @throws null
+	 * @since Kunena
 	 */
 	public function upload()
 	{
@@ -420,9 +420,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	public function post()
 	{
@@ -633,17 +633,14 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		if ($this->config->url_subject_topic)
+		$url_subject = $this->checkURLInSubject($message->subject);
+
+		if ($url_subject && $this->config->url_subject_topic)
 		{
-			$url_subject = $this->checkURLInSubject($message->subject);
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
+			$this->setRedirectBack();
 
-			if ($url_subject)
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
-				$this->setRedirectBack();
-
-				return;
-			}
+			return;
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.
@@ -821,9 +818,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	public function edit()
 	{
@@ -1155,11 +1152,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check if title of topic or message contains URL to limit part of spam
 	 *
-	 * @internal param string $usbject
-	 *
 	 * @param $subject
 	 *
 	 * @return boolean
+	 * @internal param string $usbject
 	 * @since    Kunena
 	 */
 	protected function checkURLInSubject($subject)
@@ -1191,8 +1187,8 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $topic
 	 *
 	 * @return boolean
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -1259,9 +1255,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	public function thankyou()
 	{
@@ -1270,9 +1266,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	public function unthankyou()
 	{
@@ -1283,9 +1279,9 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @param $type
 	 *
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	protected function setThankyou($type)
 	{
@@ -1972,8 +1968,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 * @throws null
 	 */
 	public function move()
@@ -2099,8 +2095,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 * @throws null
 	 */
 	public function report()
@@ -2273,9 +2269,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
+	 * @since Kunena
 	 */
 	public function vote()
 	{

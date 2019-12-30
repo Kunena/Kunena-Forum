@@ -227,11 +227,6 @@ class KunenaLog
 	const LOG_TOPIC_REPORT = 'LOG_TOPIC_REPORT';
 
 	/**
-	 * @since Kunena 5.1.16
-	 */
-	const LOG_TOPIC_NOTIFY = 'LOG_TOPIC_NOTIFY';
-
-	/**
 	 * @since Kunena
 	 */
 	// Const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';

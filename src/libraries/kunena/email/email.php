@@ -1,7 +1,6 @@
 <?php
 /**
  * Kunena Component
- *
  * @package       Kunena.Framework
  * @subpackage    Email
  *
@@ -15,31 +14,20 @@ use Joomla\CMS\Log\Log;
 
 /**
  * Class KunenaEmail
- *
  * @since Kunena
  */
 abstract class KunenaEmail
 {
-	public static $mailer_error_status = null;
-
 	/**
-	 * @param   \Joomla\CMS\Mail\Mail  $mail       mail
-	 * @param   array                  $receivers  receivers
+	 * @param   \Joomla\CMS\Mail\Mail $mail      mail
+	 * @param   array                 $receivers receivers
 	 *
 	 * @return boolean
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public static function send($mail, array $receivers)
 	{
-		if (isset(static::$mailer_error_status))
-		{
-			// Mailer is broken, so prevent any sendings
-			Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
-
-			return false;
-		}
-
 		$config = KunenaFactory::getConfig();
 
 		if (!empty($config->email_recipient_count))
@@ -71,6 +59,7 @@ abstract class KunenaEmail
 		$chunks = array_chunk($receivers, $email_recipient_count);
 
 		$success = true;
+
 		foreach ($chunks as $emails)
 		{
 			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')
@@ -91,63 +80,15 @@ abstract class KunenaEmail
 
 			try
 			{
-				$result = $mail->Send();
-				if ($result === false)
-					// mail is turned off, or broken
-					return false;
-
-				if (is_subclass_of($result, 'Exception'))
-				{
-					// mail send is failed
-					$success = false;
-				}
+				$mail->Send();
 			}
 			catch (Exception $e)
 			{
 				$success = false;
 				Log::add($e->getMessage(), Log::ERROR, 'kunena');
 			}
-
-			if (isset(static::$mailer_error_status))
-			{
-				$success = false;
-				break;
-			}
-
 		}
 
 		return $success;
-	}
-
-	/**
-	 * @param $errno
-	 * @param $errstr
-	 * @param $errfile
-	 * @param $errline
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
-	public static function on_mail_error($errno, $errstr, $errfile, $errline)
-	{
-		if (strpos($errstr, "mail(): Failed to connect to mailserver") !== false)
-		{
-			static::$mailer_error_status = new MailerBrokenException(
-				$errstr, $errno, Log::ERROR, $errfile, $errline
-			);
-
-			Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
-		}
-
-		return false;
-	}
-}
-
-class MailerBrokenException extends ErrorException
-{
-	public function errorMessage()
-	{
-		return "$this->code - $$this->message\n at: $$this->file:$$this->line";
 	}
 }

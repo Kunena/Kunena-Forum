@@ -107,10 +107,11 @@
             <option value="img-thumbnail">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
             <option value="none">COM_KUNENA_TEMPLATE_NONE</option>
         </field>
-        <field name="topicicontype" type="list" default="fa" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS"
+        <field name="topicicontype" type="list" default="B4" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS"
                description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
             <option value="B2">COM_KUNENA_TEMPLATE_BOOTSTRAP2</option>
             <option value="B3">COM_KUNENA_TEMPLATE_BOOTSTRAP3</option>
+            <option value="B4">COM_KUNENA_TEMPLATE_BOOTSTRAP4</option>
             <option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
             <option value="image">COM_KUNENA_TEMPLATE_IMAGE_LEGACY</option>
         </field>

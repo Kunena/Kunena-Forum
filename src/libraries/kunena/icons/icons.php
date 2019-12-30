@@ -48,6 +48,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-down.svg" alt="">';
+		}
+
 		return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 	}
 
@@ -79,6 +84,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-up.svg" alt="">';
+		}
+
 		return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 	}
 
@@ -99,22 +109,28 @@ class KunenaIcons
 		{
 			return '<i class="fa fa-arrow-down hasTooltip" aria-hidden="true"></i>';
 		}
-		elseif ($topicicontype == 'B2')
+
+		if ($topicicontype == 'B2')
 		{
 			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
-		elseif ($topicicontype == 'B3')
+
+		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
-		elseif ($topicicontype == 'image')
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-down.svg" alt="">';
+		}
+
+		if ($topicicontype == 'image')
 		{
 			return '<span class="kicon kforumtop"></span>';
 		}
-		else
-		{
-			return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
-		}
+
+		return '<span class="icon icon-arrow-down hasTooltip" aria-hidden="true"></span>';
 	}
 
 	/**
@@ -134,22 +150,28 @@ class KunenaIcons
 		{
 			return '<i class="fa fa-arrow-up hasTooltip" aria-hidden="true"></i>';
 		}
-		elseif ($topicicontype == 'B2')
+
+		if ($topicicontype == 'B2')
 		{
 			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
-		elseif ($topicicontype == 'B3')
+
+		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
-		elseif ($topicicontype == 'image')
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-up.svg" alt="">';
+		}
+
+		if ($topicicontype == 'image')
 		{
 			return '<span class="kicon kforumbottom"></span>';
 		}
-		else
-		{
-			return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
-		}
+
+		return '<span class="icon icon-arrow-up hasTooltip" aria-hidden="true"></span>';
 	}
 
 	/**
@@ -178,6 +200,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-right.svg" alt="">';
 		}
 
 		return '<span class="icon icon-chevron-right" aria-hidden="true"></span>';
@@ -211,6 +238,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-user glyphicon-super" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/people.svg" alt="">';
+		}
+
 		return '<span class="icon icon-user icon-big" aria-hidden="true"></span>';
 	}
 
@@ -240,6 +272,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/person.svg" alt="">';
 		}
 
 		return '<span class="icon icon-user" aria-hidden="true"></span>';
@@ -273,6 +310,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/lock.svg" alt="">';
+		}
+
 		return '<span class="icon icon-lock" aria-hidden="true"></span>';
 	}
 
@@ -302,6 +344,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/star.svg" alt="">';
 		}
 
 		if ($topicicontype == 'image')
@@ -340,6 +387,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/eye-slash.svg" alt="">';
+		}
+
 		return '<span class="icon icon-eye-open" aria-hidden="true"></span>';
 	}
 
@@ -369,6 +421,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/flag.svg" alt="">';
 		}
 
 		if ($topicicontype == 'image')
@@ -407,6 +464,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/kanban.svg" alt="">';
+		}
+
 		return '<span class="icon icon-bars" aria-hidden="true"></span>';
 	}
 
@@ -436,6 +498,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-stats glyphicon-super" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/bar-chart.svg" alt="">';
 		}
 
 		return '<span class="icon icon-bars icon-big" aria-hidden="true"></span>';
@@ -469,6 +536,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/search.svg" alt="">';
+		}
+
 		return '<span class="icon icon-search" aria-hidden="true"></span>';
 	}
 
@@ -498,6 +570,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-sort" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrows-collapse.svg" alt="">';
 		}
 
 		return '<span class="icon icon-compress" aria-hidden="true"></span>';
@@ -531,6 +608,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/clock.svg" alt="">';
+		}
+
 		return '<i class="icon icon-clock" aria-hidden="true"></i>';
 	}
 
@@ -560,6 +642,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/heart-fill.svg" alt="">';
 		}
 
 		return '<i class="icon icon-thumbs-up" aria-hidden="true"></i>';
@@ -593,6 +680,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-shield" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/shield.svg" alt="">';
+		}
+
 		return '<i class="icon icon-shield" aria-hidden="true"></i>';
 	}
 
@@ -622,6 +714,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/x-circle.svg" alt="">';
 		}
 
 		return '<i class="icon icon-remove" aria-hidden="true"></i>';
@@ -660,6 +757,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-compass" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/compass.svg" alt="">';
+		}
+
 		return '<i class="icon icon-compass" aria-hidden="true"></i>';
 	}
 
@@ -689,6 +791,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/envelope.svg" alt="">';
 		}
 
 		if ($topicicontype == 'image')
@@ -727,6 +834,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/bookmark.svg" alt="">';
+		}
+
 		return '<i class="icon icon-bookmark" aria-hidden="true"></i>';
 	}
 
@@ -756,6 +868,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-left.svg" alt="">';
 		}
 
 		return '<i class="icon icon-arrow-left" aria-hidden="true"></i>';
@@ -789,6 +906,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-save" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/check-circle.svg" alt="">';
+		}
+
 		return '<i class="icon icon-save" aria-hidden="true"></i>';
 	}
 
@@ -818,6 +940,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/screwdriver.svg" alt="">';
 		}
 
 		return '<i class="icon icon-edit" aria-hidden="true"></i>';
@@ -851,6 +978,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/pencil.svg" alt="">';
+		}
+
 		return '<i class="icon icon-pencil-2" aria-hidden="true"></i>';
 	}
 
@@ -880,6 +1012,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/images.svg" alt="">';
 		}
 
 		if ($topicicontype == 'image')
@@ -918,6 +1055,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/plus.svg" alt="">';
+		}
+
 		return '<i class="icon icon-plus" aria-hidden="true"></i>';
 	}
 
@@ -952,6 +1094,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/wifi.svg" alt="" style="transform: rotate(50deg);">';
+		}
+
 		return '<i class="icon icon-feed ' . $class . '" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 	}
 
@@ -981,6 +1128,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/upload.svg" alt="">';
 		}
 
 		return '<i class="icon icon-upload" aria-hidden="true"></i>';
@@ -1021,6 +1173,11 @@ class KunenaIcons
 			return '<span class="large-kicon glyphicon glyphicon-picture' . $big . '" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/image.svg" alt="">';
+		}
+
 		return '<i class="large-kicon icon icon-picture' . $big . '" aria-hidden="true"></i>';
 	}
 
@@ -1059,6 +1216,11 @@ class KunenaIcons
 			return '<span class="large-kicon glyphicon glyphicon-file' . $big . '" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/document-richtext.svg" alt="">';
+		}
+
 		return '<i class="large-kicon icon icon-file' . $big . '" aria-hidden="true"></i>';
 	}
 
@@ -1088,6 +1250,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="large-kicon glyphicon glyphicon-trash" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/trash.svg" alt="">';
 		}
 
 		return '<i class="large-kicon icon icon-trash" aria-hidden="true"></i>';
@@ -1122,6 +1289,11 @@ class KunenaIcons
 		{
 			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
 						alt="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/pie-chart-fill.svg" alt="">';
 		}
 
 		return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
@@ -1159,6 +1331,11 @@ class KunenaIcons
 						alt="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/bar-chart.svg" alt="">';
+		}
+
 		return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 	}
@@ -1189,6 +1366,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-clockwise.svg" alt="">';
 		}
 
 		if ($topicicontype == 'image')
@@ -1225,6 +1407,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-random" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/arrow-repeat.svg" alt="">';
 		}
 
 		return '<i class="icon icon-shuffle" aria-hidden="true"></i>';
@@ -1389,6 +1576,11 @@ class KunenaIcons
 			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" >';
+		}
+
 		if ($topicicontype == 'image')
 		{
 			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
@@ -1425,6 +1617,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-home hasTooltip" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/house.svg" alt="">';
+		}
+
 		return '<span class="icon icon-home hasTooltip" aria-hidden="true"></span>';
 	}
 
@@ -1454,6 +1651,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/calendar.svg" alt="">';
 		}
 
 		return '<i class="icon icon-calendar" aria-hidden="true"></i>';
@@ -1487,6 +1689,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-large glyphicon-menu-hamburger" aria-hidden="true"></span> <b class="caret"></b>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/three-dots-vertical.svg" alt="">';
+		}
+
 		return '<i class="icon-large icon-list" aria-hidden="true"></i> <b class="caret"></b>';
 	}
 
@@ -1516,6 +1723,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/alert-circle.svg" alt="">';
 		}
 
 		return '<i class="icon icon-info" aria-hidden="true"></i>';
@@ -1549,6 +1761,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/plus.svg" class="text-success" alt="">';
+		}
+
 		return '<i class="icon-plus green" aria-hidden="true"></i>';
 	}
 
@@ -1578,6 +1795,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-plus yellow" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/plus.svg" class="text-warning" alt="">';
 		}
 
 		return '<i class="icon-plus yellow" aria-hidden="true"></i>';
@@ -1611,6 +1833,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/dash.svg" class="text-error" alt="">';
+		}
+
 		return '<i class="icon-minus red" aria-hidden="true"></i>';
 	}
 
@@ -1640,6 +1867,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-minus grey" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/dash.svg" class="text-gray-dark" alt="">';
 		}
 
 		return '<i class="icon-minus grey" aria-hidden="true"></i>';
@@ -1673,6 +1905,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/gear.svg" alt="">';
+		}
+
 		return '<i class="icon icon-cog" aria-hidden="true"></i>';
 	}
 
@@ -1702,6 +1939,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/inbox.svg" alt="">';
 		}
 
 		return '<i class="icon icon-drawer" aria-hidden="true"></i>';
@@ -1735,6 +1977,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/power.svg" alt="">';
+		}
+
 		return '<i class="icon icon-out" aria-hidden="true"></i>';
 	}
 
@@ -1764,6 +2011,11 @@ class KunenaIcons
 		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-th" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/grid.svg" alt="">';
 		}
 
 		return '<i class="icon icon-grid-view-2" aria-hidden="true"></i>';
@@ -1802,6 +2054,11 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-website" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/window.svg" alt="">';
+		}
+
 		return '<i class="icon icon-link" aria-hidden="true"></i>';
 	}
 
@@ -1838,6 +2095,11 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-location" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/geo.svg" alt="">';
+		}
+
 		return '<i class="icon icon-location" aria-hidden="true"></i>';
 	}
 
@@ -1869,6 +2131,11 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/chat.svg" alt="">';
+		}
+
 		if ($topicicontype == 'image')
 		{
 			return '<span class="kicon-profile kicon-profile-pm" aria-hidden="true"></span>';
@@ -1894,22 +2161,28 @@ class KunenaIcons
 		{
 			return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
 		}
-		elseif ($topicicontype == 'B2')
+
+		if ($topicicontype == 'B2')
 		{
 			return '<i class="icon icon-flag" aria-hidden="true"></i>';
 		}
-		elseif ($topicicontype == 'B3')
+
+		if ($topicicontype == 'B3')
 		{
 			return '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
 		}
-		elseif ($topicicontype == 'image')
+
+		if ($topicicontype == 'B4')
+		{
+			return '<img src="media/kunena/core/svg/alert-octagon.svg" alt="">';
+		}
+
+		if ($topicicontype == 'image')
 		{
 			return '<span class="kicon-report" aria-hidden="true"></span>';
 		}
-		else
-		{
-			return '<i class="kicon-report" aria-hidden="true"></i>';
-		}
+
+		return '<i class="kicon-report" aria-hidden="true"></i>';
 	}
 
 	/**
@@ -1929,21 +2202,22 @@ class KunenaIcons
 		{
 			return 'icon icon-flag';
 		}
-		elseif ($topicicontype == 'B3')
+
+		if ($topicicontype == 'B3')
 		{
 			return 'glyphicon glyphicon-exclamation-sign';
 		}
-		elseif ($topicicontype == 'fa')
+
+		if ($topicicontype == 'fa')
 		{
 			return 'fa fa-exclamation';
 		}
-		elseif ($topicicontype == 'image')
+
+		if ($topicicontype == 'image')
 		{
 			return 'kicon-report';
 		}
-		else
-		{
-			return '';
-		}
+
+		return '';
 	}
 }

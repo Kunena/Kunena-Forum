@@ -55,7 +55,7 @@ foreach ($this->sections as $section) :
 			<?php if (count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
 					<a class="btn btn-outline-primary border btn-sm"
-					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::edit(); ?></a>
+					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
 				<?php endif; ?>
 				<button class="btn btn-outline-primary border btn-sm" type="button"
 				        data-toggle="collapse"

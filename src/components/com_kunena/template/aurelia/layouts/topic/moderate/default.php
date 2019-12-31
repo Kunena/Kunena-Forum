@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
@@ -84,6 +85,11 @@ $labels          = $this->ktemplate->params->get('labels');
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
 											aria-hidden="true"></span>
+									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
+									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
+										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
+										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' .  $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+										     alt="<?php echo $icon->name; ?>" width="32" height="32"/>
 									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
@@ -240,11 +246,15 @@ $labels          = $this->ktemplate->params->get('labels');
 					<br/>
 				</div>
 			</div>
+			<br/>
 			<div class="control-group center">
-				<input type="submit" class="btn btn-outline-primary"
-				       value="<?php echo Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
+				<button name="submit" type="submit"
+				        class="btn btn-outline-success btn-md">
+					<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>
+				</button>
+
 				<a href="javascript:window.history.back();"
-				   class="btn btn-outline-primary border"> <?php echo Text::_('COM_KUNENA_BACK'); ?> </a>
+				   class="btn btn-outline-primary border"> <?php echo KunenaIcons::cancel() . ' ' . Text::_('COM_KUNENA_BACK'); ?> </a>
 			</div>
 		</form>
 	</div>

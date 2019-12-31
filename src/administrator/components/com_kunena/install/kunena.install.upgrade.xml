@@ -949,7 +949,7 @@
         <version version="6.0.0-ALPHA6"
                  versiondate="2019-12-31"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `REDDIT` VARCHAR(75) NULL AFTER `PINTEREST`;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `reddit` VARCHAR(75) NULL AFTER `pinterest`;</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

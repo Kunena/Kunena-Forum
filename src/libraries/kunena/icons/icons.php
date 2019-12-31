@@ -2223,6 +2223,11 @@ class KunenaIcons
 			return 'glyphicon glyphicon-exclamation-sign';
 		}
 
+		if ($topicicontype == 'B4')
+		{
+			return 'alert-circle';
+		}
+
 		if ($topicicontype == 'fa')
 		{
 			return 'fa fa-exclamation';

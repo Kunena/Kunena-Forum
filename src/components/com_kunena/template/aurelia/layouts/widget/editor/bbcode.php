@@ -378,7 +378,14 @@ if (!empty($codeTypes)) : ?>
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 					foreach ($emoticons as $emo_code => $emo_properties)
 					{
-						echo '<img class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						if ($emo_properties->type == 'svg')
+						{
+							echo '<img src="' . $emo_properties->path . '" width="32" height="32"/>';
+						}
+						else
+						{
+							echo '<img class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						}
 					}
 					?>
 				</div>

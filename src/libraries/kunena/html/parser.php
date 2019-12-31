@@ -70,12 +70,25 @@ abstract class KunenaHtmlParser
 
 		foreach ($smilies as $smiley)
 		{
-			$smileyProperties = KunenaImage::getImageFileProperties($template->getSmileyPath($smiley->file));
+			$newstring = substr($smiley->file, -4);
 
-			$emoticon         = new stdClass;
-			$emoticon->path   = $template->getSmileyPath($smiley->file);
-			$emoticon->width  = $smileyProperties->width;
-			$emoticon->height = $smileyProperties->height;
+			if ($newstring == '.svg')
+			{
+				$emoticon         = new stdClass;
+				$emoticon->path   = $template->getSmileyPath($smiley->file);
+				$emoticon->width  = 32;
+				$emoticon->height = 32;
+				$emoticon->type   = 'svg';
+			}
+			else
+			{
+				$smileyProperties = KunenaImage::getImageFileProperties($template->getSmileyPath($smiley->file));
+				$emoticon         = new stdClass;
+				$emoticon->path   = $template->getSmileyPath($smiley->file);
+				$emoticon->width  = $smileyProperties->width;
+				$emoticon->height = $smileyProperties->height;
+				$emoticon->type   = $smileyProperties->type;
+			}
 
 			// We load all smileys in array, so we can sort them
 			$smileyArray [$smiley->code] = $emoticon;

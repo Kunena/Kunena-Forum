@@ -482,8 +482,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<?php else : ?>
 					<button id="form_submit_button" name="submit" type="submit"
 					        class="btn btn-outline-success btn-md form-validate" tabindex="8">
-						<?php echo KunenaIcons::save(); ?>
-						<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
+						<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
 					</button>
 				<?php endif; ?>
 

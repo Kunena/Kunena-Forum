@@ -16,19 +16,19 @@ BBCODE BUTTONS
 -------------------------------------------------------------------- */
 
 .markItUp .boldbutton a {
-	background-image: url('../images/bold.png');
+	background-image: url('../svg/type-bold.svg');
 }
 
 .markItUp .italicbutton a {
-	background-image: url('../images/italic.png');
+	background-image: url('../svg/type-italic.svg');
 }
 
 .markItUp .underlinebutton a {
-	background-image: url('../images/underline.png');
+	background-image: url('../svg/type-underline.svg');
 }
 
 .markItUp .strokebutton a {
-	background-image: url('../images/stroke.png');
+	background-image: url('../svg/type-strikethrough.svg');
 }
 
 .markItUp .supscriptbutton a {
@@ -40,106 +40,106 @@ BBCODE BUTTONS
 }
 
 .markItUp .sizebutton a {
-	background-image: url('../images/fonts.png');
+	background-image: url('../svg/type.svg');
 }
 
 .markItUp .colors a {
-	background-image: url('../images/colors.png');
+	background-image: url('../svg/brush.svg');
 }
 
 .markItUp .bulletedlistbutton a {
-	background-image: url('../images/list-bullet.png');
+	background-image: url('../svg/list-ul.svg');
 }
 
 .markItUp .numericlistbutton a {
-	background-image: url('../images/list-numeric.png');
+	background-image: url('../svg/list-ol.svg');
 }
 
 .markItUp .listitembutton a {
-	background-image: url('../images/list-item.png');
+	background-image: url('../svg/list.svg');
 }
 
 .markItUp .alignleftbutton a {
-	background-image: url('../images/text_align_left.png');
+	background-image: url('../svg/justify-left.svg');
 }
 
 .markItUp .centerbutton a {
-	background-image: url('../images/text_align_center.png');
+	background-image: url('../svg/justify.svg');
 }
 
 .markItUp .alignrightbutton a {
-	background-image: url('../images/text_align_right.png');
+	background-image: url('../svg/justify-right.svg');
 }
 
 .markItUp .quotebutton a {
-	background-image: url('../images/quotes.png');
+	background-image: url('../svg/chat.svg');
 }
 
 .markItUp .codemodalboxbutton a,
 .markItUp .codesimplebutton a {
-	background-image: url('../images/code.png');
+	background-image: url('../svg/code-slash.svg');
 }
 
 .markItUp .tablebutton a {
-	background-image: url('../images/table.png');
+	background-image: url('../svg/table.svg');
 }
 
 .markItUp .spoilerbutton a {
-	background-image: url('../images/spoiler.png');
+	background-image: url('../svg/display.svg');
 }
 
 .markItUp .hiddentextbutton a {
-	background-image: url('../images/hidden.png');
+	background-image: url('../svg/shield-lock.svg');
 }
 
 .markItUp .picturebutton a {
-	background-image: url('../images/picture.png');
+	background-image: url('../svg/image.svg');
 }
 
 .markItUp .linkbutton a {
-	background-image: url('../images/link.png');
+	background-image: url('../svg/window.svg');
 }
 
 .markItUp .ebaybutton a {
-	background-image: url('../images/ebay.png');
+	background-image: url('../../core/images/social/ebay.svg');
 }
 
 .markItUp .videodropdownbutton a {
-	background-image: url('../images/film.png');
+	background-image: url('../svg/camera-video.svg');
 }
 
 .markItUp .mapbutton a {
-	background-image: url('../images/map.png');
+	background-image: url('../svg/geo.svg');
 }
 
 .markItUp .pollbutton a {
-	background-image: url('../images/poll.png');
+	background-image: url('../svg/kanban.svg');
 }
 
 .markItUp .tweetbutton a {
-	background-image: url('../images/tweet.png');
+	background-image: url('../../core/images/social/twitter.svg');
 }
 
 .markItUp .soundcloudbutton a {
-	background-image: url('../images/soundcloud.png');
+	background-image: url('../../core/images/social/soundcloud.svg');
 	margin-left: -3px;
 	margin-top: 3px;
 }
 
 .markItUp .instagrambutton a {
-	background-image: url('../images/instagram.png');
+	background-image: url('../../core/images/social/instagram.svg');
 }
 
 .markItUp .hrbutton a {
-	background-image: url('../images/hr.png');
+	background-image: url('../svg/dash.svg');
 }
 
 .markItUp .emoticonsbutton a {
-	background-image: url('../images/emoticon.png');
+	background-image: url('../../emoticons/happy.svg');
 }
 
 .markItUp .confidentialbutton a {
-	background-image: url('../images/confidential.png');
+	background-image: url('../svg/lock.svg');
 }
 
 .markItUp .clean a {
@@ -309,13 +309,13 @@ BBCODE BUTTONS
 
 .markItUpHeader ul a {
 	display: block;
-	width: 16px;
-	height: 16px;
+	width: 22px;
+	height: 22px;
 	text-indent: -10000px;
 	background-repeat: no-repeat;
-	padding: 4px;
 	margin: 0;
 	box-sizing: content-box;
+	background-size: cover;
 }
 
 .markItUpHeader ul ul a {
@@ -347,4 +347,242 @@ BBCODE BUTTONS
 
 li.markItUpButton ul {
 	z-index: 1;
+}
+
+.btn-group {
+	position: relative;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	font-size: 0;
+	vertical-align: middle;
+	white-space: nowrap;
+	*margin-left: .3em;
+}
+
+.btn-group:first-child {
+	*margin-left: 0;
+}
+
+.btn-group + .btn-group {
+	margin-left: 5px;
+}
+
+.btn-toolbar {
+	font-size: 0;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-toolbar > .btn + .btn, .btn-toolbar > .btn-group + .btn, .btn-toolbar > .btn + .btn-group {
+	margin-left: 5px;
+}
+
+.btn-group > .btn {
+	position: relative;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+.btn-group > .btn + .btn {
+	margin-left: -1px;
+}
+
+.btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
+	font-size: 14px;
+}
+
+.btn-group > .btn-mini {
+	font-size: 10.5px;
+}
+
+.btn-group > .btn-small {
+	font-size: 11.9px;
+}
+
+.btn-group > .btn-large {
+	font-size: 17.5px;
+}
+
+.btn-group > .btn:first-child {
+	margin-left: 0;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.btn-group > .btn:last-child, .btn-group > .dropdown-toggle {
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+.btn-group > .btn.large:first-child {
+	margin-left: 0;
+	-webkit-border-top-left-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	border-top-left-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.btn-group > .btn.large:last-child, .btn-group > .large.dropdown-toggle {
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	border-top-right-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-moz-border-radius-bottomright: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.btn-group > .btn:hover, .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active {
+	z-index: 2;
+}
+
+.btn-group .dropdown-toggle:active, .btn-group.open .dropdown-toggle {
+	outline: 0;
+}
+
+.btn-group > .btn + .dropdown-toggle {
+	padding-left: 8px;
+	padding-right: 8px;
+	-webkit-box-shadow: inset 1px 0 0 rgba(255, 255, 255, .125), inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+	-moz-box-shadow: inset 1px 0 0 rgba(255, 255, 255, .125), inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+	box-shadow: inset 1px 0 0 rgba(255, 255, 255, .125), inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+	*padding-top: 5px;
+	*padding-bottom: 5px;
+}
+
+.btn-group > .btn-mini + .dropdown-toggle {
+	padding-left: 5px;
+	padding-right: 5px;
+	*padding-top: 2px;
+	*padding-bottom: 2px;
+}
+
+.btn-group > .btn-small + .dropdown-toggle {
+	*padding-top: 5px;
+	*padding-bottom: 4px;
+}
+
+.btn-group > .btn-large + .dropdown-toggle {
+	padding-left: 12px;
+	padding-right: 12px;
+	*padding-top: 7px;
+	*padding-bottom: 7px;
+}
+
+.btn-group.open .dropdown-toggle {
+	background-image: none;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.btn-group.open .btn.dropdown-toggle {
+	background-color: #e6e6e6;
+}
+
+.btn-group.open .btn-primary.dropdown-toggle {
+	background-color: #0044cc;
+}
+
+.btn-group.open .btn-warning.dropdown-toggle {
+	background-color: #f89406;
+}
+
+.btn-group.open .btn-danger.dropdown-toggle {
+	background-color: #bd362f;
+}
+
+.btn-group.open .btn-success.dropdown-toggle {
+	background-color: #51a351;
+}
+
+.btn-group.open .btn-info.dropdown-toggle {
+	background-color: #2f96b4;
+}
+
+.btn-group.open .btn-inverse.dropdown-toggle {
+	background-color: #222222;
+}
+
+.btn .caret {
+	margin-top: 8px;
+	margin-left: 0;
+}
+
+.btn-large .caret {
+	margin-top: 6px;
+}
+
+.btn-large .caret {
+	border-left-width: 5px;
+	border-right-width: 5px;
+	border-top-width: 5px;
+}
+
+.btn-mini .caret, .btn-small .caret {
+	margin-top: 8px;
+}
+
+.dropup .btn-large .caret {
+	border-bottom-width: 5px;
+}
+
+.btn-primary .caret, .btn-warning .caret, .btn-danger .caret, .btn-info .caret, .btn-success .caret, .btn-inverse .caret {
+	border-top-color: #ffffff;
+	border-bottom-color: #ffffff;
+}
+
+.btn-group-vertical {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+.btn-group-vertical > .btn {
+	display: block;
+	float: none;
+	max-width: 100%;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+.btn-group-vertical > .btn + .btn {
+	margin-left: 0;
+	margin-top: -1px;
+}
+
+.btn-group-vertical > .btn:first-child {
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+
+.btn-group-vertical > .btn:last-child {
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+}
+
+.btn-group-vertical > .btn-large:first-child {
+	-webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
+}
+
+.btn-group-vertical > .btn-large:last-child {
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
 }

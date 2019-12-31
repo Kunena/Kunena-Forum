@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * Attachments view for Kunena backend
@@ -58,12 +59,12 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function setToolbar()
 	{
 		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
 
-		JToolbarHelper::spacer();
+		ToolbarHelper::spacer();
 	}
 
 	/**

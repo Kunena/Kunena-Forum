@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena config backend
@@ -44,11 +45,11 @@ class KunenaAdminViewConfig extends KunenaView
 	{
 		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
-		JToolbarHelper::spacer();
-		JToolbarHelper::apply();
-		JToolbarHelper::save('save');
-		JToolbarHelper::divider();
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply();
+		ToolbarHelper::save('save');
+		ToolbarHelper::divider();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 
 		HTMLHelper::_('bootstrap.renderModal', 'settingModal');
 
@@ -57,10 +58,10 @@ class KunenaAdminViewConfig extends KunenaView
 					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 					$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'restore');
-		JToolbarHelper::back('JTOOLBAR_CANCEL', 'index.php?option=com_kunena');
+		ToolbarHelper::back('JTOOLBAR_CANCEL', 'index.php?option=com_kunena');
 
-		JToolbarHelper::spacer();
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/configuration';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

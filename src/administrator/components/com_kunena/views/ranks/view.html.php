@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena ranks backend
@@ -73,16 +74,16 @@ class KunenaAdminViewRanks extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');
 
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 
-		JToolbarHelper::spacer();
-		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
-		JToolbarHelper::editList();
-		JToolbarHelper::divider();
-		JToolbarHelper::deleteList();
-		JToolbarHelper::spacer();
+		ToolbarHelper::spacer();
+		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
+		ToolbarHelper::editList();
+		ToolbarHelper::divider();
+		ToolbarHelper::deleteList();
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

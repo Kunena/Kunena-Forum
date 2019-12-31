@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena cpanel
@@ -27,16 +28,16 @@ class KunenaAdminViewCpanel extends KunenaView
 	public function displayDefault()
 	{
 		$help_url = 'https://docs.kunena.org/en/';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
-		JToolbarHelper::link('https://www.kunena.org/bugs/changelog', Text::_('COM_KUNENA_DASHBOARD_CHANGELOG'));
-		JToolbarHelper::link('https://www.kunena.org/forum', Text::_('COM_KUNENA_DASHBOARD_GET_SUPPORT'));
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+		ToolbarHelper::link('https://www.kunena.org/bugs/changelog', Text::_('COM_KUNENA_DASHBOARD_CHANGELOG'));
+		ToolbarHelper::link('https://www.kunena.org/forum', Text::_('COM_KUNENA_DASHBOARD_GET_SUPPORT'));
 
 		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_kunena'))
 		{
-			JToolbarHelper::spacer();
-			JToolbarHelper::preferences('com_kunena');
-			JToolbarHelper::spacer();
+			ToolbarHelper::spacer();
+			ToolbarHelper::preferences('com_kunena');
+			ToolbarHelper::spacer();
 		}
 
 		$this->display();

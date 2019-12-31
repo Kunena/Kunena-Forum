@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena rank backend
@@ -44,12 +45,12 @@ class KunenaAdminViewRank extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
-		JToolbarHelper::spacer();
-		JToolbarHelper::save('save');
-		JToolbarHelper::spacer();
-		JToolbarHelper::cancel();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
+		ToolbarHelper::spacer();
+		ToolbarHelper::save('save');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

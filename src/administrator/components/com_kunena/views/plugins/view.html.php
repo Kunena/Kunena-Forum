@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * View class for a list of plugins.
@@ -61,17 +62,17 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
-		JToolbarHelper::spacer();
-		JToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
-		JToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
-		JToolbarHelper::divider();
-		JToolbarHelper::checkin('checkin');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
+		ToolbarHelper::spacer();
+		ToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
+		ToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
+		ToolbarHelper::divider();
+		ToolbarHelper::checkin('checkin');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

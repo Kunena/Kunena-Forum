@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * User view for Kunena backend
@@ -136,16 +137,16 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
-		JToolbarHelper::spacer();
-		JToolbarHelper::apply('apply');
-		JToolbarHelper::spacer();
-		JToolbarHelper::save('save');
-		JToolbarHelper::spacer();
-		JToolbarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('apply');
+		ToolbarHelper::spacer();
+		ToolbarHelper::save('save');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -165,11 +166,11 @@ class KunenaAdminViewUser extends KunenaView
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		JToolbarHelper::spacer();
-		JToolbarHelper::cancel();
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
 	}
 }

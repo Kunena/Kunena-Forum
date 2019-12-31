@@ -87,6 +87,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
  * @property    string $ok
  * @property    int    $socialshare
  * @property    string $pinterest
+ * @property    string $reddit
  */
 class KunenaUser extends CMSObject
 {

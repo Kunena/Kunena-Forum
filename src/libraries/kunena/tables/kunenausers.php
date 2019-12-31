@@ -498,6 +498,14 @@ class TableKunenaUsers extends KunenaTable
 	public $youtube = null;
 
 	/**
+	 * reddit
+	 *
+	 * @var integer
+	 * @since Kunena
+	 */
+	public $reddit = null;
+
+	/**
 	 * @param   JDatabaseDriver  $db  Database driver
 	 *
 	 * @since Kunena

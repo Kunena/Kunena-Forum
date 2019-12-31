@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * Logs view for Kunena backend
@@ -164,10 +165,10 @@ class KunenaAdminViewLogs extends KunenaView
 		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
 	}
 
 	/**
@@ -185,11 +186,11 @@ class KunenaAdminViewLogs extends KunenaView
 	protected function setToolbarClean()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
-		JToolbarHelper::spacer();
-		JToolbarHelper::cancel();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
 	}
 
 	/**

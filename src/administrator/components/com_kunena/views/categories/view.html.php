@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena backend
@@ -61,22 +62,22 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	protected function setToolBarEdit()
 	{
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		JToolbarHelper::spacer();
-		JToolbarHelper::apply('apply');
-		JToolbarHelper::save('save');
-		JToolbarHelper::save2new('save2new');
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('apply');
+		ToolbarHelper::save('save');
+		ToolbarHelper::save2new('save2new');
 
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())
 		{
-			JToolbarHelper::save2copy('save2copy');
+			ToolbarHelper::save2copy('save2copy');
 		}
 
-		JToolbarHelper::cancel();
-		JToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -133,15 +134,15 @@ class KunenaAdminViewCategories extends KunenaView
 		// Get the toolbar object instance
 		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		JToolbarHelper::spacer();
-		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		ToolbarHelper::spacer();
+		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
 
-		JToolbarHelper::editList();
-		JToolbarHelper::divider();
-		JToolbarHelper::publish();
-		JToolbarHelper::unpublish();
-		JToolbarHelper::divider();
+		ToolbarHelper::editList();
+		ToolbarHelper::divider();
+		ToolbarHelper::publish();
+		ToolbarHelper::unpublish();
+		ToolbarHelper::divider();
 
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
@@ -151,9 +152,9 @@ class KunenaAdminViewCategories extends KunenaView
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'confirmdelete');
 
-		JToolbarHelper::spacer();
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 
 		$title = Text::_('JTOOLBAR_BATCH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">

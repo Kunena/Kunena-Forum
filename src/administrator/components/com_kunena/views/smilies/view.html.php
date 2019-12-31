@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena smilies backend
@@ -56,15 +57,15 @@ class KunenaAdminViewSmilies extends KunenaView
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');
 
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-		JToolbarHelper::spacer();
-		JToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-		JToolbarHelper::editList();
-		JToolbarHelper::divider();
-		JToolbarHelper::deleteList();
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
+		ToolbarHelper::spacer();
+		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
+		ToolbarHelper::editList();
+		ToolbarHelper::divider();
+		ToolbarHelper::deleteList();
+		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

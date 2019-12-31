@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * Trash view for Kunena backend
@@ -98,15 +99,15 @@ class KunenaAdminViewTrash extends KunenaView
 	protected function setToolBarDefault()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		JToolbarHelper::divider();
-		JToolbarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+		ToolbarHelper::divider();
+		ToolbarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
+		ToolbarHelper::spacer();
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -127,14 +128,14 @@ class KunenaAdminViewTrash extends KunenaView
 	protected function setToolBarPurge()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
-		JToolbarHelper::spacer();
-		JToolbarHelper::cancel();
-		JToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

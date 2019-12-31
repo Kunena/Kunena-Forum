@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * Users view for Kunena backend
@@ -64,12 +65,12 @@ class KunenaAdminViewUsers extends KunenaView
 		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		// Set the titlebar text
-		JToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
-		JToolbarHelper::spacer();
-		JToolbarHelper::editList();
-		JToolbarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
-		JToolbarHelper::divider();
-		JToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::editList();
+		ToolbarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
+		ToolbarHelper::divider();
+		ToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
@@ -79,14 +80,14 @@ class KunenaAdminViewUsers extends KunenaView
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
-		JToolbarHelper::divider();
-		JToolbarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
-		JToolbarHelper::spacer();
-		JToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
-		JToolbarHelper::spacer();
+		ToolbarHelper::divider();
+		ToolbarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		ToolbarHelper::spacer();
 
 		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
 
@@ -97,7 +98,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
-		JToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

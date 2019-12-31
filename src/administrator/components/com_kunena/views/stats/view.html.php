@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * About view for Kunena stats backend
@@ -29,7 +30,7 @@ class KunenaAdminViewStats extends KunenaView
 	 */
 	public function displayDefault()
 	{
-		JToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);

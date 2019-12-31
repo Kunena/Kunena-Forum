@@ -84,6 +84,15 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$removeList  = array_keys(array_diff_key($attachments, $attach));
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
+
+			if ($attachment->inline)
+			{
+				$find             = array('/\[attachment='.$id.'\](.*?)\[\/attachment\]/su');
+				$replace          = '';
+				$text             = preg_replace($find, $replace, $message->message);
+				$message->message = $text;
+			}
+
 			$message->save();
 
 			$topic = $message->getTopic();

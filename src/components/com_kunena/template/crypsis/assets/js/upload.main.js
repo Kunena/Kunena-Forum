@@ -238,13 +238,16 @@ jQuery(function ($) {
 				}
 			}
 
+			var editor_text = $('#editor').val();
+
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id + '&editor_text=' + editor_text,
 				type: 'POST'
 			})
 			.done(function (data) {
 				data.inline = 0;
 				$this.hide();
+				$('#editor').val(data.text_prepared);
 			})
 			.fail(function () {
 				//TODO: handle the error of ajax request

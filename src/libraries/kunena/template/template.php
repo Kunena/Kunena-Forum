@@ -1224,6 +1224,7 @@ HTML;
 							$icon->title                 = (string) $attributes->title;
 							$icon->b2                    = (string) $attributes->b2;
 							$icon->b3                    = (string) $attributes->b3;
+							$icon->b4                    = (string) $attributes->b4;
 							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
@@ -1379,6 +1380,10 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
+			elseif ($topicicontype == 'B4')
+			{
+				return '<img src="' . Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/user/svg/' . $icon->b4 . '.svg" alt="' . $icon->b4 . '" width="32" height="32" />';
+			}
 			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
@@ -1456,6 +1461,10 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
+			elseif ($topicicontype == 'B4')
+			{
+				return '<img src="' . Uri::root() . '/media/kunena/topic_icons/' . $category_iconset . '/system/' . $icon->b4 . '" width="32" height="32" />';
+			}
 			elseif ($topicicontype == 'fa')
 			{
 				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
@@ -1511,6 +1520,7 @@ HTML;
 			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
+			$icon->b4   = (string) $attributes->b4;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
 			$icon->new  = (string) $attributes->new;
@@ -1549,6 +1559,7 @@ HTML;
 			$icon->name = (string) $attributes->name;
 			$icon->b2   = (string) $attributes->b2;
 			$icon->b3   = (string) $attributes->b3;
+			$icon->b4   = (string) $attributes->b4;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
 			$icon->new  = (string) $attributes->new;
@@ -1929,6 +1940,7 @@ HTML;
 			$label->id        = (int) $attributes->id;
 			$label->b2        = (string) $attributes->b2;
 			$label->b3        = (string) $attributes->b3;
+			$label->b4        = (string) $attributes->b4;
 			$label->fa        = (string) $attributes->fa;
 			$label->src       = (string) $attributes->src;
 			$label->name      = (string) $attributes->name;

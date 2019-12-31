@@ -309,6 +309,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
 											aria-hidden="true"></span>
+									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
+									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
+										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
+										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' .  $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+												alt="<?php echo $icon->name; ?>" width="32" height="32"/>
 									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>

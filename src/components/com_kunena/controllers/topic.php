@@ -951,8 +951,22 @@ class KunenaControllerTopic extends KunenaController
 				$this->app->enqueueMessage($e->getMessage(), 'notice');
 			}
 
+			$isMine = $this->me->userid == $message->userid;
+
 			if ($message->publish(KunenaForum::DELETED))
 			{
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(
+						$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_POST_DELETE,
+						array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
+						$topic->getCategory(),
+						$topic,
+						!$isMine ? $message->getAuthor() : null
+					);
+				}
+
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
 			}
 
@@ -988,8 +1002,6 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-
-		$isMine = $this->me->userid == $message->userid;
 
 		if ($this->config->log_moderation)
 		{

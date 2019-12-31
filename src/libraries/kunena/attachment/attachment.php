@@ -1067,4 +1067,31 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		return $success;
 	}
+
+	/**
+	 * Remove the BBCode [attachment=attachmentID][/attachment] from text message
+	 *
+	 * @param   string  $editor_text
+	 *
+	 * @return boolean
+	 * @since Kunena 6.0
+	 */
+	public function removeBBCodeInMessage($editor_text = null)
+	{
+		if (!$this->inline)
+		{
+			return;
+		}
+
+		if (empty($editor_text))
+		{
+			return;
+		}
+
+		$find             = array('/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su');
+		$replace          = '';
+		$text             = preg_replace($find, $replace, $editor_text);
+
+		return $text;
+	}
 }

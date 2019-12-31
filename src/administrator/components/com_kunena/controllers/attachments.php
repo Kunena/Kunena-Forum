@@ -83,6 +83,9 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$removeList  = array_keys(array_diff_key($attachments, $attach));
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
+
+			$message->message = $attachment->removeBBCodeInMessage($message->message);
+
 			$message->save();
 
 			$topic = $message->getTopic();

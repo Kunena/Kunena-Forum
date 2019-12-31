@@ -687,7 +687,7 @@
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
-    </table> 
+    </table>
     <table name="kunena_private">
 		<field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
 		<field name="parent_id" type="int(11)" null="0" default="0"/>
@@ -1014,6 +1014,9 @@
                type="varchar(75)"
                null="1"/>
         <field name="pinterest"
+               type="varchar(75)"
+               null="1"/>
+        <field name="reddit"
                type="varchar(75)"
                null="1"/>
         <field name="websitename"

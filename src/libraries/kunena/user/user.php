@@ -2150,6 +2150,7 @@ class KunenaUser extends CMSObject
 		                'youtube'          => array('url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'),
 		                'ok'               => array('url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'),
 		                'pinterest'        => array('url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'),
+		                'reddit'           => array('url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'),
 		);
 
 		return $social;

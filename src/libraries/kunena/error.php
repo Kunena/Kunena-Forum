@@ -57,7 +57,7 @@ abstract class KunenaError
 	 */
 	public static function initialize()
 	{
-		if (!self::$enabled)
+		if (!self::$enabled && !KunenaForum::isDev())
 		{
 			self::$format = Factory::getApplication()->input->getWord('format', 'html');
 			self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;

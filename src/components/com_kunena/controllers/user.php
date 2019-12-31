@@ -46,7 +46,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($active))
 		{
-			$params   = $active->params;
+			$params   = $active->getParams();
 			$redirect = $params->get('integration', 1);
 		}
 

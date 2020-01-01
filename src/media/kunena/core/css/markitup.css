@@ -32,11 +32,11 @@ BBCODE BUTTONS
 }
 
 .markItUp .supscriptbutton a {
-	background-image: url('../images/supscript.png');
+	background-image: url('../svg/supscript.svg');
 }
 
 .markItUp .subscriptbutton a {
-	background-image: url('../images/subscript.png');
+	background-image: url('../svg/subscript.svg');
 }
 
 .markItUp .sizebutton a {
@@ -117,17 +117,17 @@ BBCODE BUTTONS
 }
 
 .markItUp .tweetbutton a {
-	background-image: url('../../core/images/social/twitter.svg');
+	background-image: url('../svg/twitter.svg');
 }
 
 .markItUp .soundcloudbutton a {
-	background-image: url('../../core/images/social/soundcloud.svg');
+	background-image: url('../svg/soundcloud.svg');
 	margin-left: -3px;
 	margin-top: 3px;
 }
 
 .markItUp .instagrambutton a {
-	background-image: url('../../core/images/social/instagram.svg');
+	background-image: url('../svg/instagram.svg');
 }
 
 .markItUp .hrbutton a {
@@ -135,7 +135,7 @@ BBCODE BUTTONS
 }
 
 .markItUp .emoticonsbutton a {
-	background-image: url('../../emoticons/happy.svg');
+	background-image: url('../svg/smile.svg');
 }
 
 .markItUp .confidentialbutton a {
@@ -314,6 +314,7 @@ BBCODE BUTTONS
 	text-indent: -10000px;
 	background-repeat: no-repeat;
 	margin: 0;
+	padding: 0;
 	box-sizing: content-box;
 	background-size: cover;
 }
@@ -322,8 +323,13 @@ BBCODE BUTTONS
 	display: block;
 	text-indent: 0;
 	width: 150px;
-	padding: 5px 5px 5px 25px;
+	padding: 0;
 	background-position: 2px 50%;
+	background-image: none !important;
+}
+
+.markItUpHeader ul .colors a {
+	text-indent: -10000px;
 }
 
 .markItUpHeader ul ul a:hover {

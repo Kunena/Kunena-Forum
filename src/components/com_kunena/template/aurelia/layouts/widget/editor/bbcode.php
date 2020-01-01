@@ -77,8 +77,8 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_MAP_SETTINGS') ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_TYPE') ?>: <select id="modal-map-type">
@@ -120,8 +120,8 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
 					<p>
@@ -143,8 +143,8 @@ if (!empty($codeTypes)) : ?>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
@@ -184,8 +184,8 @@ if (!empty($codeTypes)) : ?>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
 				<p>
@@ -211,8 +211,8 @@ if (!empty($codeTypes)) : ?>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_SETTINGS') ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_SIZE') ?>: <input
@@ -261,15 +261,17 @@ if (!empty($codeTypes)) : ?>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
+				<h3 class="modal-title"><?php echo Text::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input
-							class="form-control"
-							name="modal-video-urlprovider-input"
-							id="modal-video-urlprovider-input"
-							type="text" value=""/></p>
+						class="form-control"
+						name="modal-video-urlprovider-input"
+						id="modal-video-urlprovider-input"
+						type="text" value=""/></p>
 			</div>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit"
@@ -280,6 +282,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 </div>
+
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
 	<div id="modal-poll-not-allowed-to-edit" class="modal fade" tabindex="-1" role="dialog"
 	     aria-labelledby="poll-not-allowed-to-edit"
@@ -287,8 +290,8 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="poll-not-allowed-to-edit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?></h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
 					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?>
@@ -302,8 +305,8 @@ if (!empty($codeTypes)) : ?>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
 					<div id="kbbcode-poll-options">
@@ -365,13 +368,16 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 <?php endif; ?>
+
 <div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Emoticons</h3>
+				<h3 class="modal-title">Emoticons</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div id="smilie"><?php
@@ -397,6 +403,7 @@ if (!empty($codeTypes)) : ?>
 		</div>
 	</div>
 </div>
+
 <!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">
 	<div class="controls">

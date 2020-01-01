@@ -116,9 +116,8 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attach_id = $this->input->getInt('file_id', 0);
-		$instance  = KunenaAttachmentHelper::get($attach_id);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
-		$attachs_id = explode(',',$attachs_id);
+		
 
 		if($attach_id > 0)
 		{
@@ -126,6 +125,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
+			$attachs_id = explode(',',$attachs_id);
 			$instances  = KunenaAttachmentHelper::getById($attachs_id);
 		}
 
@@ -135,6 +135,12 @@ class KunenaControllerTopic extends KunenaController
 		{
 			if($attach_id > 0)
 			{
+				$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+				$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
+				$replace          = '';
+				$text             = preg_replace($find, $replace, $editor_text);
+				$response['text_prepared'] = $text;
+
 				if ($instance->inline)
 				{
 					$response['result'] = $instance->setInline(0);
@@ -214,6 +220,16 @@ class KunenaControllerTopic extends KunenaController
 
 		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
+			$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+
+			if (!empty($editor_text) && $instance->inline)
+			{
+				$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
+				$replace          = '';
+				$text             = preg_replace($find, $replace, $editor_text);
+				$success['text_prepared'] = $text;
+			}
+
 			$success['result'] = $instance->delete();
 			unset($instance);
 		}
@@ -935,8 +951,22 @@ class KunenaControllerTopic extends KunenaController
 				$this->app->enqueueMessage($e->getMessage(), 'notice');
 			}
 
+			$isMine = $this->me->userid == $message->userid;
+
 			if ($message->publish(KunenaForum::DELETED))
 			{
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(
+						$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_POST_DELETE,
+						array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
+						$topic->getCategory(),
+						$topic,
+						!$isMine ? $message->getAuthor() : null
+					);
+				}
+
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
 			}
 
@@ -972,8 +1002,6 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-
-		$isMine = $this->me->userid == $message->userid;
 
 		if ($this->config->log_moderation)
 		{

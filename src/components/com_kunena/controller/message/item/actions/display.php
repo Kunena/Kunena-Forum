@@ -108,6 +108,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'glyphicon glyphicon-share-alt')
 				);
 			}
+			elseif ($topicicontype == 'B4' && !$fullactions)
+			{
+				$this->messageButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'pencil')
+				);
+			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->messageButtons->set('reply',
@@ -141,6 +147,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-share-alt')
 					);
 				}
+				elseif ($topicicontype == 'B4')
+				{
+					$this->messageButtons->set('quickreply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'reply')
+					);
+				}
 				elseif ($topicicontype == 'fa')
 				{
 					$this->messageButtons->set('quickreply',
@@ -171,6 +183,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			{
 				$this->messageButtons->set('quote',
 					$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication', 'quote', $button, 'glyphicon glyphicon-comment')
+				);
+			}
+			elseif ($topicicontype == 'B4' && !$fullactions)
+			{
+				$this->messageButtons->set('quote',
+					$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication', 'quote', $button, 'chat')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
@@ -239,6 +257,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', 'thankyou', false, 'glyphicon glyphicon-thumbs-up')
 					);
 				}
+				elseif ($topicicontype == 'B4')
+				{
+					$this->messageButtons->set('thankyou',
+						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', 'thankyou', false, 'plus')
+					);
+				}
 				elseif ($topicicontype == 'fa')
 				{
 					$this->messageButtons->set('thankyou',
@@ -278,6 +302,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'glyphicon glyphicon-thumbs-down')
 					);
 				}
+				elseif ($topicicontype == 'B4')
+				{
+					$this->messageButtons->set('unthankyou',
+						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'dash')
+					);
+				}
 				elseif ($topicicontype == 'fa')
 				{
 					$this->messageButtons->set('unthankyou',
@@ -312,6 +342,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				elseif ($topicicontype == 'B3')
 				{
 					$icon = 'glyphicon glyphicon-exclamation-sign';
+				}
+				elseif ($topicicontype == 'B4')
+				{
+					$icon = 'alert-octagon';
 				}
 				elseif ($topicicontype == 'fa')
 				{
@@ -353,6 +387,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 					$this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation', 'edit', $button, 'glyphicon glyphicon-edit')
 				);
 			}
+			elseif ($topicicontype == 'B4' && !$fullactions)
+			{
+				$this->messageButtons->set('edit',
+					$this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation', 'edit', $button, 'pencil')
+				);
+			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
 			{
 				$this->messageButtons->set('edit',
@@ -385,6 +425,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			{
 				$this->messageButtons->set('moderate',
 					$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation', 'edit', $button, 'glyphicon glyphicon-random')
+				);
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->messageButtons->set('moderate',
+					$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation', 'edit', $button, 'arrow-left-right')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
@@ -423,6 +469,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'glyphicon glyphicon-ok-circle')
 					);
 				}
+				elseif ($topicicontype == 'B4' && !$fullactions)
+				{
+					$this->messageButtons->set('publish',
+						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'check-circle')
+					);
+				}
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('publish',
@@ -453,6 +505,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			{
 				$this->messageButtons->set('delete',
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
+				);
+			}
+			elseif ($topicicontype == 'B4' && !$fullactions)
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'trash')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)
@@ -490,6 +548,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'glyphicon glyphicon-ok-circle')
 					);
 				}
+				elseif ($topicicontype == 'B4' && !$fullactions)
+				{
+					$this->messageButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'box-arrow-up')
+					);
+				}
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('undelete',
@@ -524,6 +588,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
 					);
 				}
+				elseif ($topicicontype == 'B4' && !$fullactions)
+				{
+					$this->messageButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'trash-fill')
+					);
+				}
 				elseif ($topicicontype == 'fa' && !$fullactions)
 				{
 					$this->messageButtons->set('permdelete',
@@ -556,6 +626,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			{
 				$this->messageButtons->set('delete',
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
+				);
+			}
+			elseif ($topicicontype == 'B4' && !$fullactions)
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'trash')
 				);
 			}
 			elseif ($topicicontype == 'fa' && !$fullactions)

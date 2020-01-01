@@ -86,6 +86,13 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					                      'icon' => 'glyphicon glyphicon-edit glyphicon-white',)
 					);
 			}
+			elseif ($url && $topicicontype == 'B4')
+			{
+				$actions['create'] = $this->subLayout('Widget/Button')
+					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					                      'icon' => 'pencil',)
+					);
+			}
 			elseif ($url && $topicicontype == 'fa')
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
@@ -115,6 +122,11 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 						->setProperties(array('url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
 						                      'icon' => 'glyphicon glyphicon-check',)
 						);
+				}
+				elseif ($url && $topicicontype == 'B4')
+				{
+					$actions['markread'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'bookmark-fill'));
 				}
 				elseif ($url && $topicicontype == 'fa')
 				{
@@ -150,6 +162,25 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
 						                      'icon' => 'glyphicon glyphicon-envelope',)
+						);
+				}
+			}
+			elseif ($url && $topicicontype == 'B4')
+			{
+				if (!$subscribed)
+				{
+					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+					$actions['subscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						                      'icon' => 'envelope',)
+						);
+				}
+				else
+				{
+					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						                      'icon' => 'envelope-open',)
 						);
 				}
 			}

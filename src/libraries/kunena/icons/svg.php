@@ -56,7 +56,14 @@ class KunenaSvgIcons
 		}
 
 		$iconfile = new DOMDocument;
-		$iconfile->load($file);
+		$opts = array(
+			'http' => array(
+				'user_agent' => 'PHP libxml agent',
+			)
+		);
+		$context = stream_context_create($opts);
+		libxml_set_streams_context($context);
+		$iconfile->load($file . '.svg');
 
 		return $iconfile->saveHTML($iconfile->getElementsByTagName('svg')[0]);
 	}

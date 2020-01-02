@@ -823,7 +823,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>';
 		}
 
-		return KunenaSvgIcons::loadsvg('screwdriver');
+		return KunenaSvgIcons::loadsvg('pencil');
 	}
 
 	/**
@@ -1405,7 +1405,16 @@ class KunenaIcons
 			}
 			else
 			{
-				return '<img class="' . $categoryicon . $newchar . '" src="' . Uri::root() . 'media/kunena/core/svg/' . $categoryicon .'.svg" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" width="32" height="32">';
+				$svg = @file_get_contents(Uri::root() . 'media/kunena/core/svg/' . $categoryicon .'.svg');
+
+				if ($svg)
+				{
+					return KunenaSvgIcons::loadsvg($categoryicon);
+				}
+				else
+				{
+					return '<span class="icon ' . $categoryicon . $bigicon . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
+				}
 			}
 		}
 

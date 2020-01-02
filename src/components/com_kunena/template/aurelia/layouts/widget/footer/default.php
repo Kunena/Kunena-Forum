@@ -18,14 +18,13 @@ use Joomla\CMS\Language\Text;
 <?php if (($rss = $this->getRSS()) !== null)
 	:
 	?>
-	<div class="float-right large-kicon"><?php echo $this->getRSS(); ?></div>
-	<div class="clearfix"></div>
+	<footer class="float-right large-kicon"><?php echo $this->getRSS(); ?></footer>
 <?php endif; ?>
 
 <?php if (($time = $this->getTime()) !== null)
 	:
 	?>
-	<div class="center">
+	<footer class="center">
 		<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
-	</div>
+	</footer>
 <?php endif;

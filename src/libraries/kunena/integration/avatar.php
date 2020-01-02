@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class KunenaAvatar
@@ -128,7 +129,24 @@ class KunenaAvatar
 			$class = ' class="' . $class . '"';
 		}
 
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+		$ktemplate = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'B4')
+		{
+			if ($avatar ==  Uri::root() . 'media/kunena/core/svg/person.svg')
+			{
+				$link = '<span ' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">' . KunenaSvgIcons::loadsvg('person') . '</span>';
+			}
+			else
+			{
+				$link = '<span' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '"><img src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
+			}
+		}
+		else
+		{
+			$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+		}
 
 		return $link;
 	}

@@ -243,7 +243,7 @@ foreach ($this->sections as $section) :
 									</div>
 								</td>
 							<?php else : ?>
-								<td>
+								<td colspan="5">
 									<div class="last-post-message">
 										<?php echo Text::_('COM_KUNENA_X_TOPICS_0'); ?>
 									</div>

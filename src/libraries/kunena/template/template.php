@@ -1382,7 +1382,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B4')
 			{
-				return '<img src="' . Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/user/svg/' . $icon->b4 . '.svg" alt="' . $icon->b4 . '" width="32" height="32" />';
+				return KunenaSvgIcons::loadsvg($icon->b4, 'usertopicicons', $category_iconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1463,7 +1463,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B4')
 			{
-				return '<img src="' . Uri::root() . '/media/kunena/topic_icons/' . $category_iconset . '/system/' . $icon->b4 . '" width="32" height="32" />';
+				return KunenaSvgIcons::loadsvg($icon->b4, 'systemtopicicons', $category_iconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{

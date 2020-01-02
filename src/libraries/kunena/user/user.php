@@ -574,7 +574,7 @@ class KunenaUser extends CMSObject
 	{
 		$avatars = KunenaFactory::getAvatarIntegration();
 
-		if (!empty($this->avatar))
+		if ($this->avatar)
 		{
 			$ktemplate     = KunenaFactory::getTemplate();
 			$topicicontype = $ktemplate->params->get('topicicontype');
@@ -631,9 +631,9 @@ class KunenaUser extends CMSObject
 					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 				}
 
-				if ($topicicontype == 'B4')
+				if ($topicicontype == 'B4' && $this->avatar == null)
 				{
-					return '<img src="' . KURL_MEDIA . '"core/svg/person.svg" width="32" height=32 />';
+					return KunenaSvgIcons::loadsvg('person');
 				}
 			}
 		}

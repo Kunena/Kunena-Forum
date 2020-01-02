@@ -46,6 +46,8 @@ JLoader::register('KunenaError', KPATH_FRAMEWORK . '/error.php');
 JLoader::register('KunenaException', KPATH_FRAMEWORK . '/exception.php');
 JLoader::register('KunenaFactory', KPATH_FRAMEWORK . '/factory.php');
 JLoader::register('KunenaInstaller', KPATH_FRAMEWORK . '/installer.php');
+JLoader::register('KunenaIcons', KPATH_FRAMEWORK . '/icons/icons.php');
+JLoader::register('KunenaSvgIcons', KPATH_FRAMEWORK . '/icons/svg.php');
 JLoader::register('KunenaLogin', KPATH_FRAMEWORK . '/login.php');
 JLoader::register('KunenaModel', KPATH_FRAMEWORK . '/model.php');
 JLoader::register('KunenaProfiler', KPATH_FRAMEWORK . '/profiler.php');

@@ -220,7 +220,7 @@ class KunenaUpload
 
 				if ($options['image_type'] == 'avatar')
 				{
-					if (!$this->checkFileSizeAvatar($size))
+				    if (!$this->checkFileSizeImage($size, $options['image_type']))
 					{
 						throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
@@ -237,7 +237,7 @@ class KunenaUpload
 
 					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 					{
-						if (!$this->checkFileSizeImageAttachment($size))
+					    if (!$this->checkFileSizeImage($size, $options['image_type']))
 						{
 							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
@@ -447,33 +447,6 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
-	 * and Php configuration
-	 *
-	 * @param   int  $filesize  The size of avatar in bytes
-	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 */
-	protected function checkFileSizeAvatar($filesize)
-	{
-		if ($filesize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
-		{
-			return false;
-		}
-
-		return (int) max(
-			0,
-			min(
-				$this->toBytes(ini_get('upload_max_filesize')),
-				$this->toBytes(ini_get('post_max_size')),
-				$this->toBytes(ini_get('memory_limit'))
-			)
-		);
-	}
-
-	/**
 	 * Convert value into bytes.
 	 *
 	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
@@ -521,15 +494,25 @@ class KunenaUpload
 	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
 	 * configuration and PHP configuration
 	 *
-	 * @param   int  $filesize  The size of file in bytes
+	 * @param   int     $filesize    The size of file in bytes
+	 * @param   string  $image_type  The type of image : avatar or attachment image
 	 *
 	 * @return boolean
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	protected function checkFileSizeImageAttachment($filesize)
+	protected function checkFileSizeImage($filesize, $image_type)
 	{
-		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
+		if ($image_type == 'avatar')
+		{
+			$config_size = KunenaConfig::getInstance()->avatarsize;
+		}
+		else
+		{
+			$config_size = KunenaConfig::getInstance()->imagesize;
+		}
+
+		$image = $filesize > intval($config_size * 1024);
 
 		if ($image)
 		{
@@ -659,7 +642,7 @@ class KunenaUpload
 
 		if ($file->isAvatar)
 		{
-			if (!$this->checkFileSizeAvatar($file->size))
+		    if (!$this->checkFileSizeImage($file->size, 'avatar'))
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}

@@ -85,7 +85,8 @@ class Nested extends Formatter
 
 		$this->write($inner
 			. implode($this->tagSeparator, $block->selectors)
-			. $this->open . $this->break);
+			. $this->open . $this->break
+		);
 	}
 
 	/**
@@ -131,7 +132,6 @@ class Nested extends Formatter
 
 		$this->currentBlock = $block;
 
-
 		$this->depth = $block->depth;
 
 		if (!empty($block->selectors))
@@ -171,7 +171,7 @@ class Nested extends Formatter
 	 */
 	private function adjustAllChildren(OutputBlock $block)
 	{
-		// flatten empty nested blocks
+		// Flatten empty nested blocks
 		$children = [];
 
 		foreach ($block->children as $i => $child)
@@ -212,7 +212,7 @@ class Nested extends Formatter
 
 		$block->children = $children;
 
-		// make relative to parent
+		// Make relative to parent
 		foreach ($block->children as $child)
 		{
 			$this->adjustAllChildren($child);

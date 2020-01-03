@@ -18,7 +18,9 @@ use Joomla\CMS\Language\Text;
 	<h1>
 		<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
 	</h1>
-	<?php foreach ($this->top as $top) : ?>
+	<?php foreach ($this->top as $top)
+	:
+		?>
 		<h3>
 			<?php echo $top[0]->title; ?>
 		</h3>
@@ -33,7 +35,9 @@ use Joomla\CMS\Language\Text;
 			</thead>
 			<tbody>
 
-			<?php foreach ($top as $id => $item) : ?>
+			<?php foreach ($top as $id => $item)
+			:
+				?>
 				<tr>
 					<td class="center" colspan="1">
 						<?php echo $id + 1; ?>
@@ -44,7 +48,7 @@ use Joomla\CMS\Language\Text;
 					<td colspan="6">
 						<div class="progress">
 							<div class="progress-bar" role="progressbar"
-							     style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
+								 style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
 						</div>
 					</td>
 				</tr>
@@ -54,7 +58,9 @@ use Joomla\CMS\Language\Text;
 		</table>
 	<?php endforeach; ?>
 	<?php
-	if ($this->config->showgenstats) : ?>
+	if ($this->config->showgenstats)
+	:
+		?>
 		<div class="card">
 			<h3 class="card-header">
 				<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
@@ -65,11 +71,12 @@ use Joomla\CMS\Language\Text;
 				<b>
 
 					<?php if ($this->userlistUrl)
-						:
+					:
 						?>
 						<a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a>
 					<?php else
-						:
+
+					:
 						?>
 						<?php echo $this->memberCount; ?>
 					<?php endif; ?>

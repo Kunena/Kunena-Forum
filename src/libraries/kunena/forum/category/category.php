@@ -286,7 +286,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   boolean  $value  True for subscribe, false for unsubscribe.
 	 * @param   mixed    $user   user
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since Kunena
 	 * @throws Exception
 	 */

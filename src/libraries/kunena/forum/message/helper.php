@@ -691,7 +691,7 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @param   int  $userid
 	 *
-	 * @return bool|mixed
+	 * @return boolean|mixed
 	 * @since 6.0.0
 	 * @throws Exception
 	 */

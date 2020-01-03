@@ -99,7 +99,7 @@ class Base64VLQEncoder
 	 *
 	 * @param   string  $aValue
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function toVLQSigned($aValue)
 	{
@@ -118,7 +118,7 @@ class Base64VLQEncoder
 	 *
 	 * @param   integer  $aValue
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function fromVLQSigned($aValue)
 	{
@@ -149,7 +149,8 @@ class Base64VLQEncoder
 			}
 
 			$encoded .= $this->base64Encode($digit);
-		} while ($vlq > 0);
+		}
+		while ($vlq > 0);
 
 		return $encoded;
 	}
@@ -172,7 +173,8 @@ class Base64VLQEncoder
 			$digit = $this->base64Decode($encoded[$i]);
 			$vlq   |= ($digit & $this->mask) << ($i * $this->shift);
 			$i++;
-		} while ($digit & $this->continuationBit);
+		}
+		while ($digit & $this->continuationBit);
 
 		return $this->fromVLQSigned($vlq);
 	}

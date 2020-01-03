@@ -116,7 +116,8 @@ class Debug extends Formatter
 		$indent = $this->indentStr();
 
 		$this->write("{$indent}block->type: {$block->type}\n" .
-			"{$indent}block->depth: {$block->depth}\n");
+			"{$indent}block->depth: {$block->depth}\n"
+		);
 
 		$this->currentBlock = $block;
 

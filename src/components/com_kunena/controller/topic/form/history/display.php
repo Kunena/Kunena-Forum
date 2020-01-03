@@ -65,11 +65,14 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		{
 			$pmFinder = new KunenaPrivateMessageFinder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
+
 			if (!$this->me->isModerator($this->category))
 			{
 				$pmFinder->filterByUser($this->me);
 			}
+
 			$pms = $pmFinder->find();
+
 			foreach ($pms as $pm)
 			{
 				$registry = new Registry($pm->params);
@@ -81,6 +84,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 					{
 						$messages[$post]->pm = array();
 					}
+
 					$messages[$post]->pm[$pm->id] = $pm;
 				}
 			}

@@ -100,7 +100,7 @@ abstract class KunenaForumCategoryHelper
 
 		foreach ($instances as $id => $instance)
 		{
-			$kunenacategory      = KunenaForumCategoryHelper::get($id);
+			$kunenacategory      = self::get($id);
 			$cat_instances [$id] = $kunenacategory;
 		}
 

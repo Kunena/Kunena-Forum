@@ -357,7 +357,8 @@ abstract class KunenaAttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			}
+			while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}

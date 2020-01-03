@@ -645,7 +645,8 @@ abstract class KunenaUserHelper
 	{
 		$db = Factory::getDBO();
 
-		/*$query = $db->getQuery(true);
+		/*
+		$query = $db->getQuery(true);
 		$query->insert($db->quoteName('#__kunena_users') . ' (userid, posts)')
 			->select("user_id AS userid, SUM(posts) AS posts")
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -773,7 +774,7 @@ abstract class KunenaUserHelper
 	 * @param $data array  With username, ip, email, api key, evidence
 	 * @param $type string Add ou just call api
 	 *
-	 * @return bool|Response
+	 * @return boolean|Response
 	 * @since 6.0.0
 	 * @throws Exception
 	 */

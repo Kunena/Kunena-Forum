@@ -35,27 +35,27 @@ class SourceMapGenerator
 	 * @var array
 	 */
 	protected $defaultOptions = array(
-		// an optional source root, useful for relocating source files
+		// An optional source root, useful for relocating source files
 		// on a server or removing repeated values in the 'sources' entry.
 		// This value is prepended to the individual entries in the 'source' field.
 		'sourceRoot'        => '',
 
-		// an optional name of the generated code that this source map is associated with.
+		// An optional name of the generated code that this source map is associated with.
 		'sourceMapFilename' => null,
 
-		// url of the map
+		// Url of the map
 		'sourceMapURL'      => null,
 
-		// absolute path to a file to write the map to
+		// Absolute path to a file to write the map to
 		'sourceMapWriteTo'  => null,
 
-		// output source contents?
+		// Output source contents?
 		'outputSourceFiles' => false,
 
-		// base path for filename normalization
+		// Base path for filename normalization
 		'sourceMapRootpath' => '',
 
-		// base path for filename normalization
+		// Base path for filename normalization
 		'sourceMapBasepath' => ''
 	);
 
@@ -86,6 +86,7 @@ class SourceMapGenerator
 	 * @var array
 	 */
 	protected $sources = array();
+
 	protected $source_keys = array();
 
 	/**
@@ -96,7 +97,7 @@ class SourceMapGenerator
 	public function __construct(array $options = [])
 	{
 		$this->options = array_merge($this->defaultOptions, $options);
-		$this->encoder = new Base64VLQEncoder();
+		$this->encoder = new Base64VLQEncoder;
 	}
 
 	/**
@@ -134,7 +135,7 @@ class SourceMapGenerator
 		$file = $this->options['sourceMapWriteTo'];
 		$dir  = dirname($file);
 
-		// directory does not exist
+		// Directory does not exist
 		if (!is_dir($dir))
 		{
 			// FIXME: create the dir automatically?
@@ -204,7 +205,7 @@ class SourceMapGenerator
 			$sourceMap['sourcesContent'] = $this->getSourcesContent();
 		}
 
-		// less.js compat fixes
+		// Less.js compat fixes
 		if (count($sourceMap['sources']) && empty($sourceMap['sourceRoot']))
 		{
 			unset($sourceMap['sourceRoot']);
@@ -250,7 +251,7 @@ class SourceMapGenerator
 
 		$this->source_keys = array_flip(array_keys($this->sources));
 
-		// group mappings by generated line number.
+		// Group mappings by generated line number.
 		$groupedMap = $groupedMapEncoded = array();
 
 		foreach ($this->mappings as $m)
@@ -276,7 +277,7 @@ class SourceMapGenerator
 				$mapEncoded          = $this->encoder->encode($m['generated_column'] - $lastGeneratedColumn);
 				$lastGeneratedColumn = $m['generated_column'];
 
-				// find the index
+				// Find the index
 				if ($m['source_file'])
 				{
 					$index = $this->findFileIndex($m['source_file']);
@@ -285,7 +286,8 @@ class SourceMapGenerator
 					{
 						$mapEncoded        .= $this->encoder->encode($index - $lastOriginalIndex);
 						$lastOriginalIndex = $index;
-						// lines are stored 0-based in SourceMap spec version 3
+
+						// Lines are stored 0-based in SourceMap spec version 3
 						$mapEncoded         .= $this->encoder->encode($m['original_line'] - 1 - $lastOriginalLine);
 						$lastOriginalLine   = $m['original_line'] - 1;
 						$mapEncoded         .= $this->encoder->encode($m['original_column'] - $lastOriginalColumn);

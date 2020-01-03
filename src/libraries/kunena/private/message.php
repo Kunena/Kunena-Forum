@@ -32,16 +32,19 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 * @since version
 	 */
 	protected $_table = 'KunenaPrivate';
+
 	/**
 	 * @var
 	 * @since version
 	 */
 	protected $_attachments;
+
 	/**
 	 * @var
 	 * @since version
 	 */
 	protected $_posts;
+
 	/**
 	 * @var
 	 * @since version
@@ -70,7 +73,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * @param   string  $field
 	 *
-	 * @return int|string
+	 * @return integer|string
 	 * @throws Exception
 	 */
 	public function displayField($field)
@@ -137,7 +140,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since version
 	 */
@@ -178,6 +181,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 			$this->_attachments->setKey($this->id)->save();
 			$ids         = $this->_attachments->getMapped();
 			$attachments = KunenaAttachmentHelper::getById($ids, 'none');
+
 			foreach ($attachments as $attachment)
 			{
 				$attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;

@@ -92,7 +92,9 @@ class TableKunenaPrivate extends KunenaTable
 		{
 			$this->created_at = Joomla\CMS\Date\Date::getInstance()->toSql();
 		}
+
 		$this->subject = trim($this->subject);
+
 		if (!$this->subject)
 		{
 			throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_PRIVATE_ERROR_NO_SUBJECT'));

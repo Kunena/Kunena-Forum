@@ -31,11 +31,11 @@ use Joomla\CMS\Language\Text;
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-outline-primary" type="button" onclick="document.id('catid').value='';"
-				        data-dismiss="modal">
+						data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-				        onclick="Joomla.submitbutton('batch_moderators');">
+						onclick="Joomla.submitbutton('batch_moderators');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 ?>
 <script type="text/javascript" src="<?php echo $this->server; ?>/javascripts/api/viz_v1.js"></script>
 <object class="tableauViz" width="<?php echo $this->width; ?>" height="<?php echo $this->height; ?>"
-        style="display:none;">
+		style="display:none;">
 	<param name="name" value="<?php echo $this->content; ?>"/>
 	<param name="toolbar" value="<?php echo $this->toolbar; ?>"/>
 </object>

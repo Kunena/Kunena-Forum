@@ -36,9 +36,9 @@ class EmailAddressValidator
 		// If magic quotes is "on", email addresses with quote marks will
 		// fail validation because of added escape characters. Uncommenting
 		// the next three lines will allow for this issue.
-		//if (get_magic_quotes_gpc()) {
+		// If (get_magic_quotes_gpc()) {
 		//    $strEmailAddress = stripslashes($strEmailAddress);
-		//}
+		// }
 
 		// Control characters are not allowed
 		if (preg_match('/[\x00-\x1F\x7F-\xFF]/', $strEmailAddress))
@@ -48,22 +48,26 @@ class EmailAddressValidator
 
 		// Split it into sections using last instance of "@"
 		$intAtSymbol = strrpos($strEmailAddress, '@');
+
 		if ($intAtSymbol === false)
 		{
 			// No "@" symbol in email.
 			return false;
 		}
+
 		$arrEmailAddress[0] = substr($strEmailAddress, 0, $intAtSymbol);
 		$arrEmailAddress[1] = substr($strEmailAddress, $intAtSymbol + 1);
 
 		// Count the "@" symbols. Only one is allowed, except where
 		// contained in quote marks in the local part. Quickest way to
 		// check this is to remove anything in quotes.
-		$arrTempAddress[0] = preg_replace('/"[^"]+"/'
-			, ''
-			, $arrEmailAddress[0]);
+		$arrTempAddress[0] = preg_replace('/"[^"]+"/',
+			'',
+			$arrEmailAddress[0]
+		);
 		$arrTempAddress[1] = $arrEmailAddress[1];
 		$strTempAddress    = $arrTempAddress[0] . $arrTempAddress[1];
+
 		// Then check - should be no "@" symbols.
 		if (strrpos($strTempAddress, '@') !== false)
 		{
@@ -100,11 +104,13 @@ class EmailAddressValidator
 		{
 			return false;
 		}
+
 		// Local portion must be:
 		// 1) a dot-atom (strings separated by periods)
 		// 2) a quoted string
 		// 3) an obsolete format string (combination of the above)
 		$arrLocalPortion = explode('.', $strLocalPortion);
+
 		for ($i = 0, $max = sizeof($arrLocalPortion); $i < $max; $i++)
 		{
 			if (!preg_match('.^('
@@ -112,8 +118,9 @@ class EmailAddressValidator
 				. '[A-Za-z0-9!#$%&\'*+/=?^_`{|}~-]{0,63})'
 				. '|'
 				. '("[^\\\"]{0,62}")'
-				. ')$.'
-				, $arrLocalPortion[$i])
+				. ')$.',
+				$arrLocalPortion[$i]
+			)
 			)
 			{
 				return false;
@@ -133,13 +140,16 @@ class EmailAddressValidator
 		{
 			return false;
 		}
+
 		// Check if domain is IP, possibly enclosed in square brackets.
 		if (preg_match('/^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
-				. '(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}$/'
-				, $strDomainPortion) ||
-			preg_match('/^\[(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
-				. '(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}\]$/'
-				, $strDomainPortion)
+				. '(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}$/',
+			$strDomainPortion
+		)
+			|| preg_match('/^\[(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
+				. '(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}\]$/',
+				$strDomainPortion
+			)
 		)
 		{
 			return true;
@@ -147,10 +157,12 @@ class EmailAddressValidator
 		else
 		{
 			$arrDomainPortion = explode('.', $strDomainPortion);
+
 			if (sizeof($arrDomainPortion) < 2)
 			{
 				return false; // Not enough parts to domain
 			}
+
 			for ($i = 0, $max = sizeof($arrDomainPortion); $i < $max; $i++)
 			{
 				// Each portion must be between 1 and 63 characters, inclusive
@@ -158,8 +170,10 @@ class EmailAddressValidator
 				{
 					return false;
 				}
+
 				if (!preg_match('/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|'
-					. '([A-Za-z0-9]+))$/', $arrDomainPortion[$i])
+					. '([A-Za-z0-9]+))$/', $arrDomainPortion[$i]
+				)
 				)
 				{
 					return false;
@@ -179,6 +193,7 @@ class EmailAddressValidator
 	{
 		// Minimum and maximum are both inclusive
 		$intTextLength = strlen($strText);
+
 		if (($intTextLength < $intMinimum) || ($intTextLength > $intMaximum))
 		{
 			return false;

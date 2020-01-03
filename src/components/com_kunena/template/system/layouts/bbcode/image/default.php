@@ -29,13 +29,17 @@ $attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . 
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
 <div class="kmsgimage">
-	<?php if ($canLink) : ?>
+	<?php if ($canLink)
+	:
+		?>
 	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
-		<?php endif; ?>
+	<?php endif; ?>
 
 		<img src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $alt; ?>"/>
 
-		<?php if ($canLink) : ?>
+		<?php if ($canLink)
+		:
+			?>
 	</a>
-<?php endif; ?>
+		<?php endif; ?>
 </div>

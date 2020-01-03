@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>"
-      id="kform-ban" name="kformban" method="post">
+	  id="kform-ban" name="kformban" method="post">
 	<input type="hidden" name="task" value="ban"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -103,7 +103,9 @@ use Joomla\CMS\Language\Text;
 			</td>
 		</tr>
 
-		<?php if ($this->banInfo->exists()) : ?>
+		<?php if ($this->banInfo->exists())
+		:
+			?>
 			<tr>
 				<td>
 					<label for="ban-remove"><?php echo Text::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>

@@ -162,10 +162,12 @@ abstract class KunenaForumTopicUserHelper
 			if (isset($results[$id]))
 			{
 				$instance = new KunenaForumTopicUser;
+
 				if (!empty($results))
 				{
 					$instance->bind($results[$id]);
 				}
+
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
 			}
@@ -429,7 +431,6 @@ abstract class KunenaForumTopicUserHelper
 			$where  = 'AND m.thread=' . (int) $topicids;
 			$where2 = 'AND ut.topic_id=' . (int) $topicids;
 			$where3 = 'topic_id=' . (int) $topicids;
-
 		}
 		else
 		{
@@ -457,7 +458,8 @@ abstract class KunenaForumTopicUserHelper
 
 		// Create the base insert statement.
 		$query->insert($db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
-			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)');
+			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)'
+		);
 		$db->setQuery($query);
 
 		try

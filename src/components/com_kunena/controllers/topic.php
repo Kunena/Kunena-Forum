@@ -2487,11 +2487,18 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
 	{
-		if (!$this->me->userid) return;
+		if (!$this->me->userid)
+		{
+			return;
+		}
 
 		$body      = (string) $this->input->getRaw('private');
 		$attachIds = $this->input->get('attachment_private', array(), 'array');
-		if (!trim($body) && !$attachIds) return;
+
+		if (!trim($body) && !$attachIds)
+		{
+			return;
+		}
 
 		$moderator          = $this->me->isModerator($message->getCategory());
 		$parent             = $message->getParent();
@@ -2501,15 +2508,23 @@ class KunenaControllerTopic extends KunenaController
 		$private->author_id = $author->userid;
 		$private->subject   = $message->subject;
 		$private->body      = $body;
+
 		// Attach message.
 		$private->posts()->add($message->id);
+
 		// Attach author of the message.
-		if ($author->exists()) $private->users()->add($author->userid);
+		if ($author->exists())
+		{
+			$private->users()->add($author->userid);
+		}
 
 		if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory())))
 		{
 			// Attach receiver (but only if moderator either posted or replied parent post).
-			if ($pAuthor->exists()) $private->users()->add($pAuthor->userid);
+			if ($pAuthor->exists())
+			{
+				$private->users()->add($pAuthor->userid);
+			}
 		}
 
 		$private->attachments()->setMapped($attachIds);
@@ -2543,7 +2558,10 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	protected function editPrivate(KunenaForumMessage $message)
 	{
-		if (!$this->me->userid) return;
+		if (!$this->me->userid)
+		{
+			return;
+		}
 
 		$body      = (string) $this->input->getRaw('private');
 		$attachIds = $this->input->get('attachment_private', array(), 'array');

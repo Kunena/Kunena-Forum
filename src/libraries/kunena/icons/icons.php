@@ -1405,7 +1405,7 @@ class KunenaIcons
 			}
 			else
 			{
-				$svg = @file_get_contents(Uri::root() . 'media/kunena/core/svg/' . $categoryicon .'.svg');
+				$svg = @file_get_contents(Uri::root() . 'media/kunena/core/svg/' . $categoryicon . '.svg');
 
 				if ($svg)
 				{

@@ -33,7 +33,7 @@ use Joomla\CMS\Language\Text;
 			</div>
 			<div class="modal-footer">
 				<button class="btn" type="button"
-				        data-dismiss="modal">
+						data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-danger" type="submit" onclick="Joomla.submitbutton('remove');">

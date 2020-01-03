@@ -17,7 +17,8 @@ use Joomla\CMS\Uri\Uri;
 
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
-// ]]>");
+// ]]>"
+);
 
 $this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -32,11 +33,14 @@ $labels          = $this->ktemplate->params->get('labels');
 	</div>
 	<div class="card-body">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post"
-		      name="myform" id="myform" class="form-horizontal">
+			  name="myform" id="myform" class="form-horizontal">
 			<input type="hidden" name="task" value="move"/>
 			<input type="hidden" name="catid" value="<?php echo $this->category->id; ?>"/>
 			<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
-			<?php if (isset($this->message)) : ?>
+			<?php
+			if (isset($this->message))
+:
+				?>
 				<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>"/>
 			<?php endif; ?>
 			<?php echo HTMLHelper::_('form.token'); ?>
@@ -52,13 +56,15 @@ $labels          = $this->ktemplate->params->get('labels');
 						   aria-controls="tab2"
 						   aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a>
 					</li>
-					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
+					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0)
+:
+						?>
 						<li class="nav-item">
 							<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab"
 							   aria-controls="tab3"
 							   aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
 						</li>
-						<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
+						<!--  <li><a href="#tab4" data-toggle="tab"><?php // Echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 					<?php endif; ?>
 				</ul>
 				<br/>
@@ -69,74 +75,106 @@ $labels          = $this->ktemplate->params->get('labels');
 							<dd> <?php echo $this->topic->displayField('subject'); ?> </dd>
 							<dt> <?php echo Text::_('COM_KUNENA_CATEGORY'); ?> </dt>
 							<dd> <?php echo $this->category->displayField('name') ?> </dd>
-							<?php if (isset($this->userLink)) : ?>
+							<?php if (isset($this->userLink))
+:
+								?>
 								<dt> <?php echo Text::_('JGLOBAL_USERNAME'); ?> </dt>
 								<dd><strong> <?php echo $this->userLink; ?></strong></dd>
 							<?php endif; ?>
 						</dl>
-						<?php if ($this->config->topicicons) : ?>
+						<?php if ($this->config->topicicons)
+:
+							?>
 							<div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 							<br/>
 							<div class="kmoderate-topicicons">
-								<?php foreach ($this->topicIcons as $id => $icon): ?>
+								<?php foreach ($this->topicIcons as $id => $icon)
+	:
+									?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
-								       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicicons && $topicicontype == 'B3') : ?>
+									   value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+									<?php if ($this->config->topicicons && $topicicontype == 'B3')
+		:
+										?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
 											aria-hidden="true"></span>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
+									<?php elseif ($this->config->topicicons && $topicicontype == 'B4')
+		:
+										?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
-										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' .  $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
-										     alt="<?php echo $icon->name; ?>" width="32" height="32"/>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
+										<?php
+										if (!$this->category->iconset)
+			:
+											$this->category->iconset = 'default';
+										endif; ?>
+										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+											 alt="<?php echo $icon->name; ?>" width="32" height="32"/>
+									<?php elseif ($this->config->topicicons && $topicicontype == 'fa')
+		:
+										?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-										<?php else : ?>
+									<?php else:
+										?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>
-											<?php endif; ?>
+									<?php endif; ?>
 										</label>
-										<?php endforeach; ?>
+								<?php endforeach; ?>
 							</div>
-						<?php elseif ($labels && !$this->config->topicicons) : ?>
+						<?php elseif ($labels && !$this->config->topicicons)
+:
+							?>
 							<div><strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
 							<br/>
 							<div class="kmoderate-topicicons">
-								<?php foreach ($this->topicIcons as $id => $icon) : ?>
+								<?php foreach ($this->topicIcons as $id => $icon)
+	:
+									?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
-								       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($topicicontype == 'B3') : ?>
+									   value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+									<?php if ($topicicontype == 'B3')
+		:
+										?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="label label-<?php echo $icon->name; ?>"><span
 												class="icon icon-<?php echo $icon->b3; ?>"
 												aria-hidden="true"></span><span
 												class="sr-only"></span><?php echo $icon->name; ?></span>
-									<?php elseif ($topicicontype == 'B2') : ?>
+									<?php elseif ($topicicontype == 'B2')
+		:
+										?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 												class="label label-<?php echo $icon->name; ?>"><span
 													class="icon icon-<?php echo $icon->b2; ?>"
 													aria-hidden="true"></span><span
 													class="sr-only"></span><?php echo $icon->name; ?></span>
-										<?php elseif ($topicicontype == 'fa') : ?>
+									<?php elseif ($topicicontype == 'fa')
+		:
+										?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 													class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-											<?php else : ?>
+									<?php else
+
+		:
+										?>
 											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
 														src="<?php echo $icon->relpath; ?>"
 														alt="<?php echo $icon->name; ?>"
 														border="0"/>
-												<?php endif; ?>
+									<?php endif; ?>
 											</label>
-											<?php endforeach; ?>
+								<?php endforeach; ?>
 							</div>
 							<br/>
 						<?php endif; ?>
 						<br/>
-						<?php if (isset($this->message)) : ?>
+						<?php if (isset($this->message))
+:
+							?>
 							<hr/>
 							<br/>
 							<h3>
@@ -165,21 +203,21 @@ $labels          = $this->ktemplate->params->get('labels');
 
 						<div class="control-group">
 							<label class="control-label"
-							       for="modcategorieslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
+								   for="modcategorieslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
 
 							<div class="controls" id="modcategorieslist"> <?php echo $this->getCategoryList(); ?> </div>
 						</div>
 						<div class="control-group">
 							<label class="control-label"
-							       for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
+								   for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
 							<div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
-									'select.genericlist', $this->getTopicOptions(), 'targettopic', 'class="form-control"', 'value', 'text', 0, 'kmod_topics'
-								); ?> </div>
+								'select.genericlist', $this->getTopicOptions(), 'targettopic', 'class="form-control"', 'value', 'text', 0, 'kmod_topics'
+							); ?> </div>
 						</div>
 						<div class="control-group" id="kmod_targetid" style="display: none;">
 							<label class="control-label"
-							       for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
+								   for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
 							<div class="controls">
 								<input type="text" size="7" name="targetid" value=""/>
@@ -187,27 +225,29 @@ $labels          = $this->ktemplate->params->get('labels');
 						</div>
 						<div class="control-group" id="kmod_subject">
 							<label class="control-label"
-							       for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
+								   for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
 							<div class="controls">
 								<input type="text" class="form-control" name="subject" id="ktitle_moderate_subject"
-								       value="<?php echo !isset($this->message)
-									       ? $this->topic->displayField('subject')
-									       : $this->message->displayField('subject'); ?>"
-								       maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"/>
+									   value="<?php echo !isset($this->message)
+										   ? $this->topic->displayField('subject')
+										   : $this->message->displayField('subject'); ?>"
+									   maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"/>
 							</div>
 						</div>
-						<?php if (!empty($this->replies)) : ?>
+						<?php if (!empty($this->replies))
+:
+							?>
 							<div class="control-group">
 								<div class="controls">
 									<label class="checkbox">
 										<input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"
-										       value="selected"
-										       style="display: inline-block;"/>
+											   value="selected"
+											   style="display: inline-block;"/>
 										<?php echo Text::_('COM_KUNENA_MODERATION_MOVE_SELECTED'); ?> </label>
 									<label class="checkbox">
 										<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer"
-										       style="display: inline-block;"/>
+											   style="display: inline-block;"/>
 										<?php echo Text::sprintf('COM_KUNENA_MODERATION_MOVE_NEWER', $this->escape($this->replies)); ?>
 									</label>
 								</div>
@@ -221,25 +261,32 @@ $labels          = $this->ktemplate->params->get('labels');
 									<?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES'); ?> </label>
 							</div>
 						</div>
-						<?php if (!isset($this->message)) : ?>
+						<?php if (!isset($this->message))
+:
+							?>
 							<div class="control-group">
 								<div class="controls">
 									<label class="checkbox">
-										<input type="checkbox" <?php if ($this->config->boxghostmessage) echo ' checked="checked"'; ?>
-										       name="shadow" value="1"/>
+										<input type="checkbox" <?php if ($this->config->boxghostmessage)
+	{
+											echo ' checked="checked"';
+															   } ?>
+											   name="shadow" value="1"/>
 										<?php echo Text::_('COM_KUNENA_MODERATION_TOPIC_SHADOW'); ?> </label>
 								</div>
 							</div>
 						<?php endif; ?>
 					</div>
-					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0) : ?>
+					<?php if (isset($this->message) && $this->message->getAuthor()->id != 0)
+:
+						?>
 						<div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
 							<?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor())->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'))->set('banHistory', $this->banHistory)->set('me', $this->me); ?>
 						</div>
 
 						<!-- FIXME: This adds a form which cause an issue, because there will be nested forms
 				<div class="tab-pane" id="tab4">
-					<?php //echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN')); ?>
+						<?php // Echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN')); ?>
 				</div>-->
 					<?php endif; ?>
 					<hr/>
@@ -249,7 +296,7 @@ $labels          = $this->ktemplate->params->get('labels');
 			<br/>
 			<div class="control-group center">
 				<button name="submit" type="submit"
-				        class="btn btn-outline-success btn-md">
+						class="btn btn-outline-success btn-md">
 					<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>
 				</button>
 

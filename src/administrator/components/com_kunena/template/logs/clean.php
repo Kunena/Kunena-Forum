@@ -20,9 +20,9 @@ use Joomla\CMS\Language\Text;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs') ?>"
-			      method="post"
-			      id="adminForm"
-			      name="adminForm">
+				  method="post"
+				  id="adminForm"
+				  name="adminForm">
 				<input type="hidden" name="task" value="clean"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 

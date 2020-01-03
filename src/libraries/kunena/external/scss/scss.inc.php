@@ -1,4 +1,5 @@
 <?php
+
 if (version_compare(PHP_VERSION, '5.4') < 0)
 {
 	throw new Exception('scssphp requires PHP 5.4 or above');

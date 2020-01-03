@@ -666,6 +666,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Start by checking if attachment is protected.
 		$exception = !$this->protected
 			? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->id ? 403 : 401);
+
 		// TODO: Add support for PROTECTION_PUBLIC
 		// Currently we only support ACL checks, not public attachments.
 		if ($exception && $this->mesid && $this->protected & (self::PROTECTION_PUBLIC + self::PROTECTION_ACL))
@@ -682,12 +683,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 		{
 			$exception = $this->authorisePrivate($action, $user);
 		}
+
 		// Check author access.
 		if ($exception && $this->protected & self::PROTECTION_AUTHOR)
 		{
 			$exception = $user->exists() && $user->id == $this->userid
 				? null : new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);
 		}
+
 		if ($exception)
 		{
 			// Hide original exception behind no access.
@@ -700,9 +703,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 			{
 				$authFunction = 'authorise' . $function;
 				$exception    = $this->$authFunction($user);
-				if ($exception) break;
+
+				if ($exception)
+				{
+					break;
+				}
 			}
 		}
+
 		// Throw or return the exception.
 		if ($throw && $exception)
 		{
@@ -951,8 +959,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Need to load private message (for now allow only one private message per attachment).
 		$map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
 		$map->load(array('attachment_id' => $this->id));
-		$finder  = new KunenaPrivateMessageFinder();
+		$finder  = new KunenaPrivateMessageFinder;
 		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
+
 		if (!$private->exists())
 		{
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
@@ -966,6 +975,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		else
 		{
 			$messages = KunenaForumMessageHelper::getMessages($private->posts()->getMapped());
+
 			foreach ($messages as $message)
 			{
 				if ($user->isModerator($message->getCategory()))

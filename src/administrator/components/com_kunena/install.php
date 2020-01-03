@@ -13,7 +13,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
-/*  KUNENA FORUM INSTALLER */
+// KUNENA FORUM INSTALLER
+
 
 $app  = Factory::getApplication();
 $view = $app->input->getCmd('view');

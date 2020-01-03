@@ -23,7 +23,7 @@ echo $this->subLayout('Widget/Datepicker');
 
 <div class="shadow-lg p-3 mb-5 rounded">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-	      name="editform" id="editform">
+		  name="editform" id="editform">
 		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
@@ -109,10 +109,10 @@ echo $this->subLayout('Widget/Datepicker');
 		<div class="control-group">
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-outline-primary" type="submit"
-				       value="<?php echo Text::_('COM_KUNENA_SAVE'); ?>"/>
+					   value="<?php echo Text::_('COM_KUNENA_SAVE'); ?>"/>
 				<input onclick="window.history.back();" name="cancel" class="btn btn-outline-primary border"
-				       type="button"
-				       value="<?php echo Text::_('COM_KUNENA_CANCEL'); ?>"/>
+					   type="button"
+					   value="<?php echo Text::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>
 	</form>

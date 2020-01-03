@@ -25,7 +25,7 @@ $id      = isset($this->id) ? ' id="' . $this->id . '"' : '';
 $primary = !empty($this->primary) ? ' btn-outline-primary' : '';
 ?>
 <a<?php echo $id; ?> class="btn btn-outline-primary <?php echo $primary; ?> border" href="<?php echo $this->url; ?>"
-                     title="<?php echo $title; ?>">
+					 title="<?php echo $title; ?>">
 	<span class="<?php echo $this->name; ?>"></span>
 	<?php echo $label; ?>
 </a>

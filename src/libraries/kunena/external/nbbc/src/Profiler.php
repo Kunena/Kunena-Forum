@@ -17,7 +17,6 @@ namespace Nbbc;
  */
 class Profiler
 {
-
 	var $start_time, $total_times;
 
 	public function __construct()
@@ -39,6 +38,7 @@ class Profiler
 	public function end($group)
 	{
 		$time = $this->now() - $this->start_time[$group];
+
 		if (!isset($this->total_times[$group]))
 		{
 			$this->total_times[$group] = $time;
@@ -63,10 +63,12 @@ class Profiler
 	{
 		print "<div>Profiled times:\n<ul>\n";
 		ksort($this->total_times);
+
 		foreach ($this->total_times as $name => $time)
 		{
 			print "<li><b>" . htmlspecialchars($name) . "</b>: " . sprintf("%0.2f msec", $time * 1000) . "</li>\n";
 		}
+
 		print "</ul>\n</div>\n";
 	}
 }

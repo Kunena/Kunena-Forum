@@ -286,7 +286,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 	/**
 	 * Check if php extensions needed by kunena are right loaded
-	 * 
+	 *
 	 * @return string
 	 * @since Kunena 6.0
 	 */

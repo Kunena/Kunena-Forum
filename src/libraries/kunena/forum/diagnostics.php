@@ -1548,46 +1548,46 @@ abstract class KunenaForumDiagnostics
 		return array('channels' => 'invalid');
 	}
 
-//	/**
-//	 * @return QueryInterface
-//	 * @since Kunena
-//	 */
-//	protected static function query_topicsownersOrphaned()
-//	{
-//		// Query to find user read which do not belong in any existing topic
-//		$db    = Factory::getDbo();
-//		$query = $db->getQuery(true);
-//		$query->from("#__kunena_users");
-//
-//		return $query;
-//	}
-//
-//	/**
-//	 * @param   QueryInterface  $query  query
-//	 *
-//	 * @return array
-//	 * @since Kunena
-//	 */
-//	protected static function fields_topicsownersOrphaned(QueryInterface $query = null)
-//	{
-//		if ($query)
-//		{
-//			$query->select('*');
-//		}
-//
-//		return array('channels' => 'invalid');
-//	}
-//
-//	/**
-//	 * @return QueryInterface
-//	 * @since Kunena
-//	 */
-//	protected static function fix_topicsownersOrphaned()
-//	{
-//		$query = self::query_topicsownersOrphaned()->insert('#__kunena_user_topics');
-//
-//		return $query;
-//	}
+	//  /**
+	//   * @return QueryInterface
+	//   * @since Kunena
+	//   */
+	//  protected static function query_topicsownersOrphaned()
+	//  {
+	//      // Query to find user read which do not belong in any existing topic
+	//      $db    = Factory::getDbo();
+	//      $query = $db->getQuery(true);
+	//      $query->from("#__kunena_users");
+	// 
+	//      return $query;
+	//  }
+	// 
+	//  /**
+	//   * @param   QueryInterface  $query  query
+	//   *
+	//   * @return array
+	//   * @since Kunena
+	//   */
+	//  protected static function fields_topicsownersOrphaned(QueryInterface $query = null)
+	//  {
+	//      if ($query)
+	//      {
+	//          $query->select('*');
+	//      }
+	//
+	//      return array('channels' => 'invalid');
+	//  }
+	//
+	//  /**
+	//   * @return QueryInterface
+	//   * @since Kunena
+	//   */
+	//  protected static function fix_topicsownersOrphaned()
+	//  {
+	//      $query = self::query_topicsownersOrphaned()->insert('#__kunena_user_topics');
+	//
+	//      return $query;
+	//  }
 }
 /*
 -- Find and update topics without owners:

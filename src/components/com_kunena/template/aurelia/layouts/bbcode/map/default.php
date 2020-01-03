@@ -101,7 +101,7 @@ if (!empty($this->config->google_map_api_key))
 	?>
 
 	<div id="<?php echo $mapid; ?>"
-	     class="kgooglemap"><?php echo Text::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
+		 class="kgooglemap"><?php echo Text::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
 
 	<?php
 }

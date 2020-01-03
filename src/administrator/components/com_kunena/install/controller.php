@@ -192,7 +192,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		} while (!$stop && !$error);
+		}
+		while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));

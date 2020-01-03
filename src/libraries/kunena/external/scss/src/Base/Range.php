@@ -19,6 +19,7 @@ namespace Leafo\ScssPhp\Base;
 class Range
 {
 	public $first;
+
 	public $last;
 
 	/**

@@ -123,7 +123,11 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	 */
 	protected function load(array $ids)
 	{
-		if (empty($ids)) return array();
+		if (empty($ids))
+		{
+			return array();
+		}
+
 		$query = $this->db->getQuery(true);
 		$query->select('*')->from('#__kunena_private')->where('id IN(' . implode(',', $ids) . ')');
 		$this->db->setQuery($query);

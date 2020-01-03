@@ -102,7 +102,8 @@ function kunena_160_2010_05_30_attachments($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	/*$query = $db->getQuery(true);
+	/*
+	$query = $db->getQuery(true);
 	$query->insert($db->quoteName('#__kunena_attachments') . ' (mesid, userid, folder, filetype, filename)')
 		->select("a.mesid, m.userid,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,

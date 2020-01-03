@@ -165,7 +165,8 @@ abstract class Formatter
 
 		$this->write($inner
 			. implode($this->tagSeparator, $block->selectors)
-			. $this->open . $this->break);
+			. $this->open . $this->break
+		);
 	}
 
 	/**
@@ -268,7 +269,7 @@ abstract class Formatter
 				$this->currentLine,
 				$this->currentColumn,
 				$this->currentBlock->sourceLine,
-				$this->currentBlock->sourceColumn - 1, //columns from parser are off by one
+				$this->currentBlock->sourceColumn - 1, // Columns from parser are off by one
 				$this->currentBlock->sourceName
 			);
 

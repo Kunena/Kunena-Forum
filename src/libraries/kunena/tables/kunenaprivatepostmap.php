@@ -21,7 +21,7 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaPrivatePostMap extends KunenaTable
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since version
 	 */
 	protected $_autoincrement = false;

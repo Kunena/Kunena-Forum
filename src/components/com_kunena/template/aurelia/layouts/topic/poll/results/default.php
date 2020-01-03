@@ -18,12 +18,12 @@ $this->addScript('poll.js');
 ?>
 
 <?php if ($this->show_title)
-	:
+:
 	?>
 	<button class="btn btn-outline-primary border float-right" type="button" data-toggle="collapse"
-	        data-target="#poll-results"
-	        aria-expanded="false"
-	        aria-controls="poll-results">
+			data-target="#poll-results"
+			aria-expanded="false"
+			aria-controls="poll-results">
 		&times;
 	</button>
 	<h2>
@@ -36,7 +36,7 @@ $this->addScript('poll.js');
 
 		<?php
 		foreach ($this->poll->getOptions() as $option)
-			:
+		:
 			$percentage = round(($option->votes * 100) / max($this->poll->getTotal(), 1), 1);
 			?>
 			<tr>
@@ -46,8 +46,8 @@ $this->addScript('poll.js');
 				<td class="col-md-8">
 					<div class="progress progress-striped">
 						<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentage; ?>"
-						     aria-valuemin="0" aria-valuemax="100"
-						     style="height:30px;width:<?php echo $percentage; ?>%;"></div>
+							 aria-valuemin="0" aria-valuemax="100"
+							 style="height:30px;width:<?php echo $percentage; ?>%;"></div>
 					</div>
 				</td>
 				<td>
@@ -75,11 +75,11 @@ $this->addScript('poll.js');
 				echo Text::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
 
 				if (!empty($this->users_voted_list))
-					:
+				:
 					echo " ( " . implode(', ', $this->users_voted_list) . " ) "; ?>
 					<?php
 					if ($this->usercount > '5')
-						:
+					:
 						?>
 						<a href="#" id="kpoll-moreusers"><?php echo Text::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 						<div style="display: none;" id="kpoll-moreusers-div">
@@ -91,28 +91,28 @@ $this->addScript('poll.js');
 		</tr>
 		<?php if (!$this->me->exists())
 		:
-		?>
+			?>
 		<tr>
 			<td colspan="4">
 				<?php echo Text::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 
-				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply'))
-					:
-					?>
+		<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply'))
+		:
+			?>
 
 					<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
 						<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 					</a>
-				<?php endif; ?>
+		<?php endif; ?>
 
 				<?php if ($this->me->isModerator($this->category))
 				:
-				?>
+					?>
 				<a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-toggle="modal">
 					<?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 				</a>
 				<div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel"
-				     aria-hidden="true">
+					 aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -139,7 +139,7 @@ $this->addScript('poll.js');
 				</div>
 			</td>
 		</tr>
-		<?php endif; ?>
+				<?php endif; ?>
 		</tfoot>
 	</table>
 </div>

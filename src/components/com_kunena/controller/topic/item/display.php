@@ -177,10 +177,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$pmFinder = new KunenaPrivateMessageFinder;
 			$pmFinder->filterByMessageIds(array_keys($this->messages))->order('id');
+
 			if (!$this->me->isModerator($this->category))
 			{
 				$pmFinder->filterByUser($this->me);
 			}
+
 			$pms = $pmFinder->find();
 
 			foreach ($pms as $pm)
@@ -195,6 +197,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 						$this->messages[$post]->pm = array();
 					}
 				}
+
 				$this->messages[$post]->pm[$pm->id] = $pm;
 			}
 		}

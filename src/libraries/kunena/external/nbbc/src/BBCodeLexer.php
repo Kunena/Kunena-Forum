@@ -7,35 +7,35 @@
 
 namespace Nbbc;
 
-//-----------------------------------------------------------------------------
-//
+// -----------------------------------------------------------------------------
+// 
 //  nbbc_lex.php
-//
+// 
 //  This file is part of NBBC, the New BBCode Parser.
-//
+// 
 //  NBBC implements a fully-validating, high-speed, extensible parser for the
 //  BBCode document language.  Its output is XHTML 1.0 Strict conformant no
 //  matter what its input is.  NBBC supports the full standard BBCode language,
 //  as well as comments, columns, enhanced quotes, spoilers, acronyms, wiki
 //  links, several list styles, justification, indentation, and smileys, among
 //  other advanced features.
-//
-//-----------------------------------------------------------------------------
-//
+// 
+// -----------------------------------------------------------------------------
+// 
 //  Copyright (c) 2008-9, the Phantom Inker.  All rights reserved.
-//
+// 
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //    * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//
+// 
 //    * Redistributions in binary form must reproduce the above copyright
 //       notice, this list of conditions and the following disclaimer in
 //       the documentation and/or other materials provided with the
 //       distribution.
-//
+// 
 //  THIS SOFTWARE IS PROVIDED BY THE PHANTOM INKER "AS IS" AND ANY EXPRESS
 //  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 //  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -47,16 +47,16 @@ namespace Nbbc;
 //  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 //  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//-----------------------------------------------------------------------------
-//
+// 
+// -----------------------------------------------------------------------------
+// 
 //  This file implements the NBBC lexical analyzer, which breaks down the
 //  input text from characters into tokens.  This uses an event-based
 //  interface, somewhat like lex or flex uses, wherein each time
 //  $this->NextToken is called, the next token is returned until it returns
 //  BBCODE_EOI at the end of the input.
-//
-//-----------------------------------------------------------------------------
+// 
+// -----------------------------------------------------------------------------
 
 class BBCodeLexer
 {
@@ -70,22 +70,33 @@ class BBCodeLexer
 	const BBCODE_LEXSTATE_TAG = 1;
 
 	public $token;            // Return token type:  One of the BBCODE_* constants.
+
 	public $text;            // Actual exact, original text of token.
+
 	public $tag;            // If token is a tag, this is the decoded array version.
 
 	public $state;            // Next state of the lexer's state machine: text, or tag/ws/nl
+
 	public $input;            // The input string, split into an array of tokens.
+
 	public $ptr;            // Read pointer into the input array.
+
 	public $unget;            // Whether to "unget" the last token.
 
 	public $verbatim;        // In verbatim mode, we return all input, unparsed, including comments.
+
 	public $debug;            // In debug mode, we dump decoded tags when we find them.
 
 	public $tagmarker;        // Which kind of tag marker we're using:  "[", "<", "(", or "{"
+
 	public $end_tagmarker;    // The ending tag marker:  "]", ">", "(", or "{"
+
 	public $pat_main;        // Main tag-matching pattern.
+
 	public $pat_comment;    // Pattern for matching comments.
+
 	public $pat_comment2;    // Pattern for matching comments.
+
 	public $pat_wiki;        // Pattern for matching wiki-links.
 
 	/**
@@ -111,6 +122,7 @@ class BBCodeLexer
 		{
 			$tagmarker = '[';
 		}
+
 		$e                   = $regex_endmarkers[$tagmarker];
 		$b                   = $regex_beginmarkers[$tagmarker];
 		$this->tagmarker     = $tagmarker;
@@ -189,7 +201,7 @@ class BBCodeLexer
 	 * horizontal rules and weird whitespace characters wrong, but it's only supposed
 	 * to provide a rough quick guess, not a hard fact.
 	 *
-	 * @return int Returns the approximate text length.
+	 * @return integer Returns the approximate text length.
 	 */
 	public function guessTextLength()
 	{
@@ -265,7 +277,6 @@ class BBCodeLexer
 		// Loop until we find a valid (nonempty) token.
 		while (true)
 		{
-
 			// Did we run out of tokens in the input?
 			if ($this->ptr >= count($this->input))
 			{
@@ -283,6 +294,7 @@ class BBCodeLexer
 			{
 				// In verbatim mode, we return *everything* as plain text or whitespace.
 				$this->tag = false;
+
 				if ($this->state == self::BBCODE_LEXSTATE_TEXT)
 				{
 					$this->state = self::BBCODE_LEXSTATE_TAG;
@@ -292,6 +304,7 @@ class BBCodeLexer
 				{
 					// This must be either whitespace, a newline, or a tag.
 					$this->state = self::BBCODE_LEXSTATE_TEXT;
+
 					switch (ord(substr($this->text, 0, 1)))
 					{
 						case 10:
@@ -324,6 +337,7 @@ class BBCodeLexer
 				// Next up is plain text, but only return it if it's nonempty.
 				$this->state = self::BBCODE_LEXSTATE_TAG;
 				$this->tag   = false;
+
 				if (strlen($this->text) > 0)
 				{
 					return $this->token = BBCode::BBCODE_TEXT;
@@ -354,10 +368,12 @@ class BBCodeLexer
 						{
 							$this->tag   = false;
 							$this->state = self::BBCODE_LEXSTATE_TEXT;
+
 							if (strlen($this->text) > 0)
 							{
 								return $this->token = BBCode::BBCODE_TEXT;
 							}
+
 							break;
 						}
 						break;
@@ -381,6 +397,7 @@ class BBCodeLexer
 							$this->state = self::BBCODE_LEXSTATE_TEXT;
 							break;
 						}
+
 						if (preg_match($this->pat_comment2, $this->text))
 						{
 							// This is a comment, not a tag, so treat it like it doesn't exist.
@@ -394,7 +411,7 @@ class BBCodeLexer
 							$matches += [1 => null, 2 => null];
 
 							$this->tag   = ['_name'    => 'wiki', '_endtag' => false,
-							                '_default' => $matches[1], 'title' => $matches[2]];
+											'_default' => $matches[1], 'title' => $matches[2]];
 							$this->state = self::BBCODE_LEXSTATE_TEXT;
 
 							return $this->token = BBCode::BBCODE_TAG;
@@ -431,6 +448,7 @@ class BBCodeLexer
 	public function peekToken()
 	{
 		$result = $this->nextToken();
+
 		if ($this->token !== BBCode::BBCODE_EOI)
 		{
 			$this->unget = true;
@@ -532,7 +550,9 @@ class BBCodeLexer
 		{
 			return -1; // EOI.
 		}
+
 		$piece = $pieces[$ptr];
+
 		if ($piece == '=')
 		{
 			return '=';
@@ -572,6 +592,7 @@ class BBCodeLexer
 
 		// The starting bracket *must* be followed by a non-whitespace character.
 		$ch = ord(substr($tag, 0, 1));
+
 		if ($ch >= 0 && $ch <= 32)
 		{
 			return $result;
@@ -647,18 +668,22 @@ class BBCodeLexer
 				// to behave in a way that makes (tolerable) sense.
 				$after_space = false;
 				$start       = $ptr;
+
 				while (($type = $this->classifyPiece($ptr, $pieces)) != -1)
 				{
 					if ($type == ' ')
 					{
 						$after_space = true;
 					}
+
 					if ($type == '=' && $after_space)
 					{
 						break;
 					}
+
 					$ptr++;
 				}
+
 				if ($type == -1)
 				{
 					$ptr--;
@@ -672,11 +697,13 @@ class BBCodeLexer
 				{
 					// Rewind before = sign.
 					$ptr--;
+
 					// Rewind before any whitespace before = sign.
 					while ($ptr > $start && $this->classifyPiece($ptr, $pieces) == ' ')
 					{
 						$ptr--;
 					}
+
 					// Rewind before any text elements before that.
 					while ($ptr > $start && $this->classifyPiece($ptr, $pieces) != ' ')
 					{
@@ -686,6 +713,7 @@ class BBCodeLexer
 
 				// The default value is everything from $start to $ptr, inclusive.
 				$value = "";
+
 				for (; $start <= $ptr; $start++)
 				{
 					if ($this->classifyPiece($start, $pieces) == ' ')
@@ -697,6 +725,7 @@ class BBCodeLexer
 						$value .= $this->stripQuotes($pieces[$start]);
 					}
 				}
+
 				$value = trim($value);
 
 				$ptr++;
@@ -711,7 +740,6 @@ class BBCodeLexer
 		// in a parameter but before whitespace counts as part of that parameter.
 		while (($type = $this->classifyPiece($ptr, $pieces)) != -1)
 		{
-
 			// Skip whitespace before the next key name.
 			while ($type === ' ')
 			{
@@ -730,6 +758,7 @@ class BBCodeLexer
 				{
 					$key = '';
 				}
+
 				$ptr++;
 			}
 			elseif ($type === '=')
@@ -757,6 +786,7 @@ class BBCodeLexer
 			else
 			{
 				$ptr++;
+
 				// Skip whitespace after the equal sign.
 				while (($type = $this->classifyPiece($ptr, $pieces)) == ' ')
 				{
@@ -773,6 +803,7 @@ class BBCodeLexer
 					// If we get a non-quoted value, consume non-quoted values
 					// until we reach whitespace.
 					$value = $pieces[$ptr++];
+
 					while (($type = $this->classifyPiece($ptr, $pieces)) != -1
 						&& $type != ' ')
 					{

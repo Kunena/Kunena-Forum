@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since version
 	 */
 	protected $loaded = false;

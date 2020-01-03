@@ -220,7 +220,7 @@ class KunenaUpload
 
 				if ($options['image_type'] == 'avatar')
 				{
-				    if (!$this->checkFileSizeImage($size, $options['image_type']))
+					if (!$this->checkFileSizeImage($size, $options['image_type']))
 					{
 						throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
@@ -237,7 +237,7 @@ class KunenaUpload
 
 					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 					{
-					    if (!$this->checkFileSizeImage($size, $options['image_type']))
+						if (!$this->checkFileSizeImage($size, $options['image_type']))
 						{
 							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
@@ -586,7 +586,8 @@ class KunenaUpload
 
 				$exceptions[] = $exception;
 				$e            = $e->getPrevious();
-			} while (JDEBUG && $e);
+			}
+			while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
@@ -642,7 +643,7 @@ class KunenaUpload
 
 		if ($file->isAvatar)
 		{
-		    if (!$this->checkFileSizeImage($file->size, 'avatar'))
+			if (!$this->checkFileSizeImage($file->size, 'avatar'))
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}

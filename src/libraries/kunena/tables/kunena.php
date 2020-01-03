@@ -167,7 +167,6 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 		if ($this->exists())
 		{
-
 			try
 			{
 				$result = $this->updateObject($updateNulls);

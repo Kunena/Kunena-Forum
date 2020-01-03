@@ -134,7 +134,7 @@ class KunenaAvatar
 
 		if ($topicicontype == 'B4')
 		{
-			if ($avatar ==  Uri::root() . 'media/kunena/core/svg/person.svg')
+			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{
 				$link = '<span ' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">' . KunenaSvgIcons::loadsvg('person') . '</span>';
 			}

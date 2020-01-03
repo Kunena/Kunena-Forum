@@ -147,9 +147,9 @@ echo $contents;
 // Remove custom error handlers.
 KunenaError::cleanup();
 
-// kunena conflicts with jot_cache, due to huge object message in app-inputs.
+// Kunena conflicts with jot_cache, due to huge object message in app-inputs.
 //  this huje object causes crash. so, need to cleanup app-inputs before exit here.
-$app->input->set('message', NULL);
+$app->input->set('message', null);
 
 // Display profiler information.
 if (KUNENA_PROFILER)

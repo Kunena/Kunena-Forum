@@ -98,7 +98,8 @@ class KunenaControllerTopics extends KunenaController
 				}
 
 				$db    = Factory::getDBO();
-				// TODO : need to find the correct way to convert this query to use 
+
+				// TODO : need to find the correct way to convert this query to use
 				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 				$db->setQuery($query);
 

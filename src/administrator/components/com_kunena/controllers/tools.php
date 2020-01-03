@@ -240,6 +240,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($useradd)
 		{
 			$query = $db->getQuery(true);
+
 			// TODO: need to find a way to make this query working with JdatabaseQuery
 			$db->setQuery(
 				"INSERT INTO #__kunena_users (userid, showOnline)
@@ -266,6 +267,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdel)
 		{
 			$query = $db->getQuery(true);
+
 			// TODO: need to find a way to make this query working with JdatabaseQuery
 			$db->setQuery(
 				"DELETE a
@@ -291,6 +293,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdellife)
 		{
 			$query = $db->getQuery(true);
+
 			// TODO: need to find a way to make this query working with JdatabaseQuery
 			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
 

@@ -315,6 +315,7 @@ class KunenaControllerTopic extends KunenaController
 				'hash'       => $this->input->getString('hash'),
 				'chunkStart' => $this->input->getInt('chunkStart', 0),
 				'chunkEnd'   => $this->input->getInt('chunkEnd', 0),
+				'image_type' => 'avatar',
 			);
 
 			// Upload!

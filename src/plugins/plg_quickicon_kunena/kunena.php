@@ -24,29 +24,15 @@ use Joomla\CMS\Router\Route;
 class plgQuickiconKunena extends CMSPlugin
 {
 	/**
-	 * plgQuickiconKunena constructor.
+	 * Application object.
 	 *
-	 * @param $subject
-	 * @param $config
-	 *
-	 * @since       Kunena
+	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * @since  6.0
 	 */
-	public function __construct(&$subject, $config)
-	{
-		// Do not load if Kunena version is not supported or KunenaForum isn't detected
-		if (!class_exists('KunenaForum'))
-		{
-			return;
-		}
-
-		parent::__construct($subject, $config);
-
-		// ! Always load language after parent::construct else the name of plugin isn't yet set
-		$this->loadLanguage('plg_quickicon_kunena.sys');
-	}
+	protected $app;
 
 	/**
-	 * Display Kunena backend icon in Joomla 2.5+
+	 * Display Kunena backend icon in Joomla 4.0
 	 *
 	 * @param   string  $context  context
 	 *
@@ -56,9 +42,15 @@ class plgQuickiconKunena extends CMSPlugin
 	 */
 	public function onGetIcons($context)
 	{
-		if ($context != $this->params->get('context', 'mod_quickicon') || !Factory::getUser()->authorise('core.manage', 'com_kunena'))
+		if ($context != $this->params->get('context', 'mod_quickicon') || !$this->app->getIdentity()->authorise('core.manage', 'com_kunena'))
 		{
-			return null;
+			return array();
+		}
+
+		// Do not load if Kunena version is not supported or KunenaForum isn't detected
+		if (!class_exists('KunenaForum'))
+		{
+			return;
 		}
 
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -133,12 +125,7 @@ class plgQuickiconKunena extends CMSPlugin
 		elseif ($updateInfo === false)
 		{
 			// Disabled
-			$icon = 'minus';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-minus';
-			}
+			$icon = 'fa fa-minus';
 
 			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-alert-white.png';
@@ -147,12 +134,7 @@ class plgQuickiconKunena extends CMSPlugin
 		elseif (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates
-			$icon = 'download';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-download';
-			}
+			$icon = 'fa fa-download';
 
 			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-update-white.png';
@@ -162,12 +144,7 @@ class plgQuickiconKunena extends CMSPlugin
 		elseif (!empty($updateInfo->addons))
 		{
 			// Has updated add-ons
-			$icon = 'download';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-download';
-			}
+			$icon = 'fa fa-download';
 
 			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-update-white.png';
@@ -176,12 +153,7 @@ class plgQuickiconKunena extends CMSPlugin
 		}
 		else
 		{
-			$icon = 'comments';
-
-			if (version_compare(JVERSION, '4.0', '>'))
-			{
-				$icon = 'fa fa-comments';
-			}
+			$icon = 'fa fa-comments';
 
 			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-good-white.png';
 			$icon = 'kunena/icons/icon-48-kupdate-good-white.png';

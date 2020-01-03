@@ -122,7 +122,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   boolean  $reload      Force object reload from the database.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)

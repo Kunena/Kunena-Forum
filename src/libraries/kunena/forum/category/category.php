@@ -1084,7 +1084,9 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array  $users  users
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @example if ($category->isAuthorised('admin')) $category->addModerators(array($user1, $user2, $user3));
 	 */

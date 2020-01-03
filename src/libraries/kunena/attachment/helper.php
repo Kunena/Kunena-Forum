@@ -123,7 +123,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadById(array $ids)
@@ -207,7 +209,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadByMessage(array $ids)

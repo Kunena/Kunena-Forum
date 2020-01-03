@@ -76,7 +76,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadMessages(array $ids)

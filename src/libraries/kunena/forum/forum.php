@@ -411,7 +411,9 @@ abstract class KunenaForum
 	 * @param   array|Joomla\Registry\Registry  $params    Extra parameters to control the model.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())

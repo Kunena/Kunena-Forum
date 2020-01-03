@@ -34,7 +34,9 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 * Prepare reply history display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()

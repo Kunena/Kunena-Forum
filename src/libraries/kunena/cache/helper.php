@@ -26,7 +26,9 @@ abstract class KunenaCacheHelper
 	 * when user wants to do it manually.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function clearAll()
@@ -80,7 +82,9 @@ abstract class KunenaCacheHelper
 	 * Clear Kunena access cache.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function clearAccess()

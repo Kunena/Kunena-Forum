@@ -144,7 +144,9 @@ class KunenaBbcodeEditor
 	 *
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function initialize()
@@ -157,7 +159,9 @@ class KunenaBbcodeEditor
 	 * Initialize HMVC editor
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function initializeHMVC()

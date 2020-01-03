@@ -106,7 +106,9 @@ class KunenaViewTopic extends KunenaView
 	 * Send list of topic icons in JSON for the category set selected
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayTopicIcons()

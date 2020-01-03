@@ -59,7 +59,9 @@ abstract class KunenaModule
 	 * Display module contents.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	final public function display()

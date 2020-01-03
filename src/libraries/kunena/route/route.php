@@ -410,7 +410,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function build()
@@ -838,7 +840,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function cacheLoad()
@@ -865,7 +869,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function cacheStore()
@@ -958,7 +964,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function initialize()

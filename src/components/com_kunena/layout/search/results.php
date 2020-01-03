@@ -24,7 +24,9 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	 * Method to display the layout of search results
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

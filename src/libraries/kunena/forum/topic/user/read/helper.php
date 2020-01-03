@@ -124,7 +124,9 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user)
@@ -285,7 +287,9 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   int  $id  id
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function reloadTopic($id)

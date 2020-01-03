@@ -62,7 +62,9 @@ abstract class JHtmlKunenaGrid
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function behavior()

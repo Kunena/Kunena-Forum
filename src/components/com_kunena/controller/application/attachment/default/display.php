@@ -200,7 +200,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Prepare attachment display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()

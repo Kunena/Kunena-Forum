@@ -52,7 +52,9 @@ abstract class KunenaError
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function initialize()
@@ -101,7 +103,9 @@ abstract class KunenaError
 	 * @param   string  $where  where
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function error($msg, $where = 'default')
@@ -118,7 +122,9 @@ abstract class KunenaError
 	 * @param   string  $where  where
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function warning($msg, $where = 'default')
@@ -234,7 +240,9 @@ abstract class KunenaError
 	 * @param   mixed  $debug  debug
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function shutdownHandler($debug)

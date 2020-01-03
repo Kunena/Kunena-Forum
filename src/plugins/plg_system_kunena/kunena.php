@@ -112,7 +112,9 @@ EOF;
 	 * @param   string   $msg      Message
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)

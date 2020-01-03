@@ -957,7 +957,9 @@ class KunenaControllerUser extends KunenaController
 	 * Save online status for user
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -996,7 +998,9 @@ class KunenaControllerUser extends KunenaController
 	 * Set online status text for user
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1113,7 +1117,9 @@ class KunenaControllerUser extends KunenaController
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function deleteOldAvatars()

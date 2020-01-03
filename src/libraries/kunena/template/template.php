@@ -475,7 +475,9 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function initialize()
@@ -513,7 +515,9 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadLanguage()
@@ -532,7 +536,9 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function initializeBackend()
@@ -924,7 +930,9 @@ HTML;
 	 * @param   string  $condition  condition
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
@@ -1744,7 +1752,9 @@ HTML;
 	 * @param   string  $outputFile  output
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function compileLess($inputFile, $outputFile)
@@ -1807,7 +1817,9 @@ HTML;
 	 * @param   string  $outputFile  output
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function compileScss($inputFile, $outputFile)

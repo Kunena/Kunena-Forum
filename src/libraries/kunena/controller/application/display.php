@@ -320,7 +320,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @param   int  $code  code
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function setResponseStatus($code = 404)
@@ -370,7 +372,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function after()

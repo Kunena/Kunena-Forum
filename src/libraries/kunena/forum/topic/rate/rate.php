@@ -227,7 +227,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   int  $limit  limit
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)

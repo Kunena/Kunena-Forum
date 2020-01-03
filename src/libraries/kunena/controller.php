@@ -177,7 +177,9 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string  $task  Task to be run.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

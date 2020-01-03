@@ -168,7 +168,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Executed before display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()
@@ -225,7 +227,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Executed after display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function after()
@@ -339,7 +343,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   bool   $replace  replace
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function setTitle($title, $replace = false)

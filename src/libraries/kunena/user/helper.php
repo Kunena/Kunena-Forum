@@ -88,7 +88,9 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function initialize()

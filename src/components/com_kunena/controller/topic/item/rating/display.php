@@ -34,7 +34,9 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 	 * Prepare topic actions display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()

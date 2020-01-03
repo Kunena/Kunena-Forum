@@ -684,7 +684,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   bool                   $once          once
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
@@ -1028,7 +1030,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   bool  $newTopic  new topic
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function update($newTopic = false)
@@ -1330,7 +1334,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function makeAnonymous($user = null)

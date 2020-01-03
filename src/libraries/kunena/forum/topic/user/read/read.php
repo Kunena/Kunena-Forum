@@ -129,7 +129,9 @@ class KunenaForumTopicUserRead extends CMSObject
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function reset()

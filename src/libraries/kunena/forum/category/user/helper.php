@@ -118,7 +118,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadCategories(array $ids, KunenaUser $user)
@@ -179,7 +181,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   null   $user  users
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function markRead(array $ids, $user = null)

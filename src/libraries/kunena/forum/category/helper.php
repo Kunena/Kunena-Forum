@@ -44,7 +44,9 @@ abstract class KunenaForumCategoryHelper
 	 * Initialize class.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function initialize()
@@ -423,7 +425,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int|array  $catids  catids
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -74,7 +74,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * By default language files are also loaded from the parent templates.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadLanguage()
@@ -93,7 +95,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * Template initialization.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function initialize()

@@ -216,7 +216,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -203,7 +203,9 @@ class KunenaForumStatistics
 	 * @param   bool  $force  force
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -219,7 +221,9 @@ class KunenaForumStatistics
 	 * @param   bool  $force  force
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadGeneral($force = false)
@@ -515,7 +519,9 @@ class KunenaForumStatistics
 	 * @param   bool  $override  override
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadUserStats($override = false)

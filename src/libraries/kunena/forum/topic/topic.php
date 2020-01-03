@@ -850,7 +850,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Increase hit counter for this topic.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function hit()

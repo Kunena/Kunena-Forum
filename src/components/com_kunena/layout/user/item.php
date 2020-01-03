@@ -263,7 +263,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display unapproved posts
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayUnapprovedPosts()
@@ -286,7 +288,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display user posts
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayUserPosts()
@@ -309,7 +313,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display who got thankyou
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayGotThankyou()
@@ -332,7 +338,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display who said thankyou
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displaySaidThankyou()
@@ -355,7 +363,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display favorites topics
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayFavorites()
@@ -378,7 +388,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display subscriptions
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displaySubscriptions()
@@ -406,7 +418,9 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * Method to display categories subscriptions
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayCategoriesSubscriptions()

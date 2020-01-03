@@ -126,7 +126,9 @@ class KunenaView extends HtmlView
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayAll()
@@ -231,7 +233,9 @@ class KunenaView extends HtmlView
 	 * @param   int    $code      code
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayError($messages = array(), $code = 404)
@@ -280,7 +284,9 @@ class KunenaView extends HtmlView
 	 * @param   string  $title  Show the title on the browser
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function setTitle($title)
@@ -323,7 +329,9 @@ class KunenaView extends HtmlView
 	 * @param   array  $errors  errors
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayNoAccess($errors = array())
@@ -341,7 +349,9 @@ class KunenaView extends HtmlView
 	 * @param   mixed  $position  position
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayModulePosition($position)
@@ -418,7 +428,9 @@ class KunenaView extends HtmlView
 	 * @param   array   $hmvcParams  params
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws LogicException
 	 */

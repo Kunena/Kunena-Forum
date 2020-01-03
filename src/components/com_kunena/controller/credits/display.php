@@ -56,7 +56,9 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * Prepare credits display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -117,7 +119,9 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function prepareDocument()

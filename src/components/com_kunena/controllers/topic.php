@@ -48,7 +48,9 @@ class KunenaControllerTopic extends KunenaController
 	 * Get attachments on edit which was attached to a message with AJAX.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -206,7 +208,9 @@ class KunenaControllerTopic extends KunenaController
 	 * Remove files with AJAX.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function removeattachments()
@@ -415,7 +419,9 @@ class KunenaControllerTopic extends KunenaController
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

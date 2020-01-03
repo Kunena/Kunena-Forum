@@ -299,7 +299,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @param   int  $mesid  Selected message Id.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function prepareMessages($mesid)
@@ -489,7 +491,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

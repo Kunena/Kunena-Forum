@@ -77,7 +77,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadMessages(array $ids)
@@ -514,7 +516,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   array|string  $mesids  mesid
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function loadLocation($mesids)

@@ -1385,7 +1385,9 @@ class KunenaConfig extends CMSObject
 	 * Load config settings from database table.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load()
@@ -1462,7 +1464,9 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save()

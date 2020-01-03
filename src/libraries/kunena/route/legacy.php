@@ -96,7 +96,9 @@ abstract class KunenaRouteLegacy
 	 * @param   mixed  $item  item
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function convertMenuItem($item)

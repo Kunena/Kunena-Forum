@@ -50,14 +50,14 @@ foreach ($this->sections as $section) :
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
-	<div class="kfrontend shadow-lg rounded mt-4 border">
+	<div class="kfrontend shadow-lg rounded border section">
 		<h2 class="btn-toolbar float-right">
 			<?php if (count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
-					<a class="btn btn-outline-primary border btn-sm"
+					<a class="btn btn-outline-primary btn-sm"
 					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
 				<?php endif; ?>
-				<button class="btn btn-outline-primary border btn-sm" type="button"
+				<button class="btn btn-outline-primary btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
 				        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
@@ -71,9 +71,9 @@ foreach ($this->sections as $section) :
 			</small>
 		</h1>
 
-		<div class="section <?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show shadow-lg rounded"
+		<div class="<?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show shadow-lg rounded"
 		     id="section<?php echo $section->id; ?>">
-			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table shadow-lg p-3 mb-5 rounded">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>
 					<thead>
 					<tr>

@@ -83,97 +83,99 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 		->set('display', true); ?>
 </div>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
-      id="ktopicsform">
-	<?php echo HTMLHelper::_('form.token'); ?>
-	<?php if ($view == 'user'): ?>
-		<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
-	<?php endif; ?>
-	<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
-		<thead>
-		<tr>
-			<th scope="col" class="center hidden-xs-down">
-				<a id="forumtop"> </a>
-				<a href="#forumbottom" rel="nofollow">
-					<?php echo KunenaIcons::arrowdown(); ?>
-				</a>
-			</th>
-			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
-				/ <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-			<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+<div class="kfrontend shadow-lg rounded mt-4 border">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
+	      id="ktopicsform">
+		<?php echo HTMLHelper::_('form.token'); ?>
+		<?php if ($view == 'user'): ?>
+			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
+		<?php endif; ?>
+		<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
+			<thead>
+			<tr>
+				<th scope="col" class="center hidden-xs-down">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom" rel="nofollow">
+						<?php echo KunenaIcons::arrowdown(); ?>
+					</a>
+				</th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+					/ <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
-			<?php if (!empty($this->actions)) : ?>
-				<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
-			<?php endif; ?>
-		</tr>
-		</thead>
-		<tfoot>
-		<tr>
-			<th scope="col" class="center hidden-xs-down">
-				<a id="forumbottom"> </a>
-				<a href="#forumtop" rel="nofollow">
-					<span class="dropdown-divider"></span>
-					<?php echo KunenaIcons::arrowup(); ?>
-				</a>
-			</th>
-			<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-				<th scope="col" class="hidden-xs-down">
-					<div class="form-group">
-						<div class="input-group" role="group">
-							<div class="input-group-btn">
-								<label>
-									<?php if (!empty($this->topics) && !empty($this->moreUri))
-									{
-										echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
-									} ?>
-									<?php if (!empty($this->actions)) : ?>
-										<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-										<?php if (isset($this->actions['move'])) :
-											$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-											echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-										endif; ?>
-										<button type="submit" name="kcheckgo"
-										        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
-									<?php endif; ?>
-								</label>
+				<?php if (!empty($this->actions)) : ?>
+					<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
+				<?php endif; ?>
+			</tr>
+			</thead>
+			<tfoot>
+			<tr>
+				<th scope="col" class="center hidden-xs-down">
+					<a id="forumbottom"> </a>
+					<a href="#forumtop" rel="nofollow">
+						<span class="dropdown-divider"></span>
+						<?php echo KunenaIcons::arrowup(); ?>
+					</a>
+				</th>
+				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
+					<th scope="col" class="hidden-xs-down">
+						<div class="form-group">
+							<div class="input-group" role="group">
+								<div class="input-group-btn">
+									<label>
+										<?php if (!empty($this->topics) && !empty($this->moreUri))
+										{
+											echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
+										} ?>
+										<?php if (!empty($this->actions)) : ?>
+											<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+											<?php if (isset($this->actions['move'])) :
+												$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+											endif; ?>
+											<button type="submit" name="kcheckgo"
+											        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+										<?php endif; ?>
+									</label>
+								</div>
 							</div>
 						</div>
-					</div>
-				</th>
-			<?php endif; ?>
-			<th scope="col"></th>
-			<th scope="col"></th>
-			<th scope="col"></th>
-		</tr>
-		</tfoot>
-		<tbody class="topic-list">
-		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
-			<tr>
-				<th scope="col"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></th>
+					</th>
+				<?php endif; ?>
+				<th scope="col"></th>
+				<th scope="col"></th>
+				<th scope="col"></th>
 			</tr>
-		<?php else : ?>
-			<?php $counter = 2; ?>
+			</tfoot>
+			<tbody class="topic-list">
+			<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
+				<tr>
+					<th scope="col"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></th>
+				</tr>
+			<?php else : ?>
+				<?php $counter = 2; ?>
 
-			<?php foreach ($this->topics as $i => $topic)
-			{
-				echo $this->subLayout('Topic/Row')
-					->set('topic', $topic)
-					->set('position', 'kunena_topic_' . $i)
-					->set('checkbox', !empty($this->actions));
-
-				if ($this->ktemplate->params->get('displayModule'))
+				<?php foreach ($this->topics as $i => $topic)
 				{
-					echo $this->subLayout('Widget/Module')
-						->set('position', 'kunena_topic_' . $counter++)
-						->set('cols', $cols)
-						->setLayout('table_row');
-				}
-			} ?>
-		<?php endif; ?>
-		</tbody>
-	</table>
-</form>
+					echo $this->subLayout('Topic/Row')
+						->set('topic', $topic)
+						->set('position', 'kunena_topic_' . $i)
+						->set('checkbox', !empty($this->actions));
+
+					if ($this->ktemplate->params->get('displayModule'))
+					{
+						echo $this->subLayout('Widget/Module')
+							->set('position', 'kunena_topic_' . $counter++)
+							->set('cols', $cols)
+							->setLayout('table_row');
+					}
+				} ?>
+			<?php endif; ?>
+			</tbody>
+		</table>
+	</form>
+</div>
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')

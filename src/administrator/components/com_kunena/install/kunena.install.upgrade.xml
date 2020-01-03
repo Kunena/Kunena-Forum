@@ -951,6 +951,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `reddit` VARCHAR(75) NULL AFTER `pinterest`;</query>
         </version>
+        <version version="6.0.0-ALPHA6"
+                 versiondate="2020-01-03"
+                 versionname="Internal">
+            <phpfile name="6.0.0-2020-01-03_updaterankstitle"/>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

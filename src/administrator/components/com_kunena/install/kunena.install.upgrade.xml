@@ -929,6 +929,16 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `wechat` VARCHAR(75) NULL DEFAULT NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `yim` VARCHAR(75) NULL DEFAULT NULL;</query>
         </version>
+        <version version="6.0.0-ALPHA3"
+                 versiondate="2019-05-18"
+                 versionname="Internal">
+            <phpfile name="6.0.0-2019-05-18_configuration"/>
+        </version>
+        <version version="6.0.0-ALPHA3"
+                 versiondate="2019-05-31"
+                 versionname="Internal">
+            <phpfile name="6.0.0-2019-05-31_banneddatetimedefault"/>
+        </version>
         <version version="6.0.0-ALPHA4"
                  versiondate="2019-06-01"
                  versionname="Internal">
@@ -938,6 +948,11 @@
                  versiondate="2019-06-10"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `pinterest` VARCHAR(75) NULL DEFAULT NULL;</query>
+        </version>
+        <version version="6.0.0-ALPHA4"
+                 versiondate="2019-07-21"
+                 versionname="Internal">
+            <phpfile name="6.0.0-2019-07-21_datetimeupdatevalue"/>
         </version>
         <version version="6.0.0-ALPHA5"
                  versiondate="2019-12-22"

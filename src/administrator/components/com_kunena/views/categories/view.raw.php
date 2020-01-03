@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaAdminViewCategories extends KunenaView
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayChkAliases()
 	{
@@ -49,7 +49,7 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayDeleteAlias()
 	{

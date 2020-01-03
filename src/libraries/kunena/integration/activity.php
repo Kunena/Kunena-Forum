@@ -22,13 +22,13 @@ class KunenaIntegrationActivity
 {
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $instances = array();
 
@@ -75,7 +75,7 @@ class KunenaIntegrationActivity
 	 * @param   array   $arguments  Arguments need to be passed to the method
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __call($method, $arguments)
 	{

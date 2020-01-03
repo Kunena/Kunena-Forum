@@ -24,49 +24,49 @@ class KunenaForumTopicRate extends CMSObject
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topic_id = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $stars = 0;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $userid = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $time = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $rate;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $users = array();
 
@@ -113,7 +113,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
 	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
 	{
@@ -259,7 +259,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   integer  $time    time
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
 	{

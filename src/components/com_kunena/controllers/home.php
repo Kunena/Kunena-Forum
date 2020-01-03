@@ -23,7 +23,7 @@ class KunenaControllerHome extends KunenaController
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $home = 1;
 

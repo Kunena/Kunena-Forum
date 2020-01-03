@@ -26,7 +26,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit/History';
 
@@ -115,7 +115,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 * Prepare document.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function prepareDocument()
 	{

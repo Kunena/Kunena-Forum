@@ -14,13 +14,13 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaExceptionAuthorise
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaExceptionAuthorise extends RuntimeException
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $responseCodes = array(
 		400 => '400 Bad Request',
@@ -34,7 +34,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getResponseStatus()
 	{
@@ -43,7 +43,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getResponseCode()
 	{

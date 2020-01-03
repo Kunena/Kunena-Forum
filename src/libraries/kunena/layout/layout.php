@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
  * Implements Kunena specific functions for all layouts.
  *
  * @see   KunenaLayoutBase
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLayout extends KunenaLayoutBase
 {
@@ -26,7 +26,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Content to be appended after the main output.
 	 *
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $after = array();
 
@@ -34,7 +34,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Object KunenaView
 	 *
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $legacy;
 
@@ -44,7 +44,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string  $content  content
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function appendAfter($content)
 	{
@@ -55,7 +55,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   mixed  $key  key
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function text($key)
 	{
@@ -137,7 +137,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   int  $precision  Significant digits for output
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function formatLargeNumber($number, $precision = 3)
 	{

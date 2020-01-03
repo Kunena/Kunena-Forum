@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 /**
  * Class plgKunenaEasyprofile
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 {
@@ -26,7 +26,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param $subject
 	 * @param $config
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -68,7 +68,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatarEasyprofile|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -86,7 +86,7 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfileEasyprofile|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
 	{

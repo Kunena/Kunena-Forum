@@ -23,7 +23,7 @@ abstract class KunenaForumMessageThankyouHelper
 {
 	/**
 	 * @var KunenaForumMessageThankyou[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
@@ -31,7 +31,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Cleanup
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{

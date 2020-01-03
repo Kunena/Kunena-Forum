@@ -95,7 +95,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return string
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -109,7 +109,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()
 	{

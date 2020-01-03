@@ -29,7 +29,7 @@ if ($item)
 			</li>
 
 			<?php foreach ($pathway as $item)
-			:
+	:
 				?>
 				<li class="mod-kunena-breadcrumbs__item breadcrumb-item" itemtype="https://schema.org/ListItem"
 					itemscope="" itemprop="itemListElement">

@@ -1249,7 +1249,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Delete attachment(s) selected in user profile
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function delfile()
 	{

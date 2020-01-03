@@ -22,7 +22,7 @@ abstract class KunenaForumTopicRateHelper
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
@@ -69,7 +69,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param   integer  $id  id
 	 *
 	 * @return float
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getSelected($id)
 	{
@@ -89,7 +89,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param   integer  $id  id
 	 *
 	 * @return float
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getCount($id)
 	{
@@ -111,7 +111,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param            $userid
 	 *
 	 * @return float
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getRate($id, $userid)
 	{

@@ -17,38 +17,38 @@ require_once __DIR__ . '/kunena.php';
  * Kunena Keywords Table
  * Provides access to the #__kunena_keywords table
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class TableKunenaKeywords extends KunenaTable
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $name = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $public_count = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $total_count = null;
 
 	/**
 	 * @param   JDatabaseDriver  $db  Database driver
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($db)
 	{
@@ -57,7 +57,7 @@ class TableKunenaKeywords extends KunenaTable
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{

@@ -24,19 +24,19 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Index/Actions';
 
 	/**
 	 * @var KunenaForumTopic
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $categoryButtons;
 

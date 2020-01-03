@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaControllerApplication
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaControllerApplication extends KunenaControllerDisplay
 {
@@ -26,7 +26,7 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 	 * @param   mixed  $app      app
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($view, $subview, $task, $input, $app)
 	{

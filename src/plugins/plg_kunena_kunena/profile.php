@@ -16,20 +16,20 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaProfileKunena
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaProfileKunena extends KunenaProfile
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -100,7 +100,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param $view
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
 	{

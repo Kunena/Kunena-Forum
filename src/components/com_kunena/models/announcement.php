@@ -23,12 +23,12 @@ class KunenaModelAnnouncement extends KunenaModel
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function populateState()
 	{
@@ -56,7 +56,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return KunenaForumAnnouncement
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getNewAnnouncement()
 	{
@@ -75,7 +75,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return boolean|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTotal()
 	{

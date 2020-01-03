@@ -18,49 +18,49 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaControllerApplicationDisplay
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaConfig
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $config;
 
 	/**
 	 * @var KunenaLayout
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $page;
 
 	/**
 	 * @var KunenaLayout
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $content;
 
 	/**
 	 * @var Joomla\CMS\Pathway\Pathway
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $breadcrumb;
 
 	/**
 	 * @var KunenaUser
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $me;
 
 	/**
 	 * @var KunenaTemplate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $template;
 
 	/**
 	 * @var Joomla\CMS\Document\HtmlDocument
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $document;
 
@@ -355,7 +355,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return KunenaLayout
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function display()
 	{

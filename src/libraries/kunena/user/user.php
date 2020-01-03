@@ -93,67 +93,67 @@ class KunenaUser extends CMSObject
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_ranks = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_allowed = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_link = [];
 
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_time;
 
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_pm;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_email;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_website;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_personalText;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_signature;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var Joomla\Database\DatabaseDriver|null
-	 * @since Kunena
+	 * @var JDatabaseDriver|null
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
@@ -222,7 +222,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $prefix  The user table prefix to be used.
 	 *
 	 * @return    Joomla\CMS\Table\Table|TableKunenaUsers    The user table object.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUsers', $prefix = 'Table')
 	{
@@ -350,7 +350,7 @@ class KunenaUser extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{
@@ -368,7 +368,7 @@ class KunenaUser extends CMSObject
 	 * Is the user me?
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isMyself()
 	{
@@ -414,7 +414,7 @@ class KunenaUser extends CMSObject
 	 * @param   bool    $escape       escape
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getName($visitorname = '', $escape = true)
 	{
@@ -466,7 +466,7 @@ class KunenaUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind($data, array $ignore = [])
 	{
@@ -780,7 +780,7 @@ class KunenaUser extends CMSObject
 	 * Return registration date.
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRegisterDate()
 	{
@@ -791,7 +791,7 @@ class KunenaUser extends CMSObject
 	 * Return last visit date.
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLastVisitDate()
 	{
@@ -834,7 +834,7 @@ class KunenaUser extends CMSObject
 	 * @param   null|string  $layout  layout
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTopicLayout($layout = null)
 	{
@@ -1132,7 +1132,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $var  var
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
 	{
@@ -1619,7 +1619,7 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isBlocked()
 	{
@@ -1636,7 +1636,7 @@ class KunenaUser extends CMSObject
 	 * time with a date in near future
 	 *
 	 * @return boolean|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isBanned()
 	{
@@ -1812,7 +1812,7 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bannedDate()
 	{
@@ -2066,40 +2066,40 @@ class KunenaUser extends CMSObject
 	 * Get list of social buttons
 	 *
 	 * @return array|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function socialButtons()
 	{
 		$social = ['twitter'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'],
-		           'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
-		           'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
-		           'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
-		           'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
-		           'friendfeed'       => ['url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'],
-		           'digg'             => ['url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
-		           'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
-		           'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
-		           'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
-		           'github'           => ['url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
-		           'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
-		           'icq'              => ['url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'],
-		           'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
-		           'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
-		           'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
-		           'instagram'        => ['url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'],
-		           'qqsocial'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'],
-		           'qzone'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'],
-		           'weibo'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'],
-		           'wechat'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'],
-		           'vk'               => ['url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'],
-		           'telegram'         => ['url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'],
-		           'apple'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'],
-		           'vimeo'            => ['url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'],
-		           'whatsapp'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'],
-		           'youtube'          => ['url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'],
-		           'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
-		           'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
-		           'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
+				   'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
+				   'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
+				   'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
+				   'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
+				   'friendfeed'       => ['url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'],
+				   'digg'             => ['url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
+				   'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
+				   'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
+				   'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
+				   'github'           => ['url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
+				   'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
+				   'icq'              => ['url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'],
+				   'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
+				   'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
+				   'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
+				   'instagram'        => ['url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'],
+				   'qqsocial'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'],
+				   'qzone'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'],
+				   'weibo'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'],
+				   'wechat'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'],
+				   'vk'               => ['url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'],
+				   'telegram'         => ['url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'],
+				   'apple'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'],
+				   'vimeo'            => ['url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'],
+				   'whatsapp'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'],
+				   'youtube'          => ['url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'],
+				   'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
+				   'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
+				   'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
 		];
 
 		return $social;
@@ -2109,7 +2109,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $name  name
 	 *
 	 * @return mixed|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __get($name)
 	{

@@ -16,14 +16,14 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Class pkg_kunena_languagesInstallerScript
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class pkg_kunena_languagesInstallerScript
 {
 	/**
 	 * @param   Joomla\CMS\Installer\Adapter\FileAdapter  $parent  parent
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function uninstall($parent)
 	{
@@ -116,7 +116,7 @@ class pkg_kunena_languagesInstallerScript
 	 * @param $tag
 	 * @param $name
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function uninstallLanguage($tag, $name)
 	{

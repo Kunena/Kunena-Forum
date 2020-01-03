@@ -24,13 +24,13 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 {
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $header;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $body;
 

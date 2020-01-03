@@ -26,43 +26,43 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Avatar';
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $gallery;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $galleries;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $galleryOptions;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $galleryImages;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 
@@ -115,7 +115,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string  $path  Absolute path for the gallery.
 	 *
 	 * @return  array|string[]  List of directories.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getGalleries($path)
 	{
@@ -152,7 +152,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string  $path  Absolute path for the gallery.
 	 *
 	 * @return  array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getGallery($path)
 	{
@@ -163,7 +163,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * Get avatar galleries and make them select option list.
 	 *
 	 * @return array|string[]  List of options.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getGalleryOptions()
 	{

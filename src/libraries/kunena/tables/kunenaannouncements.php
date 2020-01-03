@@ -20,80 +20,80 @@ require_once __DIR__ . '/kunena.php';
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class TableKunenaAnnouncements extends KunenaTable
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $title = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $created_by = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $sdescription = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $description = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $created = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $publish_up = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $publish_down = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $published = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $ordering = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $showdate = null;
 
 	/**
 	 * @param   JDatabaseDriver  $db  Database driver
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($db)
 	{

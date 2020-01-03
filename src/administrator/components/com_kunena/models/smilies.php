@@ -89,7 +89,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  id
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -102,7 +102,7 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()
 	{

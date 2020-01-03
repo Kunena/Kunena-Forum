@@ -21,7 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 /**
  * Class plgSystemKunena
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class plgSystemKunena extends CMSPlugin
 {
@@ -95,7 +95,7 @@ EOF;
 	 * @param   boolean  $params   Params
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetConfiguration($context, &$params)
 	{

@@ -17,7 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Class KunenaAdminModelPlugins
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 {
@@ -101,7 +101,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   int             $limit       The number of records
 	 *
 	 * @return  array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
@@ -176,7 +176,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   array  $items  The array of objects
 	 *
 	 * @return void The array of translated objects
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function translate(&$items)
 	{
@@ -204,7 +204,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return  string    A store id.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -222,7 +222,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()
 	{

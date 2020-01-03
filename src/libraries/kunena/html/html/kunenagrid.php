@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Utility class for creating HTML Grids
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class JHtmlKunenaGrid
 {
@@ -122,7 +122,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string|null  $form           form
 	 *
 	 * @return  string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $form = null)
 	{
@@ -190,7 +190,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   int    $overlib  overlib
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function _checkedOut(&$row, $overlib = 1)
 	{
@@ -218,7 +218,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $name        The name of the form element
 	 *
 	 * @return  string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function id($rowNum, $recId, $checkedOut = false, $name = 'cid')
 	{
@@ -414,7 +414,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $task   task
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
@@ -430,7 +430,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $alt      alt
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
 	{
@@ -451,7 +451,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $alt      alt
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')
 	{

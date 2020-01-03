@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -19,14 +20,14 @@ use Joomla\CMS\Router\Route;
 /**
  * Class plgQuickiconKunena
  *
- * @since       Kunena
+ * @since  Kunena 6.0
  */
 class plgQuickiconKunena extends CMSPlugin
 {
 	/**
 	 * Application object.
 	 *
-	 * @var    \Joomla\CMS\Application\CMSApplication
+	 * @var    CMSApplication
 	 * @since  6.0
 	 */
 	protected $app;
@@ -36,7 +37,7 @@ class plgQuickiconKunena extends CMSPlugin
 	 *
 	 * @param   string  $context  context
 	 *
-	 * @return array|null
+	 * @return array|void
 	 * @since Kunena
 	 * @throws Exception
 	 */

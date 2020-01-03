@@ -16,13 +16,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaForumTopicPollHelper
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumTopicPollHelper
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
@@ -60,7 +60,7 @@ abstract class KunenaForumTopicPollHelper
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function recount()
 	{

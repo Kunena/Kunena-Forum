@@ -27,7 +27,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 * Return true if layout exists.
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists()
 	{

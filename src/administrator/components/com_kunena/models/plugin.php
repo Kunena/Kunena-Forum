@@ -183,7 +183,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  Joomla\CMS\Table\Table    A database object
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{

@@ -27,7 +27,7 @@ $quick           = $this->ktemplate->params->get('quick');
 		?>
 		<div class="kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2)
-		:
+			:
 				?>
 				<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
 				   class="btn btn-outline-primary border Kreplyclick"
@@ -42,7 +42,7 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('edit'); ?>
 			<?php
 			if ($this->message->isAuthorised('delete'))
-			:
+		:
 				?>
 				<?php echo $this->messageButtons->get('delete'); ?>
 			<?php endif; ?>
@@ -50,7 +50,7 @@ $quick           = $this->ktemplate->params->get('quick');
 			<?php echo $this->messageButtons->get('unthankyou'); ?>
 
 			<?php if ($this->messageButtons->get('moderate'))
-			:
+		:
 				?>
 				<br/>
 				<br/>
@@ -63,7 +63,8 @@ $quick           = $this->ktemplate->params->get('quick');
 		</div>
 
 	<?php else
-:
+
+	:
 		?>
 
 		<div class="kreplymessage">
@@ -80,7 +81,7 @@ endif; ?>
 		?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if ($this->quickreply && $quick != 2)
-			:
+		:
 				?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
 				   class="btn btn-outline-primary border Kreplyclick"
@@ -101,7 +102,7 @@ endif; ?>
 					<li><?php echo $this->messageButtons->get('edit'); ?></li>
 					<?php
 					if ($config->userdeletetmessage > 0)
-					:
+		:
 						?>
 						<li><?php echo $this->messageButtons->get('delete'); ?></li>
 					<?php endif; ?>
@@ -109,7 +110,7 @@ endif; ?>
 			</div>
 
 			<?php if ($this->messageButtons->get('moderate'))
-			:
+		:
 				?>
 				<div class="btn-group">
 					<button class="btn btn-outline-primary border" data-toggle="dropdown">
@@ -134,7 +135,8 @@ endif; ?>
 		</div>
 
 	<?php else
-: ?>
+
+	: ?>
 		<div class="kreplymessage">
 			<?php echo $this->message_closed; ?>
 		</div>

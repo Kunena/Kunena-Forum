@@ -19,7 +19,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * Statistics view for Kunena backend
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAdminViewStatistics extends KunenaView
 {
@@ -165,7 +165,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 * @param $id
 	 *
 	 * @return mixed|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getType($id)
 	{
@@ -178,7 +178,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 * @param $name
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getGroupCheckbox($name)
 	{

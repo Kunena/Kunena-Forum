@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
  * Implements Kunena specific functions for page layouts.
  *
  * @see   KunenaLayout
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLayoutPage extends KunenaLayout
 {
@@ -128,7 +128,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   mixed  $options  options
 	 *
 	 * @return  KunenaControllerDisplay
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function request($path, Joomla\Input\Input $input = null, $options = null)
 	{

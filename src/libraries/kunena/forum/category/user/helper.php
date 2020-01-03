@@ -17,13 +17,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumCategoryUserHelper
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumCategoryUserHelper
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 

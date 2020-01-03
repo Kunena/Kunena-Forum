@@ -18,7 +18,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * Attachments view for Kunena backend
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAdminViewAttachments extends KunenaView
 {
@@ -54,7 +54,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{
@@ -71,7 +71,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
 	{
@@ -90,7 +90,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * Returns an array of review filter options.
 	 *
 	 * @return    array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
 	{

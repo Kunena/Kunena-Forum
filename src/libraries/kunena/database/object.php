@@ -17,37 +17,37 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaDatabaseObject
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaDatabaseObject extends CMSObject
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var null|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_name = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_saving = false;
 
@@ -96,7 +96,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
 	{
@@ -218,7 +218,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * the database is safe and as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{
@@ -229,7 +229,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Method to get the table object.
 	 *
 	 * @return  Joomla\CMS\Table\Table|KunenaTable  The table object.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getTable()
 	{
@@ -276,7 +276,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Internal save method.
 	 *
 	 * @return  boolean  True on success.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function saveInternal()
 	{
@@ -341,7 +341,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   boolean  $exists  Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{

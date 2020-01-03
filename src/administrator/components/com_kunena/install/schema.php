@@ -46,43 +46,43 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $schema = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $xmlschema = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $upgradeschema = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $diffschema = null;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $db = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $sql = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $version = null;
 
@@ -122,7 +122,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $version
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setVersion($version)
 	{
@@ -149,7 +149,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return null
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getXmlSchema($input = KUNENA_SCHEMA_FILE)
 	{
@@ -166,7 +166,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUpgradeSchema($input = KUNENA_UPGRADE_SCHEMA_FILE)
 	{
@@ -263,7 +263,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return array
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSchemaTables($prefix = null)
 	{
@@ -393,7 +393,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @return DOMDocument
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function createSchema()
 	{
@@ -411,7 +411,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSchemaFromFile($filename, $reload = false)
 	{
@@ -594,7 +594,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return array
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function listAllNodes($nodeLists)
 	{
@@ -629,7 +629,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return null
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSchemaNodeDiff($schema, $tag, $name, $loc)
 	{
@@ -834,7 +834,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return array
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSchemaSQL($schema, $drop = false)
 	{
@@ -983,7 +983,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return string
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSchemaSQLField($field, $after = '')
 	{
@@ -1066,7 +1066,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param           $node
 	 * @param   string  $table  table
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
 	{
@@ -1132,7 +1132,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $field  field
 	 *
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function findNode($schema, $type, $table, $field = '')
 	{
@@ -1175,7 +1175,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param           $node
 	 * @param   string  $table  table
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')
 	{
@@ -1247,7 +1247,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 /**
  * Class KunenaSchemaException
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaSchemaException extends Exception
 {

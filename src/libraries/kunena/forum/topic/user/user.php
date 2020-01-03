@@ -33,13 +33,13 @@ class KunenaForumTopicUser extends CMSObject
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
@@ -78,7 +78,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
 	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
 	{
@@ -196,7 +196,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{
@@ -283,7 +283,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $ignore = array())
 	{

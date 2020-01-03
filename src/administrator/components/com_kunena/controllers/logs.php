@@ -50,7 +50,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * @return void
 	 * @since K5.0
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function cleanentries()
 	{

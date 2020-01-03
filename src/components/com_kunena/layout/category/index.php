@@ -26,7 +26,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int  $maxpages  Maximum that are allowed for pagination
 	 *
 	 * @return KunenaPagination
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPaginationObject($maxpages)
 	{

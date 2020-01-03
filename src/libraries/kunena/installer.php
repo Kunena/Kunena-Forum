@@ -15,19 +15,19 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaInstaller
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaInstaller
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $downgrade = array('3.1' => '3.0.95');
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $tables = null;
 
@@ -37,7 +37,7 @@ class KunenaInstaller
 	 * @param   string  $version  version
 	 *
 	 * @return  boolean|void  True if version can be safely downgraded.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function canDowngrade($version)
 	{
@@ -66,7 +66,7 @@ class KunenaInstaller
 	 * Get Kunena database schema version.
 	 *
 	 * @return  string  Version number or null.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getSchemaVersion()
 	{
@@ -98,7 +98,7 @@ class KunenaInstaller
 	 * @param   bool    $reload  Reload all tables.
 	 *
 	 * @return boolean  True if the table exists in the database.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function detectTable($table, $prefix = '#__', $reload = false)
 	{
@@ -135,7 +135,7 @@ class KunenaInstaller
 	 * @param   boolean  $reload  Reload all tables.
 	 *
 	 * @return boolean|null Column type or NULL if either table or column does not exist.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getTableColumn($table, $column, $prefix = '#__', $reload = false)
 	{

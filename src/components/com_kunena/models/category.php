@@ -27,31 +27,31 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $pending = array();
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $items = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $topicActions = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
 
@@ -302,7 +302,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUnapprovedCount()
 	{
@@ -498,7 +498,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getActionMove()
 	{
@@ -519,7 +519,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCategoryActions()
 	{

@@ -62,7 +62,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
 		'none'                              => array(),
@@ -107,98 +107,98 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $level = 0;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $authorised = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_aliases = null;
 
 	/**
 	 * @var mixed|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_alias = null;
 
 	/**
 	 * @var KunenaForumCategory[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_channels = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_topics = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_posts = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_lastcat = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_new = null;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaCategories';
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $sectionheaderdesc;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $hold;
 
 	/**
 	 * @param   mixed|array  $properties  properties
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($properties = null)
 	{
@@ -743,7 +743,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCategory()
 	{
@@ -752,7 +752,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 	/**
 	 * @return array    Array of Kunena aliases.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAliases()
 	{
@@ -1127,7 +1127,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   array  $src      src
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
 	{
@@ -1231,7 +1231,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   string  $alias  alias
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function checkAlias($alias)
 	{
@@ -1681,7 +1681,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   int  $precision  Significant digits for output
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function formatLargeNumber($number, $precision = 3)
 	{
@@ -2082,7 +2082,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseVote(KunenaUser $user)
 	{

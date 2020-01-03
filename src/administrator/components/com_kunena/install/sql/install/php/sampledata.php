@@ -20,7 +20,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KText
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KText
 {
@@ -28,7 +28,7 @@ class KText
 	 * @param $string
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function _($string)
 	{

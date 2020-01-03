@@ -29,13 +29,13 @@ class KunenaForumMessageThankyou extends CMSObject
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $id = 0;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $users = array();
 
@@ -44,7 +44,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 *
 	 * @param   int  $id  id
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($id)
 	{
@@ -69,7 +69,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   string  $time    time
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
 	{
@@ -139,7 +139,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   int  $userid  userid
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($userid)
 	{
@@ -180,7 +180,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * Get all users who have given thank you to this message.
 	 *
 	 * @return array List of userid=>time.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getList()
 	{

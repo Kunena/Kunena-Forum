@@ -26,7 +26,7 @@ class KunenaAdminControllerUsers extends KunenaController
 {
 	/**
 	 * @var null|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
 
@@ -177,7 +177,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @param $user
 	 * @param $app
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function cleanSocial(&$user, $app)
 	{

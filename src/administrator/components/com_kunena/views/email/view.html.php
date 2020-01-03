@@ -45,7 +45,7 @@ class KunenaAdminViewEmail extends KunenaView
 	/**
 	 * Set the toolbar on log manager
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{

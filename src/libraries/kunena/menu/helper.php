@@ -19,13 +19,13 @@ use Joomla\CMS\Language\Multilanguage;
 /**
  * Class KunenaMenuHelper
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaMenuHelper
 {
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanCache()
 	{

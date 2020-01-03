@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 
 /**
  * @see   JController in Joomla! 3.0
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaControllerBase implements Serializable
 {
@@ -24,7 +24,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * The application object.
 	 *
 	 * @var    Joomla\CMS\Application\BaseApplication
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $app;
 
@@ -32,7 +32,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * The input object.
 	 *
 	 * @var    Joomla\Input\Input
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $input;
 
@@ -83,7 +83,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the input object.
 	 *
 	 * @return  Joomla\Input\Input  The input object.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function loadInput()
 	{
@@ -164,7 +164,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the application object.
 	 *
 	 * @return  Joomla\CMS\Application\BaseApplication  The application object.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getApplication()
 	{
@@ -175,7 +175,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the input object.
 	 *
 	 * @return  Joomla\Input\Input  The input object.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getInput()
 	{
@@ -186,7 +186,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Serialize the controller.
 	 *
 	 * @return  string  The serialized controller.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function serialize()
 	{

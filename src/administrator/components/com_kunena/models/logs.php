@@ -94,7 +94,7 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return    string        A store id.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{

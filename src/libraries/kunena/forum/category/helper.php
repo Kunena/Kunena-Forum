@@ -18,25 +18,25 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumCategoryHelper
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumCategoryHelper
 {
 	/**
 	 * @var KunenaForumCategory[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $_instances;
 
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_tree;
 
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $allowed;
 
@@ -130,7 +130,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array  $instances  instances
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function buildTree(array &$instances)
 	{
@@ -156,7 +156,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   KunenaForumCategory  $instance  instance
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function register($instance)
 	{
@@ -502,7 +502,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool|array  $groupids    groupids
 	 *
 	 * @return KunenaForumCategory[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
 	{
@@ -615,7 +615,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int  $parent  parent
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getCategoryTree($parent = 0)
 	{
@@ -845,7 +845,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string|array  $categories  categories
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function &getIndentation($categories)
 	{
@@ -1035,7 +1035,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $b  b
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function compareByNameAsc($a, $b)
 	{
@@ -1052,7 +1052,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $b  b
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function compareByNameDesc($a, $b)
 	{
@@ -1069,7 +1069,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $strip     strip
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function stripName($original, $strip)
 	{

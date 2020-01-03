@@ -19,49 +19,49 @@ require_once __DIR__ . '/kunena.php';
  * Kunena Sessions
  * Provides access to the #__kunena_sessions table
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class TableKunenaSessions extends KunenaTable
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $userid = 0;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $allowed = 'na';
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $allowedcats = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $lasttime = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $readtopics = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $currvisit = 0;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
@@ -70,7 +70,7 @@ class TableKunenaSessions extends KunenaTable
 	 *
 	 * @param   JDatabaseDriver  $db  Database driver
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($db)
 	{

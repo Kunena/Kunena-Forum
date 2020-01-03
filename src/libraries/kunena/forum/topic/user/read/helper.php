@@ -17,19 +17,19 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumTopicUserReadHelper
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumTopicUserReadHelper
 {
 	/**
 	 * @var array|KunenaForumTopicUserRead[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaForumTopicUserRead[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_topics = array();
 

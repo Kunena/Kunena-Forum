@@ -24,7 +24,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Statistics/General';
 

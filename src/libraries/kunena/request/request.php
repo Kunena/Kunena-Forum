@@ -29,7 +29,7 @@ defined('_JEXEC') or die();
  * sub-folders eg: controller/user/login/display.php
  *
  * @see   KunenaLayout
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaRequest
 {
@@ -41,7 +41,7 @@ class KunenaRequest
 	 * @param   mixed               $options  options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function factory($path, Joomla\Input\Input $input = null, $options = null)
 	{

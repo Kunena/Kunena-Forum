@@ -18,19 +18,19 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena Attachment Helper Class
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaAttachmentHelper
 {
 	/**
 	 * @var KunenaAttachment[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_messages = array();
 
@@ -627,7 +627,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string  $filler    filler
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
@@ -753,7 +753,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string  $mime  mime
 	 *
 	 * @return  boolean  True if mime is image.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isImageMime($mime)
 	{

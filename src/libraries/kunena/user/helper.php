@@ -30,55 +30,55 @@ abstract class KunenaUserHelper
 {
 	/**
 	 * @var array|KunenaUser[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaUser[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances_name = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_online = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_online_status = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_lastid = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_total = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_topposters = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_me = null;
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{
@@ -628,7 +628,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return KunenaUser
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getMyself()
 	{

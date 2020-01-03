@@ -25,7 +25,7 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * DisplayDefault
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()
 	{
@@ -57,7 +57,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * setToolbar
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{
@@ -105,7 +105,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
 	{
@@ -127,7 +127,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return     array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
 	{
@@ -142,7 +142,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of locked filter options.
 	 *
 	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function signatureOptions()
 	{
@@ -158,7 +158,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function blockOptions()
 	{
@@ -174,7 +174,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of type filter options.
 	 *
 	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bannedOptions()
 	{
@@ -190,7 +190,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    array   The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function moderatorOptions()
 	{
@@ -206,7 +206,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 * Returns an array ranks filter options.
 	 *
 	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function ranksOptions()
 	{

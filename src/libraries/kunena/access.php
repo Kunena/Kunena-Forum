@@ -20,59 +20,59 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaAccess
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAccess
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const CATEGORY_SUBSCRIPTION = 1;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const TOPIC_SUBSCRIPTION = 2;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance = null;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $accesstypes = array('all' => array());
 
 	/**
 	 * @var array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $adminsByCatid = null;
 
 	/**
 	 * @var array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $adminsByUserid = null;
 
 	/**
 	 * @var array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $moderatorsByCatid = null;
 
 	/**
 	 * @var array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $moderatorsByUserid = null;
 
@@ -194,7 +194,7 @@ class KunenaAccess
 	 * @param   array  $list  list
 	 *
 	 * @return mixed|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function storeRoles(array $list = null)
 	{
@@ -249,7 +249,7 @@ class KunenaAccess
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAccessOptions($category)
 	{
@@ -359,7 +359,7 @@ jQuery(document).ready(function ($) {
 	 * @param   KunenaForumCategory  $category  Category
 	 *
 	 * @return array|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
@@ -390,7 +390,7 @@ jQuery(document).ready(function ($) {
 	 * @param   bool  $all    all
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAdmins($catid = 0, $all = false)
 	{
@@ -411,7 +411,7 @@ jQuery(document).ready(function ($) {
 	 * @param   bool  $all    all
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getModerators($catid = 0, $all = false)
 	{
@@ -695,7 +695,7 @@ jQuery(document).ready(function ($) {
 	 * @param   int                  $userid    user id
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
 	{

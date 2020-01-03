@@ -132,7 +132,7 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEdit()
 	{
@@ -150,7 +150,7 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayMove()
 	{
@@ -161,7 +161,7 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarMove()
 	{

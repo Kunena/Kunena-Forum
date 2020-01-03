@@ -17,7 +17,7 @@ use Joomla\CMS\Date\Date;
 /**
  * Class KunenaDate
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaDate extends Date
 {
@@ -26,7 +26,7 @@ class KunenaDate extends Date
 	 * @param   null    $tz    tz
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($date = 'now', $tz = null)
 	{
@@ -35,7 +35,7 @@ class KunenaDate extends Date
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function toTimezone()
 	{
@@ -165,7 +165,7 @@ class KunenaDate extends Date
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function toTimeAgo()
 	{

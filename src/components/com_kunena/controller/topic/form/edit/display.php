@@ -23,7 +23,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
 
@@ -242,7 +242,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 * Can user subscribe to the topic?
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()
 	{

@@ -23,25 +23,25 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Results';
 
 	/**
 	 * @var KunenaModelSearch
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $model;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $data = array();
 

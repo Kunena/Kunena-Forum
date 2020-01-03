@@ -23,13 +23,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
 
@@ -206,7 +206,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	 * Can user subscribe to the topic?
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()
 	{

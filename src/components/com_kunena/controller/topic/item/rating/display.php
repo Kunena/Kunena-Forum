@@ -20,13 +20,13 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Rating';
 
 	/**
 	 * @var KunenaForumTopic
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topic;
 

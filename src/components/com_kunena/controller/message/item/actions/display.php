@@ -28,25 +28,25 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Message/Item/Actions';
 
 	/**
 	 * @var KunenaForumTopic
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $messageButtons;
 

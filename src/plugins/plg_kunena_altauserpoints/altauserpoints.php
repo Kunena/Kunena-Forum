@@ -26,7 +26,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object &$subject  The object to observe
 	 * @param   array   $config   An optional associative array of configuration settings.
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -67,7 +67,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -85,7 +85,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -103,7 +103,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

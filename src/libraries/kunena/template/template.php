@@ -25,49 +25,49 @@ use Joomla\CMS\Filesystem\Folder;
  * Kunena Users Table Class
  * Provides access to the #__kunena_users table
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaTemplate extends CMSObject
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var null|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $name = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $params = null;
 
 	/**
 	 * @var bool|int
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $paramstime = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topicIcons = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $categoryIcons = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/emoticons',
@@ -81,7 +81,7 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $pathTypeDefaults = array(
 		'avatars'       => 'media/avatars',
@@ -97,7 +97,7 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $pathTypeOld = array(
 		'avatars'    => 'images/avatars',
@@ -112,43 +112,43 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $default = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $paths = array();
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $css_compile = true;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $filecache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $smileyPath = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $rankPath = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $userClasses = array(
 		'kwho-',
@@ -163,49 +163,49 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $stylesheets = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $style_variables = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $compiled_style_variables = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $scripts = array();
 
 	/**
 	 * @var null|SimpleXMLElement
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $xml = null;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $map;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $hmvc;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $category_iconset = '';
 
@@ -445,7 +445,7 @@ class KunenaTemplate extends CMSObject
 	 * getconfigxml
 	 *
 	 * @return boolean|mixed|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getConfigXml()
 	{
@@ -542,7 +542,7 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUserClasses()
 	{
@@ -557,7 +557,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   null    $id     id
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -605,7 +605,7 @@ HTML;
 	 * @param   string  $title  title
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -617,7 +617,7 @@ HTML;
 	 * @param   string  $alt    alt
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')
 	{
@@ -629,7 +629,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getImagePath($filename = '', $url = true)
 	{
@@ -644,7 +644,7 @@ HTML;
 	 * @param   null    $ignore    ignore
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
 	{
@@ -683,7 +683,7 @@ HTML;
 	 * @param   mixed  $list  list
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListFooter($list)
 	{
@@ -701,7 +701,7 @@ HTML;
 	 * @param   mixed  $list  list
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListRender($list)
 	{
@@ -729,7 +729,7 @@ HTML;
 	 * @param   string  $item  item
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemActive($item)
 	{
@@ -740,7 +740,7 @@ HTML;
 	 * @param   string  $item  item
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemInactive($item)
 	{
@@ -752,7 +752,7 @@ HTML;
 	 * @param   string  $class_sfx  class_sfx
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getClass($class, $class_sfx = '')
 	{
@@ -761,7 +761,7 @@ HTML;
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariables()
 	{
@@ -773,7 +773,7 @@ HTML;
 	 * @param   string  $default  default
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariable($name, $default = '')
 	{
@@ -785,7 +785,7 @@ HTML;
 	 * @param   integer  $value  value
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setStyleVariable($name, $value)
 	{
@@ -939,7 +939,7 @@ HTML;
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function clearCache()
 	{
@@ -981,7 +981,7 @@ HTML;
 	 * @param   mixed  $matches  matches
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function findUrl($matches)
 	{
@@ -1078,7 +1078,7 @@ HTML;
 	 * @param   string  $path  path
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function addPath($path)
 	{
@@ -1123,7 +1123,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAvatarPath($filename = '', $url = false)
 	{
@@ -1135,7 +1135,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSmileyPath($filename = '', $url = false)
 	{
@@ -1147,7 +1147,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRankPath($filename = '', $url = false)
 	{
@@ -1501,7 +1501,7 @@ HTML;
 	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
 	{
@@ -1535,7 +1535,7 @@ HTML;
 	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
 	{
@@ -1730,7 +1730,7 @@ HTML;
 
 	/**
 	 * @return SimpleXMLElement
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTemplateDetails()
 	{
@@ -1869,7 +1869,7 @@ HTML;
 	 * @param   string  $iconset  iconset
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setCategoryIconset($iconset = '/default')
 	{
@@ -1922,7 +1922,7 @@ HTML;
 	 * @param   string  $style  style
 	 *
 	 * @return stdClass|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
 	{

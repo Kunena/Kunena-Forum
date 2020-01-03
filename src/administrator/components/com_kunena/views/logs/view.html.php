@@ -157,7 +157,7 @@ class KunenaAdminViewLogs extends KunenaView
 	/**
 	 * Set the toolbar on log manager
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{
@@ -172,7 +172,7 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayClean()
 	{
@@ -181,7 +181,7 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbarClean()
 	{
@@ -197,7 +197,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 * @param $id
 	 *
 	 * @return mixed|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getType($id)
 	{
@@ -210,7 +210,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 * @param $name
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getGroupCheckbox($name)
 	{

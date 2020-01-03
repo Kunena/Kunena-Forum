@@ -20,26 +20,26 @@ use Joomla\Registry\Registry;
 /**
  * Kunena Access Control for Joomla 2.5+
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAccessJoomla
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $viewLevels = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -53,7 +53,7 @@ class KunenaAccessJoomla
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
 	 * @return array    Supported access types.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAccessTypes()
 	{
@@ -68,7 +68,7 @@ class KunenaAccessJoomla
 	 * @param   KunenaForumCategory  $category  Category
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
@@ -108,7 +108,7 @@ class KunenaAccessJoomla
 	 * @param   int     $id          Group id.
 	 *
 	 * @return string|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -154,7 +154,7 @@ class KunenaAccessJoomla
 	 * @param   int     $category    Group id.
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -253,7 +253,7 @@ class KunenaAccessJoomla
 	 * @param   array  $categories  List of categories, null = all.
 	 *
 	 * @return array of (catid=>userid)
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -345,7 +345,7 @@ class KunenaAccessJoomla
 	 * @param   array      $inUsers    Only list selected users.
 	 *
 	 * @return    array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
 	{
@@ -398,7 +398,7 @@ class KunenaAccessJoomla
 	 * @param   int                  $userid    userid
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
 	{
@@ -424,7 +424,7 @@ class KunenaAccessJoomla
 	 * @param   array  $categories  List of categories in access type.
 	 *
 	 * @return array where category ids are in the keys.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -475,7 +475,7 @@ class KunenaAccessJoomla
 	 * @param   array  $userids  list(allow, deny).
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{
@@ -518,7 +518,7 @@ class KunenaAccessJoomla
 	 * @param   integer  $viewlevel  viewlevel
 	 *
 	 * @return    array    List of view levels for which the user is authorised.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getGroupsByViewLevel($viewlevel)
 	{

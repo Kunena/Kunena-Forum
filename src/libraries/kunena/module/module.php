@@ -17,7 +17,7 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaModule
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaModule
 {
@@ -25,19 +25,19 @@ abstract class KunenaModule
 	 * CSS file to be loaded.
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $css = null;
 
 	/**
 	 * @var stdClass
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $module = null;
 
 	/**
 	 * @var Joomla\Registry\Registry
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -107,7 +107,7 @@ abstract class KunenaModule
 	 * Internal module function to display module contents.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	abstract protected function _display();
 }

@@ -28,49 +28,49 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_smtpuser = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_ftp = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_sef = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_sef_rewrite = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $htaccess = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $mbstring = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $gd_info = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $gd_support = null;
 
@@ -94,104 +94,104 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $maxExecTime = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $maxExecMem = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $fileuploads = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $kunenaVersionInfo = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $ktemplate = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $ktemplatedetails = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $jtemplatedetails = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $joomlamenudetails = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $collation = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $kconfigsettings = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $joomlalanguages = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $plgtext = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $modtext = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $thirdpartytext = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $seftext = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $integration_settings = null;
 
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPruneCategories()
 	{
@@ -211,7 +211,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPruneListtrashdelete()
 	{
@@ -225,7 +225,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPruneControlOptions()
 	{
@@ -245,7 +245,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPruneKeepSticky()
 	{
@@ -811,7 +811,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @param   $path  $path    Path to extension directory
 	 *
 	 * @return  string  Version number
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function findExtensionVersion($path)
 	{
@@ -852,7 +852,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * @return array
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getIntegrationSettings()
 	{

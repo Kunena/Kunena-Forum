@@ -24,13 +24,13 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Form';
 
 	/**
 	 * @var KunenaModelSearch
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $model;
 

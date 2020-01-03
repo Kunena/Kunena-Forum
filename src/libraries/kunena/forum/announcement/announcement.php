@@ -35,7 +35,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
 		'none'   => array(),
@@ -47,38 +47,38 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaAnnouncements';
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_date = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_author = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = null;
 
 	/**
 	 * @param   mixed  $properties  properties
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($properties = null)
 	{
@@ -134,7 +134,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $layout  layout
 	 *
 	 * @return Joomla\CMS\Uri\Uri
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUri($layout = 'default')
 	{
@@ -177,7 +177,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $task  task
 	 *
 	 * @return Joomla\CMS\Uri\Uri
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTaskUri($task = null)
 	{
@@ -254,7 +254,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCreationDate()
 	{
@@ -351,7 +351,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{
@@ -360,7 +360,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function saveInternal()
 	{
@@ -372,7 +372,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNew(KunenaUser $user)
 	{

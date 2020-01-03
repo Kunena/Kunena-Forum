@@ -121,7 +121,7 @@ function kunena_200_2011_12_14_aliases($parent)
  * @param   int  $state  state
  *
  * @return boolean
- * @since Kunena
+ * @since   Kunena 6.0
  */
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
@@ -148,7 +148,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
  * @param   int  $state  state
  *
  * @return boolean
- * @since Kunena
+ * @since   Kunena 6.0
  */
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
@@ -173,7 +173,7 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
  * @param $str
  *
  * @return string
- * @since Kunena
+ * @since   Kunena 6.0
  */
 function kStringURLSafe($str)
 {

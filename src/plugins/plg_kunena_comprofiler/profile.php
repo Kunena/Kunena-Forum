@@ -18,13 +18,13 @@ require_once dirname(__FILE__) . '/integration.php';
 /**
  * Class KunenaProfileComprofiler
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaProfileComprofiler extends KunenaProfile
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -53,7 +53,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function open()
 	{
@@ -61,7 +61,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function close()
 	{
@@ -127,7 +127,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param $params
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -179,7 +179,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

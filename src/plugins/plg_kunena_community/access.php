@@ -18,31 +18,31 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaAccessCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAccessCommunity
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $categories = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $groups = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $tree = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -51,7 +51,7 @@ class KunenaAccessCommunity
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -65,7 +65,7 @@ class KunenaAccessCommunity
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
 	 * @return array    Supported access types.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAccessTypes()
 	{

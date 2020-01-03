@@ -23,13 +23,13 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Settings';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $settings;
 
@@ -187,7 +187,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * @param   string  $string  String to be escaped.
 	 *
 	 * @return  string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function escape($string)
 	{

@@ -22,25 +22,25 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Report';
 
 	/**
 	 * @var KunenaForumTopic
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
 	 * @var KunenaForumMessage|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $uri;
 

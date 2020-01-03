@@ -24,7 +24,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Profile';
 

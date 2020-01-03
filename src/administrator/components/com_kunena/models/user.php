@@ -236,7 +236,7 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMovecatslist()
 	{

@@ -37,7 +37,9 @@ use Joomla\CMS\Language\Text;
 		?>
 		<a class="btn btn-outline-primary border" href="<?php echo $this->naturalurl; ?>"
 		   target="_blank"><?php echo Text::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
-	<?php else: ?>
+	<?php else
+
+	: ?>
 		<?php echo Text::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
 	<?php endif; ?>
 <?php endif;

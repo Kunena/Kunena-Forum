@@ -18,7 +18,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Topic View
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewTopic extends KunenaView
 {

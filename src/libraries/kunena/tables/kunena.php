@@ -14,13 +14,13 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaTable
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaTable extends Joomla\CMS\Table\Table
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
@@ -209,7 +209,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   null  $exists  exists
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{

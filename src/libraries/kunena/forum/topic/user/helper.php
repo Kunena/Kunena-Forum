@@ -17,19 +17,19 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena Forum Topic User Helper Class
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumTopicUserHelper
 {
 	/**
 	 * @var array|KunenaForumTopicUser[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array|KunenaForumTopicUser[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_topics = array();
 
@@ -399,7 +399,7 @@ abstract class KunenaForumTopicUserHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{

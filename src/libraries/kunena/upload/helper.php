@@ -19,18 +19,18 @@ use Joomla\CMS\Filesystem\Path;
 /**
  * Kunena Upload Backend Helper Class
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaUploadHelper
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private function __construct()
 	{
@@ -42,7 +42,7 @@ class KunenaUploadHelper
 	 * @param   string  $format        format
 	 *
 	 * @return mixed|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function upload($file, $uploadfolder, $format)
 	{

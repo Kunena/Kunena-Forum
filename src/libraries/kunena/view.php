@@ -18,61 +18,61 @@ use Joomla\CMS\MVC\View\HtmlView;
 /**
  * Kunena View Class
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaView extends HtmlView
 {
 	/**
 	 * @var Joomla\CMS\Document\Document|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $document = null;
 
 	/**
 	 * @var Joomla\CMS\Application\CMSApplication|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $app = null;
 
 	/**
 	 * @var KunenaUser|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
 	 * @var KunenaConfig|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $config = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $embedded = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $templatefiles = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $teaser = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $inLayout = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;
 
@@ -554,7 +554,7 @@ class KunenaView extends HtmlView
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTemplateMD5()
 	{

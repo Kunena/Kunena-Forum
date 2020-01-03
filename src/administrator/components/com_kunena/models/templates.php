@@ -90,7 +90,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return boolean|stdClass
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTemplatedetails()
 	{
@@ -108,7 +108,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return boolean|void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getFileLessParsed()
 	{
@@ -128,7 +128,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return boolean|void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getFileContentParsed()
 	{
@@ -149,7 +149,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getFTPcredentials()
 	{
@@ -162,7 +162,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @return mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPagination()
 	{
@@ -189,7 +189,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   string  $id  id
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -204,7 +204,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTotal()
 	{
@@ -213,7 +213,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getStart()
 	{

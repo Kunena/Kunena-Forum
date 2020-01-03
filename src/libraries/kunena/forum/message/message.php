@@ -48,7 +48,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
 		'none'                   => array(),
@@ -70,67 +70,67 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaMessages';
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var KunenaAttachment[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_attachments_add = array();
 
 	/**
 	 * @var KunenaAttachment[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_attachments_del = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_topic = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_hold = 1;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_thread = 0;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authtcache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();
 
@@ -166,7 +166,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Destruct
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __destruct()
 	{
@@ -243,7 +243,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaForumTopic  $topic  topic
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setTopic(KunenaForumTopic $topic)
 	{
@@ -1092,7 +1092,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function delta()
 	{
@@ -1154,7 +1154,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTime()
 	{
@@ -1173,7 +1173,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getModifiedTime()
 	{
@@ -1721,7 +1721,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNotHold(KunenaUser $user)
 	{

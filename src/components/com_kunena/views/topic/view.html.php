@@ -23,49 +23,49 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Topic View
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewTopic extends KunenaView
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topicButtons = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $messageButtons = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $inline_attachments = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $poll = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $mmm = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $k = 0;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $cache = true;
 
@@ -1049,7 +1049,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function hasThreadHistory()
 	{
@@ -1142,7 +1142,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $replycnt
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getNumLink($mesid, $replycnt)
 	{
@@ -1162,7 +1162,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayMessageField($name)
 	{
@@ -1173,7 +1173,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayTopicField($name)
 	{
@@ -1184,7 +1184,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayCategoryField($name)
 	{
@@ -1193,7 +1193,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function canSubscribe()
 	{
@@ -1386,7 +1386,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   string  $class  class
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
@@ -1431,7 +1431,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $keywords
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setKeywords($keywords)
 	{
@@ -1452,7 +1452,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $description
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setDescription($description)
 	{

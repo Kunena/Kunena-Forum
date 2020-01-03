@@ -16,13 +16,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaProfile
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaProfile
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
 
@@ -82,7 +82,7 @@ class KunenaProfile
 	 * @param   int  $limit  limit
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _getTopHits($limit = 0)
 	{
@@ -116,7 +116,7 @@ class KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -128,7 +128,7 @@ class KunenaProfile
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -139,7 +139,7 @@ class KunenaProfile
 	 * @param   mixed  $params  params
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -150,7 +150,7 @@ class KunenaProfile
 	 * @param   bool     $xhtml   xhtml
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

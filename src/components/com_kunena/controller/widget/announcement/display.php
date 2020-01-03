@@ -20,13 +20,13 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Widget/Announcement';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $announcement;
 

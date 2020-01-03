@@ -17,13 +17,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaProfileCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaProfileCommunity extends KunenaProfile
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -32,7 +32,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -95,7 +95,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param $view
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -106,7 +106,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
@@ -119,7 +119,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{

@@ -16,13 +16,13 @@ use Joomla\CMS\Language\Text;
 /**
  * The HTML Kunena configuration view.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $model = null;
 

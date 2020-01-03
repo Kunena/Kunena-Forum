@@ -19,20 +19,20 @@ use Joomla\CMS\Plugin\PluginHelper;
 /**
  * Class KunenaLoginJoomla
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLoginJoomla
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -80,7 +80,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
 	{
@@ -89,7 +89,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
 	{
@@ -98,7 +98,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
 	{
@@ -107,7 +107,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
 	{
@@ -123,7 +123,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
 	{
@@ -132,7 +132,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()
 	{

@@ -14,19 +14,19 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaUserFinder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaUserFinder extends KunenaDatabaseObjectFinder
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__users';
 
 	/**
 	 * @var KunenaConfig|mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $config;
 
@@ -54,7 +54,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool                  $register  True = registration date, False = last visit date.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null, $register = true)
 	{
@@ -80,7 +80,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByConfiguration(array $ignore = array())
 	{
@@ -112,7 +112,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   string  $search  search
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByName($search)
 	{

@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaExceptionLayout
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaExceptionLayout extends RuntimeException
 {

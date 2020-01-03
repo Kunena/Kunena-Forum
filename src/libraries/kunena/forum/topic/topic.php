@@ -49,7 +49,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
 		'none'                        => array(),
@@ -91,67 +91,67 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $unread = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $lastread = 0;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaTopics';
 
 	/**
 	 * @var JDatabaseDriver|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authccache = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_hold = 1;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_posts = 0;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_pagination = null;
 
@@ -313,7 +313,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function delta()
 	{
@@ -336,7 +336,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{
@@ -417,7 +417,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   bool|string  $glue  glue
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getKeywords($user = null, $glue = false)
 	{
@@ -689,7 +689,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   string  $name     name
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function updatePostInfo($id, $time = 0, $userid = 0, $message = '', $name = '')
 	{
@@ -839,7 +839,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getHits()
 	{
@@ -1075,7 +1075,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getFirstPostTime()
 	{
@@ -1084,7 +1084,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLastPostTime()
 	{
@@ -1973,7 +1973,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNotExists(KunenaUser $user)
 	{
@@ -2025,7 +2025,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNotHold(KunenaUser $user)
 	{
@@ -2042,7 +2042,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return KunenaExceptionAuthorise|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNotMoved(KunenaUser $user)
 	{

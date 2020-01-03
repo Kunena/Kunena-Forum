@@ -26,49 +26,49 @@ class KunenaModel extends BaseDatabaseModel
 {
 	/**
 	 * @var  string JSite|JAdministrator
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $app = null;
 
 	/**
 	 * @var KunenaUser
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
 	 * @var KunenaConfig
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $config = null;
 
 	/**
 	 * @var string Registry
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $params = null;
 
 	/**
 	 * @var Input
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $input = null;
 
 	/**
 	 * @var InputFilter
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $filter = null;
 
 	/**
 	 * @var JObject
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $state = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $embedded = false;
 
@@ -95,7 +95,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   bool   $embedded  embedded
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function initialize($params = array(), $embedded = true)
 	{
@@ -118,7 +118,7 @@ class KunenaModel extends BaseDatabaseModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getItemid()
 	{
@@ -139,7 +139,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   mixed  $var  The output to escape.
 	 *
 	 * @return mixed The escaped value.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
 	{
@@ -148,7 +148,7 @@ class KunenaModel extends BaseDatabaseModel
 
 	/**
 	 * @return Joomla\Registry\Registry
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getParameters()
 	{
@@ -167,7 +167,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $type     type
 	 *
 	 * @return mixed|object
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
 	{
@@ -188,7 +188,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $type     type
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getVar($name, $default = null, $hash = 'request', $type = 'none')
 	{
@@ -214,7 +214,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getBool($name, $default = false, $hash = 'request')
 	{
@@ -227,7 +227,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getCmd($name, $default = '', $hash = 'request')
 	{
@@ -240,7 +240,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getFloat($name, $default = 0.0, $hash = 'request')
 	{
@@ -253,7 +253,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getInt($name, $default = 0, $hash = 'request')
 	{
@@ -266,7 +266,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getString($name, $default = '', $hash = 'request')
 	{
@@ -279,7 +279,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getWord($name, $default = '', $hash = 'request')
 	{

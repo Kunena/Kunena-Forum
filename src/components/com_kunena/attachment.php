@@ -99,7 +99,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   Registry   $config  config
 	 * @param   WebClient  $client  client
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(Joomla\Input\Input $input = null, Joomla\Registry\Registry $config = null, Joomla\Application\Web\WebClient $client = null)
 	{
@@ -137,7 +137,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   Joomla\CMS\Session\Session  $session  session
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function loadSession(Joomla\CMS\Session\Session $session = null)
 	{
@@ -209,7 +209,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isSite()
 	{
@@ -218,7 +218,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isAdmin()
 	{
@@ -229,7 +229,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   bool  $params  params
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTemplate($params = false)
 	{
@@ -241,7 +241,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   boolean  $value  value
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setUserState($name, $value)
 	{
@@ -253,7 +253,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   null    $default  default
 	 *
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUserState($name, $default = null)
 	{

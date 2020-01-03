@@ -65,7 +65,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the list of categories
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCategoryList()
 	{

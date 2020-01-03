@@ -23,7 +23,7 @@ abstract class KunenaForumAnnouncementHelper
 {
 	/**
 	 * @var KunenaForumAnnouncement[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $_instances = false;
 
@@ -88,7 +88,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string  $layout  layout
 	 *
 	 * @return Joomla\CMS\Uri\Uri
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getUri($layout = null)
 	{
@@ -220,7 +220,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{

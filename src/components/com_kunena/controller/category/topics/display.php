@@ -26,43 +26,43 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Item';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 
 	/**
 	 * @var KunenaForumCategory
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $pagination;
 
 	/**
 	 * @var KunenaUser
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $me;
 

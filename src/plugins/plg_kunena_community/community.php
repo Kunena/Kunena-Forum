@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
 /**
  * Class plgKunenaCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 {
@@ -27,7 +27,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param $subject
 	 * @param $config
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -89,7 +89,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena login integration object.
 	 *
 	 * @return KunenaLoginCommunity|null|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -107,7 +107,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatarCommunity|null|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -125,7 +125,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfileCommunity|null|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -143,7 +143,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena private message integration object.
 	 *
 	 * @return KunenaPrivateCommunity|null|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -161,7 +161,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivityCommunity|null|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

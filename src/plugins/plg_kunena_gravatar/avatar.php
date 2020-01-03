@@ -14,13 +14,13 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaAvatarGravatar
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarGravatar extends KunenaAvatar
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -29,7 +29,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{

@@ -23,7 +23,7 @@ abstract class KunenaTemplateHelper
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
@@ -50,7 +50,7 @@ abstract class KunenaTemplateHelper
 	 * @param   null  $templateBaseDir  template
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function parseXmlFiles($templateBaseDir = null)
 	{
@@ -100,7 +100,7 @@ abstract class KunenaTemplateHelper
 	 * @param   string  $templateBaseDir  template basedir
 	 *
 	 * @return boolean|stdClass
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function parseXmlFile($templateDir, $templateBaseDir = null)
 	{
@@ -134,7 +134,7 @@ abstract class KunenaTemplateHelper
 	 * @param   string  $path  path
 	 *
 	 * @return boolean|stdClass
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function parseKunenaInstallFile($path)
 	{
@@ -192,7 +192,7 @@ abstract class KunenaTemplateHelper
 	 * @param   string  $templatename  The name of template which needs to be checked
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function templateCanBeUsed($templatename)
 	{

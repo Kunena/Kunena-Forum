@@ -26,7 +26,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 {
 	/**
 	 * @var null|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
 

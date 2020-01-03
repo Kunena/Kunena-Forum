@@ -23,7 +23,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewConfig extends KunenaView
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()
 	{
@@ -39,7 +39,7 @@ class KunenaAdminViewConfig extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarDefault()
 	{

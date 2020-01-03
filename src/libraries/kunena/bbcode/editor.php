@@ -26,7 +26,7 @@ class KunenaBbcodeEditor
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $editor_elements = array();
 
@@ -69,7 +69,7 @@ class KunenaBbcodeEditor
 	 * @param   mixed  $where    where
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function insertElement($element, $pos = null, $where = null)
 	{
@@ -90,7 +90,7 @@ class KunenaBbcodeEditor
 	 * @param   mixed  $where     where
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function insertElements($elements, $pos = null, $where = null)
 	{
@@ -238,13 +238,13 @@ class KunenaBbcodeEditor
 /**
  * Class KunenaBbcodeEditorElement
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaBbcodeEditorElement
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $name;
 
@@ -253,7 +253,7 @@ abstract class KunenaBbcodeEditorElement
 	 *
 	 * @param   string  $name  name
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($name)
 	{
@@ -269,7 +269,7 @@ abstract class KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{
@@ -280,43 +280,43 @@ abstract class KunenaBbcodeEditorElement
 /**
  * Class KunenaBbcodeEditorButton
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $tag;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $config;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $title;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $alt;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $class;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $actions = array();
 
@@ -329,7 +329,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   string  $title  title
 	 * @param   string  $alt    alt
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($name, $class, $tag, $title, $alt)
 	{
@@ -422,7 +422,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function generateHMVCJs()
 	{
@@ -433,7 +433,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function editorActionHMVCJs()
 	{
@@ -762,7 +762,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   null    $tag        tag
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function addDisplayAction($selection, $class, $tag = null)
 	{
@@ -786,7 +786,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   null  $after         after
 	 * @param   null  $tag           tag
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function addWrapSelectionAction($repeat = null, $empty_before = null, $empty_after = null, $start = null, $end = null, $before = null, $after = null, $tag = null)
 	{
@@ -818,7 +818,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   string  $url  url
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function addUrlAction($url)
 	{
@@ -831,7 +831,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 /**
  * Class KunenaBbcodeEditorSeparator
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 {
@@ -841,7 +841,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return KunenaBbcodeEditorSeparator
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
 	{
@@ -852,7 +852,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * Generate JS part for element
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function generateHMVCJs()
 	{

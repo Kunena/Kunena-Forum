@@ -28,56 +28,56 @@ class KunenaGravatar
 {
 	/**
 	 * @var string - URL constants for the avatar images
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 
 	/**
 	 * @var integer - The size to use for avatars.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $size = 80;
 
 	/**
 	 * @var string - The maximum rating to allow for the avatar.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $max_rating = 'g';
 
 	/**
 	 * @var string - A temporary internal cache of the URL parameters to use.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $param_cache = null;
 
 	/**
 	 * @var string - The email address of the user.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $email = null;
 
 	/**
 	 * @var mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
 	 *      a URL, or false if using the...default gravatar default image (hah)
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $default_image = false;
 
 	/**
 	 * Extra attributes to the IMG tag like ALT, CLASS, STYLE...
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $extra = "";
 
 	/**
 	 * @param   string  $email  email
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($email = null)
 	{
@@ -88,7 +88,7 @@ class KunenaGravatar
 	 * @param   string  $email  email
 	 *
 	 * @return void $email
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setEmail($email)
 	{
@@ -100,7 +100,7 @@ class KunenaGravatar
 	 *
 	 * @param   string  $extra  extra
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setExtra($extra)
 	{
@@ -143,7 +143,7 @@ class KunenaGravatar
 	 * @param $hash_email
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLink($hash_email)
 	{
@@ -159,7 +159,7 @@ class KunenaGravatar
 	 *                                    stored already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function buildGravatarURL($hash_email = true)
 	{
@@ -219,7 +219,7 @@ class KunenaGravatar
 	 * Check if we are using the secure protocol for the image URLs.
 	 *
 	 * @return boolean - Are we supposed to use the secure protocol?
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function usingSecureURL()
 	{
@@ -241,7 +241,7 @@ class KunenaGravatar
 	 * @param   string  $email  - The email to get the hash for.
 	 *
 	 * @return string - The hashed form of the email, post cleaning.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEmailHash($email)
 	{
@@ -253,7 +253,7 @@ class KunenaGravatar
 	 * Get the currently set avatar size.
 	 *
 	 * @return integer - The current avatar size in use.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAvatarSize()
 	{
@@ -264,7 +264,7 @@ class KunenaGravatar
 	 * Get the current maximum allowed rating for avatars.
 	 *
 	 * @return string - The string representing the current maximum allowed rating ('g', 'pg', 'r', 'x').
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMaxRating()
 	{
@@ -303,7 +303,7 @@ class KunenaGravatar
 	 * Get the current default image setting.
 	 *
 	 * @return mixed - False if no default image set, string if one is set.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getDefaultImage()
 	{
@@ -360,7 +360,7 @@ class KunenaGravatar
 	/**
 	 * toString
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __toString()
 	{

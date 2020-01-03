@@ -18,13 +18,13 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaActivityCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaActivityCommunity extends KunenaActivity
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -116,7 +116,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $category
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getAccess($category)
 	{
@@ -231,7 +231,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param   int  $target   target
 	 * @param   int  $message  message
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -291,7 +291,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $target
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onAfterDeleteTopic($target)
 	{

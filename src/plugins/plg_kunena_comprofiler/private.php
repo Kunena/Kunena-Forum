@@ -18,13 +18,13 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaPrivateComprofiler
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -44,7 +44,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showIcon($userid)
 	{
@@ -86,7 +86,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param   string  $icon   icon
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
@@ -118,7 +118,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
 	{
@@ -136,7 +136,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @return integer|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getCBUserid()
 	{
@@ -169,7 +169,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)
 	{
@@ -194,7 +194,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)
 	{

@@ -17,7 +17,7 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Helper class for image manipulation.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaImageHelper
 {
@@ -34,7 +34,7 @@ class KunenaImageHelper
 	 * @param   int     $crop       Define if you want crop the image.
 	 *
 	 * @return boolean    True on success.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
 	{

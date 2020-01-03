@@ -34,13 +34,13 @@ class KunenaBbcode extends Nbbc\BBCode
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $autolink_disable = 0;
 
 	/**
 	 * @var object
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $parent = null;
 
@@ -313,7 +313,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   mixed  $params  params
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function canCloakEmail(&$params)
 	{
@@ -365,7 +365,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   string  $string  string
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function Internal_AutoDetectURLs($string)
 	{
@@ -457,7 +457,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	}
 
 	/**
-	 * @see   BBCode::IsValidURL()
+	 * @see     BBCode::IsValidURL()
 	 * Regular expression taken from https://gist.github.com/729294
 	 *
 	 * @param   string  $string     string
@@ -465,7 +465,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   bool    $local_too  local
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function IsValidURL($string, $email_too = true, $local_too = false)
 	{
@@ -498,7 +498,7 @@ class KunenaBbcode extends Nbbc\BBCode
 /**
  * Class KunenaBbcodeLibrary
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 {
@@ -512,13 +512,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $mapid = 0;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $default_tag_rules = [
 		'b'            => [
@@ -1119,7 +1119,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1393,7 +1393,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function DoList($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1642,7 +1642,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getMessage()
 	{
@@ -1976,7 +1976,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -3075,7 +3075,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return boolean|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
 	{

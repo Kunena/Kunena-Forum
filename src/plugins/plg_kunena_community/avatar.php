@@ -16,13 +16,13 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaAvatarCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarCommunity extends KunenaAvatar
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -31,7 +31,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -41,7 +41,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	/**
 	 * @param $userlist
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
 	{
@@ -57,7 +57,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{

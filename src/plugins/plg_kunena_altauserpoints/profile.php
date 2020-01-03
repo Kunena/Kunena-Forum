@@ -23,7 +23,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -32,7 +32,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @param   mixed  $params  params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -64,7 +64,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   int  $limit  limit
 	 *
 	 * @return array|boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -95,7 +95,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   mixed  $params  params
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
 	{

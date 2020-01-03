@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Class plgKunenaGravatar
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 {
@@ -24,7 +24,7 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param $subject
 	 * @param $config
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -41,7 +41,7 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
 	{

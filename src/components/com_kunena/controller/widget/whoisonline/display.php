@@ -22,13 +22,13 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Widget/WhoIsOnline';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $usersUrl;
 

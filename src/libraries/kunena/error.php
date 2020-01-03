@@ -16,37 +16,37 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaError
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaError
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $enabled = 0;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $handler = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $debug = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $admin = false;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $format;
 
@@ -82,7 +82,7 @@ abstract class KunenaError
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{
@@ -171,7 +171,7 @@ abstract class KunenaError
 	 * @param   string  $errline  errorline
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{

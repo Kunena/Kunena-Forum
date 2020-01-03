@@ -24,31 +24,31 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/List';
 
 	/**
 	 * @var KunenaUser
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
 	 * @var array|KunenaForumTopic[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
 	 * @var KunenaPagination
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $pagination;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 

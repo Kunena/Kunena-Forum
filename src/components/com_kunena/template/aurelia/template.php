@@ -29,7 +29,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * The feature allows you to create one base template and only override changed files.
 	 *
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $default = array('aurelia');
 
@@ -39,7 +39,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * These will override default files in JROOT/media/kunena
 	 *
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $pathTypes = array(
 		'emoticons'     => 'media/kunena/emoticons',
@@ -55,7 +55,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * User group initialization.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $userClasses = array(
 		'kwho-',
@@ -191,7 +191,7 @@ EOF;
 	 * @param   null  $id  id
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
@@ -238,7 +238,7 @@ HTML;
 	 * @param   string  $title  title
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
 	{
@@ -250,7 +250,7 @@ HTML;
 	 * @param   string  $alt  alt
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')
 	{

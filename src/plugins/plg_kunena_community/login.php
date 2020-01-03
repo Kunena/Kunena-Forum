@@ -16,13 +16,13 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Class KunenaLoginCommunity
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLoginCommunity
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -31,7 +31,7 @@ class KunenaLoginCommunity
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -40,7 +40,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
 	{
@@ -49,7 +49,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
 	{
@@ -58,7 +58,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return null|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
 	{

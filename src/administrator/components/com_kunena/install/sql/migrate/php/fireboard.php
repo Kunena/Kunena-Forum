@@ -15,13 +15,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaMigratorFireboard
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaMigratorFireboard
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $versions = array(
 		array('version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit'),
@@ -33,7 +33,7 @@ class KunenaMigratorFireboard
 
 	/**
 	 * @return KunenaMigratorFireboard|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()
 	{
@@ -51,7 +51,7 @@ class KunenaMigratorFireboard
 	 * Detect FireBoard version.
 	 *
 	 * @return  string  FireBoard version or null.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function detect()
 	{

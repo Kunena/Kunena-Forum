@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Class JHtmlKunenaForum
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class JHtmlKunenaForum
 {
@@ -282,7 +282,7 @@ abstract class JHtmlKunenaForum
 	 * @param   null    $class_input  input
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function checklist($name, $options, $selected = array(), $class_input = null)
 	{

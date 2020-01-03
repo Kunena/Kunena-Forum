@@ -114,7 +114,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return    string        A store id.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -215,7 +215,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()
 	{

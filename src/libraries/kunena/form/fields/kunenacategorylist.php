@@ -19,13 +19,13 @@ use Joomla\CMS\Form\FormField;
 /**
  * Class Joomla\CMS\Form\FormField|KunenaCategoryList
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class JFormFieldKunenaCategoryList extends FormField
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $type = 'KunenaCategoryList';
 

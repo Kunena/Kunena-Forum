@@ -18,50 +18,50 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaControllerDisplay
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
 	 * @var null|KunenaLayout
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $output = null;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $layout = 'default';
 
 	/**
 	 * @var KunenaConfig
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $config;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Empty';
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $primary = false;
 
 	/**
 	 * @var Document
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private $document;
 
 	/**
 	 * @internal
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setPrimary()
 	{
@@ -203,7 +203,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getProperties()
 	{
@@ -258,7 +258,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Method to get the view layout.
 	 *
 	 * @return  string  The layout name.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLayout()
 	{
@@ -273,7 +273,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $layout  The layout name.
 	 *
 	 * @return KunenaControllerDisplay|KunenaLayout
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setLayout($layout)
 	{
@@ -325,7 +325,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   mixed  $value  value
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function set($key, $value)
 	{
@@ -376,7 +376,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $keywords  keywords
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setKeywords($keywords)
 	{
@@ -387,7 +387,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $description  description
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setDescription($description)
 	{
@@ -398,7 +398,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $robots  robots
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setRobots($robots)
 	{
@@ -411,7 +411,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $attribute  attribute
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setMetaData($name, $content, $attribute = 'name')
 	{

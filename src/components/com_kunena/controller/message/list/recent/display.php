@@ -24,13 +24,13 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Message/List';
 
 	/**
 	 * @var array|KunenaForumMessage[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $messages;
 

@@ -20,25 +20,25 @@ use Joomla\CMS\Application\CMSApplicationInterface;
 /**
  * Class KunenaController
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
 	 * @var CMSApplicationInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $app;
 
 	/**
 	 * @var KunenaUser|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
 	 * @var KunenaConfig|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $config = null;
 
@@ -452,7 +452,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string  $var  The output to escape.
 	 *
 	 * @return string The escaped value.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
 	{
@@ -461,7 +461,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRedirect()
 	{
@@ -470,7 +470,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMessage()
 	{
@@ -479,7 +479,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMessageType()
 	{

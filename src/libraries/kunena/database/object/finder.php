@@ -21,7 +21,7 @@ defined('_JEXEC') or die;
 /**
  * Class KunenaDatabaseObjectFinder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaDatabaseObjectFinder
 {
@@ -29,50 +29,50 @@ abstract class KunenaDatabaseObjectFinder
 	 * Table associated with the model.
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $table;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $primaryKey = 'id';
 
 	/**
 	 * @var JDatabaseQuery
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $query;
 
 	/**
 	 * @var DatabaseDriver
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $db;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $start = 0;
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $limit = 20;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $skip = false;
 
 	/**
 	 * Constructor.
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -92,7 +92,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int  $limitstart  limitstart
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function start($limitstart = 0)
 	{
@@ -109,7 +109,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int  $limit  limit
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function limit($limit = null)
 	{
@@ -131,7 +131,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string  $alias      alias
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
 	{
@@ -151,7 +151,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   bool          $escape     Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function where($field, $operation, $value, $escape = true)
 	{
@@ -242,7 +242,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)
 	{

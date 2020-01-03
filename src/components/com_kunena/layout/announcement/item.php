@@ -20,7 +20,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $buttons;
 

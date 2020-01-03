@@ -17,25 +17,25 @@ use Joomla\Database\QueryInterface;
 /**
  * Class KunenaForumTopicFinder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_topics';
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $hold = array(0);
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $moved = null;
 
@@ -84,7 +84,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   array  $categories  categories
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByCategories(array $categories)
 	{
@@ -123,7 +123,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool                  $lastPost  True = last post, False = first post.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null, $lastPost = true)
 	{
@@ -160,7 +160,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   string      $action  Action or negation of the action (!action).
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
@@ -228,7 +228,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool   $negate  negate
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterAnsweredBy(array $users, $negate = false)
 	{
@@ -291,7 +291,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   array  $hold  List of hold states to display.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByHold(array $hold = array(0))
 	{
@@ -306,7 +306,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   bool  $value  True on moved, false on not moved.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByMoved($value = true)
 	{
@@ -338,7 +338,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   mixed  $columns  A string or an array of field names.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function select($columns)
 	{
@@ -353,7 +353,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser  $user
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByUserUnread(KunenaUser $user)
 	{
@@ -367,7 +367,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)
 	{

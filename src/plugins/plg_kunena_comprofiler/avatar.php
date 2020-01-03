@@ -14,13 +14,13 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaAvatarComprofiler
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarComprofiler extends KunenaAvatar
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -29,7 +29,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -39,7 +39,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	/**
 	 * @param $userlist
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
 	{
@@ -48,7 +48,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{

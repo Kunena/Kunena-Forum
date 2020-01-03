@@ -13,14 +13,14 @@ defined('_JEXEC') or die();
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 	/**
 	 * @param   null  $step  step
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($step = null)
 	{
@@ -176,7 +176,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @return array
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function mapUserGroups($list)
 	{

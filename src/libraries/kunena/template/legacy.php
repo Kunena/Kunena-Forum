@@ -17,13 +17,13 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaTemplateLegacy
 {
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function load()
 	{
@@ -186,7 +186,7 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 /**
  * Class CKunenaTools is legacy class from Kunena 1.6/1.7
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class CKunenaTools
 {

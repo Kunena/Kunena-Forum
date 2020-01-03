@@ -17,12 +17,12 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena cpanel
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAdminViewTools extends KunenaView
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()
 	{
@@ -31,7 +31,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarDefault()
 	{
@@ -41,7 +41,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayPrune()
 	{
@@ -55,7 +55,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarPrune()
 	{
@@ -92,7 +92,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displaySyncUsers()
 	{
@@ -101,7 +101,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarSyncUsers()
 	{
@@ -116,7 +116,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayRecount()
 	{
@@ -125,7 +125,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarRecount()
 	{
@@ -140,7 +140,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayMenu()
 	{
@@ -153,7 +153,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarMenu()
 	{
@@ -174,7 +174,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayPurgeReStatements()
 	{
@@ -183,7 +183,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarPurgeReStatements()
 	{
@@ -198,7 +198,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayCleanupIP()
 	{
@@ -207,7 +207,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolCleanupIP()
 	{
@@ -222,7 +222,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayDiagnostics()
 	{
@@ -231,7 +231,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarDiagnostics()
 	{
@@ -244,7 +244,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayUninstall()
 	{
@@ -257,7 +257,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarUninstall()
 	{
@@ -270,7 +270,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function displayReport()
 	{
@@ -281,7 +281,7 @@ class KunenaAdminViewTools extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarReport()
 	{

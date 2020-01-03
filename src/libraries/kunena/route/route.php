@@ -22,13 +22,13 @@ KunenaRoute::initialize();
 /**
  * Class KunenaRoute
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaRoute
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $views = array(
 		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
@@ -47,115 +47,115 @@ abstract class KunenaRoute
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $time = 0;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $adminApp = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $config = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $menus = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $menu = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $default = false;
 
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $active = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $home = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $search = false;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $current = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $childlist = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $subtree = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $parent = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $uris = array();
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $urisSave = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $filtered = array();
 
@@ -483,7 +483,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return Joomla\CMS\Cache\CacheController
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function getCache()
 	{
@@ -494,7 +494,7 @@ abstract class KunenaRoute
 	 * @param   mixed  $item  item
 	 *
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getHome($item)
 	{
@@ -530,7 +530,7 @@ abstract class KunenaRoute
 	 * @param   integer  $catid  catid
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function checkHome($item, $catid)
 	{
@@ -643,7 +643,7 @@ abstract class KunenaRoute
 	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function check($item, Joomla\CMS\Uri\Uri $uri)
 	{
@@ -829,7 +829,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getMenu()
 	{
@@ -895,7 +895,7 @@ abstract class KunenaRoute
 	 * @param   null    $default  default
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function stringURLSafe($string, $default = null)
 	{
@@ -923,7 +923,7 @@ abstract class KunenaRoute
 	 * @param   string  $alias  alias
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function resolveAlias($alias)
 	{
@@ -1051,7 +1051,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
 	{
@@ -1212,7 +1212,7 @@ abstract class KunenaRoute
 	 * @param   string  $string  String to process
 	 *
 	 * @return  string  Processed string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function stringURLUnicodeSlug($string)
 	{

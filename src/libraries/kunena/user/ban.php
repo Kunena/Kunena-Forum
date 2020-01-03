@@ -40,60 +40,60 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaUserBan extends CMSObject
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const ANY = 0;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const ACTIVE = 1;
 
 	/**
 	 * @var array|KunenaUserBan[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instancesByUserid = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_instancesByIP = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_useridcache = array();
 
 	/**
 	 * @var Date|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_now = null;
 
 	/**
 	 * @var Joomla\CMS\User\User|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $_my = null;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
@@ -182,7 +182,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   mixed  $data  data
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function bind($data)
 	{
@@ -223,7 +223,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   KunenaUserBan  $instance  instance
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private static function storeInstance($instance)
 	{
@@ -257,7 +257,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   integer  $userid  userid
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private static function cacheUserid($userid)
 	{
@@ -269,7 +269,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isEnabled()
 	{
@@ -290,7 +290,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isLifetime()
 	{
@@ -488,7 +488,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban creation date.
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getCreationDate()
 	{
@@ -499,7 +499,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban expiration date.
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getExpirationDate()
 	{
@@ -510,7 +510,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban modification date.
 	 *
 	 * @return KunenaDate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getModificationDate()
 	{
@@ -519,7 +519,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists()
 	{
@@ -579,7 +579,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   null  $private  private
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setReason($public = null, $private = null)
 	{
@@ -614,7 +614,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   string  $comment         comment
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
@@ -632,7 +632,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   string  $comment     comment
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setExpiration($expiration, $comment = '')
 	{
@@ -665,7 +665,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   string  $comment  comment
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function addComment($comment)
 	{
@@ -683,7 +683,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   string  $comment  comment
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function unBan($comment = '')
 	{

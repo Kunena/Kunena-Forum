@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Topics View
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewTopics extends KunenaView
 {

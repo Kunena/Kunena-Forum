@@ -26,7 +26,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return    array    The HTML code for the select tag
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function specialOptions()
 	{
@@ -67,7 +67,7 @@ class KunenaAdminViewRanks extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{
@@ -88,7 +88,7 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
 	{
@@ -103,7 +103,7 @@ class KunenaAdminViewRanks extends KunenaView
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
 	{

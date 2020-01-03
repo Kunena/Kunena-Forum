@@ -15,13 +15,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaMigratorKunena
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaMigratorKunena
 {
 	/**
 	 * @return KunenaMigratorKunena|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()
 	{
@@ -39,7 +39,7 @@ class KunenaMigratorKunena
 	 * Detect Kunena 1.x version.
 	 *
 	 * @return  string  Kunena version or null.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function detect()
 	{

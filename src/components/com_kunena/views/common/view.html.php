@@ -19,19 +19,19 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Common view
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewCommon extends KunenaView
 {
 	/**
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $catid = 0;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $offline = false;
 

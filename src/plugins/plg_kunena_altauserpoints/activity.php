@@ -24,7 +24,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -73,7 +73,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private function _checkPermissions($message)
 	{
@@ -106,7 +106,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private function _checkRuleEnabled($ruleName)
 	{
@@ -120,7 +120,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   string  $spc  spc
 	 *
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
@@ -156,7 +156,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function onAfterDelete($message)
 	{
@@ -216,7 +216,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
@@ -234,7 +234,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $userid
 	 *
 	 * @return array|boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUserMedals($userid)
 	{
@@ -263,7 +263,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param $var
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
 	{
@@ -305,7 +305,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _getAUPversion()
 	{

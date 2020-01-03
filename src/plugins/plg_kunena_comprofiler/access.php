@@ -19,31 +19,31 @@ require_once dirname(__FILE__) . '/integration.php';
 /**
  * Kunena Access Control for CommunityBuilder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAccessComprofiler
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $categories = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $groups = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $tree = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -52,7 +52,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{

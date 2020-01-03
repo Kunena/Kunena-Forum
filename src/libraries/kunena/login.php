@@ -19,24 +19,24 @@ use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 /**
  * Class KunenaLogin
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLogin
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
 
 	/**
 	 * @var array|KunenaLogin[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $instances = array();
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -59,7 +59,7 @@ class KunenaLogin
 	 * @param   null  $integration  integration
 	 *
 	 * @return boolean|KunenaLogin
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -85,7 +85,7 @@ class KunenaLogin
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function enabled()
 	{
@@ -101,7 +101,7 @@ class KunenaLogin
 	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
@@ -120,7 +120,7 @@ class KunenaLogin
 	 * @param   null  $return  logout user
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function logoutUser($return = null)
 	{
@@ -137,7 +137,7 @@ class KunenaLogin
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
 	{
@@ -154,7 +154,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
 	{
@@ -171,7 +171,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
 	{
@@ -188,7 +188,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
 	{
@@ -205,7 +205,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
 	{
@@ -222,7 +222,7 @@ class KunenaLogin
 
 	/**
 	 * @return null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()
 	{

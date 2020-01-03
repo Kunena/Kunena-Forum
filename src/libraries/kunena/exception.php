@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 /**
  * Exception class definition for the Kunena Framework.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaException extends Exception
 {

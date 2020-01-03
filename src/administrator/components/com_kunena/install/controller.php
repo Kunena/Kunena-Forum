@@ -26,24 +26,24 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $step = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $steps = null;
 
 	/**
 	 * @var boolean|Joomla\CMS\MVC\Model\BaseDatabaseModel|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $model = null;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -61,7 +61,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $exception
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function exceptionHandler($exception)
 	{
@@ -74,7 +74,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $type
 	 * @param $errstr
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function error($type, $errstr)
 	{
@@ -90,7 +90,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $errline
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
@@ -241,7 +241,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return mixed|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function runStep()
 	{

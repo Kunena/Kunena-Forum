@@ -128,7 +128,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getQuerySearch()
 	{

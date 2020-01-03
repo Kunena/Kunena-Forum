@@ -18,31 +18,31 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaAvatar
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatar
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $avatarSizes = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $resize = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $css = false;
 
@@ -85,7 +85,7 @@ class KunenaAvatar
 	 * @param   array  $userlist  userlist
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
 	{
@@ -93,7 +93,7 @@ class KunenaAvatar
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{
@@ -207,7 +207,7 @@ class KunenaAvatar
 	 * @param   integer  $sizey  sizey
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

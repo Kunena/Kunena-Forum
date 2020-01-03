@@ -74,7 +74,7 @@ class TableKunenaPrivate extends KunenaTable
 	/**
 	 * @param   JDatabaseDriver  $db  Database driver
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($db)
 	{

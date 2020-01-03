@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaConfig
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaConfig extends CMSObject
 {
@@ -1348,7 +1348,7 @@ class KunenaConfig extends CMSObject
 	public $utm_source = 0;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -1437,7 +1437,7 @@ class KunenaConfig extends CMSObject
 	 * @param   mixed  $properties  properties
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind($properties)
 	{
@@ -1448,7 +1448,7 @@ class KunenaConfig extends CMSObject
 	 * Messages per page
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{
@@ -1493,7 +1493,7 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function reset()
 	{
@@ -1508,7 +1508,7 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @return Joomla\Registry\Registry
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getPlugin($name)
 	{

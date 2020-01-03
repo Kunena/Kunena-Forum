@@ -18,7 +18,7 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Users View
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewUser extends KunenaView
 {

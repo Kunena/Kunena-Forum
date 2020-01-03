@@ -17,19 +17,19 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaHtmlParser
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaHtmlParser
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $emoticons = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $relative = true;
 
@@ -136,7 +136,7 @@ abstract class KunenaHtmlParser
 	 * @param   string  $string  string
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function escape($string)
 	{

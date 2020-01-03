@@ -17,13 +17,13 @@ use Joomla\CMS\Router\Route;
 /**
  * Class KunenaAvatarAltaUserPoints
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -32,7 +32,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -41,7 +41,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{
@@ -54,7 +54,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return string|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

@@ -18,13 +18,13 @@ require_once dirname(__FILE__) . '/integration.php';
 /**
  * Class KunenaActivityComprofiler
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaActivityComprofiler extends KunenaActivity
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{

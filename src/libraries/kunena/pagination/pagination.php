@@ -76,19 +76,19 @@ class KunenaPagination
 
 	/**
 	 * @var    integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $stickyStart = null;
 
 	/**
 	 * @var    integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $stickyStop = null;
 
 	/**
 	 * @var    Joomla\CMS\Uri\Uri
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $uri = null;
 
@@ -100,25 +100,25 @@ class KunenaPagination
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $itemActiveChrome = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $itemInactiveChrome = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $listChrome = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $footerChrome = null;
 
@@ -193,7 +193,7 @@ class KunenaPagination
 	 * @param   int  $end        How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setDisplayedPages($displayed = 10, $start = 0, $end = 0)
 	{
@@ -238,7 +238,7 @@ class KunenaPagination
 	 * @param   Joomla\CMS\Uri\Uri  $uri  Joomla\CMS\Uri\Uri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setUri(Joomla\CMS\Uri\Uri $uri)
 	{

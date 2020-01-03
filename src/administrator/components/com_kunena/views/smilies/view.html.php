@@ -50,7 +50,7 @@ class KunenaAdminViewSmilies extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
 	{
@@ -70,7 +70,7 @@ class KunenaAdminViewSmilies extends KunenaView
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
 	{
@@ -84,7 +84,7 @@ class KunenaAdminViewSmilies extends KunenaView
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
 	{

@@ -238,12 +238,12 @@ class KunenaLog
 	const LOG_TOPIC_NOTIFY = 'LOG_TOPIC_NOTIFY';
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	// Const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	// Const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
 
@@ -273,17 +273,17 @@ class KunenaLog
 	const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	// Const LOG_USER_WARNING = 'LOG_USER_WARNING';
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	// Const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	// Const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';
 

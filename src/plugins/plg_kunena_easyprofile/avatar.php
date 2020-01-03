@@ -18,13 +18,13 @@ use Joomla\CMS\Router\Route;
 /**
  * Class KunenaAvatarEasyprofile
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarEasyprofile extends KunenaAvatar
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -42,7 +42,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{

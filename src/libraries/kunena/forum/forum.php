@@ -22,66 +22,66 @@ use Joomla\CMS\Log\Log;
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
  * is compatible with the current version.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForum
 {
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const PUBLISHED = 0;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const UNAPPROVED = 1;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const DELETED = 2;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const TOPIC_DELETED = 3;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const TOPIC_CREATION = 4;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const MODERATOR = 1;
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	const ADMINISTRATOR = 2;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $version = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $version_major = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $version_date = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $version_name = false;
 
@@ -148,12 +148,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see   KunenaForum::enabled()
-	 * @see   KunenaForum::isCompatible()
-	 * @see   KunenaForum::setup()
+	 * @see     KunenaForum::enabled()
+	 * @see     KunenaForum::isCompatible()
+	 * @see     KunenaForum::setup()
 	 *
 	 * @return boolean True if Kunena has been fully installed.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function installed()
 	{
@@ -169,7 +169,7 @@ abstract class KunenaForum
 	 * by replacing files during upgrade.
 	 *
 	 * @return boolean True if Git repository is detected.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function isDev()
 	{
@@ -250,12 +250,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see   KunenaForum::installed()
+	 * @see     KunenaForum::installed()
 	 *
 	 * @param   string  $version  Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function isCompatible($version)
 	{
@@ -284,7 +284,7 @@ abstract class KunenaForum
 	 * Returns the exact version from Kunena Forum.
 	 *
 	 * @return boolean Version number.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function version()
 	{
@@ -337,7 +337,7 @@ abstract class KunenaForum
 	 * Returns all version information together.
 	 *
 	 * @return object stdClass containing (version, major, date, name).
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getVersionInfo()
 	{
@@ -354,7 +354,7 @@ abstract class KunenaForum
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return boolean Major version in xxx.yyy format.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function versionMajor()
 	{
@@ -370,7 +370,7 @@ abstract class KunenaForum
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
 	 * @return boolean Date in yyyy-mm-dd format.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function versionDate()
 	{
@@ -386,7 +386,7 @@ abstract class KunenaForum
 	 * Returns codename from Kunena release.
 	 *
 	 * @return boolean Codename.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function versionName()
 	{

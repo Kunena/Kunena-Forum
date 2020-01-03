@@ -16,19 +16,19 @@ defined('_JEXEC') or die;
 /**
  * Kunena JSON Response, extends Joomla\CMS\Response\JsonResponse.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
 	/**
 	 * @var integer|mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $code = 200;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $location;
 
@@ -40,7 +40,7 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 	 * @param   boolean  $error           True, if the success flag shall be set to false, defaults to false
 	 * @param   boolean  $ignoreMessages  True, if the message queue shouldn't be included, defaults to false
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($response = null, $message = null, $error = false, $ignoreMessages = false)
 	{

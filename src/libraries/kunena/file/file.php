@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Class KunenaFile
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaFile
 {
@@ -22,7 +22,7 @@ class KunenaFile
 	 * @param   string  $file  file
 	 *
 	 * @return boolean|mixed|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getMime($file)
 	{

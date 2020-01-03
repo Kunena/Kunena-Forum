@@ -15,13 +15,13 @@ use Joomla\CMS\Factory;
 /**
  * Class KunenaFactory
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaFactory
 {
 	/**
 	 * @var void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $session = null;
 
@@ -47,7 +47,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return KunenaAdminTemplate|KunenaTemplate
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getAdminTemplate()
 	{
@@ -100,7 +100,7 @@ abstract class KunenaFactory
 	 * @param   boolean  $session  null
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function setSession($session)
 	{
@@ -234,7 +234,7 @@ abstract class KunenaFactory
 	 * @param   string  $filename  filename
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function parseLanguage($lang, $filename)
 	{

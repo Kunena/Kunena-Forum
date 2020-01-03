@@ -17,7 +17,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Class KunenaTableMap
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaTableMap
 {
@@ -25,7 +25,7 @@ class KunenaTableMap
 	 * Name of the database table to model.
 	 *
 	 * @var    string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_tbl = '';
 
@@ -33,7 +33,7 @@ class KunenaTableMap
 	 * Name of the primary key field in the table.
 	 *
 	 * @var    string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_tbl_key = '';
 
@@ -41,7 +41,7 @@ class KunenaTableMap
 	 * Name of the mapped key field in the table.
 	 *
 	 * @var    string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_tbl_mapped = '';
 
@@ -49,7 +49,7 @@ class KunenaTableMap
 	 * JDatabaseDriver object.
 	 *
 	 * @var    JDatabaseDriver
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
@@ -57,7 +57,7 @@ class KunenaTableMap
 	 * Indicator that the tables have been locked.
 	 *
 	 * @var    boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_locked = false;
 
@@ -71,7 +71,7 @@ class KunenaTableMap
 	 * @param   string           $mapped  Name of the mapped key field in the table.
 	 * @param   JDatabaseDriver  $db      JDatabaseDriver object.
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($table, $key, $mapped, JDatabaseDriver $db = null)
 	{
@@ -127,7 +127,7 @@ class KunenaTableMap
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMirrorInstance()
 	{
@@ -174,7 +174,7 @@ class KunenaTableMap
 	 * Method to get the mapped field name for the table.
 	 *
 	 * @return  string  The name of the map field for the table.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMappedName()
 	{
@@ -198,7 +198,7 @@ class KunenaTableMap
 	 * Method to get the primary key.
 	 *
 	 * @return  integer  Get value for the primary key.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getKey()
 	{
@@ -211,7 +211,7 @@ class KunenaTableMap
 	 * @param   int  $id  Set value for the primary key.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setKey($id)
 	{
@@ -224,7 +224,7 @@ class KunenaTableMap
 	 * Method to get the mapped value.
 	 *
 	 * @return  array  Get array of mapped objects.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getMapped()
 	{
@@ -237,7 +237,7 @@ class KunenaTableMap
 	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function add($id)
 	{
@@ -323,7 +323,7 @@ class KunenaTableMap
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getProperties()
 	{
@@ -381,7 +381,7 @@ class KunenaTableMap
 	 * @param   array  $list  Set array of mapped objects.
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setMapped(array $list)
 	{
@@ -631,7 +631,7 @@ class KunenaTableMap
 	 * Method to unlock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function _unlock()
 	{
@@ -647,7 +647,7 @@ class KunenaTableMap
 	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function remove($id)
 	{

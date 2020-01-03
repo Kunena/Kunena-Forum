@@ -67,7 +67,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRateActions()
 	{

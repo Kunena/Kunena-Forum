@@ -23,13 +23,13 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Announcement/Item';
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $announcement;
 

@@ -17,25 +17,25 @@ use Joomla\Database\QueryInterface;
 /**
  * Class KunenaForumMessageFinder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_messages';
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $hold = array(0);
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $moved = null;
 
@@ -84,7 +84,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array  $categories  categories
 	 *
 	 * @return $this|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByCategories(array $categories)
 	{
@@ -118,7 +118,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
 	{
@@ -147,7 +147,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string      $action  Action or negation of the action (!action).
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByUser(KunenaUser $user = null, $action = 'posted')
 	{
@@ -193,7 +193,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   array  $hold  List of hold states to display.
 	 *
 	 * @return $this
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function filterByHold(array $hold = array(0))
 	{
@@ -223,7 +223,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)
 	{

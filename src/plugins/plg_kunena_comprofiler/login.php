@@ -18,13 +18,13 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Class KunenaLoginComprofiler
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLoginComprofiler
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
@@ -33,7 +33,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @param $params
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -87,7 +87,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
 	{
@@ -106,7 +106,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
 	{
@@ -117,7 +117,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
 	{
@@ -128,7 +128,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return void|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
 	{
@@ -148,7 +148,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
 	{
@@ -159,7 +159,7 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()
 	{

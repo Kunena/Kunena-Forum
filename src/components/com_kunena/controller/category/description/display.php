@@ -20,7 +20,7 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Description';
 

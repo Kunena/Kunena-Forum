@@ -26,13 +26,13 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Manage';
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 
@@ -44,13 +44,13 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $topics;
 

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaVersion
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaVersion
 {
@@ -79,7 +79,7 @@ class KunenaVersion
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function checkVersion()
 	{
@@ -138,7 +138,7 @@ class KunenaVersion
 	 * Retrieve installed Kunena version as string.
 	 *
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getVersionHTML()
 	{
@@ -149,7 +149,7 @@ class KunenaVersion
 	 * Retrieve copyright information as string.
 	 *
 	 * @return string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getCopyrightHTML()
 	{
@@ -164,7 +164,7 @@ class KunenaVersion
 	 *
 	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
 	 *                License: GNU General Public License"
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getLongVersionHTML()
 	{
@@ -175,7 +175,7 @@ class KunenaVersion
 /**
  * Class KunenaVersionException
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaVersionException extends Exception
 {

@@ -19,25 +19,25 @@ use Joomla\CMS\Filesystem\Path;
  * Class KunenaPath
  *
  * @see   JPath
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaPath extends Path
 {
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $tmpdir = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $apache = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $owner = null;
 
@@ -45,7 +45,7 @@ class KunenaPath extends Path
 	 * Returns server writable temporary directory, preferring to Joomla tmp if possible.
 	 *
 	 * @return  string  Path to temporary directory.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function tmpdir()
 	{
@@ -78,7 +78,7 @@ class KunenaPath extends Path
 	 * @param   string  $path  paths
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function isWritable($path)
 	{
@@ -96,7 +96,7 @@ class KunenaPath extends Path
 	 * @param   string  $path  Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function isOwner($path)
 	{

@@ -50,20 +50,20 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	}
 
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 2'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -72,22 +72,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 3'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -96,22 +96,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 4'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -120,22 +120,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 5'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -144,22 +144,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 6'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -168,22 +168,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 7'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -192,22 +192,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 8'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -216,22 +216,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 9'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();
@@ -240,22 +240,22 @@ function kunena_600_2020_01_03_updaterankstitle($parent)
 	{
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
-	
+
 	$query = $db->getQuery(true);
-	
+
 	// Fields to update.
 	$fields = array(
 		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')
 	);
-	
+
 	// Conditions for which records should be updated.
 	$conditions = array(
 		$db->quoteName('id') . ' = 10'
 	);
-	
+
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
 	$db->setQuery($query);
-	
+
 	try
 	{
 		$db->execute();

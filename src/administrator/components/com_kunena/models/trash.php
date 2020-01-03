@@ -25,25 +25,25 @@ class KunenaAdminModelTrash extends KunenaModel
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $__state_set = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_items = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_items_order = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_object = false;
 
@@ -376,7 +376,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * @return Joomla\CMS\Pagination\Pagination
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getNavigation()
 	{
@@ -390,7 +390,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function populateState()
 	{

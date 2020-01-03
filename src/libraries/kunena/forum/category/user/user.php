@@ -29,13 +29,13 @@ class KunenaForumCategoryUser extends CMSObject
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
@@ -75,7 +75,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
 	 * @return Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
 	{
@@ -121,7 +121,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -252,7 +252,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   null|bool  $exists  True/false will change the state of the object.
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{

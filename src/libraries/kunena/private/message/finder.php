@@ -18,7 +18,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_private';
 

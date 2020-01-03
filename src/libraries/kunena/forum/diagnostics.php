@@ -18,13 +18,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumDiagnostics
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaForumDiagnostics
 {
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getList()
 	{
@@ -166,7 +166,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string  $function  function
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function canFix($function)
 	{
@@ -184,7 +184,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string  $function  function
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function canNotice($function)
 	{
@@ -234,7 +234,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string  $function  function
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function canDelete($function)
 	{
@@ -252,7 +252,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string  $function  function
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getFieldInfo($function)
 	{
@@ -277,7 +277,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   string  $function  function
 	 *
 	 * @return string|void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getQuery($function)
 	{
@@ -299,7 +299,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields(QueryInterface $query = null)
 	{
@@ -313,7 +313,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_categoryOrphaned()
 	{
@@ -324,7 +324,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_categoryOrphaned()
 	{
@@ -340,7 +340,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_categoryOrphaned(QueryInterface $query = null)
 	{
@@ -354,7 +354,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_categoryMissingAlias()
 	{
@@ -398,7 +398,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_categoryMissingAlias(QueryInterface $query = null)
 	{
@@ -412,7 +412,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_categoryWrongAlias()
 	{
@@ -428,7 +428,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_categoryWrongAlias(QueryInterface $query = null)
 	{
@@ -442,7 +442,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_aliasMissingCategory()
 	{
@@ -453,7 +453,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_aliasMissingCategory()
 	{
@@ -469,7 +469,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_aliasMissingCategory(QueryInterface $query = null)
 	{
@@ -483,7 +483,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_messageBodyMissingMessage()
 	{
@@ -494,7 +494,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_messageBodyMissingMessage()
 	{
@@ -510,7 +510,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_messageBodyMissingMessage(QueryInterface $query = null)
 	{
@@ -524,7 +524,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_messageMissingMessageBody()
 	{
@@ -535,7 +535,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_messageMissingMessageBody()
 	{
@@ -551,7 +551,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_messageMissingMessageBody(QueryInterface $query = null)
 	{
@@ -567,7 +567,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_topicInSection(QueryInterface $query = null)
 	{
@@ -581,7 +581,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_topicInSection()
 	{
@@ -592,7 +592,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_topicInSection()
 	{
@@ -608,7 +608,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_topicMissingCategory(QueryInterface $query = null)
 	{
@@ -622,7 +622,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_topicMissingCategory()
 	{
@@ -633,7 +633,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_topicMissingCategory()
 	{
@@ -647,7 +647,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_topicMissingMessages()
 	{
@@ -658,7 +658,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_topicMissingMessages()
 	{
@@ -674,7 +674,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_topicMissingMessages(QueryInterface $query = null)
 	{
@@ -688,7 +688,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_topicMissingPoll()
 	{
@@ -699,7 +699,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_topicMissingPoll()
 	{
@@ -715,7 +715,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_topicMissingPoll(QueryInterface $query = null)
 	{
@@ -729,7 +729,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_topicPollMismatch()
 	{
@@ -740,7 +740,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_topicPollMismatch()
 	{
@@ -756,7 +756,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_topicPollMismatch(QueryInterface $query = null)
 	{
@@ -770,7 +770,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_movedMissingTopic()
 	{
@@ -781,7 +781,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_movedMissingTopic()
 	{
@@ -797,7 +797,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_movedMissingTopic(QueryInterface $query = null)
 	{
@@ -811,7 +811,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_movedAndMessages()
 	{
@@ -822,7 +822,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_movedAndMessages()
 	{
@@ -838,7 +838,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_movedAndMessages(QueryInterface $query = null)
 	{
@@ -852,7 +852,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_messageWrongCategory()
 	{
@@ -863,7 +863,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_messageWrongCategory()
 	{
@@ -879,7 +879,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_messageWrongCategory(QueryInterface $query = null)
 	{
@@ -893,7 +893,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_messageOrphaned()
 	{
@@ -904,7 +904,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_messageOrphaned()
 	{
@@ -920,7 +920,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_messageOrphaned(QueryInterface $query = null)
 	{
@@ -934,7 +934,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_attachmentOrphaned()
 	{
@@ -945,7 +945,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_attachmentOrphaned()
 	{
@@ -961,7 +961,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_attachmentOrphaned(QueryInterface $query = null)
 	{
@@ -975,7 +975,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_pollOrphaned()
 	{
@@ -986,7 +986,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_pollOrphaned()
 	{
@@ -1002,7 +1002,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_pollOrphaned(QueryInterface $query = null)
 	{
@@ -1016,7 +1016,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_pollTopicMismatch()
 	{
@@ -1027,7 +1027,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_pollTopicMismatch()
 	{
@@ -1043,7 +1043,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_pollTopicMismatch(QueryInterface $query = null)
 	{
@@ -1057,7 +1057,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_pollOptionOrphaned()
 	{
@@ -1068,7 +1068,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_pollOptionOrphaned()
 	{
@@ -1084,7 +1084,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_pollOptionOrphaned(QueryInterface $query = null)
 	{
@@ -1098,7 +1098,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_pollUserOrphaned()
 	{
@@ -1109,7 +1109,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_pollUserOrphaned()
 	{
@@ -1125,7 +1125,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_pollUserOrphaned(QueryInterface $query = null)
 	{
@@ -1139,7 +1139,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_thankyouOrphaned()
 	{
@@ -1150,7 +1150,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_thankyouOrphaned()
 	{
@@ -1166,7 +1166,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_thankyouOrphaned(QueryInterface $query = null)
 	{
@@ -1180,7 +1180,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_userCategoryOrphaned()
 	{
@@ -1191,7 +1191,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_userCategoryOrphaned()
 	{
@@ -1207,7 +1207,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_userCategoryOrphaned(QueryInterface $query = null)
 	{
@@ -1221,7 +1221,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_userReadOrphaned()
 	{
@@ -1232,7 +1232,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_userReadOrphaned()
 	{
@@ -1248,7 +1248,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_userReadOrphaned(QueryInterface $query = null)
 	{
@@ -1262,7 +1262,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_userReadWrongCategory()
 	{
@@ -1273,7 +1273,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_userReadWrongCategory()
 	{
@@ -1289,7 +1289,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_userReadWrongCategory(QueryInterface $query = null)
 	{
@@ -1303,7 +1303,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_userTopicOrphaned()
 	{
@@ -1314,7 +1314,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_userTopicOrphaned()
 	{
@@ -1330,7 +1330,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_userTopicOrphaned(QueryInterface $query = null)
 	{
@@ -1344,7 +1344,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_userTopicWrongCategory()
 	{
@@ -1355,7 +1355,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_userTopicWrongCategory()
 	{
@@ -1371,7 +1371,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_userTopicWrongCategory(QueryInterface $query = null)
 	{
@@ -1385,7 +1385,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function delete_ratingOrphaned()
 	{
@@ -1396,7 +1396,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_ratingOrphaned()
 	{
@@ -1413,7 +1413,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_ratingOrphaned(QueryInterface $query = null)
 	{
@@ -1427,7 +1427,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_channelOrphaned()
 	{
@@ -1438,7 +1438,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_channelOrphaned()
 	{
@@ -1454,7 +1454,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_channelOrphaned(QueryInterface $query = null)
 	{
@@ -1468,7 +1468,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_ownerOrphaned()
 	{
@@ -1482,7 +1482,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_ownerOrphaned()
 	{
@@ -1495,7 +1495,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_ownerOrphaned(QueryInterface $query = null)
 	{
@@ -1509,7 +1509,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fix_useravatarOrphaned()
 	{
@@ -1520,7 +1520,7 @@ abstract class KunenaForumDiagnostics
 
 	/**
 	 * @return QueryInterface
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function query_useravatarOrphaned()
 	{
@@ -1536,7 +1536,7 @@ abstract class KunenaForumDiagnostics
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function fields_useravatarOrphaned(QueryInterface $query = null)
 	{

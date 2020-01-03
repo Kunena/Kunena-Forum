@@ -21,55 +21,55 @@ KunenaMenuFix::initialize();
 /**
  * Class KunenaMenuFix
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaMenuFix
 {
 	/**
 	 * @var array|StdClass[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $items = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $filtered = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $aliases = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $invalid = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $legacy = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $same = array();
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $structure = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $parent = null;
 
@@ -141,7 +141,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function build()
 	{
@@ -203,7 +203,7 @@ abstract class KunenaMenuFix
 	 * @param   StdClass  $item  item
 	 *
 	 * @return object|boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static function getHome($item)
 	{
@@ -232,7 +232,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getLegacy()
 	{
@@ -281,7 +281,7 @@ abstract class KunenaMenuFix
 	 * @param   integer  $itemid  itemid
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function delete($itemid)
 	{
@@ -300,7 +300,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getAll()
 	{
@@ -319,7 +319,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getAliases()
 	{
@@ -335,7 +335,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInvalid()
 	{

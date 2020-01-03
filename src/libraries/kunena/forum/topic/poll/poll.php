@@ -29,55 +29,55 @@ class KunenaForumTopicPoll extends CMSObject
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var JDatabaseDriver|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
 	 * @var null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_total = null;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $options = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $newOptions = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $usercount = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $users = false;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $myvotes = array();
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $mytime = array();
 
@@ -124,7 +124,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
 	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
 	{
@@ -212,7 +212,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   array  $options  array(id=>name, id=>name)
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function setOptions($options)
 	{
@@ -484,7 +484,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
 	{
@@ -607,7 +607,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   array  $allow  allow
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $allow = array())
 	{

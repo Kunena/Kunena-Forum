@@ -17,13 +17,13 @@ use Joomla\CMS\Language\Text;
 /**
  * Class KunenaPrivate
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaPrivate
 {
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
 
@@ -117,7 +117,7 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)
 	{
@@ -128,7 +128,7 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getOnClick($userid)
 	{
@@ -200,7 +200,7 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return integer
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getUnreadCount($userid)
 	{
@@ -209,7 +209,7 @@ class KunenaPrivate
 
 	/**
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
 	{
@@ -220,7 +220,7 @@ class KunenaPrivate
 	 * @param   string  $text  text
 	 *
 	 * @return string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)
 	{

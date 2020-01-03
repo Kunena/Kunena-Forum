@@ -13,13 +13,13 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaMigratorJoomlaboard
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaMigratorJoomlaboard
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $versions = array(
 		array('version' => '1.0', 'date' => '1000-01-01', 'table' => 'sb_messages', 'column' => 'id'),
@@ -27,7 +27,7 @@ class KunenaMigratorJoomlaboard
 
 	/**
 	 * @return KunenaMigratorJoomlaboard|null
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()
 	{
@@ -45,7 +45,7 @@ class KunenaMigratorJoomlaboard
 	 * Detect JoomlaBoard version.
 	 *
 	 * @return  string  JoomlaBoard version or null.
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function detect()
 	{

@@ -24,25 +24,25 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 {
 	/**
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/List';
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $pagination;
 
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $categories = array();
 
@@ -133,7 +133,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Get topic action option list.
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getActions()
 	{

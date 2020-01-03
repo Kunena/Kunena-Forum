@@ -25,7 +25,7 @@ use Joomla\Image\Image;
 /**
  * Helper class for image manipulation.
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaImage extends Joomla\Image\Image
 {

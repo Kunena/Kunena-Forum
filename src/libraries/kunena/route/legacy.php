@@ -21,13 +21,13 @@ require_once KPATH_SITE . '/router.php';
 /**
  * Class KunenaRouteLegacy
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 abstract class KunenaRouteLegacy
 {
 	/**
 	 * @var array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static $functions = array(
 		'entrypage'       => 1,
@@ -80,7 +80,7 @@ abstract class KunenaRouteLegacy
 	 * @param   string  $view  view
 	 *
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function isLegacy($view)
 	{

@@ -26,25 +26,25 @@ class KunenaAdminModelCategories extends KunenaModel
 {
 	/**
 	 * @var
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $context;
 
 	/**
 	 * @var KunenaForumCategory[]
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_admincategories = false;
 
 	/**
 	 * @var KunenaForumCategory
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_admincategory = false;
 
 	/**
 	 * @return Joomla\CMS\Pagination\Pagination
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAdminNavigation()
 	{
@@ -320,7 +320,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * @param $table
 	 *
 	 * @return array
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getReorderConditions($table)
 	{

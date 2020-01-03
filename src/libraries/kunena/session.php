@@ -16,49 +16,49 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaSession
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaSession extends CMSObject
 {
 	/**
 	 * @var mixed
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	private static $_instance;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * @var boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $_sessiontimeout = false;
 
 	/**
 	 * @var integer|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected $allreadtime;
 
 	/**
 	 * @var integer|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $lasttime;
 
 	/**
 	 * @var integer|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $currvisit;
 
 	/**
 	 * @var integer|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public $readtopics;
 
@@ -302,7 +302,7 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return boolean
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function isNewUser()
 	{
@@ -311,7 +311,7 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return integer|string
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getAllReadTime()
 	{
@@ -324,7 +324,7 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function markAllCategoriesRead()
 	{

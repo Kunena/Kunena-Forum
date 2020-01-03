@@ -16,7 +16,7 @@ use Joomla\CMS\Filesystem\File;
 /**
  * Class KunenaFolder
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaFolder
 {
@@ -26,7 +26,7 @@ class KunenaFolder
 	 * @param   string  $folder  folder
 	 *
 	 * @return void
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
 	public static function createIndex($folder)
 	{

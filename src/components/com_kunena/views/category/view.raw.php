@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 /**
  * Category View
  *
- * @since Kunena
+ * @since   Kunena 6.0
  */
 class KunenaViewCategory extends KunenaView
 {

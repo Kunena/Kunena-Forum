@@ -1489,7 +1489,7 @@ class KunenaUser extends CMSObject
 
 		if ($type == 'title')
 		{
-			return $rank->rank_title;
+			return Text::_($rank->rank_title);
 		}
 
 		if (!$config->rankimages)

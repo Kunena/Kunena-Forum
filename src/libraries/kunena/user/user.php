@@ -1225,55 +1225,27 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * Render user karma.
+	 * Check if user can see karma.
 	 *
-	 * @return  string
+	 * @return  boolean
 	 *
-	 * @since  K5.0
+	 * @since  K6.0
 	 * @throws  Exception
 	 */
-	public function getKarma()
+	public function canSeeKarma()
 	{
-		$karma = '';
-
 		if ($this->userid)
 		{
 			$config = KunenaConfig::getInstance();
 			$me     = KunenaUserHelper::getMyself();
 
-			$karma = $this->karma;
-
 			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
 			{
-				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
-
-				if ($topicicontype == 'B3')
-				{
-					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				elseif ($topicicontype == 'fa')
-				{
-					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
-					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
-				}
-				elseif ($topicicontype == 'B2')
-				{
-					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-				else
-				{
-					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
-				}
-
-				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaMinusIcon);
-				$karma .= ' ' . HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaPlusIcon);
+				return true;
 			}
 		}
 
-		return $karma;
+		return false;
 	}
 
 	/**

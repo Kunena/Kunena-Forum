@@ -24,7 +24,7 @@ if ($show)
 {
 	if ($config->showkarma)
 	{
-		$karma = $user->getKarma();
+		$canseekarma = $user->canSeeKarma();
 	}
 
 	$rankImage    = $user->getRank($this->category_id, 'image');
@@ -113,10 +113,10 @@ if ($show)
 		</li>
 	<?php endif; ?>
 
-	<?php if (!empty($karma) && $config->showkarma) : ?>
+	<?php if ($canseekarma && $config->showkarma) : ?>
 		<li>
 			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
-			<span> <?php echo $karma; ?> </span>
+			<span> <?php $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid).$this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?> </span>
 		</li>
 	<?php endif; ?>
 

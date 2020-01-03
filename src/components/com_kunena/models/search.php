@@ -41,7 +41,8 @@ class KunenaModelSearch extends KunenaModel
 	protected $messages = false;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()
@@ -158,7 +159,9 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function buildWhere()
@@ -271,6 +274,7 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function buildOrderBy()
@@ -337,6 +341,7 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getSearchWords()
@@ -448,6 +453,7 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUrlParams()
@@ -494,7 +500,9 @@ class KunenaModelSearch extends KunenaModel
 	 * @param   bool    $xhtml       xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

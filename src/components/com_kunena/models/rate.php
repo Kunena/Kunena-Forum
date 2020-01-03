@@ -47,7 +47,8 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return  KunenaForumTopicRate
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getNewRate()
@@ -57,7 +58,9 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getRate()
@@ -67,6 +70,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRateActions()

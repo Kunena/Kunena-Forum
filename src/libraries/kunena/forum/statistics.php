@@ -168,7 +168,8 @@ class KunenaForumStatistics
 	protected $_config = null;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct()
@@ -186,7 +187,8 @@ class KunenaForumStatistics
 
 	/**
 	 * @return  KunenaForumStatistics
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance()
@@ -312,7 +314,9 @@ class KunenaForumStatistics
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTotalEmoticons()
@@ -419,7 +423,8 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array|KunenaForumTopic[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -558,7 +563,9 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadTopPosters($limit = 0)
@@ -595,7 +602,9 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadTopProfiles($limit = 0)
@@ -632,7 +641,9 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadTopThankyous($limit = 0)

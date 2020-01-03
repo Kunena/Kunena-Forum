@@ -215,7 +215,9 @@ abstract class JHtmlKunenaForum
 	 *                               'lang'=>'en')
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -282,6 +284,7 @@ abstract class JHtmlKunenaForum
 	 * @param   null    $class_input  input
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function checklist($name, $options, $selected = array(), $class_input = null)

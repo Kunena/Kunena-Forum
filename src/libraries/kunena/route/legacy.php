@@ -80,6 +80,7 @@ abstract class KunenaRouteLegacy
 	 * @param   string  $view  view
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function isLegacy($view)
@@ -149,7 +150,8 @@ abstract class KunenaRouteLegacy
 	 * @param   int     $showstart  showstart
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function convert($uri, $showstart = 1)

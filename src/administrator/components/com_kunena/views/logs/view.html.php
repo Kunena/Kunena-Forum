@@ -210,6 +210,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 * @param $name
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getGroupCheckbox($name)

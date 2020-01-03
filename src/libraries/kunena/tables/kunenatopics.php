@@ -177,7 +177,9 @@ class TableKunenaTopics extends KunenaTable
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id = null, $reset = true)
@@ -240,7 +242,9 @@ class TableKunenaTopics extends KunenaTable
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()

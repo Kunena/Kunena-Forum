@@ -78,6 +78,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -108,7 +109,8 @@ abstract class KunenaUserHelper
 	 * @param   string  $name  name
 	 *
 	 * @return  KunenaUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getAuthor($id, $name)
@@ -145,7 +147,8 @@ abstract class KunenaUserHelper
 	 * @param   bool   $reload      Reload user from database.
 	 *
 	 * @return  KunenaUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -207,7 +210,9 @@ abstract class KunenaUserHelper
 	 * @param   array  $userids  userids
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function loadUsers(array $userids = array())
@@ -278,7 +283,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getLastId()
@@ -293,7 +299,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTotalCount()
@@ -369,7 +376,9 @@ abstract class KunenaUserHelper
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTopPosters($limit = 0)
@@ -483,7 +492,9 @@ abstract class KunenaUserHelper
 	 * Get the number of users online
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getOnlineCount()
@@ -537,7 +548,9 @@ abstract class KunenaUserHelper
 	 * Get the list of users online by giving list of userid
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getOnlineUsers()
@@ -589,7 +602,8 @@ abstract class KunenaUserHelper
 	 * @param   mixed  $user  The user object to get the status
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getStatus($user)

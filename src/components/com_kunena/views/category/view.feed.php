@@ -24,7 +24,8 @@ class KunenaViewCategory extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
@@ -82,7 +83,8 @@ class KunenaViewCategory extends KunenaView
 	 * @param $userid
 	 * @param $username
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)

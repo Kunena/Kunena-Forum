@@ -114,7 +114,8 @@ abstract class KunenaForum
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
 	 * @return  boolean True if online.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function enabled($checkAdmin = true)

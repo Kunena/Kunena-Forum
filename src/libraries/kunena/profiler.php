@@ -60,6 +60,7 @@ class KunenaProfiler extends Profiler
 	 * @param   string  $name  name
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function start($name)
@@ -86,6 +87,7 @@ class KunenaProfiler extends Profiler
 	 * @param   string  $name  name
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function stop($name)
@@ -128,6 +130,7 @@ class KunenaProfiler extends Profiler
 	 * @param   string  $property  property
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function sort(&$array, $property = 'total')
@@ -203,6 +206,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getStartTime()
@@ -232,6 +236,7 @@ class KunenaProfilerItem
 	 * @param   boolean  $starttime  start time
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function start($starttime)
@@ -267,6 +272,7 @@ class KunenaProfilerItem
 	 * @param   float  $delta  delta
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function external($delta)

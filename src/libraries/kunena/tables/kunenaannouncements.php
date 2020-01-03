@@ -102,7 +102,9 @@ class TableKunenaAnnouncements extends KunenaTable
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()

@@ -217,7 +217,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $actions  actions
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
@@ -281,7 +283,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $actions   actions
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))

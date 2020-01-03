@@ -51,7 +51,8 @@ class KunenaBbcode extends Nbbc\BBCode
 	 *
 	 * @param   bool  $relative  relative
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($relative = true)
@@ -81,7 +82,9 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   bool  $relative  relative
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($relative = true)
@@ -102,7 +105,9 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   mixed  $params  params
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function parseUrl($params)
@@ -313,6 +318,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   mixed  $params  params
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function canCloakEmail(&$params)
@@ -365,6 +371,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   string  $string  string
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function Internal_AutoDetectURLs($string)
@@ -465,6 +472,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @param   bool    $local_too  local
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function IsValidURL($string, $email_too = true, $local_too = false)
@@ -1049,7 +1057,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	];
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct()
@@ -1081,7 +1090,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   int  $ItemID  The eBay ID of object to query
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getEbayItem($ItemID)
@@ -1183,7 +1194,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|mixed|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
@@ -1234,7 +1246,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoURL($bbcode, $action, $name, $default, $params, $content)
@@ -1343,7 +1356,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
@@ -1482,7 +1496,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
@@ -1532,7 +1547,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
@@ -1582,7 +1598,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
@@ -1642,6 +1659,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 	/**
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getMessage()
@@ -1672,7 +1690,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
@@ -1728,7 +1748,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
@@ -1762,7 +1783,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   integer  $ItemID  id
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function renderEbayLayout($ItemID)
@@ -1809,7 +1831,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   int  $ItemID  The eBay ID of object to query
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getEbayItemFromCache($ItemID)
@@ -1831,7 +1855,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoArticle($bbcode, $action, $name, $default, $params, $content)
@@ -2007,7 +2032,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoCode($bbcode, $action, $name, $default, $params, $content)
@@ -2075,7 +2101,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
@@ -2137,7 +2164,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoVideo($bbcode, $action, $name, $default, $params, $content)
@@ -2419,7 +2447,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2529,7 +2558,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   bool              $displayImage
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2577,7 +2608,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2668,7 +2700,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2761,7 +2794,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
@@ -2790,7 +2824,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
@@ -2829,7 +2864,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   int  $tweetid  The tweet id to render in layout
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function renderTweet($tweetid)
@@ -2868,7 +2905,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   int  $tweetid  The tweet ID to query against twitter API
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getTweet($tweetid)

@@ -520,7 +520,9 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   bool  $reset   reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($userid = null, $reset = true)
@@ -588,6 +590,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function reset()
@@ -606,6 +609,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
@@ -624,6 +628,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function check()

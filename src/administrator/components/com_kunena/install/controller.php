@@ -61,6 +61,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $exception
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function exceptionHandler($exception)
@@ -90,6 +91,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $errline
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
@@ -113,7 +115,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -138,7 +141,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function run()
@@ -254,7 +258,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function uninstall()

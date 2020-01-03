@@ -26,7 +26,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 * Get geshi code types.
 	 *
 	 * @return  array|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCodeTypes()

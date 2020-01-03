@@ -31,6 +31,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Cleanup
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -43,7 +44,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessageThankyou|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier, $reload = false)
@@ -139,7 +141,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $endtime    Ending time as unix timestamp.
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTotal($starttime = null, $endtime = null)
@@ -188,7 +191,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $limit       limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTopUsers($target = true, $limitstart = 0, $limit = 10)
@@ -230,7 +235,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limit       limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTopMessages($limitstart = 0, $limit = 10)
@@ -272,7 +279,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $limit       limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
@@ -391,7 +400,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int  $ids  ids
 	 *
 	 * @return  KunenaForumMessageThankyou[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getByMessage($ids = false)

@@ -26,7 +26,9 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the options of the topic
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -65,6 +67,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 * Method to get the list of categories
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryList()

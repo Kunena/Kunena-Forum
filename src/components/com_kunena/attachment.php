@@ -209,6 +209,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isSite()
@@ -218,6 +219,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isAdmin()
@@ -229,6 +231,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   bool  $params  params
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplate($params = false)
@@ -241,6 +244,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   boolean  $value  value
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setUserState($name, $value)

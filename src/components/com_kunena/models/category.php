@@ -56,7 +56,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	protected $actionMove = false;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()
@@ -129,7 +130,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLastestCategories()
@@ -302,6 +305,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUnapprovedCount()
@@ -311,7 +315,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  KunenaForumCategory
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategory()
@@ -404,7 +409,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -420,7 +427,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  array|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -498,6 +506,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getActionMove()
@@ -507,7 +516,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getModerators()

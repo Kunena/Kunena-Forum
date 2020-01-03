@@ -76,7 +76,8 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   array  $config  config
 	 * @param   Input  $input   input
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array(), Input $input = null)
@@ -95,6 +96,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   bool   $embedded  embedded
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function initialize($params = array(), $embedded = true)
@@ -188,6 +190,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $type     type
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getVar($name, $default = null, $hash = 'request', $type = 'none')
@@ -214,6 +217,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getBool($name, $default = false, $hash = 'request')
@@ -227,6 +231,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getCmd($name, $default = '', $hash = 'request')
@@ -240,6 +245,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getFloat($name, $default = 0.0, $hash = 'request')
@@ -253,6 +259,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getInt($name, $default = 0, $hash = 'request')
@@ -266,6 +273,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getString($name, $default = '', $hash = 'request')
@@ -279,6 +287,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getWord($name, $default = '', $hash = 'request')

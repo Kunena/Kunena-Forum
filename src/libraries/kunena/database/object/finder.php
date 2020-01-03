@@ -208,7 +208,9 @@ abstract class KunenaDatabaseObjectFinder
 	 * Derived classes should generally override this function to return correct objects.
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function find()
@@ -242,6 +244,7 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)
@@ -252,7 +255,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function count()

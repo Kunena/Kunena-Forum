@@ -27,7 +27,9 @@ abstract class KunenaEmail
 	 * @param   array                         $receivers  receivers
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function send($mail, array $receivers)

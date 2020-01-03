@@ -42,7 +42,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Constructor.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct()
@@ -61,7 +62,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return $this
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function filterByUserAccess(KunenaUser $user)
@@ -223,6 +225,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)

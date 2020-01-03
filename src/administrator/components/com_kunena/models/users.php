@@ -158,7 +158,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   null  $ordering   ordering
 	 * @param   null  $direction  direction
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)

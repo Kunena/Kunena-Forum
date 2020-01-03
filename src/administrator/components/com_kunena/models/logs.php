@@ -119,7 +119,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 * Build a finder query to load the list data.
 	 *
 	 * @return    KunenaLogFinder
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getFinder()
@@ -351,7 +352,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)

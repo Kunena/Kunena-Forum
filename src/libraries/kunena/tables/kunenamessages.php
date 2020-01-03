@@ -166,7 +166,9 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id = null, $reset = true)
@@ -232,6 +234,7 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function reset()
@@ -242,7 +245,9 @@ class TableKunenaMessages extends KunenaTable
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()
@@ -289,7 +294,9 @@ class TableKunenaMessages extends KunenaTable
 	 * @param   boolean  $updateNulls  has no effect.
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function store($updateNulls = false)

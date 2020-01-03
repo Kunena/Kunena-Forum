@@ -133,6 +133,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * Get topic action option list.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getActions()

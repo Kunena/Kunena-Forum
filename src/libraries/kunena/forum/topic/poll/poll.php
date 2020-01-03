@@ -84,7 +84,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
@@ -100,7 +101,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $id  The poll id to be loaded.
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id)
@@ -148,7 +151,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   bool   $reset       reset
 	 *
 	 * @return  KunenaForumTopicPoll
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reset = false)
@@ -158,7 +162,8 @@ class KunenaForumTopicPoll extends CMSObject
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTotal()
@@ -179,7 +184,9 @@ class KunenaForumTopicPoll extends CMSObject
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getOptions()
@@ -212,6 +219,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   array  $options  array(id=>name, id=>name)
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setOptions($options)
@@ -239,7 +247,8 @@ class KunenaForumTopicPoll extends CMSObject
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getUserCount()
@@ -270,7 +279,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)
@@ -302,7 +313,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMyTime($user = null)
@@ -337,7 +349,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user    user
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function vote($option, $change = false, $user = null)
@@ -484,6 +498,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -502,7 +517,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLastVoteId($user = null)
@@ -531,7 +547,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMyVotes($user = null)
@@ -565,7 +582,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $delta   delta
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function changeOptionVotes($option, $delta)
@@ -607,6 +626,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   array  $allow  allow
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $allow = array())
@@ -623,7 +643,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()
@@ -711,7 +732,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   bool  $updateOnly  Save the object only if not a new poll.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)

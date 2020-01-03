@@ -672,7 +672,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @param   string  $icon    icon
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

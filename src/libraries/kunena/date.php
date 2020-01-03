@@ -35,6 +35,7 @@ class KunenaDate extends Date
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function toTimezone()
@@ -51,7 +52,9 @@ class KunenaDate extends Date
 	 * @param   string  $class   class
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = '')
@@ -64,7 +67,9 @@ class KunenaDate extends Date
 	 * @param   bool    $offset  offset
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
@@ -165,6 +170,7 @@ class KunenaDate extends Date
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function toTimeAgo()

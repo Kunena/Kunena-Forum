@@ -43,7 +43,8 @@ class KunenaModelTopic extends KunenaModel
 	protected $topic = false;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()
@@ -118,7 +119,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  KunenaForumCategory
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategory()
@@ -128,7 +130,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  boolean|KunenaForumTopic
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopic()
@@ -171,7 +174,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  array|boolean|KunenaForumMessage[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMessages()
@@ -253,7 +257,9 @@ class KunenaModelTopic extends KunenaModel
 	 * @param   array  $indent  indent
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
@@ -340,7 +346,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTotal()
@@ -350,7 +357,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMyVotes()
@@ -360,7 +368,9 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getModerators()
@@ -372,7 +382,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  KunenaForumTopicPoll
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPoll()
@@ -382,7 +393,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPollUserCount()
@@ -392,7 +404,9 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPollUsers()

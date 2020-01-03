@@ -111,7 +111,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -184,7 +185,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -222,7 +224,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

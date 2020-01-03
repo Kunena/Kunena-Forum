@@ -82,7 +82,9 @@ class TableKunenaSessions extends KunenaTable
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($oid = null, $reset = true)
@@ -97,7 +99,9 @@ class TableKunenaSessions extends KunenaTable
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()

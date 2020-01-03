@@ -77,7 +77,8 @@ class KunenaAccess
 	protected $moderatorsByUserid = null;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct()
@@ -131,7 +132,9 @@ class KunenaAccess
 
 	/**
 	 * @return  mixed|void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function clearCache()
@@ -194,6 +197,7 @@ class KunenaAccess
 	 * @param   array  $list  list
 	 *
 	 * @return  mixed|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function storeRoles(array $list = null)
@@ -228,7 +232,8 @@ class KunenaAccess
 
 	/**
 	 * @return  KunenaAccess|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance()
@@ -249,6 +254,7 @@ class KunenaAccess
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAccessOptions($category)
@@ -284,7 +290,9 @@ class KunenaAccess
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAccessTypesList($category)
@@ -390,6 +398,7 @@ jQuery(document).ready(function ($) {
 	 * @param   bool  $all    all
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAdmins($catid = 0, $all = false)
@@ -411,6 +420,7 @@ jQuery(document).ready(function ($) {
 	 * @param   bool  $all    all
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getModerators($catid = 0, $all = false)
@@ -429,7 +439,9 @@ jQuery(document).ready(function ($) {
 	 * @param   mixed  $user  user
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAdminStatus($user = null)
@@ -451,7 +463,8 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
 	 */
@@ -511,7 +524,9 @@ jQuery(document).ready(function ($) {
 	 * @param   mixed  $user  user
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getModeratorStatus($user = null)
@@ -528,7 +543,9 @@ jQuery(document).ready(function ($) {
 	 * @param   mixed  $user  user
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAllowedCategories($user = null)
@@ -604,7 +621,9 @@ jQuery(document).ready(function ($) {
 	 * @param   int    $catid  catid
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isModerator($user = null, $catid = 0)
@@ -649,7 +668,9 @@ jQuery(document).ready(function ($) {
 	 * @param   int    $catid  catid
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isAdmin($user = null, $catid = 0)
@@ -695,6 +716,7 @@ jQuery(document).ready(function ($) {
 	 * @param   int                  $userid    user id
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
@@ -730,7 +752,8 @@ jQuery(document).ready(function ($) {
 	 * @param   bool   $string  string
 	 *
 	 * @return  string|array
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAllowedHold($user, $catid, $string = true)
@@ -780,7 +803,9 @@ jQuery(document).ready(function ($) {
 	 * @param   mixed  $excludeList  exclude list
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null)
@@ -961,7 +986,9 @@ jQuery(document).ready(function ($) {
 	 * @param   bool              $type   type
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type)

@@ -43,7 +43,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onAfterPost($message)
@@ -95,7 +96,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return  mixed|string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	private function buildContent($message)
@@ -156,7 +158,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onAfterReply($message)

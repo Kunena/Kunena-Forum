@@ -42,7 +42,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -174,7 +175,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -194,7 +196,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -214,7 +217,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -234,7 +238,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -254,7 +259,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -274,7 +280,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -294,7 +301,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -314,7 +322,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -334,7 +343,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -364,7 +374,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -995,7 +1006,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @since K4.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

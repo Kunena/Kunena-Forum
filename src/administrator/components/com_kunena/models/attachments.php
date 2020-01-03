@@ -24,7 +24,8 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -103,6 +104,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  id
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')

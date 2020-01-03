@@ -46,7 +46,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @param   int    $category  category
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($category = 0, $user = null)
@@ -98,7 +99,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   bool      $reload  reload
 	 *
 	 * @return  KunenaForumCategoryUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
@@ -108,7 +110,8 @@ class KunenaForumCategoryUser extends CMSObject
 
 	/**
 	 * @return  KunenaForumCategory
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategory()
@@ -121,6 +124,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
@@ -135,7 +139,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   bool  $updateOnly  Save the object only if not a new category.
 	 *
 	 * @return  boolean    True on success
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
@@ -188,7 +193,9 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   mixed     $user         The user to be loaded.
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($category_id = null, $user = null)
@@ -221,7 +228,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
 	 * @return  boolean    True on success
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()
@@ -252,6 +260,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   null|bool  $exists  True/false will change the state of the object.
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)

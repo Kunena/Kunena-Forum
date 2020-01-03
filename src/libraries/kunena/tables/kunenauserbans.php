@@ -127,7 +127,9 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	 * @param   int      $mode    mode
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
@@ -193,6 +195,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
@@ -215,7 +218,9 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	 * @param   int      $mode  mode
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
@@ -279,7 +284,9 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()

@@ -32,7 +32,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -886,7 +887,9 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $topic
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function checkMaxLinks($text, $topic)
@@ -1406,7 +1409,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1439,7 +1443,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1472,7 +1477,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1505,7 +1511,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1538,7 +1545,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1586,7 +1594,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1634,7 +1643,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1682,7 +1692,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1730,7 +1741,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1801,7 +1813,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1857,7 +1870,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1929,7 +1943,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1999,7 +2014,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2126,7 +2142,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -2357,7 +2374,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

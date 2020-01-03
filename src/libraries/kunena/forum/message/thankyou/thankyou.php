@@ -56,7 +56,8 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessageThankyou
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -69,6 +70,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   string  $time    time
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
@@ -82,7 +84,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($user)
@@ -139,6 +143,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   int  $userid  userid
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($userid)
@@ -150,7 +155,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   KunenaForumMessage  $message  message
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
@@ -193,7 +200,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete($user)

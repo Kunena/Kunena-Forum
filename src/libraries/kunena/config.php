@@ -1357,7 +1357,8 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @return  KunenaConfig|mixed
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance()
@@ -1439,6 +1440,7 @@ class KunenaConfig extends CMSObject
 	 * @param   mixed  $properties  properties
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($properties)
@@ -1450,6 +1452,7 @@ class KunenaConfig extends CMSObject
 	 * Messages per page
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function check()
@@ -1497,6 +1500,7 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function reset()
@@ -1523,7 +1527,9 @@ class KunenaConfig extends CMSObject
 	 * Email set for the configuration
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getEmail()

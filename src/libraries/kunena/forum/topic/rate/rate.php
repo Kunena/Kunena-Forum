@@ -73,7 +73,8 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
@@ -89,7 +90,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   int  $id  The poll id to be loaded.
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id)
@@ -261,6 +264,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   integer  $time    time
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
@@ -285,7 +289,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * Get rate for the specified topic and user
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicUserRate()

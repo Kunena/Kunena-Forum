@@ -33,7 +33,8 @@ abstract class KunenaForumTopicPollHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumTopicPoll
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -60,6 +61,7 @@ abstract class KunenaForumTopicPollHelper
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function recount()

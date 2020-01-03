@@ -84,6 +84,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
@@ -93,6 +94,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -102,6 +104,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
@@ -127,6 +130,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
@@ -136,6 +140,7 @@ class KunenaLoginJoomla
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()

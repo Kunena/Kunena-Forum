@@ -45,7 +45,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 *
 	 * @param   mixed  $topic  topic
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($topic = null, $user = null)
@@ -96,7 +97,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   bool   $reload  reload
 	 *
 	 * @return  KunenaForumTopicUserRead
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
@@ -106,7 +108,8 @@ class KunenaForumTopicUserRead extends CMSObject
 
 	/**
 	 * @return  KunenaForumTopicUserRead
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopic()
@@ -119,6 +122,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $ignore = array())
@@ -147,7 +151,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   mixed  $user      user
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null)
@@ -189,7 +194,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   bool  $updateOnly  Save the object only if not a new entry.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
@@ -235,7 +241,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * Method to delete the KunenaForumTopicUserRead object from the database.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()
@@ -264,6 +271,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)

@@ -324,7 +324,9 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isHmvc()
@@ -353,7 +355,8 @@ class KunenaTemplate extends CMSObject
 	 * @param   string  $type     type
 	 *
 	 * @return Joomla\CMS\Document\Document|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
@@ -548,6 +551,7 @@ class KunenaTemplate extends CMSObject
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUserClasses()
@@ -563,6 +567,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   null    $id     id
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -611,6 +616,7 @@ HTML;
 	 * @param   string  $title  title
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
@@ -623,6 +629,7 @@ HTML;
 	 * @param   string  $alt    alt
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')
@@ -635,6 +642,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getImagePath($filename = '', $url = true)
@@ -650,6 +658,7 @@ HTML;
 	 * @param   null    $ignore    ignore
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
@@ -689,6 +698,7 @@ HTML;
 	 * @param   mixed  $list  list
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListFooter($list)
@@ -707,6 +717,7 @@ HTML;
 	 * @param   mixed  $list  list
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListRender($list)
@@ -735,6 +746,7 @@ HTML;
 	 * @param   string  $item  item
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemActive($item)
@@ -746,6 +758,7 @@ HTML;
 	 * @param   string  $item  item
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemInactive($item)
@@ -758,6 +771,7 @@ HTML;
 	 * @param   string  $class_sfx  class_sfx
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getClass($class, $class_sfx = '')
@@ -767,6 +781,7 @@ HTML;
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariables()
@@ -779,6 +794,7 @@ HTML;
 	 * @param   string  $default  default
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariable($name, $default = '')
@@ -791,6 +807,7 @@ HTML;
 	 * @param   integer  $value  value
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setStyleVariable($name, $value)
@@ -805,7 +822,9 @@ HTML;
 	 * @param   string  $group     group
 	 *
 	 * @return  mixed|void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
@@ -947,6 +966,7 @@ HTML;
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function clearCache()
@@ -963,7 +983,9 @@ HTML;
 	 * @param   string  $filename  filename
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCachePath($filename = '')
@@ -989,6 +1011,7 @@ HTML;
 	 * @param   mixed  $matches  matches
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function findUrl($matches)
@@ -1012,7 +1035,8 @@ HTML;
 	 * @param   array   $attribs
 	 *
 	 * @return Joomla\CMS\Document\Document|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addScript($filename, $options = array(), $attribs = array())
@@ -1086,6 +1110,7 @@ HTML;
 	 * @param   string  $path  path
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function addPath($path)
@@ -1098,7 +1123,9 @@ HTML;
 	 * @param   bool    $fullpath  fullpath
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
@@ -1131,6 +1158,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAvatarPath($filename = '', $url = false)
@@ -1143,6 +1171,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getSmileyPath($filename = '', $url = false)
@@ -1155,6 +1184,7 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRankPath($filename = '', $url = false)
@@ -1167,7 +1197,9 @@ HTML;
 	 * @param   bool   $url    url
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicIconIndexPath($index, $url = false)
@@ -1192,7 +1224,8 @@ HTML;
 	 * @param   int   $checked  checked
 	 *
 	 * @return  array|SimpleXMLElement
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
@@ -1287,7 +1320,9 @@ HTML;
 	 * @param   bool    $url       url
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicIconPath($filename = '', $url = true)
@@ -1322,7 +1357,9 @@ HTML;
 	 * @param   KunenaForumTopic  $topic  topic
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicIcon($topic)
@@ -1580,7 +1617,9 @@ HTML;
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryIcon($category)
@@ -1608,7 +1647,9 @@ HTML;
 	 * @param   bool   $url    url
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
@@ -1633,7 +1674,8 @@ HTML;
 	 * @param   int   $checked  checked
 	 *
 	 * @return  array|SimpleXMLElement
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
@@ -1722,7 +1764,9 @@ HTML;
 	 * @param   mixed   $category_iconset  category
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset = 'default')
@@ -1881,6 +1925,7 @@ HTML;
 	 * @param   string  $iconset  iconset
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setCategoryIconset($iconset = '/default')
@@ -1892,7 +1937,8 @@ HTML;
 	 * @param   mixed  $topic  topic
 	 *
 	 * @return stdClass|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicLabel($topic)
@@ -1965,7 +2011,9 @@ HTML;
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function borderless()

@@ -44,7 +44,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -95,6 +97,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   mixed  $params  params
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
@@ -106,7 +109,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool     $xhtml   xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
@@ -120,7 +125,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)

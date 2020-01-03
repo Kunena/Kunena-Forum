@@ -84,6 +84,7 @@ abstract class KunenaError
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -177,6 +178,7 @@ abstract class KunenaError
 	 * @param   string  $errline  errorline
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)

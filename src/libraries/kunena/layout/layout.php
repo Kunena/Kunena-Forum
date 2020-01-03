@@ -44,6 +44,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string  $content  content
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function appendAfter($content)
@@ -55,6 +56,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   mixed  $key  key
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function text($key)
@@ -69,7 +71,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return  string  The rendered view.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception|RunTimeException
 	 */
 	public function render($layout = null)
@@ -104,7 +107,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null    $id     id
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -118,7 +123,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   string  $title  title
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getIcon($name, $title = '')
@@ -137,6 +144,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   int  $precision  Significant digits for output
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function formatLargeNumber($number, $precision = 3)
@@ -173,7 +181,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null                 $canonical  canonical
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -238,7 +248,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   bool                 $canonical  canonical
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -329,7 +341,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param   null   $canonical  canonical
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)

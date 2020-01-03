@@ -68,6 +68,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)

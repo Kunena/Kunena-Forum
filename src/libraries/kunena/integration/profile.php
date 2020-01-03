@@ -30,7 +30,8 @@ class KunenaProfile
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaProfile
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
@@ -65,7 +66,9 @@ class KunenaProfile
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopHits($limit = 0)
@@ -82,6 +85,7 @@ class KunenaProfile
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function _getTopHits($limit = 0)
@@ -94,7 +98,9 @@ class KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -116,6 +122,7 @@ class KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -128,6 +135,7 @@ class KunenaProfile
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
@@ -139,6 +147,7 @@ class KunenaProfile
 	 * @param   mixed  $params  params
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
@@ -150,6 +159,7 @@ class KunenaProfile
 	 * @param   bool     $xhtml   xhtml
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)

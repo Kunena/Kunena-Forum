@@ -29,7 +29,8 @@ class plgSystemKunena extends CMSPlugin
 	 * @param   object  $subject  Subject
 	 * @param   array   $config   Config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct(&$subject, $config)
@@ -95,6 +96,7 @@ EOF;
 	 * @param   boolean  $params   Params
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetConfiguration($context, &$params)
@@ -141,7 +143,8 @@ EOF;
 	 * @param   int     $eid       id
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
@@ -162,7 +165,9 @@ EOF;
 	 * @param   string   $manifest  manifest
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)

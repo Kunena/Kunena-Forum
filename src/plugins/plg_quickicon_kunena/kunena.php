@@ -38,7 +38,8 @@ class plgQuickiconKunena extends CMSPlugin
 	 * @param   string  $context  context
 	 *
 	 * @return  array|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function onGetIcons($context)

@@ -50,7 +50,8 @@ class KunenaForumTopicUser extends CMSObject
 	 *
 	 * @param   mixed  $topic  topic
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($topic = null, $user = null)
@@ -101,7 +102,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   bool   $reload  reload
 	 *
 	 * @return  KunenaForumTopicUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
@@ -129,7 +131,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   mixed  $user      user
 	 *
 	 * @return  boolean    True on success
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null)
@@ -169,7 +172,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * Method to delete the KunenaForumTopicUser object from the database.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()
@@ -198,6 +202,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -217,7 +222,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   int                 $postDelta  postdelta
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function update(KunenaForumMessage $message = null, $postDelta = 0)
@@ -272,7 +278,8 @@ class KunenaForumTopicUser extends CMSObject
 
 	/**
 	 * @return  KunenaForumTopic
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopic()
@@ -285,6 +292,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $ignore = array())
@@ -299,7 +307,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   bool  $updateOnly  Save the object only if not a new topic.
 	 *
 	 * @return  boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)

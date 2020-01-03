@@ -50,6 +50,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)
@@ -64,6 +65,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
@@ -75,7 +77,9 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getOnClick($userid)
@@ -97,6 +101,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)

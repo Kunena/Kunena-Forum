@@ -41,6 +41,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 
 	/**
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -68,7 +69,9 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)

@@ -59,7 +59,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
 	 *                              If not provided, default values will be used.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($properties = null)
@@ -139,7 +140,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save()
@@ -244,7 +246,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   mixed  $id  Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id = null)
@@ -289,7 +292,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Method to delete the object from the database.
 	 *
 	 * @return    boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()

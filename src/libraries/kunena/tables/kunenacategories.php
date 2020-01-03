@@ -249,7 +249,9 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id = null, $reset = true)
@@ -315,6 +317,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string  $ignore  ignore
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($array, $ignore = '')
@@ -348,7 +351,9 @@ class TableKunenaCategories extends KunenaTable
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function check()
@@ -386,7 +391,9 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   integer  $id  id
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isChild($id)
@@ -478,7 +485,9 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   bool  $updateNulls  update
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function store($updateNulls = false)

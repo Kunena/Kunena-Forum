@@ -65,7 +65,8 @@ class KunenaSession extends CMSObject
 	/**
 	 * @param   mixed|null  $identifier  identifier
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($identifier)
@@ -154,7 +155,8 @@ class KunenaSession extends CMSObject
 	 * @param   null  $userid  userid
 	 *
 	 * @return  KunenaSession
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($update = false, $userid = null)
@@ -195,7 +197,9 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isNewSession()
@@ -304,6 +308,7 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isNewUser()
@@ -326,6 +331,7 @@ class KunenaSession extends CMSObject
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function markAllCategoriesRead()

@@ -74,7 +74,8 @@ abstract class KunenaMenuFix
 	public static $parent = null;
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function initialize()
@@ -143,6 +144,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function build()
@@ -234,6 +236,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getLegacy()
@@ -250,7 +253,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function fixLegacy()
@@ -283,6 +287,7 @@ abstract class KunenaMenuFix
 	 * @param   integer  $itemid  itemid
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function delete($itemid)
@@ -302,6 +307,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getAll()
@@ -321,6 +327,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getAliases()
@@ -337,6 +344,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInvalid()

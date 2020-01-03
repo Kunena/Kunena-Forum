@@ -41,6 +41,7 @@ class KunenaAdminTemplate
 	 * @param   bool|false  $fullpath  fullpath
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)

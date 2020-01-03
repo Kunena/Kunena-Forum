@@ -102,7 +102,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumAnnouncement
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -160,7 +161,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -206,7 +209,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $mode   mode
 	 *
 	 * @return integer|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayField($field, $mode = null)
@@ -239,7 +243,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return  KunenaUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAuthor()
@@ -351,6 +356,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function check()
@@ -360,6 +366,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function saveInternal()
@@ -388,7 +395,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -410,7 +418,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
@@ -438,7 +447,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authoriseWrite(KunenaUser $user)

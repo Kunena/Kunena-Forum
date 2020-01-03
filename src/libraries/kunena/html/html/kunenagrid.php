@@ -35,7 +35,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $taskOff  Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function boolean($i, $value, $taskOn = null, $taskOff = null)
@@ -124,6 +125,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string|null  $form           form
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $form = null)
@@ -158,7 +160,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $identifier  identifier
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
@@ -192,6 +196,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   int    $overlib  overlib
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function _checkedOut(&$row, $overlib = 1)
@@ -220,6 +225,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $name        The name of the form element
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function id($rowNum, $recId, $checkedOut = false, $name = 'cid')
@@ -239,7 +245,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool     $bootstrap  bootstrap
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function published($i, $value, $prefix = '', $bootstrap = false)
@@ -402,7 +410,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool     $bootstrap  bootstrap
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)
@@ -416,6 +426,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $task   task
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
@@ -432,6 +443,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $alt      alt
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
@@ -453,6 +465,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $alt      alt
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')

@@ -24,7 +24,9 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the time of page generation
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getTime()
@@ -46,7 +48,9 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * Method to get the RSS URL link with image
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

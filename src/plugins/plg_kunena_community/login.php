@@ -40,6 +40,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -49,6 +50,7 @@ class KunenaLoginCommunity
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()

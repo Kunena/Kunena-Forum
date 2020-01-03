@@ -34,7 +34,8 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -96,7 +97,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -124,7 +126,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -144,7 +147,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -156,7 +160,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @param $karmaDelta
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -254,7 +259,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -265,7 +271,8 @@ class KunenaControllerUser extends KunenaController
 
 	/**
 	 * @return  array|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save()
@@ -374,7 +381,8 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @return  boolean
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function saveUser()
@@ -644,7 +652,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -868,7 +877,8 @@ class KunenaControllerUser extends KunenaController
 	// Internal functions:
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function cancel()
@@ -878,7 +888,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -918,7 +929,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1329,7 +1341,9 @@ class KunenaControllerUser extends KunenaController
 	 * @param   string  $evidence  evidence
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function report(int $userid = 0, string $evidence = null)

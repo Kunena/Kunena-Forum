@@ -117,7 +117,8 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   bool    $id     Id of the button.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

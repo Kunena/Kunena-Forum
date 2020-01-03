@@ -45,7 +45,8 @@ abstract class KunenaModule
 	 * @param   stdClass                  $module  module
 	 * @param   Joomla\Registry\Registry  $params  params
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($module, $params)
@@ -109,6 +110,7 @@ abstract class KunenaModule
 	 * Internal module function to display module contents.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	abstract protected function _display();

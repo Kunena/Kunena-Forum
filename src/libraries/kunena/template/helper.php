@@ -33,7 +33,8 @@ abstract class KunenaTemplateHelper
 	 * @param   string  $template  template
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function isDefault($template)
@@ -50,6 +51,7 @@ abstract class KunenaTemplateHelper
 	 * @param   null  $templateBaseDir  template
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function parseXmlFiles($templateBaseDir = null)
@@ -192,6 +194,7 @@ abstract class KunenaTemplateHelper
 	 * @param   string  $templatename  The name of template which needs to be checked
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function templateCanBeUsed($templatename)

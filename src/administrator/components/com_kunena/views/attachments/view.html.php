@@ -26,7 +26,8 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void|mixed
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function display($tpl = null)

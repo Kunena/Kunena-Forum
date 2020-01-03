@@ -127,6 +127,7 @@ class KunenaTableMap
 
 	/**
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMirrorInstance()
@@ -323,6 +324,7 @@ class KunenaTableMap
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getProperties()
@@ -381,6 +383,7 @@ class KunenaTableMap
 	 * @param   array  $list  Set array of mapped objects.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setMapped(array $list)

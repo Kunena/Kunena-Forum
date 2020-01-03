@@ -163,7 +163,8 @@ abstract class KunenaRoute
 	 * @param   bool  $object  object
 	 *
 	 * @return  boolean|Joomla\CMS\Uri\Uri|null|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -192,7 +193,8 @@ abstract class KunenaRoute
 	 * @param   null  $uri  uri
 	 *
 	 * @return  boolean|Joomla\CMS\Uri\Uri|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -674,7 +676,9 @@ abstract class KunenaRoute
 	 * @param   string  $anchor   Anchor (location in the page).
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -728,7 +732,9 @@ abstract class KunenaRoute
 	 * @param   int   $ssl    ssl
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -797,7 +803,8 @@ abstract class KunenaRoute
 	 * @param   bool                $object  object
 	 *
 	 * @return Joomla\CMS\Uri\Uri|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -831,6 +838,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getMenu()
@@ -901,6 +909,7 @@ abstract class KunenaRoute
 	 * @param   null    $default  default
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function stringURLSafe($string, $default = null)
@@ -929,6 +938,7 @@ abstract class KunenaRoute
 	 * @param   string  $alias  alias
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function resolveAlias($alias)
@@ -1059,6 +1069,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -1072,7 +1083,9 @@ abstract class KunenaRoute
 	 * @param   bool                 $xhtml     xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1085,7 +1098,8 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  array|boolean|integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1098,7 +1112,8 @@ abstract class KunenaRoute
 	 * @param   null  $uri  uri
 	 *
 	 * @return  array|boolean|integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1158,7 +1173,9 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1179,7 +1196,9 @@ abstract class KunenaRoute
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1204,7 +1223,9 @@ abstract class KunenaRoute
 	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -24,7 +24,8 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaControllerAnnouncement extends KunenaController
 {
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -35,7 +36,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -100,7 +102,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -165,7 +168,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -180,7 +184,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -237,7 +242,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

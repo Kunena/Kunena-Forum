@@ -42,7 +42,9 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   string  $category  The KunenaCategory object
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryIcon($category)
@@ -80,7 +82,9 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   string  $subcategory  The KunenaCategory object
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getSmallCategoryIcon($subcategory)
@@ -119,7 +123,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int  $numTopics    The number of topics
 	 *
 	 * @return  boolean|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -145,7 +150,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
 	 * @return  boolean|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -45,7 +45,8 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -74,7 +75,8 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   mixed   $config  config
 	 *
 	 * @return  KunenaController
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
@@ -296,7 +298,9 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string  $task  task
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function executeTask($task)
@@ -334,7 +338,8 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @return  Joomla\CMS\MVC\Controller\BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -463,6 +468,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRedirect()
@@ -472,6 +478,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMessage()
@@ -481,6 +488,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMessageType()

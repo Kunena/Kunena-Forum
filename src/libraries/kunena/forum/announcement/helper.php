@@ -34,7 +34,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumAnnouncement
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -71,7 +72,9 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -110,7 +113,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $filter  filter
 	 *
 	 * @return  KunenaForumAnnouncement[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
@@ -175,7 +179,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $filter  filter
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getCount($filter = true)
@@ -220,6 +225,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()

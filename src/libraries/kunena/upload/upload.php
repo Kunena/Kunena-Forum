@@ -468,6 +468,7 @@ class KunenaUpload
 	 * @param   int  $filesize  The size of file in bytes
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 */
@@ -498,6 +499,7 @@ class KunenaUpload
 	 * @param   string  $image_type  The type of image : avatar or attachment image
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 */
@@ -533,6 +535,7 @@ class KunenaUpload
 	 * Clean up temporary file if it exists.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function cleanup()
@@ -551,6 +554,7 @@ class KunenaUpload
 	 * @param   mixed  $content  content
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function ajaxResponse($content)
@@ -610,6 +614,7 @@ class KunenaUpload
 	 * @param   string  $type         The type of file uploaded: attachment or avatar
 	 *
 	 * @return  object
+	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 */
@@ -744,6 +749,7 @@ class KunenaUpload
 	 * @param   boolean  $si          whether to use SI prefixes or IEC
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bytes($bytes, $force_unit = null, $format = null, $si = true)

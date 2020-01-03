@@ -61,7 +61,8 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to return array of actions sublayout
 	 *
 	 * @return  array|boolean
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryActions()
@@ -247,7 +248,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   bool                 $canonical  canonical
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -290,7 +293,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   int  $maxpages  The maximum number of pages
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPagination($maxpages)

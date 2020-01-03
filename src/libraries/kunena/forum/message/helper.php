@@ -143,7 +143,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool    $orderbyid  orderbyid
 	 *
 	 * @return  KunenaForumMessage[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
@@ -192,7 +193,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool    $orderbyid  orderbyid
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
@@ -430,7 +433,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   null|array   $hold       hold
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
@@ -478,7 +482,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessage    The message object.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -600,6 +605,7 @@ abstract class KunenaForumMessageHelper
 	 * Free up memory by cleaning up all cached items.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -612,7 +618,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int  $topicids  topicids
 	 *
 	 * @return  boolean|integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function recount($topicids = false)

@@ -52,6 +52,7 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
@@ -82,6 +83,7 @@ class KunenaAdminViewTrash extends KunenaView
 
 	/**
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()

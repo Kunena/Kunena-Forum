@@ -41,7 +41,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool  $reload      reloaded
 	 *
 	 * @return  KunenaAttachment
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -80,7 +81,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   string          $authorise  authorise
 	 *
 	 * @return  KunenaAttachment[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -183,7 +185,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|string  $ids  ids
 	 *
 	 * @return  KunenaAttachment[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getNumberAttachments($ids = false)
@@ -279,7 +282,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   string          $authorise  authorise
 	 *
 	 * @return  KunenaAttachment[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getByMessage($ids = false, $authorise = 'read')
@@ -398,7 +402,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   null   $user      user
 	 *
 	 * @return  array|boolean
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getExtensions($category, $user = null)
@@ -419,7 +424,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $user      user
 	 *
 	 * @return  array|boolean
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getImageExtensions($category = null, $user = null)
@@ -495,7 +501,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $user      user
 	 *
 	 * @return  array|boolean
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getFileExtensions($category = null, $user = null)
@@ -564,7 +571,9 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function cleanup()
@@ -631,6 +640,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string  $filler    filler
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
@@ -654,7 +664,8 @@ abstract class KunenaAttachmentHelper
 	 * @param   array  $params  params
 	 *
 	 * @return  KunenaAttachment[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getByUserid($user, array $params)

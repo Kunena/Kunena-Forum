@@ -25,6 +25,7 @@ abstract class KunenaMenuHelper
 {
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanCache()
@@ -228,6 +229,7 @@ abstract class KunenaMenuHelper
 	 * Get default menu item (home page) for current language.
 	 *
 	 * @return  object
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

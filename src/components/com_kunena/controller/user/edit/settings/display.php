@@ -189,6 +189,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * @param   string  $string  String to be escaped.
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function escape($string)

@@ -31,7 +31,8 @@ class KunenaPrivate
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaPrivate
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
@@ -66,7 +67,9 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function showIcon($userid)
@@ -117,6 +120,7 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)
@@ -128,6 +132,7 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getOnClick($userid)
@@ -144,7 +149,9 @@ class KunenaPrivate
 	 * @param   integer  $userid  userid
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
@@ -209,6 +216,7 @@ class KunenaPrivate
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
@@ -220,6 +228,7 @@ class KunenaPrivate
 	 * @param   string  $text  text
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)

@@ -1047,7 +1047,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return  void
 	 * @since 4.0.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1096,7 +1097,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return  void
 	 * @since 4.0.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1145,7 +1147,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @return  void
 	 * @since 5.1.8
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -68,6 +68,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 * Define javascript variables to show or disable some bbcode buttons
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

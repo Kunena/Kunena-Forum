@@ -28,6 +28,7 @@ class KText
 	 * @param $string
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function _($string)

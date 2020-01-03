@@ -76,7 +76,9 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	 * Prepare menu display.
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()

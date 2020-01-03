@@ -24,7 +24,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewUser extends KunenaView
 {
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayEdit()

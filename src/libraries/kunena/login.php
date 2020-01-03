@@ -75,7 +75,8 @@ class KunenaLogin
 	 * Method to check if TFA is enabled when user ins't logged
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTwoFactorMethods()
@@ -85,6 +86,7 @@ class KunenaLogin
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function enabled()
@@ -101,6 +103,7 @@ class KunenaLogin
 	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
@@ -120,6 +123,7 @@ class KunenaLogin
 	 * @param   null  $return  logout user
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function logoutUser($return = null)
@@ -137,6 +141,7 @@ class KunenaLogin
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
@@ -245,7 +250,8 @@ class KunenaLogin
 	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
 	 *
 	 * @return  boolean True if TFA is enabled for this user
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isTFAEnabled($userId = null)

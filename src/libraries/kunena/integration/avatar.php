@@ -50,7 +50,8 @@ class KunenaAvatar
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaAvatar
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
@@ -85,6 +86,7 @@ class KunenaAvatar
 	 * @param   array  $userlist  userlist
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
@@ -93,6 +95,7 @@ class KunenaAvatar
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -107,7 +110,8 @@ class KunenaAvatar
 	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
@@ -156,7 +160,8 @@ class KunenaAvatar
 	 * @param   int  $sizey  sizey
 	 *
 	 * @return StdClass
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
@@ -182,7 +187,8 @@ class KunenaAvatar
 	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
@@ -207,6 +213,7 @@ class KunenaAvatar
 	 * @param   integer  $sizey  sizey
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function _getURL($user, $sizex, $sizey)

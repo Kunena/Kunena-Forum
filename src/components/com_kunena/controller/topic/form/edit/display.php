@@ -244,6 +244,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	 * Can user subscribe to the topic?
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()

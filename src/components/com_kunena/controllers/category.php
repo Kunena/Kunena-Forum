@@ -27,7 +27,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -38,7 +39,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

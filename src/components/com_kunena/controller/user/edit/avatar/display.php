@@ -154,6 +154,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 * @param   string  $path  Absolute path for the gallery.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getGallery($path)

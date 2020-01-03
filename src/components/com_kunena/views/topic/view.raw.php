@@ -25,7 +25,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayEdit($tpl = null)
@@ -57,7 +58,8 @@ class KunenaViewTopic extends KunenaView
 	 * @return  void
 	 * @since K4.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayListEmoji($tpl = null)
@@ -187,7 +189,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Load global rate for the topic
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayGetrate()
@@ -220,7 +223,8 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayRate($tpl = null)

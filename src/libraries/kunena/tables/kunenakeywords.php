@@ -57,6 +57,7 @@ class TableKunenaKeywords extends KunenaTable
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function check()

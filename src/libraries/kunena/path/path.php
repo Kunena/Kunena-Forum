@@ -78,6 +78,7 @@ class KunenaPath extends Path
 	 * @param   string  $path  paths
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function isWritable($path)

@@ -260,6 +260,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 * Can user subscribe to the topic?
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()

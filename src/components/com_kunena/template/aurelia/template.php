@@ -55,6 +55,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * User group initialization.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected $userClasses = array(
@@ -195,6 +196,7 @@ EOF;
 	 * @param   null  $id  id
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -242,6 +244,7 @@ HTML;
 	 * @param   string  $title  title
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
@@ -254,6 +257,7 @@ HTML;
 	 * @param   string  $alt  alt
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')

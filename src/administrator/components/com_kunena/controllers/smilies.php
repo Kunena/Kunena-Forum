@@ -72,7 +72,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

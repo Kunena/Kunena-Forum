@@ -72,7 +72,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -192,7 +193,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayUnread($tpl = null)
@@ -214,7 +216,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -228,7 +231,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -242,7 +246,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -500,7 +505,9 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMessageProfileBox()
@@ -612,7 +619,9 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTopicActions()
@@ -710,7 +719,9 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMessageActions()
@@ -788,7 +799,8 @@ class KunenaViewTopic extends KunenaView
 	 * @param         $message
 	 * @param   null  $template  template
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -969,7 +981,8 @@ class KunenaViewTopic extends KunenaView
 	 * @param $matches
 	 *
 	 * @return  mixed|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function fillMessageInfo($matches)
@@ -996,7 +1009,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $template  template
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1012,7 +1026,8 @@ class KunenaViewTopic extends KunenaView
 	 * @param $maxpages
 	 *
 	 * @return  KunenaPagination
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1036,7 +1051,9 @@ class KunenaViewTopic extends KunenaView
 	 * @param $maxpages
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1049,6 +1066,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function hasThreadHistory()
@@ -1102,7 +1120,8 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string  $anchor  anchor
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -1142,6 +1161,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $replycnt
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getNumLink($mesid, $replycnt)
@@ -1162,6 +1182,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayMessageField($name)
@@ -1173,6 +1194,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayTopicField($name)
@@ -1184,6 +1206,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param $name
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayCategoryField($name)
@@ -1193,6 +1216,7 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function canSubscribe()
@@ -1208,7 +1232,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param $type
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function _prepareDocument($type)
@@ -1386,6 +1411,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   string  $class  class
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
@@ -1396,7 +1422,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   string  $title  Title name on the browser
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function setTitle($title)

@@ -564,7 +564,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * Get attachment layout.
 	 *
 	 * @return  KunenaLayout
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLayout()
@@ -1066,7 +1067,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   int  $inline  inline
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function setInline($inline)
@@ -1084,6 +1087,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   string  $editor_text
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function removeBBCodeInMessage($editor_text = null)

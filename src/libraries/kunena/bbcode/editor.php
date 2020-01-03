@@ -33,7 +33,8 @@ class KunenaBbcodeEditor
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -46,7 +47,8 @@ class KunenaBbcodeEditor
 	 * @param   array  $config  config
 	 *
 	 * @return  KunenaBbcodeEditor
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($config = array())
@@ -69,6 +71,7 @@ class KunenaBbcodeEditor
 	 * @param   mixed  $where    where
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function insertElement($element, $pos = null, $where = null)
@@ -90,6 +93,7 @@ class KunenaBbcodeEditor
 	 * @param   mixed  $where     where
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function insertElements($elements, $pos = null, $where = null)
@@ -203,7 +207,9 @@ class KunenaBbcodeEditor
 	 * @param   string            $parseMethod  The parse method name to call
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
@@ -273,6 +279,7 @@ abstract class KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
@@ -349,7 +356,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return  KunenaBbcodeEditorButton
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)
@@ -426,6 +434,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function generateHMVCJs()
@@ -437,6 +446,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function editorActionHMVCJs()
@@ -766,6 +776,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   null    $tag        tag
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function addDisplayAction($selection, $class, $tag = null)
@@ -822,6 +833,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   string  $url  url
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function addUrlAction($url)
@@ -856,6 +868,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * Generate JS part for element
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function generateHMVCJs()

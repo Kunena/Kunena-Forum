@@ -28,7 +28,9 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * Method to get moderation actions for announcements
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -65,7 +67,8 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -79,7 +79,8 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -146,7 +147,9 @@ class KunenaView extends HtmlView
 	 * @param   null  $tpl     tmpl
 	 *
 	 * @return  mixed|void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayLayout($layout = null, $tpl = null)
@@ -363,7 +366,9 @@ class KunenaView extends HtmlView
 	 * @param   mixed  $position  position
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getModulePosition($position)
@@ -387,7 +392,8 @@ class KunenaView extends HtmlView
 	 * @param   mixed  $position  position
 	 *
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isModulePosition($position)
@@ -403,7 +409,9 @@ class KunenaView extends HtmlView
 	 * @param   mixed   $parent  parent
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function parse($text, $len = 0, $parent)
@@ -494,7 +502,8 @@ class KunenaView extends HtmlView
 	 * @param   array   $hmvcParams  Extra parameters for HMVC.
 	 *
 	 * @return  string|void The output of the the template script.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
@@ -566,6 +575,7 @@ class KunenaView extends HtmlView
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplateMD5()
@@ -580,7 +590,9 @@ class KunenaView extends HtmlView
 	 * @param   null                 $class     class
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
@@ -607,7 +619,9 @@ class KunenaView extends HtmlView
 	 * @param   KunenaForumCategory|null  $category  category
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

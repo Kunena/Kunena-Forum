@@ -81,7 +81,8 @@ class KunenaAccessCommunity
 	 * @param   int     $id          Group id.
 	 *
 	 * @return  boolean|void|string
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getGroupName($accesstype, $id = null)
@@ -102,7 +103,8 @@ class KunenaAccessCommunity
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function loadGroups()
@@ -139,7 +141,9 @@ class KunenaAccessCommunity
 	 * @param   int     $category    Group id.
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAccessOptions($accesstype, $category)
@@ -174,7 +178,8 @@ class KunenaAccessCommunity
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function loadCategories()
@@ -217,7 +222,8 @@ class KunenaAccessCommunity
 	 * @param   array  $categories  List of categories, null = all.
 	 *
 	 * @return  array(array => u, 'category_id'=>c, 'role'=>r))
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadCategoryRoles(array $categories = null)
@@ -256,7 +262,8 @@ class KunenaAccessCommunity
 	 * @param   array  $categories  List of categories in access type.
 	 *
 	 * @return  array, where category ids are in the keys.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function authoriseCategories($userid, array &$categories)
@@ -300,7 +307,9 @@ class KunenaAccessCommunity
 	 * @param   array  $userids  list(allow, deny).
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)

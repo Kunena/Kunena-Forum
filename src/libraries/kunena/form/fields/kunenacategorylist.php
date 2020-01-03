@@ -31,7 +31,9 @@ class JFormFieldKunenaCategoryList extends FormField
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getInput()

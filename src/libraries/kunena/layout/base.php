@@ -85,7 +85,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $name   name
 	 * @param   array   $paths  The paths queue.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($name, array $paths = null)
@@ -111,6 +112,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Magic toString method that is a proxy for the render method.
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __toString()
@@ -136,7 +138,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @return  string  The rendered view.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception|RunTimeException
 	 */
 	public function render($layout = null)
@@ -191,6 +194,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Dirty function to debug layout/path errors
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function debugInfo()
@@ -396,7 +400,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $filename  filename
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addStyleSheet($filename)
@@ -410,7 +416,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $filename  filename
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addScript($filename)
@@ -425,7 +433,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $type     type
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
@@ -441,7 +451,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $merge
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addScriptOptions($key, $options, $merge = true)
@@ -523,6 +535,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   integer  $value     value
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __set($property, $value)
@@ -574,6 +587,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   mixed  $property  properties
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __isset($property)
@@ -616,6 +630,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getProperties()
@@ -643,7 +658,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $path  path
 	 *
 	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function subLayout($path)
@@ -665,7 +681,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $base   Base path.
 	 *
 	 * @return  KunenaLayout
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function factory($paths, $base = 'layouts')

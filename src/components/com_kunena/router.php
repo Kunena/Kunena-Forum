@@ -285,6 +285,7 @@ class KunenaRouter extends RouterBase
 	 * @param $segments
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 */

@@ -33,7 +33,8 @@ abstract class KunenaFactory
 	 * @param   string  $name  name
 	 *
 	 * @return  KunenaTemplate
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTemplate($name = null)
@@ -67,7 +68,8 @@ abstract class KunenaFactory
 	 * @param   bool  $reload  reload
 	 *
 	 * @return  KunenaUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getUser($id = null, $reload = false)
@@ -83,7 +85,8 @@ abstract class KunenaFactory
 	 * @param   array|bool  $update  An array containing session options
 	 *
 	 * @return  KunenaSession
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getSession($update = false)
@@ -100,6 +103,7 @@ abstract class KunenaFactory
 	 * @param   boolean  $session  null
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function setSession($session)
@@ -113,7 +117,8 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaAvatar
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getAvatarIntegration()
@@ -127,7 +132,8 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaPrivate
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getPrivateMessaging()
@@ -141,7 +147,8 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaIntegrationActivity
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getActivityIntegration()
@@ -155,7 +162,8 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaProfile
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getProfile()
@@ -172,7 +180,9 @@ abstract class KunenaFactory
 	 * @param   string  $client  client
 	 *
 	 * @return  mixed
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
@@ -221,7 +231,8 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaConfig
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getConfig()
@@ -234,6 +245,7 @@ abstract class KunenaFactory
 	 * @param   string  $filename  filename
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function parseLanguage($lang, $filename)

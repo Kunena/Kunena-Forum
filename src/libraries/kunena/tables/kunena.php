@@ -29,7 +29,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($keys = null, $reset = true)
@@ -149,7 +151,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   bool  $updateNulls  update
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function store($updateNulls = false)
@@ -209,6 +213,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   null  $exists  exists
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -230,7 +235,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  RuntimeException
 	 */
@@ -321,7 +327,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 *
 	 * @return  boolean    True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  RuntimeException
 	 */
@@ -400,7 +407,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   null  $pk  pk
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete($pk = null)

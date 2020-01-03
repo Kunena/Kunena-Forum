@@ -29,6 +29,7 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 	 * @param   int     $id          Id to be added to the input
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayInput($name, $attributes = '', $id = null)

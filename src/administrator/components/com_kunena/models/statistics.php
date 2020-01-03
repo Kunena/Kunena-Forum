@@ -104,7 +104,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $field  field
 	 *
 	 * @return  KunenaLogFinder
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getFinder($field = 'user_id')
@@ -285,7 +286,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   null  $ordering   ordering
 	 * @param   null  $direction  direction
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)

@@ -101,6 +101,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   int             $limit       The number of records
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)

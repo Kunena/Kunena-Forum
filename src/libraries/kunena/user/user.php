@@ -162,7 +162,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @param   int  $identifier  identifier
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
@@ -189,7 +190,8 @@ class KunenaUser extends CMSObject
 	 * @param   mixed  $id  The user id of the user to load.
 	 *
 	 * @return    boolean            True on success
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function load($id)
@@ -247,7 +249,8 @@ class KunenaUser extends CMSObject
 	 * @param   bool      $reload      Reload user from database.
 	 *
 	 * @return  KunenaUser
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -350,6 +353,7 @@ class KunenaUser extends CMSObject
 	 * @param   null|bool  $exists  exists
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -368,6 +372,7 @@ class KunenaUser extends CMSObject
 	 * Is the user me?
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isMyself()
@@ -385,7 +390,9 @@ class KunenaUser extends CMSObject
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isAdmin(KunenaForumCategory $category = null)
@@ -401,7 +408,9 @@ class KunenaUser extends CMSObject
 	 * @param   KunenaForumCategory  $category  category
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function isModerator(KunenaForumCategory $category = null)
@@ -414,6 +423,7 @@ class KunenaUser extends CMSObject
 	 * @param   bool    $escape       escape
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getName($visitorname = '', $escape = true)
@@ -466,6 +476,7 @@ class KunenaUser extends CMSObject
 	 * @param   array  $ignore  ignore
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, array $ignore = [])
@@ -478,7 +489,8 @@ class KunenaUser extends CMSObject
 	 * Method to delete the KunenaUser object from the database.
 	 *
 	 * @return    boolean    True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function delete()
@@ -502,7 +514,8 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getStatus()
@@ -512,7 +525,9 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getStatusText()
@@ -522,7 +537,9 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAllowedCategories()
@@ -537,7 +554,9 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMessageOrdering()
@@ -566,7 +585,9 @@ class KunenaUser extends CMSObject
 	 * @param   string      $online  online
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90, $online = '')
@@ -645,7 +666,9 @@ class KunenaUser extends CMSObject
 	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90)
@@ -719,7 +742,8 @@ class KunenaUser extends CMSObject
 	 * @param   string  $task   task
 	 *
 	 * @return  boolean|mixed|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getURL($xhtml = true, $task = '')
@@ -745,7 +769,8 @@ class KunenaUser extends CMSObject
 	 * Return local time for the user.
 	 *
 	 * @return  KunenaDate  User time instance.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTime()
@@ -811,7 +836,9 @@ class KunenaUser extends CMSObject
 	 * @param   string  $layout  layout
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function setTopicLayout($layout = 'default')
@@ -834,6 +861,7 @@ class KunenaUser extends CMSObject
 	 * @param   null|string  $layout  layout
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTopicLayout($layout = null)
@@ -872,7 +900,8 @@ class KunenaUser extends CMSObject
 	 * @param   boolean  $updateOnly  Save the object only if not a new user.
 	 *
 	 * @return    boolean True on success.
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
@@ -935,7 +964,9 @@ class KunenaUser extends CMSObject
 	 * Get the URL to private messages
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPrivateMsgURL()
@@ -949,7 +980,9 @@ class KunenaUser extends CMSObject
 	 * Get the label for URL to private messages
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getPrivateMsgLabel()
@@ -1132,6 +1165,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $var  var
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
@@ -1336,7 +1370,8 @@ class KunenaUser extends CMSObject
 	 * @param   bool|null  $special  True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
@@ -1551,7 +1586,9 @@ class KunenaUser extends CMSObject
 	 * @param   bool  $code   True if we want to return the code, otherwise return translation key.
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getType($catid = 0, $code = false)
@@ -1619,6 +1656,7 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isBlocked()
@@ -1695,7 +1733,8 @@ class KunenaUser extends CMSObject
 	 * @param   integer  $catid  Catid
 	 *
 	 * @return  string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function rankCss($rank, $catid)
@@ -1812,6 +1851,7 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bannedDate()
@@ -1826,7 +1866,8 @@ class KunenaUser extends CMSObject
 	 * @param   string  $name  name
 	 *
 	 * @return  string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function profileIcon($name)
@@ -1920,7 +1961,9 @@ class KunenaUser extends CMSObject
 	 * @param   int          $avatarLink  avatar link
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0)
@@ -2109,6 +2152,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $name  name
 	 *
 	 * @return  mixed|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __get($name)
@@ -2127,7 +2171,8 @@ class KunenaUser extends CMSObject
 	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function canDoCaptcha()

@@ -272,7 +272,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -364,7 +365,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -424,7 +426,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -481,7 +484,8 @@ class KunenaModelTopics extends KunenaModel
 	 * @param   array  $userlist  userlist
 	 * @param   array  $postlist  postlist
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
@@ -533,7 +537,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -549,7 +554,8 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return  array|null
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -705,6 +711,7 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getActionMove()

@@ -25,7 +25,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return  mixed
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getRankspaths()
@@ -70,7 +71,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * @return  mixed|void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getRank()
@@ -107,7 +109,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()

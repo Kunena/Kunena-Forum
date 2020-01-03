@@ -23,6 +23,7 @@ class KunenaTemplateLegacy
 {
 	/**
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function load()

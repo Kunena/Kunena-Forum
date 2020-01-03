@@ -69,7 +69,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return  KunenaForumCategory[]
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getCatsubcriptions()
@@ -84,7 +85,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return  array|void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getIPlist()
@@ -148,7 +150,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return  mixed
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getListmodcats()
@@ -180,7 +183,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return  KunenaUser
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getUser()
@@ -194,7 +198,8 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return  array|mixed|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getListuserranks()
@@ -245,7 +250,8 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return  array|string|void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMoveuser()
@@ -283,7 +289,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()

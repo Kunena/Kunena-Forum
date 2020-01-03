@@ -262,7 +262,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @return  string
 	 * @since 5.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getSystemReportAnonymous()
@@ -288,6 +289,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * Check if php extensions needed by kunena are right loaded
 	 *
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getPhpExtensions()
@@ -345,7 +347,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @return  void
 	 * @since 5.0
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function getReportData()

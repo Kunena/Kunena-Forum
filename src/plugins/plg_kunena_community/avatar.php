@@ -57,6 +57,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	/**
 	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -70,7 +71,9 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return  string
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)

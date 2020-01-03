@@ -588,6 +588,7 @@ abstract class KunenaTableObject
 	 * For internal use only.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function &getInstances()
@@ -626,6 +627,7 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getQuery()
@@ -644,6 +646,7 @@ abstract class KunenaTableObject
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function &loadInstances(QueryInterface $query)
@@ -765,6 +768,7 @@ abstract class KunenaTableObject
 	 * @param   bool  $updateNulls  update
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function store($updateNulls = false)

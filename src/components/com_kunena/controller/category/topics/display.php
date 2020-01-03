@@ -69,10 +69,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	/**
 	 * Prepare category display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -215,10 +215,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function prepareDocument()
 	{

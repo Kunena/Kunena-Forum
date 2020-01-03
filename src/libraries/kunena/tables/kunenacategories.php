@@ -25,212 +25,212 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaCategories extends KunenaTable
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $parent_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $alias = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $icon = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $icon_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $locked = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $accesstype = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $access = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $pub_access = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $pub_recurse = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $admin_access = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $admin_recurse = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $ordering = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $published = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $channels = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $checked_out = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $checked_out_time = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $review = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $allow_anonymous = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $post_anonymous = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $hits = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $description = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $headerdesc = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $class_sfx = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $allow_polls = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topic_ordering = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $iconset = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $numTopics = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $numPosts = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_topic_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_time = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $params = null;
 
 	/**
-	 * @var null
-	 * @since Kunena 5.1.0
+	 * @var     null
+	 * @since   Kunena 5.1.0
 	 */
 	public $topictemplate = null;
 
@@ -248,9 +248,9 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   null  $id     id
 	 * @param   bool  $reset  reset
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -314,7 +314,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   mixed   $array   array
 	 * @param   string  $ignore  ignore
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function bind($array, $ignore = '')
@@ -347,9 +347,9 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function check()
 	{
@@ -385,9 +385,9 @@ class TableKunenaCategories extends KunenaTable
 	/**
 	 * @param   integer  $id  id
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function isChild($id)
 	{
@@ -445,7 +445,7 @@ class TableKunenaCategories extends KunenaTable
 	/**
 	 * @param   string  $where  where
 	 *
-	 * @return boolean|mixed
+	 * @return  boolean|mixed
 	 * @since   Kunena 6.0
 	 */
 	public function reorder($where = '')
@@ -477,9 +477,9 @@ class TableKunenaCategories extends KunenaTable
 	/**
 	 * @param   bool  $updateNulls  update
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function store($updateNulls = false)
 	{

@@ -22,7 +22,7 @@ use Joomla\CMS\Router\Route;
 class KunenaProfileEasyprofile extends KunenaProfile
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -30,7 +30,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	/**
 	 * KunenaProfileEasyprofile constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -43,10 +43,12 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -68,8 +70,10 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param $view
-	 * @param $params
+	 * @param   object  $view   view
+	 * @param   object  $params params
+	 *
+	 * @return   void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -78,10 +82,11 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param         $userid
+	 * @param   int   $userid userid
 	 * @param   bool  $xhtml  xhtml
 	 *
-	 * @return boolean
+	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
@@ -90,11 +95,12 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param           $userid
+	 * @param   int     $userid userid
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return boolean
+	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)

@@ -40,7 +40,7 @@ class KunenaProfiler extends Profiler
 	/**
 	 * @param   string  $prefix  string
 	 *
-	 * @return KunenaProfiler
+	 * @return  KunenaProfiler
 	 *
 	 * @fixme   override getInstance() and fix the function into Joomla
 	 * @since   Kunena 6.0
@@ -59,7 +59,7 @@ class KunenaProfiler extends Profiler
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function start($name)
@@ -85,7 +85,7 @@ class KunenaProfiler extends Profiler
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function stop($name)
@@ -112,7 +112,7 @@ class KunenaProfiler extends Profiler
 	}
 
 	/**
-	 * @return array|KunenaProfilerItem[]
+	 * @return  array|KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */
 	public function getAll()
@@ -127,7 +127,7 @@ class KunenaProfiler extends Profiler
 	 * @param   array   $array     array
 	 * @param   string  $property  property
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function sort(&$array, $property = 'total')
@@ -179,7 +179,7 @@ class KunenaProfilerItem
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return KunenaProfilerItem
+	 * @return  KunenaProfilerItem
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($name)
@@ -193,7 +193,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @return array|KunenaProfilerItem[]
+	 * @return  array|KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */
 	public static function getAll()
@@ -202,7 +202,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function getStartTime()
@@ -231,7 +231,7 @@ class KunenaProfilerItem
 	/**
 	 * @param   boolean  $starttime  start time
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function start($starttime)
@@ -266,7 +266,7 @@ class KunenaProfilerItem
 	/**
 	 * @param   float  $delta  delta
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function external($delta)

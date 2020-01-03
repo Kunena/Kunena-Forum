@@ -35,10 +35,10 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	/**
 	 * Prepare Who is online display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -114,9 +114,9 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

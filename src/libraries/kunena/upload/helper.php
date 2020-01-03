@@ -41,7 +41,7 @@ class KunenaUploadHelper
 	 * @param   string  $uploadfolder  upload
 	 * @param   string  $format        format
 	 *
-	 * @return mixed|void
+	 * @return  mixed|void
 	 * @since   Kunena 6.0
 	 */
 	public static function upload($file, $uploadfolder, $format)

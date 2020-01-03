@@ -25,139 +25,139 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaTopics extends KunenaTable
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $category_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $subject = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $icon_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $locked = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $hold = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $ordering = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $posts = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $hits = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $attachments = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $poll_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $moved_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $first_post_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $first_post_time = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $first_post_userid = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $first_post_message = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $first_post_guest_name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_id = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_time = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_userid = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_message = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $last_post_guest_name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $params = null;
@@ -176,9 +176,9 @@ class TableKunenaTopics extends KunenaTable
 	 * @param   null  $id     id
 	 * @param   bool  $reset  reset
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -239,9 +239,9 @@ class TableKunenaTopics extends KunenaTable
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function check()
 	{

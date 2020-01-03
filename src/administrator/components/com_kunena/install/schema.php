@@ -45,25 +45,25 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	protected $__state_set = false;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $schema = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $xmlschema = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $upgradeschema = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $diffschema = null;
@@ -75,20 +75,20 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	protected $db = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $sql = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $version = null;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -131,7 +131,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @return DOMDocument|null
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function getSchema()
@@ -186,7 +186,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null)
@@ -224,9 +224,9 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return array|null
+	 * @return  array|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	protected function getSQL()
@@ -241,9 +241,9 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return array|null
+	 * @return  array|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function getCreateSQL()
@@ -261,7 +261,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   string  $prefix  prefix
 	 *
-	 * @return array
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -289,7 +289,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function updateSchemaTable($table)
@@ -319,9 +319,9 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function updateSchema()
@@ -357,9 +357,9 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $prefix
 	 * @param   bool    $reload  reload
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	protected function listTables($prefix, $reload = false)
@@ -409,7 +409,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $filename
 	 * @param   bool    $reload  reload
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -434,8 +434,8 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   bool  $reload  reload
 	 *
-	 * @return boolean|DOMDocument
-	 * @since Kunena
+	 * @return  boolean|DOMDocument
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function getSchemaFromDatabase($reload = false)
@@ -552,7 +552,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return DOMDocument|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function getSchemaDiff($old, $new)
@@ -592,7 +592,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $nodeLists
 	 *
-	 * @return array
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -785,7 +785,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return DOMDocument|DOMNode|mixed|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	protected function getDOMDocument($input)
@@ -832,7 +832,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param         $schema
 	 * @param   bool  $drop  drop
 	 *
-	 * @return array
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -981,7 +981,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $field
 	 * @param   string  $after  after
 	 *
-	 * @return string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1042,7 +1042,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param $dbschema
 	 * @param $upgrade
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
 	 */
 	public function upgradeSchema($dbschema, $upgrade)

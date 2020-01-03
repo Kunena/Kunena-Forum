@@ -24,14 +24,14 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerCategories extends KunenaController
 {
 	/**
-	 * @var null|string
-	 * @since    2.0.0-BETA2
+	 * @var     null|string
+	 * @since   Kunena 2.0.0-BETA2
 	 */
 	protected $baseurl = null;
 
 	/**
-	 * @var null|string
-	 * @since    2.0.0-BETA2
+	 * @var     null|string
+	 * @since   Kunena 2.0.0-BETA2
 	 */
 	protected $baseurl2 = null;
 
@@ -40,10 +40,10 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -56,11 +56,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * Lock
 	 *
 	 * @return  void
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function lock()
 	{
@@ -78,11 +78,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @param   string   $variable  variable
 	 * @param   string   $value     value
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function setVariable($cid, $variable, $value)
 	{
@@ -152,11 +152,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Unlock
 	 *
-	 * @return void
-	 * @since    2.0.0-BETA2
+	 * @return  void
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unlock()
 	{
@@ -170,13 +170,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Review
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function review()
 	{
@@ -192,11 +192,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unreview()
 	{
@@ -210,13 +210,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Allow Anonymous
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function allow_anonymous()
 	{
@@ -230,13 +230,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Deny Anonymous
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function deny_anonymous()
 	{
@@ -250,13 +250,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Allow Polls
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function allow_polls()
 	{
@@ -270,13 +270,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Deny Polls
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function deny_polls()
 	{
@@ -290,13 +290,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Publish
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function publish()
 	{
@@ -310,13 +310,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Unpublish
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unpublish()
 	{
@@ -330,13 +330,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Add
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function add()
 	{
@@ -360,13 +360,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Edit
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function edit()
 	{
@@ -401,11 +401,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Apply
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function apply()
 	{
@@ -424,11 +424,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return KunenaForumCategory|void
+	 * @return  KunenaForumCategory|void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function _save()
 	{
@@ -567,11 +567,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save2new
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function save2new()
 	{
@@ -582,11 +582,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -608,9 +608,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function save2copy()
 	{
@@ -637,8 +637,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return    array  Contains the modified title and alias.
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  Exception
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
 	{
@@ -654,11 +654,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Remove
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function remove()
 	{
@@ -731,8 +731,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function cancel()
 	{
@@ -772,8 +772,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function saveorder()
 	{
@@ -845,8 +845,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since   3.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function saveOrderAjax()
 	{
@@ -883,8 +883,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function orderup()
 	{
@@ -904,7 +904,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
+	 * @throws  null
 	 */
 	protected function orderUpDown($id, $direction)
 	{
@@ -954,8 +954,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 *
 	 * @since  K3.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function orderdown()
 	{
@@ -969,13 +969,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to archive one or multiples categories
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
 	 *
 	 * @since 2.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function archive()
 	{
@@ -991,13 +991,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to put in trash one or multiple categories
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function trash()
 	{
@@ -1013,11 +1013,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to do batch process on selected categories, to move or copy them.
 	 *
-	 * @return boolean|void
+	 * @return  boolean|void
 	 *
 	 * @since  5.1.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function batch_categories()
 	{

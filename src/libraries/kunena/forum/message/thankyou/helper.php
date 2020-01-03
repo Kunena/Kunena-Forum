@@ -30,7 +30,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Cleanup
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -42,9 +42,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumMessageThankyou|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumMessageThankyou|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier, $reload = false)
 	{
@@ -75,9 +75,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @param   array  $ids  ids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -137,8 +137,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $endtime    Ending time as unix timestamp.
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTotal($starttime = null, $endtime = null)
 	{
@@ -185,9 +185,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $limitstart  limitstart
 	 * @param   int   $limit       limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTopUsers($target = true, $limitstart = 0, $limit = 10)
 	{
@@ -227,9 +227,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $limitstart  limitstart
 	 * @param   int  $limit       limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
@@ -269,9 +269,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $limitstart  limitstart
 	 * @param   int   $limit       limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
 	{
@@ -312,10 +312,10 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous is null.
 	 *
-	 * @return boolean|integer    Number of rows is successful, false on error.
+	 * @return  boolean|integer    Number of rows is successful, false on error.
 	 *
 	 * @since K2.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function recountThankyou()
 	{
@@ -348,9 +348,9 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank you's.
 	 *
-	 * @return boolean|integer    Number of rows is successful, false on error.
+	 * @return  boolean|integer    Number of rows is successful, false on error.
 	 * @since K2.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function recount()
 	{
@@ -388,9 +388,9 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @param   bool|array|int  $ids  ids
 	 *
-	 * @return KunenaForumMessageThankyou[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumMessageThankyou[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getByMessage($ids = false)
 	{

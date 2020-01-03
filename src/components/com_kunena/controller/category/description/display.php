@@ -27,10 +27,10 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 	/**
 	 * Prepare category display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{

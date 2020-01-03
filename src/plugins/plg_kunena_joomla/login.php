@@ -24,13 +24,13 @@ use Joomla\CMS\Plugin\PluginHelper;
 class KunenaLoginJoomla
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -47,9 +47,11 @@ class KunenaLoginJoomla
 	 * @param   boolean  $rememberme  Remember the user next time it wants login
 	 * @param   string   $secretkey   The secretkey given by user when TFA is enabled
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 *
+	 * @since   Kunena
+	 *
+	 * @throws  Exception
 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)
 	{
@@ -67,9 +69,11 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return boolean|string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena
+	 *
+	 * @throws  Exception
 	 */
 	public function logoutUser()
 	{
@@ -79,7 +83,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
@@ -88,7 +92,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -97,7 +101,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
@@ -106,7 +110,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return void|string
+	 * @return  void|string
 	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
@@ -122,7 +126,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
@@ -131,7 +135,7 @@ class KunenaLoginJoomla
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()
@@ -142,8 +146,9 @@ class KunenaLoginJoomla
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return Joomla\Registry\Registry
-	 * @since Kunena 5.1
+	 * @return  object
+	 *
+	 * @since   Kunena 5.1
 	 */
 	public function getParams()
 	{

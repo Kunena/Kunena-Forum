@@ -21,7 +21,7 @@ class KunenaFile
 	/**
 	 * @param   string  $file  file
 	 *
-	 * @return boolean|mixed|string
+	 * @return  boolean|mixed|string
 	 * @since   Kunena 6.0
 	 */
 	public static function getMime($file)

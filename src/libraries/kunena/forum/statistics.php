@@ -24,67 +24,67 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumStatistics
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instance = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $lastUserId = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $memberCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $sectionCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $categoryCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topicCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $messageCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $todayTopicCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $yesterdayTopicCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $todayReplyCount = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $yesterdayReplyCount = null;
@@ -96,25 +96,25 @@ class KunenaForumStatistics
 	public $topTopics = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topPosters = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topProfiles = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topPolls = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $topThanks = null;
@@ -126,31 +126,31 @@ class KunenaForumStatistics
 	public $top = array();
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $showgenstats = true;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $showpopuserstats = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $showpopsubjectstats = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $showpoppollstats = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $showpopthankyoustats = false;
@@ -168,8 +168,8 @@ class KunenaForumStatistics
 	protected $_config = null;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -185,9 +185,9 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return KunenaForumStatistics
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumStatistics
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance()
 	{
@@ -202,10 +202,10 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool  $force  force
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loadAll($force = false)
 	{
@@ -218,9 +218,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool  $force  force
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadGeneral($force = false)
 	{
@@ -236,10 +236,10 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function loadMemberCount()
 	{
@@ -250,10 +250,10 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function loadLastUserId()
 	{
@@ -264,10 +264,10 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function loadCategoryCount()
 	{
@@ -307,9 +307,9 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTotalEmoticons()
 	{
@@ -335,10 +335,10 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function loadLastDays()
 	{
@@ -383,10 +383,10 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool  $override  override
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function loadTopicStats($override = false)
 	{
@@ -414,10 +414,10 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array|KunenaForumTopic[]
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  array|KunenaForumTopic[]
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loadTopTopics($limit = 0)
 	{
@@ -454,10 +454,10 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function loadTopPolls($limit = 0)
 	{
@@ -514,9 +514,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   bool  $override  override
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadUserStats($override = false)
 	{
@@ -551,9 +551,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadTopPosters($limit = 0)
 	{
@@ -588,9 +588,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadTopProfiles($limit = 0)
 	{
@@ -625,9 +625,9 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadTopThankyous($limit = 0)
 	{

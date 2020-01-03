@@ -41,43 +41,43 @@ abstract class KunenaUserHelper
 	protected static $_instances_name = array();
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_online = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_online_status = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_lastid = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_total = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_topposters = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_me = null;
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -87,9 +87,9 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function initialize()
 	{
@@ -105,9 +105,9 @@ abstract class KunenaUserHelper
 	 * @param   int     $id    id
 	 * @param   string  $name  name
 	 *
-	 * @return KunenaUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getAuthor($id, $name)
 	{
@@ -142,9 +142,9 @@ abstract class KunenaUserHelper
 	 *                              automatically.
 	 * @param   bool   $reload      Reload user from database.
 	 *
-	 * @return KunenaUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -204,9 +204,9 @@ abstract class KunenaUserHelper
 	/**
 	 * @param   array  $userids  userids
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function loadUsers(array $userids = array())
 	{
@@ -276,8 +276,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getLastId()
 	{
@@ -291,8 +291,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTotalCount()
 	{
@@ -339,8 +339,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return integer
-	 * @since Kunena 6.0.0
-	 * @throws Exception
+	 * @since   Kunena 6.0.0
+	 * @throws  Exception
 	 */
 	public static function getTotalRanks()
 	{
@@ -366,9 +366,9 @@ abstract class KunenaUserHelper
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTopPosters($limit = 0)
 	{
@@ -480,9 +480,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Get the number of users online
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getOnlineCount()
 	{
@@ -534,9 +534,9 @@ abstract class KunenaUserHelper
 	/**
 	 * Get the list of users online by giving list of userid
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getOnlineUsers()
 	{
@@ -587,8 +587,8 @@ abstract class KunenaUserHelper
 	 * @param   mixed  $user  The user object to get the status
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getStatus($user)
 	{
@@ -627,7 +627,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return KunenaUser
+	 * @return  KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public static function getMyself()
@@ -636,10 +636,10 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return boolean|integer
+	 * @return  boolean|integer
 	 *
 	 * @since K5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function recount()
 	{
@@ -677,10 +677,10 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return boolean|integer
+	 * @return  boolean|integer
 	 *
 	 * @since K5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function recountBanned()
 	{
@@ -711,10 +711,10 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return boolean|integer
+	 * @return  boolean|integer
 	 *
 	 * @since K5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function recountPostsNull()
 	{
@@ -760,7 +760,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @param $ip
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since 6.0.0
 	 */
 	public static function isIPv6($ip)
@@ -774,9 +774,9 @@ abstract class KunenaUserHelper
 	 * @param $data array  With username, ip, email, api key, evidence
 	 * @param $type string Add ou just call api
 	 *
-	 * @return boolean|Response
+	 * @return  boolean|Response
 	 * @since 6.0.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function storeCheckStopforumspam($data = array(), $type)
 	{

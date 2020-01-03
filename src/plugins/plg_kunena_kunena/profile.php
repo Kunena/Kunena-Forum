@@ -21,13 +21,13 @@ use Joomla\CMS\Factory;
 class KunenaProfileKunena extends KunenaProfile
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -40,10 +40,12 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -61,9 +63,11 @@ class KunenaProfileKunena extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -97,8 +101,10 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param $view
-	 * @param $params
+	 * @param   string  $view   view
+	 * @param   object  $params params
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -107,13 +113,15 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param         $userid
+	 * @param   int   $userid userid
 	 * @param   bool  $xhtml  xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
@@ -123,15 +131,17 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param                $user
+	 * @param   int          $user       user
 	 * @param   string       $task       task
 	 * @param   bool         $xhtml      xhtml
 	 * @param   bool|string  $avatarTab  avatarTab
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
 	{

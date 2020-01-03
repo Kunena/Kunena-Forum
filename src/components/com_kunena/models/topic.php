@@ -19,32 +19,32 @@ defined('_JEXEC') or die();
 class KunenaModelTopic extends KunenaModel
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $items = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topic = false;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{
@@ -117,9 +117,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumCategory
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategory
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategory()
 	{
@@ -127,9 +127,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return boolean|KunenaForumTopic
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|KunenaForumTopic
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopic()
 	{
@@ -170,9 +170,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return array|boolean|KunenaForumMessage[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean|KunenaForumMessage[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getMessages()
 	{
@@ -252,9 +252,9 @@ class KunenaModelTopic extends KunenaModel
 	 * @param   int    $parent  parent
 	 * @param   array  $indent  indent
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
@@ -340,8 +340,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTotal()
 	{
@@ -350,8 +350,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getMyVotes()
 	{
@@ -359,9 +359,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getModerators()
 	{
@@ -371,9 +371,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumTopicPoll
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicPoll
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getPoll()
 	{
@@ -382,8 +382,8 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getPollUserCount()
 	{
@@ -391,9 +391,9 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getPollUsers()
 	{

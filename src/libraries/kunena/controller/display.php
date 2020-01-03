@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
-	 * @var null|KunenaLayout
+	 * @var     null|KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	public $output = null;
@@ -47,7 +47,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected $name = 'Empty';
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $primary = false;
@@ -60,7 +60,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * @internal
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function setPrimary()
@@ -73,9 +73,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Return view as a string.
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __toString()
 	{
@@ -121,8 +121,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @see   KunenaControllerBase::execute()
 	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function execute()
 	{
@@ -167,9 +167,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Executed before display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -186,8 +186,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Initialize and display the layout.
 	 *
 	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function display()
 	{
@@ -224,9 +224,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Executed after display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function after()
 	{
@@ -239,9 +239,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -272,7 +272,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @param   string  $layout  The layout name.
 	 *
-	 * @return KunenaControllerDisplay|KunenaLayout
+	 * @return  KunenaControllerDisplay|KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	public function setLayout($layout)
@@ -338,9 +338,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   mixed  $title    title
 	 * @param   bool   $replace  replace
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function setTitle($title, $replace = false)
 	{
@@ -375,7 +375,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @param   string  $keywords  keywords
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function setKeywords($keywords)
@@ -386,7 +386,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @param   string  $description  description
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function setDescription($description)
@@ -397,7 +397,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @param   string  $robots  robots
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function setRobots($robots)
@@ -410,7 +410,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param           $content
 	 * @param   string  $attribute  attribute
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function setMetaData($name, $content, $attribute = 'name')

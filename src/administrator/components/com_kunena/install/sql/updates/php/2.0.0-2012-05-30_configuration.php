@@ -16,9 +16,9 @@ use Joomla\CMS\Language\Text;
 /**
  * @param $parent
  *
- * @return array
- * @since Kunena
- * @throws Exception
+ * @return  array
+ * @since   Kunena
+ * @throws  Exception
  */
 function kunena_200_2012_05_30_configuration($parent)
 {

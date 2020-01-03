@@ -23,13 +23,13 @@ use Joomla\CMS\Language\Text;
 class KunenaAccessCommunity
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $categories = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $groups = false;
@@ -41,7 +41,7 @@ class KunenaAccessCommunity
 	protected $tree = array();
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -49,7 +49,7 @@ class KunenaAccessCommunity
 	/**
 	 * KunenaAccessCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -64,7 +64,7 @@ class KunenaAccessCommunity
 	 * List all access types you want to handle. All names must be less than 20 characters.
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
-	 * @return array    Supported access types.
+	 * @return  array    Supported access types.
 	 * @since   Kunena 6.0
 	 */
 	public function getAccessTypes()
@@ -80,9 +80,9 @@ class KunenaAccessCommunity
 	 * @param   string  $accesstype  Access type.
 	 * @param   int     $id          Group id.
 	 *
-	 * @return boolean|void|string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void|string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getGroupName($accesstype, $id = null)
 	{
@@ -102,8 +102,8 @@ class KunenaAccessCommunity
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function loadGroups()
 	{
@@ -138,9 +138,9 @@ class KunenaAccessCommunity
 	 * @param   string  $accesstype  Access type.
 	 * @param   int     $category    Group id.
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
@@ -174,8 +174,8 @@ class KunenaAccessCommunity
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function loadCategories()
 	{
@@ -216,9 +216,9 @@ class KunenaAccessCommunity
 	 *
 	 * @param   array  $categories  List of categories, null = all.
 	 *
-	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array(array => u, 'category_id'=>c, 'role'=>r))
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -255,9 +255,9 @@ class KunenaAccessCommunity
 	 * @param   int    $userid      User who needs the authorisation (null=current user, 0=visitor).
 	 * @param   array  $categories  List of categories in access type.
 	 *
-	 * @return array, where category ids are in the keys.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array, where category ids are in the keys.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
@@ -299,9 +299,9 @@ class KunenaAccessCommunity
 	 * @param   mixed  $topic    Category or topic.
 	 * @param   array  $userids  list(allow, deny).
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
 	{

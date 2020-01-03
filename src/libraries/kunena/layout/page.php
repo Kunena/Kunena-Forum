@@ -33,8 +33,8 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   string  $base   Base path.
 	 *
 	 * @return  KunenaLayout
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function factory($paths, $base = 'pages')
 	{
@@ -112,8 +112,8 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   mixed  $options  options
 	 *
 	 * @return  KunenaLayout
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function execute($path, Joomla\Input\Input $input = null, $options = null)
 	{
@@ -144,8 +144,8 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   bool    $ignore  ignore
 	 *
 	 * @return $this
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{

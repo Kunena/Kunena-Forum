@@ -23,10 +23,10 @@ use Joomla\CMS\Filesystem\Folder;
 class KunenaAdminModelRank extends KunenaModel
 {
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getRankspaths()
 	{
@@ -68,10 +68,10 @@ class KunenaAdminModelRank extends KunenaModel
 	}
 
 	/**
-	 * @return mixed|void
+	 * @return  mixed|void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getRank()
 	{
@@ -107,8 +107,8 @@ class KunenaAdminModelRank extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{

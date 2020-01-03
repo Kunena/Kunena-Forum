@@ -17,7 +17,7 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaForumTopicUserRead
  *
- * @since Kunena
+ * @since   Kunena
  * @property int $topic_id
  * @property int $category_id
  * @property int $message_id
@@ -27,7 +27,7 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaForumTopicUserRead extends CMSObject
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -45,8 +45,8 @@ class KunenaForumTopicUserRead extends CMSObject
 	 *
 	 * @param   mixed  $topic  topic
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -72,7 +72,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   string  $type    Topics table name to be used.
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
-	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserRead
+	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserRead
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table')
@@ -95,9 +95,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   mixed  $user    user
 	 * @param   bool   $reload  reload
 	 *
-	 * @return KunenaForumTopicUserRead
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicUserRead
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -105,9 +105,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	}
 
 	/**
-	 * @return KunenaForumTopicUserRead
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicUserRead
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopic()
 	{
@@ -118,7 +118,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   array  $data    data
 	 * @param   array  $ignore  ignore
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $ignore = array())
@@ -128,9 +128,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function reset()
 	{
@@ -144,9 +144,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   int    $topic_id  Topic id to be loaded.
 	 * @param   mixed  $user      user
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null)
 	{
@@ -186,9 +186,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new entry.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -232,9 +232,9 @@ class KunenaForumTopicUserRead extends CMSObject
 	/**
 	 * Method to delete the KunenaForumTopicUserRead object from the database.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete()
 	{
@@ -261,7 +261,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	/**
 	 * @param   null|bool  $exists  exists
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)

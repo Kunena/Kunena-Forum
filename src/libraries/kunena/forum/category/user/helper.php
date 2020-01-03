@@ -34,9 +34,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   mixed     $user      The user id to load - Can be only an integer.
 	 * @param   bool      $reload    Reload objects from the database.
 	 *
-	 * @return KunenaForumCategoryUser    The user category object.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategoryUser    The user category object.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($category = null, $user = null, $reload = false)
 	{
@@ -68,9 +68,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   bool|array|int  $ids   The category ids to load.
 	 * @param   mixed           $user  The user id to load.
 	 *
-	 * @return KunenaForumCategoryUser[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategoryUser[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getCategories($ids = false, $user = null)
 	{
@@ -117,9 +117,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   array       $ids   The category ids to load.
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadCategories(array $ids, KunenaUser $user)
 	{
@@ -178,9 +178,9 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   array  $ids   ids
 	 * @param   null   $user  users
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function markRead(array $ids, $user = null)
 	{

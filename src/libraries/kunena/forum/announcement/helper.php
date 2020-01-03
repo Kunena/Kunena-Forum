@@ -33,9 +33,9 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   int   $identifier  Announcement to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumAnnouncement
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumAnnouncement
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -70,10 +70,10 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string  $layout  layout
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getUrl($layout = null, $xhtml = true)
 	{
@@ -109,9 +109,9 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   int   $limit   limit
 	 * @param   bool  $filter  filter
 	 *
-	 * @return KunenaForumAnnouncement[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumAnnouncement[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
@@ -175,8 +175,8 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $filter  filter
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getCount($filter = true)
 	{
@@ -219,7 +219,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()

@@ -30,7 +30,7 @@ class Util
 	 * @param   array   $value  The value to check.
 	 * @param   string  $unit   The unit of the value. Used in error reporting.
 	 *
-	 * @return mixed `value` adjusted to fall within range, if it was outside by a floating-point margin.
+	 * @return  mixed `value` adjusted to fall within range, if it was outside by a floating-point margin.
 	 *
 	 * @throws RangeException
 	 */
@@ -62,7 +62,7 @@ class Util
 	 *
 	 * @param   string  $string
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public static function encodeURIComponent($string)
 	{

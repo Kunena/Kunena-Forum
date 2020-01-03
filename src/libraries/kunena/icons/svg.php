@@ -29,7 +29,7 @@ class KunenaSvgIcons
 	 *
 	 * @param   string  $iconset  Load iconset when topicicons
 	 *
-	 * @return string
+	 * @return  string
 	 * @since 6.0
 	 */
 	public static function loadsvg($svgname, $group = 'default', $iconset = '')

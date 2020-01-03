@@ -23,7 +23,7 @@ require_once dirname(__FILE__) . '/integration.php';
 class KunenaActivityComprofiler extends KunenaActivity
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * KunenaActivityComprofiler constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -43,9 +43,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int  $userid  userid
 	 *
-	 * @return null
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  null
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function getUserPoints($userid)
 	{
@@ -57,10 +59,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onBeforePost($message)
 	{
@@ -69,10 +74,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onBeforeReply($message)
 	{
@@ -81,9 +89,12 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message  message
 	 *
-	 * @since Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws Exception
 	 */
 	public function onBeforeEdit($message)
@@ -93,10 +104,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterPost($message)
 	{
@@ -105,10 +119,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterReply($message)
 	{
@@ -117,10 +134,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterEdit($message)
 	{
@@ -129,10 +149,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterDelete($message)
 	{
@@ -142,10 +165,13 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterUndelete($message)
 	{
@@ -159,8 +185,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $target   target
 	 * @param   int  $message  message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -172,8 +201,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $topic   topic
 	 * @param   int  $action  action
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterSubscribe($topic, $action)
 	{
@@ -186,8 +218,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $topic   topic
 	 * @param   int  $action  action
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterFavorite($topic, $action)
 	{
@@ -200,8 +235,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $topic   topic
 	 * @param   int  $action  action
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterSticky($topic, $action)
 	{
@@ -214,8 +252,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $topic   topic
 	 * @param   int  $action  action
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterLock($topic, $action)
 	{
@@ -229,8 +270,11 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @param   int  $actor   actor
 	 * @param   int  $delta   delta
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{

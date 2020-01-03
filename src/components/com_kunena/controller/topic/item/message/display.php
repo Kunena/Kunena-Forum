@@ -73,11 +73,11 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	/**
 	 * Prepare displaying message.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{

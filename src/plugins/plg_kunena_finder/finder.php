@@ -1,10 +1,8 @@
 <?php
 /**
- * @copyright      Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @copyright      Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
-
-// No direct access
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
@@ -28,9 +26,11 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object  $table    A Table object containing the message
 	 * @param   bool    $isNew    If the message has just been created
 	 *
-	 * @return void
-	 * @since    2.5
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   2.5
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
@@ -55,9 +55,11 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param   object  $table    A Table object containing the message
 	 * @param   bool    $isNew    If the message is just about to be created
 	 *
-	 * @return void
+	 * @return  void
+	 *
 	 * @since   2.5
-	 * @throws Exception
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
@@ -80,9 +82,11 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6)
 	 * @param   object  $table    A Table object containing the message
 	 *
-	 * @return void
+	 * @return  void
+	 *
 	 * @since   2.5
-	 * @throws Exception
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
@@ -104,9 +108,11 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 	 * @param   string  $context  The context of the content passed to the plugin (added in 1.6)
 	 * @param   object  $table    A Table object containing the message
 	 *
-	 * @return void
+	 * @return  void
+	 *
 	 * @since   2.5
-	 * @throws Exception
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{

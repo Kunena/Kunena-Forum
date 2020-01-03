@@ -32,8 +32,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,10 +47,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Get attachments on edit which was attached to a message with AJAX.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loadattachments()
 	{
@@ -104,9 +104,9 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Set inline to 0 on the attachment object or list of attachments when inserted in message.
 	 *
-	 * @return void
-	 * @since Kunena 5.1
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena 5.1
+	 * @throws  Exception
 	 */
 	public function setinlinestatus()
 	{
@@ -205,9 +205,9 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Remove files with AJAX.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function removeattachments()
 	{
@@ -259,8 +259,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Upload files with AJAX.
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	public function upload()
 	{
@@ -414,10 +414,10 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function post()
 	{
@@ -848,8 +848,8 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @param $subject
 	 *
-	 * @return boolean
-	 * @since    Kunena
+	 * @return  boolean
+	 * @since   Kunena
 	 */
 	protected function checkURLInSubject($subject)
 	{
@@ -879,9 +879,9 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $text
 	 * @param $topic
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -948,10 +948,10 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
-	 * @return void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
+	 * @return  void
 	 */
 	public function edit()
 	{
@@ -1279,10 +1279,10 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
-	 * @return void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
+	 * @return  void
 	 */
 	public function thankyou()
 	{
@@ -1293,10 +1293,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * @param $type
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
-	 * @return void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
+	 * @return  void
 	 */
 	protected function setThankyou($type)
 	{
@@ -1389,9 +1389,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unthankyou()
 	{
@@ -1400,9 +1400,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function subscribe()
 	{
@@ -1433,9 +1433,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unsubscribe()
 	{
@@ -1466,9 +1466,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function favorite()
 	{
@@ -1499,9 +1499,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unfavorite()
 	{
@@ -1532,9 +1532,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function sticky()
 	{
@@ -1580,9 +1580,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unsticky()
 	{
@@ -1628,9 +1628,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function lock()
 	{
@@ -1676,9 +1676,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function unlock()
 	{
@@ -1724,9 +1724,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function delete()
 	{
@@ -1795,9 +1795,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function undelete()
 	{
@@ -1851,9 +1851,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function permdelete()
 	{
@@ -1923,9 +1923,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function approve()
 	{
@@ -1993,9 +1993,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function move()
 	{
@@ -2120,9 +2120,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function report()
 	{
@@ -2293,9 +2293,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function vote()
 	{
@@ -2351,9 +2351,9 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function resetvotes()
 	{
@@ -2389,7 +2389,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @param $message
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since 6.0.0
 	 */
 	protected function checkIfBlacklisted($message)
@@ -2482,8 +2482,8 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @param   KunenaForumMessage  $message
 	 *
-	 * @since Kunena 6.0
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
 	{
@@ -2553,8 +2553,8 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @param   KunenaForumMessage  $message
 	 *
-	 * @since Kunena 6.0
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	protected function editPrivate(KunenaForumMessage $message)
 	{

@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class KunenaModelAnnouncement extends KunenaModel
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
@@ -55,7 +55,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumAnnouncement
+	 * @return  KunenaForumAnnouncement
 	 * @since   Kunena 6.0
 	 */
 	public function getNewAnnouncement()
@@ -64,9 +64,9 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumAnnouncement
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumAnnouncement
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAnnouncement()
 	{
@@ -74,7 +74,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return boolean|null
+	 * @return  boolean|null
 	 * @since   Kunena 6.0
 	 */
 	public function getTotal()
@@ -88,9 +88,9 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumAnnouncement[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumAnnouncement[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAnnouncements()
 	{
@@ -116,9 +116,9 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getannouncementActions()
 	{

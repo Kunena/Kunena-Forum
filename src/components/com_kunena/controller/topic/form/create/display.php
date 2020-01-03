@@ -30,7 +30,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	protected $name = 'Topic/Edit';
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
@@ -38,11 +38,11 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	/**
 	 * Prepare topic creation form.
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -198,9 +198,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -257,7 +257,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()

@@ -22,13 +22,13 @@ use Joomla\CMS\Language\Text;
 class KunenaPrivateCommunity extends KunenaPrivate
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $loaded = false;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -36,7 +36,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * KunenaPrivateCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -49,7 +49,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * @param $text
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)
@@ -63,7 +63,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
@@ -74,9 +74,9 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getOnClick($userid)
 	{
@@ -96,7 +96,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)

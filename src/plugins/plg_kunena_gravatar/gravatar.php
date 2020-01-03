@@ -21,8 +21,8 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * plgKunenaGravatar constructor.
 	 *
-	 * @param $subject
-	 * @param $config
+	 * @param   object  $subject subject
+	 * @param   object  $config  config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -40,7 +40,8 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar|void
+	 * @return  KunenaAvatar|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()

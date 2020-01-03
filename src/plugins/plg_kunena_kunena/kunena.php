@@ -19,9 +19,8 @@ defined('_JEXEC') or die();
 class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
-	 * @param   object &$subject  $subject
-	 *
-	 * @param   array   $config   config
+	 * @param   object $subject  subject
+	 * @param   array  $config   config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -39,7 +38,8 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaAvatarKunena|void
+	 * @return  KunenaAvatarKunena|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -55,7 +55,8 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaProfileKunena|void
+	 * @return  KunenaProfileKunena|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()

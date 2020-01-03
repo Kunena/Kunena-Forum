@@ -23,13 +23,13 @@ use Joomla\CMS\Language\Text;
 class KunenaModelTopics extends KunenaModel
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;
@@ -41,13 +41,13 @@ class KunenaModelTopics extends KunenaModel
 	protected $total = 0;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topicActions = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
@@ -222,10 +222,10 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getTopics()
 	{
@@ -272,9 +272,9 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function getRecentTopics()
 	{
@@ -364,9 +364,9 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function getUserTopics()
 	{
@@ -424,9 +424,9 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function getPosts()
 	{
@@ -481,8 +481,8 @@ class KunenaModelTopics extends KunenaModel
 	 * @param   array  $userlist  userlist
 	 * @param   array  $postlist  postlist
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{
@@ -516,10 +516,10 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getMessages()
 	{
@@ -533,9 +533,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTotal()
 	{
@@ -548,10 +548,10 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return array|null
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  array|null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTopicActions()
 	{
@@ -636,10 +636,10 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return array|null
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|null
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getPostActions()
 	{
@@ -704,7 +704,7 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function getActionMove()

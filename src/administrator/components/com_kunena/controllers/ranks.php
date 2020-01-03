@@ -25,7 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerRanks extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
@@ -35,8 +35,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,11 +47,11 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Add
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function add()
 	{
@@ -69,12 +69,12 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Edit
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function edit()
 	{
@@ -107,13 +107,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function save()
 	{
@@ -180,13 +180,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Rank upload
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function rankupload()
 	{
@@ -218,13 +218,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Remove
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 *
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function remove()
 	{
@@ -271,11 +271,11 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{

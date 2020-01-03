@@ -19,55 +19,55 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Private Messages
  * Provides access to the #__kunena_private table
  *
- * @since Kunena 6.0
+ * @since   Kunena 6.0
  */
 class TableKunenaPrivate extends KunenaTable
 {
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $parent_id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $author_id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $created_at = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $attachments = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $subject = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $body = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $params = null;
 
@@ -82,9 +82,9 @@ class TableKunenaPrivate extends KunenaTable
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function check()
 	{

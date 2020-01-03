@@ -54,9 +54,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAdminOptions()
 	{
@@ -165,9 +165,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return boolean|KunenaForumCategory|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|KunenaForumCategory|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -230,9 +230,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAdminModerators()
 	{
@@ -252,9 +252,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * @param   null  $pks    pks
 	 * @param   null  $order  order
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function saveorder($pks = null, $order = null)
 	{
@@ -319,7 +319,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * @param $table
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	protected function getReorderConditions($table)
@@ -333,10 +333,10 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
-	 * @return array
+	 * @return  array
 	 * @since 5.1.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getBatchCategories()
 	{
@@ -355,10 +355,10 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @return array|KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getAdminCategories()
 	{
@@ -476,8 +476,8 @@ class KunenaAdminModelCategories extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{

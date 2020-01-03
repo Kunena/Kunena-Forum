@@ -433,7 +433,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns the full HTML url.
+	 * @return  string Returns the full HTML url.
 	 */
 	public function doURL(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -495,7 +495,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns the email link HTML.
+	 * @return  string Returns the email link HTML.
 	 */
 	public function doEmail(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -531,7 +531,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns a span with the font size CSS.
+	 * @return  string Returns a span with the font size CSS.
 	 */
 	public function doSize(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -590,7 +590,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns a span with the font family CSS.
+	 * @return  string Returns a span with the font family CSS.
 	 */
 	public function doFont(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -642,7 +642,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns a link to the wiki.
+	 * @return  string Returns a link to the wiki.
 	 */
 	public function doWiki(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -678,7 +678,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string Returns the image tag.
+	 * @return  string Returns the image tag.
 	 */
 	public function doImage(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
@@ -843,7 +843,7 @@ class BBCodeLibrary
 	 * @param   array   $params   All of the parameters passed to the tag.
 	 * @param   string  $content  The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
 	 *
-	 * @return string|bool Returns the list HTML or a boolen result when {@link $action} is **BBCode::BBCODE_CHECK**.
+	 * @return  string|bool Returns the list HTML or a boolen result when {@link $action} is **BBCode::BBCODE_CHECK**.
 	 */
 	public function doList(BBCode $bbcode, $action, $name, $default, $params, $content)
 	{

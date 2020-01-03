@@ -33,8 +33,8 @@ class KunenaIntegrationActivity
 	protected $instances = array();
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -55,8 +55,8 @@ class KunenaIntegrationActivity
 
 	/**
 	 * @return static
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance()
 	{
@@ -74,7 +74,7 @@ class KunenaIntegrationActivity
 	 * @param   string  $method     Name of method to call
 	 * @param   array   $arguments  Arguments need to be passed to the method
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function __call($method, $arguments)

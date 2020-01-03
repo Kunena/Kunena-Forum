@@ -27,19 +27,19 @@ abstract class KunenaError
 	public static $enabled = 0;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $handler = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $debug = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $admin = false;
@@ -51,9 +51,9 @@ abstract class KunenaError
 	public static $format;
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function initialize()
 	{
@@ -81,7 +81,7 @@ abstract class KunenaError
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -100,9 +100,9 @@ abstract class KunenaError
 	 * @param   string  $msg    msg
 	 * @param   string  $where  where
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function error($msg, $where = 'default')
 	{
@@ -117,9 +117,9 @@ abstract class KunenaError
 	 * @param   string  $msg    msg
 	 * @param   string  $where  where
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function warning($msg, $where = 'default')
 	{
@@ -135,9 +135,9 @@ abstract class KunenaError
 	 *
 	 * @param   Exception| Joomla\Database\Exception\ExecutionFailureException  $exception  exception
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 5.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function displayDatabaseError($exception)
 	{
@@ -170,7 +170,7 @@ abstract class KunenaError
 	 * @param   string  $errfile  errorfile
 	 * @param   string  $errline  errorline
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
@@ -233,9 +233,9 @@ abstract class KunenaError
 	/**
 	 * @param   mixed  $debug  debug
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function shutdownHandler($debug)
 	{

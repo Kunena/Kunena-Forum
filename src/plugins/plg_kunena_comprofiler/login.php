@@ -23,7 +23,7 @@ use Joomla\CMS\Component\ComponentHelper;
 class KunenaLoginComprofiler
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaLoginComprofiler
 	/**
 	 * KunenaLoginComprofiler constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -41,14 +41,16 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @param $username
-	 * @param $password
-	 * @param $rememberme
+	 * @param   string  $username   username
+	 * @param   string  $password   password
+	 * @param   string  $rememberme remember me
 	 *
 	 * @return null|string
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loginUser($username, $password, $rememberme)
 	{
@@ -69,9 +71,11 @@ class KunenaLoginComprofiler
 
 	/**
 	 * @return null|string
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function logoutUser()
 	{
@@ -86,7 +90,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
@@ -105,7 +110,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -116,7 +122,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
@@ -127,7 +134,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return void|string
+	 * @return  void|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
@@ -147,7 +155,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
@@ -158,7 +167,8 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()

@@ -510,7 +510,7 @@ class BBCodeLexer
 	 *
 	 * @param   string  $string  The string to strip.
 	 *
-	 * @return string Returns the string stripped of quotes.
+	 * @return  string Returns the string stripped of quotes.
 	 */
 	protected function stripQuotes($string)
 	{
@@ -542,7 +542,7 @@ class BBCodeLexer
 	 * @param   int    $ptr     The index of {@link $pieces} to examine.
 	 * @param   array  $pieces  The pieces array to classify.
 	 *
-	 * @return string Returns the tokenized piece of the tag.
+	 * @return  string Returns the tokenized piece of the tag.
 	 */
 	protected function classifyPiece($ptr, $pieces)
 	{
@@ -577,7 +577,7 @@ class BBCodeLexer
 	 *
 	 * @param   string  $tag  The tag to decode.
 	 *
-	 * @return array Returns the array representation of the tag.
+	 * @return  array Returns the array representation of the tag.
 	 */
 	protected function decodeTag($tag)
 	{

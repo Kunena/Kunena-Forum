@@ -21,7 +21,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaAvatarCommunity extends KunenaAvatar
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -29,7 +29,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	/**
 	 * KunenaAvatarCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -56,7 +56,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -69,9 +69,9 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	 * @param $sizex
 	 * @param $sizey
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

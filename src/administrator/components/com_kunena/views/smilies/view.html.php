@@ -25,9 +25,9 @@ class KunenaAdminViewSmilies extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -69,7 +69,7 @@ class KunenaAdminViewSmilies extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
@@ -83,7 +83,7 @@ class KunenaAdminViewSmilies extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()

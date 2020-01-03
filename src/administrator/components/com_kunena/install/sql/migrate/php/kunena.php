@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 class KunenaMigratorKunena
 {
 	/**
-	 * @return KunenaMigratorKunena|null
+	 * @return  KunenaMigratorKunena|null
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()

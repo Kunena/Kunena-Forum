@@ -26,7 +26,7 @@ class KunenaAdminModelEmail extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since      Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{

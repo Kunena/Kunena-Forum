@@ -16,25 +16,25 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Private Message map to attachments.
  * Provides access to the #__kunena_private_attachment_map table
  *
- * @since Kunena 6.0
+ * @since   Kunena 6.0
  */
 class TableKunenaPrivateAttachmentMap extends KunenaTable
 {
 	/**
-	 * @var boolean
-	 * @since version
+	 * @var   boolean
+	 * @since   Kunena 6.0
 	 */
 	protected $_autoincrement = false;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $private_id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $attachment_id = null;
 

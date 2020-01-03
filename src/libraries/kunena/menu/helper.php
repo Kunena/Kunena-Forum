@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Multilanguage;
 abstract class KunenaMenuHelper
 {
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanCache()
@@ -43,7 +43,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return    array
 	 * @since      Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getList(&$params)
 	{
@@ -184,7 +184,7 @@ abstract class KunenaMenuHelper
 	 * @return  object
 	 *
 	 * @since    3.0.2
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getBase(&$params)
 	{
@@ -215,7 +215,7 @@ abstract class KunenaMenuHelper
 	 * @return  object
 	 *
 	 * @since    3.0.2
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getActive(&$params)
 	{
@@ -228,9 +228,9 @@ abstract class KunenaMenuHelper
 	 * Get default menu item (home page) for current language.
 	 *
 	 * @return  object
-	 * @since       Kunena
+	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getDefault()
 	{

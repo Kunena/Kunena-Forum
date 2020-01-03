@@ -80,7 +80,7 @@ abstract class KunenaTableObject
 	/**
 	 * Flag whether the object exists in the database or not.
 	 *
-	 * @var boolean
+	 * @var   boolean
 	 * @since  K4.0
 	 */
 	protected $_exists = false;
@@ -202,7 +202,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param   bool  $sqlFetch  True only if properties were assigned before constructor was called.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since  K4.0
 	 */
 	protected function initialise($sqlFetch = false)
@@ -213,7 +213,7 @@ abstract class KunenaTableObject
 	 * @param   null  $keys   keys
 	 * @param   bool  $reset  reset
 	 *
-	 * @return boolean|KunenaTableObject
+	 * @return  boolean|KunenaTableObject
 	 * @since   Kunena 6.0
 	 */
 	protected function load($keys = null, $reset = true)
@@ -284,7 +284,7 @@ abstract class KunenaTableObject
 	 * @param   array|string  $fields  fields
 	 * @param   bool          $throw   throw
 	 *
-	 * @return array
+	 * @return  array
 	 * @since  K4.0
 	 */
 	protected function getKeyValues($fields = null, $throw = true)
@@ -433,7 +433,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns an associative array of object properties.
 	 *
-	 * @return array|Closure
+	 * @return  array|Closure
 	 *
 	 * @since  K4.0
 	 */
@@ -533,7 +533,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param   array|string  $fields  fields
 	 *
-	 * @return array
+	 * @return  array
 	 * @since  K4.0
 	 * @throws UnexpectedValueException
 	 */
@@ -587,7 +587,7 @@ abstract class KunenaTableObject
 	/**
 	 * For internal use only.
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function &getInstances()
@@ -600,7 +600,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param   null|int|array  $ids  ids
 	 *
-	 * @return void
+	 * @return  void
 	 * @since  K4.0
 	 */
 	public static function freeInstances($ids = null)
@@ -625,7 +625,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * @internal
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public static function getQuery()
@@ -643,7 +643,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param   QueryInterface  $query  query
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function &loadInstances(QueryInterface $query)
@@ -661,7 +661,7 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @return mixed|string
+	 * @return  mixed|string
 	 * @since   Kunena 6.0
 	 */
 	public function getId()
@@ -733,7 +733,7 @@ abstract class KunenaTableObject
 	 *
 	 * New object will also return false on $new->exists() until it gets saved.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since  K4.0
 	 */
 	public function __clone()
@@ -764,7 +764,7 @@ abstract class KunenaTableObject
 	/**
 	 * @param   bool  $updateNulls  update
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function store($updateNulls = false)
@@ -976,7 +976,7 @@ abstract class KunenaTableObject
 	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is
 	 *           used.
 	 *
-	 * @return boolean True on success.
+	 * @return  boolean True on success.
 	 *
 	 * @since    K4.0
 	 */

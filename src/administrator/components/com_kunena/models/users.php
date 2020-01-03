@@ -31,7 +31,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since      Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -59,10 +59,10 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return boolean|KunenaUser
+	 * @return  boolean|KunenaUser
 	 *
 	 * @since   3.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getItems()
 	{
@@ -138,7 +138,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * @return  string
 	 *
 	 * @since  3.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getModcatslist()
 	{
@@ -158,8 +158,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   null  $ordering   ordering
 	 * @param   null  $direction  direction
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

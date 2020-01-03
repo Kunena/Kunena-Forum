@@ -66,11 +66,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare topic display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -299,8 +299,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @param   int  $mesid  Selected message Id.
 	 *
 	 * @return  void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareMessages($mesid)
 	{
@@ -373,8 +373,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * @param   array  $indent  Indent for the current object.
 	 *
 	 * @return  array
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
@@ -464,10 +464,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * After render update topic data for the user.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function after()
 	{
@@ -488,10 +488,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function prepareDocument()
 	{
@@ -671,9 +671,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function docImage()
 	{

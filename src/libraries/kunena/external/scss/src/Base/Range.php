@@ -39,7 +39,7 @@ class Range
 	 *
 	 * @param   integer|float  $value
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function includes($value)
 	{

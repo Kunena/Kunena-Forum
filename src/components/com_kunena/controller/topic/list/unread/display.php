@@ -26,10 +26,10 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 	/**
 	 * Prepare topic list for moderators.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function before()
 	{

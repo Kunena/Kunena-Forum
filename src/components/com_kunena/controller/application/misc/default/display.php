@@ -37,9 +37,9 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	/**
 	 * Return custom display layout.
 	 *
-	 * @return KunenaLayout
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaLayout
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function display()
 	{
@@ -114,10 +114,10 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	/**
 	 * Prepare custom text output.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function before()
 	{

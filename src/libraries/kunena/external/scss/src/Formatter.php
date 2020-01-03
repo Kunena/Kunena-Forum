@@ -57,7 +57,7 @@ abstract class Formatter
 	public $assignSeparator;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 */
 	public $keepSemicolons;
 
@@ -91,7 +91,7 @@ abstract class Formatter
 	/**
 	 * Return indentation (whitespace)
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function indentStr()
 	{
@@ -106,7 +106,7 @@ abstract class Formatter
 	 * @param   string  $name
 	 * @param   mixed   $value
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function property($name, $value)
 	{
@@ -236,7 +236,7 @@ abstract class Formatter
 	 * @param   OutputBlock              $block               An abstract syntax tree
 	 * @param   SourceMapGenerator|null  $sourceMapGenerator  Optional source map generator
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function format(OutputBlock $block, SourceMapGenerator $sourceMapGenerator = null)
 	{

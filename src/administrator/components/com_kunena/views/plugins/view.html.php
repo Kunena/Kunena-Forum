@@ -28,9 +28,9 @@ class KunenaAdminViewPlugins extends KunenaView
 	 *
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -57,7 +57,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @return void The HTML code for the select tag
+	 * @return  void The HTML code for the select tag
 	 * @since   K1.6
 	 */
 	protected function setToolbar()

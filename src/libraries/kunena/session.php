@@ -27,13 +27,13 @@ class KunenaSession extends CMSObject
 	private static $_instance;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_sessiontimeout = false;
@@ -65,8 +65,8 @@ class KunenaSession extends CMSObject
 	/**
 	 * @param   mixed|null  $identifier  identifier
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($identifier)
 	{
@@ -153,9 +153,9 @@ class KunenaSession extends CMSObject
 	 * @param   bool  $update  update
 	 * @param   null  $userid  userid
 	 *
-	 * @return KunenaSession
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaSession
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($update = false, $userid = null)
 	{
@@ -174,9 +174,9 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function updateSessionInfo()
 	{
@@ -192,9 +192,9 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function isNewSession()
 	{
@@ -216,7 +216,7 @@ class KunenaSession extends CMSObject
 	 *
 	 * @return    boolean True on success
 	 * @since     1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -301,7 +301,7 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function isNewUser()
@@ -323,7 +323,7 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function markAllCategoriesRead()

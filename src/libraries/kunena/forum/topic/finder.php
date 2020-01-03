@@ -34,7 +34,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	protected $hold = array(0);
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $moved = null;
@@ -42,8 +42,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Constructor.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -61,8 +61,8 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return $this
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function filterByUserAccess(KunenaUser $user)
 	{
@@ -320,10 +320,10 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   string  $access  Kunena action access control check.
 	 *
-	 * @return array|KunenaForumTopic[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|KunenaForumTopic[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function find($access = 'read')
 	{
@@ -366,7 +366,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   QueryInterface  $query  query
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)

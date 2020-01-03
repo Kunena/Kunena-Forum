@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $model = null;
@@ -65,7 +65,7 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @access private
 	 *
-	 * @return void
+	 * @return  void
 	 * @since  Kunena
 	 */
 	public function setToolBar()
@@ -75,10 +75,10 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
+	 * @return  void
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function displaySchema()
 	{
@@ -103,10 +103,10 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
+	 * @return  void
+	 * @since   Kunena
 	 * @throws KunenaSchemaException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function displaySchemaDiff()
 	{

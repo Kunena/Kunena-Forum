@@ -36,9 +36,9 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Prepare Kunena user settings.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -134,9 +134,9 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

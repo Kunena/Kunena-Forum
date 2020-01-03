@@ -53,9 +53,9 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	/**
 	 * Prepare ban manager.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -78,9 +78,9 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

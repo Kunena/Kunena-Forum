@@ -25,8 +25,8 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayList($tpl = null)
 	{
@@ -64,9 +64,9 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since K4.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function displayListMention($tpl = null)
 	{
@@ -101,9 +101,9 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * Return the list of files for the avatar gallery selected by the user
 	 *
-	 * @return void
+	 * @return  void
 	 * @since K5.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function displayGalleryimages()
 	{

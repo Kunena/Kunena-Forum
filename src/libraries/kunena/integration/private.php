@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class KunenaPrivate
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -30,9 +30,9 @@ class KunenaPrivate
 	/**
 	 * @param   null  $integration  integration
 	 *
-	 * @return boolean|KunenaPrivate
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|KunenaPrivate
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -65,9 +65,9 @@ class KunenaPrivate
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function showIcon($userid)
 	{
@@ -116,7 +116,7 @@ class KunenaPrivate
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)
@@ -127,7 +127,7 @@ class KunenaPrivate
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function getOnClick($userid)
@@ -143,9 +143,9 @@ class KunenaPrivate
 	 *
 	 * @param   integer  $userid  userid
 	 *
-	 * @return string
-	 * @since    Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function shownewIcon($userid, $class = '', $icon = '')
 	{
@@ -208,7 +208,7 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
@@ -219,7 +219,7 @@ class KunenaPrivate
 	/**
 	 * @param   string  $text  text
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)

@@ -30,11 +30,12 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * plgKunenaComprofiler constructor.
 	 *
-	 * @param $subject
-	 * @param $config
+	 * @param   object  $subject subject
+	 * @param   object  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -85,12 +86,15 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @param         $type
-	 * @param   null  $view    view
-	 * @param   null  $params  params
+	 * @param   string  $type    type
+	 * @param   null    $view    view
+	 * @param   null    $params  params
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
 	{
@@ -112,13 +116,16 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @param        $context
-	 * @param        $item
-	 * @param        $params
-	 * @param   int  $page  page
+	 * @param   string  $context context
+	 * @param   int     $item    items
+	 * @param   object  $params  params
+	 * @param   int     $page    page
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
 	{
@@ -137,7 +144,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess|KunenaAccessComprofiler|void
+	 * @return  KunenaAccess|KunenaAccessComprofiler|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAccessControl()
@@ -155,7 +163,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin|KunenaLoginComprofiler|void
+	 * @return  KunenaLogin|KunenaLoginComprofiler|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetLogin()
@@ -173,7 +182,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar|void
+	 * @return  KunenaAvatar|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -191,7 +201,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfile|void
+	 * @return  KunenaProfile|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
@@ -209,7 +220,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return KunenaPrivate|void
+	 * @return  KunenaPrivate|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetPrivate()
@@ -227,7 +239,8 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivity|void
+	 * @return  KunenaActivity|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()

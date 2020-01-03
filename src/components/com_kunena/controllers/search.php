@@ -21,8 +21,8 @@ class KunenaControllerSearch extends KunenaController
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{

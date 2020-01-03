@@ -36,10 +36,10 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	/**
 	 * Prepare announcement form display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -73,9 +73,9 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

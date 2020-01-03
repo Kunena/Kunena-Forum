@@ -21,7 +21,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can publish an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function canPublish()
@@ -32,7 +32,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can edit an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function canEdit()
@@ -43,7 +43,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can delete an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function canDelete()
@@ -57,7 +57,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * @param   string  $name  The name of the field
 	 * @param   string  $mode  Define the way to display the date on the field
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function displayField($name, $mode = null)

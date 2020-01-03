@@ -26,7 +26,7 @@ class KunenaMigratorJoomlaboard
 	);
 
 	/**
-	 * @return KunenaMigratorJoomlaboard|null
+	 * @return  KunenaMigratorJoomlaboard|null
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()

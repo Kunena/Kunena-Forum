@@ -22,7 +22,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaTemplateLegacy
 {
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function load()

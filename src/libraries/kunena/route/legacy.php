@@ -79,7 +79,7 @@ abstract class KunenaRouteLegacy
 	/**
 	 * @param   string  $view  view
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function isLegacy($view)
@@ -95,9 +95,9 @@ abstract class KunenaRouteLegacy
 	/**
 	 * @param   mixed  $item  item
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function convertMenuItem($item)
 	{
@@ -146,9 +146,9 @@ abstract class KunenaRouteLegacy
 	 * @param   string  $uri        uri
 	 * @param   int     $showstart  showstart
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function convert($uri, $showstart = 1)
 	{

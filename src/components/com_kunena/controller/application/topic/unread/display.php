@@ -23,9 +23,9 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function exists()
 	{
@@ -35,10 +35,10 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	/**
 	 * Redirect unread layout to the page that contains the first unread message.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -65,9 +65,9 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

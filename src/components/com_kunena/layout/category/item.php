@@ -25,9 +25,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to display categories Index sublayout
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayCategories()
 	{
@@ -41,9 +41,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to display category action sublayout
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayCategoryActions()
 	{
@@ -56,9 +56,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to return array of actions sublayout
 	 *
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryActions()
 	{
@@ -242,10 +242,10 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   bool                 $follow     follow
 	 * @param   bool                 $canonical  canonical
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = false)
 	{
@@ -285,9 +285,9 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @param   int  $maxpages  The maximum number of pages
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getPagination($maxpages)
 	{

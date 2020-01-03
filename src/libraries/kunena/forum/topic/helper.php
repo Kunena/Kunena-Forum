@@ -33,9 +33,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   int   $identifier  The topic to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumTopic
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopic
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -74,8 +74,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $user   user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
 	{
@@ -105,8 +105,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $user   user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function favorite($ids, $value = true, $user = null)
 	{
@@ -134,10 +134,10 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed   $ids        ids
 	 * @param   string  $authorise  authorise
 	 *
-	 * @return KunenaForumTopic[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  KunenaForumTopic[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getTopics($ids = false, $authorise = 'read')
 	{
@@ -176,9 +176,9 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * @param   array  $ids  ids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadTopics(array $ids)
 	{
@@ -235,9 +235,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $ids   ids
 	 * @param   mixed  $user  user
 	 *
-	 * @return KunenaForumTopicUser[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicUser[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getUserTopics($ids = false, $user = null)
 	{
@@ -255,10 +255,10 @@ abstract class KunenaForumTopicHelper
 	 * @param   int    $limit       limit
 	 * @param   array  $params      params
 	 *
-	 * @return array|KunenaForumTopic[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|KunenaForumTopic[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -456,8 +456,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int  $ids  ids
 	 *
 	 * @return integer    Count of deleted topics.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function delete($ids)
 	{
@@ -527,8 +527,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   array|int  $ids  ids
 	 *
 	 * @return integer    Count of trashed topics.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function trash($ids)
 	{
@@ -572,7 +572,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -585,9 +585,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   int    $start  start
 	 * @param   int    $end    end
 	 *
-	 * @return boolean|integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|integer
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
 	{
@@ -723,9 +723,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   array  $topics  Topics
 	 * @param   mixed  $user    User
 	 *
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function fetchNewStatus(array $topics, $user = null)
 	{

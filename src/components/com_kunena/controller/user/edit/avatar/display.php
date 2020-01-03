@@ -69,10 +69,10 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare avatar form.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -100,9 +100,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -162,7 +162,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar galleries and make them select option list.
 	 *
-	 * @return array|string[]  List of options.
+	 * @return  array|string[]  List of options.
 	 * @since   Kunena 6.0
 	 */
 	protected function getGalleryOptions()

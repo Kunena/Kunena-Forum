@@ -22,31 +22,31 @@ use Joomla\CMS\Object\CMSObject;
 abstract class KunenaDatabaseObject extends CMSObject
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
 
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	protected $_name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_saving = false;
@@ -59,8 +59,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
 	 *                              If not provided, default values will be used.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -121,9 +121,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   int      $identifier  Object identifier to load.
 	 * @param   boolean  $reload      Force object reload from the database.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -137,8 +137,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
 	 *
 	 * @return  boolean  True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -242,8 +242,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   mixed  $id  Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($id = null)
 	{
@@ -287,8 +287,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Method to delete the object from the database.
 	 *
 	 * @return    boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete()
 	{

@@ -24,19 +24,19 @@ use Joomla\CMS\Filesystem\Path;
 class KunenaPath extends Path
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public static $tmpdir = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public static $apache = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public static $owner = null;
@@ -77,7 +77,7 @@ class KunenaPath extends Path
 	 *
 	 * @param   string  $path  paths
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function isWritable($path)

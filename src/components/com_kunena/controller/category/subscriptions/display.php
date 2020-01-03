@@ -49,11 +49,11 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	/**
 	 * Prepare category subscriptions display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -132,7 +132,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	/**
 	 * Get topic action option list.
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function getActions()
@@ -147,9 +147,9 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

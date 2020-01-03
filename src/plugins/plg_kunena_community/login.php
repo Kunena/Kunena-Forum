@@ -21,7 +21,7 @@ use Joomla\CMS\Component\ComponentHelper;
 class KunenaLoginCommunity
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -29,7 +29,7 @@ class KunenaLoginCommunity
 	/**
 	 * KunenaLoginCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -39,7 +39,7 @@ class KunenaLoginCommunity
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -48,7 +48,7 @@ class KunenaLoginCommunity
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()

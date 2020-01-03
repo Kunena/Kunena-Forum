@@ -1044,7 +1044,7 @@ class BBCode
 	 *
 	 * @param   string  $string  The string to replace.
 	 *
-	 * @return string Returns an encoded version of {@link $string}.
+	 * @return  string Returns an encoded version of {@link $string}.
 	 */
 	public function htmlEncode($string)
 	{
@@ -1075,7 +1075,7 @@ class BBCode
 	 *
 	 * @param   string  $string  The string to process.
 	 *
-	 * @return string Returns the processed version of {@link $string}.
+	 * @return  string Returns the processed version of {@link $string}.
 	 */
 	public function fixupOutput($string)
 	{
@@ -1129,7 +1129,7 @@ class BBCode
 	 *
 	 * @param   string  $string  The string to process.
 	 *
-	 * @return string Returns the processed version of {@link $string}.
+	 * @return  string Returns the processed version of {@link $string}.
 	 */
 	protected function processSmileys($string)
 	{
@@ -1237,7 +1237,7 @@ class BBCode
      * must be an array of alternating pairs of plain text (even indexes) and HTML (odd indexes).
      *
      * @param string $string The string to detect the URLs in.
-     * @return array Returns an array in the form `[text, anchor, text, anchor, ...]`.
+     * @return  array Returns an array in the form `[text, anchor, text, anchor, ...]`.
      */
 	protected function autoDetectURLs($string)
 	{
@@ -1575,7 +1575,7 @@ REGEX;
 	 * @param   array  $array  The token stack.
 	 * @param   int    $start  The starting index in {@link $array} to process.
 	 *
-	 * @return string Returns the stack text from all the elements in the stack.
+	 * @return  string Returns the stack text from all the elements in the stack.
 	 */
 	protected function collectText($array, $start = 0)
 	{
@@ -1613,7 +1613,7 @@ REGEX;
 	 *
 	 * @param   int  $pos  The position to start on the stack.
 	 *
-	 * @return array Returns an array of output tokens.
+	 * @return  array Returns an array of output tokens.
 	 */
 	protected function generateOutput($pos)
 	{
@@ -2968,7 +2968,7 @@ REGEX;
 	 *
 	 * @param   string  $string  The BBCode string to parse.
 	 *
-	 * @return string Returns the HTML version of {@link $string}.
+	 * @return  string Returns the HTML version of {@link $string}.
 	 */
 	public function parse($string)
 	{

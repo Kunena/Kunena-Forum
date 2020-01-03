@@ -35,8 +35,8 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $taskOff  Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function boolean($i, $value, $taskOn = null, $taskOff = null)
 	{
@@ -61,9 +61,9 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function behavior()
 	{
@@ -155,9 +155,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   integer  $i           i
 	 * @param   string   $identifier  identifier
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
@@ -189,7 +189,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   mixed  $row      row
 	 * @param   int    $overlib  overlib
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected static function _checkedOut(&$row, $overlib = 1)
@@ -236,9 +236,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $prefix     An optional prefix for the task
 	 * @param   bool     $bootstrap  bootstrap
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function published($i, $value, $prefix = '', $bootstrap = false)
 	{
@@ -272,10 +272,10 @@ abstract class JHtmlKunenaGrid
 	 * @param   string        $img        An optinal img HTML tag
 	 * @param   string        $checkbox   An optional prefix for checkboxes.
 	 *
-	 * @return string The Html code
+	 * @return  string The Html code
 	 *
 	 * @since    3.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{
@@ -399,9 +399,9 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $prefix     An optional prefix for the task
 	 * @param   bool     $bootstrap  bootstrap
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)
 	{
@@ -413,7 +413,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $image  image
 	 * @param   string  $task   task
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
@@ -429,7 +429,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $enabled  enabled
 	 * @param   string  $alt      alt
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
@@ -450,7 +450,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   bool    $enabled  enabled
 	 * @param   string  $alt      alt
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')

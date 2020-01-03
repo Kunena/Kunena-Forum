@@ -47,10 +47,10 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare report message form.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -94,9 +94,9 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

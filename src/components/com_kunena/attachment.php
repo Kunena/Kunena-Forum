@@ -182,9 +182,9 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function doExecute()
 	{
@@ -208,7 +208,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function isSite()
@@ -217,7 +217,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function isAdmin()
@@ -228,7 +228,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	/**
 	 * @param   bool  $params  params
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplate($params = false)
@@ -240,7 +240,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   string   $name   name
 	 * @param   boolean  $value  value
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setUserState($name, $value)

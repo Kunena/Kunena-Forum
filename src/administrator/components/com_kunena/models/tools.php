@@ -27,169 +27,169 @@ require_once __DIR__ . '/cpanel.php';
 class KunenaAdminModelTools extends KunenaAdminModelCpanel
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_smtpuser = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_ftp = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_sef = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $jconfig_sef_rewrite = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $htaccess = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $mbstring = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $gd_info = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $gd_support = null;
 
 	/**
-	 * @var null
-	 * @since Kunena 6.0
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $openssl = null;
 
 	/**
-	 * @var null
-	 * @since Kunena 6.0
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $json = null;
 
 	/**
-	 * @var null
-	 * @since Kunena 6.0
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $fileinfo = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $maxExecTime = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $maxExecMem = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $fileuploads = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $kunenaVersionInfo = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $ktemplate = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $ktemplatedetails = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $jtemplatedetails = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $joomlamenudetails = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $collation = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $kconfigsettings = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $joomlalanguages = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $plgtext = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $modtext = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $thirdpartytext = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $seftext = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $integration_settings = null;
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -209,7 +209,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -223,7 +223,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -243,7 +243,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -259,11 +259,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to generate the report configuration with anonymous data
 	 *
-	 * @return string
+	 * @return  string
 	 * @since 5.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getSystemReportAnonymous()
 	{
@@ -287,8 +287,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Check if php extensions needed by kunena are right loaded
 	 *
-	 * @return string
-	 * @since Kunena 6.0
+	 * @return  string
+	 * @since   Kunena 6.0
 	 */
 	protected function getPhpExtensions()
 	{
@@ -342,11 +342,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Initialize data to generate configuration report
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 5.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getReportData()
 	{
@@ -517,7 +517,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to put readable correctly the kunena template params
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @return    string
 	 * @since 5.1.1
@@ -541,10 +541,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get the default joomla template.
 	 *
-	 * @return boolean|stdClass|void
+	 * @return  boolean|stdClass|void
 	 *
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function _getJoomlaTemplate()
 	{
@@ -650,7 +650,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @return    string|void
 	 *
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function _getTablesCollation()
 	{
@@ -756,7 +756,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @return    string
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected function _getJoomlaLanguagesInstalled()
 	{
@@ -850,7 +850,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -898,7 +898,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @return    string
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getSystemReport()
 	{

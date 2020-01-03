@@ -102,17 +102,17 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 
 	/**
 	 * @var
-	 * @since Kunena 5.1
+	 * @since   Kunena 5.1
 	 */
 	public $plglogin;
 
 	/**
 	 * Prepare login display.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function before()
 	{

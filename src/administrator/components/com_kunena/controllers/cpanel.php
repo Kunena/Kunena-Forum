@@ -23,9 +23,9 @@ use Joomla\CMS\Uri\Uri;
 class KunenaAdminControllerCpanel extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 *
-	 * @since    2.0.0-BETA2
+	 * @since   Kunena 2.0.0-BETA2
 	 */
 	protected $baseurl = null;
 
@@ -34,8 +34,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @param   array  $config  construct
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -48,10 +48,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * Display Kunena updates on dashboard
 	 *
-	 * @return array|null|string
+	 * @return  array|null|string
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  Exception
 	 */
 	public static function onGetIcons()
 	{
@@ -132,9 +132,9 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
-	 * @since    2.0.0-BETA2
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0.0-BETA2
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

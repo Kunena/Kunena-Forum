@@ -43,10 +43,10 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	/**
 	 * Prepare topic actions display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -341,10 +341,10 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
 	 * @param   string  $icon     icon
 	 *
-	 * @return KunenaLayout|KunenaLayoutBase
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{

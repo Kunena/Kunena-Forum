@@ -37,9 +37,9 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @param   null  $identifier  identifier
 	 *
-	 * @return KunenaForumTopicRate The rate object.
+	 * @return  KunenaForumTopicRate The rate object.
 	 * @since     5.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{

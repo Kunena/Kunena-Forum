@@ -22,10 +22,10 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl
 	 *
-	 * @return mixed|void
+	 * @return  mixed|void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{

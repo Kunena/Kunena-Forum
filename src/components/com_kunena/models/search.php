@@ -23,26 +23,26 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaModelSearch extends KunenaModel
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $error = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{
@@ -157,9 +157,9 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function buildWhere()
 	{
@@ -270,7 +270,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function buildOrderBy()
@@ -304,10 +304,10 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return boolean|integer
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  boolean|integer
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getTotal()
 	{
@@ -336,7 +336,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function getSearchWords()
@@ -360,10 +360,10 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getResults()
 	{
@@ -447,7 +447,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getUrlParams()
@@ -493,10 +493,10 @@ class KunenaModelSearch extends KunenaModel
 	 * @param   string  $params      params
 	 * @param   bool    $xhtml       xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{

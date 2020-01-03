@@ -32,9 +32,9 @@ abstract class KunenaForumTopicPollHelper
 	 * @param   int   $identifier  The poll to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumTopicPoll
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicPoll
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -59,7 +59,7 @@ abstract class KunenaForumTopicPollHelper
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function recount()

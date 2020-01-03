@@ -22,7 +22,7 @@ use Joomla\CMS\Router\Route;
 class KunenaProfileAltaUserPoints extends KunenaProfile
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -43,9 +43,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -63,7 +63,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array|boolean
+	 * @return  array|boolean
 	 * @since   Kunena 6.0
 	 */
 	public function _getTopHits($limit = 0)
@@ -94,7 +94,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   mixed  $view    view
 	 * @param   mixed  $params  params
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
@@ -105,9 +105,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   integer  $userid  userid
 	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
@@ -119,9 +119,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{

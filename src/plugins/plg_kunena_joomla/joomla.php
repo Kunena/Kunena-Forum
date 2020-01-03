@@ -38,7 +38,8 @@ class plgKunenaJoomla extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaAccessJoomla|void
+	 * @return  KunenaAccessJoomla|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAccessControl()
@@ -54,7 +55,8 @@ class plgKunenaJoomla extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return KunenaLoginJoomla|null
+	 * @return  KunenaLoginJoomla|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetLogin()

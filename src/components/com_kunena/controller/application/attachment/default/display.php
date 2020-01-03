@@ -26,7 +26,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists()
@@ -37,12 +37,12 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	/**
 	 * Display attachment.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaExceptionAuthorise
 	 * @throws RuntimeException
-	 * @throws null
+	 * @throws  null
 	 */
 	public function execute()
 	{
@@ -72,11 +72,11 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	/**
 	 * Display attachment.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function display()
 	{
@@ -199,9 +199,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	/**
 	 * Prepare attachment display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{

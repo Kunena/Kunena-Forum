@@ -16,24 +16,24 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 /**
- * @package     Kunena
+ * @package  Easysocial
  *
- * @since       Kunena
+ * @since  Kunena 6.0
  */
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * KunenaActivityEasySocial constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
-	 * @since       Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -41,12 +41,13 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param         $command
-	 * @param         $message
-	 * @param   null  $target  target
+	 * @param   string  $command command
+	 * @param   string  $message message
+	 * @param   null    $target  target
 	 *
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function assignBadge($command, $message, $target = null)
 	{
@@ -57,11 +58,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param         $command
-	 * @param   null  $target  target
+	 * @param   string  $command command
+	 * @param   null    $target  target
 	 *
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function assignPoints($command, $target = null)
 	{
@@ -73,9 +75,11 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since       Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onAfterPost($message)
 	{
@@ -106,12 +110,15 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @internal  param $string
 	 *
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @since     1.3
-	 * @access    public
+	 * @return  void
 	 *
-	 * @throws Exception
+	 * @since   1.3
+	 *
+	 * @access  public
+	 *
+	 * @throws  Exception
 	 */
 	public function onAfterReply($message)
 	{
@@ -167,13 +174,15 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @internal  param $string
 	 *
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @return array|boolean
-	 * @since     5.0
-	 * @access    public
+	 * @return   array|boolean
 	 *
-	 * @throws Exception
+	 * @since    5.0
+	 *
+	 * @access   public
+	 *
+	 * @throws  Exception
 	 */
 	public function getSubscribers($message)
 	{
@@ -250,7 +259,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int  $target   target
 	 * @param   int  $message  message
 	 *
-	 * @since       Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -273,9 +284,11 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param $target
+	 * @param   object  $target target
 	 *
-	 * @since       Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onBeforeDeleteTopic($target)
 	{
@@ -283,9 +296,11 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param $topic
+	 * @param   object  $topic topic
 	 *
-	 * @since       Kunena
+	 * @return  void
+	 *
+	 * @since  Kunena 6.0
 	 */
 	public function onAfterDeleteTopic($topic)
 	{

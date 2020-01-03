@@ -19,7 +19,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumMessageThankyou
  *
- * @since Kunena
+ * @since   Kunena
  * @property int    $userid
  * @property int    $targetuserid
  * @property string $time
@@ -55,9 +55,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   null  $identifier  identifier
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumMessageThankyou
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumMessageThankyou
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -68,7 +68,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   int     $userid  userid
 	 * @param   string  $time    time
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
@@ -81,9 +81,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 *
 	 * @param   mixed  $user  user
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save($user)
 	{
@@ -138,7 +138,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 *
 	 * @param   int  $userid  userid
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($userid)
@@ -149,9 +149,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	/**
 	 * @param   KunenaForumMessage  $message  message
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
@@ -179,7 +179,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	/**
 	 * Get all users who have given thank you to this message.
 	 *
-	 * @return array List of userid=>time.
+	 * @return  array List of userid=>time.
 	 * @since   Kunena 6.0
 	 */
 	public function getList()
@@ -192,9 +192,9 @@ class KunenaForumMessageThankyou extends CMSObject
 	 *
 	 * @param   mixed  $user  user
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete($user)
 	{

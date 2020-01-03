@@ -77,7 +77,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	protected $_action = false;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
  */
 	protected $_errormsg = null;
@@ -89,7 +89,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	protected $_versiontablearray = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
  */
 	protected $_versionarray = null;
@@ -101,8 +101,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public $steps = null;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -164,10 +164,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Initialise Kunena, run from Joomla installer.
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function install()
 	{
@@ -180,9 +180,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Uninstall Kunena, run from Joomla installer.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function uninstall()
 	{
@@ -251,7 +251,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @return    object    The property where specified, the state object where omitted.
 	 *
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getState($property = null, $default = null)
 	{
@@ -282,9 +282,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Get Status
 	 *
-	 * @return object
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getStatus()
 	{
@@ -294,9 +294,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Get Action
 	 *
-	 * @return object
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getAction()
 	{
@@ -304,9 +304,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return object
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getStep()
 	{
@@ -314,9 +314,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return object
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTask()
 	{
@@ -326,9 +326,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Get version
 	 *
-	 * @return object
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getVersion()
 	{
@@ -340,8 +340,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @param $action
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setAction($action)
 	{
@@ -353,8 +353,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $step
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setStep($step)
 	{
@@ -367,8 +367,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $task
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setTask($task)
 	{
@@ -380,8 +380,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $version
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setVersion($version)
 	{
@@ -396,8 +396,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $msg
 	 * @param   null    $id
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addStatus($task, $result = false, $msg = '', $id = null)
 	{
@@ -422,8 +422,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool|string
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getInstallError()
 	{
@@ -443,7 +443,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return array|null
+	 * @return  array|null
 	 *
 	 * @since   Kunena 6.0
  */
@@ -460,8 +460,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return bool|null
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function extract($path, $filename, $dest = null, $silent = false)
 	{
@@ -517,8 +517,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $name
 	 *
 	 * @return bool
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function installLanguage($tag, $name = '')
 	{
@@ -575,7 +575,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   $group
 	 * @param   $element
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
  */
@@ -593,8 +593,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return bool|null
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function installModule($path, $name)
 	{
@@ -659,8 +659,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return bool|null
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function installPlugin($path, $group, $name, $publish, $ordering = 0)
 	{
@@ -784,7 +784,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Method to uninstall the Kunena library during uninstall process
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
  */
@@ -802,7 +802,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Method to uninstall the Kunena media during uninstall process
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
  */
@@ -897,10 +897,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 * @throws KunenaSchemaException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function stepPrepare()
 	{
@@ -973,8 +973,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function stepExtract()
 	{
@@ -1053,9 +1053,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $group    group
 	 * @param   string  $element  element
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public function enablePlugin($group, $element)
 	{
@@ -1072,8 +1072,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function stepPlugins()
 	{
@@ -1097,10 +1097,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 * @throws KunenaSchemaException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function stepDatabase()
 	{
@@ -1165,9 +1165,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function stepFinish()
 	{
@@ -1210,9 +1210,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function migrateDatabase()
 	{
@@ -1264,10 +1264,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 * @throws KunenaSchemaException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function installDatabase()
 	{
@@ -1328,9 +1328,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function migrateConfig()
 	{
@@ -1374,9 +1374,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 	/**
 	 * @return bool
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function upgradeDatabase()
 	{
@@ -1467,7 +1467,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $action
 	 *
-	 * @return array|mixed|null
+	 * @return  array|mixed|null
 	 * @since   Kunena 6.0
  */
 	public function processUpgradeXMLNode($action)
@@ -1541,9 +1541,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function installSampleData()
 	{
@@ -1562,8 +1562,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   null  $stats
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function setAvatarStatus($stats = null)
 	{
@@ -1580,9 +1580,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @return mixed|stdClass
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed|stdClass
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getAvatarStatus()
 	{
@@ -1599,9 +1599,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function migrateAvatars()
 	{
@@ -1751,8 +1751,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function migrateAvatarGalleries()
 	{
@@ -1786,8 +1786,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function migrateCategoryImages()
 	{
@@ -1821,8 +1821,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   null  $stats
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function setAttachmentStatus($stats = null)
 	{
@@ -1839,10 +1839,10 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @return mixed|stdClass
+	 * @return  mixed|stdClass
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getAttachmentStatus()
 	{
@@ -1859,9 +1859,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function migrateAttachments()
 	{
@@ -2073,8 +2073,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function recountCategories()
 	{
@@ -2157,7 +2157,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function getVersionPrefix()
@@ -2184,9 +2184,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @return array
+	 * @return  array
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function getDetectVersions()
@@ -2272,7 +2272,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return bool
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function isMigration($new, $old)
@@ -2319,9 +2319,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param         $versionlist
 	 * @param   bool  $state
 	 *
-	 * @return mixed|null|StdClass
+	 * @return  mixed|null|StdClass
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function getInstalledVersion($prefix, $versionlist, $state = false)
@@ -2415,7 +2415,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   string  $state
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function insertVersion($state = 'beginInstall')
@@ -2427,7 +2427,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $state
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function updateVersionState($state)
@@ -2450,7 +2450,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $type
 	 * @param   null    $action
 	 *
-	 * @return string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
  */
@@ -2549,9 +2549,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $detectlist
 	 *
-	 * @return array
+	 * @return  array
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function detectTable($detectlist)
@@ -2639,9 +2639,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param $oldtable
 	 * @param $newtable
 	 *
-	 * @return array|void
+	 * @return  array|void
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function migrateTable($oldprefix, $oldtable, $newtable)
@@ -2728,7 +2728,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param $table
 	 *
-	 * @return string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
  */
@@ -2749,9 +2749,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @return array|null
+	 * @return  array|null
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function createVersionTable()
@@ -2813,7 +2813,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   integer  $versionname
 	 * @param   string   $state
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
@@ -2849,9 +2849,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param   string  $prefix
 	 * @param   bool    $reload
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	protected function listTables($prefix, $reload = false)
@@ -2886,7 +2886,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   string  $prefix
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
 	 */
 	public function deleteTables($prefix)
@@ -2916,8 +2916,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * In addition it checks if there is a link to Kunena in any of the menus
 	 * and if not, adds a forum link in the mainmenu.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 * @throws KunenaInstallerException
 	 */
 	public function createMenu()
@@ -2960,9 +2960,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 *
 	 * @return bool
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws KunenaInstallerException
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function createMenuJ25($menu, $submenu)
 	{
@@ -3140,8 +3140,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function deleteMenu()
 	{
@@ -3199,8 +3199,8 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @return bool
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function recountThankyou()
 	{

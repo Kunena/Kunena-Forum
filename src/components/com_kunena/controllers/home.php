@@ -33,8 +33,8 @@ class KunenaControllerHome extends KunenaController
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 * @since K1.0
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -106,8 +106,8 @@ class KunenaControllerHome extends KunenaController
 	 * @param   array         $visited  Already visited menu items.
 	 *
 	 * @return null
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function _getDefaultMenuItem(AbstractMenu $menu, $active, $visited = array())
 	{

@@ -66,9 +66,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @return Joomla\CMS\Layout\BaseLayout
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function execute()
 	{
@@ -215,10 +215,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -299,9 +299,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function exists()
 	{
@@ -319,9 +319,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @param   int  $code  code
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setResponseStatus($code = 404)
 	{
@@ -354,7 +354,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return KunenaLayout
+	 * @return  KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	protected function display()
@@ -369,9 +369,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function after()
 	{
@@ -393,9 +393,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	final public function poweredBy()
 	{

@@ -23,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaActivityCommunity extends KunenaActivity
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * KunenaActivityCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -43,8 +43,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onAfterPost($message)
 	{
@@ -94,9 +94,9 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return mixed|string|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed|string|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	private function buildContent($message)
 	{
@@ -156,8 +156,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onAfterReply($message)
 	{

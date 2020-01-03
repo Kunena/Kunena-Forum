@@ -23,11 +23,11 @@ use Joomla\CMS\Language\Text;
 class KunenaAdminModelUser extends KunenaModel
 {
 	/**
-	 * @return array|KunenaForumTopic[]|void
+	 * @return  array|KunenaForumTopic[]|void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getSubscriptions()
 	{
@@ -67,10 +67,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaForumCategory[]
+	 * @return  KunenaForumCategory[]
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCatsubcriptions()
 	{
@@ -82,10 +82,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|void
+	 * @return  array|void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getIPlist()
 	{
@@ -146,10 +146,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getListmodcats()
 	{
@@ -178,10 +178,10 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return KunenaUser
+	 * @return  KunenaUser
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUser()
 	{
@@ -193,9 +193,9 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|mixed|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|mixed|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getListuserranks()
 	{
@@ -234,7 +234,7 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -244,9 +244,9 @@ class KunenaAdminModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|string|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|string|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getMoveuser()
 	{
@@ -283,8 +283,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{

@@ -27,8 +27,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -38,9 +38,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function jump()
 	{
@@ -57,9 +57,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function markread()
 	{
@@ -132,9 +132,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function subscribe()
 	{
@@ -170,9 +170,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unsubscribe()
 	{

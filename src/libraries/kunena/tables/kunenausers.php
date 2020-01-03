@@ -29,48 +29,48 @@ class TableKunenaUsers extends KunenaTable
 	 * User ID
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $userid = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $username = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $email = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $blocked = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $registerDate = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $lastvisitDate = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $view = null;
@@ -79,7 +79,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Signature
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $signature = null;
 
@@ -87,7 +87,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Is moderator?
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $moderator = null;
 
@@ -95,7 +95,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Banned until timestamp
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $banned = null;
 
@@ -103,7 +103,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Ordering of posts
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $ordering = null;
 
@@ -111,7 +111,7 @@ class TableKunenaUsers extends KunenaTable
 	 * User post count
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $posts = null;
 
@@ -119,7 +119,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Avatar image file
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $avatar = null;
 
@@ -127,12 +127,12 @@ class TableKunenaUsers extends KunenaTable
 	 * User karma
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $karma = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $karma_time = null;
@@ -141,7 +141,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Kunena Group ID
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $group_id = null;
 
@@ -149,7 +149,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Kunena Profile hits
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $uhits = null;
 
@@ -157,7 +157,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Personal text
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $personalText = null;
 
@@ -165,7 +165,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Gender
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $gender = null;
 
@@ -173,7 +173,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Birthdate
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $birthdate = null;
 
@@ -181,7 +181,7 @@ class TableKunenaUsers extends KunenaTable
 	 * User Location
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $location = null;
 
@@ -189,7 +189,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Name of web site
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $websitename = null;
 
@@ -197,7 +197,7 @@ class TableKunenaUsers extends KunenaTable
 	 * URL to web site
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $websiteurl = null;
 
@@ -205,7 +205,7 @@ class TableKunenaUsers extends KunenaTable
 	 * User rank
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $rank = null;
 
@@ -213,7 +213,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Hide Email address
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $hideEmail = null;
 
@@ -221,7 +221,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Show online
 	 *
 	 * @var integer
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $showOnline = null;
 
@@ -229,7 +229,7 @@ class TableKunenaUsers extends KunenaTable
 	 * ICQ ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $icq = null;
 
@@ -237,7 +237,7 @@ class TableKunenaUsers extends KunenaTable
 	 * YIM ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $yim = null;
 
@@ -245,7 +245,7 @@ class TableKunenaUsers extends KunenaTable
 	 * Microsoft ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $microsoft = null;
 
@@ -253,7 +253,7 @@ class TableKunenaUsers extends KunenaTable
 	 * SKYPE ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $skype = null;
 
@@ -261,7 +261,7 @@ class TableKunenaUsers extends KunenaTable
 	 * TWITTER ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $twitter = null;
 
@@ -269,7 +269,7 @@ class TableKunenaUsers extends KunenaTable
 	 * FACEBOOK ID
 	 *
 	 * @var string
-	 * @since Kunena
+	 * @since   Kunena
 	 **/
 	public $facebook = null;
 
@@ -469,7 +469,7 @@ class TableKunenaUsers extends KunenaTable
 	 * what's app
 	 *
 	 * @var integer
-	 * @since Kunena 6.0.0
+	 * @since   Kunena 6.0.0
 	 */
 	public $vimeo = null;
 
@@ -519,9 +519,9 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   null  $userid  userid
 	 * @param   bool  $reset   reset
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($userid = null, $reset = true)
 	{
@@ -587,7 +587,7 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function reset()
@@ -605,7 +605,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @param   mixed  $data    data
 	 * @param   array  $ignore  ignore
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
@@ -623,7 +623,7 @@ class TableKunenaUsers extends KunenaTable
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function check()

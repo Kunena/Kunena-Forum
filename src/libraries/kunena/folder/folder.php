@@ -25,7 +25,7 @@ class KunenaFolder
 	 *
 	 * @param   string  $folder  folder
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function createIndex($folder)

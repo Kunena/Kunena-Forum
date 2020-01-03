@@ -24,9 +24,9 @@ use Joomla\CMS\Uri\Uri;
 class KunenaAdminModelConfig extends KunenaModel
 {
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getConfiglists()
 	{

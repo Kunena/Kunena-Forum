@@ -34,9 +34,9 @@ abstract class JHtmlKunenaForum
 	 * @param   bool    $idtag      idtag
 	 * @param   bool    $translate  translate
 	 *
-	 * @return string|void
-	 * @since Kunena
-	 * @throws null
+	 * @return  string|void
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
@@ -214,10 +214,10 @@ abstract class JHtmlKunenaForum
 	 * @param   mixed   $attributes  Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a',
 	 *                               'lang'=>'en')
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = '', $attributes = '')
 	{
@@ -281,7 +281,7 @@ abstract class JHtmlKunenaForum
 	 * @param   array   $selected     selected
 	 * @param   null    $class_input  input
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public static function checklist($name, $options, $selected = array(), $class_input = null)

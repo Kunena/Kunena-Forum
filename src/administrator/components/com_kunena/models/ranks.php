@@ -24,8 +24,8 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -50,8 +50,8 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $direction  direction
 	 *
 	 * @return    void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -93,7 +93,7 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * @param   string  $id  id
 	 *
-	 * @return string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */

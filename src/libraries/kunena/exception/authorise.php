@@ -33,7 +33,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 	);
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function getResponseStatus()

@@ -52,8 +52,8 @@ abstract class KunenaControllerBase implements Serializable
 	 * @param   Joomla\Registry\Registry|array          $options  Array Joomla\Registry\Registry object with the
 	 *                                                            options to load.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct(Joomla\Input\Input $input = null, $app = null, $options = null)
 	{
@@ -71,8 +71,8 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the application object.
 	 *
 	 * @return CMSApplicationInterface
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function loadApplication()
 	{
@@ -154,7 +154,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  mixed
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws  RuntimeException
 	 * @throws  LogicException
 	 */
@@ -200,8 +200,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return JController|KunenaControllerBase
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function unserialize($input)
 	{

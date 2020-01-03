@@ -179,9 +179,9 @@ class Compiler
 	 * @param   string  $code
 	 * @param   string  $path
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
-	 * @throws Exception\ParserException
+	 * @throws  Exception\ParserException
 	 */
 	public function compile($code, $path = null)
 	{
@@ -273,7 +273,7 @@ class Compiler
 	 * @param   array  $target
 	 * @param   array  $origin
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function isSelfExtend($target, $origin)
 	{
@@ -357,7 +357,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $rootBlock
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function compileRoot(Block $rootBlock)
 	{
@@ -567,7 +567,7 @@ class Compiler
 	 * @param   array  $rawSingle
 	 * @param   array  $outOrigin
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function matchExtendsSingle($rawSingle, &$outOrigin)
 	{
@@ -674,7 +674,7 @@ class Compiler
 	 *
 	 * @param   array  $fragment  The selector fragment maybe ending with a direction relationship combinator.
 	 *
-	 * @return array The selector without the relationship fragment if any, the relationship fragment.
+	 * @return  array The selector without the relationship fragment if any, the relationship fragment.
 	 */
 	protected function extractRelationshipFromFragment(array $fragment)
 	{
@@ -705,7 +705,7 @@ class Compiler
 	 * @param   array  $base
 	 * @param   array  $other
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function combineSelectorSingle($base, $other)
 	{
@@ -751,7 +751,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $media
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function compileMedia(Block $media)
 	{
@@ -904,7 +904,7 @@ class Compiler
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   integer               $without
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	private function spliceTree($envs, Block $block, $without)
 	{
@@ -1077,7 +1077,7 @@ class Compiler
 	 * @param   integer               $without
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	private function isWithout($without, Block $block)
 	{
@@ -1101,7 +1101,7 @@ class Compiler
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function compileKeyframeBlock(Block $block, $selectors)
 	{
@@ -1131,7 +1131,7 @@ class Compiler
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function compileNestedBlock(Block $block, $selectors)
 	{
@@ -1165,7 +1165,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function compileBlock(Block $block)
 	{
@@ -1231,7 +1231,7 @@ class Compiler
 	 *
 	 * @param   array  $selectors
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function evalSelectors($selectors)
 	{
@@ -1259,7 +1259,7 @@ class Compiler
 	 *
 	 * @param   array  $selector
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function evalSelector($selector)
 	{
@@ -1271,7 +1271,7 @@ class Compiler
 	 *
 	 * @param   array  $part
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function evalSelectorPart($part)
@@ -1305,7 +1305,7 @@ class Compiler
 	 *
 	 * @param   array  $selectors
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function collapseSelectors($selectors)
 	{
@@ -1333,7 +1333,7 @@ class Compiler
 	 *
 	 * @param   array  $single
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function flattenSelectorSingle($single)
 	{
@@ -1368,7 +1368,7 @@ class Compiler
 	 *
 	 * @param   string|array  $selector
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function compileSelector($selector)
 	{
@@ -1391,7 +1391,7 @@ class Compiler
 	 *
 	 * @param   array  $piece
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	protected function compileSelectorPart($piece)
@@ -1423,7 +1423,7 @@ class Compiler
 	 *
 	 * @param   array  $selector
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function hasSelectorPlaceholder($selector)
 	{
@@ -1452,7 +1452,7 @@ class Compiler
 	 * @param   array        $stms
 	 * @param   OutputBlock  $out
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function compileChildren($stms, OutputBlock $out)
@@ -1474,7 +1474,7 @@ class Compiler
 	 * @param   array        $stms
 	 * @param   OutputBlock  $out
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @throws CompilerException
 	 */
@@ -1498,7 +1498,7 @@ class Compiler
 	 *
 	 * @param   array  $queryList
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	protected function compileMediaQuery($queryList)
@@ -1622,7 +1622,7 @@ class Compiler
 	 * @param   array  $type1
 	 * @param   array  $type2
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 */
 	protected function mergeMediaTypes($type1, $type2)
 	{
@@ -1702,7 +1702,7 @@ class Compiler
 	 * @param   array    $out
 	 * @param   boolean  $once
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @throws CompilerException
 	 */
 	protected function compileImport($rawPath, $out, $once = false)
@@ -1758,7 +1758,7 @@ class Compiler
 	 * @param   array        $child
 	 * @param   OutputBlock  $out
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function compileChild($child, OutputBlock $out)
@@ -2184,7 +2184,7 @@ class Compiler
 	 *
 	 * @param   array  $exp
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function expToString($exp)
 	{
@@ -2226,7 +2226,7 @@ class Compiler
 	 *
 	 * @param   string  $value
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function isImmediateRelationshipCombinator($value)
 	{
@@ -2238,7 +2238,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function shouldEval($value)
 	{
@@ -2265,7 +2265,7 @@ class Compiler
 	 * @param   array    $value
 	 * @param   boolean  $inExp
 	 *
-	 * @return array|Number
+	 * @return  array|Number
 	 * @throws CompilerException
 	 */
 	protected function reduce($value, $inExp = false)
@@ -2481,8 +2481,8 @@ class Compiler
 	 * @param   string  $name
 	 * @param   array   $argValues
 	 *
-	 * @return array|null
-	 * @throws Exception
+	 * @return  array|null
+	 * @throws  Exception
 	 */
 	private function fncall($name, $argValues)
 	{
@@ -2517,7 +2517,7 @@ class Compiler
 	 *
 	 * @param   string  $name
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function normalizeName($name)
 	{
@@ -2529,7 +2529,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	public function normalizeValue($value)
@@ -2613,7 +2613,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array|Number
+	 * @return  array|Number
 	 */
 	protected function opDivNumberNumber($left, $right)
 	{
@@ -2644,7 +2644,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opAdd($left, $right)
 	{
@@ -2680,7 +2680,7 @@ class Compiler
 	 * @param   array    $right
 	 * @param   boolean  $shouldEval
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opAnd($left, $right, $shouldEval)
 	{
@@ -2704,7 +2704,7 @@ class Compiler
 	 * @param   array    $right
 	 * @param   boolean  $shouldEval
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opOr($left, $right, $shouldEval)
 	{
@@ -2728,7 +2728,7 @@ class Compiler
 	 * @param   array   $left
 	 * @param   array   $right
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function opColorColor($op, $left, $right)
@@ -2799,7 +2799,7 @@ class Compiler
 	 * @param   array   $left
 	 * @param   array   $right
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function opColorNumber($op, $left, $right)
@@ -2820,7 +2820,7 @@ class Compiler
 	 * @param   array   $left
 	 * @param   array   $right
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function opNumberColor($op, $left, $right)
@@ -2840,7 +2840,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function opEq($left, $right)
@@ -2863,7 +2863,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function opNeq($left, $right)
@@ -2886,7 +2886,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opGteNumberNumber($left, $right)
 	{
@@ -2899,7 +2899,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opGtNumberNumber($left, $right)
 	{
@@ -2912,7 +2912,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opLteNumberNumber($left, $right)
 	{
@@ -2925,7 +2925,7 @@ class Compiler
 	 * @param   array  $left
 	 * @param   array  $right
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function opLtNumberNumber($left, $right)
 	{
@@ -2954,7 +2954,7 @@ class Compiler
 	 *
 	 * @param   mixed  $thing
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function toBool($thing)
 	{
@@ -2976,7 +2976,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	public function compileValue($value)
@@ -3161,7 +3161,7 @@ class Compiler
 	 *
 	 * @param   array  $list
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	protected function flattenList($list)
@@ -3174,7 +3174,7 @@ class Compiler
 	 *
 	 * @param   array  $string
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	protected function compileStringContent($string)
@@ -3201,7 +3201,7 @@ class Compiler
 	 *
 	 * @param   array  $list
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function extractInterpolation($list)
 	{
@@ -3226,7 +3226,7 @@ class Compiler
 	 *
 	 * @param   Environment  $env
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function multiplySelectors(Environment $env)
 	{
@@ -3263,7 +3263,7 @@ class Compiler
 	 * @param   array  $parent
 	 * @param   array  $child
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function joinSelectors($parent, $child)
 	{
@@ -3312,7 +3312,7 @@ class Compiler
 	 * @param   Environment  $env
 	 * @param   array        $childQueries
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function multiplyMedia(Environment $env = null, $childQueries = null)
 	{
@@ -3359,7 +3359,7 @@ class Compiler
 	 *
 	 * @param   Environment  $env
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	private function compactEnv(Environment $env)
 	{
@@ -3513,7 +3513,7 @@ class Compiler
 	 * @param   boolean      $shouldThrow
 	 * @param   Environment  $env
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @throws CompilerException
 	 */
 	public function get($name, $shouldThrow = true, Environment $env = null)
@@ -3571,7 +3571,7 @@ class Compiler
 	 * @param   string       $name
 	 * @param   Environment  $env
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @throws CompilerException
 	 */
 	protected function has($name, Environment $env = null)
@@ -3638,7 +3638,7 @@ class Compiler
 	 *
 	 * @api
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function getVariables()
 	{
@@ -3665,7 +3665,7 @@ class Compiler
 	 *
 	 * @api
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function getParsedFiles()
 	{
@@ -3803,7 +3803,7 @@ class Compiler
 	 * @param   string  $path
 	 * @param   array   $out
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function importFile($path, $out)
 	{
@@ -3838,7 +3838,7 @@ class Compiler
 	 *
 	 * @param   string  $url
 	 *
-	 * @return string|null
+	 * @return  string|null
 	 */
 	public function findImport($url)
 	{
@@ -3906,7 +3906,7 @@ class Compiler
 	 *
 	 * @param   boolean  $ignoreErrors
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public function setIgnoreErrors($ignoreErrors)
 	{
@@ -3945,7 +3945,7 @@ class Compiler
 	 *
 	 * @param   string  $name
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function handleImportLoop($name)
 	{
@@ -3966,7 +3966,7 @@ class Compiler
 	 *
 	 * @param   string  $name
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function fileExists($name)
 	{
@@ -3980,8 +3980,8 @@ class Compiler
 	 * @param   array   $argValues
 	 * @param   array   $returnValue
 	 *
-	 * @return boolean Returns true if returnValue is set; otherwise, false
-	 * @throws Exception
+	 * @return  boolean Returns true if returnValue is set; otherwise, false
+	 * @throws  Exception
 	 */
 	protected function callScssFunction($name, $argValues, &$returnValue)
 	{
@@ -4028,7 +4028,7 @@ class Compiler
 	 * @param   array   $args
 	 * @param   array   $returnValue
 	 *
-	 * @return boolean Returns true if returnValue is set; otherwise, false
+	 * @return  boolean Returns true if returnValue is set; otherwise, false
 	 */
 	protected function callNativeFunction($name, $args, &$returnValue)
 	{
@@ -4077,7 +4077,7 @@ class Compiler
 	 *
 	 * @param   string  $name  Normalized name
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function getBuiltinFunction($name)
 	{
@@ -4098,7 +4098,7 @@ class Compiler
 	 * @param   array  $prototype
 	 * @param   array  $args
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function sortArgs($prototype, $args)
 	{
@@ -4151,7 +4151,7 @@ class Compiler
 	 * @param   array  $argDef
 	 * @param   array  $argValues
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function applyArguments($argDef, $argValues)
 	{
@@ -4312,7 +4312,7 @@ class Compiler
 	 *
 	 * @param   mixed  $value
 	 *
-	 * @return array|Number
+	 * @return  array|Number
 	 */
 	private function coerceValue($value)
 	{
@@ -4378,7 +4378,7 @@ class Compiler
 	 *
 	 * @param   array  $item
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function coerceMap($item)
 	{
@@ -4401,7 +4401,7 @@ class Compiler
 	 * @param   array   $item
 	 * @param   string  $delim
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function coerceList($item, $delim = ',')
 	{
@@ -4439,7 +4439,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 */
 	protected function coerceForExpression($value)
 	{
@@ -4456,7 +4456,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 */
 	protected function coerceColor($value)
 	{
@@ -4488,7 +4488,7 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 * @throws CompilerException
 	 */
 	protected function coerceString($value)
@@ -4530,9 +4530,9 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function assertMap($value)
 	{
@@ -4553,9 +4553,9 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function assertList($value)
 	{
@@ -4574,9 +4574,9 @@ class Compiler
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function assertColor($value)
 	{
@@ -4597,7 +4597,7 @@ class Compiler
 	 *
 	 * @return integer|float
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function assertNumber($value)
 	{
@@ -4614,7 +4614,7 @@ class Compiler
 	 *
 	 * @param   array  $c
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function fixColor($c)
 	{
@@ -4643,7 +4643,7 @@ class Compiler
 	 * @param   integer  $green
 	 * @param   integer  $blue
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function toHSL($red, $green, $blue)
 	{
@@ -4732,7 +4732,7 @@ class Compiler
 	 * @param   integer  $saturation  S from 0 to 100
 	 * @param   integer  $lightness   L from 0 to 100
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function toRGB($hue, $saturation, $lightness)
 	{
@@ -5412,7 +5412,7 @@ class Compiler
 	 *
 	 * @param   array  $args
 	 *
-	 * @return array
+	 * @return  array
 	 * @throws CompilerException
 	 */
 	protected function getNormalizedNumbers($args)
@@ -5971,7 +5971,7 @@ class Compiler
 	 *
 	 * @param   array  $args
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function libCounter($args)
 	{

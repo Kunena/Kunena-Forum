@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 class KunenaLayoutWidgetModule extends KunenaLayout
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $position = null;
@@ -29,9 +29,9 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	/**
 	 * Renders module position.
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function renderPosition()
 	{

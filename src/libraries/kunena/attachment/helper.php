@@ -40,9 +40,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   int   $identifier  The attachment to load - Can be only an integer.
 	 * @param   bool  $reload      reloaded
 	 *
-	 * @return KunenaAttachment
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaAttachment
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -79,10 +79,10 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|array|int  $ids        ids
 	 * @param   string          $authorise  authorise
 	 *
-	 * @return KunenaAttachment[]
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  KunenaAttachment[]
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getById($ids = false, $authorise = 'read')
 	{
@@ -122,9 +122,9 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * @param   array  $ids  ids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadById(array $ids)
 	{
@@ -180,9 +180,9 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @param   bool|string  $ids  ids
 	 *
-	 * @return KunenaAttachment[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaAttachment[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getNumberAttachments($ids = false)
 	{
@@ -206,9 +206,9 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * @param   array  $ids  ids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadByMessage(array $ids)
 	{
@@ -274,9 +274,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|array|int  $ids        ids
 	 * @param   string          $authorise  authorise
 	 *
-	 * @return KunenaAttachment[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaAttachment[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getByMessage($ids = false, $authorise = 'read')
 	{
@@ -339,10 +339,10 @@ abstract class KunenaAttachmentHelper
 	 * @param   string  $extension  File extension.
 	 * @param   bool    $protected  True to randomize the filename. If not given, uses Kunena configuration setting.
 	 *
-	 * @return string
+	 * @return  string
 	 *
 	 * @since  K4.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
 	{
@@ -393,9 +393,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $category  category
 	 * @param   null   $user      user
 	 *
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getExtensions($category, $user = null)
 	{
@@ -414,9 +414,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $category  category
 	 * @param   mixed  $user      user
 	 *
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getImageExtensions($category = null, $user = null)
 	{
@@ -490,9 +490,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $category  category
 	 * @param   mixed  $user      user
 	 *
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getFileExtensions($category = null, $user = null)
 	{
@@ -559,9 +559,9 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function cleanup()
 	{
@@ -626,7 +626,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   int     $back      back
 	 * @param   string  $filler    filler
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
@@ -649,9 +649,9 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $user    user
 	 * @param   array  $params  params
 	 *
-	 * @return KunenaAttachment[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaAttachment[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getByUserid($user, array $params)
 	{
@@ -720,9 +720,9 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Load the total count of attachments
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since K5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getTotalAttachments()
 	{

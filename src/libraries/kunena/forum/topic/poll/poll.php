@@ -19,7 +19,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumTopicPoll
  *
- * @since Kunena
+ * @since   Kunena
  * @property string $title
  * @property int    $threadid
  * @property string $polltimetolive
@@ -28,7 +28,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopicPoll extends CMSObject
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -40,13 +40,13 @@ class KunenaForumTopicPoll extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_total = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $options = false;
@@ -58,13 +58,13 @@ class KunenaForumTopicPoll extends CMSObject
 	protected $newOptions = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $usercount = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $users = false;
@@ -84,8 +84,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -99,9 +99,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @param   int  $id  The poll id to be loaded.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($id)
 	{
@@ -123,7 +123,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
+	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
@@ -147,9 +147,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $identifier  Poll to load - Can be only an integer.
 	 * @param   bool   $reset       reset
 	 *
-	 * @return KunenaForumTopicPoll
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicPoll
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reset = false)
 	{
@@ -158,8 +158,8 @@ class KunenaForumTopicPoll extends CMSObject
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTotal()
 	{
@@ -178,9 +178,9 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getOptions()
 	{
@@ -211,7 +211,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @param   array  $options  array(id=>name, id=>name)
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setOptions($options)
@@ -239,8 +239,8 @@ class KunenaForumTopicPoll extends CMSObject
 
 	/**
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUserCount()
 	{
@@ -269,9 +269,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $start  start
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -302,8 +302,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getMyTime($user = null)
 	{
@@ -336,9 +336,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   bool   $change  change
 	 * @param   mixed  $user    user
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function vote($option, $change = false, $user = null)
 	{
@@ -483,7 +483,7 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   null|bool  $exists  exists
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -502,8 +502,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getLastVoteId($user = null)
 	{
@@ -531,8 +531,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   mixed  $user  user
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getMyVotes($user = null)
 	{
@@ -564,9 +564,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   int  $option  option
 	 * @param   int  $delta   delta
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function changeOptionVotes($option, $delta)
 	{
@@ -606,7 +606,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   array  $data   data
 	 * @param   array  $allow  allow
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $allow = array())
@@ -622,9 +622,9 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete()
 	{
@@ -710,9 +710,9 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new poll.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{

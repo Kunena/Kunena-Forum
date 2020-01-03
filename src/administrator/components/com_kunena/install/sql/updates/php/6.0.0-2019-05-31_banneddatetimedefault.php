@@ -17,9 +17,9 @@ use Joomla\CMS\Language\Text;
 /**
  * @param $parent
  *
- * @return array
- * @since Kunena
- * @throws Exception
+ * @return  array
+ * @since   Kunena
+ * @throws  Exception
  */
 function kunena_600_2019_05_31_banneddatetimedefault($parent)
 {

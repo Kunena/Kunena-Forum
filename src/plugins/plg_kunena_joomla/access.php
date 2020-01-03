@@ -25,19 +25,19 @@ use Joomla\Registry\Registry;
 class KunenaAccessJoomla
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $viewLevels = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -52,7 +52,7 @@ class KunenaAccessJoomla
 	 * List all access types you want to handle. All names must be less than 20 characters.
 	 * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
 	 *
-	 * @return array    Supported access types.
+	 * @return  array    Supported access types.
 	 * @since   Kunena 6.0
 	 */
 	public function getAccessTypes()
@@ -67,7 +67,8 @@ class KunenaAccessJoomla
 	 *
 	 * @param   KunenaForumCategory  $category  Category
 	 *
-	 * @return array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
@@ -107,7 +108,8 @@ class KunenaAccessJoomla
 	 * @param   string  $accesstype  Access type.
 	 * @param   int     $id          Group id.
 	 *
-	 * @return string|null
+	 * @return  string|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getGroupName($accesstype, $id = null)
@@ -153,7 +155,8 @@ class KunenaAccessJoomla
 	 * @param   string  $accesstype  Access type.
 	 * @param   int     $category    Group id.
 	 *
-	 * @return array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAccessOptions($accesstype, $category)
@@ -252,7 +255,8 @@ class KunenaAccessJoomla
 	 *
 	 * @param   array  $categories  List of categories, null = all.
 	 *
-	 * @return array of (catid=>userid)
+	 * @return  array of (catid=>userid)
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function loadCategoryRoles(array $categories = null)
@@ -275,10 +279,10 @@ class KunenaAccessJoomla
 	}
 
 	/**
-	 * @param         $action
-	 * @param   null  $asset  asset
+	 * @param   string  $action action
+	 * @param   null    $asset  asset
 	 *
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	protected function getAuthorisedUsers($action, $asset = null)
@@ -299,9 +303,9 @@ class KunenaAccessJoomla
 		// Get all action rules for the asset
 		$groups = array();
 
-		if (!empty($data [$action]))
+		if (!empty($data[$action]))
 		{
-			$groups = $data [$action]->getData();
+			$groups = $data[$action]->getData();
 		}
 
 		// Split groups into allow and deny list
@@ -344,7 +348,8 @@ class KunenaAccessJoomla
 	 * @param   boolean    $recursive  Recursively include all child groups (optional)
 	 * @param   array      $inUsers    Only list selected users.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
@@ -397,7 +402,8 @@ class KunenaAccessJoomla
 	 * @param   KunenaForumCategory  $category  category
 	 * @param   int                  $userid    userid
 	 *
-	 * @return array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
@@ -423,7 +429,8 @@ class KunenaAccessJoomla
 	 * @param   int    $userid      User who needs the authorisation (null=current user, 0=visitor).
 	 * @param   array  $categories  List of categories in access type.
 	 *
-	 * @return array where category ids are in the keys.
+	 * @return  array where category ids are in the keys.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function authoriseCategories($userid, array &$categories)
@@ -474,7 +481,8 @@ class KunenaAccessJoomla
 	 * @param   mixed  $topic    Category or topic.
 	 * @param   array  $userids  list(allow, deny).
 	 *
-	 * @return array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
@@ -518,6 +526,7 @@ class KunenaAccessJoomla
 	 * @param   integer  $viewlevel  viewlevel
 	 *
 	 * @return    array    List of view levels for which the user is authorised.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getGroupsByViewLevel($viewlevel)

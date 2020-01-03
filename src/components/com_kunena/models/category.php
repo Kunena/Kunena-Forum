@@ -26,7 +26,7 @@ require_once KPATH_ADMIN . '/models/categories.php';
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
@@ -38,26 +38,26 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	protected $pending = array();
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $items = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topicActions = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{
@@ -128,9 +128,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getLastestCategories()
 	{
@@ -146,10 +146,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array|boolean|KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array|boolean|KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getCategories()
 	{
@@ -301,7 +301,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function getUnapprovedCount()
@@ -310,9 +310,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return KunenaForumCategory
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategory
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategory()
 	{
@@ -320,10 +320,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getTopics()
 	{
@@ -403,10 +403,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTotal()
 	{
@@ -419,10 +419,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array|null
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  array|null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTopicActions()
 	{
@@ -497,7 +497,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function getActionMove()
@@ -506,9 +506,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getModerators()
 	{
@@ -518,7 +518,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array|null
+	 * @return  array|null
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryActions()

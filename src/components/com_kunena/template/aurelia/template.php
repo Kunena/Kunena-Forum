@@ -54,7 +54,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	/**
 	 * User group initialization.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected $userClasses = array(
@@ -73,9 +73,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 *
 	 * By default language files are also loaded from the parent templates.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadLanguage()
 	{
@@ -92,9 +92,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	/**
 	 * Template initialization.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function initialize()
 	{
@@ -190,7 +190,7 @@ EOF;
 	 * @param         $type
 	 * @param   null  $id  id
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -237,7 +237,7 @@ HTML;
 	 * @param           $name
 	 * @param   string  $title  title
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
@@ -249,7 +249,7 @@ HTML;
 	 * @param           $image
 	 * @param   string  $alt  alt
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')

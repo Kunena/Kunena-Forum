@@ -37,10 +37,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	/**
 	 * Prepare category list display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -278,10 +278,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

@@ -24,7 +24,7 @@ class KunenaPrivateMessageUser extends KunenaDatabaseObject
 {
 	/**
 	 * @var string
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaPrivateUserMap';
 }

@@ -36,7 +36,7 @@ class TableKunenaSessions extends KunenaTable
 	public $allowed = 'na';
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $allowedcats = null;
@@ -60,7 +60,7 @@ class TableKunenaSessions extends KunenaTable
 	public $currvisit = 0;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -81,9 +81,9 @@ class TableKunenaSessions extends KunenaTable
 	 * @param   null  $oid    oid
 	 * @param   bool  $reset  reset
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($oid = null, $reset = true)
 	{
@@ -96,9 +96,9 @@ class TableKunenaSessions extends KunenaTable
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function check()
 	{

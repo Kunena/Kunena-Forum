@@ -16,43 +16,43 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Private Message map to users.
  * Provides access to the #__kunena_private_user_map table
  *
- * @since Kunena 6.0
+ * @since   Kunena 6.0
  */
 class TableKunenaPrivateUserMap extends KunenaTable
 {
 	/**
-	 * @var boolean
-	 * @since version
+	 * @var   boolean
+	 * @since   Kunena 6.0
 	 */
 	protected $_autoincrement = false;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $private_id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $user_id = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $read_at = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $replied_at = null;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	public $deleted_at = null;
 

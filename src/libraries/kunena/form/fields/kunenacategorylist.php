@@ -30,9 +30,9 @@ class JFormFieldKunenaCategoryList extends FormField
 	protected $type = 'KunenaCategoryList';
 
 	/**
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getInput()
 	{

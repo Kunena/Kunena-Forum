@@ -68,9 +68,9 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return KunenaAccess|KunenaAccessCommunity|void
+	 * @return  KunenaAccess|KunenaAccessCommunity|void
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @todo  Should we remove category ACL integration?
 	 */
 	public function onKunenaGetAccessControl()
@@ -88,7 +88,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLoginCommunity|null|void
+	 * @return  KunenaLoginCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetLogin()
@@ -106,7 +106,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatarCommunity|null|void
+	 * @return  KunenaAvatarCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -124,7 +124,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfileCommunity|null|void
+	 * @return  KunenaProfileCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
@@ -142,7 +142,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return KunenaPrivateCommunity|null|void
+	 * @return  KunenaPrivateCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetPrivate()
@@ -160,7 +160,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivityCommunity|null|void
+	 * @return  KunenaActivityCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()

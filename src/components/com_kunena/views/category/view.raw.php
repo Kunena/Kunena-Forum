@@ -23,8 +23,8 @@ class KunenaViewCategory extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

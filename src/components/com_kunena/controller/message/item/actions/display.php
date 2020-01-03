@@ -53,10 +53,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Prepare message actions display.
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -671,10 +671,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 *
 	 * @param   string  $icon    icon
 	 *
-	 * @return KunenaLayout|KunenaLayoutBase
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{

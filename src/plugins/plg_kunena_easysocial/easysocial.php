@@ -26,18 +26,19 @@ require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since   Kunena 6.0
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
 	/**
 	 * plgKunenaEasySocial constructor.
 	 *
-	 * @param $subject
-	 * @param $config
+	 * @param   object  $subject subject
+	 * @param   object  $config  config
 	 *
-	 * @return void|boolean
-	 * @since       Kunena
+	 * @return  void|boolean
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -55,8 +56,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLoginEasySocial
-	 * @since       Kunena
+	 * @return  KunenaLoginEasySocial
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -73,8 +75,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar
-	 * @since       Kunena
+	 * @return  KunenaAvatar
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -91,8 +93,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfile
-	 * @since       Kunena
+	 * @return  KunenaProfile
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -109,8 +112,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return KunenaPrivate
-	 * @since       Kunena
+	 * @return  KunenaPrivate
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -127,8 +131,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivity
-	 * @since       Kunena
+	 * @return  KunenaActivity
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

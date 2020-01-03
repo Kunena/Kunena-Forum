@@ -79,8 +79,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayEdit()
 	{

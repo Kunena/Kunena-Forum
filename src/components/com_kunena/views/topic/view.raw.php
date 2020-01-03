@@ -25,8 +25,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayEdit($tpl = null)
 	{
@@ -54,11 +54,11 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string  $tpl  tpl
 	 *
-	 * @return void
+	 * @return  void
 	 * @since K4.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayListEmoji($tpl = null)
 	{
@@ -105,9 +105,9 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Send list of topic icons in JSON for the category set selected
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayTopicIcons()
 	{
@@ -185,8 +185,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Load global rate for the topic
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayGetrate()
 	{
@@ -218,8 +218,8 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayRate($tpl = null)
 	{
@@ -257,8 +257,8 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena 5.1
-	 * @throws Exception
+	 * @since   Kunena 5.1
+	 * @throws  Exception
 	 */
 	public function displayCategorytemplatetext($tpl = null)
 	{

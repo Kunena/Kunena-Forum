@@ -59,8 +59,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $mesIds   List of additional message Ids to be loaded.
 	 *
 	 * @return  void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
 	{
@@ -125,9 +125,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -212,9 +212,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $topics   topics
 	 * @param   array  $actions  actions
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
 	{
@@ -276,9 +276,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $messages  messages
 	 * @param   array  $actions   actions
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{

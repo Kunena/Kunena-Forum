@@ -66,7 +66,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar|void
+	 * @return  KunenaAvatar|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -84,7 +84,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfile|void
+	 * @return  KunenaProfile|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()
@@ -102,7 +102,7 @@ class plgKunenaAltaUserPoints extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivity|void
+	 * @return  KunenaActivity|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()

@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 class KunenaAvatarComprofiler extends KunenaAvatar
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -27,7 +27,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	/**
 	 * KunenaAvatarComprofiler constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -37,7 +37,9 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	}
 
 	/**
-	 * @param $userlist
+	 * @param   object  $userlist userlist
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -47,7 +49,8 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	}
 
 	/**
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -58,13 +61,15 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   int  $user  user
+	 * @param   int  $sizex sizex
+	 * @param   int  $sizey sizey
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

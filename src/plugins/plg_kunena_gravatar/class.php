@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class KunenaGravatar
  *
@@ -9,66 +8,70 @@
  * Source:
  * http://site.gravatar.com/site/implement
  *
- * @package   gravatarlib
- * @author    emberlabs.org
- * @copyright gravatar
+ * @package   Gravatarlib
+ * @author    Emberlabs  <info@emberlabs.org>
+ * @copyright 2015-2020 gravatar
  * @license   MIT License
  * @link      https://github.com/emberlabs/gravatarlib
  * @since     Kunena
  */
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
 
 /**
- * @package     Kunena
+ * @package Gravatar
  *
- * @since       Kunena
+ * @since   Kunena 6.0
  */
 class KunenaGravatar
 {
 	/**
-	 * @var string - URL constants for the avatar images
+	 * @var     string - URL constants for the avatar images
 	 * @since   Kunena 6.0
 	 */
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
+
 	/**
 	 * @since   Kunena 6.0
 	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 
 	/**
-	 * @var integer - The size to use for avatars.
+	 * @var     integer - The size to use for avatars.
 	 * @since   Kunena 6.0
 	 */
 	protected $size = 80;
 
 	/**
-	 * @var string - The maximum rating to allow for the avatar.
+	 * @var     string - The maximum rating to allow for the avatar.
 	 * @since   Kunena 6.0
 	 */
 	protected $max_rating = 'g';
 
 	/**
-	 * @var string - A temporary internal cache of the URL parameters to use.
+	 * @var     string - A temporary internal cache of the URL parameters to use.
 	 * @since   Kunena 6.0
 	 */
 	protected $param_cache = null;
 
 	/**
-	 * @var string - The email address of the user.
+	 * @var     string - The email address of the user.
 	 * @since   Kunena 6.0
 	 */
 	protected $email = null;
 
 	/**
-	 * @var mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
-	 *      a URL, or false if using the...default gravatar default image (hah)
+	 * @var     mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
+	 *           a URL, or false if using the...default gravatar default image (hah)
 	 * @since   Kunena 6.0
 	 */
 	protected $default_image = false;
 
 	/**
 	 * Extra attributes to the IMG tag like ALT, CLASS, STYLE...
+	 *
+	 * @var     string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -87,7 +90,7 @@ class KunenaGravatar
 	/**
 	 * @param   string  $email  email
 	 *
-	 * @return void $email
+	 * @return  void $email
 	 * @since   Kunena 6.0
 	 */
 	public function setEmail($email)
@@ -99,6 +102,8 @@ class KunenaGravatar
 	 * Define extras html attributes to be added into the HTML
 	 *
 	 * @param   string  $extra  extra
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -112,9 +117,10 @@ class KunenaGravatar
 	 *
 	 * @param   integer  $size  - The avatar size to use, must be less than 512 and greater than 0.
 	 *
-	 * @return KunenaGravatar
+	 * @return  KunenaGravatar
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function setAvatarSize($size)
@@ -140,9 +146,10 @@ class KunenaGravatar
 	/**
 	 * Provide HTML with gravatar URL, and extras HTML attibutes if provided
 	 *
-	 * @param $hash_email
+	 * @param   string  $hash_email email
 	 *
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLink($hash_email)
@@ -158,7 +165,8 @@ class KunenaGravatar
 	 * @param   bool|string  $hash_email  - Should we hash the $email variable? (Useful if the email address has a hash
 	 *                                    stored already)
 	 *
-	 * @return string - The XHTML-safe URL to the gravatar.
+	 * @return  string - The XHTML-safe URL to the gravatar.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function buildGravatarURL($hash_email = true)
@@ -218,7 +226,8 @@ class KunenaGravatar
 	/**
 	 * Check if we are using the secure protocol for the image URLs.
 	 *
-	 * @return boolean - Are we supposed to use the secure protocol?
+	 * @return  boolean - Are we supposed to use the secure protocol?
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function usingSecureURL()
@@ -240,7 +249,8 @@ class KunenaGravatar
 	 *
 	 * @param   string  $email  - The email to get the hash for.
 	 *
-	 * @return string - The hashed form of the email, post cleaning.
+	 * @return  string - The hashed form of the email, post cleaning.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEmailHash($email)
@@ -253,6 +263,7 @@ class KunenaGravatar
 	 * Get the currently set avatar size.
 	 *
 	 * @return integer - The current avatar size in use.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAvatarSize()
@@ -263,7 +274,8 @@ class KunenaGravatar
 	/**
 	 * Get the current maximum allowed rating for avatars.
 	 *
-	 * @return string - The string representing the current maximum allowed rating ('g', 'pg', 'r', 'x').
+	 * @return  string - The string representing the current maximum allowed rating ('g', 'pg', 'r', 'x').
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMaxRating()
@@ -276,9 +288,10 @@ class KunenaGravatar
 	 *
 	 * @param   string  $rating  - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
 	 *
-	 * @return KunenaGravatar
+	 * @return  KunenaGravatar
 	 *
-	 * @since Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function setMaxRating($rating)
@@ -302,7 +315,8 @@ class KunenaGravatar
 	/**
 	 * Get the current default image setting.
 	 *
-	 * @return mixed - False if no default image set, string if one is set.
+	 * @return  mixed - False if no default image set, string if one is set.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getDefaultImage()
@@ -316,10 +330,10 @@ class KunenaGravatar
 	 * @param   mixed  $image  - The default image to use. Use boolean false for the gravatar default, a string
 	 *                         containing a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
-	 * @return KunenaGravatar
+	 * @return  KunenaGravatar
 	 *
-	 * @since Kunena
-	 * @throws InvalidArgumentException
+	 * @since   Kunena 6.0
+	 * @throws  InvalidArgumentException
 	 */
 	public function setDefaultImage($image)
 	{
@@ -359,6 +373,8 @@ class KunenaGravatar
 
 	/**
 	 * toString
+	 *
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

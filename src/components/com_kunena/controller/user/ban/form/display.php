@@ -47,10 +47,10 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare ban form.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -69,9 +69,9 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

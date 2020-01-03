@@ -17,7 +17,7 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * Class KunenaForumCategoryUser
  *
- * @since Kunena
+ * @since   Kunena
  * @property int    $category_id
  * @property int    $role
  * @property string $allreadtime
@@ -28,7 +28,7 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaForumCategoryUser extends CMSObject
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -46,8 +46,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @param   int    $category  category
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($category = 0, $user = null)
 	{
@@ -97,9 +97,9 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   mixed     $user    user
 	 * @param   bool      $reload  reload
 	 *
-	 * @return KunenaForumCategoryUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategoryUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -107,9 +107,9 @@ class KunenaForumCategoryUser extends CMSObject
 	}
 
 	/**
-	 * @return KunenaForumCategory
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategory
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategory()
 	{
@@ -120,7 +120,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   array  $data    data
 	 * @param   array  $ignore  ignore
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind($data, $ignore = array())
@@ -134,9 +134,9 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new category.
 	 *
-	 * @return boolean    True on success
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -187,9 +187,9 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   null|int  $category_id  The category id to be loaded.
 	 * @param   mixed     $user         The user to be loaded.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($category_id = null, $user = null)
 	{
@@ -220,9 +220,9 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
-	 * @return boolean    True on success
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete()
 	{
@@ -251,7 +251,7 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * @param   null|bool  $exists  True/false will change the state of the object.
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)

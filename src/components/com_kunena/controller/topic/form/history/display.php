@@ -33,9 +33,9 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	/**
 	 * Prepare reply history display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -114,7 +114,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function prepareDocument()

@@ -21,7 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaUserBan
  *
- * @since Kunena
+ * @since   Kunena
  * @property    integer $created_time
  * @property    integer $created_by
  * @property    integer $modified_by
@@ -92,7 +92,7 @@ class KunenaUserBan extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -105,7 +105,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   null  $identifier  identifier
 	 *
 	 * @since     Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($identifier = null)
 	{
@@ -181,7 +181,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   mixed  $data  data
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function bind($data)
@@ -222,7 +222,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   KunenaUserBan  $instance  instance
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	private static function storeInstance($instance)
@@ -256,7 +256,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	private static function cacheUserid($userid)
@@ -268,7 +268,7 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function isEnabled()
@@ -289,7 +289,7 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function isLifetime()
@@ -363,9 +363,9 @@ class KunenaUserBan extends CMSObject
 	 * @param   int  $start  start
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
@@ -410,9 +410,9 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getUserHistory($userid)
 	{
@@ -455,9 +455,9 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return KunenaUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUser()
 	{
@@ -465,9 +465,9 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return KunenaUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCreator()
 	{
@@ -475,9 +475,9 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return KunenaUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getModifier()
 	{
@@ -487,7 +487,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Return ban creation date.
 	 *
-	 * @return KunenaDate
+	 * @return  KunenaDate
 	 * @since   Kunena 6.0
 	 */
 	public function getCreationDate()
@@ -498,7 +498,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Return ban expiration date.
 	 *
-	 * @return KunenaDate
+	 * @return  KunenaDate
 	 * @since   Kunena 6.0
 	 */
 	public function getExpirationDate()
@@ -509,7 +509,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Return ban modification date.
 	 *
-	 * @return KunenaDate
+	 * @return  KunenaDate
 	 * @since   Kunena 6.0
 	 */
 	public function getModificationDate()
@@ -518,7 +518,7 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists()
@@ -578,7 +578,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   null  $public   public
 	 * @param   null  $private  private
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setReason($public = null, $private = null)
@@ -613,7 +613,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   string  $reason_public   public
 	 * @param   string  $comment         comment
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
@@ -631,7 +631,7 @@ class KunenaUserBan extends CMSObject
 	 * @param   mixed   $expiration  expiration
 	 * @param   string  $comment     comment
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setExpiration($expiration, $comment = '')
@@ -664,7 +664,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   string  $comment  comment
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function addComment($comment)
@@ -682,7 +682,7 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * @param   string  $comment  comment
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function unBan($comment = '')
@@ -706,9 +706,9 @@ class KunenaUserBan extends CMSObject
 	 *
 	 * @param   boolean  $updateOnly  Save the object only if not a new ban
 	 *
-	 * @return boolean True on success
+	 * @return  boolean True on success
 	 * @since     1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{
@@ -810,9 +810,9 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function canBan()
 	{

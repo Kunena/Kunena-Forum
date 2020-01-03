@@ -67,7 +67,7 @@ class KunenaModel extends BaseDatabaseModel
 	protected $state = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $embedded = false;
@@ -76,8 +76,8 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   array  $config  config
 	 * @param   Input  $input   input
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array(), Input $input = null)
 	{
@@ -94,7 +94,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   array  $params    params
 	 * @param   bool   $embedded  embedded
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function initialize($params = array(), $embedded = true)
@@ -138,7 +138,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @param   mixed  $var  The output to escape.
 	 *
-	 * @return mixed The escaped value.
+	 * @return  mixed The escaped value.
 	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
@@ -166,7 +166,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   null    $default  default
 	 * @param   string  $type     type
 	 *
-	 * @return mixed|object
+	 * @return  mixed|object
 	 * @since   Kunena 6.0
 	 */
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
@@ -187,7 +187,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $hash     hash
 	 * @param   string  $type     type
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getVar($name, $default = null, $hash = 'request', $type = 'none')
@@ -213,7 +213,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   bool    $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getBool($name, $default = false, $hash = 'request')
@@ -226,7 +226,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getCmd($name, $default = '', $hash = 'request')
@@ -239,7 +239,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   float   $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getFloat($name, $default = 0.0, $hash = 'request')
@@ -252,7 +252,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   int     $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getInt($name, $default = 0, $hash = 'request')
@@ -265,7 +265,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getString($name, $default = '', $hash = 'request')
@@ -278,7 +278,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $default  default
 	 * @param   string  $hash     hash
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function getWord($name, $default = '', $hash = 'request')

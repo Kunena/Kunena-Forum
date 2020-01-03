@@ -23,7 +23,7 @@ require_once dirname(__FILE__) . '/integration.php';
 class KunenaProfileComprofiler extends KunenaProfile
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * KunenaProfileComprofiler constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -41,11 +41,14 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param $event
-	 * @param $params
+	 * @param   string  $event  event
+	 * @param   object  $params params
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public static function trigger($event, &$params)
 	{
@@ -53,7 +56,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws Exception
 	 */
 	public function open()
 	{
@@ -61,7 +68,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws Exception
 	 */
 	public function close()
 	{
@@ -72,9 +83,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean|string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -92,13 +105,15 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param           $user
+	 * @param   int     $user   user
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return boolean|string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -123,10 +138,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param $view
-	 * @param $params
+	 * @param   string  $view   view
+	 * @param   object  $params params
 	 *
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
@@ -146,9 +162,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -175,10 +193,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param         $userid
+	 * @param   int   $userid userid
 	 * @param   bool  $xhtml  xhtml
 	 *
-	 * @return string
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)

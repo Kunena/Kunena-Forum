@@ -22,7 +22,7 @@ use Joomla\CMS\Factory;
 class KunenaProfileCommunity extends KunenaProfile
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -30,7 +30,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * KunenaProfileCommunity constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -43,9 +43,9 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean|string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -63,9 +63,9 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -93,7 +93,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param $view
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -105,7 +105,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param         $userid
 	 * @param   bool  $xhtml  xhtml
 	 *
-	 * @return boolean|string
+	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
@@ -118,7 +118,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return boolean|string
+	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)

@@ -250,7 +250,7 @@ class Number extends Node implements ArrayAccess
 	/**
 	 * Returns true if the number is unitless
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function unitless()
 	{
@@ -260,7 +260,7 @@ class Number extends Node implements ArrayAccess
 	/**
 	 * Returns unit(s) as the product of numerator units divided by the product of denominator units
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function unitStr()
 	{
@@ -290,7 +290,7 @@ class Number extends Node implements ArrayAccess
 	 *
 	 * @param   Compiler  $compiler
 	 *
-	 * @return string
+	 * @return  string
 	 * @throws CompilerException
 	 */
 	public function output(Compiler $compiler = null)

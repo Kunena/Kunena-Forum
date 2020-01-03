@@ -127,7 +127,7 @@ class SourceMapGenerator
 	 *
 	 * @param   string  $content  The content to write
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @throws CompilerException If the file could not be saved
 	 */
 	public function saveMap($content)
@@ -155,7 +155,7 @@ class SourceMapGenerator
 	 * Generates the JSON source map
 	 *
 	 * @see https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#
-	 * @return string
+	 * @return  string
 	 *
 	 */
 	public function generateJson()
@@ -217,7 +217,7 @@ class SourceMapGenerator
 	/**
 	 * Returns the sources contents
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 */
 	protected function getSourcesContent()
 	{
@@ -239,8 +239,8 @@ class SourceMapGenerator
 	/**
 	 * Generates the mappings string
 	 *
-	 * @return string
-	 * @throws Exception
+	 * @return  string
+	 * @throws  Exception
 	 */
 	public function generateMappings()
 	{
@@ -343,7 +343,7 @@ class SourceMapGenerator
 	 * @param   string   $path
 	 * @param   boolean  $addEndSlash
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function fixWindowsPath($path, $addEndSlash = false)
 	{

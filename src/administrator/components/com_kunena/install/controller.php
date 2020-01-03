@@ -25,19 +25,19 @@ use Joomla\CMS\Component\ComponentHelper;
 class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $step = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $steps = null;
 
 	/**
-	 * @var boolean|Joomla\CMS\MVC\Model\BaseDatabaseModel|null
+	 * @var   boolean|Joomla\CMS\MVC\Model\BaseDatabaseModel|null
 	 * @since   Kunena 6.0
 	 */
 	protected $model = null;
@@ -60,7 +60,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	/**
 	 * @param $exception
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function exceptionHandler($exception)
@@ -89,7 +89,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param $errfile
 	 * @param $errline
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
@@ -113,8 +113,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -138,8 +138,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function run()
 	{
@@ -240,7 +240,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return  mixed|null
 	 * @since   Kunena 6.0
 	 */
 	public function runStep()
@@ -254,8 +254,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function uninstall()
 	{

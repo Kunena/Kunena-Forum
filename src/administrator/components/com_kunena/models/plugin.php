@@ -54,8 +54,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -69,10 +69,10 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   array    $data      Data for the form.
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return boolean|JForm
+	 * @return  boolean|JForm
 	 *
 	 * @since   1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -125,8 +125,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getItem($pk = null)
 	{
@@ -198,7 +198,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @return  boolean  True on success.
 	 *
 	 * @since   1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function save($data)
 	{
@@ -233,7 +233,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @return  mixed  The data for the form.
 	 *
 	 * @since   1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function loadFormData()
 	{
@@ -259,7 +259,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   string  $group    group
 	 *
 	 * @since   Joomla 3.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function preprocessData($context, &$data, $group = 'kunena')
 	{
@@ -284,7 +284,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @return  void
 	 *
 	 * @since   1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{

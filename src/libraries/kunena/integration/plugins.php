@@ -24,9 +24,9 @@ class KunenaIntegrationPlugins
 	/**
 	 * Returns total kunena plugins.
 	 *
-	 * @return boolean Codename.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean Codename.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTotalPlugins()
 	{

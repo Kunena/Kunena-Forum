@@ -19,14 +19,17 @@ defined('_JEXEC') or die();
 class KunenaIntegrationComprofiler
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $open = false;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public static function open()
 	{
@@ -45,11 +48,14 @@ class KunenaIntegrationComprofiler
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
 	 *
-	 * @param $event
-	 * @param $params
+	 * @param   string  $event  event
+	 * @param   object  $params params
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public static function trigger($event, &$params)
 	{
@@ -61,8 +67,11 @@ class KunenaIntegrationComprofiler
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public static function close()
 	{

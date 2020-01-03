@@ -24,7 +24,7 @@ use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 class KunenaLogin
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -58,7 +58,7 @@ class KunenaLogin
 	/**
 	 * @param   null  $integration  integration
 	 *
-	 * @return boolean|KunenaLogin
+	 * @return  boolean|KunenaLogin
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($integration = null)
@@ -75,8 +75,8 @@ class KunenaLogin
 	 * Method to check if TFA is enabled when user ins't logged
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getTwoFactorMethods()
 	{
@@ -84,7 +84,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function enabled()
@@ -100,7 +100,7 @@ class KunenaLogin
 	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
 	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
@@ -119,7 +119,7 @@ class KunenaLogin
 	/**
 	 * @param   null  $return  logout user
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function logoutUser($return = null)
@@ -136,7 +136,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function getRememberMe()
@@ -244,9 +244,9 @@ class KunenaLogin
 	 *
 	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
 	 *
-	 * @return boolean True if TFA is enabled for this user
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean True if TFA is enabled for this user
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function isTFAEnabled($userId = null)
 	{
@@ -275,7 +275,7 @@ class KunenaLogin
 	 * Return the parameters of the plugin
 	 *
 	 * @return Joomla\Registry\Registry|boolean
-	 * @since Kunena 5.1
+	 * @since   Kunena 5.1
 	 */
 	public function getParams()
 	{

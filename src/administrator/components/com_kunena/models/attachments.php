@@ -24,8 +24,8 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -53,7 +53,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return    void
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -102,7 +102,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * @param   string  $id  id
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
@@ -123,10 +123,10 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   int     $limitstart  limitstart
 	 * @param   int     $limit       limit
 	 *
-	 * @return KunenaAttachment[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  KunenaAttachment[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{

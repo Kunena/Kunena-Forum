@@ -26,7 +26,7 @@ class KunenaInstaller
 	protected static $downgrade = array('3.1' => '3.0.95');
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected static $tables = null;
@@ -97,7 +97,7 @@ class KunenaInstaller
 	 * @param   string  $prefix  Database prefix.
 	 * @param   bool    $reload  Reload all tables.
 	 *
-	 * @return boolean  True if the table exists in the database.
+	 * @return  boolean  True if the table exists in the database.
 	 * @since   Kunena 6.0
 	 */
 	public static function detectTable($table, $prefix = '#__', $reload = false)
@@ -134,7 +134,7 @@ class KunenaInstaller
 	 * @param   string   $prefix  Database prefix.
 	 * @param   boolean  $reload  Reload all tables.
 	 *
-	 * @return boolean|null Column type or NULL if either table or column does not exist.
+	 * @return  boolean|null Column type or NULL if either table or column does not exist.
 	 * @since   Kunena 6.0
 	 */
 	public static function getTableColumn($table, $column, $prefix = '#__', $reload = false)

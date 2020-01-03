@@ -23,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaActivityAltaUserPoints extends KunenaActivity
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * KunenaActivityAltaUserPoints constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -43,10 +43,10 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function onAfterPost($message)
 	{
@@ -72,7 +72,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	private function _checkPermissions($message)
@@ -105,7 +105,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $ruleName
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	private function _checkRuleEnabled($ruleName)
@@ -119,7 +119,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param           $plugin_function
 	 * @param   string  $spc  spc
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
@@ -130,9 +130,9 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function onAfterReply($message)
 	{
@@ -180,8 +180,8 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 * @param   int  $target   target
 	 * @param   int  $message  message
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -233,7 +233,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $userid
 	 *
-	 * @return array|boolean
+	 * @return  array|boolean
 	 * @since   Kunena 6.0
 	 */
 	public function getUserMedals($userid)
@@ -262,7 +262,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param $var
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
@@ -273,9 +273,9 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	/**
 	 * @param   int  $userid  userid
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUserPoints($userid)
 	{
@@ -304,7 +304,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	protected function _getAUPversion()

@@ -100,7 +100,7 @@ class KunenaTableMap
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws  UnexpectedValueException
 	 */
 	public function getFields()
@@ -126,7 +126,7 @@ class KunenaTableMap
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function getMirrorInstance()
@@ -350,7 +350,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws  UnexpectedValueException
 	 */
 	public function save(array $map = null, array $filter = null)
@@ -380,7 +380,7 @@ class KunenaTableMap
 	 *
 	 * @param   array  $list  Set array of mapped objects.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setMapped(array $list)
@@ -666,7 +666,7 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws  RuntimeException
 	 */
 	protected function _lock()

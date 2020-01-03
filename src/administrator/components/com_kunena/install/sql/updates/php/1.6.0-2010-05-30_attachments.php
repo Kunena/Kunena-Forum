@@ -17,8 +17,8 @@ use Joomla\CMS\Language\Text;
 /**
  * @param $parent
  *
- * @return array
- * @since Kunena
+ * @return  array
+ * @since   Kunena
  * @throws KunenaInstallerException
  */
 function kunena_160_2010_05_30_attachments($parent)

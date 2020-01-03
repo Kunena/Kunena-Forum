@@ -24,7 +24,7 @@ use Joomla\CMS\Router\Route;
 class KunenaAdminControllerLogs extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 *
 	 * @since    5.0
 	 */
@@ -36,7 +36,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since    5.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,7 +47,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Redirect user to the right layout in order to define some settings
 	 *
-	 * @return void
+	 * @return  void
 	 * @since K5.0
 	 *
 	 * @since   Kunena 6.0
@@ -60,13 +60,13 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Clean
 	 *
-	 * @return boolean|void
+	 * @return  boolean|void
 	 *
 	 * @since  K5.0
 	 *
 	 * @since  Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function clean()
 	{
@@ -117,11 +117,11 @@ class KunenaAdminControllerLogs extends KunenaController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K5.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{

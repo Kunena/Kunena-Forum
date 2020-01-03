@@ -17,10 +17,10 @@ use Joomla\CMS\Language\Text;
 /**
  * @param $parent
  *
- * @return array|null
- * @since Kunena
+ * @return  array|null
+ * @since   Kunena
  * @throws KunenaInstallerException
- * @throws Exception
+ * @throws  Exception
  */
 function kunena_160_2010_05_30_timezone($parent)
 {

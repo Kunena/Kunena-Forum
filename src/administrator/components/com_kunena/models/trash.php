@@ -24,25 +24,25 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaAdminModelTrash extends KunenaModel
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $__state_set = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_items = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_items_order = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_object = false;
@@ -52,8 +52,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array|object
 	 * @since    1.6
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTrashItems()
 	{
@@ -73,8 +73,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * @return    object
 	 *
 	 * @since    1.6
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function _getTopics()
 	{
@@ -166,8 +166,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 *
 	 * @return    array
 	 * @since    1.6
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function _getMessages()
 	{
@@ -338,8 +338,8 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * @return    array
 	 *
 	 * @since    1.6
-	 * @throws null
-	 * @throws Exception
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getPurgeItems()
 	{

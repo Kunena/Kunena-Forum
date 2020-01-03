@@ -25,7 +25,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @param   int  $maxpages  Maximum that are allowed for pagination
 	 *
-	 * @return KunenaPagination
+	 * @return  KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationObject($maxpages)
@@ -41,9 +41,9 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @param   string  $category  The KunenaCategory object
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -79,9 +79,9 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @param   string  $subcategory  The KunenaCategory object
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
@@ -118,10 +118,10 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int  $category_id  The category Id
 	 * @param   int  $numTopics    The number of topics
 	 *
-	 * @return boolean|null
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean|null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
@@ -144,10 +144,10 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int          $catid  The Id of category
 	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
-	 * @return boolean|null
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean|null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{

@@ -34,7 +34,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	public $announcements;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -42,10 +42,10 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	/**
 	 * Prepare announcement list display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -87,9 +87,9 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

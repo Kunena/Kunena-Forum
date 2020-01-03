@@ -25,10 +25,10 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	/**
 	 * Method to get the options of the topic
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTopicOptions()
 	{
@@ -64,7 +64,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	/**
 	 * Method to get the list of categories
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryList()

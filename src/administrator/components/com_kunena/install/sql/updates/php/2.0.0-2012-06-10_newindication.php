@@ -17,10 +17,10 @@ use Joomla\CMS\Language\Text;
 /**
  * @param $parent
  *
- * @return array
- * @since Kunena
+ * @return  array
+ * @since   Kunena
  * @throws KunenaInstallerException
- * @throws Exception
+ * @throws  Exception
  */
 function kunena_200_2012_06_10_newindication($parent)
 {

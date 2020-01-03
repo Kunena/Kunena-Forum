@@ -22,7 +22,7 @@ class KunenaLogEntry
 {
 	/**
 	 * @var array
-	 * @since Kunena 5.0
+	 * @since   Kunena 5.0
 	 */
 	public $data;
 
@@ -34,8 +34,8 @@ class KunenaLogEntry
 	 * @param   KunenaForumTopic     $topic      topic
 	 * @param   KunenaUser           $user       user
 	 *
-	 * @since Kunena 5.0
-	 * @throws Exception
+	 * @since   Kunena 5.0
+	 * @throws  Exception
 	 */
 	public function __construct(
 		$type,
@@ -64,8 +64,8 @@ class KunenaLogEntry
 	/**
 	 * Get all the data.
 	 *
-	 * @return array
-	 * @since Kunena 5.0
+	 * @return  array
+	 * @since   Kunena 5.0
 	 */
 	public function getData()
 	{

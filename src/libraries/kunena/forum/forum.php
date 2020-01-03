@@ -62,25 +62,25 @@ abstract class KunenaForum
 	const ADMINISTRATOR = 2;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $version = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $version_major = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $version_date = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $version_name = false;
@@ -113,9 +113,9 @@ abstract class KunenaForum
 	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
-	 * @return boolean True if online.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean True if online.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function enabled($checkAdmin = true)
 	{
@@ -152,7 +152,7 @@ abstract class KunenaForum
 	 * @see     KunenaForum::isCompatible()
 	 * @see     KunenaForum::setup()
 	 *
-	 * @return boolean True if Kunena has been fully installed.
+	 * @return  boolean True if Kunena has been fully installed.
 	 * @since   Kunena 6.0
 	 */
 	public static function installed()
@@ -168,7 +168,7 @@ abstract class KunenaForum
 	 * used to check the condition and make sure we do not break users repository
 	 * by replacing files during upgrade.
 	 *
-	 * @return boolean True if Git repository is detected.
+	 * @return  boolean True if Git repository is detected.
 	 * @since   Kunena 6.0
 	 */
 	public static function isDev()
@@ -205,9 +205,9 @@ abstract class KunenaForum
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 2.0.0-BETA2
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function setup()
 	{
@@ -254,7 +254,7 @@ abstract class KunenaForum
 	 *
 	 * @param   string  $version  Minimum required version.
 	 *
-	 * @return boolean Yes, if it is safe to use Kunena Framework.
+	 * @return  boolean Yes, if it is safe to use Kunena Framework.
 	 * @since   Kunena 6.0
 	 */
 	public static function isCompatible($version)
@@ -283,7 +283,7 @@ abstract class KunenaForum
 	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return boolean Version number.
+	 * @return  boolean Version number.
 	 * @since   Kunena 6.0
 	 */
 	public static function version()
@@ -297,9 +297,9 @@ abstract class KunenaForum
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected static function buildVersion()
 	{
@@ -336,7 +336,7 @@ abstract class KunenaForum
 	/**
 	 * Returns all version information together.
 	 *
-	 * @return object stdClass containing (version, major, date, name).
+	 * @return  object stdClass containing (version, major, date, name).
 	 * @since   Kunena 6.0
 	 */
 	public static function getVersionInfo()
@@ -353,7 +353,7 @@ abstract class KunenaForum
 	/**
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
-	 * @return boolean Major version in xxx.yyy format.
+	 * @return  boolean Major version in xxx.yyy format.
 	 * @since   Kunena 6.0
 	 */
 	public static function versionMajor()
@@ -369,7 +369,7 @@ abstract class KunenaForum
 	/**
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
-	 * @return boolean Date in yyyy-mm-dd format.
+	 * @return  boolean Date in yyyy-mm-dd format.
 	 * @since   Kunena 6.0
 	 */
 	public static function versionDate()
@@ -385,7 +385,7 @@ abstract class KunenaForum
 	/**
 	 * Returns codename from Kunena release.
 	 *
-	 * @return boolean Codename.
+	 * @return  boolean Codename.
 	 * @since   Kunena 6.0
 	 */
 	public static function versionName()
@@ -410,9 +410,9 @@ abstract class KunenaForum
 	 * @param   null|string                     $template  Name of the template file.
 	 * @param   array|Joomla\Registry\Registry  $params    Extra parameters to control the model.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())
 	{

@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 abstract class KunenaTable extends Joomla\CMS\Table\Table
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -28,9 +28,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 * @param   null  $keys   keys
 	 * @param   bool  $reset  reset
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -148,9 +148,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	/**
 	 * @param   bool  $updateNulls  update
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function store($updateNulls = false)
 	{
@@ -208,7 +208,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	/**
 	 * @param   null  $exists  exists
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -230,8 +230,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 * @throws  RuntimeException
 	 */
 	public function updateObject($nulls = false)
@@ -321,8 +321,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 *
 	 * @return  boolean    True on success.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 * @throws  RuntimeException
 	 */
 	protected function insertObject()
@@ -399,9 +399,9 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	/**
 	 * @param   null  $pk  pk
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete($pk = null)
 	{

@@ -14,22 +14,22 @@ defined('_JEXEC') or die('Unauthorized Access');
 /**
  * Class KunenaAvatarEasySocial
  *
- * @since       Kunena
+ * @since   Kunena 6.0
  */
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * KunenaAvatarEasySocial constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
-	 * @since       Kunena
+	 * @since  Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -37,9 +37,11 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	}
 
 	/**
-	 * @param $userlist
+	 * @param   array  $userlist userlist
 	 *
-	 * @since       Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
 	{
@@ -54,8 +56,9 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	}
 
 	/**
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
 	{
@@ -63,13 +66,15 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   int  $user  user
+	 * @param   int  $sizex sizex
+	 * @param   int  $sizey sizey
 	 *
-	 * @return mixed
-	 * @since       Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{

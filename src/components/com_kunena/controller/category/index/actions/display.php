@@ -43,10 +43,10 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	/**
 	 * Prepare message actions display.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -114,10 +114,10 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   string  $type   Type of the button.
 	 * @param   bool    $id     Id of the button.
 	 *
-	 * @return KunenaLayout|KunenaLayoutBase
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

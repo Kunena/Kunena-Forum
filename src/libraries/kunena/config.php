@@ -1356,9 +1356,9 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @return KunenaConfig|mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaConfig|mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance()
 	{
@@ -1384,9 +1384,9 @@ class KunenaConfig extends CMSObject
 	/**
 	 * Load config settings from database table.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load()
 	{
@@ -1436,7 +1436,7 @@ class KunenaConfig extends CMSObject
 	/**
 	 * @param   mixed  $properties  properties
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind($properties)
@@ -1447,7 +1447,7 @@ class KunenaConfig extends CMSObject
 	/**
 	 * Messages per page
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function check()
@@ -1461,9 +1461,9 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -1492,7 +1492,7 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function reset()
@@ -1518,9 +1518,9 @@ class KunenaConfig extends CMSObject
 	/**
 	 * Email set for the configuration
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getEmail()
 	{

@@ -78,7 +78,7 @@ class KunenaVersion
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function checkVersion()
@@ -137,7 +137,7 @@ class KunenaVersion
 	/**
 	 * Retrieve installed Kunena version as string.
 	 *
-	 * @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
+	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
 	 * @since   Kunena 6.0
 	 */
 	public static function getVersionHTML()
@@ -148,7 +148,7 @@ class KunenaVersion
 	/**
 	 * Retrieve copyright information as string.
 	 *
-	 * @return string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @return  string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	 * @since   Kunena 6.0
 	 */
 	public static function getCopyrightHTML()
@@ -162,7 +162,7 @@ class KunenaVersion
 	/**
 	 * Retrieve installed Kunena version, copyright and license as string.
 	 *
-	 * @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
+	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
 	 *                License: GNU General Public License"
 	 * @since   Kunena 6.0
 	 */

@@ -36,13 +36,13 @@ class KunenaTemplate extends CMSObject
 	protected static $_instances = array();
 
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	public $name = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $params = null;
@@ -123,7 +123,7 @@ class KunenaTemplate extends CMSObject
 	protected $paths = array();
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $css_compile = true;
@@ -174,7 +174,7 @@ class KunenaTemplate extends CMSObject
 	protected $style_variables = array();
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $compiled_style_variables = null;
@@ -186,7 +186,7 @@ class KunenaTemplate extends CMSObject
 	protected $scripts = array();
 
 	/**
-	 * @var null|SimpleXMLElement
+	 * @var     null|SimpleXMLElement
 	 * @since   Kunena 6.0
 	 */
 	protected $xml = null;
@@ -217,7 +217,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   null  $name  name
 	 *
 	 * @since     Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($name = null)
 	{
@@ -323,9 +323,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function isHmvc()
 	{
@@ -353,8 +353,8 @@ class KunenaTemplate extends CMSObject
 	 * @param   string  $type     type
 	 *
 	 * @return Joomla\CMS\Document\Document|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
@@ -378,7 +378,7 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @return    KunenaTemplate    The template object.
 	 * @since     1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getInstance($name = null)
 	{
@@ -444,7 +444,7 @@ class KunenaTemplate extends CMSObject
 	/**
 	 * getconfigxml
 	 *
-	 * @return boolean|mixed|string
+	 * @return  boolean|mixed|string
 	 * @since   Kunena 6.0
 	 */
 	public function getConfigXml()
@@ -474,9 +474,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function initialize()
 	{
@@ -512,9 +512,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadLanguage()
 	{
@@ -531,9 +531,9 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function initializeBackend()
 	{
@@ -541,7 +541,7 @@ class KunenaTemplate extends CMSObject
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function getUserClasses()
@@ -556,7 +556,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   string  $type   type
 	 * @param   null    $id     id
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -604,7 +604,7 @@ HTML;
 	 * @param   string  $name   name
 	 * @param   string  $title  title
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getIcon($name, $title = '')
@@ -616,7 +616,7 @@ HTML;
 	 * @param   string  $image  image
 	 * @param   string  $alt    alt
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getImage($image, $alt = '')
@@ -628,7 +628,7 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   bool    $url       url
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getImagePath($filename = '', $url = true)
@@ -643,7 +643,7 @@ HTML;
 	 * @param   null    $default   default
 	 * @param   null    $ignore    ignore
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
@@ -682,7 +682,7 @@ HTML;
 	/**
 	 * @param   mixed  $list  list
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListFooter($list)
@@ -700,7 +700,7 @@ HTML;
 	/**
 	 * @param   mixed  $list  list
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationListRender($list)
@@ -728,7 +728,7 @@ HTML;
 	/**
 	 * @param   string  $item  item
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemActive($item)
@@ -739,7 +739,7 @@ HTML;
 	/**
 	 * @param   string  $item  item
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationItemInactive($item)
@@ -751,7 +751,7 @@ HTML;
 	 * @param   string  $class      class
 	 * @param   string  $class_sfx  class_sfx
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getClass($class, $class_sfx = '')
@@ -760,7 +760,7 @@ HTML;
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariables()
@@ -772,7 +772,7 @@ HTML;
 	 * @param   string  $name     name
 	 * @param   string  $default  default
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getStyleVariable($name, $default = '')
@@ -784,7 +784,7 @@ HTML;
 	 * @param   string   $name   name
 	 * @param   integer  $value  value
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function setStyleVariable($name, $value)
@@ -798,9 +798,9 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   string  $group     group
 	 *
-	 * @return mixed|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
@@ -855,9 +855,9 @@ HTML;
 	 *
 	 * @param   string  $filename  filename
 	 *
-	 * @return mixed|void
-	 * @since Kunena 5.1.3
-	 * @throws Exception
+	 * @return  mixed|void
+	 * @since   Kunena 5.1.3
+	 * @throws  Exception
 	 */
 	public function addLessSheet($filename)
 	{
@@ -879,9 +879,9 @@ HTML;
 	 *
 	 * @param   string  $filename  filename
 	 *
-	 * @return mixed|void
-	 * @since Kunena 5.1.3
-	 * @throws Exception
+	 * @return  mixed|void
+	 * @since   Kunena 5.1.3
+	 * @throws  Exception
 	 */
 	public function addScssSheet($filename)
 	{
@@ -901,10 +901,10 @@ HTML;
 	/**
 	 * @param $style
 	 *
-	 * @return string|void
+	 * @return  string|void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function addStyleDeclaration($style)
 	{
@@ -923,9 +923,9 @@ HTML;
 	 * @param   string  $filename   filename
 	 * @param   string  $condition  condition
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addIEStyleSheet($filename, $condition = 'IE')
 	{
@@ -938,7 +938,7 @@ HTML;
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function clearCache()
@@ -954,9 +954,9 @@ HTML;
 	/**
 	 * @param   string  $filename  filename
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCachePath($filename = '')
 	{
@@ -980,7 +980,7 @@ HTML;
 	/**
 	 * @param   mixed  $matches  matches
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function findUrl($matches)
@@ -1004,8 +1004,8 @@ HTML;
 	 * @param   array   $attribs
 	 *
 	 * @return Joomla\CMS\Document\Document|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function addScript($filename, $options = array(), $attribs = array())
 	{
@@ -1059,7 +1059,7 @@ HTML;
 	 * @return Joomla\CMS\Document\Document|void
 	 *
 	 * @since   3.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function addScriptOptions($key, $options, $merge = true)
 	{
@@ -1077,7 +1077,7 @@ HTML;
 	/**
 	 * @param   string  $path  path
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function addPath($path)
@@ -1089,9 +1089,9 @@ HTML;
 	 * @param   string  $path      path
 	 * @param   bool    $fullpath  fullpath
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
@@ -1122,7 +1122,7 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   bool    $url       url
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getAvatarPath($filename = '', $url = false)
@@ -1134,7 +1134,7 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   bool    $url       url
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getSmileyPath($filename = '', $url = false)
@@ -1146,7 +1146,7 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   bool    $url       url
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getRankPath($filename = '', $url = false)
@@ -1158,9 +1158,9 @@ HTML;
 	 * @param   mixed  $index  index
 	 * @param   bool   $url    url
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicIconIndexPath($index, $url = false)
 	{
@@ -1183,9 +1183,9 @@ HTML;
 	 * @param   bool  $all      all
 	 * @param   int   $checked  checked
 	 *
-	 * @return array|SimpleXMLElement
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|SimpleXMLElement
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
@@ -1278,9 +1278,9 @@ HTML;
 	 * @param   string  $filename  filename
 	 * @param   bool    $url       url
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicIconPath($filename = '', $url = true)
 	{
@@ -1313,9 +1313,9 @@ HTML;
 	 *
 	 * @param   KunenaForumTopic  $topic  topic
 	 *
-	 * @return string
-	 * @since    Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicIcon($topic)
 	{
@@ -1571,9 +1571,9 @@ HTML;
 	/**
 	 * @param   KunenaForumCategory  $category  category
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -1599,9 +1599,9 @@ HTML;
 	 * @param   mixed  $index  index
 	 * @param   bool   $url    url
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryIconIndexPath($index, $url = false)
 	{
@@ -1624,9 +1624,9 @@ HTML;
 	 * @param   bool  $all      all
 	 * @param   int   $checked  checked
 	 *
-	 * @return array|SimpleXMLElement
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|SimpleXMLElement
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
@@ -1713,9 +1713,9 @@ HTML;
 	 * @param   bool    $url               url
 	 * @param   mixed   $category_iconset  category
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset = 'default')
 	{
@@ -1743,9 +1743,9 @@ HTML;
 	 * @param   string  $inputFile   input
 	 * @param   string  $outputFile  output
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function compileLess($inputFile, $outputFile)
 	{
@@ -1806,9 +1806,9 @@ HTML;
 	 * @param   string  $inputFile   input
 	 * @param   string  $outputFile  output
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function compileScss($inputFile, $outputFile)
 	{
@@ -1868,7 +1868,7 @@ HTML;
 	 *
 	 * @param   string  $iconset  iconset
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function setCategoryIconset($iconset = '/default')
@@ -1880,8 +1880,8 @@ HTML;
 	 * @param   mixed  $topic  topic
 	 *
 	 * @return stdClass|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicLabel($topic)
 	{
@@ -1952,9 +1952,9 @@ HTML;
 	}
 
 	/**
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function borderless()
 	{
@@ -1974,10 +1974,10 @@ HTML;
 	/**
 	 * @param   bool  $class  class
 	 *
-	 * @return string|void
+	 * @return  string|void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function tooltips($class = false)
 	{
@@ -2000,10 +2000,10 @@ HTML;
 	/**
 	 * @param   bool  $topic_ids
 	 *
-	 * @return string|void
+	 * @return  string|void
 	 *
-	 * @since version
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function recaptcha($topic_ids = false)
 	{

@@ -34,9 +34,9 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return Joomla\CMS\MVC\Controller\BaseController|void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -96,9 +96,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function search()
 	{
@@ -124,9 +124,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function change()
 	{
@@ -144,9 +144,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function karmaup()
 	{
@@ -156,9 +156,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @param $karmaDelta
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -254,9 +254,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function karmadown()
 	{
@@ -264,9 +264,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @return array|null
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|null
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -372,10 +372,10 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function saveUser()
 	{
@@ -644,9 +644,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function ban()
 	{
@@ -868,8 +868,8 @@ class KunenaControllerUser extends KunenaController
 	// Internal functions:
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function cancel()
 	{
@@ -878,9 +878,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function login()
 	{
@@ -918,9 +918,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function logout()
 	{
@@ -956,10 +956,10 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Save online status for user
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function status()
 	{
@@ -995,10 +995,10 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Set online status text for user
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function statusText()
 	{
@@ -1035,7 +1035,7 @@ class KunenaControllerUser extends KunenaController
 	 * Upload avatar with AJAX.
 	 *
 	 * @since 5.1
-	 * @throws null
+	 * @throws  null
 	 */
 	public function upload()
 	{
@@ -1112,9 +1112,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -1147,7 +1147,7 @@ class KunenaControllerUser extends KunenaController
 	 * Remove avatar with AJAX
 	 *
 	 * @since 5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function removeAvatar()
 	{
@@ -1198,9 +1198,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Get avatar attached to a profile with AJAX.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function loadAvatar()
 	{
@@ -1322,9 +1322,9 @@ class KunenaControllerUser extends KunenaController
 	 * @param   int     $userid
 	 * @param   string  $evidence  evidence
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{

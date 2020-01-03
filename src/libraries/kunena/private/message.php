@@ -29,25 +29,25 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 {
 	/**
 	 * @var string
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaPrivate';
 
 	/**
 	 * @var
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected $_attachments;
 
 	/**
 	 * @var
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected $_posts;
 
 	/**
 	 * @var
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	protected $_users;
 
@@ -56,7 +56,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 *
 	 * @param   null  $properties
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -74,7 +74,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 * @param   string  $field
 	 *
 	 * @return integer|string
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function displayField($field)
 	{
@@ -92,9 +92,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return KunenaTableMap
+	 * @return  KunenaTableMap
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public function attachments()
 	{
@@ -108,9 +108,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return KunenaTableMap
+	 * @return  KunenaTableMap
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public function posts()
 	{
@@ -124,9 +124,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return KunenaTableMap
+	 * @return  KunenaTableMap
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public function users()
 	{
@@ -140,9 +140,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{
@@ -171,8 +171,8 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * Save changes in the relations.
 	 *
-	 * @return void
-	 * @throws Exception
+	 * @return  void
+	 * @throws  Exception
 	 */
 	protected function saveInternal()
 	{

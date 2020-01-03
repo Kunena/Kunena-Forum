@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 class KunenaProfile
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -29,9 +29,9 @@ class KunenaProfile
 	/**
 	 * @param   null  $integration  integration
 	 *
-	 * @return boolean|KunenaProfile
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|KunenaProfile
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -64,9 +64,9 @@ class KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopHits($limit = 0)
 	{
@@ -81,7 +81,7 @@ class KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	protected function _getTopHits($limit = 0)
@@ -93,10 +93,10 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
@@ -115,7 +115,7 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
@@ -127,7 +127,7 @@ class KunenaProfile
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
@@ -138,7 +138,7 @@ class KunenaProfile
 	 * @param   int    $view    view
 	 * @param   mixed  $params  params
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function showProfile($view, &$params)
@@ -149,7 +149,7 @@ class KunenaProfile
 	 * @param   integer  $userid  userid
 	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)

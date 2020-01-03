@@ -41,7 +41,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get all items in the collection.
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public function all()
@@ -52,7 +52,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get the first item from the collection.
 	 *
-	 * @return mixed|null
+	 * @return  mixed|null
 	 * @since   Kunena 6.0
 	 */
 	public function first()
@@ -63,7 +63,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get the last item from the collection.
 	 *
-	 * @return mixed|null
+	 * @return  mixed|null
 	 * @since   Kunena 6.0
 	 */
 	public function last()
@@ -76,7 +76,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return KunenaCollection
+	 * @return  KunenaCollection
 	 * @since   Kunena 6.0
 	 */
 	public function filter(Closure $callback)
@@ -89,7 +89,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return KunenaCollection
+	 * @return  KunenaCollection
 	 * @since   Kunena 6.0
 	 */
 	public function each(Closure $callback)
@@ -104,7 +104,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return KunenaCollection
+	 * @return  KunenaCollection
 	 * @since   Kunena 6.0
 	 */
 	public function map(Closure $callback)
@@ -115,7 +115,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get an iterator for the items.
 	 *
-	 * @return ArrayIterator
+	 * @return  arrayIterator
 	 * @since   Kunena 6.0
 	 */
 	public function getIterator()
@@ -139,7 +139,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   mixed  $key  key
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function offsetExists($key)
@@ -152,7 +152,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   mixed  $key  key
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function offsetGet($key)
@@ -166,7 +166,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   mixed  $key    key
 	 * @param   mixed  $value  value
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function offsetSet($key, $value)
@@ -186,7 +186,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   string  $key  key
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function offsetUnset($key)

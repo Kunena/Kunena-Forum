@@ -117,7 +117,7 @@ class Parser
 	 *
 	 * @api
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function getSourceName()
 	{
@@ -213,7 +213,7 @@ class Parser
 	 * @param   string  $buffer
 	 * @param   string  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function parseValue($buffer, &$out)
 	{
@@ -240,7 +240,7 @@ class Parser
 	 * @param   string  $buffer
 	 * @param   string  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function parseSelector($buffer, &$out)
 	{
@@ -296,7 +296,7 @@ class Parser
 	 * position into $s. Then if a chain fails, use $this->seek($s) to
 	 * go back where we started.
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @throws ParserException
 	 */
 	protected function parseChunk()
@@ -832,7 +832,7 @@ class Parser
 	 *
 	 * @return \Leafo\ScssPhp\Block
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function popBlock()
 	{
@@ -906,7 +906,7 @@ class Parser
 	 * @param   array   $m      Matches (passed by reference)
 	 * @param   string  $delim  Delimeter
 	 *
-	 * @return boolean True if match; false otherwise
+	 * @return  boolean True if match; false otherwise
 	 */
 	protected function matchString(&$m, $delim)
 	{
@@ -949,7 +949,7 @@ class Parser
 	 * @param   array    $out
 	 * @param   boolean  $eatWhitespace
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function match($regex, &$out, $eatWhitespace = null)
 	{
@@ -981,7 +981,7 @@ class Parser
 	 * @param   string   $what
 	 * @param   boolean  $eatWhitespace
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function literal($what, $eatWhitespace = null)
 	{
@@ -1010,7 +1010,7 @@ class Parser
 	/**
 	 * Match some whitespace
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function whitespace()
 	{
@@ -1075,7 +1075,7 @@ class Parser
 	/**
 	 * Returns last child was appended
 	 *
-	 * @return array|null
+	 * @return  array|null
 	 */
 	protected function last()
 	{
@@ -1092,7 +1092,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function mediaQueryList(&$out)
 	{
@@ -1104,7 +1104,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function mediaQuery(&$out)
 	{
@@ -1165,7 +1165,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function mediaExpression(&$out)
 	{
@@ -1198,7 +1198,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function argValues(&$out)
 	{
@@ -1217,7 +1217,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function argValue(&$out)
 	{
@@ -1256,7 +1256,7 @@ class Parser
 	 *
 	 * @param   string  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function valueList(&$out)
 	{
@@ -1268,7 +1268,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function spaceList(&$out)
 	{
@@ -1283,7 +1283,7 @@ class Parser
 	 * @param   string    $delim
 	 * @param   boolean   $flatten
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function genericList(&$out, $parseItem, $delim = '', $flatten = true)
 	{
@@ -1327,7 +1327,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function expression(&$out)
 	{
@@ -1373,7 +1373,7 @@ class Parser
 	 * @param   array    $lhs
 	 * @param   integer  $minP
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function expHelper($lhs, $minP)
 	{
@@ -1427,7 +1427,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function value(&$out)
 	{
@@ -1526,7 +1526,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function parenValue(&$out)
 	{
@@ -1565,7 +1565,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function progid(&$out)
 	{
@@ -1598,7 +1598,7 @@ class Parser
 	 *
 	 * @param $func
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function func(&$func)
 	{
@@ -1656,7 +1656,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function argumentList(&$out)
 	{
@@ -1704,7 +1704,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @throws ParserException
 	 */
 	protected function argumentDef(&$out)
@@ -1773,7 +1773,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function map(&$out)
 	{
@@ -1817,7 +1817,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function color(&$out)
 	{
@@ -1860,7 +1860,7 @@ class Parser
 	 *
 	 * @param $unit
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function unit(&$unit)
 	{
@@ -1879,7 +1879,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function string(&$out)
 	{
@@ -1983,7 +1983,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function mixedKeyword(&$out)
 	{
@@ -2033,7 +2033,7 @@ class Parser
 	 * @param   array   $out
 	 * @param   string  $nestingOpen
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function openString($end, &$out, $nestingOpen = null)
 	{
@@ -2107,7 +2107,7 @@ class Parser
 	 * @param   array    $out
 	 * @param   boolean  $lookWhite  save information about whitespace before and after
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function interpolation(&$out, $lookWhite = true)
 	{
@@ -2150,7 +2150,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function propertyName(&$out)
 	{
@@ -2218,7 +2218,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function selectors(&$out)
 	{
@@ -2257,7 +2257,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function selector(&$out)
 	{
@@ -2306,7 +2306,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function selectorSingle(&$out)
 	{
@@ -2464,7 +2464,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function variable(&$out)
 	{
@@ -2488,7 +2488,7 @@ class Parser
 	 * @param   string   $word
 	 * @param   boolean  $eatWhitespace
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function keyword(&$word, $eatWhitespace = null)
 	{
@@ -2513,7 +2513,7 @@ class Parser
 	 *
 	 * @param   string  $placeholder
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function placeholder(&$placeholder)
 	{
@@ -2537,7 +2537,7 @@ class Parser
 	 *
 	 * @param   array  $out
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function url(&$out)
 	{
@@ -2554,7 +2554,7 @@ class Parser
 	/**
 	 * Consume an end of statement delimiter
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	protected function end()
 	{
@@ -2577,7 +2577,7 @@ class Parser
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function stripAssignmentFlags(&$value)
 	{
@@ -2609,7 +2609,7 @@ class Parser
 	 *
 	 * @param   array  $selectors
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	protected function stripOptionalFlag(&$selectors)
 	{
@@ -2633,7 +2633,7 @@ class Parser
 	 *
 	 * @param   array  $value
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	protected function flattenList($value)
 	{
@@ -2651,7 +2651,7 @@ class Parser
 	 * @param   bool  $until
 	 * @param   bool  $allowNewline
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @deprecated
 	 *
 	 * {@internal
@@ -2704,7 +2704,7 @@ class Parser
 	 *
 	 * @param   string  $what
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	private function pregQuote($what)
 	{
@@ -2740,7 +2740,7 @@ class Parser
 	 *
 	 * @param   integer  $pos
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	private function getSourcePosition($pos)
 	{

@@ -23,25 +23,25 @@ use Joomla\CMS\Uri\Uri;
 class KunenaAvatar
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $avatarSizes = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $resize = false;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $css = false;
@@ -49,9 +49,9 @@ class KunenaAvatar
 	/**
 	 * @param   null  $integration  integration
 	 *
-	 * @return boolean|KunenaAvatar
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|KunenaAvatar
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -84,7 +84,7 @@ class KunenaAvatar
 	/**
 	 * @param   array  $userlist  userlist
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function load($userlist)
@@ -92,7 +92,7 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -106,9 +106,9 @@ class KunenaAvatar
 	 * @param   int     $sizex  sizex
 	 * @param   int     $sizey  sizey
 	 *
-	 * @return string|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
@@ -156,8 +156,8 @@ class KunenaAvatar
 	 * @param   int  $sizey  sizey
 	 *
 	 * @return StdClass
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
@@ -181,9 +181,9 @@ class KunenaAvatar
 	 * @param   int     $sizex  sizex
 	 * @param   int     $sizey  sizey
 	 *
-	 * @return string|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
@@ -206,7 +206,7 @@ class KunenaAvatar
 	 * @param   integer  $sizex  sizex
 	 * @param   integer  $sizey  sizey
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	protected function _getURL($user, $sizex, $sizey)

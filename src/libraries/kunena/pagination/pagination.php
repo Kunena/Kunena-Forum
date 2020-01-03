@@ -99,25 +99,25 @@ class KunenaPagination
 	protected $viewall = false;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $itemActiveChrome = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $itemInactiveChrome = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $listChrome = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $footerChrome = null;
@@ -460,7 +460,7 @@ class KunenaPagination
 	 * @return  string  Pagination footer.
 	 *
 	 * @since   1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getListFooter()
 	{
@@ -486,7 +486,7 @@ class KunenaPagination
 	 * @return  string  The HTML for the limit # input box.
 	 *
 	 * @since   1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getLimitBox($all = false)
 	{
@@ -563,7 +563,7 @@ class KunenaPagination
 	 * @return  string  Pagination page list string.
 	 *
 	 * @since   1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getPagesLinks()
 	{
@@ -657,9 +657,9 @@ class KunenaPagination
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function setChrome()
 	{
@@ -782,7 +782,7 @@ class KunenaPagination
 	 * @return  string  HTML link
 	 *
 	 * @since   1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function _item_active(Joomla\CMS\Pagination\PaginationObject $item)
 	{
@@ -815,7 +815,7 @@ class KunenaPagination
 	 * @return  string
 	 *
 	 * @since   1.5
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function _item_inactive(Joomla\CMS\Pagination\PaginationObject $item)
 	{

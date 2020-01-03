@@ -37,10 +37,10 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int  $ids        ids
 	 * @param   string          $authorise  authorise
 	 *
-	 * @return KunenaForumMessage[]
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  KunenaForumMessage[]
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getMessages($ids = false, $authorise = 'read')
 	{
@@ -76,9 +76,9 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   array  $ids  ids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -140,9 +140,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   int     $hold       hold
 	 * @param   bool    $orderbyid  orderbyid
 	 *
-	 * @return KunenaForumMessage[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumMessage[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -189,9 +189,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   int     $hold       hold
 	 * @param   bool    $orderbyid  orderbyid
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -242,10 +242,10 @@ abstract class KunenaForumMessageHelper
 	 * @param   int             $limit       limit
 	 * @param   array           $params      params
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -428,8 +428,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   null|array   $hold       hold
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
 	{
@@ -475,9 +475,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   null  $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumMessage    The message object.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumMessage    The message object.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -513,9 +513,9 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   array|string  $mesids  mesid
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -595,7 +595,7 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function cleanup()
@@ -607,9 +607,9 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   bool|array|int  $topicids  topicids
 	 *
-	 * @return boolean|integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|integer
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function recount($topicids = false)
 	{
@@ -652,9 +652,9 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * @param   array  $ids  ids
 	 *
-	 * @return array|boolean
+	 * @return  array|boolean
 	 * @since 5.0.3
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getMessagesByTopics(array $ids)
 	{
@@ -691,9 +691,9 @@ abstract class KunenaForumMessageHelper
 	 *
 	 * @param   int  $userid
 	 *
-	 * @return boolean|mixed
+	 * @return  boolean|mixed
 	 * @since 6.0.0
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getLastUserIP(int $userid)
 	{

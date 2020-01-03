@@ -23,8 +23,8 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * plgKunenaEasyprofile constructor.
 	 *
-	 * @param $subject
-	 * @param $config
+	 * @param   object  $subject subject
+	 * @param   object  $config  config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -67,7 +67,8 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatarEasyprofile|void
+	 * @return  KunenaAvatarEasyprofile|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -85,7 +86,8 @@ class plgKunenaEasyprofile extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfileEasyprofile|void
+	 * @return  KunenaProfileEasyprofile|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetProfile()

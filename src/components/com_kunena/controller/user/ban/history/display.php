@@ -53,10 +53,10 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	/**
 	 * Prepare ban history.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -76,9 +76,9 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

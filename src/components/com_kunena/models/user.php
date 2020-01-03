@@ -23,8 +23,8 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaModelUser extends KunenaModel
 {
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{
@@ -79,9 +79,9 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getQueryWhere()
 	{
@@ -127,7 +127,7 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|string
+	 * @return  array|string
 	 * @since   Kunena 6.0
 	 */
 	public function getQuerySearch()
@@ -160,9 +160,9 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTotal()
 	{
@@ -189,9 +189,9 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCount()
 	{
@@ -224,9 +224,9 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return array|mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getItems()
 	{

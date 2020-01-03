@@ -23,7 +23,7 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerTrash extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
@@ -33,8 +33,8 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -45,11 +45,11 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Purge
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function purge()
 	{
@@ -163,11 +163,11 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Restore
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function restore()
 	{
@@ -255,11 +255,11 @@ class KunenaAdminControllerTrash extends KunenaController
 	/**
 	 * Method to redirect user on cancel on purge page
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{

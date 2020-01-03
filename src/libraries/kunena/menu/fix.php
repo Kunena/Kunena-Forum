@@ -62,20 +62,20 @@ abstract class KunenaMenuFix
 	public static $same = array();
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public static $structure = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public static $parent = null;
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function initialize()
 	{
@@ -86,9 +86,9 @@ abstract class KunenaMenuFix
 	/**
 	 * Loads the entire menu table into memory (taken from Joomla 1.7.3).
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected static function load()
 	{
@@ -140,7 +140,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected static function build()
@@ -202,7 +202,7 @@ abstract class KunenaMenuFix
 	/**
 	 * @param   StdClass  $item  item
 	 *
-	 * @return object|boolean
+	 * @return  object|boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static function getHome($item)
@@ -231,7 +231,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function getLegacy()
@@ -247,9 +247,9 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array|null
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|null
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function fixLegacy()
 	{
@@ -280,7 +280,7 @@ abstract class KunenaMenuFix
 	/**
 	 * @param   integer  $itemid  itemid
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public static function delete($itemid)
@@ -299,7 +299,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function getAll()
@@ -318,7 +318,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function getAliases()
@@ -334,7 +334,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function getInvalid()
@@ -350,7 +350,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	public static function getConflicts()

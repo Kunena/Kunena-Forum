@@ -24,8 +24,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 {
 	/**
 	 * @return  mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getSmileyspaths()
 	{
@@ -69,8 +69,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 	/**
 	 * @return  mixed|void
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getSmiley()
 	{
@@ -106,8 +106,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{

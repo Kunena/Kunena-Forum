@@ -24,9 +24,9 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerTools extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected $baseurl = null;
 
@@ -35,8 +35,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,11 +47,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Diagnotics
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function diagnostics()
 	{
@@ -91,12 +91,12 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Prune
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function prune()
 	{
@@ -214,11 +214,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Sync Users
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function syncusers()
 	{
@@ -360,11 +360,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Begin category recount.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function recount()
 	{
@@ -441,9 +441,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @param   $response
 	 * @param   $ajax
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected function setResponse($response, $ajax)
 	{
@@ -475,12 +475,12 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Perform recount on statistics in smaller chunks.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function dorecount()
 	{
@@ -640,9 +640,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @param   bool  $stop  stop
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected function checkTimeout($stop = false)
 	{
@@ -673,11 +673,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Trash Menu
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function trashmenu()
 	{
@@ -694,11 +694,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Fix Legacy
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function fixlegacy()
 	{
@@ -730,9 +730,9 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function purgeReStatements()
 	{
@@ -791,12 +791,12 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Clean ip
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function cleanupIP()
 	{
@@ -884,11 +884,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{
@@ -898,11 +898,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Method to completely remove kunena by checking before if the user is a super-administrator
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function uninstall()
 	{
@@ -952,11 +952,11 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * System Report
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function systemreport()
 	{

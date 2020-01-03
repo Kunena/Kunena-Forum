@@ -30,11 +30,11 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	/**
 	 * Prepare topic edit form.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -182,9 +182,9 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -241,7 +241,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()

@@ -25,9 +25,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function exists()
 	{
@@ -39,9 +39,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @return BaseLayout|KunenaLayout
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function execute()
 	{
@@ -123,9 +123,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   object        $active   Active menu item.
 	 * @param   array         $visited  Already visited menu items.
 	 *
-	 * @return object|null
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  object|null
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function getDefaultMenuItem(AbstractMenu $menu, $active, $visited = array())
 	{

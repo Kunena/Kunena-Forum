@@ -24,9 +24,9 @@ class KunenaAdminViewRank extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return mixed|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{

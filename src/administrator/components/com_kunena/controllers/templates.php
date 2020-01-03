@@ -26,16 +26,16 @@ use Joomla\CMS\Filesystem\Folder;
 class KunenaAdminControllerTemplates extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected $baseurl = null;
 
 	/**
 	 * @var array
 	 *
-	 * @since    2.0
+	 * @since   Kunena 2.0
 	 */
 	protected $locked = array('aurelia');
 
@@ -44,8 +44,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -56,11 +56,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Publish
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function publish()
 	{
@@ -91,11 +91,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Add
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function add()
 	{
@@ -113,11 +113,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Edit
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function edit()
 	{
@@ -149,11 +149,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Install
 	 *
-	 * @return boolean|void
+	 * @return  boolean|void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function install()
 	{
@@ -274,11 +274,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Uninstall
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function uninstall()
 	{
@@ -344,11 +344,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Choose less
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function chooseless()
 	{
@@ -371,11 +371,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Edit Less
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function editless()
 	{
@@ -399,11 +399,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Choose Css
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function choosecss()
 	{
@@ -418,11 +418,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Apply less
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function applyless()
 	{
@@ -466,11 +466,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Save Less
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function saveless()
 	{
@@ -518,11 +518,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Edit Css
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function editcss()
 	{
@@ -546,11 +546,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Apply Css
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function applycss()
 	{
@@ -591,11 +591,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Save Css
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function savecss()
 	{
@@ -640,9 +640,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function apply()
 	{
@@ -677,11 +677,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @param   string  $template  The name of the template.
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since  3.0.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function _saveParamFile($template)
 	{
@@ -837,11 +837,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena 2.0
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function save()
 	{
@@ -874,10 +874,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to restore the default settings of the template selected
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since 5.1
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function restore()
 	{
@@ -901,11 +901,11 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since 3.0.5
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{

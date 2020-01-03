@@ -32,7 +32,7 @@ class KunenaMigratorFireboard
 	);
 
 	/**
-	 * @return KunenaMigratorFireboard|null
+	 * @return  KunenaMigratorFireboard|null
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()

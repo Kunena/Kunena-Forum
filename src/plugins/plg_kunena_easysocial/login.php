@@ -16,22 +16,22 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since   Kunena 6.0
  */
 class KunenaLoginEasySocial
 {
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * KunenaLoginEasySocial constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
-	 * @since       Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -39,8 +39,9 @@ class KunenaLoginEasySocial
 	}
 
 	/**
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
 	{
@@ -48,8 +49,9 @@ class KunenaLoginEasySocial
 	}
 
 	/**
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
 	{
@@ -57,8 +59,9 @@ class KunenaLoginEasySocial
 	}
 
 	/**
-	 * @return null
-	 * @since       Kunena
+	 * @return  null
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
 	{

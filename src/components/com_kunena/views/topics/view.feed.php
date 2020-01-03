@@ -24,9 +24,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -97,9 +97,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayUser($tpl = null)
 	{
@@ -142,9 +142,9 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayPosts($tpl = null)
 	{
@@ -187,8 +187,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayTopicRows()
 	{
@@ -233,8 +233,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayPostRows()
 	{
@@ -277,8 +277,8 @@ class KunenaViewTopics extends KunenaView
 	 * @param $userid
 	 * @param $username
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{

@@ -42,10 +42,10 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare user for editing.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -71,9 +71,9 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

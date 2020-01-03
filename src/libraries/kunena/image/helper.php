@@ -33,7 +33,7 @@ class KunenaImageHelper
 	 * @param   int     $scale      See available KunenaImage constants.
 	 * @param   int     $crop       Define if you want crop the image.
 	 *
-	 * @return boolean    True on success.
+	 * @return  boolean    True on success.
 	 * @since   Kunena 6.0
 	 */
 	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)

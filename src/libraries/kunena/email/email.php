@@ -26,9 +26,9 @@ abstract class KunenaEmail
 	 * @param   Joomla\CMS\Mail\MailTemplate  $mail       mail
 	 * @param   array                         $receivers  receivers
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function send($mail, array $receivers)
 	{
@@ -128,9 +128,9 @@ abstract class KunenaEmail
 	 * @param $errfile
 	 * @param $errline
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since version
+	 * @since   Kunena 6.0
 	 */
 	public static function on_mail_error($errno, $errstr, $errfile, $errline)
 	{

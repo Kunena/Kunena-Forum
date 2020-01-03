@@ -18,7 +18,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumTopicUser
  *
- * @since Kunena
+ * @since   Kunena
  * @property int    $user_id
  * @property int    $topic_id
  * @property int    $category_id
@@ -32,7 +32,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopicUser extends CMSObject
 {
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -50,8 +50,8 @@ class KunenaForumTopicUser extends CMSObject
 	 *
 	 * @param   mixed  $topic  topic
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -77,7 +77,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   string  $type    Topics table name to be used.
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
-	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
+	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
@@ -100,9 +100,9 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   mixed  $user    user
 	 * @param   bool   $reload  reload
 	 *
-	 * @return KunenaForumTopicUser
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopicUser
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
@@ -110,9 +110,9 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function reset()
 	{
@@ -126,9 +126,9 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   int    $topic_id  Topic id to be loaded.
 	 * @param   mixed  $user      user
 	 *
-	 * @return boolean    True on success
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null)
 	{
@@ -166,9 +166,9 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * Method to delete the KunenaForumTopicUser object from the database.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function delete()
 	{
@@ -195,7 +195,7 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * @param   null|bool  $exists  exists
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)
@@ -214,9 +214,9 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   KunenaForumMessage  $message    message
 	 * @param   int                 $postDelta  postdelta
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function update(KunenaForumMessage $message = null, $postDelta = 0)
 	{
@@ -269,9 +269,9 @@ class KunenaForumTopicUser extends CMSObject
 	}
 
 	/**
-	 * @return KunenaForumTopic
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumTopic
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopic()
 	{
@@ -282,7 +282,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   array  $data    data
 	 * @param   array  $ignore  ignore
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $data, array $ignore = array())
@@ -296,9 +296,9 @@ class KunenaForumTopicUser extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new topic.
 	 *
-	 * @return boolean    True on success.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean    True on success.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
 	{

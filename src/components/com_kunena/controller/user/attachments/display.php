@@ -53,9 +53,9 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return KunenaExceptionAuthorise
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaExceptionAuthorise
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -126,9 +126,9 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

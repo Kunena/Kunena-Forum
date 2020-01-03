@@ -25,10 +25,10 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaControllerTopics extends KunenaController
 {
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function none()
 	{
@@ -37,11 +37,11 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws null
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  null
 	 * @throws void
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function permdel()
 	{
@@ -140,9 +140,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function delete()
 	{
@@ -204,9 +204,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function restore()
 	{
@@ -268,9 +268,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function approve()
 	{
@@ -333,9 +333,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function move()
 	{
@@ -438,9 +438,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unfavorite()
 	{
@@ -485,9 +485,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unsubscribe()
 	{
@@ -519,9 +519,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function approve_posts()
 	{
@@ -568,9 +568,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function delete_posts()
 	{
@@ -616,9 +616,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function restore_posts()
 	{
@@ -664,9 +664,9 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since Kunena
-	 * @throws null
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function permdel_posts()
 	{

@@ -24,9 +24,9 @@ class KunenaAdminViewStats extends KunenaView
 {
 	/**
 	 * @internal param null $tpl
-	 * @since    Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function displayDefault()
 	{

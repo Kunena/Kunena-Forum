@@ -56,7 +56,7 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * setToolbar
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()

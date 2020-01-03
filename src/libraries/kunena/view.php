@@ -47,7 +47,7 @@ class KunenaView extends HtmlView
 	public $config = null;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	public $embedded = false;
@@ -59,7 +59,7 @@ class KunenaView extends HtmlView
 	public $templatefiles = array();
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $teaser = null;
@@ -79,8 +79,8 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -125,9 +125,9 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayAll()
 	{
@@ -143,9 +143,9 @@ class KunenaView extends HtmlView
 	 * @param   null  $layout  layout
 	 * @param   null  $tpl     tmpl
 	 *
-	 * @return mixed|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayLayout($layout = null, $tpl = null)
 	{
@@ -230,9 +230,9 @@ class KunenaView extends HtmlView
 	 * @param   array  $messages  messages
 	 * @param   int    $code      code
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayError($messages = array(), $code = 404)
 	{
@@ -279,9 +279,9 @@ class KunenaView extends HtmlView
 	 *
 	 * @param   string  $title  Show the title on the browser
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function setTitle($title)
 	{
@@ -322,9 +322,9 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   array  $errors  errors
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -340,9 +340,9 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   mixed  $position  position
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function displayModulePosition($position)
 	{
@@ -352,9 +352,9 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   mixed  $position  position
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getModulePosition($position)
 	{
@@ -377,8 +377,8 @@ class KunenaView extends HtmlView
 	 * @param   mixed  $position  position
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function isModulePosition($position)
 	{
@@ -392,9 +392,9 @@ class KunenaView extends HtmlView
 	 * @param   int     $len     len
 	 * @param   mixed   $parent  parent
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function parse($text, $len = 0, $parent)
 	{
@@ -417,9 +417,9 @@ class KunenaView extends HtmlView
 	 * @param   string  $tpl         tmpl
 	 * @param   array   $hmvcParams  params
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 * @throws LogicException
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
@@ -481,9 +481,9 @@ class KunenaView extends HtmlView
 	 *                               automatically searches the template paths and compiles as needed.
 	 * @param   array   $hmvcParams  Extra parameters for HMVC.
 	 *
-	 * @return string|void The output of the the template script.
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string|void The output of the the template script.
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
 	{
@@ -553,7 +553,7 @@ class KunenaView extends HtmlView
 	}
 
 	/**
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplateMD5()
@@ -567,9 +567,9 @@ class KunenaView extends HtmlView
 	 * @param   null                 $title     title
 	 * @param   null                 $class     class
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
@@ -594,10 +594,10 @@ class KunenaView extends HtmlView
 	 * @param   null                      $class     class
 	 * @param   KunenaForumCategory|null  $category  category
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{

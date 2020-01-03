@@ -26,7 +26,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since Kunena
+	 * @since   Kunena
 	 * @throws ReflectionException
 	 */
 	public function displayDefault($tpl = null)
@@ -67,7 +67,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	protected function getFilterUserFields()
@@ -84,7 +84,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	protected function getSortFields()
@@ -104,7 +104,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	protected function getSortDirectionFields()
@@ -117,7 +117,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 */
 	protected function getFilterTypeFields()
@@ -132,7 +132,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * @return  array
 	 * @since  Kunena
 	 * @throws ReflectionException
 	 */
@@ -164,7 +164,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	/**
 	 * @param $id
 	 *
-	 * @return mixed|string
+	 * @return  mixed|string
 	 * @since   Kunena 6.0
 	 */
 	public function getType($id)
@@ -177,7 +177,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	/**
 	 * @param $name
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getGroupCheckbox($name)

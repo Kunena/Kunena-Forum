@@ -31,11 +31,11 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	/**
 	 * Prepare general statistics display.
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -74,9 +74,9 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

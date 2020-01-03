@@ -27,7 +27,7 @@ class KText
 	/**
 	 * @param $string
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public static function _($string)
@@ -38,7 +38,7 @@ class KText
 
 /**
  * @return integer
- * @since Kunena
+ * @since   Kunena
  * @throws KunenaInstallerException
  */
 function installSampleData()

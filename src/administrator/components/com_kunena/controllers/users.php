@@ -25,7 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminControllerUsers extends KunenaController
 {
 	/**
-	 * @var null|string
+	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
@@ -35,8 +35,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @param   array  $config  construct
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -47,12 +47,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Edit
 	 *
-	 * @return boolean|void
+	 * @return  boolean|void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function edit()
 	{
@@ -84,12 +84,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Save
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function save()
 	{
@@ -194,10 +194,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @param               $modCatids
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since Kunena 5.1
-	 * @throws Exception
+	 * @since   Kunena 5.1
+	 * @throws  Exception
 	 */
 	protected function setModerate(KunenaUser $user, $modCatids)
 	{
@@ -221,10 +221,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Apply
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function apply()
 	{
@@ -319,12 +319,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Trash menu
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function trashusermessages()
 	{
@@ -368,10 +368,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function move()
 	{
@@ -402,12 +402,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Move Messages
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function movemessages()
 	{
@@ -473,12 +473,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Logout
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function logout()
 	{
@@ -512,12 +512,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function remove()
 	{
@@ -592,12 +592,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Ban
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function ban()
 	{
@@ -652,12 +652,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Unban
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function unban()
 	{
@@ -712,10 +712,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Set an user as global moderator, works only if you are an admin
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    5.1
-	 * @throws null
+	 * @since   5.1
+	 * @throws  null
 	 */
 	public function moderate()
 	{
@@ -762,12 +762,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Unmoderate
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    5.1
-	 * @throws Exception
+	 * @since   5.1
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function unmoderate()
 	{
@@ -844,12 +844,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Block
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function block()
 	{
@@ -904,12 +904,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Unblock
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function unblock()
 	{
@@ -964,12 +964,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Batch Moderators
 	 *
-	 * @return void
+	 * @return  void
 	 *
-	 * @since    2.0
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 *
-	 * @throws null
+	 * @throws  null
 	 */
 	public function batch_moderators()
 	{
@@ -1030,11 +1030,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @return void
+	 * @return  void
 	 *
 	 * @since K4.0
-	 * @throws Exception
-	 * @throws null
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function cancel()
 	{
@@ -1044,12 +1044,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove categories subscriptions for the users selected
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 4.0.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function removecatsubscriptions()
 	{
@@ -1093,12 +1093,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Remove topics subscriptions for the users selected
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 4.0.0
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function removetopicsubscriptions()
 	{
@@ -1142,12 +1142,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * Subscribe users to categories selected
 	 *
-	 * @return void
+	 * @return  void
 	 * @since 5.1.8
 	 *
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function subscribeuserstocategories()
 	{

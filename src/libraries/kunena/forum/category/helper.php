@@ -43,9 +43,9 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * Initialize class.
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function initialize()
 	{
@@ -72,9 +72,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @return array|boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function &loadCategories()
 	{
@@ -129,7 +129,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   array  $instances  instances
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected static function buildTree(array &$instances)
@@ -155,7 +155,7 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @param   KunenaForumCategory  $instance  instance
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public static function register($instance)
@@ -181,9 +181,9 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getSubscriptions($user = null)
 	{
@@ -215,9 +215,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool        $reverse    reverse
 	 * @param   string      $authorise  authorise
 	 *
-	 * @return array|KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array|KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getCategories($ids = false, $reverse = false, $authorise = 'read')
 	{
@@ -288,8 +288,8 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return integer
 	 *
-	 * @since    2.0.0
-	 * @throws Exception
+	 * @since   Kunena 2.0.0
+	 * @throws  Exception
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
 	{
@@ -326,10 +326,10 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int    $limit       limit
 	 * @param   array  $params      params
 	 *
-	 * @return array (total, list)
+	 * @return  array (total, list)
 	 *
-	 * @since    2.0.0
-	 * @throws Exception
+	 * @since   Kunena 2.0.0
+	 * @throws  Exception
 	 */
 	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
 	{
@@ -422,10 +422,10 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   int|array  $catids  catids
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
-	 * @throws null
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getNewTopics($catids)
 	{
@@ -501,7 +501,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string      $accesstype  accesstype
 	 * @param   bool|array  $groupids    groupids
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return  KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
@@ -533,9 +533,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int    $levels  levels
 	 * @param   array  $params  params
 	 *
-	 * @return KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
+	 * @return  KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	public static function getParents($id = 0, $levels = 100, $params = array())
 	{
@@ -584,9 +584,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int    $levels  levels
 	 * @param   array  $params  params
 	 *
-	 * @return KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
+	 * @return  KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	public static function getOrphaned($levels = 0, $params = array())
 	{
@@ -614,7 +614,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   int  $parent  parent
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function getCategoryTree($parent = 0)
@@ -633,10 +633,10 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int   $identifier  The category to load - Can be only an integer.
 	 * @param   bool  $reload      Reload category from the database.
 	 *
-	 * @return KunenaForumCategory    The Category object.
+	 * @return  KunenaForumCategory    The Category object.
 	 *
 	 * @since    1.6
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -680,9 +680,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int    $levels   levels
 	 * @param   array  $params   params
 	 *
-	 * @return array|KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
+	 * @return  array|KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	public static function getChildren($parents = 0, $levels = 0, $params = array())
 	{
@@ -723,9 +723,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array  $params    params
 	 * @param   bool   $optimize  optimize
 	 *
-	 * @return array|KunenaForumCategory[]
-	 * @since Kunena
-	 * @throws null
+	 * @return  array|KunenaForumCategory[]
+	 * @since   Kunena
+	 * @throws  null
 	 */
 	protected static function _getChildren(array $parents, $levels, array $params, $optimize)
 	{
@@ -844,7 +844,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   string|array  $categories  categories
 	 *
-	 * @return array
+	 * @return  array
 	 * @since   Kunena 6.0
 	 */
 	public static function &getIndentation($categories)
@@ -857,9 +857,9 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param   string|array  $categories  categories
 	 *
-	 * @return boolean|integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|integer
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function recount($categories = '')
 	{
@@ -950,9 +950,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @return boolean|integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|integer
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function fixAliases()
 	{
@@ -997,9 +997,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $category_id  category
 	 * @param   mixed  $alias        alias
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public static function getAlias($category_id, $alias)
 	{
@@ -1068,7 +1068,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $original  origin
 	 * @param   mixed  $strip     strip
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public static function stripName($original, $strip)

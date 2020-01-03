@@ -27,7 +27,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayModeList($id, $attributes = 'class="form-control"')
@@ -45,7 +45,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayDateList($id, $attributes = 'class="form-control"')
@@ -70,7 +70,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
@@ -88,7 +88,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displaySortByList($id, $attributes = 'class="form-control"')
@@ -114,7 +114,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayOrderList($id, $attributes = 'class="form-control"')
@@ -132,7 +132,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayLimitList($id, $attributes = 'class="form-control"')
@@ -163,7 +163,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   int     $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function displayCategoryList($id, $attributes = 'class="form-control"')
@@ -186,7 +186,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @param   string  $attributes  Attibutes to be added to input
 	 * @param   int     $id          Id to be added to the input
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function displayInput($name, $attributes = '', $id = null)

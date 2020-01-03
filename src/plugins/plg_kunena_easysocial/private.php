@@ -16,28 +16,28 @@ use Joomla\CMS\Language\Text;
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since   Kunena 6.0
  */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
 	/**
-	 * @var boolean
-	 * @since version
+	 * @var     boolean
+	 * @since   Kunena 6.0
 	 */
 	protected $loaded = false;
 
 	/**
-	 * @var null
-	 * @since version
+	 * @var     null
+	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
 	 * KunenaPrivateEasySocial constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
-	 * @since       Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($params)
 	{
@@ -48,10 +48,11 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   int  $userid userid
 	 *
-	 * @return string
-	 * @since       Kunena
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getOnClick($userid)
 	{
@@ -61,10 +62,11 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   int  $userid userid
 	 *
-	 * @return string
-	 * @since       Kunena
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getURL($userid)
 	{
@@ -72,10 +74,11 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @param $text
+	 * @param   string  $text text
 	 *
-	 * @return string
-	 * @since       Kunena
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxLink($text)
 	{
@@ -90,8 +93,9 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @return mixed
-	 * @since       Kunena
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getInboxURL()
 	{

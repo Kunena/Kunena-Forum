@@ -35,13 +35,13 @@ class KunenaForumTopicRate extends CMSObject
 	public $stars = 0;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $userid = null;
 
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $time = null;
@@ -53,7 +53,7 @@ class KunenaForumTopicRate extends CMSObject
 	public $rate;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -73,8 +73,8 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -88,9 +88,9 @@ class KunenaForumTopicRate extends CMSObject
 	 *
 	 * @param   int  $id  The poll id to be loaded.
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function load($id)
 	{
@@ -112,7 +112,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
+	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
@@ -138,9 +138,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return KunenaForumMessage|KunenaForumTopicRate
+	 * @return  KunenaForumMessage|KunenaForumTopicRate
 	 * @since     Kunena
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -154,9 +154,9 @@ class KunenaForumTopicRate extends CMSObject
 	 *
 	 * @param   string  $user  user
 	 *
-	 * @return boolean|Joomla\CMS\Response\JsonResponse
-	 * @since    2.0
-	 * @throws Exception
+	 * @return  boolean|Joomla\CMS\Response\JsonResponse
+	 * @since   Kunena 2.0
+	 * @throws  Exception
 	 */
 	public function save($user)
 	{
@@ -226,9 +226,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   int  $start  start
 	 * @param   int  $limit  limit
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -258,7 +258,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   integer  $userid  userid
 	 * @param   integer  $time    time
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function _add($userid, $time)
@@ -271,8 +271,8 @@ class KunenaForumTopicRate extends CMSObject
 	 *
 	 * @param   int  $userid  userid
 	 *
-	 * @return boolean userid if hes in table else empty
-	 * @since    2.0
+	 * @return  boolean userid if hes in table else empty
+	 * @since   Kunena 2.0
 	 */
 	public function exists($userid)
 	{
@@ -282,9 +282,9 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Get rate for the specified topic and user
 	 *
-	 * @return mixed
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  mixed
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function getTopicUserRate()
 	{

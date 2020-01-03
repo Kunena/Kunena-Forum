@@ -29,8 +29,8 @@ class plgSystemKunena extends CMSPlugin
 	 * @param   object  $subject  Subject
 	 * @param   array   $config   Config
 	 *
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function __construct(&$subject, $config)
 	{
@@ -94,7 +94,7 @@ EOF;
 	 * @param   string   $context  Context
 	 * @param   boolean  $params   Params
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetConfiguration($context, &$params)
@@ -111,9 +111,9 @@ EOF;
 	 * @param   boolean  $success  Success
 	 * @param   string   $msg      Message
 	 *
-	 * @return void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)
 	{
@@ -138,9 +138,9 @@ EOF;
 	 * @param   string  $manifest  manifest
 	 * @param   int     $eid       id
 	 *
-	 * @return boolean|void
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean|void
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
 	{
@@ -159,9 +159,9 @@ EOF;
 	 * @param   boolean  $type      type
 	 * @param   string   $manifest  manifest
 	 *
-	 * @return boolean
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  boolean
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
 	{
@@ -205,9 +205,9 @@ EOF;
 	/**
 	 * Adds the Kunena Privacy Information to Joomla Privacy plugin.
 	 *
-	 * @return array
+	 * @return  array
 	 *
-	 * @since Kunena 5.1.6
+	 * @since   Kunena 5.1.6
 	 */
 	public function onPrivacyCollectAdminCapabilities()
 	{
@@ -238,10 +238,11 @@ EOF;
 	 * @param   object  $params  Joomla\Registry\Registry object holding eventual parameters
 	 * @param   int     $page    An integer holding page number
 	 *
-	 * @return object KunenaForumMessage
-	 * @since  Kunena 2.0
+	 * @return  object|string
 	 *
-	 * @throws Exception
+	 * @since   Kunena 2.0
+	 *
+	 * @throws  Exception
 	 */
 	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
 	{

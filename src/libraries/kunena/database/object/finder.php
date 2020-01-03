@@ -64,7 +64,7 @@ abstract class KunenaDatabaseObjectFinder
 	protected $limit = 20;
 
 	/**
-	 * @var boolean
+	 * @var   boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $skip = false;
@@ -207,9 +207,9 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * Derived classes should generally override this function to return correct objects.
 	 *
-	 * @return array
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  array
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function find()
 	{
@@ -241,7 +241,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @param   QueryInterface  $query  query
 	 *
-	 * @return void
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
 	protected function build(QueryInterface $query = null)
@@ -252,8 +252,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * Count items.
 	 *
 	 * @return integer
-	 * @since Kunena
-	 * @throws Exception
+	 * @since   Kunena
+	 * @throws  Exception
 	 */
 	public function count()
 	{

@@ -23,7 +23,7 @@ use Joomla\CMS\Router\Route;
 class KunenaAvatarEasyprofile extends KunenaAvatar
 {
 	/**
-	 * @var null
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
@@ -31,7 +31,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	/**
 	 * KunenaAvatarEasyprofile constructor.
 	 *
-	 * @param $params
+	 * @param   object  $params params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -41,7 +41,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL()
@@ -50,13 +50,15 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   object  $user  user
+	 * @param   int     $sizex sizex
+	 * @param   int     $sizey sizey
 	 *
-	 * @return string
-	 * @since Kunena
-	 * @throws Exception
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

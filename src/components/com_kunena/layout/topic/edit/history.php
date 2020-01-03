@@ -24,7 +24,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 * @param   int  $mesid     The Id of the message
 	 * @param   int  $replycnt  The number of replies
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getNumLink($mesid, $replycnt)
@@ -49,7 +49,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 * @param   string  $rel     The rel attribute for the link
 	 * @param   string  $class   The class attribute for the link
 	 *
-	 * @return string
+	 * @return  string
 	 * @since   Kunena 6.0
 	 */
 	public function getSamePageAnchorLink($anchor, $name, $rel = 'nofollow', $class = '')

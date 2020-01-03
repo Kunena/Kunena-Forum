@@ -10,6 +10,9 @@
  * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
+use Joomla\Database\DatabaseDriver;
+
 require_once(__DIR__ . '/kunena.php');
 
 /**
@@ -21,7 +24,7 @@ require_once(__DIR__ . '/kunena.php');
 class TableKunenaPrivateAttachmentMap extends KunenaTable
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_autoincrement = false;
@@ -41,7 +44,9 @@ class TableKunenaPrivateAttachmentMap extends KunenaTable
 	/**
 	 * TableKunenaPrivateAttachmentMap constructor.
 	 *
-	 * @param $db
+	 * @param   DatabaseDriver  $db database driver
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($db)
 	{

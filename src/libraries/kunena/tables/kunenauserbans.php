@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -113,7 +114,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	public $params = null;
 
 	/**
-	 * @param   JDatabaseDriver  $db  Database driver
+	 * @param   DatabaseDriver  $db  Database driver
 	 *
 	 * @since   Kunena 6.0
 	 */

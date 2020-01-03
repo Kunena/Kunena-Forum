@@ -42,6 +42,7 @@ class KunenaUpload
 	 * @param   array  $extensions  List of allowed file extensions.
 	 *
 	 * @return  KunenaUpload
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance(array $extensions = array())
@@ -61,7 +62,8 @@ class KunenaUpload
 	 *
 	 * @param   array  $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function addExtensions(array $extensions)
@@ -88,7 +90,9 @@ class KunenaUpload
 	 * @param   array  $options  Upload options.
 	 *
 	 * @return  array Updated options.
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	public function ajaxUpload(array $options)
@@ -306,6 +310,7 @@ class KunenaUpload
 	 * Get upload folder.
 	 *
 	 * @return  string  Absolute path.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getFolder()
@@ -319,7 +324,9 @@ class KunenaUpload
 	 * @param   string  $filename  Original filename.
 	 *
 	 * @return  string  Path pointing to the protected file.
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getProtectedFile($filename = null)
@@ -332,8 +339,10 @@ class KunenaUpload
 	/**
 	 * @param   string  $filename  Original filename.
 	 *
-	 * @return  string     Protected filename.
+	 * @return  string  Protected filename.
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getProtectedFilename($filename = null)
@@ -354,8 +363,10 @@ class KunenaUpload
 	 * @param   string  $filename  Name of the file.
 	 *
 	 * @return  array  File parts: list($name, $extension).
+	 *
 	 * @since   Kunena 6.0
-	 * @throws RuntimeException
+	 *
+	 * @throws  RuntimeException
 	 */
 	public function splitFilename($filename = null)
 	{
@@ -397,7 +408,8 @@ class KunenaUpload
 	 *
 	 * @param   array  $file  Entry from $_FILES array.
 	 *
-	 * @return RuntimeException
+	 * @return  RuntimeException
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function checkUpload($file)
@@ -451,7 +463,8 @@ class KunenaUpload
 	 *
 	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
 	 *
-	 * @return integer  Value in bytes.
+	 * @return  integer  Value in bytes.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function toBytes($value)
@@ -470,6 +483,7 @@ class KunenaUpload
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
@@ -501,6 +515,7 @@ class KunenaUpload
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function checkFileSizeImage($filesize, $image_type)
@@ -616,6 +631,7 @@ class KunenaUpload
 	 * @return  object
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')

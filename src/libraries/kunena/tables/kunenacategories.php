@@ -453,6 +453,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @param   string  $where  where
 	 *
 	 * @return  boolean|mixed
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function reorder($where = '')

@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\Database\DatabaseDriver;
+
 require_once __DIR__ . '/kunena.php';
 
 /**
@@ -46,7 +48,8 @@ class TableKunenaRate extends KunenaTable
 	public $time = null;
 
 	/**
-	 * @param   JDatabaseDriver  $db  Database driver
+	 *
+	 * @param   DatabaseDriver  $db database driver
 	 *
 	 * @since   Kunena 6.0
 	 */

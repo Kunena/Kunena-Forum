@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -24,13 +25,13 @@ require_once __DIR__ . '/kunena.php';
 class TableKunenaSessions extends KunenaTable
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $userid = 0;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $allowed = 'na';
@@ -42,25 +43,25 @@ class TableKunenaSessions extends KunenaTable
 	public $allowedcats = null;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $lasttime = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $readtopics = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $currvisit = 0;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -68,7 +69,7 @@ class TableKunenaSessions extends KunenaTable
 	/**
 	 * TableKunenaSessions constructor.
 	 *
-	 * @param   JDatabaseDriver  $db  Database driver
+	 * @param   DatabaseDriver  $db  Database driver
 	 *
 	 * @since   Kunena 6.0
 	 */

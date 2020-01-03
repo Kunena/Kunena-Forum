@@ -216,7 +216,8 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @param   null  $name  name
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($name = null)
@@ -355,6 +356,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   string  $type     type
 	 *
 	 * @return  Joomla\CMS\Document\Document|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -379,8 +381,10 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @param   int  $name  Template name or null for default/selected template in your configuration
 	 *
-	 * @return    KunenaTemplate    The template object.
+	 * @return  KunenaTemplate    The template object.
+	 *
 	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($name = null)
@@ -448,6 +452,7 @@ class KunenaTemplate extends CMSObject
 	 * getconfigxml
 	 *
 	 * @return  boolean|mixed|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getConfigXml()
@@ -881,7 +886,9 @@ HTML;
 	 * @param   string  $filename  filename
 	 *
 	 * @return  mixed|void
+	 *
 	 * @since   Kunena 5.1.3
+	 *
 	 * @throws  Exception
 	 */
 	public function addLessSheet($filename)
@@ -905,7 +912,9 @@ HTML;
 	 * @param   string  $filename  filename
 	 *
 	 * @return  mixed|void
+	 *
 	 * @since   Kunena 5.1.3
+	 *
 	 * @throws  Exception
 	 */
 	public function addScssSheet($filename)
@@ -924,11 +933,12 @@ HTML;
 	}
 
 	/**
-	 * @param $style
+	 * @param   string  $style style
 	 *
 	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function addStyleDeclaration($style)
@@ -1030,11 +1040,11 @@ HTML;
 	 * Wrapper to addScript
 	 *
 	 * @param   string  $filename  filename
-	 *
-	 * @param   array   $options
-	 * @param   array   $attribs
+	 * @param   array   $options   options
+	 * @param   array   $attribs   attribs
 	 *
 	 * @return  Joomla\CMS\Document\Document|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1090,7 +1100,8 @@ HTML;
 	 *
 	 * @return  Joomla\CMS\Document\Document|void
 	 *
-	 * @since   3.5
+	 * @since   Kunena 3.5
+	 *
 	 * @throws  Exception
 	 */
 	public function addScriptOptions($key, $options, $merge = true)
@@ -1224,6 +1235,7 @@ HTML;
 	 * @param   int   $checked  checked
 	 *
 	 * @return  array|SimpleXMLElement
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1545,7 +1557,8 @@ HTML;
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
-	 * @return stdClass|void
+	 * @return  stdClass|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src')
@@ -1579,7 +1592,8 @@ HTML;
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
-	 * @return stdClass|void
+	 * @return  stdClass|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src')
@@ -1674,6 +1688,7 @@ HTML;
 	 * @param   int   $checked  checked
 	 *
 	 * @return  array|SimpleXMLElement
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1781,7 +1796,8 @@ HTML;
 	}
 
 	/**
-	 * @return SimpleXMLElement
+	 * @return  SimpleXMLElement
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplateDetails()
@@ -1936,7 +1952,8 @@ HTML;
 	/**
 	 * @param   mixed  $topic  topic
 	 *
-	 * @return stdClass|void
+	 * @return  stdClass|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1979,7 +1996,8 @@ HTML;
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
-	 * @return stdClass|void
+	 * @return  stdClass|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function get_xml_label($src, $id = 0, $style = 'src')
@@ -2037,6 +2055,7 @@ HTML;
 	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function tooltips($class = false)
@@ -2058,11 +2077,12 @@ HTML;
 	}
 
 	/**
-	 * @param   bool  $topic_ids
+	 * @param   bool  $topic_ids topics id's
 	 *
 	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function recaptcha($topic_ids = false)

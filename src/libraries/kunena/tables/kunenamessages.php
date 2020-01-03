@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -152,7 +153,7 @@ class TableKunenaMessages extends KunenaTable
 	public $message = null;
 
 	/**
-	 * @param   JDatabaseDriver  $db  Database driver
+	 * @param   DatabaseDriver  $db  Database driver
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -289,7 +290,7 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @see   KunenaTable::store()
+	 * @see     KunenaTable::store()
 	 *
 	 * @param   boolean  $updateNulls  has no effect.
 	 *

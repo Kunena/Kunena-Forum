@@ -18,7 +18,7 @@ use Joomla\CMS\Menu\AbstractMenu;
 /**
  * Class ComponentKunenaControllerApplicationHomeDefaultDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaControllerApplicationDisplay
 {

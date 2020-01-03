@@ -103,7 +103,7 @@ class KunenaViewUser extends KunenaView
 	 * Return the list of files for the avatar gallery selected by the user
 	 *
 	 * @return  void
-	 * @since K5.0
+	 * @since   Kunena 5.0
 	 * @throws  Exception
 	 */
 	public function displayGalleryimages()

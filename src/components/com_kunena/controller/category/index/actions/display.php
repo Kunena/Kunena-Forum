@@ -18,7 +18,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 /**
  * Class ComponentKunenaControllerCategoryIndexActionsDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControllerDisplay
 {

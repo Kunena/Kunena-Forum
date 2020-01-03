@@ -375,7 +375,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	}
 
 	/**
-	 * @return Joomla\CMS\Pagination\Pagination
+	 * @return  Joomla\CMS\Pagination\Pagination
 	 * @since   Kunena 6.0
 	 */
 	public function getNavigation()

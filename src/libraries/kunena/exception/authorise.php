@@ -43,7 +43,8 @@ class KunenaExceptionAuthorise extends RuntimeException
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getResponseCode()

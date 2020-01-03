@@ -21,7 +21,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Class ComponentKunenaControllerUserItemDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 {

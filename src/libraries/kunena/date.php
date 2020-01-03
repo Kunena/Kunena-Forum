@@ -26,6 +26,7 @@ class KunenaDate extends Date
 	 * @param   null    $tz    tz
 	 *
 	 * @return  KunenaDate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($date = 'now', $tz = null)

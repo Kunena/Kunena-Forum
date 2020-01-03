@@ -489,7 +489,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -514,7 +514,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   bool        $throw   throw
 	 *
 	 * @return  KunenaExceptionAuthorise|boolean
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -697,7 +697,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param   mixed     $category  Fake category (or null).
 	 * @param   int|null  $action    Limitstart.
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return  Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -825,7 +825,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getState()
 	{
@@ -920,7 +920,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 /**
  * KunenaLayoutWidgetFooter
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class KunenaLayoutWidgetFooter extends KunenaLayout
 {

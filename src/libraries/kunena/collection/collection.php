@@ -127,7 +127,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Count the number of items in the collection.
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function count()

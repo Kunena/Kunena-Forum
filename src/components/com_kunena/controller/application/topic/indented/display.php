@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerApplicationTopicIndentedDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaControllerApplicationDisplay
 {

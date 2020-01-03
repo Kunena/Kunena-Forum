@@ -22,7 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {

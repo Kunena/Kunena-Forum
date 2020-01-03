@@ -7,7 +7,6 @@
  * @copyright      Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  *
  * Based on FireBoard Component
@@ -1037,43 +1036,43 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $legacy_urls = 1;
 
 	/**
 	 * @var    integer  Attachment protection; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $attachment_protection = 0;
 
 	/**
 	 * @var    integer  Category icons; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $categoryicons = 1;
 
 	/**
 	 * @var    integer  Avatar crop; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $avatarcrop = 0;
 
 	/**
 	 * @var    integer  User can report himself; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $user_report = 1;
 
 	/**
 	 * @var    integer  Search time; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $searchtime = 365;
 
 	/**
 	 * @var    integer  Teaser; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $teaser = 0;
 
@@ -1091,25 +1090,25 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @var    string  Define twitter API consumer key; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $twitter_consumer_key = '';
 
 	/**
 	 * @var    string  Define twitter API consumer secret; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $twitter_consumer_secret = '';
 
 	/**
 	 * @var    string  Allow to define if the user can change the subject of topic on replies; select, boolean
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $allow_change_subject = 1;
 
 	/**
 	 * @var    integer  Max Links limit; input, number
-	 * @since  K4.0.0
+	 * @since   Kunena 4.0.0
 	 */
 	public $max_links = 6;
 
@@ -1357,6 +1356,7 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @return  KunenaConfig|mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1514,7 +1514,7 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @param   string  $name  Name of the plugin
 	 *
-	 * @return Joomla\Registry\Registry
+	 * @return  Joomla\Registry\Registry
 	 *
 	 * @since   Kunena 6.0
 	 */

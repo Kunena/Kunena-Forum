@@ -20,7 +20,7 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {

@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * KunenaLayoutSearchForm
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class KunenaLayoutSearchForm extends KunenaLayout
 {

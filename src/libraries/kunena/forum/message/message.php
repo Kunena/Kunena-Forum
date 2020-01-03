@@ -267,7 +267,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getState()
 	{
@@ -304,7 +304,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory  $category  Fake category if needed. Used for aliases.
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return  Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -670,7 +670,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param   null|KunenaForumCategory  $category  category
 	 *
-	 * @return Joomla\CMS\Uri\Uri|boolean
+	 * @return  Joomla\CMS\Uri\Uri|boolean
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1111,7 +1111,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function delta()
@@ -1240,7 +1241,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -1266,7 +1267,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   bool        $throw   trow
 	 *
 	 * @return  mixed
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -1416,7 +1417,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -1455,7 +1456,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   array  $ids  ids
 	 *
 	 * @return  void
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public function removeAttachments(array $ids)
@@ -1695,7 +1696,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param   integer  $length  length
 	 *
 	 * @return  string
-	 * @since K5.0.2
+	 * @since   Kunena 5.0.2
 	 */
 	public function getsubstr($string, $start, $length)
 	{

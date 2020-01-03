@@ -74,7 +74,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   bool   $value  value
 	 * @param   mixed  $user   user
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -106,7 +107,8 @@ abstract class KunenaForumTopicHelper
 	 * @param   bool   $value  value
 	 * @param   mixed  $user   user
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

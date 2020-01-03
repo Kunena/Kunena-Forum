@@ -136,13 +136,13 @@ class KunenaForumTopicRate extends CMSObject
 	/**
 	 * Returns KunenaForumMessage object
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessage|KunenaForumTopicRate
-	 * @since     Kunena
+	 * @since   Kunena
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)

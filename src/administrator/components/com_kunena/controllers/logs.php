@@ -48,7 +48,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * Redirect user to the right layout in order to define some settings
 	 *
 	 * @return  void
-	 * @since K5.0
+	 * @since   Kunena 5.0
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -119,7 +119,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since K5.0
+	 * @since   Kunena 5.0
 	 * @throws  Exception
 	 * @throws  null
 	 */

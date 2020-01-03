@@ -119,7 +119,8 @@ class KunenaModel extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getItemid()
@@ -141,6 +142,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   mixed  $var  The output to escape.
 	 *
 	 * @return  mixed The escaped value.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
@@ -149,7 +151,8 @@ class KunenaModel extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return Joomla\Registry\Registry
+	 * @return  Joomla\Registry\Registry
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getParameters()
@@ -169,6 +172,7 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   string  $type     type
 	 *
 	 * @return  mixed|object
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none')

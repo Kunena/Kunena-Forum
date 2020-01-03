@@ -32,7 +32,8 @@ abstract class KunenaTemplateHelper
 	 *
 	 * @param   string  $template  template
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

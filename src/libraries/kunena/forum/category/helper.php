@@ -1048,7 +1048,8 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $a  a
 	 * @param   mixed  $b  b
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function compareByNameAsc($a, $b)
@@ -1065,7 +1066,8 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $a  a
 	 * @param   mixed  $b  b
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function compareByNameDesc($a, $b)

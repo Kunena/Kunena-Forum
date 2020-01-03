@@ -59,6 +59,7 @@ class KunenaLogin
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaLogin
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($integration = null)
@@ -74,7 +75,8 @@ class KunenaLogin
 	/**
 	 * Method to check if TFA is enabled when user ins't logged
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -158,7 +160,8 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return null
+	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLoginURL()
@@ -175,7 +178,8 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return null
+	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLogoutURL()
@@ -192,7 +196,8 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return null
+	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()
@@ -209,7 +214,8 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return null
+	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getResetURL()
@@ -226,7 +232,8 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return null
+	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getRemindURL()
@@ -250,6 +257,7 @@ class KunenaLogin
 	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
 	 *
 	 * @return  boolean True if TFA is enabled for this user
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -280,7 +288,8 @@ class KunenaLogin
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return Joomla\Registry\Registry|boolean
+	 * @return  Joomla\Registry\Registry|boolean
+	 *
 	 * @since   Kunena 5.1
 	 */
 	public function getParams()

@@ -207,7 +207,8 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTotal()
@@ -216,7 +217,8 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getStart()

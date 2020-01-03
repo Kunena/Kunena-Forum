@@ -18,7 +18,7 @@ use Joomla\CMS\Session\Session;
 /**
  * KunenaLayoutCategoryItem
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class KunenaLayoutCategoryItem extends KunenaLayout
 {

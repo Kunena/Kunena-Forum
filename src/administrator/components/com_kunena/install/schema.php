@@ -148,7 +148,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   string  $input  input
 	 *
-	 * @return null
+	 * @return  null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -288,7 +288,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * @param   string  $table
 	 *
-	 * @return null
+	 * @return  null
 	 *
 	 * @since   Kunena
 	 * @throws KunenaSchemaException
@@ -628,7 +628,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param $name
 	 * @param $loc
 	 *
-	 * @return null
+	 * @return  null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1132,7 +1132,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @param           $table
 	 * @param   string  $field  field
 	 *
-	 * @return null
+	 * @return  null
 	 * @since   Kunena 6.0
 	 */
 	protected function findNode($schema, $type, $table, $field = '')

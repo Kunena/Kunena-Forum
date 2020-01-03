@@ -65,7 +65,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected $document;
 
 	/**
-	 * @return Joomla\CMS\Layout\BaseLayout
+	 * @return  Joomla\CMS\Layout\BaseLayout
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

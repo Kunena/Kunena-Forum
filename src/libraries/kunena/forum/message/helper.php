@@ -432,7 +432,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   null|string  $direction  direction
 	 * @param   null|array   $hold       hold
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -703,7 +704,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   int  $userid
 	 *
 	 * @return  boolean|mixed
-	 * @since 6.0.0
+	 * @since   Kunena 6
 	 * @throws  Exception
 	 */
 	public static function getLastUserIP(int $userid)

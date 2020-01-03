@@ -40,7 +40,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Options object.
 	 *
 	 * @var    Joomla\Registry\Registry
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	protected $options = null;
 

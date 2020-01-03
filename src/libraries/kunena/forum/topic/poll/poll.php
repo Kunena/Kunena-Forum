@@ -161,7 +161,8 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -246,7 +247,8 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -312,7 +314,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -516,7 +519,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -546,7 +550,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

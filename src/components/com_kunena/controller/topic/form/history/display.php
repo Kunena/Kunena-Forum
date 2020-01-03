@@ -20,7 +20,7 @@ use Joomla\Registry\Registry;
  *
  * TODO: merge to another controller...
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
 {

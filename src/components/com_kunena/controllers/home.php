@@ -31,7 +31,7 @@ class KunenaControllerHome extends KunenaController
 	 * @param   bool  $cachable   cachable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return Joomla\CMS\MVC\Controller\BaseController|void
+	 * @return  Joomla\CMS\MVC\Controller\BaseController|void
 	 * @since K1.0
 	 * @throws  null
 	 * @throws  Exception
@@ -105,7 +105,7 @@ class KunenaControllerHome extends KunenaController
 	 * @param   object        $active   Active menu item.
 	 * @param   array         $visited  Already visited menu items.
 	 *
-	 * @return null
+	 * @return  null
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

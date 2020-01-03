@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class ComponentKunenaControllerStatisticsWhoisonlineDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {

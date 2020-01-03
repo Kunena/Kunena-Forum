@@ -536,7 +536,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -254,7 +254,8 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Count items.
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

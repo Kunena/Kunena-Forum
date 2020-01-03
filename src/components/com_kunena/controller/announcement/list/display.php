@@ -17,7 +17,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 /**
  * Class ComponentKunenaControllerAnnouncementListDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerDisplay
 {

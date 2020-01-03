@@ -2414,7 +2414,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $message
 	 *
 	 * @return  boolean
-	 * @since 6.0.0
+	 * @since   Kunena 6
 	 */
 	protected function checkIfBlacklisted($message)
 	{

@@ -143,7 +143,9 @@ abstract class KunenaError
 	 * @param   Exception| Joomla\Database\Exception\ExecutionFailureException  $exception  exception
 	 *
 	 * @return  void
-	 * @since 5.0
+	 *
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function displayDatabaseError($exception)

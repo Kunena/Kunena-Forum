@@ -66,7 +66,8 @@ abstract class KunenaForumDiagnostics
 	/**
 	 * @param   string  $function  function
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class ComponentKunenaControllerTopicReportDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDisplay
 {

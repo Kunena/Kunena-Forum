@@ -514,7 +514,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * The bearer token to get tweet data
 	 *
 	 * @var string
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public $token = null;
 

@@ -4692,7 +4692,7 @@ class Compiler
 	 * @param   float  $m2
 	 * @param   float  $h
 	 *
-	 * @return float
+	 * @return  float
 	 */
 	private function hueToRGB($m1, $m2, $h)
 	{

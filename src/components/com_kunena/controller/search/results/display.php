@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class ComponentKunenaControllerSearchResultsDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {

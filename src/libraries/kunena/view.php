@@ -391,7 +391,8 @@ class KunenaView extends HtmlView
 	/**
 	 * @param   mixed  $position  position
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -440,7 +441,7 @@ class KunenaView extends HtmlView
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 * @throws LogicException
+	 * @throws  LogicException
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
 	{
@@ -502,6 +503,7 @@ class KunenaView extends HtmlView
 	 * @param   array   $hmvcParams  Extra parameters for HMVC.
 	 *
 	 * @return  string|void The output of the the template script.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

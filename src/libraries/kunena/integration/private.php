@@ -206,7 +206,8 @@ class KunenaPrivate
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUnreadCount($userid)

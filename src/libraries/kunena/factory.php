@@ -33,6 +33,7 @@ abstract class KunenaFactory
 	 * @param   string  $name  name
 	 *
 	 * @return  KunenaTemplate
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -48,6 +49,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaAdminTemplate|KunenaTemplate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getAdminTemplate()
@@ -68,6 +70,7 @@ abstract class KunenaFactory
 	 * @param   bool  $reload  reload
 	 *
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -85,6 +88,7 @@ abstract class KunenaFactory
 	 * @param   array|bool  $update  An array containing session options
 	 *
 	 * @return  KunenaSession
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -117,6 +121,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaAvatar
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -132,6 +137,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaPrivate
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -147,6 +153,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaIntegrationActivity
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -162,6 +169,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaProfile
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -231,6 +239,7 @@ abstract class KunenaFactory
 	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaConfig
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

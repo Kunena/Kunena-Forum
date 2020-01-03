@@ -117,7 +117,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $category
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getAccess($category)

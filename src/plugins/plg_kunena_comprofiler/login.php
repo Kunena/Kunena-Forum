@@ -45,7 +45,7 @@ class KunenaLoginComprofiler
 	 * @param   string  $password   password
 	 * @param   string  $rememberme remember me
 	 *
-	 * @return null|string
+	 * @return  null|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -70,7 +70,7 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return null|string
+	 * @return  null|string
 	 *
 	 * @since   Kunena 6.0
 	 *

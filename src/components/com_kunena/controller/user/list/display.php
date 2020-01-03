@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 /**
  * Class ComponentKunenaControllerUserListDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {

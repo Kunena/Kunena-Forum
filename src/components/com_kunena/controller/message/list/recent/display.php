@@ -18,7 +18,7 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {

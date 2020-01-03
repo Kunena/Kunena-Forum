@@ -21,7 +21,7 @@ use Joomla\Registry\Registry;
 /**
  * Class ComponentKunenaControllerUserEditUserDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaControllerUserEditDisplay
 {

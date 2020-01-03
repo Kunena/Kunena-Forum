@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class ComponentKunenaControllerUserBanFormDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDisplay
 {

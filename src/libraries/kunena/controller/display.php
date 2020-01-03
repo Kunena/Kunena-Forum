@@ -123,7 +123,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * @see   KunenaControllerBase::execute()
-	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
+	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -191,7 +191,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Initialize and display the layout.
 	 *
-	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

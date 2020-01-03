@@ -216,7 +216,7 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @param   null  $name  name
 	 *
-	 * @since     Kunena
+	 * @since   Kunena
 	 * @throws  Exception
 	 */
 	public function __construct($name = null)
@@ -354,7 +354,7 @@ class KunenaTemplate extends CMSObject
 	 * @param   string  $content  content
 	 * @param   string  $type     type
 	 *
-	 * @return Joomla\CMS\Document\Document|void
+	 * @return  Joomla\CMS\Document\Document|void
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -375,12 +375,12 @@ class KunenaTemplate extends CMSObject
 	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int  $name  Template name or null for default/selected template in your configuration
 	 *
 	 * @return    KunenaTemplate    The template object.
-	 * @since     1.6
+	 * @since   Kunena 1.6
 	 * @throws  Exception
 	 */
 	public static function getInstance($name = null)
@@ -1034,7 +1034,7 @@ HTML;
 	 * @param   array   $options
 	 * @param   array   $attribs
 	 *
-	 * @return Joomla\CMS\Document\Document|void
+	 * @return  Joomla\CMS\Document\Document|void
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1088,7 +1088,7 @@ HTML;
 	 * @param   mixed   $options  Scrip options as array or string
 	 * @param   bool    $merge    Whether merge with existing (true) or replace (false)
 	 *
-	 * @return Joomla\CMS\Document\Document|void
+	 * @return  Joomla\CMS\Document\Document|void
 	 *
 	 * @since   3.5
 	 * @throws  Exception

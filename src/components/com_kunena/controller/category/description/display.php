@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControllerDisplay
 {

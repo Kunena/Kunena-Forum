@@ -140,7 +140,8 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int  $starttime  Starting time as unix timestamp.
 	 * @param   int  $endtime    Ending time as unix timestamp.
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

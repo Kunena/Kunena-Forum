@@ -75,6 +75,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   mixed   $config  config
 	 *
 	 * @return  KunenaController
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -459,6 +460,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string  $var  The output to escape.
 	 *
 	 * @return  string The escaped value.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function escape($var)
@@ -506,7 +508,9 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 * @param   string  $anchor   anchor
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

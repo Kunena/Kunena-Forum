@@ -349,7 +349,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
@@ -736,7 +736,7 @@ abstract class KunenaAttachmentHelper
 	 * Load the total count of attachments
 	 *
 	 * @return  boolean
-	 * @since K5.1
+	 * @since   Kunena 5.1
 	 * @throws  Exception
 	 */
 	public static function getTotalAttachments()

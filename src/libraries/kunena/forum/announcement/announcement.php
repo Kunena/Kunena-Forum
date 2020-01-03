@@ -134,7 +134,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @param   string  $layout  layout
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return  Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 */
 	public function getUri($layout = 'default')
@@ -179,7 +179,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @param   string  $task  task
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return  Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 */
 	public function getTaskUri($task = null)
@@ -279,7 +279,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
@@ -294,7 +294,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool        $throw   trow
 	 *
 	 * @return  mixed
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws InvalidArgumentException
 	 *
 	 * @throws KunenaExceptionAuthorise

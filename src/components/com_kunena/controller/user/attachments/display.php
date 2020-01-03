@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Class ComponentKunenaControllerUserAttachmentsDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
 {

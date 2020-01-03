@@ -18,7 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 /**
  * Aurelia template.
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class KunenaTemplateAurelia extends KunenaTemplate
 {

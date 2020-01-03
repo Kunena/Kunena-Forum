@@ -21,7 +21,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaUserBan
  *
- * @since   Kunena
  * @property    integer $created_time
  * @property    integer $created_by
  * @property    integer $modified_by
@@ -34,8 +33,9 @@ use Joomla\Database\Exception\ExecutionFailureException;
  * @property    integer $modified_time
  * @property    integer $blocked
  * @property    string  $comment
- *
  * @property    integer $expiration
+ *
+ * @since   Kunena 6.0
  */
 class KunenaUserBan extends CMSObject
 {
@@ -100,11 +100,12 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Constructor
 	 *
-	 * @access    protected
+	 * @access  protected
 	 *
 	 * @param   null  $identifier  identifier
 	 *
-	 * @since     Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($identifier = null)
@@ -127,12 +128,13 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Method to load a KunenaUserBan object by ban id
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int  $id  The ban id of the item to load
 	 *
-	 * @return    boolean            True on success
-	 * @since     1.6
+	 * @return    boolean True on success
+	 *
+	 * @since     Kunena 1.6
 	 */
 	public function load($id)
 	{
@@ -155,13 +157,14 @@ class KunenaUserBan extends CMSObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   string  $type    The user table name to be used
 	 * @param   string  $prefix  The user table prefix to be used
 	 *
-	 * @return    object    The user table object
-	 * @since     1.6
+	 * @return    object  The user table object
+	 *
+	 * @since     Kunena 1.6
 	 */
 	public function getTable($type = 'KunenaUserBans', $prefix = 'Table')
 	{
@@ -195,12 +198,13 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int  $identifier  The ban object to be loaded
 	 *
-	 * @return    KunenaUserBan            The ban object.
-	 * @since     1.6
+	 * @return  KunenaUserBan  The ban object.
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public static function getInstance($identifier = null)
 	{
@@ -307,13 +311,14 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int   $identifier  The ban object to be loaded
 	 * @param   bool  $create      create
 	 *
-	 * @return    KunenaUserBan            The ban object.
-	 * @since     1.6
+	 * @return  KunenaUserBan  The ban object.
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public static function getInstanceByUserid($identifier = null, $create = false)
 	{
@@ -337,13 +342,14 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int   $identifier  The ban object to be loaded
 	 * @param   bool  $create      create
 	 *
-	 * @return    KunenaUserBan            The ban object.
-	 * @since     1.6
+	 * @return  KunenaUserBan The ban object.
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public static function getInstanceByIP($identifier = null, $create = false)
 	{
@@ -465,6 +471,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -476,6 +483,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -487,6 +495,7 @@ class KunenaUserBan extends CMSObject
 
 	/**
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -500,6 +509,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban creation date.
 	 *
 	 * @return  KunenaDate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCreationDate()
@@ -511,6 +521,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban expiration date.
 	 *
 	 * @return  KunenaDate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getExpirationDate()
@@ -522,6 +533,7 @@ class KunenaUserBan extends CMSObject
 	 * Return ban modification date.
 	 *
 	 * @return  KunenaDate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getModificationDate()
@@ -542,13 +554,14 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Method to load a KunenaUserBan object by user id
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int  $userid  The user id of the user to load
 	 * @param   int  $mode    KunenaUserBan::ANY or KunenaUserBan::ACTIVE
 	 *
-	 * @return    boolean            True on success
-	 * @since     1.6
+	 * @return  boolean            True on success
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
@@ -566,13 +579,14 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Method to load a KunenaUserBan object by user id
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   string  $ip    ip
 	 * @param   int     $mode  KunenaUserBan::ANY or KunenaUserBan::ACTIVE
 	 *
-	 * @return    boolean            True on success
-	 * @since     1.6
+	 * @return  boolean  True on success
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
@@ -720,12 +734,14 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Method to save the KunenaUserBan object to the database
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   boolean  $updateOnly  Save the object only if not a new ban
 	 *
 	 * @return  boolean True on success
-	 * @since     1.6
+	 *
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
@@ -871,9 +887,11 @@ class KunenaUserBan extends CMSObject
 	/**
 	 * Method to delete the KunenaUserBan object from the database
 	 *
-	 * @access    public
-	 * @return    boolean    True on success
-	 * @since     1.6
+	 * @access  public
+	 *
+	 * @return  boolean    True on success
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public function delete()
 	{

@@ -54,7 +54,8 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 * @param   bool                  $register  True = registration date, False = last visit date.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null, $register = true)
@@ -80,7 +81,8 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   array  $ignore  ignore
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByConfiguration(array $ignore = array())
@@ -112,7 +114,8 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   string  $search  search
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByName($search)
@@ -136,6 +139,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 * Get users.
 	 *
 	 * @return  array|KunenaUser[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

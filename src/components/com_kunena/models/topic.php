@@ -345,7 +345,8 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -356,7 +357,8 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -392,7 +394,8 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

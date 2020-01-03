@@ -259,7 +259,7 @@ class KunenaTree implements Iterator
 
 	/**
 	 * @param   int    $parent_id   parent id
-	 * @param   array  $itemIndent  itemindent
+	 * @param   array  $itemIndent  item indent
 	 * @param   bool   $gap         gap
 	 *
 	 * @return  array

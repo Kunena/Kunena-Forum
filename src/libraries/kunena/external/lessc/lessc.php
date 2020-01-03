@@ -140,7 +140,7 @@ class lessc
 	/**
 	 * @param $url
 	 *
-	 * @return null|string
+	 * @return  null|string
 	 * @since LESSC
 	 */
 	protected function findImport($url)
@@ -599,7 +599,7 @@ class lessc
 	 * @param         $env
 	 * @param   null  $childQueries
 	 *
-	 * @return null
+	 * @return  null
 	 * @since LESSC
 	 */
 	protected function multiplyMedia($env, $childQueries = null)
@@ -662,7 +662,7 @@ class lessc
 	}
 
 	/**
-	 * @return null
+	 * @return  null
 	 * @since LESSC
 	 */
 	protected function findClosestSelectors()
@@ -1333,7 +1333,7 @@ class lessc
 	/**
 	 * @param $args
 	 *
-	 * @return float|int
+	 * @return  float|int
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1345,7 +1345,7 @@ class lessc
 	}
 
 	/**
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 */
 	protected function lib_pi()
@@ -1370,7 +1370,7 @@ class lessc
 	/**
 	 * @param $num
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1382,7 +1382,7 @@ class lessc
 	/**
 	 * @param $num
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1394,7 +1394,7 @@ class lessc
 	/**
 	 * @param $num
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1448,7 +1448,7 @@ class lessc
 	/**
 	 * @param $num
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1881,7 +1881,7 @@ class lessc
 	/**
 	 * @param $color
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1895,7 +1895,7 @@ class lessc
 	/**
 	 * @param $color
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -1909,7 +1909,7 @@ class lessc
 	/**
 	 * @param $color
 	 *
-	 * @return float
+	 * @return  float
 	 * @since LESSC
 	 * @throws  Exception
 	 */
@@ -3835,7 +3835,7 @@ class lessc_parser
 	/**
 	 * @param $buffer
 	 *
-	 * @return null
+	 * @return  null
 	 * @since LESSC
 	 * @throws  Exception
 	 */

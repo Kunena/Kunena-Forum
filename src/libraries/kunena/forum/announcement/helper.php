@@ -90,7 +90,7 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @param   string  $layout  layout
 	 *
-	 * @return Joomla\CMS\Uri\Uri
+	 * @return  Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 */
 	public static function getUri($layout = null)
@@ -178,7 +178,8 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @param   bool  $filter  filter
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

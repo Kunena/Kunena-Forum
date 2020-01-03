@@ -232,6 +232,7 @@ class KunenaAccess
 
 	/**
 	 * @return  KunenaAccess|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -367,6 +368,7 @@ jQuery(document).ready(function ($) {
 	 * @param   KunenaForumCategory  $category  Category
 	 *
 	 * @return  array|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
@@ -752,6 +754,7 @@ jQuery(document).ready(function ($) {
 	 * @param   bool   $string  string
 	 *
 	 * @return  string|array
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

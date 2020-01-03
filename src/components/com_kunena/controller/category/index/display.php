@@ -23,7 +23,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {

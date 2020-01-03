@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
  *
  * Only implemented on raw format as it's faster to run.
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerApplicationDisplay
 {

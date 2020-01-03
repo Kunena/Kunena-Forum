@@ -73,7 +73,8 @@ class KunenaProfiler extends Profiler
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return float
+	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTime($name)
@@ -115,6 +116,7 @@ class KunenaProfiler extends Profiler
 
 	/**
 	 * @return  array|KunenaProfilerItem[]
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAll()
@@ -183,6 +185,7 @@ class KunenaProfilerItem
 	 * @param   string  $name  name
 	 *
 	 * @return  KunenaProfilerItem
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance($name)
@@ -197,6 +200,7 @@ class KunenaProfilerItem
 
 	/**
 	 * @return  array|KunenaProfilerItem[]
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getAll()
@@ -215,7 +219,8 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @return float
+	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTotalTime()
@@ -224,7 +229,8 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @return float
+	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInternalTime()
@@ -250,7 +256,8 @@ class KunenaProfilerItem
 	/**
 	 * @param   boolean  $stoptime  stop time
 	 *
-	 * @return float
+	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function stop($stoptime)

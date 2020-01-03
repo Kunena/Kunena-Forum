@@ -33,7 +33,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool  $cachable   cachable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return Joomla\CMS\MVC\Controller\BaseController|void
+	 * @return  Joomla\CMS\MVC\Controller\BaseController|void
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

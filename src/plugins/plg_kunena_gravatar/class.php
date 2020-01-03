@@ -13,7 +13,7 @@
  * @copyright 2015-2020 gravatar
  * @license   MIT License
  * @link      https://github.com/emberlabs/gravatarlib
- * @since     Kunena
+ * @since   Kunena
  */
 defined('_JEXEC') or die();
 

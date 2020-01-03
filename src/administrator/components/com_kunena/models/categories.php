@@ -43,7 +43,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	protected $_admincategory = false;
 
 	/**
-	 * @return Joomla\CMS\Pagination\Pagination
+	 * @return  Joomla\CMS\Pagination\Pagination
 	 * @since   Kunena 6.0
 	 */
 	public function getAdminNavigation()

@@ -657,7 +657,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string  $path  path
 	 *
-	 * @return Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

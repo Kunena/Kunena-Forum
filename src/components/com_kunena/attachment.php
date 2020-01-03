@@ -256,7 +256,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   string  $name     name
 	 * @param   null    $default  default
 	 *
-	 * @return null
+	 * @return  null
 	 * @since   Kunena 6.0
 	 */
 	public function getUserState($name, $default = null)

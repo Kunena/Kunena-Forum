@@ -22,7 +22,7 @@ use Joomla\CMS\Table\Table;
 /**
  * Class KunenaAttachment
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  * @property int    $id
  * @property int    $userid
  * @property int    $mesid
@@ -227,7 +227,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaAttachment
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -238,7 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Destructor deletes the files from the filesystem if attachment isn't stored in database.
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function __destruct()
 	{
@@ -251,7 +251,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @internal
 	 * @return  void
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	protected function deleteFile()
 	{
@@ -289,7 +289,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   string  $property  property
 	 *
 	 * @return integer
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function __get($property)
 	{
@@ -338,7 +338,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @internal
 	 * @return  void
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	protected function initialize()
 	{
@@ -361,7 +361,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string|false  Path to the file or false if file doesn't exist.
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getPath($thumb = false)
 	{
@@ -384,7 +384,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean  True if attachment is image.
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function isImage()
 	{
@@ -453,7 +453,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getExtension($escape = true)
 	{
@@ -475,7 +475,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getShortName($front = 10, $back = 8, $filler = '...', $escape = true)
 	{
@@ -494,7 +494,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getFilename($escape = true)
 	{
@@ -512,7 +512,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -609,7 +609,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaUser
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public function getAuthor()
@@ -625,7 +625,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -641,7 +641,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool        $throw   throw
 	 *
 	 * @return  mixed
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  null
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -728,7 +728,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaForumMessage
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public function getMessage()
@@ -742,7 +742,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public function upload($key = 'kattachment', $catid = null)
@@ -863,7 +863,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool    $overwrite  If not allowed, throw exception if the file exists.
 	 *
 	 * @return  boolean
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	public function saveFile($source, $basename = null, $extension = null, $unlink = false, $overwrite = false)
@@ -995,7 +995,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 */
 	protected function authoriseExists(KunenaUser $user)
 	{
@@ -1013,7 +1013,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -1047,7 +1047,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since  K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 */
 	protected function authoriseOwn(KunenaUser $user)

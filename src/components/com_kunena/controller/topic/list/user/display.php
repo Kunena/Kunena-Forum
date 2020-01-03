@@ -20,7 +20,7 @@ use Joomla\CMS\Filesystem\File;
 /**
  * Class ComponentKunenaControllerTopicListUserDisplay
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaControllerTopicListDisplay
 {

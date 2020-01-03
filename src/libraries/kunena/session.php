@@ -95,7 +95,7 @@ class KunenaSession extends CMSObject
 	/**
 	 * Method to load a KunenaSession object by userid
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   int  $userid  The user id of the user to load
 	 *
@@ -127,7 +127,7 @@ class KunenaSession extends CMSObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   string  $type    The session table name to be used
 	 * @param   string  $prefix  The session table prefix to be used
@@ -216,12 +216,14 @@ class KunenaSession extends CMSObject
 	/**
 	 * Method to save the KunenaSession object to the database
 	 *
-	 * @access    public
+	 * @access  public
 	 *
 	 * @param   boolean  $updateOnly  Save the object only if not a new session
 	 *
-	 * @return    boolean True on success
-	 * @since     1.5
+	 * @return  boolean True on success
+	 *
+	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	public function save($updateOnly = false)
@@ -287,8 +289,10 @@ class KunenaSession extends CMSObject
 	/**
 	 * Method to delete the KunenaSession object from the database
 	 *
-	 * @access    public
+	 * @access  public
+	 *
 	 * @return    boolean            True on success
+	 *
 	 * @since     1.5
 	 */
 	public function delete()
@@ -317,7 +321,8 @@ class KunenaSession extends CMSObject
 	}
 
 	/**
-	 * @return integer|string
+	 * @return  integer|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getAllReadTime()

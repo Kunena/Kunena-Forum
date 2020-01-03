@@ -24,7 +24,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaUserHelper
  *
- * @since  K4.0
+ * @since   Kunena 4.0
  */
 abstract class KunenaUserHelper
 {
@@ -109,6 +109,7 @@ abstract class KunenaUserHelper
 	 * @param   string  $name  name
 	 *
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -147,6 +148,7 @@ abstract class KunenaUserHelper
 	 * @param   bool   $reload      Reload user from database.
 	 *
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -282,7 +284,8 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -298,7 +301,8 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -347,8 +351,10 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return integer
-	 * @since   Kunena 6.0.0
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTotalRanks()
@@ -425,7 +431,9 @@ abstract class KunenaUserHelper
 	 * @param   boolean  $recursive  Recursively include all child groups (optional)
 	 *
 	 * @return  array
-	 * @since 5.0
+	 *
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  BadMethodCallException  If first two parameters are both null.
 	 */
 	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false)
@@ -601,7 +609,8 @@ abstract class KunenaUserHelper
 	 *
 	 * @param   mixed  $user  The user object to get the status
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -644,6 +653,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getMyself()
@@ -654,7 +664,8 @@ abstract class KunenaUserHelper
 	/**
 	 * @return  boolean|integer
 	 *
-	 * @since K5.1
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public static function recount()
@@ -695,7 +706,8 @@ abstract class KunenaUserHelper
 	/**
 	 * @return  boolean|integer
 	 *
-	 * @since K5.1
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public static function recountBanned()
@@ -729,7 +741,8 @@ abstract class KunenaUserHelper
 	/**
 	 * @return  boolean|integer
 	 *
-	 * @since K5.1
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public static function recountPostsNull()
@@ -764,7 +777,8 @@ abstract class KunenaUserHelper
 	 * Return the IP used by the user
 	 *
 	 * @return  string
-	 * @since 6.0.0
+	 *
+	 * @since   Kunena 6
 	 */
 	public static function getUserIp()
 	{
@@ -774,10 +788,11 @@ abstract class KunenaUserHelper
 	/**
 	 * Return is the user IP is ipv6 or not
 	 *
-	 * @param $ip
+	 * @param   int  $ip ip
 	 *
 	 * @return  boolean
-	 * @since 6.0.0
+	 *
+	 * @since   Kunena 6
 	 */
 	public static function isIPv6($ip)
 	{
@@ -787,11 +802,13 @@ abstract class KunenaUserHelper
 	/**
 	 * Method to send data about spammer or to check if user is blacklisted in stopforumspam database
 	 *
-	 * @param $data array  With username, ip, email, api key, evidence
-	 * @param $type string Add ou just call api
+	 * @param   array   $data  With username, ip, email, api key, evidence
+	 * @param   string  $type  Add ou just call api
 	 *
 	 * @return  boolean|Response
-	 * @since 6.0.0
+	 *
+	 * @since   Kunena 6
+	 *
 	 * @throws  Exception
 	 */
 	public static function storeCheckStopforumspam($data = array(), $type)

@@ -486,7 +486,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @return Joomla\CMS\Cache\CacheController
+	 * @return  Joomla\CMS\Cache\CacheController
 	 * @since   Kunena 6.0
 	 */
 	protected static function getCache()
@@ -497,7 +497,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   mixed  $item  item
 	 *
-	 * @return null
+	 * @return  null
 	 * @since   Kunena 6.0
 	 */
 	public static function getHome($item)
@@ -533,7 +533,8 @@ abstract class KunenaRoute
 	 * @param   mixed    $item   item
 	 * @param   integer  $catid  catid
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function checkHome($item, $catid)
@@ -646,7 +647,8 @@ abstract class KunenaRoute
 	 * @param   mixed               $item  item
 	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function check($item, Joomla\CMS\Uri\Uri $uri)
@@ -802,7 +804,7 @@ abstract class KunenaRoute
 	 * @param   Joomla\CMS\Uri\Uri  $uri     uri
 	 * @param   bool                $object  object
 	 *
-	 * @return Joomla\CMS\Uri\Uri|string
+	 * @return  Joomla\CMS\Uri\Uri|string
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -61,7 +61,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumCategory extends KunenaDatabaseObject
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
@@ -118,7 +118,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public $level = 0;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $authorised = array();
@@ -142,31 +142,31 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	protected $_channels = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_topics = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_posts = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_lastcat = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();

@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class KunenaModelAnnouncement extends KunenaModel
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;

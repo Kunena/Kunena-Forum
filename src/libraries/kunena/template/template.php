@@ -30,7 +30,7 @@ use Joomla\CMS\Filesystem\Folder;
 class KunenaTemplate extends CMSObject
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -54,19 +54,19 @@ class KunenaTemplate extends CMSObject
 	public $paramstime = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $topicIcons = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categoryIcons = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $pathTypes = array(
@@ -80,7 +80,7 @@ class KunenaTemplate extends CMSObject
 	);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $pathTypeDefaults = array(
@@ -96,7 +96,7 @@ class KunenaTemplate extends CMSObject
 	);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $pathTypeOld = array(
@@ -111,43 +111,43 @@ class KunenaTemplate extends CMSObject
 	);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $default = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $paths = array();
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $css_compile = true;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $filecache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $smileyPath = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $rankPath = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $userClasses = array(
@@ -162,13 +162,13 @@ class KunenaTemplate extends CMSObject
 	);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $stylesheets = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $style_variables = array();
@@ -180,7 +180,7 @@ class KunenaTemplate extends CMSObject
 	protected $compiled_style_variables = null;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $scripts = array();

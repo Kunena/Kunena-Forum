@@ -28,7 +28,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopicPoll extends CMSObject
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -46,37 +46,37 @@ class KunenaForumTopicPoll extends CMSObject
 	protected $_total = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $options = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $newOptions = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $usercount = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $users = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $myvotes = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $mytime = array();

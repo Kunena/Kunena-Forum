@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaTableMap
@@ -24,7 +25,7 @@ class KunenaTableMap
 	/**
 	 * Name of the database table to model.
 	 *
-	 * @var    string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_tbl = '';
@@ -32,7 +33,7 @@ class KunenaTableMap
 	/**
 	 * Name of the primary key field in the table.
 	 *
-	 * @var    string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_tbl_key = '';
@@ -40,7 +41,7 @@ class KunenaTableMap
 	/**
 	 * Name of the mapped key field in the table.
 	 *
-	 * @var    string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_tbl_mapped = '';
@@ -48,7 +49,7 @@ class KunenaTableMap
 	/**
 	 * JDatabaseDriver object.
 	 *
-	 * @var    JDatabaseDriver
+	 * @var     DatabaseDriver
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -56,7 +57,7 @@ class KunenaTableMap
 	/**
 	 * Indicator that the tables have been locked.
 	 *
-	 * @var    boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_locked = false;
@@ -69,11 +70,11 @@ class KunenaTableMap
 	 * @param   string           $table   Name of the table to model.
 	 * @param   string           $key     Name of the primary key field in the table.
 	 * @param   string           $mapped  Name of the mapped key field in the table.
-	 * @param   JDatabaseDriver  $db      JDatabaseDriver object.
+	 * @param   DatabaseDriver   $db      DatabaseDriver object.
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($table, $key, $mapped, JDatabaseDriver $db = null)
+	public function __construct($table, $key, $mapped, DatabaseDriver $db = null)
 	{
 		// Set internal variables.
 		$this->_tbl        = $table;
@@ -100,7 +101,8 @@ class KunenaTableMap
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  UnexpectedValueException
 	 */
 	public function getFields()
@@ -149,9 +151,10 @@ class KunenaTableMap
 	 * Method to get the database table name for the class.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getTableName
+	 *
 	 * @return  string  The name of the database table being modeled.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getTableName()
 	{
@@ -162,9 +165,10 @@ class KunenaTableMap
 	 * Method to get the primary key field name for the table.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getKeyName
+	 *
 	 * @return  string  The name of the primary key for the table.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function getKeyName()
 	{
@@ -175,6 +179,7 @@ class KunenaTableMap
 	 * Method to get the mapped field name for the table.
 	 *
 	 * @return  string  The name of the map field for the table.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMappedName()
@@ -186,9 +191,10 @@ class KunenaTableMap
 	 * Method to get the JDatabaseDriver object.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
-	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
-	 * @since   Kunena
+	 * @return  DatabaseDriver  The internal database driver object.
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function getDbo()
 	{
@@ -199,6 +205,7 @@ class KunenaTableMap
 	 * Method to get the primary key.
 	 *
 	 * @return  integer  Get value for the primary key.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getKey()
@@ -211,7 +218,8 @@ class KunenaTableMap
 	 *
 	 * @param   int  $id  Set value for the primary key.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setKey($id)
@@ -225,6 +233,7 @@ class KunenaTableMap
 	 * Method to get the mapped value.
 	 *
 	 * @return  array  Get array of mapped objects.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getMapped()
@@ -237,7 +246,8 @@ class KunenaTableMap
 	 *
 	 * @param   int  $id  Add Id.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function add($id)
@@ -251,17 +261,17 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to set the JDatabaseDriver object.
+	 * Method to set the DatabaseDriver object.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
 	 *
-	 * @param   JDatabaseDriver  $db  A JDatabaseDriver object to be used by the table object.
+	 * @param   DatabaseDriver  $db  A DatabaseDriver object to be used by the table object.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
-	public function setDbo(JDatabaseDriver $db)
+	public function setDbo(DatabaseDriver $db)
 	{
 		$this->_db = $db;
 
@@ -275,13 +285,13 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/bind
 	 *
-	 * @param   mixed  $ignore  An optional array or space separated list of properties to ignore while binding.
-	 *
 	 * @param   mixed  $src     An associative array or object to bind to the Joomla\CMS\Table\Table instance.
+	 * @param   mixed  $ignore  An optional array or space separated list of properties to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  InvalidArgumentException
 	 */
 	public function bind($src, $ignore = array())
@@ -352,7 +362,8 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  UnexpectedValueException
 	 */
 	public function save(array $map = null, array $filter = null)
@@ -401,7 +412,7 @@ class KunenaTableMap
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/check
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function check()
 	{
@@ -417,7 +428,8 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  UnexpectedValueException
 	 */
 	public function store(array $filter = null)
@@ -493,14 +505,14 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/load
 	 *
-	 * @param   boolean  $reset  True to reset the default values before loading the new row.
-	 *
 	 * @param   mixed    $keys   An optional primary key value to load the row by, or an array of fields to match.  If
 	 *                           not set the instance property value is used.
+	 * @param   boolean  $reset  True to reset the default values before loading the new row.
 	 *
 	 * @return  boolean  True if successful. False if no rows were found.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  UnexpectedValueException
 	 * @throws  RuntimeException
 	 */
@@ -565,9 +577,10 @@ class KunenaTableMap
 	 * properties.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/reset
+	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	public function reset()
 	{
@@ -592,7 +605,8 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  UnexpectedValueException
 	 */
 	public function delete($pk = null)
@@ -634,6 +648,7 @@ class KunenaTableMap
 	 * Method to unlock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function _unlock()
@@ -649,7 +664,8 @@ class KunenaTableMap
 	 *
 	 * @param   int  $id  Add Id.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function remove($id)
@@ -669,7 +685,8 @@ class KunenaTableMap
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  RuntimeException
 	 */
 	protected function _lock()
@@ -679,5 +696,4 @@ class KunenaTableMap
 
 		return true;
 	}
-
 }

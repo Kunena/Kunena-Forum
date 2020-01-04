@@ -34,7 +34,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	public $announcements;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;

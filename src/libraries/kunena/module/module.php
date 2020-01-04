@@ -24,19 +24,19 @@ abstract class KunenaModule
 	/**
 	 * CSS file to be loaded.
 	 *
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected static $css = null;
 
 	/**
-	 * @var stdClass
+	 * @var     stdClass
 	 * @since   Kunena 6.0
 	 */
 	protected $module = null;
 
 	/**
-	 * @var Joomla\Registry\Registry
+	 * @var     Joomla\Registry\Registry
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;

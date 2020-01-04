@@ -40,25 +40,25 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	public $me;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $sections = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $pending = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $more = array();

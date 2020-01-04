@@ -16,11 +16,13 @@ defined('_JEXEC') or die();
  *
  * @property int $private_id
  * @property int $message_id
+ *
+ * @since   Kunena 6.0
  */
 class KunenaPrivateMessagePost extends KunenaDatabaseObject
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaPrivatePostMap';

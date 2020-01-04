@@ -40,7 +40,7 @@ class KunenaViewTopic extends KunenaView
 	public $messageButtons = null;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $inline_attachments = array();
@@ -64,7 +64,7 @@ class KunenaViewTopic extends KunenaView
 	public $k = 0;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $cache = true;

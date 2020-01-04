@@ -53,7 +53,7 @@ class KunenaForumTopicRate extends CMSObject
 	public $rate;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
@@ -65,7 +65,7 @@ class KunenaForumTopicRate extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $users = array();

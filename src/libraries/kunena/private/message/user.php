@@ -19,11 +19,13 @@ defined('_JEXEC') or die();
  * @property string $read_at
  * @property string $replied_at
  * @property string $deleted_at
+ *
+ * @since   Kunena 6.0
  */
 class KunenaPrivateMessageUser extends KunenaDatabaseObject
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaPrivateUserMap';

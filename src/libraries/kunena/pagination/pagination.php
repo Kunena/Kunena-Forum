@@ -75,19 +75,19 @@ class KunenaPagination
 	public $pagesTotal;
 
 	/**
-	 * @var    integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $stickyStart = null;
 
 	/**
-	 * @var    integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $stickyStop = null;
 
 	/**
-	 * @var    Joomla\CMS\Uri\Uri
+	 * @var     Joomla\CMS\Uri\Uri
 	 * @since   Kunena 6.0
 	 */
 	public $uri = null;
@@ -193,6 +193,7 @@ class KunenaPagination
 	 * @param   int  $end        How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setDisplayedPages($displayed = 10, $start = 0, $end = 0)
@@ -238,6 +239,7 @@ class KunenaPagination
 	 * @param   Joomla\CMS\Uri\Uri  $uri  Joomla\CMS\Uri\Uri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setUri(Joomla\CMS\Uri\Uri $uri)
@@ -460,6 +462,7 @@ class KunenaPagination
 	 * @return  string  Pagination footer.
 	 *
 	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	public function getListFooter()
@@ -486,6 +489,7 @@ class KunenaPagination
 	 * @return  string  The HTML for the limit # input box.
 	 *
 	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	public function getLimitBox($all = false)
@@ -563,6 +567,7 @@ class KunenaPagination
 	 * @return  string  Pagination page list string.
 	 *
 	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	public function getPagesLinks()
@@ -784,6 +789,7 @@ class KunenaPagination
 	 * @return  string  HTML link
 	 *
 	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	protected function _item_active(Joomla\CMS\Pagination\PaginationObject $item)
@@ -817,6 +823,7 @@ class KunenaPagination
 	 * @return  string
 	 *
 	 * @since   1.5
+	 *
 	 * @throws  Exception
 	 */
 	protected function _item_inactive(Joomla\CMS\Pagination\PaginationObject $item)

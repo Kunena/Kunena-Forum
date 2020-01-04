@@ -39,7 +39,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	public $profile;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $attachments;

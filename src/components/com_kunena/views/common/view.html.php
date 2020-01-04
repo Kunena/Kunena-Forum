@@ -30,7 +30,7 @@ class KunenaViewCommon extends KunenaView
 	public $catid = 0;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $offline = false;

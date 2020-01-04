@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaLogFinder extends KunenaDatabaseObjectFinder
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 5.0
 	 */
 	protected $table = '#__kunena_logs';
@@ -43,7 +43,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
 	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
@@ -67,7 +68,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   mixed  $condition  condition
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public function innerJoin($condition)
@@ -80,7 +82,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   mixed  $columns  columns
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public function select($columns)
@@ -93,7 +96,8 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   mixed  $columns  columns
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public function group($columns)
@@ -107,7 +111,9 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return  array|KunenaCollection
+	 *
 	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public function find()
@@ -139,6 +145,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	 * @param   QueryInterface  $query  query
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.0
 	 */
 	protected function build(QueryInterface $query = null)

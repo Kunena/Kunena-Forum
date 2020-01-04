@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class KunenaPrivateCommunity extends KunenaPrivate
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $loaded = false;

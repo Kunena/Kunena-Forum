@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 abstract class KunenaTable extends Joomla\CMS\Table\Table
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

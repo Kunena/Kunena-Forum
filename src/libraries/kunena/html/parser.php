@@ -28,7 +28,7 @@ abstract class KunenaHtmlParser
 	public static $emoticons = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $relative = true;
@@ -111,7 +111,8 @@ abstract class KunenaHtmlParser
 	 * @param   int     $len     len
 	 * @param   string  $target  target
 	 *
-	 * @return  mixed|string|void
+	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -257,6 +258,7 @@ abstract class KunenaHtmlParser
 	 * @param   string  $target  target
 	 *
 	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

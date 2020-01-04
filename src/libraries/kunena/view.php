@@ -47,13 +47,13 @@ class KunenaView extends HtmlView
 	public $config = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $embedded = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $templatefiles = array();

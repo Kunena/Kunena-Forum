@@ -25,7 +25,7 @@ use Joomla\CMS\Language\Text;
 class KunenaBbcodeEditor
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $editor_elements = array();
@@ -326,7 +326,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	protected $class;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $actions = array();

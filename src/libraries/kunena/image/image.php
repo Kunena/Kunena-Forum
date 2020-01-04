@@ -11,13 +11,7 @@
  **/
 defined('_JEXEC') or die;
 
-/**
- *
- */
 define('MIME_GIF', 'image/gif');
-/**
- *
- */
 define('MIME_PNG', 'image/png');
 
 use Joomla\Image\Image;
@@ -35,7 +29,8 @@ class KunenaImage extends Joomla\Image\Image
 	 * @param   string  $filename  filename
 	 *
 	 * @return  void
-	 * @since  K5.0
+	 *
+	 * @since   Kunena 5.0
 	 */
 	public static function correctImageOrientation($filename)
 	{

@@ -28,7 +28,7 @@ abstract class KunenaForumMessageHelper
 	protected static $_instances = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_location = array();

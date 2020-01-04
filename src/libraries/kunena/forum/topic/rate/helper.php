@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 abstract class KunenaForumTopicRateHelper
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();

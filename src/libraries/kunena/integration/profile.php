@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 class KunenaProfile
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -30,6 +30,7 @@ class KunenaProfile
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaProfile
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

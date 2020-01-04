@@ -28,7 +28,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	protected $table = '#__kunena_messages';
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $hold = array(0);

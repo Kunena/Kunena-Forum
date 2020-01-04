@@ -120,6 +120,7 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

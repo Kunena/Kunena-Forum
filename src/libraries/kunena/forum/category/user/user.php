@@ -28,7 +28,7 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaForumCategoryUser extends CMSObject
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

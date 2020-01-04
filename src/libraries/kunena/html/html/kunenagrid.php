@@ -35,6 +35,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $taskOff  Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -282,10 +283,11 @@ abstract class JHtmlKunenaGrid
 	 * @param   string        $img        An optinal img HTML tag
 	 * @param   string        $checkbox   An optional prefix for checkboxes.
 	 *
-	 * @return  string The Html code
+	 * @return   string The Html code
 	 *
-	 * @since    3.0
-	 * @throws  Exception
+	 * @since    Kunena 3.0
+	 *
+	 * @throws   Exception
 	 */
 	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{

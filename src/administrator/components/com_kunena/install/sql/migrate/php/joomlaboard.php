@@ -18,7 +18,7 @@ defined('_JEXEC') or die();
 class KunenaMigratorJoomlaboard
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $versions = array(

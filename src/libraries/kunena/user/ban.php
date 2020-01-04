@@ -56,19 +56,19 @@ class KunenaUserBan extends CMSObject
 	protected static $_instances = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instancesByUserid = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instancesByIP = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_useridcache = array();
@@ -92,7 +92,7 @@ class KunenaUserBan extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

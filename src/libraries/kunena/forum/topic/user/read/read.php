@@ -27,7 +27,7 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaForumTopicUserRead extends CMSObject
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

@@ -47,7 +47,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected $name = 'Empty';
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $primary = false;

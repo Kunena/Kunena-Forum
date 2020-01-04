@@ -26,37 +26,37 @@ KunenaMenuFix::initialize();
 abstract class KunenaMenuFix
 {
 	/**
-	 * @var array|StdClass[]
+	 * @var     array|StdClass[]
 	 * @since   Kunena 6.0
 	 */
 	public static $items = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $filtered = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $aliases = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $invalid = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $legacy = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $same = array();
@@ -74,6 +74,8 @@ abstract class KunenaMenuFix
 	public static $parent = null;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -207,6 +209,7 @@ abstract class KunenaMenuFix
 	 * @param   StdClass  $item  item
 	 *
 	 * @return  object|boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function getHome($item)
@@ -253,6 +256,7 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -361,7 +365,8 @@ abstract class KunenaMenuFix
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public static function getConflicts()
 	{

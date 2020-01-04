@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class KunenaPrivate
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -31,6 +31,7 @@ class KunenaPrivate
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaPrivate
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -143,10 +144,9 @@ class KunenaPrivate
 	/**
 	 * @internal param $text
 	 *
+	 * @param   integer  $userid  userid
 	 * @param   string   $class   class
 	 * @param   string   $icon    icon
-	 *
-	 * @param   integer  $userid  userid
 	 *
 	 * @return  string
 	 *

@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 class KunenaExceptionAuthorise extends RuntimeException
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $responseCodes = array(

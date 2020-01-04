@@ -28,7 +28,7 @@ defined('_JEXEC') or die();
  * Individual controller classes are located in /components/com_kunena/controller
  * sub-folders eg: controller/user/login/display.php
  *
- * @see   KunenaLayout
+ * @see     KunenaLayout
  * @since   Kunena 6.0
  */
 class KunenaRequest
@@ -41,6 +41,7 @@ class KunenaRequest
 	 * @param   mixed               $options  options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function factory($path, Joomla\Input\Input $input = null, $options = null)

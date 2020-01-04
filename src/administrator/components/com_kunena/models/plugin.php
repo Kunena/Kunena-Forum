@@ -410,7 +410,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @since   1.6
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

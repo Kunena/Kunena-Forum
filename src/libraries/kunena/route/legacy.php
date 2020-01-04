@@ -26,7 +26,7 @@ require_once KPATH_SITE . '/router.php';
 abstract class KunenaRouteLegacy
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $functions = array(
@@ -150,6 +150,7 @@ abstract class KunenaRouteLegacy
 	 * @param   int     $showstart  showstart
 	 *
 	 * @return  boolean|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

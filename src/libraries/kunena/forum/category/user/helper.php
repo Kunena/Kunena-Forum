@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumCategoryUserHelper
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();

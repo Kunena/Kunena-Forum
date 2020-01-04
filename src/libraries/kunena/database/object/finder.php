@@ -64,7 +64,7 @@ abstract class KunenaDatabaseObjectFinder
 	protected $limit = 20;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $skip = false;

@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 abstract class KunenaForumTopicPollHelper
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();

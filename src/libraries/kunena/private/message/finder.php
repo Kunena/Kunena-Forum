@@ -13,17 +13,19 @@ defined('_JEXEC') or die();
 
 /**
  * Private message finder.
+ *
+ * @since   Kunena 6.0
  */
 class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_private';
 
 	/**
-	 * @param   KunenaUser  $user
+	 * @param   KunenaUser  $user user object
 	 *
 	 * @return $this
 	 *
@@ -45,9 +47,9 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   KunenaForumMessage  $message
+	 * @param   KunenaForumMessage  $message message object
 	 *
-	 * @return $this
+	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -67,9 +69,9 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   array  $ids
+	 * @param   array  $ids ids
 	 *
-	 * @return $this
+	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -92,6 +94,9 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	 * Get private messages.
 	 *
 	 * @return  array|KunenaPrivateMessage[]
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function find()
@@ -103,6 +108,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	 * @return  KunenaPrivateMessage|mixed
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function firstOrNew()
@@ -114,11 +120,12 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param   array  $ids
+	 * @param   array  $ids ids
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function load(array $ids)

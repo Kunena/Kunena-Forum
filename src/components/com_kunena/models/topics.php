@@ -23,13 +23,13 @@ use Joomla\CMS\Language\Text;
 class KunenaModelTopics extends KunenaModel
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;
@@ -41,13 +41,13 @@ class KunenaModelTopics extends KunenaModel
 	protected $total = 0;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $topicActions = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;

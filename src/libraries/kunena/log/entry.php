@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 class KunenaLogEntry
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 5.0
 	 */
 	public $data;
@@ -35,6 +35,7 @@ class KunenaLogEntry
 	 * @param   KunenaUser           $user       user
 	 *
 	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct(
@@ -65,6 +66,7 @@ class KunenaLogEntry
 	 * Get all the data.
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public function getData()

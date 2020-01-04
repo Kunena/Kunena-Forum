@@ -104,6 +104,7 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @return  void
 	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayGalleryimages()

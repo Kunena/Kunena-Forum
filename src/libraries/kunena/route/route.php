@@ -27,7 +27,7 @@ KunenaRoute::initialize();
 abstract class KunenaRoute
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $views = array(
@@ -46,73 +46,73 @@ abstract class KunenaRoute
 	);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public static $time = 0;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $adminApp = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $config = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $menus = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $menu = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $default = false;
 
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	public static $active = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $home = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $search = false;
@@ -124,37 +124,37 @@ abstract class KunenaRoute
 	public static $current = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $childlist = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $subtree = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $parent = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public static $uris = array();
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public static $urisSave = false;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $filtered = array();
@@ -163,6 +163,7 @@ abstract class KunenaRoute
 	 * @param   bool  $object  object
 	 *
 	 * @return  boolean|Joomla\CMS\Uri\Uri|null|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -193,6 +194,7 @@ abstract class KunenaRoute
 	 * @param   null  $uri  uri
 	 *
 	 * @return  boolean|Joomla\CMS\Uri\Uri|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -318,8 +320,10 @@ abstract class KunenaRoute
 	/**
 	 * @param   Joomla\CMS\Uri\Uri  $uri  uri
 	 *
-	 * @return integer
-	 * @since   Kunena
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -487,6 +491,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @return  Joomla\CMS\Cache\CacheController
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function getCache()
@@ -498,6 +503,7 @@ abstract class KunenaRoute
 	 * @param   mixed  $item  item
 	 *
 	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getHome($item)
@@ -572,8 +578,10 @@ abstract class KunenaRoute
 	 * @param   mixed               $item  item
 	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
 	 *
-	 * @return integer
-	 * @since   Kunena
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected static function checkItem($item, Uri $uri)
@@ -614,8 +622,10 @@ abstract class KunenaRoute
 	 * @param   mixed               $item  item
 	 * @param   Joomla\CMS\Uri\Uri  $uri   url
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena
+	 *
 	 * @throws  null
 	 */
 	protected static function checkCategory($item, Joomla\CMS\Uri\Uri $uri)
@@ -805,6 +815,7 @@ abstract class KunenaRoute
 	 * @param   bool                $object  object
 	 *
 	 * @return  Joomla\CMS\Uri\Uri|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1099,7 +1110,8 @@ abstract class KunenaRoute
 	/**
 	 * @param   KunenaForumCategory  $category  category
 	 *
-	 * @return  array|boolean|integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1113,7 +1125,8 @@ abstract class KunenaRoute
 	/**
 	 * @param   null  $uri  uri
 	 *
-	 * @return  array|boolean|integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1148,8 +1161,10 @@ abstract class KunenaRoute
 	/**
 	 * Fix itemid when there is no item id.
 	 *
-	 * @return  array|boolean|integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -1243,6 +1258,7 @@ abstract class KunenaRoute
 	 * @param   string  $string  String to process
 	 *
 	 * @return  string  Processed string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected static function stringURLUnicodeSlug($string)

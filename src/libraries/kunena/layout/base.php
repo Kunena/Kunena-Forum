@@ -36,7 +36,8 @@ use Joomla\CMS\Log\Log;
  *    echo KunenaLayout::factory('Pagination')->set('pagination', $this->pagination)->setLayout('mini');
  * </code>
  *
- * @see   KunenaRequest
+ * @see     KunenaRequest
+ *
  * @since   Kunena 6.0
  */
 class KunenaLayoutBase extends KunenaCompatLayoutBase
@@ -44,7 +45,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Layout name.
 	 *
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_name = '';
@@ -52,7 +53,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * The view layout.
 	 *
-	 * @var    string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $layout = 'default';
@@ -60,7 +61,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * The paths queue.
 	 *
-	 * @var    array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $includePaths;
@@ -68,13 +69,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Support for closure variables.
 	 *
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $closures = array();
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $debug;
@@ -101,6 +102,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Method to load the paths queue.
 	 *
 	 * @return  array  The paths queue.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function loadPaths()
@@ -244,6 +246,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Method to get the view layout.
 	 *
 	 * @return  string  The layout name.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLayout()
@@ -259,6 +262,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $layout  The layout name.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setLayout($layout)
@@ -279,6 +283,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $layout  The layout name, defaulting to the current one.
 	 *
 	 * @return  mixed  The layout file name if found, false otherwise.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPath($layout = null)
@@ -379,13 +384,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Set/override debug mode.
 	 *
 	 * @internal param bool $value
-	 *
 	 * @internal param bool $value
 	 *
 	 * @param   array  $data  data
 	 *
 	 * @return  KunenaLayoutBase Instance of $this to allow chaining.
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function debug($data = array())
 	{
@@ -446,9 +451,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add script options to the document.
 	 *
-	 * @param $key
-	 * @param $options
-	 * @param $merge
+	 * @param   object   $key     key
+	 * @param   object   $options options
+	 * @param   boolean  $merge   merge
 	 *
 	 * @return  mixed
 	 *
@@ -465,6 +470,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Method to get the view paths.
 	 *
 	 * @return  array  The paths queue.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getPaths()
@@ -478,6 +484,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $path  The paths queue.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setPath($path)
@@ -493,6 +500,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   array  $paths  The paths queue.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setPaths(array $paths)
@@ -508,8 +516,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   mixed  $property  property
 	 *
 	 * @return  mixed|void
-	 * @since   Kunena
-	 * @throws InvalidArgumentException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  InvalidArgumentException
 	 */
 	public function __get($property)
 	{
@@ -550,6 +560,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   mixed   $value     The value of the property to set.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function set($property, $value = null)
@@ -573,8 +584,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   mixed   $arguments  arguments
 	 *
 	 * @return  mixed
-	 * @since   Kunena
-	 * @throws InvalidArgumentException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  InvalidArgumentException
 	 */
 	public function __call($name, $arguments)
 	{
@@ -604,8 +617,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
 	 *
-	 * @since   Kunena
-	 * @throws InvalidArgumentException
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  InvalidArgumentException
 	 */
 	public function setProperties($properties)
 	{
@@ -658,6 +672,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $path  path
 	 *
 	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -681,6 +696,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $base   Base path.
 	 *
 	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -764,6 +780,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   mixed               $options  options
 	 *
 	 * @return  KunenaControllerDisplay|KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)

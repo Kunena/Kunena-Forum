@@ -105,7 +105,7 @@ class KunenaUser extends CMSObject
 	protected $_allowed = null;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_link = [];
@@ -147,7 +147,7 @@ class KunenaUser extends CMSObject
 	protected $_signature;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

@@ -67,7 +67,7 @@ class KunenaModel extends BaseDatabaseModel
 	protected $state = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $embedded = false;

@@ -40,7 +40,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	public $total;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $data = array();

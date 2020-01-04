@@ -24,7 +24,7 @@ use Joomla\CMS\Filesystem\Path;
 class KunenaUploadHelper
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();

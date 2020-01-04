@@ -34,7 +34,7 @@ use Joomla\CMS\Session\Session;
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(

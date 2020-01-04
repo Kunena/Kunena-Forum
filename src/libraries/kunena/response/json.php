@@ -9,8 +9,6 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
-
-// No direct access
 defined('_JEXEC') or die;
 
 /**
@@ -21,13 +19,13 @@ defined('_JEXEC') or die;
 class KunenaResponseJson extends KunenaCompatResponseJson
 {
 	/**
-	 * @var integer|mixed
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $code = 200;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $location;

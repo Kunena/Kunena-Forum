@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Implements Kunena specific functions for all layouts.
  *
- * @see   KunenaLayoutBase
+ * @see     KunenaLayoutBase
  * @since   Kunena 6.0
  */
 class KunenaLayout extends KunenaLayoutBase
@@ -25,7 +25,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Content to be appended after the main output.
 	 *
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $after = array();
@@ -33,7 +33,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Object KunenaView
 	 *
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy;

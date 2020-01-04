@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 class KunenaMigratorFireboard
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $versions = array(

@@ -47,7 +47,7 @@ class KunenaAccess
 	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $accesstypes = array('all' => array());

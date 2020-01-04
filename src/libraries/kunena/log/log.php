@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
  */
 class KunenaLog
 {
-	// Log types.
 	/**
 	 * @since   Kunena 5.0
 	 */
@@ -46,7 +45,6 @@ class KunenaLog
 	 */
 	const TYPE_REPORT = 4;
 
-	// Log operations.
 	/**
 	 * @since   Kunena 5.0
 	 */
@@ -313,7 +311,7 @@ class KunenaLog
 	const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
 
 	/**
-	 * @var array|KunenaLogEntry[]
+	 * @var     array|KunenaLogEntry[]
 	 * @since   Kunena 5.0
 	 */
 	protected static $entries = array();
@@ -324,6 +322,7 @@ class KunenaLog
 	 * Should only be called as a shutdown function in order to make sure all items are logged.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public static function flush()
@@ -359,6 +358,7 @@ class KunenaLog
 	 * Clear out the log entries.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public static function clear()
@@ -377,7 +377,9 @@ class KunenaLog
 	 * @param   KunenaUser           $user       Target user.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function log(
@@ -398,6 +400,7 @@ class KunenaLog
 	 * @param   KunenaLogEntry  $entry  An instance of an entry to be logged.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.0
 	 */
 	public static function addEntry(KunenaLogEntry $entry)

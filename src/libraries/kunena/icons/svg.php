@@ -16,7 +16,7 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaSvgIcons
  *
- * @since 6.0
+ * @since   Kunena 6.0
  */
 class KunenaSvgIcons
 {
@@ -24,13 +24,12 @@ class KunenaSvgIcons
 	 * Class load svg icon.
 	 *
 	 * @param   string  $svgname  load svg name
-	 *
 	 * @param   string  $group    Load the svg location
-	 *
 	 * @param   string  $iconset  Load iconset when topicicons
 	 *
 	 * @return  string
-	 * @since 6.0
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public static function loadsvg($svgname, $group = 'default', $iconset = '')
 	{
@@ -56,12 +55,12 @@ class KunenaSvgIcons
 		}
 
 		$iconfile = new DOMDocument;
-		$opts = array(
+		$opts     = array(
 			'http' => array(
 				'user_agent' => 'PHP libxml agent',
 			)
 		);
-		$context = stream_context_create($opts);
+		$context  = stream_context_create($opts);
 		libxml_set_streams_context($context);
 		$iconfile->load($file . '.svg');
 

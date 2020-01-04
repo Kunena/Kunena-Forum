@@ -525,7 +525,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	public $mapid = 0;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $default_tag_rules = [

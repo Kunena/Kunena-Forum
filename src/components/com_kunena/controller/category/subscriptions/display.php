@@ -41,7 +41,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	public $pagination;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = array();

@@ -23,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaAvatar
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;
@@ -35,13 +35,13 @@ class KunenaAvatar
 	public $avatarSizes = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $resize = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $css = false;
@@ -50,6 +50,7 @@ class KunenaAvatar
 	 * @param   null  $integration  integration
 	 *
 	 * @return  boolean|KunenaAvatar
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -110,6 +111,7 @@ class KunenaAvatar
 	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -159,7 +161,8 @@ class KunenaAvatar
 	 * @param   int  $sizex  sizex
 	 * @param   int  $sizey  sizey
 	 *
-	 * @return StdClass
+	 * @return  StdClass
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -187,6 +190,7 @@ class KunenaAvatar
 	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

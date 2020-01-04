@@ -91,7 +91,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected static $_directory = 'media/kunena/attachments';
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
@@ -108,7 +108,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $id = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $disabled = false;
@@ -204,7 +204,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $comment;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $inline;

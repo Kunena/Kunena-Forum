@@ -22,7 +22,7 @@ use Joomla\CMS\Filesystem\Folder;
 abstract class KunenaTemplateHelper
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();

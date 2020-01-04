@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Database\QueryInterface;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Abstract Table Object class
@@ -21,7 +22,7 @@ use Joomla\Database\QueryInterface;
  *
  * Note: If you set default values for the fields, please keep at least one default key value as null!
  *
- * @since       K4.0
+ * @since   Kunena 6.0
  */
 abstract class KunenaTableObject
 {
@@ -29,7 +30,7 @@ abstract class KunenaTableObject
 	 * Store all instances of this type by Id.
 	 * Always override this variable in your own class!
 	 *
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 4.0
 	 */
 	protected static $instances = null;
@@ -38,7 +39,7 @@ abstract class KunenaTableObject
 	 * Name of the database table to model.
 	 * Always override this variable in your own class!
 	 *
-	 * @var    string
+	 * @var     string
 	 * @since   Kunena 4.0
 	 */
 	protected static $tbl = '';
@@ -47,7 +48,7 @@ abstract class KunenaTableObject
 	 * Array of table fields with their default value (field=>default).
 	 * You can either fill up your table structure or leave base class to fetch the fields for you.
 	 *
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 4.0
 	 */
 	protected static $tbl_fields;
@@ -56,15 +57,15 @@ abstract class KunenaTableObject
 	 * Array of primary key fields in the table.
 	 * Always override this variable in your own class!
 	 *
-	 * @var    array
+	 * @var     array
 	 * @since   Kunena 4.0
 	 */
 	protected static $tbl_keys = array();
 
 	/**
-	 * JDatabaseDriver object.
+	 * DatabaseDriver object.
 	 *
-	 * @var    JDatabaseDriver
+	 * @var     DatabaseDriver
 	 * @since   Kunena 4.0
 	 */
 	protected static $db;
@@ -72,7 +73,7 @@ abstract class KunenaTableObject
 	/**
 	 * Indicator that the tables have been locked.
 	 *
-	 * @var    boolean
+	 * @var     boolean
 	 * @since   Kunena 4.0
 	 */
 	protected static $_locked = false;
@@ -80,7 +81,7 @@ abstract class KunenaTableObject
 	/**
 	 * Flag whether the object exists in the database or not.
 	 *
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 4.0
 	 */
 	protected $_exists = false;
@@ -88,7 +89,7 @@ abstract class KunenaTableObject
 	/**
 	 * Serialized key for the object.
 	 *
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 4.0
 	 */
 	protected $_key;
@@ -177,6 +178,7 @@ abstract class KunenaTableObject
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  UnexpectedValueException
 	 */
 	public static function getFields()
@@ -203,6 +205,7 @@ abstract class KunenaTableObject
 	 * @param   bool  $sqlFetch  True only if properties were assigned before constructor was called.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 4.0
 	 */
 	protected function initialise($sqlFetch = false)
@@ -214,6 +217,7 @@ abstract class KunenaTableObject
 	 * @param   bool  $reset  reset
 	 *
 	 * @return  boolean|KunenaTableObject
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function load($keys = null, $reset = true)
@@ -285,6 +289,7 @@ abstract class KunenaTableObject
 	 * @param   bool          $throw   throw
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 4.0
 	 */
 	protected function getKeyValues($fields = null, $throw = true)
@@ -364,6 +369,7 @@ abstract class KunenaTableObject
 	 * If you want to reset other properties, you need to override the function.
 	 *
 	 * @return  KunenaTableObject
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function reset()
@@ -392,6 +398,7 @@ abstract class KunenaTableObject
 	 * @return  KunenaTableObject
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  InvalidArgumentException
 	 */
 	public function bind($src, $ignore = array())
@@ -449,9 +456,9 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to get the JDatabaseDriver object.
+	 * Method to get the DatabaseDriver object.
 	 *
-	 * @return  JDatabaseDriver  The internal database driver object.
+	 * @return  DatabaseDriver  The internal database driver object.
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -461,17 +468,17 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to set the JDatabaseDriver object.
+	 * Method to set the DatabaseDriver object.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/setDbo
 	 *
-	 * @param   JDatabaseDriver  $db  A JDatabaseDriver object to be used by the table object.
+	 * @param   DatabaseDriver  $db  A DatabaseDriver object to be used by the table object.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @since   K4.0
 	 */
-	public static function setDbo(JDatabaseDriver $db)
+	public static function setDbo(DatabaseDriver $db)
 	{
 		static::$db = $db;
 
@@ -488,8 +495,10 @@ abstract class KunenaTableObject
 	 * @param   int|array  $keys  An optional primary key value to load the object by, or an array of fields to match.
 	 *
 	 * @return  KunenaDatabaseObject
+	 *
+	 * @since   Kunena 4.0
+	 *
 	 * @throw   RuntimeException
-	 * @since   K4.0
 	 */
 	public static function getInstance($keys)
 	{
@@ -534,8 +543,10 @@ abstract class KunenaTableObject
 	 * @param   array|string  $fields  fields
 	 *
 	 * @return  array
+	 *
 	 * @since   Kunena 4.0
-	 * @throws UnexpectedValueException
+	 *
+	 * @throws  UnexpectedValueException
 	 */
 	protected static function resolveKeys($fields)
 	{
@@ -602,6 +613,7 @@ abstract class KunenaTableObject
 	 * @param   null|int|array  $ids  ids
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public static function freeInstances($ids = null)
@@ -626,6 +638,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * @internal
+	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
@@ -665,6 +678,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * @return  mixed|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getId()
@@ -737,6 +751,7 @@ abstract class KunenaTableObject
 	 * New object will also return false on $new->exists() until it gets saved.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function __clone()
@@ -805,6 +820,7 @@ abstract class KunenaTableObject
 	 * @param   boolean  $exists  Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function exists($exists = null)
@@ -842,8 +858,10 @@ abstract class KunenaTableObject
 	 *                          use arbitrary fields to delete more than one item.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 4.0
-	 * @throws UnexpectedValueException
+	 *
+	 * @throws  UnexpectedValueException
 	 */
 	public function delete($keys = null)
 	{
@@ -982,7 +1000,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean True on success.
 	 *
-	 * @since   Kunena 5 4.0
+	 * @since   Kunena 4.0
 	 */
 	public function hit()
 	{
@@ -1059,6 +1077,7 @@ abstract class KunenaTableObject
 	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  RuntimeException
 	 */
 	protected function lock()

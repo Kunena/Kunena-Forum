@@ -21,13 +21,13 @@ use Joomla\CMS\Factory;
 class KunenaIntegrationActivity
 {
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $instances = array();
@@ -55,7 +55,8 @@ class KunenaIntegrationActivity
 	}
 
 	/**
-	 * @return static
+	 * @return  static
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -20,13 +20,13 @@ use Joomla\CMS\Profiler\Profiler;
 class KunenaProfiler extends Profiler
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_kstart = array();
@@ -163,7 +163,7 @@ class KunenaProfilerItem
 	protected static $_instances = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $start = array();

@@ -40,13 +40,13 @@ abstract class KunenaDatabaseObject extends CMSObject
 	protected $_table = null;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
 
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_saving = false;

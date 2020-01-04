@@ -856,7 +856,7 @@ class KunenaControllerTopic extends KunenaController
 	 * @param $subject
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function checkURLInSubject($subject)
 	{

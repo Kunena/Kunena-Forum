@@ -23,38 +23,43 @@ use Joomla\Registry\Registry;
  * @property int       $attachments
  * @property string    $subject
  * @property string    $body
- * @property JRegistry $params
+ * @property Registry  $params
+ *
+ * @since   Kunena 6.0
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaPrivate';
 
 	/**
-	 * @var
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	protected $_attachments;
+	protected $_attachments = null;
 
 	/**
-	 * @var
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	protected $_posts;
+	protected $_posts = null;
 
 	/**
-	 * @var
+	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	protected $_users;
+	protected $_users = null;
 
 	/**
 	 * KunenaPrivateMessage constructor.
 	 *
-	 * @param   null  $properties
+	 * @param   null  $properties properties
+	 *
+	 *
+	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
@@ -71,9 +76,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string  $field
+	 * @param   string  $field field
 	 *
 	 * @return integer|string
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function displayField($field)
@@ -172,6 +180,9 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 * Save changes in the relations.
 	 *
 	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function saveInternal()
@@ -203,7 +214,13 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * Delete attachments
 	 *
-	 * @see KunenaDatabaseObject::delete()
+	 * @see     KunenaDatabaseObject::delete()
+	 *
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function delete()
 	{

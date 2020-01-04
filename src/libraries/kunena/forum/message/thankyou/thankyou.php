@@ -34,7 +34,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	protected $id = 0;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $users = array();

@@ -48,7 +48,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopic extends KunenaDatabaseObject
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
@@ -120,19 +120,19 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	protected $_db = null;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authccache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();

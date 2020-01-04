@@ -32,7 +32,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopicUser extends CMSObject
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;

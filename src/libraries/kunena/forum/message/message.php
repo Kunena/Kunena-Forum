@@ -47,7 +47,7 @@ use Joomla\CMS\Log\Log;
 class KunenaForumMessage extends KunenaDatabaseObject
 {
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected static $actions = array(
@@ -117,19 +117,19 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_thread = 0;
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authtcache = array();
 
 	/**
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = array();

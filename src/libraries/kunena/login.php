@@ -24,7 +24,7 @@ use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 class KunenaLogin
 {
 	/**
-	 * @var   boolean
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected static $instance = false;

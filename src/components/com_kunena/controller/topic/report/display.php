@@ -27,19 +27,19 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	protected $name = 'Topic/Report';
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var KunenaForumMessage|null
+	 * @var     KunenaForumMessage|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
@@ -49,7 +49,8 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

@@ -27,13 +27,13 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	protected $name = 'User/Attachments';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
@@ -53,7 +53,8 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return  KunenaExceptionAuthorise
+	 * @return  KunenaExceptionAuthorise|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

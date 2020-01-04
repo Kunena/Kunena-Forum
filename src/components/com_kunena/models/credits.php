@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Credits Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelCredits extends KunenaModel
 {

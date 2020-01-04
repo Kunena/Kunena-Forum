@@ -29,13 +29,13 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	protected $name = 'Topic/Item/Actions';
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $topicButtons;
@@ -44,7 +44,9 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * Prepare topic actions display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -341,7 +343,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
 	 * @param   string  $icon     icon
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

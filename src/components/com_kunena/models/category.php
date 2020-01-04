@@ -21,7 +21,7 @@ require_once KPATH_ADMIN . '/models/categories.php';
 /**
  * Category Model for Kunena
  *
- * @since        2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
@@ -56,6 +56,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	protected $actionMove = false;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -150,7 +152,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  array|boolean|KunenaForumCategory[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -315,6 +319,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  KunenaForumCategory
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -326,7 +331,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -426,7 +433,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return  array|null
+	 * @return  array|null|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -529,7 +537,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return  array|null
+	 * @return  array|null|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCategoryActions()

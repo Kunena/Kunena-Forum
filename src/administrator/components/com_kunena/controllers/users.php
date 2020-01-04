@@ -20,7 +20,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Users Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerUsers extends KunenaController
 {

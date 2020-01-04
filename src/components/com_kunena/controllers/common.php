@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena Common Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerCommon extends KunenaController
 {

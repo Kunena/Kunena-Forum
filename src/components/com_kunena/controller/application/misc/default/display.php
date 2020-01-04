@@ -23,13 +23,13 @@ use Joomla\CMS\Component\ComponentHelper;
 class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
 {
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $header;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $body;
@@ -38,6 +38,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * Return custom display layout.
 	 *
 	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

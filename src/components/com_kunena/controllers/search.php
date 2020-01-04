@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena Search Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerSearch extends KunenaController
 {
@@ -31,6 +31,8 @@ class KunenaControllerSearch extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function results()

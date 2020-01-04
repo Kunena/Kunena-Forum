@@ -34,25 +34,25 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	protected $name = 'Topic/Item';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var KunenaForumCategory
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var KunenaPagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -68,7 +68,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -469,7 +470,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * After render update topic data for the user.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -677,6 +680,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
+	 * @return  string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -684,8 +689,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function docImage()
 	{
-		$image = '';
-
 		if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar))
 		{
 			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;

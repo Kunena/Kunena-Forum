@@ -18,11 +18,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * User Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 6.0
  */
 class KunenaModelUser extends KunenaModel
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -131,6 +133,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return  array|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getQuerySearch()
@@ -163,7 +166,7 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -194,7 +197,7 @@ class KunenaModelUser extends KunenaModel
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -232,6 +235,7 @@ class KunenaModelUser extends KunenaModel
 
 	/**
 	 * @return  array|mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

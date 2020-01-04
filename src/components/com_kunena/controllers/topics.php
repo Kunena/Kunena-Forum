@@ -20,13 +20,15 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena Topics Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerTopics extends KunenaController
 {
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -38,9 +40,11 @@ class KunenaControllerTopics extends KunenaController
 
 	/**
 	 * @return  boolean|void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
-	 * @throws void
+	 * @throws  void
 	 * @throws  Exception
 	 */
 	public function permdel()
@@ -140,7 +144,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -204,7 +211,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -268,7 +278,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -333,7 +346,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -438,7 +454,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -485,7 +504,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -519,7 +541,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -568,7 +593,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -616,7 +644,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -664,7 +695,10 @@ class KunenaControllerTopics extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

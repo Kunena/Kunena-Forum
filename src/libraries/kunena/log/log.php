@@ -136,21 +136,29 @@ class KunenaLog
 	const LOG_POLL_MODERATE = 'LOG_POLL_MODERATE';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const LOG_USER_REPORT_STOPFORUMSPAM = 'LOG_USER_REPORT_STOPFORUMSPAM';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const LOG_PRIVATE_POST_CREATE = 'LOG_PRIVATE_POST_CREATE';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const LOG_PRIVATE_POST_EDIT = 'LOG_PRIVATE_POST_EDIT';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const LOG_PRIVATE_POST_DELETE = 'LOG_PRIVATE_POST_DELETE';
@@ -236,11 +244,15 @@ class KunenaLog
 	const LOG_TOPIC_NOTIFY = 'LOG_TOPIC_NOTIFY';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	// Const LOG_SHADOW_TOPIC_CREATE = 'LOG_SHADOW_TOPIC_CREATE';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	// Const LOG_SHADOW_TOPIC_DELETE = 'LOG_SHADOW_TOPIC_DELETE';
@@ -271,16 +283,22 @@ class KunenaLog
 	const LOG_USER_UNBAN = 'LOG_USER_UNBAN';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	// Const LOG_USER_WARNING = 'LOG_USER_WARNING';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	// Const LOG_IMAGE_ATTACHMENT_RESIZE = 'LOG_IMAGE_ATTACHMENT_RESIZE';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	// Const LOG_IMAGE_AVATAR_RESIZE = 'LOG_IMAGE_AVATAR_RESIZE';

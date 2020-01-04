@@ -25,11 +25,15 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaAccess
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const CATEGORY_SUBSCRIPTION = 1;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const TOPIC_SUBSCRIPTION = 2;
@@ -77,6 +81,8 @@ class KunenaAccess
 	protected $moderatorsByUserid = null;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

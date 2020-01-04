@@ -21,7 +21,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Plugins Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerPlugins extends KunenaController
 {

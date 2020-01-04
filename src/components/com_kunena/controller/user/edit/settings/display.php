@@ -28,7 +28,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	protected $name = 'User/Edit/Settings';
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $settings;
@@ -37,7 +37,9 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 * Prepare Kunena user settings.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

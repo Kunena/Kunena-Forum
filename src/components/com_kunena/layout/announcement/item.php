@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
 	/**
-	 * @var
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $buttons;
@@ -66,7 +66,8 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @param   int     $id      Id of the button.
 	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

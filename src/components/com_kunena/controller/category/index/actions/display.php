@@ -29,13 +29,13 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	protected $name = 'Category/Index/Actions';
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categoryButtons;
@@ -116,7 +116,8 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   string  $type   Type of the button.
 	 * @param   bool    $id     Id of the button.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

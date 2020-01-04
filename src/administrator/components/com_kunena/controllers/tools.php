@@ -19,7 +19,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Cpanel Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerTools extends KunenaController
 {

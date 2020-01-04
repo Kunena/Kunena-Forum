@@ -24,6 +24,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewUser extends KunenaView
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -133,6 +135,8 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEdit()
@@ -151,6 +155,8 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayMove()
@@ -162,6 +168,8 @@ class KunenaAdminViewUser extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarMove()

@@ -25,7 +25,8 @@ class KunenaAdminModelUser extends KunenaModel
 	/**
 	 * @return  array|KunenaForumTopic[]|void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

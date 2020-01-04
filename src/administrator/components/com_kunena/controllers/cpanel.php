@@ -18,7 +18,7 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Kunena Cpanel Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerCpanel extends KunenaController
 {

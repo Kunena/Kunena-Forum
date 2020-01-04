@@ -37,7 +37,9 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	 * Prepare announcement form display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

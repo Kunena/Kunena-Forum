@@ -22,7 +22,7 @@ require_once __DIR__ . '/cpanel.php';
 /**
  * Tools Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelTools extends KunenaAdminModelCpanel
 {

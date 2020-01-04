@@ -21,9 +21,10 @@ class KunenaLayoutCategoryManage extends KunenaLayout
 	/**
 	 * Method to return a KunenaPagination object
 	 *
-	 * @param   int  $maxpages  Maximum that are allowed for pagination
+	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
 	 * @return  KunenaPagination
+	 *
 	 * @since   Kunena 5.1
 	 */
 	public function getPaginationObject($maxpages)

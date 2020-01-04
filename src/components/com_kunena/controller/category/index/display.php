@@ -34,7 +34,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	protected $name = 'Category/Index';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
@@ -67,7 +67,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * Prepare category index display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

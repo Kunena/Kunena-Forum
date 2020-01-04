@@ -17,10 +17,15 @@ use Joomla\CMS\Language\Text;
 /**
  * Rate Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelRate extends KunenaModel
 {
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
 	protected function populateState()
 	{
 		$id = $this->getInt('topicid', 0);
@@ -47,6 +52,7 @@ class KunenaModelRate extends KunenaModel
 
 	/**
 	 * @return  KunenaForumTopicRate
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

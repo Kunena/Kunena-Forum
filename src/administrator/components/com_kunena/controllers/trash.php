@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Trash Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerTrash extends KunenaController
 {

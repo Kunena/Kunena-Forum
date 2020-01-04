@@ -30,37 +30,37 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	protected $name = 'Topic/Moderate';
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var KunenaForumMessage|null
+	 * @var     KunenaForumMessage|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $title;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $topicIcons;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $userLink;
@@ -70,7 +70,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

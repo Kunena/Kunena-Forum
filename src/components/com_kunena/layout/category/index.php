@@ -23,7 +23,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to return a KunenaPagination object
 	 *
-	 * @param   int  $maxpages  Maximum that are allowed for pagination
+	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
 	 * @return  KunenaPagination
 	 * @since   Kunena 6.0
@@ -122,7 +122,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   int  $category_id  The category Id
 	 * @param   int  $numTopics    The number of topics
 	 *
-	 * @return  boolean|null
+	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -146,10 +147,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int          $catid  The Id of category
+	 * @param   integer      $catid  The Id of category
 	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
-	 * @return  boolean|null
+	 * @return  string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

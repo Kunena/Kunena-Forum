@@ -29,13 +29,13 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	protected $name = 'Category/List';
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
-	 * @var
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -51,7 +51,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

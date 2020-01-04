@@ -24,6 +24,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewTemplates extends KunenaView
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()
@@ -35,6 +37,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarDefault()
@@ -57,6 +61,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayAdd()
@@ -66,6 +72,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarAdd()
@@ -79,6 +87,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -110,6 +120,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEdit()
@@ -129,6 +141,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayChooseless()
@@ -152,6 +166,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarChooseless()
@@ -167,6 +183,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayEditless()
@@ -182,6 +200,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEditless()
@@ -198,6 +218,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayChoosecss()
@@ -225,6 +247,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarChoosecss()
@@ -240,6 +264,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayEditcss()
@@ -254,6 +280,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEditcss()

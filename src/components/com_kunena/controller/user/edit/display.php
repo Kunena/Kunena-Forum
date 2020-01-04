@@ -28,13 +28,13 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Edit';
 
 	/**
-	 * @var Joomla\CMS\User\User
+	 * @var     Joomla\CMS\User\User
 	 * @since   Kunena 6.0
 	 */
 	public $user;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
@@ -44,7 +44,8 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

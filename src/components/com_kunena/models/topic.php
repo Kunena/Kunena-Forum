@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Topic Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelTopic extends KunenaModel
 {
@@ -43,6 +43,8 @@ class KunenaModelTopic extends KunenaModel
 	protected $topic = false;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -119,6 +121,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  KunenaForumCategory
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -130,6 +133,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  boolean|KunenaForumTopic
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -174,6 +178,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  array|boolean|KunenaForumMessage[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -384,6 +389,7 @@ class KunenaModelTopic extends KunenaModel
 
 	/**
 	 * @return  KunenaForumTopicPoll
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

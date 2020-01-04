@@ -1059,6 +1059,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	];
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

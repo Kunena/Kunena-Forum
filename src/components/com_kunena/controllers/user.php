@@ -25,7 +25,9 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Kunena User Controller
  *
- * @since  2.0
+ * @property KunenaUser|null user user
+ *
+ * @since   Kunena 2.0
  */
 class KunenaControllerUser extends KunenaController
 {
@@ -34,6 +36,7 @@ class KunenaControllerUser extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return  Joomla\CMS\MVC\Controller\BaseController|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -97,7 +100,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
@@ -126,7 +133,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
@@ -147,7 +158,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
@@ -158,7 +173,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @param $karmaDelta
+	 * @param   integer  $karmaDelta karma delta
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -259,6 +276,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -270,7 +289,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @return  array|null
+	 * @return  array|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -580,6 +600,13 @@ class KunenaControllerUser extends KunenaController
 		return true;
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	protected function saveProfile()
 	{
 		$input  = $this->app->input;
@@ -634,6 +661,13 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	protected function saveSettings()
 	{
 		$this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
@@ -652,6 +686,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -877,6 +913,8 @@ class KunenaControllerUser extends KunenaController
 	// Internal functions:
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -888,6 +926,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -929,6 +969,8 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1050,7 +1092,10 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload avatar with AJAX.
 	 *
-	 * @since 5.1
+	 * @return  void
+	 *
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  null
 	 */
 	public function upload()
@@ -1126,7 +1171,7 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * Delete previoulsy uplaoded avatars from filesystem
+	 * Delete previoulsy uploaded avatars from filesystem
 	 *
 	 * @return  void
 	 *
@@ -1164,7 +1209,10 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Remove avatar with AJAX
 	 *
-	 * @since 5.1
+	 * @return  void
+	 *
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function removeAvatar()
@@ -1217,7 +1265,9 @@ class KunenaControllerUser extends KunenaController
 	 * Get avatar attached to a profile with AJAX.
 	 *
 	 * @return  void
-	 * @since 5.1
+	 *
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function loadAvatar()
@@ -1267,7 +1317,11 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Delete attachment(s) selected in user profile
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function delfile()
 	{
@@ -1337,10 +1391,10 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param   int     $userid
+	 * @param   int     $userid    userid
 	 * @param   string  $evidence  evidence
 	 *
-	 * @return  boolean
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 *

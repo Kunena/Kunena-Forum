@@ -19,7 +19,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Categories Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerCategories extends KunenaController
 {
@@ -59,7 +59,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	 * @return  void
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

@@ -47,7 +47,8 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 * Load user form.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

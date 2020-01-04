@@ -27,25 +27,25 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	protected $name = 'User/Ban/Manager';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
 
 	/**
-	 * @var KunenaUserBan
+	 * @var     KunenaUserBan
 	 * @since   Kunena 6.0
 	 */
 	public $userBans;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;

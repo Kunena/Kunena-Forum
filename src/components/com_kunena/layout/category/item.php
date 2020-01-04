@@ -61,6 +61,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * Method to return array of actions sublayout
 	 *
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -235,15 +236,13 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to get the last post link
 	 *
-	 * @see   KunenaLayout::getLastPostLink()
+	 * @see     KunenaLayout::getLastPostLink()
 	 *
 	 * @param   KunenaForumCategory  $category   The KunenaCategory object
 	 * @param   string               $content    The content of last topic subject
 	 * @param   string               $title      The title of the link
 	 * @param   string               $class      The class attribute of the link
-	 *
 	 * @param   int                  $length     length
-	 *
 	 * @param   bool                 $follow     follow
 	 * @param   bool                 $canonical  canonical
 	 *

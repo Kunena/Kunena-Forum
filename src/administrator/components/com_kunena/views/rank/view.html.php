@@ -43,6 +43,8 @@ class KunenaAdminViewRank extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()

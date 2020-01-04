@@ -17,7 +17,7 @@ use Joomla\CMS\Session\Session;
 /**
  * Kunena Backend Config Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerConfig extends KunenaController
 {

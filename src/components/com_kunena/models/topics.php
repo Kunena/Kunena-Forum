@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Topics Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelTopics extends KunenaModel
 {
@@ -35,7 +35,7 @@ class KunenaModelTopics extends KunenaModel
 	protected $messages = false;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $total = 0;
@@ -53,7 +53,11 @@ class KunenaModelTopics extends KunenaModel
 	protected $actionMove = false;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	protected function populateState()
 	{
@@ -223,7 +227,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -272,6 +278,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -365,6 +373,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -426,6 +436,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -484,6 +496,8 @@ class KunenaModelTopics extends KunenaModel
 	 * @param   array  $userlist  userlist
 	 * @param   array  $postlist  postlist
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -521,7 +535,9 @@ class KunenaModelTopics extends KunenaModel
 
 	/**
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -554,7 +570,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return  array|null
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -643,8 +660,10 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return  array|null
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

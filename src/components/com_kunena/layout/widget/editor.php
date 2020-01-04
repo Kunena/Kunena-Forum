@@ -25,7 +25,8 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	/**
 	 * Get geshi code types.
 	 *
-	 * @return  array|null
+	 * @return  array|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

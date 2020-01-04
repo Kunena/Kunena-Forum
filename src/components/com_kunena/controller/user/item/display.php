@@ -26,31 +26,31 @@ use Joomla\Utilities\ArrayHelper;
 class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var Joomla\CMS\User\User
+	 * @var     Joomla\CMS\User\User
 	 * @since   Kunena 6.0
 	 */
 	public $user;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $tabs;
@@ -66,7 +66,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

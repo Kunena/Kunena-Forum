@@ -27,19 +27,19 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	protected $name = 'Widget/Statistics';
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $config;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $latestMemberLink;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $statisticsUrl;

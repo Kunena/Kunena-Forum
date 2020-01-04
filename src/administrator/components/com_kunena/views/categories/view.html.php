@@ -30,6 +30,8 @@ class KunenaAdminViewCategories extends KunenaView
 	public $categories = array();
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayCreate()
@@ -38,6 +40,8 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayEdit()
@@ -58,6 +62,8 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarEdit()
@@ -81,6 +87,8 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()
@@ -124,6 +132,8 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarDefault()

@@ -37,7 +37,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	public $headerText;
 
 	/**
-	 * @var KunenaForumCategory
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 5.1
 	 */
 	public $category;
@@ -55,13 +55,13 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	public $topics;
 
 	/**
-	 * @var KunenaPagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 5.1
 	 */
 	public $pagination;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 5.1
 	 */
 	public $me;
@@ -78,6 +78,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	protected function before()
@@ -218,7 +219,9 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 * Prepare document.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	protected function prepareDocument()

@@ -29,7 +29,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	protected $name = 'Message/List';
 
 	/**
-	 * @var array|KunenaForumMessage[]
+	 * @var     array|KunenaForumMessage[]
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
@@ -38,7 +38,9 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 * Prepare category list display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

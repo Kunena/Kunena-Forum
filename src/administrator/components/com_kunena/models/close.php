@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Close Model for Kunena
  *
- * @since  2.0.3
+ * @since   Kunena 2.0.3
  */
 class KunenaAdminModelClose extends KunenaModel
 {

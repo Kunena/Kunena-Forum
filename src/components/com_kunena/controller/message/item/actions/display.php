@@ -33,19 +33,19 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	protected $name = 'Message/Item/Actions';
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $messageButtons;
@@ -54,7 +54,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * Prepare message actions display.
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -671,7 +673,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 *
 	 * @param   string  $icon    icon
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

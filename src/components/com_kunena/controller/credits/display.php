@@ -29,25 +29,25 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	protected $name = 'Credits';
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $logo;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $intro;
 
 	/**
-	 * @var
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $memberList;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $thanks;

@@ -362,7 +362,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return  array|KunenaForumCategory[]
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

@@ -29,19 +29,19 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	protected $name = 'Topic/List';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var array|KunenaForumTopic[]
+	 * @var     array|KunenaForumTopic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
-	 * @var KunenaPagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -216,7 +216,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $topics   topics
 	 * @param   array  $actions  actions
 	 *
-	 * @return  array
+	 * @return  array|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -282,7 +282,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @param   array  $messages  messages
 	 * @param   array  $actions   actions
 	 *
-	 * @return  array
+	 * @return  array|void
 	 *
 	 * @since   Kunena 6.0
 	 *

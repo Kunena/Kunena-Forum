@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Announcement Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelAnnouncement extends KunenaModel
 {
@@ -28,6 +28,8 @@ class KunenaModelAnnouncement extends KunenaModel
 	protected $total = false;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function populateState()
@@ -56,6 +58,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return  KunenaForumAnnouncement
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getNewAnnouncement()
@@ -65,6 +68,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return  KunenaForumAnnouncement
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -75,7 +79,8 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return  boolean|null
+	 * @return  integer|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTotal()
@@ -90,6 +95,7 @@ class KunenaModelAnnouncement extends KunenaModel
 
 	/**
 	 * @return  KunenaForumAnnouncement[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

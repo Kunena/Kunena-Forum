@@ -31,37 +31,37 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	protected $name = 'Category/Item';
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
 
 	/**
-	 * @var KunenaForumCategory
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
-	 * @var
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
-	 * @var KunenaPagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
@@ -71,7 +71,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

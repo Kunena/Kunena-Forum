@@ -30,6 +30,8 @@ class KunenaUploadHelper
 	protected static $_instances = array();
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	private function __construct()

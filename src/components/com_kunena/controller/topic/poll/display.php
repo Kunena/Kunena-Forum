@@ -21,31 +21,31 @@ use Joomla\CMS\Language\Text;
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var KunenaForumTopic
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var
+	 * @var     KunenaForumTopicPoll
 	 * @since   Kunena 6.0
 	 */
 	public $poll;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
@@ -55,7 +55,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

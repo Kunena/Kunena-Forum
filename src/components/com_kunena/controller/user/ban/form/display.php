@@ -27,19 +27,19 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	protected $name = 'User/Ban/Form';
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
 
 	/**
-	 * @var KunenaUserBan
+	 * @var     KunenaUserBan
 	 * @since   Kunena 6.0
 	 */
 	public $banInfo;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
@@ -49,7 +49,8 @@ class ComponentKunenaControllerUserBanFormDisplay extends KunenaControllerDispla
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function before()

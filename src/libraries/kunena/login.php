@@ -36,6 +36,8 @@ class KunenaLogin
 	protected $instances = array();
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __construct()

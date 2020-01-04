@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Stats Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelStats extends KunenaModel
 {

@@ -33,6 +33,8 @@ class KunenaGravatar
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';

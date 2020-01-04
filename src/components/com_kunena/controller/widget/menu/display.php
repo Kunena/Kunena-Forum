@@ -25,49 +25,49 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	protected $name = 'Widget/Menu';
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $basemenu;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $list;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $menu;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $active;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $path;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $active_id;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $showAll;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $class_sfx;

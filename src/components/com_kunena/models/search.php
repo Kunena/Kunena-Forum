@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Search Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaModelSearch extends KunenaModel
 {
@@ -41,6 +41,8 @@ class KunenaModelSearch extends KunenaModel
 	protected $messages = false;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -309,7 +311,9 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  boolean|integer
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -366,7 +370,9 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @return  array|boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -492,7 +498,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @param           $view
+	 * @param   string  $view        view
 	 * @param   string  $searchword  searchword
 	 * @param   int     $limitstart  limitstart
 	 * @param   int     $limit       limit

@@ -39,7 +39,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return BaseLayout|KunenaLayout
+	 * @return  BaseLayout|KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -127,6 +127,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   array         $visited  Already visited menu items.
 	 *
 	 * @return  object|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

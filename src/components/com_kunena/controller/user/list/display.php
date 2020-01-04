@@ -23,31 +23,31 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $state;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $users;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -61,7 +61,10 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	/**
 	 * Load user list.
 	 *
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

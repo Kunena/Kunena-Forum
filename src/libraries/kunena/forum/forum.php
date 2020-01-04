@@ -27,36 +27,50 @@ use Joomla\CMS\Log\Log;
 abstract class KunenaForum
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const PUBLISHED = 0;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const UNAPPROVED = 1;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const DELETED = 2;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const TOPIC_DELETED = 3;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const TOPIC_CREATION = 4;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const MODERATOR = 1;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const ADMINISTRATOR = 2;

@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 /**
  * Templates Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 {

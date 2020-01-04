@@ -1347,6 +1347,8 @@ class KunenaConfig extends CMSObject
 	public $utm_source = 0;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __construct()

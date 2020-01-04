@@ -16,7 +16,7 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Kunena Misc Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerMisc extends KunenaController
 {
@@ -33,6 +33,8 @@ class KunenaControllerMisc extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

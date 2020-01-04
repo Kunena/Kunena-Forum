@@ -297,6 +297,13 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	protected function prepareDocument()
 	{
 		$this->setMetaData('og:url', Uri::current(), 'property');

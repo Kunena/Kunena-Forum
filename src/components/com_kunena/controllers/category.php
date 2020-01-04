@@ -20,7 +20,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 /**
  * Kunena Category Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
@@ -39,6 +39,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -59,7 +61,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -134,7 +139,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -172,7 +180,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

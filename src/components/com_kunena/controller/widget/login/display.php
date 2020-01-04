@@ -29,79 +29,79 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	protected $name = 'Widget/Login';
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $my;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $registrationUrl;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $resetPasswordUrl;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $remindUsernameUrl;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $rememberMe;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $lastvisitDate;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $announcementsUrl;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $pm_link;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $inboxCount;
 
 	/**
-	 * @var
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $inboxCountValue;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $profile_edit_url;
 
 	/**
-	 * @var
+	 * @var     object
 	 * @since   Kunena 5.1
 	 */
 	public $plglogin;

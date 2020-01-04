@@ -29,43 +29,43 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	protected $name = 'Topic/Item/Message';
 
 	/**
-	 * @var
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var
+	 * @var     KunenaForumTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $reportMessageLink;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $ipLink;
@@ -75,7 +75,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

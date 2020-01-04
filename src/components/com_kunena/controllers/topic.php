@@ -21,11 +21,12 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena Topic Controller
  *
- * @since  2.0
  * @property int catid
  * @property int id
  * @property int mesid
  * @property int return
+ *
+ * @since   Kunena 2.0
  */
 class KunenaControllerTopic extends KunenaController
 {
@@ -108,7 +109,9 @@ class KunenaControllerTopic extends KunenaController
 	 * Set inline to 0 on the attachment object or list of attachments when inserted in message.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function setinlinestatus()
@@ -264,7 +267,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Upload files with AJAX.
 	 *
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	public function upload()
@@ -853,9 +859,10 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @internal param string $usbject
 	 *
-	 * @param $subject
+	 * @param   string  $subject subject
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function checkURLInSubject($subject)
@@ -883,8 +890,8 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check in the text the max links
 	 *
-	 * @param $text
-	 * @param $topic
+	 * @param   string  $text  text
+	 * @param   object  $topic topic
 	 *
 	 * @return  boolean
 	 *
@@ -957,10 +964,12 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
-	 * @return  void
 	 */
 	public function edit()
 	{
@@ -1288,10 +1297,12 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
-	 * @return  void
 	 */
 	public function thankyou()
 	{
@@ -1300,12 +1311,14 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @param $type
+	 * @param   string  $type type
 	 *
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
-	 * @return  void
 	 */
 	protected function setThankyou($type)
 	{
@@ -1398,7 +1411,10 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -1409,6 +1425,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1443,6 +1461,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1477,6 +1497,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1511,6 +1533,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1545,6 +1569,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1594,6 +1620,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1643,6 +1671,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1692,6 +1722,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1741,6 +1773,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1813,6 +1847,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1870,6 +1906,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1943,6 +1981,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2014,6 +2054,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2142,6 +2184,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2316,7 +2360,10 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -2374,6 +2421,8 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2409,11 +2458,12 @@ class KunenaControllerTopic extends KunenaController
 	}
 
 	/**
-	 * Check if the IP, username or email adress given are blacklisted
+	 * Check if the IP, username or email address given are blacklisted
 	 *
-	 * @param $message
+	 * @param   string  $message message
 	 *
-	 * @return  boolean
+	 * @return  boolean|void
+	 *
 	 * @since   Kunena 6
 	 */
 	protected function checkIfBlacklisted($message)
@@ -2504,9 +2554,12 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Save private data from message
 	 *
-	 * @param   KunenaForumMessage  $message
+	 * @param   KunenaForumMessage  $message message
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function postPrivate(KunenaForumMessage $message)
@@ -2575,9 +2628,12 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Load private data information when edit message
 	 *
-	 * @param   KunenaForumMessage  $message
+	 * @param   KunenaForumMessage  $message message
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function editPrivate(KunenaForumMessage $message)

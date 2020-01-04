@@ -24,7 +24,7 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 	/**
 	 * Method to get moderation action in announcements list
 	 *
-	 * @see   KunenaCompatLayoutBase::getOptions()
+	 * @see     KunenaCompatLayoutBase::getOptions()
 	 *
 	 * @return  array
 	 *

@@ -19,7 +19,7 @@ use Joomla\Database\QueryInterface;
 /**
  * Users Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 {

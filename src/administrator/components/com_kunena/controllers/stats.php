@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena Backend Stats Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerStats extends KunenaController
 {

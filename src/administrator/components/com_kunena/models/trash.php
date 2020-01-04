@@ -19,7 +19,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Trash Model for Kunena
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelTrash extends KunenaModel
 {

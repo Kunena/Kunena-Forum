@@ -23,6 +23,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewCpanel extends KunenaView
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayDefault()

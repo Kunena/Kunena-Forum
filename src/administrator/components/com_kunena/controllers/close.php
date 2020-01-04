@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena Cpanel Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerClose extends KunenaController
 {

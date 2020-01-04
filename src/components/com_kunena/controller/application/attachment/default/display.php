@@ -40,9 +40,10 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
-	 * @throws KunenaExceptionAuthorise
-	 * @throws RuntimeException
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaExceptionAuthorise
+	 * @throws  RuntimeException
 	 * @throws  null
 	 */
 	public function execute()
@@ -75,7 +76,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

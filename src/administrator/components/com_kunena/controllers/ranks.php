@@ -20,7 +20,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Ranks Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerRanks extends KunenaController
 {

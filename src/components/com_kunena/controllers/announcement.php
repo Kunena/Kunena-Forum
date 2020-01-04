@@ -19,11 +19,13 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Kunena Announcements Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerAnnouncement extends KunenaController
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -36,6 +38,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -102,6 +106,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -168,6 +174,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -184,6 +192,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -242,6 +252,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	}
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

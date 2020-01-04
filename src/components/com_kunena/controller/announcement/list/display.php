@@ -43,7 +43,9 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 	 * Prepare announcement list display.
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

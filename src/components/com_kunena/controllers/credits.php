@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Kunena Credits Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerCredits extends KunenaController
 {

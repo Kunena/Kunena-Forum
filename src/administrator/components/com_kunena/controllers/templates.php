@@ -21,7 +21,7 @@ use Joomla\CMS\Filesystem\Folder;
 /**
  * Kunena Backend Templates Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminControllerTemplates extends KunenaController
 {

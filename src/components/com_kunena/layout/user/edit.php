@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 /**
  * KunenaLayoutUserItem
  *
- * @since  K5.1
+ * @since   Kunena 5.1
  */
 class KunenaLayoutUserEdit extends KunenaLayout
 {

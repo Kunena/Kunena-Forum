@@ -17,12 +17,12 @@ use Joomla\CMS\Menu\AbstractMenu;
 /**
  * Kunena Home Controller
  *
- * @since  2.0
+ * @since   Kunena 2.0
  */
 class KunenaControllerHome extends KunenaController
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $home = 1;
@@ -32,7 +32,9 @@ class KunenaControllerHome extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return  Joomla\CMS\MVC\Controller\BaseController|void
-	 * @since K1.0
+	 *
+	 * @since   Kunena 1.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -105,7 +107,8 @@ class KunenaControllerHome extends KunenaController
 	 * @param   object        $active   Active menu item.
 	 * @param   array         $visited  Already visited menu items.
 	 *
-	 * @return  null
+	 * @return  mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

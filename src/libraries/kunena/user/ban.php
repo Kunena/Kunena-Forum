@@ -41,11 +41,15 @@ use Joomla\Database\DatabaseDriver;
 class KunenaUserBan extends CMSObject
 {
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const ANY = 0;
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	const ACTIVE = 1;

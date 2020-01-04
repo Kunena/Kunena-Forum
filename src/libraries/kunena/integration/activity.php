@@ -33,6 +33,8 @@ class KunenaIntegrationActivity
 	protected $instances = array();
 
 	/**
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

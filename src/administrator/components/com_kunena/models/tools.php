@@ -260,9 +260,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * Method to generate the report configuration with anonymous data
 	 *
 	 * @return  string
-	 * @since 5.0
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 *
 	 * @throws  Exception
 	 */
@@ -288,7 +287,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Check if php extensions needed by kunena are right loaded
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -345,7 +344,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * Initialize data to generate configuration report
 	 *
 	 * @return  void
-	 * @since 5.0
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -522,8 +520,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @param   object  $params params
 	 *
-	 * @return    string
-	 * @since 5.1.1
+	 * @return  string
+	 *
+	 * @since   Kunena 5.1.1
 	 */
 	protected function getKunenaTemplateParams($params)
 	{
@@ -546,7 +545,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 *
 	 * @return  boolean|stdClass|void
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	protected function _getJoomlaTemplate()
@@ -611,9 +611,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get all joomla menu details about kunena.
 	 *
-	 * @return    string
+	 * @return  string
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
 	 */
 	protected function _getJoomlaMenuDetails()
 	{
@@ -650,9 +650,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to check the tables collation.
 	 *
-	 * @return    string|void
+	 * @return  string|void
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	protected function _getTablesCollation()
@@ -721,8 +722,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get all the kunena configuration settings.
 	 *
-	 * @return    string
-	 * @since    1.6
+	 * @return  string
+	 *
+	 * @since   Kunena 1.6
 	 */
 	protected function _getKunenaConfiguration()
 	{
@@ -757,7 +759,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to get all languages installed into Joomla! and the default one
 	 *
-	 * @return    string
+	 * @return  string
 	 *
 	 * @since   Kunena 2.0
 	 */
@@ -783,9 +785,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 * @param   string  $extension  extension
 	 * @param   string  $name       name
 	 *
-	 * @return    string
+	 * @return  string
 	 *
-	 * @since    1.6
+	 * @since   Kunena  1.6
 	 */
 	protected function getExtensionVersion($extension, $name)
 	{
@@ -811,9 +813,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param   $path  $path    Path to extension directory
+	 * @param   string  $path  Path to extension directory
 	 *
 	 * @return  string  Version number
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function findExtensionVersion($path)
@@ -899,8 +902,10 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	/**
 	 * Method to generate all the report configuration.
 	 *
-	 * @return    string
-	 * @since    1.6
+	 * @return  string
+	 *
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public function getSystemReport()

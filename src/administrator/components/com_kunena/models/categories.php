@@ -25,19 +25,19 @@ use Joomla\CMS\Filesystem\Folder;
 class KunenaAdminModelCategories extends KunenaModel
 {
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $context;
 
 	/**
-	 * @var KunenaForumCategory[]
+	 * @var     KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_admincategories = false;
 
 	/**
-	 * @var KunenaForumCategory
+	 * @var     KunenaForumCategory
 	 * @since   Kunena 6.0
 	 */
 	protected $_admincategory = false;
@@ -55,6 +55,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -167,6 +168,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return  boolean|KunenaForumCategory|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -233,6 +235,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -322,7 +325,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @param $table
+	 * @param   array  $table table
 	 *
 	 * @return  array
 	 *
@@ -340,7 +343,9 @@ class KunenaAdminModelCategories extends KunenaModel
 	 * Get list of categories to be displayed in drop-down select in batch
 	 *
 	 * @return  array
-	 * @since 5.1.0
+	 *
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -362,6 +367,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * @return  array|KunenaForumCategory[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
@@ -482,6 +488,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

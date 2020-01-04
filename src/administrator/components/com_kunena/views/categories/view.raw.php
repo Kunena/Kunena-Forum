@@ -17,7 +17,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Category View
  *
- * @since  K5.0
+ * @since   Kunena 5.0
  */
 class KunenaAdminViewCategories extends KunenaView
 {

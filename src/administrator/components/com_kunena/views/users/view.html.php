@@ -18,14 +18,18 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * Users view for Kunena backend
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewUsers extends KunenaView
 {
 	/**
 	 * DisplayDefault
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{
@@ -105,7 +109,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return     array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
@@ -127,7 +132,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return     array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
@@ -142,7 +148,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of locked filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array    The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function signatureOptions()
@@ -158,7 +165,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array    The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function blockOptions()
@@ -174,7 +182,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array    The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bannedOptions()
@@ -190,7 +199,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    array   The HTML code for the select tag
+	 * @return  array   The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function moderatorOptions()
@@ -206,7 +216,8 @@ class KunenaAdminViewUsers extends KunenaView
 	/**
 	 * Returns an array ranks filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array    The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function ranksOptions()

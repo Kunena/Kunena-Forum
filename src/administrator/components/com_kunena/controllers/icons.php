@@ -14,14 +14,14 @@ defined('_JEXEC') or die();
 /**
  * Kunena Backend Icons Controller
  *
- * @since  5.1
+ * @since   Kunena 5.1
  */
 class KunenaAdminControllerIcons extends KunenaController
 {
 	/**
 	 * @var     null|string
 	 *
-	 * @since   5.1
+	 * @since   Kunena 5.1
 	 */
 	protected $baseurl = null;
 
@@ -30,7 +30,8 @@ class KunenaAdminControllerIcons extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since   5.1
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())

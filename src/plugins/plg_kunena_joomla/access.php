@@ -283,7 +283,7 @@ class KunenaAccessJoomla
 	 * @param   null    $asset  asset
 	 *
 	 * @return  array
-	 * @since  Kunena
+	 * @since   Kunena 6.0
 	 */
 	protected function getAuthorisedUsers($action, $asset = null)
 	{

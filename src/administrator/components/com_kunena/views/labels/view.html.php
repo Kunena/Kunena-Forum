@@ -25,6 +25,8 @@ class KunenaAdminViewLabels extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -45,6 +47,8 @@ class KunenaAdminViewLabels extends KunenaView
 
 	/**
 	 * Set the toolbar on log manager
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

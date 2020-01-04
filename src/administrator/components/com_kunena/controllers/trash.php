@@ -34,6 +34,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -48,6 +49,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -166,6 +168,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -258,6 +261,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

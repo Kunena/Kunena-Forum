@@ -28,9 +28,8 @@ class KunenaAdminControllerConfig extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 2.0.0-BETA2
-	 * @since   Kunena 6.0
 	 */
 	protected $kunenabaseurl = null;
 
@@ -40,6 +39,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -55,6 +55,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -71,6 +72,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -140,6 +142,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

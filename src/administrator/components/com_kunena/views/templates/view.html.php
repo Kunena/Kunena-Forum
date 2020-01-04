@@ -27,6 +27,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{
@@ -64,6 +66,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayAdd()
 	{
@@ -144,6 +148,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayChooseless()
 	{
@@ -186,6 +192,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayEditless()
 	{
@@ -221,6 +229,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayChoosecss()
 	{
@@ -267,6 +277,8 @@ class KunenaAdminViewTemplates extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayEditcss()
 	{

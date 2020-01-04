@@ -25,7 +25,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KText
 {
 	/**
-	 * @param $string
+	 * @param   string  $string string
 	 *
 	 * @return  mixed
 	 *
@@ -38,9 +38,11 @@ class KText
 }
 
 /**
- * @return integer
- * @since   Kunena
- * @throws KunenaInstallerException
+ * @return  integer
+ *
+ * @since   Kunena 6.0
+ *
+ * @throws  KunenaInstallerException
  */
 function installSampleData()
 {

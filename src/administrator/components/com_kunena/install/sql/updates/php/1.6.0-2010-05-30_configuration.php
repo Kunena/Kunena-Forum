@@ -14,10 +14,12 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 1.6.0: Convert deprecated configuration options
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
  * @return  array
- * @since   Kunena
+ *
+ * @since   Kunena 6.0
+ *
  * @throws  Exception
  */
 function kunena_160_2010_05_30_configuration($parent)

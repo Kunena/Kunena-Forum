@@ -15,10 +15,12 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
  * @return  array
- * @since   Kunena
+ *
+ * @since   Kunena 6.0
+ *
  * @throws  Exception
  */
 function kunena_200_2011_12_14_aliases($parent)

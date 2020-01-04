@@ -26,8 +26,9 @@ class KunenaVersion
 	 * @param   string  $msg  Message to be shown containing two %s parameters for version (2.0.0RC) and version type
 	 *                        (GIT, RC, BETA etc)
 	 *
-	 * @return    string    Warning message
-	 * @since    1.6
+	 * @return  string    Warning message
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public function getVersionWarning($msg = 'COM_KUNENA_VERSION_WARNING')
 	{
@@ -102,10 +103,11 @@ class KunenaVersion
 	/**
 	 * Get version information from database
 	 *
-	 * @param   string  Kunena table prefix
+	 * @param   string  $prefix  Kunena table prefix
 	 *
-	 * @return    object    Version table
-	 * @since    1.6
+	 * @return  object  Version table
+	 *
+	 * @since   Kunena 1.6
 	 */
 	public function getDBVersion($prefix = 'kunena_')
 	{
@@ -139,6 +141,7 @@ class KunenaVersion
 	 * Retrieve installed Kunena version as string.
 	 *
 	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getVersionHTML()
@@ -150,6 +153,7 @@ class KunenaVersion
 	 * Retrieve copyright information as string.
 	 *
 	 * @return  string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getCopyrightHTML()
@@ -165,6 +169,7 @@ class KunenaVersion
 	 *
 	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
 	 *                License: GNU General Public License"
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getLongVersionHTML()

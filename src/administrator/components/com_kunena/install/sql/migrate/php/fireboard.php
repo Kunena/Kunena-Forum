@@ -33,6 +33,7 @@ class KunenaMigratorFireboard
 
 	/**
 	 * @return  KunenaMigratorFireboard|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance()
@@ -51,6 +52,7 @@ class KunenaMigratorFireboard
 	 * Detect FireBoard version.
 	 *
 	 * @return  string  FireBoard version or null.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function detect()

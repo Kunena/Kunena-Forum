@@ -42,6 +42,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @return  boolean|mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -93,6 +94,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return  boolean|stdClass
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTemplatedetails()
@@ -111,6 +113,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return  boolean|void|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getFileLessParsed()
@@ -131,6 +134,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 
 	/**
 	 * @return  boolean|void|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getFileContentParsed()
@@ -229,6 +233,8 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -268,8 +274,8 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @param           $key
-	 * @param           $request
+	 * @param   string  $key        key
+	 * @param   string  $request    request
 	 * @param   null    $default    default
 	 * @param   string  $type       type
 	 * @param   bool    $resetPage  resetPage
@@ -307,8 +313,10 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @see   Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @see     Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 *
 	 * @return  array|mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -15,11 +15,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 1.6.0: Migrate polls data from K1.5
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
- * @return  array|null
- * @since   Kunena
- * @throws KunenaInstallerException
+ * @return  array
+ *
+ * @since   Kunena 6.0
+ *
+ * @throws  KunenaInstallerException
  */
 function kunena_160_2010_05_30_polls($parent)
 {

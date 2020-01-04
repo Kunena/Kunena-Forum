@@ -18,14 +18,15 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena ranks backend
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewRanks extends KunenaView
 {
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array  The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function specialOptions()

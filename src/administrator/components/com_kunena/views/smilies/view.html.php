@@ -18,14 +18,14 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena smilies backend
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewSmilies extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  mixed
+	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
 	 *

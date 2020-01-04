@@ -16,7 +16,7 @@ require_once __DIR__ . '/ranks.php';
 /**
  * Kunena Rank Controller
  *
- * @since  3.0
+ * @since   Kunena 3.0
  */
 class KunenaAdminControllerRank extends KunenaAdminControllerRanks
 {

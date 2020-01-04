@@ -199,6 +199,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return  array|mixed|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -251,6 +252,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return  array|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -289,6 +291,8 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

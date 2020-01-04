@@ -23,31 +23,32 @@ use Joomla\Utilities\ArrayHelper;
 class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 {
 	/**
-	 * @var        string    The help screen key for the module.
-	 * @since   1.6
+	 * @var     string    The help screen key for the module.
+	 * @since   Kunena 1.6
 	 */
 	protected $helpKey = 'JHELP_EXTENSIONS_PLUGIN_MANAGER_EDIT';
 
 	/**
-	 * @var        string    The help screen base URL for the module.
-	 * @since   1.6
+	 * @var     string    The help screen base URL for the module.
+	 * @since   Kunena 1.6
 	 */
 	protected $helpURL;
 
 	/**
-	 * @since   1.6
+	 * @var     string
+	 * @since   Kunena 1.6
 	 */
 	protected $_cache;
 
 	/**
-	 * @var        string    The event to trigger after saving the data.
-	 * @since   1.6
+	 * @var     string    The event to trigger after saving the data.
+	 * @since   Kunena 1.6
 	 */
 	protected $event_after_save = 'onExtensionAfterSave';
 
 	/**
-	 * @var        string    The event to trigger after before the data.
-	 * @since   1.6
+	 * @var      string    The event to trigger after before the data.
+	 * @since    Kunena 1.6
 	 */
 	protected $event_before_save = 'onExtensionBeforeSave';
 
@@ -72,7 +73,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  boolean|JForm
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public function getForm($data = array(), $loadData = true)
@@ -126,6 +128,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -185,6 +188,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  Joomla\CMS\Table\Table    A database object
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
@@ -199,7 +203,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public function save($data)
@@ -222,7 +227,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  object  An object with key, url, and local properties for loading the item help screen.
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
 	 */
 	public function getHelp()
 	{
@@ -234,7 +239,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  mixed  The data for the form.
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
 	 * @throws  Exception
 	 */
 	protected function loadFormData()
@@ -256,11 +261,13 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * Method to allow derived classes to preprocess the data.
 	 *
 	 * @param   string  $context  The context identifier.
-	 * @param   mixed  &$data     The data to be processed. It gets altered directly.
-	 *
+	 * @param   mixed   $data     The data to be processed. It gets altered directly.
 	 * @param   string  $group    group
 	 *
+	 * @return  void
+	 *
 	 * @since   Joomla 3.1
+	 *
 	 * @throws  Exception
 	 */
 	protected function preprocessData($context, &$data, $group = 'kunena')
@@ -285,7 +292,8 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState()
@@ -308,8 +316,10 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * @param   string  $group  Form group.
 	 *
 	 * @return  mixed|void  True if successful.
-	 * @since   1.6
-	 * @throws    Exception if there is an error in the form event.
+	 *
+	 * @since   Kunena 1.6
+	 *
+	 * @throws  Exception if there is an error in the form event.
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
@@ -390,7 +400,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -405,8 +415,9 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
 	 * @param   null  $group      group
-	 *
 	 * @param   int   $client_id  client_id
+	 *
+	 * @return  void
 	 *
 	 * @since   1.6
 	 *

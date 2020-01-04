@@ -50,8 +50,10 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
-	 * @return    array|object
-	 * @since    1.6
+	 * @return  array|object
+	 *
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -70,9 +72,10 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted topics.
 	 *
-	 * @return    object
+	 * @return  object
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -164,8 +167,10 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted messages.
 	 *
-	 * @return    array
-	 * @since    1.6
+	 * @return  array
+	 *
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -317,9 +322,9 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get select options to choose between topics and messages.
 	 *
-	 * @return    array
+	 * @return  array
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
 	 */
 	public function getViewOptions()
 	{
@@ -335,9 +340,10 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get details on selected items.
 	 *
-	 * @return    array
+	 * @return  array
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -363,9 +369,9 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to hash datas.
 	 *
-	 * @return    string Hashed value.
+	 * @return  string Hashed value.
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
 	 */
 	public function getMd5()
 	{
@@ -376,6 +382,7 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * @return  Joomla\CMS\Pagination\Pagination
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getNavigation()
@@ -389,6 +396,8 @@ class KunenaAdminModelTrash extends KunenaModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

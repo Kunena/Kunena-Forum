@@ -26,6 +26,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void|mixed
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -73,7 +74,8 @@ class KunenaAdminViewAttachments extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
@@ -92,7 +94,8 @@ class KunenaAdminViewAttachments extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()

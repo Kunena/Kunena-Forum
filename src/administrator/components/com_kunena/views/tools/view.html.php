@@ -25,6 +25,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{
@@ -48,6 +50,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayPrune()
 	{
@@ -106,6 +110,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displaySyncUsers()
 	{
@@ -134,6 +140,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayRecount()
 	{
@@ -162,6 +170,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayMenu()
 	{
@@ -200,6 +210,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayPurgeReStatements()
 	{
@@ -228,6 +240,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayCleanupIP()
 	{
@@ -256,6 +270,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDiagnostics()
 	{
@@ -282,6 +298,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayUninstall()
 	{
@@ -312,6 +330,8 @@ class KunenaAdminViewTools extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayReport()
 	{

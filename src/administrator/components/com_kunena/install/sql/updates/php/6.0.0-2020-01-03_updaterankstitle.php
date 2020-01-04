@@ -15,10 +15,12 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Update ranks title value to have string which can be translated
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
  * @return  array
- * @since   Kunena
+ *
+ * @since   Kunena 6.0
+ *
  * @throws  Exception
  */
 function kunena_600_2020_01_03_updaterankstitle($parent)

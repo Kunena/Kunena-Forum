@@ -16,7 +16,7 @@ require_once __DIR__ . '/users.php';
 /**
  * Kunena User Controller
  *
- * @since  3.0
+ * @since   Kunena 3.0
  */
 class KunenaAdminControllerUser extends KunenaAdminControllerUsers
 {

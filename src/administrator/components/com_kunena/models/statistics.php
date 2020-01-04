@@ -23,11 +23,12 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see        JController
+	 * @see     JController
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since      Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -52,6 +53,7 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 * @return  integer  The total number of items available in the data set.
 	 *
 	 * @since   3.1
+	 *
 	 * @throws  Exception
 	 */
 	public function getTotal()
@@ -85,7 +87,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @return    string        A store id.
+	 * @return  string  A store id.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
@@ -104,6 +107,7 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $field  field
 	 *
 	 * @return  KunenaLogFinder
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -167,7 +171,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
-	 * @since   3.1
+	 * @since   Kunena 3.1
+	 *
 	 * @throws  Exception
 	 */
 	public function getItems()
@@ -285,6 +290,8 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   null  $ordering   ordering
 	 * @param   null  $direction  direction
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

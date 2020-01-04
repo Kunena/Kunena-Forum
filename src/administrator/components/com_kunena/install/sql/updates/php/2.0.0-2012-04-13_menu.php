@@ -15,10 +15,12 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Update menu items
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
- * @return  array|null
- * @since   Kunena
+ * @return  array
+ *
+ * @since   Kunena 6.0
+ *
  * @throws  Exception
  */
 function kunena_200_2012_04_13_menu($parent)

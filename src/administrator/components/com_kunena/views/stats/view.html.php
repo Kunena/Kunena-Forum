@@ -18,12 +18,15 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena stats backend
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewStats extends KunenaView
 {
 	/**
 	 * @internal param null $tpl
+	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -23,11 +23,12 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see        JController
+	 * @see     JController
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since      Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -59,7 +60,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
-	 * @since   5.0
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTotal()
@@ -93,7 +95,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @return    string        A store id.
+	 * @return  string  A store id.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
@@ -118,7 +121,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @return    KunenaLogFinder
+	 * @return  KunenaLogFinder
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -303,7 +307,8 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  KunenaUser  List of KunenaUser objects found.
 	 *
-	 * @since   5.0
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -349,8 +354,10 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param   null  $ordering  ordering
+	 * @param   null  $direction direction
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

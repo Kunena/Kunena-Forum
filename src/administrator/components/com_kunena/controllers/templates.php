@@ -27,14 +27,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 {
 	/**
 	 * @var     null|string
-	 *
 	 * @since   Kunena 2.0
 	 */
 	protected $baseurl = null;
 
 	/**
-	 * @var array
-	 *
+	 * @var     array
 	 * @since   Kunena 2.0
 	 */
 	protected $locked = array('aurelia');
@@ -45,6 +43,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -59,6 +58,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -94,6 +94,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -116,6 +117,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -152,6 +154,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  boolean|void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -277,6 +280,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -347,6 +351,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -374,6 +379,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -402,6 +408,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -421,6 +428,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -469,6 +477,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -521,6 +530,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -549,6 +559,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -594,6 +605,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -641,6 +653,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -679,7 +692,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since  3.0.0
+	 * @since   Kunena 3.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -840,6 +854,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -876,7 +891,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since 5.1
+	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function restore()
@@ -903,7 +919,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since 3.0.5
+	 * @since   Kunena 3.0.5
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

@@ -36,6 +36,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -50,6 +51,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -72,8 +74,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
-	 * @throws  Exception
 	 *
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function edit()
@@ -108,8 +110,6 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * Save
 	 *
 	 * @return  void
-	 *
-	 * @since   Kunena 2.0
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -183,8 +183,6 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -221,8 +219,6 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * Remove
 	 *
 	 * @return  void
-	 *
-	 * @since   Kunena 2.0
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -277,6 +273,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

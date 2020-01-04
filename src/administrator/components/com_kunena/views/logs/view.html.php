@@ -26,8 +26,11 @@ class KunenaAdminViewLogs extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
-	 * @throws ReflectionException
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  ReflectionException
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -68,7 +71,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getFilterUserFields()
 	{
@@ -85,7 +89,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
 	{
@@ -104,7 +109,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
 	{
@@ -117,7 +123,8 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getFilterTypeFields()
 	{
@@ -132,8 +139,10 @@ class KunenaAdminViewLogs extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
-	 * @throws ReflectionException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  ReflectionException
 	 */
 	protected function getFilterOperationFields()
 	{
@@ -157,6 +166,8 @@ class KunenaAdminViewLogs extends KunenaView
 	/**
 	 * Set the toolbar on log manager
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function setToolbar()
@@ -175,6 +186,8 @@ class KunenaAdminViewLogs extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayClean()
 	{
@@ -198,9 +211,10 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 * @param $id
+	 * @param   integer  $id id
 	 *
 	 * @return  mixed|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getType($id)
@@ -211,7 +225,7 @@ class KunenaAdminViewLogs extends KunenaView
 	}
 
 	/**
-	 * @param $name
+	 * @param   string  $name name
 	 *
 	 * @return  string
 	 *

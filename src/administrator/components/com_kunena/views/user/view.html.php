@@ -158,6 +158,8 @@ class KunenaAdminViewUser extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayMove()
 	{

@@ -26,11 +26,12 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see        JController
+	 * @see     JController
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since      Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -61,7 +62,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  boolean|KunenaUser
 	 *
-	 * @since   3.0
+	 * @since   Kunena 3.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getItems()
@@ -113,7 +115,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   string  $id  A prefix for the store id.
 	 *
-	 * @return    string        A store id.
+	 * @return  string  A store id.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
@@ -137,7 +140,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @return  string
 	 *
-	 * @since  3.0
+	 * @since   Kunena 3.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getModcatslist()
@@ -157,6 +161,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   null  $ordering   ordering
 	 * @param   null  $direction  direction
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -215,7 +221,8 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @return QueryInterface
+	 * @return  QueryInterface
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()

@@ -31,10 +31,11 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	 *
 	 * @param   string  $tpl  A template file to load.
 	 *
-	 * @return    Exception|void    Exception on failure, void on success.
+	 * @return  Exception|void    Exception on failure, void on success.
 	 *
-	 * @since    1.6
-	 * @throws    Exception
+	 * @since   Kunena 1.6
+	 *
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -66,7 +67,8 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	 * @access private
 	 *
 	 * @return  void
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	public function setToolBar()
 	{
@@ -76,8 +78,10 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 
 	/**
 	 * @return  void
-	 * @since   Kunena
-	 * @throws KunenaSchemaException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaSchemaException
 	 * @throws  Exception
 	 */
 	public function displaySchema()
@@ -104,8 +108,10 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 
 	/**
 	 * @return  void
-	 * @since   Kunena
-	 * @throws KunenaSchemaException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaSchemaException
 	 * @throws  Exception
 	 */
 	public function displaySchemaDiff()

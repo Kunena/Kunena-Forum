@@ -33,7 +33,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @param   array  $config  Construct
 	 *
-	 * @since 2.0
+	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -47,9 +48,9 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since 2.0
-	 * @throws  Exception
+	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function delete()

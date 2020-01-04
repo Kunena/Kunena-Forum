@@ -26,8 +26,11 @@ class KunenaAdminViewStatistics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
-	 * @throws ReflectionException
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  ReflectionException
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -68,7 +71,8 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getFilterUserFields()
 	{
@@ -85,7 +89,8 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena
 	 */
 	protected function getSortFields()
 	{
@@ -105,7 +110,8 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena
 	 */
 	protected function getSortDirectionFields()
 	{
@@ -118,7 +124,8 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function getFilterTypeFields()
 	{
@@ -133,8 +140,10 @@ class KunenaAdminViewStatistics extends KunenaView
 
 	/**
 	 * @return  array
-	 * @since  Kunena
-	 * @throws ReflectionException
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  ReflectionException
 	 */
 	protected function getFilterOperationFields()
 	{
@@ -155,6 +164,11 @@ class KunenaAdminViewStatistics extends KunenaView
 		return $filterFields;
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
 	protected function setToolbar()
 	{
 		// Set the titlebar text
@@ -162,9 +176,10 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @param $id
+	 * @param   integer  $id id
 	 *
 	 * @return  mixed|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getType($id)
@@ -175,7 +190,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	}
 
 	/**
-	 * @param $name
+	 * @param   string  $name name
 	 *
 	 * @return  string
 	 *

@@ -29,7 +29,6 @@ class KunenaViewTopics extends KunenaView
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 *
 	 * @throws  null
 	 */
 	public function displayDefault($tpl = null)
@@ -69,7 +68,6 @@ class KunenaViewTopics extends KunenaView
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 *
 	 * @throws  null
 	 */
 	public function displayUser($tpl = null)
@@ -108,7 +106,6 @@ class KunenaViewTopics extends KunenaView
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 *
 	 * @throws  null
 	 */
 	public function displayPosts($tpl = null)

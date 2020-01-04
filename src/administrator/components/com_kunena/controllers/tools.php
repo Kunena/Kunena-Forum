@@ -25,7 +25,6 @@ class KunenaAdminControllerTools extends KunenaController
 {
 	/**
 	 * @var     null|string
-	 *
 	 * @since   Kunena 2.0
 	 */
 	protected $baseurl = null;
@@ -36,6 +35,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -50,6 +50,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -94,8 +95,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
-	 * @throws  Exception
 	 *
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function prune()
@@ -217,6 +218,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -363,6 +365,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -438,8 +441,8 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Set proper response for both AJAX and traditional calls.
 	 *
-	 * @param   $response
-	 * @param   $ajax
+	 * @param   array  $response response
+	 * @param   bool   $ajax     ajax
 	 *
 	 * @return  void
 	 *
@@ -478,8 +481,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
-	 * @throws  Exception
 	 *
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function dorecount()
@@ -676,6 +679,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -697,6 +701,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -731,6 +736,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -794,8 +800,8 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
-	 * @throws  Exception
 	 *
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function cleanupIP()
@@ -887,6 +893,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -901,6 +908,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -955,6 +963,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */

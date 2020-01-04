@@ -24,7 +24,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class KunenaAdminViewCategories extends KunenaView
 {
 	/**
-	 * @var array|KunenaForumCategory[]
+	 * @var     array|KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public $categories = array();
@@ -43,6 +43,8 @@ class KunenaAdminViewCategories extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayEdit()
 	{
@@ -90,6 +92,8 @@ class KunenaAdminViewCategories extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{
@@ -176,7 +180,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortFields()
@@ -198,7 +203,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getSortDirectionFields()
@@ -213,7 +219,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function publishedOptions()
@@ -229,7 +236,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of locked filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array  The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function lockOptions()
@@ -245,7 +253,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array   The HTML code for the select tag
+	 * @return  array The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function reviewOptions()
@@ -261,7 +270,8 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return    array
+	 * @return  array
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function allowpollsOptions()
@@ -277,7 +287,7 @@ class KunenaAdminViewCategories extends KunenaView
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array  The HTML code for the select tag
 	 * @since   Kunena 6.0
 	 */
 	public function anonymousOptions()

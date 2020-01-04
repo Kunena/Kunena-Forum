@@ -21,11 +21,12 @@ class KunenaAdminModelBlockips extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see        JController
+	 * @see     JController
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since      5.1
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())

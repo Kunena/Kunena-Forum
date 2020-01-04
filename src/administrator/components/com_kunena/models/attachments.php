@@ -17,7 +17,7 @@ use Joomla\Database\QueryInterface;
 /**
  * Attachments Model for Kunena
  *
- * @since 2.0
+ * @since   Kunena 2.0
  */
 class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 {
@@ -52,8 +52,10 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $ordering   ordering
 	 * @param   string  $direction  direction
 	 *
-	 * @return    void
-	 * @since    1.6
+	 * @return  void
+	 *
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
@@ -126,6 +128,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   int     $limit       limit
 	 *
 	 * @return  KunenaAttachment[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
@@ -152,7 +155,8 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @return QueryInterface
+	 * @return  QueryInterface
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()

@@ -37,6 +37,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -72,6 +73,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * @return  void
 	 *
 	 * @since   12.2
+	 *
 	 * @throws  Exception
 	 */
 	public function publish()
@@ -161,6 +163,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * @return  boolean  True on success
 	 *
 	 * @since   12.2
+	 *
 	 * @throws  Exception
 	 */
 	public function reorder()
@@ -243,6 +246,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 * @return  boolean  True on success
 	 *
 	 * @since   12.2
+	 *
 	 * @throws  Exception
 	 */
 	public function checkin()
@@ -280,7 +284,10 @@ class KunenaAdminControllerPlugins extends KunenaController
 	/**
 	 * Regenerate editor file
 	 *
-	 * @since 5.0.2
+	 * @return  void
+	 *
+	 * @since   Kunena 5.0.2
+	 *
 	 * @throws  Exception
 	 */
 	public function resync()

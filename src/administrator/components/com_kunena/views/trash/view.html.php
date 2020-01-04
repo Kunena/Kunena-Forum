@@ -26,6 +26,8 @@ class KunenaAdminViewTrash extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{
@@ -120,6 +122,8 @@ class KunenaAdminViewTrash extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayPurge()
 	{

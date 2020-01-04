@@ -18,7 +18,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena cpanel
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewCpanel extends KunenaView
 {
@@ -26,6 +26,8 @@ class KunenaAdminViewCpanel extends KunenaView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayDefault()
 	{

@@ -17,7 +17,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * About view for Kunena rank backend
  *
- * @since  K1.X
+ * @since   Kunena 1.X
  */
 class KunenaAdminViewRank extends KunenaView
 {

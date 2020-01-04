@@ -15,11 +15,12 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Convert new indication into new format
 /**
- * @param $parent
+ * @param   string  $parent parent
  *
  * @return  array
- * @since   Kunena
- * @throws KunenaInstallerException
+ *
+ * @since   Kunena 6.0
+ *
  * @throws  Exception
  */
 function kunena_200_2012_06_10_newindication($parent)

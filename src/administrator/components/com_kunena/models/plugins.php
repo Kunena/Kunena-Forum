@@ -28,7 +28,8 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since   1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -177,6 +178,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   array  $items  The array of objects
 	 *
 	 * @return  void The array of translated objects
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function translate(&$items)
@@ -205,6 +207,7 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return  string    A store id.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getStoreId($id = '')
@@ -222,7 +225,8 @@ class KunenaAdminModelPlugins extends Joomla\CMS\MVC\Model\ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @return QueryInterface
+	 * @return  QueryInterface
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()

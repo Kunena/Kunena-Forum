@@ -50,7 +50,8 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	 * @param   string  $ordering   ordering
 	 * @param   string  $direction  direction
 	 *
-	 * @return    void
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -104,7 +105,8 @@ class KunenaAdminModelSmilies extends Joomla\CMS\MVC\Model\ListModel
 	}
 
 	/**
-	 * @return QueryInterface
+	 * @return  QueryInterface
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getListQuery()

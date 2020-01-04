@@ -6,7 +6,6 @@
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -60,6 +59,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void The HTML code for the select tag
+	 *
 	 * @since   K1.6
 	 */
 	protected function setToolbar()
@@ -115,7 +115,8 @@ class KunenaAdminViewPlugins extends KunenaView
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return    array    The HTML code for the select tag
+	 * @return  array    The HTML code for the select tag
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function publishedOptions()

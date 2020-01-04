@@ -19,14 +19,13 @@ use Joomla\CMS\Router\Route;
 /**
  * Kunena Backend Logs Controller
  *
- * @since  5.0
+ * @since   Kunena 5.0
  */
 class KunenaAdminControllerLogs extends KunenaController
 {
 	/**
 	 * @var     null|string
-	 *
-	 * @since    5.0
+	 * @since   Kunena 5.0
 	 */
 	protected $baseurl = null;
 
@@ -35,7 +34,8 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @since    5.0
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public function __construct($config = array())
@@ -48,9 +48,8 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * Redirect user to the right layout in order to define some settings
 	 *
 	 * @return  void
-	 * @since   Kunena 5.0
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function cleanentries()
 	{
@@ -62,9 +61,8 @@ class KunenaAdminControllerLogs extends KunenaController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since  K5.0
+	 * @since   Kunena 5.0
 	 *
-	 * @since  Kunena
 	 * @throws  Exception
 	 * @throws  null
 	 */

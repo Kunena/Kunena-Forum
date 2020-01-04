@@ -45,9 +45,9 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * Check if Kunena migration is supported.
 	 *
-	 * @return   boolean
+	 * @return  boolean
 	 *
-	 * @since   1.6.4
+	 * @since   Kunena 1.6.4
 	 */
 	protected function detectExtension()
 	{
@@ -58,10 +58,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * Get tables to be migrated.
 	 *
-	 * @return    array    List of tables without prefix
+	 * @return   array    List of tables without prefix
 	 *
-	 * @since    1.6.4
-	 * @throws  Exception
+	 * @since    Kunena 1.6.4
+	 *
+	 * @throws   Exception
 	 */
 	protected function getCopyTables()
 	{
@@ -86,10 +87,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @param   string  $table  table
 	 *
-	 * @return    boolean Ready (true/false)
+	 * @return  boolean Ready (true/false)
 	 *
-	 * @since    1.6.4
-	 * @throws    Exception
+	 * @since   Kunena 1.6.4
+	 *
+	 * @throws  Exception
 	 */
 	protected function copyTable_kunena_categories($table)
 	{
@@ -153,10 +155,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 *
 	 * @param   object  $object  A reference to the parameters as an object.
 	 *
-	 * @return    void
+	 * @return  void
 	 *
-	 * @since    0.4.
-	 * @throws    Exception
+	 * @since   Kunena 3.0.4
+	 *
+	 * @throws  Exception
 	 */
 	protected function convertParamsHook(&$object)
 	{
@@ -172,7 +175,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	}
 
 	/**
-	 * @param $list
+	 * @param   string  $list list
 	 *
 	 * @return  array
 	 *
@@ -209,10 +212,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @return    boolean Ready (true/false)
+	 * @return  boolean Ready (true/false)
 	 *
-	 * @since    1.6.4
-	 * @throws    Exception
+	 * @since   Kunena 1.6.4
+	 *
+	 * @throws  Exception
 	 */
 	protected function migrateExtensionCustom()
 	{

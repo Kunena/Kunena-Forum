@@ -16,7 +16,7 @@ require_once __DIR__ . '/smilies.php';
 /**
  * Kunena Smiley Controller
  *
- * @since  3.0
+ * @since  Kunena 3.0
  */
 class KunenaAdminControllerSmiley extends KunenaAdminControllerSmilies
 {

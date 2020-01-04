@@ -564,7 +564,7 @@ class BBCode
 	 *
 	 * @param   bool  $escape_content
 	 *
-	 * @return $this
+	 * @return  $this
 	 */
 	public function setEscapeContent($escape_content)
 	{

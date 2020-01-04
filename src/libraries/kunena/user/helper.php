@@ -29,13 +29,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaUserHelper
 {
 	/**
-	 * @var array|KunenaUser[]
+	 * @var     array|KunenaUser[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @var array|KunenaUser[]
+	 * @var     array|KunenaUser[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances_name = array();

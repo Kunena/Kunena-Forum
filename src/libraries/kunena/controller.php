@@ -25,19 +25,19 @@ use Joomla\CMS\Application\CMSApplicationInterface;
 class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 {
 	/**
-	 * @var CMSApplicationInterface
+	 * @var     CMSApplicationInterface
 	 * @since   Kunena 6.0
 	 */
 	protected $app;
 
 	/**
-	 * @var KunenaUser|null
+	 * @var     KunenaUser|null
 	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
-	 * @var KunenaConfig|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;

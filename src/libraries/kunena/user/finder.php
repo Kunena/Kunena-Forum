@@ -19,13 +19,13 @@ defined('_JEXEC') or die();
 class KunenaUserFinder extends KunenaDatabaseObjectFinder
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__users';
 
 	/**
-	 * @var KunenaConfig|mixed
+	 * @var     KunenaConfig|mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $config;

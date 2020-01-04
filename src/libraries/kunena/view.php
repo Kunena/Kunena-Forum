@@ -23,25 +23,25 @@ use Joomla\CMS\MVC\View\HtmlView;
 class KunenaView extends HtmlView
 {
 	/**
-	 * @var Joomla\CMS\Document\Document|null
+	 * @var     Joomla\CMS\Document\Document|null
 	 * @since   Kunena 6.0
 	 */
 	public $document = null;
 
 	/**
-	 * @var Joomla\CMS\Application\CMSApplication|null
+	 * @var     Joomla\CMS\Application\CMSApplication|null
 	 * @since   Kunena 6.0
 	 */
 	public $app = null;
 
 	/**
-	 * @var KunenaUser|null
+	 * @var     KunenaUser|null
 	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
-	 * @var KunenaConfig|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;
@@ -65,13 +65,13 @@ class KunenaView extends HtmlView
 	public $teaser = null;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $inLayout = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;

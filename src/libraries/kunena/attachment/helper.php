@@ -23,7 +23,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaAttachmentHelper
 {
 	/**
-	 * @var KunenaAttachment[]
+	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -41,6 +41,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool  $reload      reloaded
 	 *
 	 * @return  KunenaAttachment
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -81,6 +82,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string          $authorise  authorise
 	 *
 	 * @return  KunenaAttachment[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -185,6 +187,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   bool|string  $ids  ids
 	 *
 	 * @return  KunenaAttachment[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -282,6 +285,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string          $authorise  authorise
 	 *
 	 * @return  KunenaAttachment[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -350,6 +354,7 @@ abstract class KunenaAttachmentHelper
 	 * @return  string
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
@@ -402,6 +407,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   null   $user      user
 	 *
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -424,6 +430,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $user      user
 	 *
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -501,6 +508,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   mixed  $user      user
 	 *
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -570,7 +578,7 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @return  boolean
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -664,6 +672,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   array  $params  params
 	 *
 	 * @return  KunenaAttachment[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -736,7 +745,9 @@ abstract class KunenaAttachmentHelper
 	 * Load the total count of attachments
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public static function getTotalAttachments()
@@ -768,6 +779,7 @@ abstract class KunenaAttachmentHelper
 	 * @param   string  $mime  mime
 	 *
 	 * @return  boolean  True if mime is image.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function isImageMime($mime)

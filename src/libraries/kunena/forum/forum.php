@@ -107,13 +107,14 @@ abstract class KunenaForum
 	 * }
 	 * </code>
 	 *
-	 * @see   KunenaForum::installed()
-	 * @see   KunenaForum::isCompatible()
-	 * @see   KunenaForum::setup()
+	 * @see     KunenaForum::installed()
+	 * @see     KunenaForum::isCompatible()
+	 * @see     KunenaForum::setup()
 	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
 	 * @return  boolean True if online.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -154,6 +155,7 @@ abstract class KunenaForum
 	 * @see     KunenaForum::setup()
 	 *
 	 * @return  boolean True if Kunena has been fully installed.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function installed()
@@ -170,6 +172,7 @@ abstract class KunenaForum
 	 * by replacing files during upgrade.
 	 *
 	 * @return  boolean True if Git repository is detected.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function isDev()
@@ -207,7 +210,9 @@ abstract class KunenaForum
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
 	 * @return  void
-	 * @since 2.0.0-BETA2
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @throws  Exception
 	 */
 	public static function setup()
@@ -256,6 +261,7 @@ abstract class KunenaForum
 	 * @param   string  $version  Minimum required version.
 	 *
 	 * @return  boolean Yes, if it is safe to use Kunena Framework.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function isCompatible($version)
@@ -285,6 +291,7 @@ abstract class KunenaForum
 	 * Returns the exact version from Kunena Forum.
 	 *
 	 * @return  boolean Version number.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function version()
@@ -338,6 +345,7 @@ abstract class KunenaForum
 	 * Returns all version information together.
 	 *
 	 * @return  object stdClass containing (version, major, date, name).
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getVersionInfo()
@@ -355,6 +363,7 @@ abstract class KunenaForum
 	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return  boolean Major version in xxx.yyy format.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function versionMajor()
@@ -371,6 +380,7 @@ abstract class KunenaForum
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
 	 * @return  boolean Date in yyyy-mm-dd format.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function versionDate()
@@ -387,6 +397,7 @@ abstract class KunenaForum
 	 * Returns codename from Kunena release.
 	 *
 	 * @return  boolean Codename.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function versionName()

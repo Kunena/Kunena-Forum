@@ -136,7 +136,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	/**
 	 * @param   Joomla\CMS\Session\Session  $session  session
 	 *
-	 * @return $this
+	 * @return  $this
 	 * @since   Kunena 6.0
 	 */
 	public function loadSession(Joomla\CMS\Session\Session $session = null)

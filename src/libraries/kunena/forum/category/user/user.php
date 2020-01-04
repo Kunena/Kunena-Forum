@@ -13,17 +13,19 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaForumCategoryUser
  *
- * @since   Kunena
  * @property int    $category_id
  * @property int    $role
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
+ *
+ * @since   Kunena 6.0
  */
 class KunenaForumCategoryUser extends CMSObject
 {
@@ -34,7 +36,7 @@ class KunenaForumCategoryUser extends CMSObject
 	protected $_exists = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -42,9 +44,8 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   mixed  $user      user
-	 *
 	 * @param   int    $category  category
+	 * @param   mixed  $user      user
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -75,7 +76,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   string  $type    The categories table name to be used
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
-	 * @return  Joomla\CMS\Table\Table|TableKunenaUserCategories        The categories table object
+	 * @return  Joomla\CMS\Table\Table|TableKunenaUserCategories  The categories table object
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table')
@@ -99,6 +101,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 * @param   bool      $reload  reload
 	 *
 	 * @return  KunenaForumCategoryUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -110,6 +113,7 @@ class KunenaForumCategoryUser extends CMSObject
 
 	/**
 	 * @return  KunenaForumCategory
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -138,7 +142,8 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new category.
 	 *
-	 * @return  boolean    True on success
+	 * @return  boolean  True on success
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -227,7 +232,8 @@ class KunenaForumCategoryUser extends CMSObject
 	/**
 	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
-	 * @return  boolean    True on success
+	 * @return  boolean  True on success
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -23,7 +23,7 @@ use Joomla\Utilities\ArrayHelper;
 class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaControllerUserEditDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Profile';

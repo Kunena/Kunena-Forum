@@ -16,6 +16,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Registry\Registry;
 use Joomla\Input\Input;
+use Joomla\CMS\Object\CMSObject;
 
 /**
  * Model for Kunena
@@ -25,43 +26,43 @@ use Joomla\Input\Input;
 class KunenaModel extends BaseDatabaseModel
 {
 	/**
-	 * @var  string JSite|JAdministrator
+	 * @var     string JSite|JAdministrator
 	 * @since   Kunena 6.0
 	 */
 	public $app = null;
 
 	/**
-	 * @var KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me = null;
 
 	/**
-	 * @var KunenaConfig
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;
 
 	/**
-	 * @var string Registry
+	 * @var     string Registry
 	 * @since   Kunena 6.0
 	 */
 	public $params = null;
 
 	/**
-	 * @var Input
+	 * @var     Input
 	 * @since   Kunena 6.0
 	 */
 	protected $input = null;
 
 	/**
-	 * @var InputFilter
+	 * @var     InputFilter
 	 * @since   Kunena 6.0
 	 */
 	protected $filter = null;
 
 	/**
-	 * @var JObject
+	 * @var     CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $state = null;

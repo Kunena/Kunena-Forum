@@ -21,7 +21,7 @@ use Joomla\CMS\Object\CMSObject;
 class KunenaSession extends CMSObject
 {
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	private static $_instance;
@@ -39,25 +39,25 @@ class KunenaSession extends CMSObject
 	protected $_sessiontimeout = false;
 
 	/**
-	 * @var integer|string
+	 * @var     integer|string
 	 * @since   Kunena 6.0
 	 */
 	protected $allreadtime;
 
 	/**
-	 * @var integer|string
+	 * @var     integer|string
 	 * @since   Kunena 6.0
 	 */
 	public $lasttime;
 
 	/**
-	 * @var integer|string
+	 * @var     integer|string
 	 * @since   Kunena 6.0
 	 */
 	public $currvisit;
 
 	/**
-	 * @var integer|string
+	 * @var     integer|string
 	 * @since   Kunena 6.0
 	 */
 	public $readtopics;

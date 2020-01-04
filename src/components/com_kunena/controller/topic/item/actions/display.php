@@ -23,7 +23,7 @@ use Joomla\CMS\Object\CMSObject;
 class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Actions';

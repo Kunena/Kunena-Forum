@@ -17,12 +17,12 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumAnnouncementHelper
  *
- * @since  K1.X
+ * @since   Kunena 1.0
  */
 abstract class KunenaForumAnnouncementHelper
 {
 	/**
-	 * @var KunenaForumAnnouncement[]
+	 * @var     KunenaForumAnnouncement[]
 	 * @since   Kunena 6.0
 	 */
 	public static $_instances = false;
@@ -34,6 +34,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumAnnouncement
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -91,6 +92,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   string  $layout  layout
 	 *
 	 * @return  Joomla\CMS\Uri\Uri
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getUri($layout = null)
@@ -113,6 +115,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   bool  $filter  filter
 	 *
 	 * @return  KunenaForumAnnouncement[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

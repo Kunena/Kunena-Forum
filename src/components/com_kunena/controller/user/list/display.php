@@ -53,7 +53,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	public $pagination;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/List';

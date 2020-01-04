@@ -24,7 +24,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';

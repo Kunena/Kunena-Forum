@@ -33,13 +33,13 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 class KunenaBbcode extends Nbbc\BBCode
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $autolink_disable = 0;
 
 	/**
-	 * @var object
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $parent = null;
@@ -62,10 +62,12 @@ class KunenaBbcode extends Nbbc\BBCode
 
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys   = $this->defaults->default_smileys;
+
 		if (empty($this->smileys))
 		{
 			$this->SetEnableSmileys(false);
 		}
+
 		$this->SetSmileyDir(JPATH_ROOT);
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
@@ -340,7 +342,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	/**
 	 * @param   string  $url  url
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -513,13 +515,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	/**
 	 * The bearer token to get tweet data
 	 *
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 4.0
 	 */
 	public $token = null;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $mapid = 0;
@@ -1130,6 +1132,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
@@ -1194,6 +1197,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|mixed|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1245,7 +1249,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1355,7 +1360,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1407,6 +1413,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function DoList($bbcode, $action, $name, $default, $params, $content)
@@ -1495,7 +1502,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1546,7 +1554,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1597,7 +1606,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1689,7 +1699,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  mixed
+	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1748,6 +1758,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1782,7 +1793,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 *
 	 * @param   integer  $ItemID  id
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1855,6 +1867,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2001,6 +2014,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
@@ -2032,6 +2046,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2101,6 +2116,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2164,6 +2180,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2447,6 +2464,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2553,9 +2571,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * @param   KunenaAttachment  $attachment
-	 * @param                     $bbcode
-	 * @param   bool              $displayImage
+	 * @param   KunenaAttachment  $attachment   attachment
+	 * @param   string            $bbcode       bbcode
+	 * @param   bool              $displayImage display image
 	 *
 	 * @return  string
 	 *
@@ -2608,6 +2626,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2700,6 +2719,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2793,7 +2813,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2824,6 +2845,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $content  content
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -2863,7 +2885,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 *
 	 * @param   int  $tweetid  The tweet id to render in layout
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2900,11 +2922,11 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * Get JSON tweet data by using OAuth 2.0 authentification
+	 * Get JSON tweet data by using OAuth 2.0 authentication
 	 *
 	 * @param   int  $tweetid  The tweet ID to query against twitter API
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -3113,7 +3135,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
@@ -3151,7 +3174,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	}
 
 	/**
-	 * Hnadle private bbcode tag in the message
+	 * Handle private bbcode tag in the message
 	 *
 	 * @param   mixed  $bbcode   bbcode
 	 * @param   mixed  $action   action
@@ -3160,8 +3183,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function DoPrivate($bbcode, $action, $name, $default, $params, $content)

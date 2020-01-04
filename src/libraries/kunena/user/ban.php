@@ -17,6 +17,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaUserBan
@@ -50,7 +51,7 @@ class KunenaUserBan extends CMSObject
 	const ACTIVE = 1;
 
 	/**
-	 * @var array|KunenaUserBan[]
+	 * @var     array|KunenaUserBan[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -74,19 +75,19 @@ class KunenaUserBan extends CMSObject
 	protected static $_useridcache = array();
 
 	/**
-	 * @var Date|null
+	 * @var     Date|null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_now = null;
 
 	/**
-	 * @var Joomla\CMS\User\User|null
+	 * @var     Joomla\CMS\User\User|null
 	 * @since   Kunena 6.0
 	 */
 	protected static $_my = null;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -889,7 +890,7 @@ class KunenaUserBan extends CMSObject
 	 *
 	 * @access  public
 	 *
-	 * @return  boolean    True on success
+	 * @return  boolean  True on success
 	 *
 	 * @since   Kunena 1.6
 	 */

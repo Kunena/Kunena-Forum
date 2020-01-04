@@ -30,7 +30,7 @@ class KunenaLogin
 	protected static $instance = false;
 
 	/**
-	 * @var array|KunenaLogin[]
+	 * @var     array|KunenaLogin[]
 	 * @since   Kunena 6.0
 	 */
 	protected $instances = array();

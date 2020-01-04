@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit';

@@ -18,7 +18,6 @@ use Joomla\CMS\Session\Session;
 /**
  * Class KunenaForumAnnouncement
  *
- * @since   Kunena
  * @property int    $id
  * @property string $title
  * @property int    $created_by
@@ -30,6 +29,8 @@ use Joomla\CMS\Session\Session;
  * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
+ *
+ * @since   Kunena 6.0
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
@@ -46,7 +47,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	);
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaAnnouncements';
@@ -102,6 +103,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumAnnouncement
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -118,7 +120,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -135,6 +139,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $layout  layout
 	 *
 	 * @return  Joomla\CMS\Uri\Uri
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUri($layout = 'default')
@@ -180,6 +185,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $task  task
 	 *
 	 * @return  Joomla\CMS\Uri\Uri
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTaskUri($task = null)
@@ -208,7 +214,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   string  $field  field
 	 * @param   string  $mode   mode
 	 *
-	 * @return integer|string
+	 * @return  integer|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -243,6 +250,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return  KunenaUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -259,6 +267,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 	/**
 	 * @return  KunenaDate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getCreationDate()
@@ -294,10 +303,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   bool        $throw   trow
 	 *
 	 * @return  mixed
-	 * @since   Kunena 4.0
-	 * @throws InvalidArgumentException
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @since   Kunena 4.0
+	 *
+	 * @throws  InvalidArgumentException
+	 * @throws  KunenaExceptionAuthorise
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -379,6 +389,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNew(KunenaUser $user)
@@ -395,6 +406,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -418,6 +430,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -447,6 +460,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  KunenaExceptionAuthorise|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';

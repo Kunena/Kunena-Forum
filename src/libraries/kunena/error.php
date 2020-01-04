@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 abstract class KunenaError
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public static $enabled = 0;
@@ -45,7 +45,7 @@ abstract class KunenaError
 	public static $admin = false;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public static $format;

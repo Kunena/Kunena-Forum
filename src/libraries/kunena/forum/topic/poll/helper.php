@@ -33,6 +33,7 @@ abstract class KunenaForumTopicPollHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumTopicPoll
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

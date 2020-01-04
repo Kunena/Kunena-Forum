@@ -23,7 +23,7 @@ use Joomla\CMS\Component\ComponentHelper;
 class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Message/List';

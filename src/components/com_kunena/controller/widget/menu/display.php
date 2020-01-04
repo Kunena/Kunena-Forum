@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Widget/Menu';

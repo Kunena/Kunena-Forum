@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Kunena Forum Topic Rate Class
@@ -23,13 +24,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class KunenaForumTopicRate extends CMSObject
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $topic_id = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $stars = 0;
@@ -47,7 +48,7 @@ class KunenaForumTopicRate extends CMSObject
 	public $time = null;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $rate;
@@ -59,7 +60,7 @@ class KunenaForumTopicRate extends CMSObject
 	protected $_exists = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -116,6 +117,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
 	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaRate
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaRate', $prefix = 'Table')
@@ -142,7 +144,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessage|KunenaForumTopicRate
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -158,7 +162,9 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   string  $user  user
 	 *
 	 * @return  boolean|Joomla\CMS\Response\JsonResponse
+	 *
 	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public function save($user)
@@ -278,6 +284,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @param   int  $userid  userid
 	 *
 	 * @return  boolean userid if hes in table else empty
+	 *
 	 * @since   Kunena 2.0
 	 */
 	public function exists($userid)

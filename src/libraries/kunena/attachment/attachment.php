@@ -22,7 +22,6 @@ use Joomla\CMS\Table\Table;
 /**
  * Class KunenaAttachment
  *
- * @since   Kunena 4.0
  * @property int    $id
  * @property int    $userid
  * @property int    $mesid
@@ -39,6 +38,8 @@ use Joomla\CMS\Table\Table;
  * @property string $typeAlias
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
+ *
+ * @since   Kunena 4.0
  */
 class KunenaAttachment extends KunenaDatabaseObject
 {
@@ -85,7 +86,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	const PROTECTION_UNPUBLISHED = 128;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected static $_directory = 'media/kunena/attachments';
@@ -102,7 +103,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	);
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
@@ -114,91 +115,91 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $disabled = false;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaAttachments';
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $path;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $width;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $height;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $shortname;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $folder;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $userid;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $mesid;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $protected;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $hash;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $size;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $filetype;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $filename;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $filename_real;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $comment;
@@ -210,13 +211,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $inline;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $typeAlias;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $caption;
@@ -228,6 +229,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  KunenaAttachment
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
@@ -250,7 +252,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @internal
+	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 4.0
 	 */
 	protected function deleteFile()
@@ -288,7 +292,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @param   string  $property  property
 	 *
-	 * @return integer
+	 * @return  integer
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function __get($property)
@@ -337,7 +342,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @internal
+	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 4.0
 	 */
 	protected function initialize()
@@ -513,6 +520,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  string
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -564,6 +572,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * Get attachment layout.
 	 *
 	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -575,7 +584,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return  string
-	 * @since K4.0
+	 *
+	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getTextLink()
@@ -585,7 +596,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return  string
-	 * @since K4.0
+	 *
+	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getImageLink()
@@ -596,7 +609,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return  string
-	 * @since K4.0
+	 *
+	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getThumbnailLink()
@@ -610,6 +625,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  KunenaUser
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getAuthor()
@@ -626,6 +642,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  boolean
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  null
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
@@ -641,7 +658,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool        $throw   throw
 	 *
 	 * @return  mixed
+	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  null
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
@@ -729,6 +748,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  KunenaForumMessage
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function getMessage()
@@ -740,9 +760,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   string    $key    key
 	 * @param   null|int  $catid  catid
 	 *
-	 * @return  boolean
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function upload($key = 'kattachment', $catid = null)
@@ -863,7 +884,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   bool    $overwrite  If not allowed, throw exception if the file exists.
 	 *
 	 * @return  boolean
+	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	public function saveFile($source, $basename = null, $extension = null, $unlink = false, $overwrite = false)
@@ -938,11 +961,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Check is an attachment is private
 	 *
-	 * @param   string      $action
-	 * @param   KunenaUser  $user
+	 * @param   string      $action action
+	 * @param   KunenaUser  $user   user
 	 *
 	 * @return  KunenaExceptionAuthorise|NULL
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authorisePrivate($action, KunenaUser $user)
@@ -1014,6 +1039,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  mixed|void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authoriseRead(KunenaUser $user)
@@ -1048,6 +1074,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @return  mixed|void
 	 *
 	 * @since   Kunena 4.0
+	 *
 	 * @throws  Exception
 	 */
 	protected function authoriseOwn(KunenaUser $user)
@@ -1084,9 +1111,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Remove the BBCode [attachment=attachmentID][/attachment] from text message
 	 *
-	 * @param   string  $editor_text
+	 * @param   string  $editor_text editor text
 	 *
-	 * @return  boolean
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Rating';

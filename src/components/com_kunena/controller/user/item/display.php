@@ -56,7 +56,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	public $tabs;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Item';

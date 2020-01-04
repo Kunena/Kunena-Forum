@@ -14,12 +14,12 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaAttachmentFinder
  *
- * @since 5.0
+ * @since   Kunena 5.0
  */
 class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_attachments';
@@ -28,6 +28,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 	 * Get log entries.
 	 *
 	 * @return  array|KunenaCollection
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception|void

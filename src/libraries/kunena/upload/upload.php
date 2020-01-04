@@ -9,13 +9,12 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-
-defined('_JEXEC') or die;
 
 /**
  * Class to handle file uploads.
@@ -31,7 +30,7 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $filename;

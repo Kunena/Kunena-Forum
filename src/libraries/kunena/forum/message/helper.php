@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumMessageHelper
 {
 	/**
-	 * @var KunenaForumMessage[]
+	 * @var     KunenaForumMessage[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -38,7 +38,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   string          $authorise  authorise
 	 *
 	 * @return  KunenaForumMessage[]
+	 *
 	 * @since   Kunena
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -143,6 +145,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool    $orderbyid  orderbyid
 	 *
 	 * @return  KunenaForumMessage[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -248,7 +251,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   array           $params      params
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -482,7 +487,8 @@ abstract class KunenaForumMessageHelper
 	 * @param   null  $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumMessage    The message object.
+	 * @return  KunenaForumMessage  The message object.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -619,6 +625,7 @@ abstract class KunenaForumMessageHelper
 	 * @param   bool|array|int  $topicids  topicids
 	 *
 	 * @return  boolean|integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -665,7 +672,9 @@ abstract class KunenaForumMessageHelper
 	 * @param   array  $ids  ids
 	 *
 	 * @return  array|boolean
-	 * @since 5.0.3
+	 *
+	 * @since   Kunena 5.0.3
+	 *
 	 * @throws  Exception
 	 */
 	public static function getMessagesByTopics(array $ids)
@@ -701,10 +710,12 @@ abstract class KunenaForumMessageHelper
 	/**
 	 * Get last IP address used by the user
 	 *
-	 * @param   int  $userid
+	 * @param   int  $userid userid
 	 *
 	 * @return  boolean|mixed
-	 * @since   Kunena 6
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getLastUserIP(int $userid)

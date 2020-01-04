@@ -14,11 +14,11 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaForumTopicUser
  *
- * @since   Kunena
  * @property int    $user_id
  * @property int    $topic_id
  * @property int    $category_id
@@ -28,6 +28,8 @@ use Joomla\Database\Exception\ExecutionFailureException;
  * @property int    $favorite
  * @property int    $subscribed
  * @property string $params
+ *
+ * @since   Kunena 6.0
  */
 class KunenaForumTopicUser extends CMSObject
 {
@@ -38,7 +40,7 @@ class KunenaForumTopicUser extends CMSObject
 	protected $_exists = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -46,9 +48,8 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   mixed  $user   user
-	 *
 	 * @param   mixed  $topic  topic
+	 * @param   mixed  $user   user
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -79,6 +80,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
 	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserTopics
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
@@ -102,6 +104,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   bool   $reload  reload
 	 *
 	 * @return  KunenaForumTopicUser
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -130,7 +133,8 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   int    $topic_id  Topic id to be loaded.
 	 * @param   mixed  $user      user
 	 *
-	 * @return  boolean    True on success
+	 * @return  boolean  True on success
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -171,7 +175,8 @@ class KunenaForumTopicUser extends CMSObject
 	/**
 	 * Method to delete the KunenaForumTopicUser object from the database.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -222,6 +227,7 @@ class KunenaForumTopicUser extends CMSObject
 	 * @param   int                 $postDelta  postdelta
 	 *
 	 * @return  boolean|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -278,6 +284,7 @@ class KunenaForumTopicUser extends CMSObject
 
 	/**
 	 * @return  KunenaForumTopic
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -306,7 +313,8 @@ class KunenaForumTopicUser extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new topic.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Widget/Login';

@@ -35,6 +35,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   bool      $reload    Reload objects from the database.
 	 *
 	 * @return  KunenaForumCategoryUser    The user category object.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -70,6 +71,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @param   mixed           $user  The user id to load.
 	 *
 	 * @return  KunenaForumCategoryUser[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

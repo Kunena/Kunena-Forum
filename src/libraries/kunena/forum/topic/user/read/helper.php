@@ -22,13 +22,13 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumTopicUserReadHelper
 {
 	/**
-	 * @var array|KunenaForumTopicUserRead[]
+	 * @var     array|KunenaForumTopicUserRead[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
 
 	/**
-	 * @var array|KunenaForumTopicUserRead[]
+	 * @var     array|KunenaForumTopicUserRead[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_topics = array();
@@ -41,6 +41,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   bool   $reload  reload
 	 *
 	 * @return  KunenaForumTopicUserRead
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -79,6 +80,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @param   mixed       $user  user
 	 *
 	 * @return  KunenaForumTopicUserRead[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

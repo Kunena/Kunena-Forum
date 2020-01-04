@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 abstract class KunenaFactory
 {
 	/**
-	 * @var void
+	 * @var     void
 	 * @since   Kunena 6.0
 	 */
 	public static $session = null;

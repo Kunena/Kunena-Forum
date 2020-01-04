@@ -9,14 +9,13 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\QueryInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
-
-// No direct access
-defined('_JEXEC') or die;
+use Joomla\Database\DatabaseQuery;
 
 /**
  * Class KunenaDatabaseObjectFinder
@@ -28,37 +27,37 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Table associated with the model.
 	 *
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $table;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $primaryKey = 'id';
 
 	/**
-	 * @var JDatabaseQuery
+	 * @var     DatabaseQuery
 	 * @since   Kunena 6.0
 	 */
 	protected $query;
 
 	/**
-	 * @var DatabaseDriver
+	 * @var     DatabaseDriver
 	 * @since   Kunena 6.0
 	 */
 	protected $db;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $start = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $limit = 20;
@@ -91,7 +90,8 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @param   int  $limitstart  limitstart
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function start($limitstart = 0)
@@ -108,7 +108,8 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @param   int  $limit  limit
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function limit($limit = null)
@@ -130,7 +131,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   int     $direction  direction
 	 * @param   string  $alias      alias
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
@@ -150,7 +152,8 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string|array  $value      Value.
 	 * @param   bool          $escape     Only works for LIKE / NOT LIKE.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function where($field, $operation, $value, $escape = true)

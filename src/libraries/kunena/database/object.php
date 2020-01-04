@@ -97,6 +97,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false)
@@ -140,6 +141,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -222,6 +224,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * the database is safe and as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function check()
@@ -233,6 +236,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Method to get the table object.
 	 *
 	 * @return  Joomla\CMS\Table\Table|KunenaTable  The table object.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function getTable()
@@ -246,6 +250,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   mixed  $id  Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -281,6 +286,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Internal save method.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function saveInternal()
@@ -292,6 +298,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Method to delete the object from the database.
 	 *
 	 * @return    boolean    True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -347,6 +354,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @param   boolean  $exists  Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function exists($exists = null)

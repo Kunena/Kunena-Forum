@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Attachments';
@@ -45,7 +45,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	public $attachments;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;

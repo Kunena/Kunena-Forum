@@ -22,13 +22,13 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Announcement/Edit';
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;

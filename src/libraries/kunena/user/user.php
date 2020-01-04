@@ -21,6 +21,7 @@ use Joomla\CMS\Image\Image;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Access\Access;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaUser
@@ -111,37 +112,37 @@ class KunenaUser extends CMSObject
 	protected $_link = [];
 
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $_time;
 
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $_pm;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_email;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_website;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_personalText;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_signature;
@@ -153,7 +154,7 @@ class KunenaUser extends CMSObject
 	protected $_exists = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -495,7 +496,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * Method to delete the KunenaUser object from the database.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
 	 *

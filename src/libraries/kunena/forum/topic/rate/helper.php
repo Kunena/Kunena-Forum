@@ -33,12 +33,13 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
 	 *
+	 * @param   null  $identifier  identifier
 	 * @param   bool  $reload      reload
 	 *
-	 * @param   null  $identifier  identifier
-	 *
 	 * @return  KunenaForumTopicRate The rate object.
-	 * @since     5.0
+	 *
+	 * @since   Kunena 5.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -69,6 +70,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param   integer  $id  id
 	 *
 	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getSelected($id)
@@ -89,6 +91,7 @@ abstract class KunenaForumTopicRateHelper
 	 * @param   integer  $id  id
 	 *
 	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getCount($id)
@@ -106,11 +109,11 @@ abstract class KunenaForumTopicRateHelper
 	/**
 	 * Return rate by id and userid
 	 *
-	 * @param   integer  $id  id
-	 *
-	 * @param            $userid
+	 * @param   integer  $id     id
+	 * @param   integer  $userid userid
 	 *
 	 * @return  float
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getRate($id, $userid)

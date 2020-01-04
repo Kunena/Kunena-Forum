@@ -32,7 +32,7 @@ class KunenaProfiler extends Profiler
 	protected $_kstart = array();
 
 	/**
-	 * @var array|KunenaProfilerItem[]
+	 * @var     array|KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_heap = array();

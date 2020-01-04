@@ -1513,7 +1513,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   $path
 	 *
 	 * @return  KunenaLayout
-	 * @since K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function subLayout($path)
 	{
@@ -1533,7 +1533,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   $options
 	 *
 	 * @return  KunenaControllerDisplay
-	 * @since K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)
 	{

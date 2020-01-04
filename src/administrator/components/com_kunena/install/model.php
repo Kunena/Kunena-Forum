@@ -238,7 +238,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	/**
 	 * Get model
 	 *
-	 * @return $this
+	 * @return  $this
 	 * @since   Kunena 6.0
  */
 	public function getModel()

@@ -28,7 +28,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Index';

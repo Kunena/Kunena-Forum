@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/List';
@@ -47,7 +47,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	public $pagination;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;

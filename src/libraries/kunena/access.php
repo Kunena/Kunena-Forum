@@ -41,7 +41,7 @@ class KunenaAccess
 	protected static $instance = null;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected static $cacheKey = 'com_kunena.access.global.v1';
@@ -53,25 +53,25 @@ class KunenaAccess
 	protected $accesstypes = array('all' => array());
 
 	/**
-	 * @var array|null
+	 * @var     array|null
 	 * @since   Kunena 6.0
 	 */
 	protected $adminsByCatid = null;
 
 	/**
-	 * @var array|null
+	 * @var     array|null
 	 * @since   Kunena 6.0
 	 */
 	protected $adminsByUserid = null;
 
 	/**
-	 * @var array|null
+	 * @var     array|null
 	 * @since   Kunena 6.0
 	 */
 	protected $moderatorsByCatid = null;
 
 	/**
-	 * @var array|null
+	 * @var     array|null
 	 * @since   Kunena 6.0
 	 */
 	protected $moderatorsByUserid = null;

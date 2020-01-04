@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
 class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit/History';

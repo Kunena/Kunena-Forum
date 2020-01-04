@@ -25,13 +25,13 @@ use Joomla\CMS\Filesystem\Folder;
 class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Manage';
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
@@ -43,13 +43,13 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	public $category;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $total;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $topics;

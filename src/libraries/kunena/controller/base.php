@@ -15,7 +15,7 @@ use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 
 /**
- * @see   JController in Joomla! 3.0
+ * @see     JController in Joomla! 3.0
  * @since   Kunena 6.0
  */
 abstract class KunenaControllerBase implements Serializable
@@ -23,7 +23,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The application object.
 	 *
-	 * @var    Joomla\CMS\Application\BaseApplication
+	 * @var     Joomla\CMS\Application\BaseApplication
 	 * @since   Kunena 6.0
 	 */
 	protected $app;
@@ -31,7 +31,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The input object.
 	 *
-	 * @var    Joomla\Input\Input
+	 * @var     Joomla\Input\Input
 	 * @since   Kunena 6.0
 	 */
 	protected $input;
@@ -39,7 +39,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Options object.
 	 *
-	 * @var    Joomla\Registry\Registry
+	 * @var     Joomla\Registry\Registry
 	 * @since   Kunena 4.0
 	 */
 	protected $options = null;
@@ -71,7 +71,8 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Load the application object.
 	 *
-	 * @return CMSApplicationInterface
+	 * @return  CMSApplicationInterface
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -85,6 +86,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Load the input object.
 	 *
 	 * @return  Joomla\Input\Input  The input object.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	protected function loadInput()
@@ -97,7 +99,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  Joomla\Registry\Registry  Object with the options.
 	 *
-	 * @since   K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function getOptions()
 	{
@@ -117,7 +119,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
-	 * @since   K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function setOptions($options = null)
 	{
@@ -144,7 +146,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
-	 * @since   K4.0
+	 * @since   Kunena 4.0
 	 */
 	public function resetOptions()
 	{
@@ -156,7 +158,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  RuntimeException
 	 * @throws  LogicException
 	 */
@@ -166,6 +169,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the application object.
 	 *
 	 * @return  Joomla\CMS\Application\BaseApplication  The application object.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getApplication()
@@ -177,6 +181,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Get the input object.
 	 *
 	 * @return  Joomla\Input\Input  The input object.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getInput()
@@ -188,6 +193,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Serialize the controller.
 	 *
 	 * @return  string  The serialized controller.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function serialize()

@@ -29,19 +29,19 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $output = null;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $layout = 'default';
 
 	/**
-	 * @var KunenaConfig
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Empty';
@@ -53,13 +53,14 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected $primary = false;
 
 	/**
-	 * @var Document
+	 * @var     Document
 	 * @since   Kunena 6.0
 	 */
 	private $document;
 
 	/**
 	 * @internal
+	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
@@ -122,8 +123,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @see   KunenaControllerBase::execute()
+	 * @see     KunenaControllerBase::execute()
+	 *
 	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -192,6 +195,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Initialize and display the layout.
 	 *
 	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -250,6 +254,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Prepare title, description, keywords, breadcrumb etc.
 	 *
 	 * @return  boolean|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -269,6 +274,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * Method to get the view layout.
 	 *
 	 * @return  string  The layout name.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getLayout()
@@ -284,6 +290,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   string  $layout  The layout name.
 	 *
 	 * @return  KunenaControllerDisplay|KunenaLayout
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function setLayout($layout)
@@ -307,8 +314,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @return  KunenaControllerDisplay  Method supports chaining.
 	 *
-	 * @since   Kunena
-	 * @throws InvalidArgumentException
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  InvalidArgumentException
 	 */
 	public function setProperties($properties)
 	{
@@ -335,7 +343,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @param   mixed  $key    key
 	 * @param   mixed  $value  value
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function set($key, $value)
@@ -422,9 +431,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param           $name
-	 * @param           $content
-	 * @param   string  $attribute  attribute
+	 * @param   string  $name      name
+	 * @param   string  $content   content
+	 * @param   string  $attribute attribute
 	 *
 	 * @return  void
 	 *

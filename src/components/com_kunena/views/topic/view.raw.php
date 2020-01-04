@@ -56,7 +56,7 @@ class KunenaViewTopic extends KunenaView
 	 * @param   string  $tpl  tpl
 	 *
 	 * @return  void
-	 * @since K4.0
+	 * @since   Kunena 4.0
 	 *
 	 * @since   Kunena 6.0
 	 *

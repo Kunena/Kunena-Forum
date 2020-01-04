@@ -23,19 +23,19 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumCategoryHelper
 {
 	/**
-	 * @var KunenaForumCategory[]
+	 * @var     KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public static $_instances;
 
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected static $_tree;
 
 	/**
-	 * @var mixed
+	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected static $allowed;
@@ -75,6 +75,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -187,6 +188,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $user  user
 	 *
 	 * @return  KunenaForumCategory[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -222,6 +224,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string      $authorise  authorise
 	 *
 	 * @return  array|KunenaForumCategory[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -293,9 +296,10 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool   $value  value
 	 * @param   mixed  $user   user
 	 *
-	 * @return integer
+	 * @return  integer
 	 *
-	 * @since   Kunena 2.0.0
+	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function subscribe($ids, $value = true, $user = null)
@@ -335,7 +339,8 @@ abstract class KunenaForumCategoryHelper
 	 *
 	 * @return  array (total, list)
 	 *
-	 * @since   Kunena 2.0.0
+	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = array())
@@ -511,6 +516,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool|array  $groupids    groupids
 	 *
 	 * @return  KunenaForumCategory[]
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false)
@@ -543,7 +549,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array  $params  params
 	 *
 	 * @return  KunenaForumCategory[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	public static function getParents($id = 0, $levels = 100, $params = array())
@@ -594,7 +602,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array  $params  params
 	 *
 	 * @return  KunenaForumCategory[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	public static function getOrphaned($levels = 0, $params = array())
@@ -643,9 +653,10 @@ abstract class KunenaForumCategoryHelper
 	 * @param   int   $identifier  The category to load - Can be only an integer.
 	 * @param   bool  $reload      Reload category from the database.
 	 *
-	 * @return  KunenaForumCategory    The Category object.
+	 * @return  KunenaForumCategory  The Category object.
 	 *
-	 * @since    1.6
+	 * @since   Kunena 1.6
+	 *
 	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
@@ -691,7 +702,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   array  $params   params
 	 *
 	 * @return  array|KunenaForumCategory[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	public static function getChildren($parents = 0, $levels = 0, $params = array())
@@ -734,7 +747,9 @@ abstract class KunenaForumCategoryHelper
 	 * @param   bool   $optimize  optimize
 	 *
 	 * @return  array|KunenaForumCategory[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected static function _getChildren(array $parents, $levels, array $params, $optimize)
@@ -869,6 +884,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   string|array  $categories  categories
 	 *
 	 * @return  boolean|integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -963,6 +979,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @return  boolean|integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1011,6 +1028,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param   mixed  $alias        alias
 	 *
 	 * @return  boolean|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

@@ -125,10 +125,10 @@ abstract class KunenaEmail
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
-	 * @param $errfile
-	 * @param $errline
+	 * @param   integer  $errno   error number
+	 * @param   string   $errstr  error string
+	 * @param   string   $errfile error file
+	 * @param   string   $errline error line
 	 *
 	 * @return  boolean
 	 *
@@ -151,6 +151,11 @@ abstract class KunenaEmail
 
 class MailerBrokenException extends ErrorException
 {
+	/**
+	 * @return  string
+	 *
+	 * @since   Kunena 5.1.15
+	 */
 	public function errorMessage()
 	{
 		return "$this->code - $$this->message\n at: $$this->file:$$this->line";

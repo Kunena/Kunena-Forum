@@ -15,15 +15,17 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaForumTopicPoll
  *
- * @since   Kunena
  * @property string $title
  * @property int    $threadid
  * @property string $polltimetolive
  * @property int    $id
+ *
+ * @since   Kunena 6.0
  */
 class KunenaForumTopicPoll extends CMSObject
 {
@@ -34,7 +36,7 @@ class KunenaForumTopicPoll extends CMSObject
 	protected $_exists = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
@@ -127,6 +129,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
 	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table')
@@ -151,6 +154,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   bool   $reset       reset
 	 *
 	 * @return  KunenaForumTopicPoll
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -647,7 +651,8 @@ class KunenaForumTopicPoll extends CMSObject
 	/**
 	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -736,7 +741,8 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new poll.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

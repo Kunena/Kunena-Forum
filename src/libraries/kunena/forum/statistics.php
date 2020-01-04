@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Class KunenaForumStatistics
@@ -90,7 +91,7 @@ class KunenaForumStatistics
 	public $yesterdayReplyCount = null;
 
 	/**
-	 * @var array|KunenaForumTopic[]
+	 * @var     array|KunenaForumTopic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topTopics = null;
@@ -156,13 +157,13 @@ class KunenaForumStatistics
 	public $showpopthankyoustats = false;
 
 	/**
-	 * @var JDatabaseDriver|null
+	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
 
 	/**
-	 * @var KunenaConfig|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_config = null;
@@ -187,6 +188,7 @@ class KunenaForumStatistics
 
 	/**
 	 * @return  KunenaForumStatistics
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -245,6 +247,7 @@ class KunenaForumStatistics
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadMemberCount()
@@ -259,6 +262,7 @@ class KunenaForumStatistics
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadLastUserId()
@@ -273,6 +277,7 @@ class KunenaForumStatistics
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadCategoryCount()
@@ -346,6 +351,7 @@ class KunenaForumStatistics
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function loadLastDays()
@@ -392,7 +398,9 @@ class KunenaForumStatistics
 	 * @param   bool  $override  override
 	 *
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -423,6 +431,7 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array|KunenaForumTopic[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -464,7 +473,9 @@ class KunenaForumStatistics
 	 * @param   int  $limit  limit
 	 *
 	 * @return  array
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

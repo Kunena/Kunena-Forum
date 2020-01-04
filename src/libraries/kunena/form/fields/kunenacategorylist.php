@@ -24,7 +24,7 @@ use Joomla\CMS\Form\FormField;
 class JFormFieldKunenaCategoryList extends FormField
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $type = 'KunenaCategoryList';
@@ -81,6 +81,7 @@ class JFormFieldKunenaCategoryList extends FormField
 	 * Method to get the field options.
 	 *
 	 * @return  array  The field option objects.
+	 *
 	 * @since   11.1
 	 */
 	protected function getOptions()

@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumMessageThankyouHelper
 {
 	/**
-	 * @var KunenaForumMessageThankyou[]
+	 * @var     KunenaForumMessageThankyou[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -44,6 +44,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessageThankyou|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -324,9 +325,10 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank yous is null.
 	 *
-	 * @return  boolean|integer    Number of rows is successful, false on error.
+	 * @return  boolean|integer  Number of rows is successful, false on error.
 	 *
-	 * @since K2.0
+	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function recountThankyou()
@@ -360,8 +362,10 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Recount thank you's.
 	 *
-	 * @return  boolean|integer    Number of rows is successful, false on error.
-	 * @since K2.0
+	 * @return  boolean|integer  Number of rows is successful, false on error.
+	 *
+	 * @since   Kunena 2.0
+	 *
 	 * @throws  Exception
 	 */
 	public static function recount()
@@ -401,6 +405,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   bool|array|int  $ids  ids
 	 *
 	 * @return  KunenaForumMessageThankyou[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

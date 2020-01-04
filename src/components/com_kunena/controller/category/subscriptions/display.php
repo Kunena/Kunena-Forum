@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/List';

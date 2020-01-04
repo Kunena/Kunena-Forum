@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $minCBVersion = '2.0.0';

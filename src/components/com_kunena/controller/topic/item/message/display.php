@@ -23,7 +23,7 @@ use Joomla\CMS\Session\Session;
 class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Message';

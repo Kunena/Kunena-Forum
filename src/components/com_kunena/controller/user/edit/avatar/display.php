@@ -25,13 +25,13 @@ use Joomla\CMS\Filesystem\Folder;
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Avatar';
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';

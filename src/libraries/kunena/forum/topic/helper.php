@@ -22,7 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 abstract class KunenaForumTopicHelper
 {
 	/**
-	 * @var KunenaForumTopic[]
+	 * @var     KunenaForumTopic[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = array();
@@ -34,6 +34,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumTopic
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -140,7 +141,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   string  $authorise  authorise
 	 *
 	 * @return  KunenaForumTopic[]
+	 *
 	 * @since   Kunena
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -243,6 +246,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $user  user
 	 *
 	 * @return  KunenaForumTopicUser[]
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -264,7 +268,9 @@ abstract class KunenaForumTopicHelper
 	 * @param   array  $params      params
 	 *
 	 * @return  array|KunenaForumTopic[]
+	 *
 	 * @since   Kunena
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -463,7 +469,8 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @param   array|int  $ids  ids
 	 *
-	 * @return integer    Count of deleted topics.
+	 * @return  integer Count of deleted topics.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -535,7 +542,8 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @param   array|int  $ids  ids
 	 *
-	 * @return integer    Count of trashed topics.
+	 * @return  integer  Count of trashed topics.
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -597,6 +605,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   int    $end    end
 	 *
 	 * @return  boolean|integer
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -736,6 +745,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $user    User
 	 *
 	 * @return  array|boolean
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

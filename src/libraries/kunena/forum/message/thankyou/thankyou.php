@@ -19,16 +19,17 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Class KunenaForumMessageThankyou
  *
- * @since   Kunena
  * @property int    $userid
  * @property int    $targetuserid
  * @property string $time
  * @property int    $postid
+ *
+ * @since   Kunena 6.0
  */
 class KunenaForumMessageThankyou extends CMSObject
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $id = 0;
@@ -56,6 +57,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   bool  $reload      reload
 	 *
 	 * @return  KunenaForumMessageThankyou
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -187,6 +189,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * Get all users who have given thank you to this message.
 	 *
 	 * @return  array List of userid=>time.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getList()

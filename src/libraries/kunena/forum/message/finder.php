@@ -22,7 +22,7 @@ use Joomla\Database\QueryInterface;
 class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $table = '#__kunena_messages';
@@ -61,7 +61,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -85,7 +86,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   array  $categories  categories
 	 *
-	 * @return $this|void
+	 * @return  $this|void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByCategories(array $categories)
@@ -119,7 +121,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
 	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
@@ -148,7 +151,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   KunenaUser  $user    user
 	 * @param   string      $action  Action or negation of the action (!action).
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByUser(KunenaUser $user = null, $action = 'posted')
@@ -194,7 +198,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   array  $hold  List of hold states to display.
 	 *
-	 * @return $this
+	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filterByHold(array $hold = array(0))
@@ -210,7 +215,9 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @param   string  $access  Kunena action access control check.
 	 *
 	 * @return  array|KunenaForumMessage[]
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */

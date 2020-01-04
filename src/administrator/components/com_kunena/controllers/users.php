@@ -1032,7 +1032,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since K4.0
+	 * @since   Kunena 4.0
 	 * @throws  Exception
 	 * @throws  null
 	 */

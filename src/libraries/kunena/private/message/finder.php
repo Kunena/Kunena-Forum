@@ -27,7 +27,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * @param   KunenaUser  $user user object
 	 *
-	 * @return $this
+	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */

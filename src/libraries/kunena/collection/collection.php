@@ -21,7 +21,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * The items in the collection.
 	 *
-	 * @var array
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $items = array();
@@ -54,6 +54,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get the first item from the collection.
 	 *
 	 * @return  mixed|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function first()
@@ -65,6 +66,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get the last item from the collection.
 	 *
 	 * @return  mixed|null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function last()
@@ -78,6 +80,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure  $callback  callback
 	 *
 	 * @return  KunenaCollection
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function filter(Closure $callback)
@@ -91,6 +94,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure  $callback  callback
 	 *
 	 * @return  KunenaCollection
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function each(Closure $callback)
@@ -106,6 +110,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @param   Closure  $callback  callback
 	 *
 	 * @return  KunenaCollection
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function map(Closure $callback)
@@ -117,6 +122,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * Get an iterator for the items.
 	 *
 	 * @return  arrayIterator
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getIterator()

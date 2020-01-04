@@ -27,7 +27,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Message/Item/Actions';

@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 /**
  * Class KunenaActivity
  *
- * @since 2.0
+ * @since   Kunena 2.0
  */
 class KunenaActivity
 {

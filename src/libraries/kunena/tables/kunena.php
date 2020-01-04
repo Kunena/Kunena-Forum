@@ -325,7 +325,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	/**
 	 * Inserts a row into a table based on an object's properties.
 	 *
-	 * @return  boolean    True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
 	 *

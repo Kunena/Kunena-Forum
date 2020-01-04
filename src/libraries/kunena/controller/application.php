@@ -25,7 +25,7 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 	 * @param   mixed  $input    input
 	 * @param   mixed  $app      app
 	 *
-	 * @return  mixed
+	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
 	 */

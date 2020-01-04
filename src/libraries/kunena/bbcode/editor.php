@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Kunena BBCode Editor Class
  *
- * @since 2.0
+ * @since   Kunena 2.0
  */
 class KunenaBbcodeEditor
 {
@@ -47,6 +47,7 @@ class KunenaBbcodeEditor
 	 * @param   array  $config  config
 	 *
 	 * @return  KunenaBbcodeEditor
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -92,7 +93,7 @@ class KunenaBbcodeEditor
 	 * @param   null   $pos       pos
 	 * @param   mixed  $where     where
 	 *
-	 * @return  boolean
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -253,7 +254,7 @@ class KunenaBbcodeEditor
 abstract class KunenaBbcodeEditorElement
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $name;
@@ -296,31 +297,31 @@ abstract class KunenaBbcodeEditorElement
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $tag;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $config;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $title;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $alt;
 
 	/**
-	 * @var string
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $class;
@@ -356,6 +357,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return  KunenaBbcodeEditorButton
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -857,6 +859,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return  KunenaBbcodeEditorSeparator
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml)

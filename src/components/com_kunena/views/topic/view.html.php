@@ -52,13 +52,13 @@ class KunenaViewTopic extends KunenaView
 	public $poll = null;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $mmm = 0;
 
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $k = 0;
@@ -71,6 +71,8 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -193,6 +195,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -216,6 +220,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -230,6 +236,8 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -246,6 +254,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -261,8 +271,10 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean
-	 * @since   Kunena
+	 * @return  boolean|void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -357,8 +369,10 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean
-	 * @since   Kunena
+	 * @return  boolean|void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -427,8 +441,10 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean
-	 * @since   Kunena
+	 * @return  boolean|void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -498,6 +514,13 @@ class KunenaViewTopic extends KunenaView
 		$this->render('Topic/Edit', $tpl);
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayMessageProfile()
 	{
 		echo $this->getMessageProfileBox();
@@ -607,11 +630,25 @@ class KunenaViewTopic extends KunenaView
 		return $profiles [$key];
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayMessageContents()
 	{
 		echo $this->loadTemplateFile('message');
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayTopicActions()
 	{
 		echo $this->getTopicActions();
@@ -712,6 +749,13 @@ class KunenaViewTopic extends KunenaView
 		return (string) $this->loadTemplateFile('actions');
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayMessageActions()
 	{
 		echo $this->getMessageActions();
@@ -795,9 +839,11 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param         $id
-	 * @param         $message
-	 * @param   null  $template  template
+	 * @param   integer  $id       id
+	 * @param   string   $message  message
+	 * @param   null     $template template
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -978,9 +1024,10 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $matches
+	 * @param   array  $matches matches
 	 *
-	 * @return  mixed|string
+	 * @return  mixed|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1009,6 +1056,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $template  template
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1023,9 +1072,10 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $maxpages
+	 * @param   integer  $maxpages max pages
 	 *
 	 * @return  KunenaPagination
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1048,7 +1098,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $maxpages
+	 * @param   integer  $maxpages max pages
 	 *
 	 * @return  string
 	 *
@@ -1079,6 +1129,13 @@ class KunenaViewTopic extends KunenaView
 		return true;
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayThreadHistory()
 	{
 		if (!$this->hasThreadHistory())
@@ -1120,6 +1177,8 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   string  $anchor  anchor
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1157,8 +1216,8 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $mesid
-	 * @param $replycnt
+	 * @param   integer  $mesid    mesid
+	 * @param   integer  $replycnt reply count
 	 *
 	 * @return  string
 	 *
@@ -1179,7 +1238,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $name
+	 * @param   string  $name name
 	 *
 	 * @return  mixed
 	 *
@@ -1191,7 +1250,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $name
+	 * @param   string  $name name
 	 *
 	 * @return  mixed
 	 *
@@ -1203,7 +1262,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $name
+	 * @param   string  $name name
 	 *
 	 * @return  mixed
 	 *
@@ -1230,7 +1289,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $type
+	 * @param   string  $type type
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1405,10 +1466,10 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param           $anker
-	 * @param           $name
-	 * @param   string  $rel    rel
-	 * @param   string  $class  class
+	 * @param   integer $anker anker
+	 * @param   string  $name  name
+	 * @param   string  $rel   rel
+	 * @param   string  $class class
 	 *
 	 * @return  string
 	 *
@@ -1421,6 +1482,8 @@ class KunenaViewTopic extends KunenaView
 
 	/**
 	 * @param   string  $title  Title name on the browser
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1456,7 +1519,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $keywords
+	 * @param   string  $keywords keywords
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1477,7 +1542,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param $description
+	 * @param   string  $description description
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1510,9 +1577,10 @@ class KunenaViewTopic extends KunenaView
 	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
 	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
 	 *
-	 * @param   $path
+	 * @param   string  $path path
 	 *
 	 * @return  KunenaLayout
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function subLayout($path)
@@ -1528,11 +1596,12 @@ class KunenaViewTopic extends KunenaView
 	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
-	 * @param   $path
-	 * @param   $input
-	 * @param   $options
+	 * @param   string               $path    path
+	 * @param   Joomla\Input\Input   $input   input
+	 * @param   array                $options options
 	 *
 	 * @return  KunenaControllerDisplay
+	 *
 	 * @since   Kunena 4.0
 	 */
 	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)

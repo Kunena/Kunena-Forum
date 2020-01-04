@@ -23,6 +23,8 @@ class KunenaViewCategory extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

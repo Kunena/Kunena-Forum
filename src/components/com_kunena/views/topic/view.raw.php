@@ -25,6 +25,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -51,14 +53,13 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 *    Return JSON results of smilies available
+	 * Return JSON results of smilies available
 	 *
 	 * @param   string  $tpl  tpl
 	 *
 	 * @return  void
-	 * @since   Kunena 4.0
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 4.0
 	 *
 	 * @throws  Exception
 	 */
@@ -189,6 +190,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * Load global rate for the topic
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -222,6 +225,8 @@ class KunenaViewTopic extends KunenaView
 	 * Save rate for user logged in by JSON call
 	 *
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -263,7 +268,10 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 5.1
+	 *
 	 * @throws  Exception
 	 */
 	public function displayCategorytemplatetext($tpl = null)

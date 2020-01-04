@@ -21,6 +21,8 @@ class KunenaViewCategory extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function displayDefault($tpl = null)
@@ -28,7 +30,9 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param $type
+	 * @param   string  $type type
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

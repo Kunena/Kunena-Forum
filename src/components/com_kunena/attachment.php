@@ -68,7 +68,7 @@ require_once JPATH_LIBRARIES . '/cms.php';
 require_once JPATH_BASE . '/includes/framework.php';
 
 /**
- *  Kunena Application
+ * Kunena Application
  *
  * @package  Kunena
  *
@@ -77,20 +77,20 @@ require_once JPATH_BASE . '/includes/framework.php';
 class KunenaApplication extends Joomla\CMS\Application\WebApplication
 {
 	/**
-	 * @var string
-	 * @since K2.0
+	 * @var     string
+	 * @since   Kunena 2.0
 	 */
 	protected $_name = 'site';
 
 	/**
-	 * @var integer
-	 * @since K2.0
+	 * @var     integer
+	 * @since   Kunena 2.0
 	 */
 	protected $_clientId = 0;
 
 	/**
-	 * @var array
-	 * @since K2.0
+	 * @var     array
+	 * @since   Kunena 2.0
 	 */
 	protected $userstate = array();
 
@@ -137,6 +137,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   Joomla\CMS\Session\Session  $session  session
 	 *
 	 * @return  $this
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function loadSession(Joomla\CMS\Session\Session $session = null)
@@ -183,7 +184,9 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 	/**
 	 * @return  void
-	 * @since   Kunena
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 */
 	protected function doExecute()
@@ -257,6 +260,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @param   null    $default  default
 	 *
 	 * @return  null
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUserState($name, $default = null)

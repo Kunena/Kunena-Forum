@@ -24,6 +24,8 @@ class KunenaViewCategory extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -75,13 +77,15 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param $title
-	 * @param $url
-	 * @param $description
-	 * @param $category
-	 * @param $date
-	 * @param $userid
-	 * @param $username
+	 * @param   string  $title       title
+	 * @param   string  $url         url
+	 * @param   string  $description description
+	 * @param   string  $category    category
+	 * @param   integer $date        date
+	 * @param   integer $userid      userid
+	 * @param   string  $username    username
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

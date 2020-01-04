@@ -35,10 +35,12 @@ class KunenaRouter extends RouterBase
 	 *
 	 * NOTE! Only major variables are using SEF segments
 	 *
-	 * @param $query
+	 * @param   array  $query query
 	 *
 	 * @return  array Segments
+	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function build(&$query)
@@ -282,11 +284,12 @@ class KunenaRouter extends RouterBase
 	}
 
 	/**
-	 * @param $segments
+	 * @param   array $segments segments
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function parse(&$segments)

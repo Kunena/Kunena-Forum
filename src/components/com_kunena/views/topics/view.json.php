@@ -18,11 +18,12 @@ defined('_JEXEC') or die;
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl tmpl
 	 *
 	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function display($tpl = null)

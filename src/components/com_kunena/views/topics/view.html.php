@@ -24,9 +24,12 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
+	 *
 	 * @throws  null
 	 */
 	public function displayDefault($tpl = null)
@@ -61,9 +64,12 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
+	 *
 	 * @throws  null
 	 */
 	public function displayUser($tpl = null)
@@ -97,9 +103,12 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
+	 *
 	 * @throws  null
 	 */
 	public function displayPosts($tpl = null)
@@ -131,6 +140,13 @@ class KunenaViewTopics extends KunenaView
 		$this->render('Message/List', $tpl);
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayRows()
 	{
 		if ($this->layout == 'posts')
@@ -143,6 +159,13 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayTopicRows()
 	{
 		$lasttopic      = null;
@@ -222,9 +245,10 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param $matches
+	 * @param   array  $matches matches
 	 *
-	 * @return  mixed|string
+	 * @return  mixed|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -247,6 +271,13 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayPostRows()
 	{
 		$lasttopic      = null;
@@ -315,6 +346,11 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
 	protected function _prepareDocument()
 	{
 	}

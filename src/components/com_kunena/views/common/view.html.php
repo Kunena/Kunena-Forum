@@ -24,7 +24,7 @@ use Joomla\CMS\Uri\Uri;
 class KunenaViewCommon extends KunenaView
 {
 	/**
-	 * @var integer
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $catid = 0;
@@ -68,6 +68,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -88,6 +90,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -151,6 +155,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -185,7 +191,10 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @since   Kunena
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
@@ -293,6 +302,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -378,6 +389,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
+	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -416,6 +429,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -462,6 +477,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -519,6 +536,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -595,9 +614,10 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param $matches
+	 * @param   array  $matches matches
 	 *
-	 * @return  mixed|string
+	 * @return  mixed|string|void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -615,6 +635,13 @@ class KunenaViewCommon extends KunenaView
 		}
 	}
 
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function getPrivateMessageLink()
 	{
 		// Private messages
@@ -630,6 +657,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
+	 *
+	 * @return  void|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -683,7 +712,7 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param           $name
+	 * @param   string  $name    name
 	 * @param   string  $rel     rel
 	 * @param   string  $params  params
 	 *
@@ -700,11 +729,12 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param           $name
+	 * @param   string  $name   name
 	 * @param   string  $class  class
 	 * @param   string  $rel    rel
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -723,12 +753,13 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param           $action
-	 * @param           $name
+	 * @param   string  $action action
+	 * @param   string  $name   name
 	 * @param   string  $rel    rel
 	 * @param   string  $class  class
 	 *
 	 * @return  boolean|string
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception

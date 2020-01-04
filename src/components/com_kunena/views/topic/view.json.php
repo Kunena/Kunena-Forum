@@ -13,18 +13,18 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 
 /**
- * @package     ${NAMESPACE}
  *
- * @since       version
+ * @since   Kunena 6.0
  */
 class KunenaViewTopic extends KunenaView
 {
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl tmpl
 	 *
 	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
+	 *
 	 * @throws  Exception
 	 */
 	public function display($tpl = null)

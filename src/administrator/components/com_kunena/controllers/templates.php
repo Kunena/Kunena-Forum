@@ -160,8 +160,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function install()
 	{
-		$tmp        = JPATH_ROOT . '/' . KunenaPath::tmpdir();
-		$tmp_kunena = $tmp . '/kinstall/';
+		$tmp_kunena = KunenaPath::tmpdir() . '/kinstall/';
 		$dest       = KPATH_SITE . '/template/';
 		$file       = $this->app->input->files->get('install_package', null, 'raw');
 

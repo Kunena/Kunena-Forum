@@ -634,7 +634,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$success = false;
 
-		$dest = JPATH_ROOT . "/" . KunenaPath::tmpdir() . "/kinstall_mod_{$name}";
+		$dest = KunenaPath::tmpdir() . "/kinstall_mod_{$name}";
 
 		if (is_dir($dest))
 		{
@@ -701,7 +701,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$success = false;
 
-		$dest = JPATH_ROOT . "/"  . KunenaPath::tmpdir() . "/kinstall_plg_{$group}_{$name}";
+		$dest = KunenaPath::tmpdir() . "/kinstall_plg_{$group}_{$name}";
 
 		if (is_dir($dest))
 		{
@@ -1269,7 +1269,7 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		// Delete the tmp install directory
-		foreach (glob(JPATH_ROOT . '/' . KunenaPath::tmpdir() . '/install_*') as $dir)
+		foreach (glob(KunenaPath::tmpdir() . '/install_*') as $dir)
 		{
 			if (is_dir($dir))
 			{
@@ -1299,11 +1299,11 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$date    = (string) $version->versiondate;
 		}
 
-		$tmpfile = JPATH_ROOT . '/' . KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+		$tmpfile = KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
 
 		if (is_file($tmpfile))
 		{
-			File::delete(JPATH_ROOT . '/' . KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
+			File::delete(KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}
 	}
 

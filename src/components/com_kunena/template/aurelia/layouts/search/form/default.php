@@ -19,7 +19,6 @@ use Joomla\CMS\Language\Text;
 
 // TODO: Add generic form version
 
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 echo $this->subLayout('Widget/Datepicker');

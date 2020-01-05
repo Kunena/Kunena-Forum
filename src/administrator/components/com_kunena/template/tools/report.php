@@ -48,7 +48,6 @@ jQuery(document).ready(function ($) {
 "
 );
 
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 ?>
 

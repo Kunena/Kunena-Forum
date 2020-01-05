@@ -1299,7 +1299,9 @@ class KunenaModelInstall extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$date    = (string) $version->versiondate;
 		}
 
-		if (is_file($dir))
+		$tmpfile = JPATH_ROOT . '/tmp/pkg_kunena_v' . $version . '_' . $date . '.zip';
+
+		if (is_file($tmpfile))
 		{
 			File::delete(JPATH_ROOT . '/tmp/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}

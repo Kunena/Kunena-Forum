@@ -16,7 +16,6 @@ use Joomla\CMS\Language\Text;
 
 /** @var KunenaAdminViewLogs $this */
 
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 HTMLHelper::_('bootstrap.popover');

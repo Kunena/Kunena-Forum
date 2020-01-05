@@ -22,7 +22,6 @@ $this->document->addScriptDeclaration(
 }"
 );
 
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 ?>
 

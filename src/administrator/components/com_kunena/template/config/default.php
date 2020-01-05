@@ -15,7 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
-HTMLHelper::_('behavior.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 

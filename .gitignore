@@ -63,3 +63,5 @@ selenium-server-standalone.jar
 codecept.phar
 selenium.log
 tests/cache
+
+src/media/kunena/avatars/users/

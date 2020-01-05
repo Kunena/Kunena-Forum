@@ -45,6 +45,18 @@ class KunenaBbcode extends Nbbc\BBCode
 	public $parent = null;
 
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $output_limit = 0;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $text_length = 0;
+
+	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
 	 * @internal

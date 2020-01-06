@@ -451,8 +451,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add script options to the document.
 	 *
-	 * @param   object   $key     key
-	 * @param   object   $options options
+	 * @param   string   $key     key
+	 * @param   boolean  $options options
 	 * @param   boolean  $merge   merge
 	 *
 	 * @return  mixed

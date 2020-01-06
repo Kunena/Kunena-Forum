@@ -120,7 +120,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($this->skip)
 		{
-			return array();
+			return [];
 		}
 
 		$query = clone $this->query;

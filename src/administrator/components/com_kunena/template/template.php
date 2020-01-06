@@ -53,7 +53,7 @@ class KunenaAdminTemplate
 			$path = KunenaPath::clean("/$path");
 		}
 
-		$array   = array();
+		$array   = [];
 		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/' . $path;
 
 		return $array;

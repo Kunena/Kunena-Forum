@@ -195,7 +195,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getPruneCategories()
 	{
-		$cat_params                = array();
+		$cat_params                = [];
 		$cat_params['ordering']    = 'ordering';
 		$cat_params['toplevel']    = 0;
 		$cat_params['sections']    = 0;
@@ -215,7 +215,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getPruneListtrashdelete()
 	{
-		$trashdelete    = array();
+		$trashdelete    = [];
 		$trashdelete [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_TRASH_USERMESSAGES'));
 		$trashdelete [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
@@ -229,7 +229,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getPruneControlOptions()
 	{
-		$contoloptions    = array();
+		$contoloptions    = [];
 		$contoloptions [] = HTMLHelper::_('select.option', 'all', Text::_('COM_KUNENA_A_PRUNE_ALL'));
 		$contoloptions [] = HTMLHelper::_('select.option', 'normal', Text::_('COM_KUNENA_A_PRUNE_NORMAL'));
 		$contoloptions [] = HTMLHelper::_('select.option', 'locked', Text::_('COM_KUNENA_A_PRUNE_LOCKED'));
@@ -249,7 +249,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getPruneKeepSticky()
 	{
-		$optionsticky    = array();
+		$optionsticky    = [];
 		$optionsticky [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$optionsticky [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
@@ -444,7 +444,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			$this->plgtext = '[quote][b]Plugins:[/b] None [/quote]';
 		}
 
-		$mod                 = array();
+		$mod                 = [];
 		$mod['kunenalatest'] = $this->getExtensionVersion('mod_kunenalatest', 'Kunena Latest');
 		$mod['kunenastats']  = $this->getExtensionVersion('mod_kunenastats', 'Kunena Stats');
 		$mod['kunenalogin']  = $this->getExtensionVersion('mod_kunenalogin', 'Kunena Login');
@@ -467,7 +467,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			$this->modtext = '[quote][b]Modules:[/b] None [/quote]';
 		}
 
-		$thirdparty              = array();
+		$thirdparty              = [];
 		$thirdparty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
@@ -489,7 +489,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 			$this->thirdpartytext = '[quote][b]Third-party components:[/b] None [/quote]';
 		}
 
-		$sef             = array();
+		$sef             = [];
 		$sef['sh404sef'] = $this->getExtensionVersion('com_sh404sef', 'sh404sef');
 		$sef['joomsef']  = $this->getExtensionVersion('com_joomsef', 'ARTIO JoomSEF');
 		$sef['acesef']   = $this->getExtensionVersion('com_acesef', 'AceSEF');
@@ -681,7 +681,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 					return;
 				}
 
-				$fieldTypes = array('tinytext', 'text', 'char', 'varchar');
+				$fieldTypes = ['tinytext', 'text', 'char', 'varchar'];
 
 				foreach ($fullfields as $row)
 				{
@@ -824,7 +824,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		if (is_file($path))
 		{
 			// Make array from the xml file
-			$xmlfiles = array($path);
+			$xmlfiles = [$path];
 		}
 		elseif (is_dir($path))
 		{
@@ -862,8 +862,8 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena');
-		$plugin_final = array();
+		$plugins_list = ['finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena'];
+		$plugin_final = [];
 
 		foreach ($plugins_list as $name => $desc)
 		{

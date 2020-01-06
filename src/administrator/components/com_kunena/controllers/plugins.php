@@ -40,7 +40,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$this->option = 'com_kunena';
 
@@ -82,9 +82,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid   = $this->input->get('cid', array(), 'array');
-		$cid   = ArrayHelper::toInteger($cid, array());
-		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
+		$cid   = $this->input->get('cid', [], 'array');
+		$cid   = ArrayHelper::toInteger($cid, []);
+		$data  = ['publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3];
 		$task  = $this->getTask();
 		$value = ArrayHelper::getValue($data, $task, 0, 'int');
 
@@ -147,7 +147,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	 *
 	 * @since   Kunena 2.0
 	 */
-	public function getModel($name = '', $prefix = '', $config = array())
+	public function getModel($name = '', $prefix = '', $config = [])
 	{
 		if (empty($name))
 		{
@@ -171,8 +171,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$ids = $this->input->get('cid', array(), 'array');
-		$ids = ArrayHelper::toInteger($ids, array());
+		$ids = $this->input->get('cid', [], 'array');
+		$ids = ArrayHelper::toInteger($ids, []);
 
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
@@ -210,11 +210,11 @@ class KunenaAdminControllerPlugins extends KunenaController
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Get the input
-		$pks = $this->input->get('cid', array(), 'array');
-		$pks = ArrayHelper::toInteger($pks, array());
+		$pks = $this->input->get('cid', [], 'array');
+		$pks = ArrayHelper::toInteger($pks, []);
 
-		$order = $this->input->get('order', array(), 'array');
-		$order = ArrayHelper::toInteger($order, array());
+		$order = $this->input->get('order', [], 'array');
+		$order = ArrayHelper::toInteger($order, []);
 
 		// Get the model
 		$model = $this->getModel();
@@ -254,8 +254,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$ids = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$ids = ArrayHelper::toInteger($cid, []);
 
 		$model  = $this->getModel();
 		$return = $model->checkin($ids);

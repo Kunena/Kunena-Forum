@@ -31,7 +31,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl  = 'index.php?option=com_kunena&view=category&layout=manage';
@@ -113,7 +113,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 			if ($session->userid)
 			{
-				$categories = array($category->id => $category);
+				$categories = [$category->id => $category];
 
 				if ($children)
 				{
@@ -203,8 +203,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 
 		$catid  = $this->app->input->getInt('catid', 0);
 		$catids = $catid
-			? array($catid)
-			: array_keys($this->app->input->get('categories', array(), 'post'));
+			? [$catid]
+			: array_keys($this->app->input->get('categories', [], 'post'));
 		$catids = ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);

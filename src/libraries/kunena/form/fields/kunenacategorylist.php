@@ -87,7 +87,7 @@ class JFormFieldKunenaCategoryList extends FormField
 	protected function getOptions()
 	{
 		// Initialize variables.
-		$options = array();
+		$options = [];
 
 		foreach ($this->element->children() as $option)
 		{

@@ -132,7 +132,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		if (empty($ids))
 		{
-			return array();
+			return [];
 		}
 
 		$query = $this->db->getQuery(true);
@@ -140,7 +140,7 @@ class KunenaPrivateMessageFinder extends KunenaDatabaseObjectFinder
 		$this->db->setQuery($query);
 		$results = $this->db->loadObjectList('id');
 
-		$_instances = array();
+		$_instances = [];
 
 		foreach ($results as $id => $instance)
 		{

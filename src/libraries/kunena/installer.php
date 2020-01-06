@@ -23,7 +23,7 @@ class KunenaInstaller
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $downgrade = array('3.1' => '3.0.95');
+	protected static $downgrade = ['3.1' => '3.0.95'];
 
 	/**
 	 * @var     null
@@ -111,7 +111,7 @@ class KunenaInstaller
 		{
 			$list = $db->getTableList();
 
-			self::$tables = array();
+			self::$tables = [];
 
 			foreach ($list as $item)
 			{

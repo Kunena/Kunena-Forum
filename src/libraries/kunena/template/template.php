@@ -33,7 +33,7 @@ class KunenaTemplate extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     null|string
@@ -57,19 +57,19 @@ class KunenaTemplate extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $topicIcons = array();
+	public $topicIcons = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $categoryIcons = array();
+	public $categoryIcons = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $pathTypes = array(
+	protected $pathTypes = [
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
 		'icons'         => 'media/icons',
@@ -77,13 +77,13 @@ class KunenaTemplate extends CMSObject
 		'images'        => 'media/images',
 		'js'            => 'media/js',
 		'css'           => 'media/css',
-	);
+	];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $pathTypeDefaults = array(
+	protected $pathTypeDefaults = [
 		'avatars'       => 'media/avatars',
 		'emoticons'     => 'media/emoticons',
 		'ranks'         => 'media/ranks',
@@ -93,13 +93,13 @@ class KunenaTemplate extends CMSObject
 		'images'        => 'media/images',
 		'js'            => 'media/js',
 		'css'           => 'media/css',
-	);
+	];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $pathTypeOld = array(
+	protected $pathTypeOld = [
 		'avatars'    => 'images/avatars',
 		'emoticons'  => 'images/emoticons',
 		'ranks'      => 'images/ranks',
@@ -108,19 +108,19 @@ class KunenaTemplate extends CMSObject
 		'images'     => 'images',
 		'js'         => 'js',
 		'css'        => 'css',
-	);
+	];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $default = array();
+	protected $default = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $paths = array();
+	protected $paths = [];
 
 	/**
 	 * @var     boolean
@@ -132,25 +132,25 @@ class KunenaTemplate extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $filecache = array();
+	protected $filecache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $smileyPath = array();
+	protected $smileyPath = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $rankPath = array();
+	protected $rankPath = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $userClasses = array(
+	protected $userClasses = [
 		'kwho-',
 		'admin'     => 'kwho-admin',
 		'globalmod' => 'kwho-globalmoderator',
@@ -159,19 +159,19 @@ class KunenaTemplate extends CMSObject
 		'guest'     => 'kwho-guest',
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
-	);
+	];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $stylesheets = array();
+	protected $stylesheets = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $style_variables = array();
+	protected $style_variables = [];
 
 	/**
 	 * @var     null
@@ -183,7 +183,7 @@ class KunenaTemplate extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $scripts = array();
+	protected $scripts = [];
 
 	/**
 	 * @var     null|SimpleXMLElement
@@ -473,8 +473,8 @@ class KunenaTemplate extends CMSObject
 		{
 			// Update old template files to new format.
 			$xml = preg_replace(
-				array('|<params|', '|</params>|', '|<param\s+|', '|</param>|'),
-				array('<config', '</config>', '<field ', '</field>'), $xml
+				['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
+				['<config', '</config>', '<field ', '</field>'], $xml
 			);
 		}
 
@@ -577,9 +577,9 @@ class KunenaTemplate extends CMSObject
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
-		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod');
-		$names = array('unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		               'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit');
+		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
+		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
+		          'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit'];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1049,7 +1049,7 @@ HTML;
 	 *
 	 * @throws  Exception
 	 */
-	public function addScript($filename, $options = array(), $attribs = array())
+	public function addScript($filename, $options = [], $attribs = [])
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -1148,7 +1148,7 @@ HTML;
 			$path = KunenaPath::clean("/$path");
 		}
 
-		$array = array();
+		$array = [];
 
 		foreach (array_reverse($this->default) as $template)
 		{
@@ -1312,7 +1312,7 @@ HTML;
 		}
 		else
 		{
-			$icons = array();
+			$icons = [];
 
 			foreach ($this->topicIcons as $icon)
 			{
@@ -1758,7 +1758,7 @@ HTML;
 		}
 		else
 		{
-			$icons = array();
+			$icons = [];
 
 			foreach ($this->categoryIcons as $icon)
 			{
@@ -2094,13 +2094,13 @@ HTML;
 			if ($topic_ids)
 			{
 				PluginHelper::importPlugin('captcha');
-				Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_' . $topic_ids));
-				$display = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_' . $topic_ids, 'controls g-recaptcha'));
+				Factory::getApplication()->triggerEvent('onInit', ['dynamic_recaptcha_' . $topic_ids]);
+				$display = Factory::getApplication()->triggerEvent('onDisplay', [null, 'dynamic_recaptcha_' . $topic_ids, 'controls g-recaptcha']);
 			}
 			else
 			{
-				Factory::getApplication()->triggerEvent('onInit', array('dynamic_recaptcha_1'));
-				$display = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'dynamic_recaptcha_1', 'controls g-recaptcha'));
+				Factory::getApplication()->triggerEvent('onInit', ['dynamic_recaptcha_1']);
+				$display = Factory::getApplication()->triggerEvent('onDisplay', [null, 'dynamic_recaptcha_1', 'controls g-recaptcha']);
 			}
 
 			return $display[0];

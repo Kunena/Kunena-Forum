@@ -128,7 +128,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind(array $data, array $ignore = array())
+	public function bind(array $data, array $ignore = [])
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
@@ -179,7 +179,7 @@ class KunenaForumTopicUserRead extends CMSObject
 		// Load the KunenaTable object based on id
 		if ($topic_id)
 		{
-			$this->_exists = $table->load(array('user_id' => $user->userid, 'topic_id' => $topic_id));
+			$this->_exists = $table->load(['user_id' => $user->userid, 'topic_id' => $topic_id]);
 		}
 		else
 		{
@@ -261,7 +261,7 @@ class KunenaForumTopicUserRead extends CMSObject
 		// Create the table object
 		$table = $this->getTable();
 
-		$result = $table->delete(array('topic_id' => $this->topic_id, 'user_id' => $this->user_id));
+		$result = $table->delete(['topic_id' => $this->topic_id, 'user_id' => $this->user_id]);
 
 		if (!$result)
 		{

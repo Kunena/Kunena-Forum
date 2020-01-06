@@ -31,8 +31,8 @@ class KunenaViewCategory extends KunenaView
 	 */
 	public function displayDefault($tpl = null)
 	{
-		$response              = array();
-		$response['topiclist'] = array();
+		$response              = [];
+		$response['topiclist'] = [];
 
 		if ($this->me->exists())
 		{

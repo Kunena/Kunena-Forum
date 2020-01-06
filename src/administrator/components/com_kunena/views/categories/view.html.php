@@ -27,7 +27,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 * @var     array|KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
-	public $categories = array();
+	public $categories = [];
 
 	/**
 	 * @return  void
@@ -103,7 +103,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->batch_categories = $this->get('BatchCategories');
 
 		// Preprocess the list of items to find ordering divisions.
-		$this->ordering = array();
+		$this->ordering = [];
 
 		foreach ($this->categories as &$item)
 		{
@@ -186,7 +186,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'ordering', Text::_('COM_KUNENA_REORDER'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.published', Text::_('JSTATUS'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.title', Text::_('JGLOBAL_TITLE'));
@@ -209,7 +209,7 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
@@ -226,7 +226,7 @@ class KunenaAdminViewCategories extends KunenaView
 	public function publishedOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -243,7 +243,7 @@ class KunenaAdminViewCategories extends KunenaView
 	public function lockOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -260,7 +260,7 @@ class KunenaAdminViewCategories extends KunenaView
 	public function reviewOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -277,7 +277,7 @@ class KunenaAdminViewCategories extends KunenaView
 	public function allowpollsOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -293,7 +293,7 @@ class KunenaAdminViewCategories extends KunenaView
 	public function anonymousOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 

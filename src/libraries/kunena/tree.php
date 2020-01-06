@@ -21,25 +21,25 @@ class KunenaTree implements Iterator
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_instances = array();
+	protected $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_tree = array();
+	protected $_tree = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_parents = array();
+	protected $_parents = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_levels = array();
+	protected $_levels = [];
 
 	/**
 	 * @var     null|string
@@ -81,7 +81,7 @@ class KunenaTree implements Iterator
 	 */
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level')
 	{
-		$this->_tree[0] = array();
+		$this->_tree[0] = [];
 		$this->_id      = $id;
 		$this->_parent  = $parent;
 		$this->_level   = $level;
@@ -105,8 +105,8 @@ class KunenaTree implements Iterator
 			$itemparent                = $item->{$this->_parent};
 			$this->_instances[$itemid] = $item;
 			$this->_parents[$itemid]   = $itemparent;
-			$this->_tree [$itemid]     = array();
-			$item->indent              = array('gap', 'leaf');
+			$this->_tree [$itemid]     = [];
+			$item->indent              = ['gap', 'leaf'];
 
 			if (isset($item->{$this->_level}))
 			{
@@ -127,7 +127,7 @@ class KunenaTree implements Iterator
 			if ($itemparent && !isset($this->_tree [$itemparent]))
 			{
 				$this->_parents[$itemparent]  = -1;
-				$this->_tree [$itemparent]    = array();
+				$this->_tree [$itemparent]    = [];
 				$this->_tree [0][$itemparent] = &$this->_tree [$itemparent];
 			}
 
@@ -137,7 +137,7 @@ class KunenaTree implements Iterator
 		// Figure out tree levels if objects do not contain the information
 		if (empty($this->_levels))
 		{
-			$heap = array(0);
+			$heap = [0];
 
 			while (($parent = array_shift($heap)) !== null)
 			{
@@ -162,7 +162,7 @@ class KunenaTree implements Iterator
 	 */
 	public function rewind()
 	{
-		$this->heap = array(0);
+		$this->heap = [0];
 
 		if (!isset($this->_instances[0]))
 		{
@@ -254,7 +254,7 @@ class KunenaTree implements Iterator
 			return $this->_tree;
 		}
 
-		return isset($this->_tree[$parent]) ? $this->_tree[$parent] : array();
+		return isset($this->_tree[$parent]) ? $this->_tree[$parent] : [];
 	}
 
 	/**
@@ -266,13 +266,13 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function &getIndentation($parent_id = 0, $itemIndent = array(), $gap = false)
+	public function &getIndentation($parent_id = 0, $itemIndent = [], $gap = false)
 	{
 		$parent_tree = &$this->_tree[$parent_id];
 		end($parent_tree);
 		$last_id = key($parent_tree);
 
-		$list = array();
+		$list = [];
 
 		foreach ($parent_tree as $id => $tree)
 		{

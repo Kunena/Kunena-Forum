@@ -28,7 +28,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $after = array();
+	protected $after = [];
 
 	/**
 	 * Object KunenaView

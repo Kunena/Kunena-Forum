@@ -49,7 +49,7 @@ class KunenaLogEntry
 	{
 		$now = new Joomla\CMS\Date\Date;
 
-		$this->data = array(
+		$this->data = [
 			'type'        => (int) $type,
 			'user_id'     => KunenaUserHelper::getMyself()->userid,
 			'category_id' => $category ? $category->id : 0,
@@ -59,7 +59,7 @@ class KunenaLogEntry
 			'time'        => $now->toUnix(),
 			'operation'   => $operation,
 			'data'        => json_encode($data),
-		);
+		];
 	}
 
 	/**

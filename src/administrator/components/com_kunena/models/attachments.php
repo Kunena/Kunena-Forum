@@ -28,11 +28,11 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id',
 				'post',
 				'username',
@@ -40,7 +40,7 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 				'folder',
 				'filetype',
 				'filename',
-			);
+			];
 		}
 
 		parent::__construct($config);
@@ -139,8 +139,8 @@ class KunenaAdminModelAttachments extends Joomla\CMS\MVC\Model\ListModel
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();
 		$results = KunenaAttachmentHelper::getById($ids);
-		$userids = array();
-		$mesids  = array();
+		$userids = [];
+		$mesids  = [];
 
 		foreach ($results as $result)
 		{

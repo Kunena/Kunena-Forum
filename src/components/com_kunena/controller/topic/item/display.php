@@ -109,9 +109,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		 return;
 		 }*/
 
-		$options            = array();
+		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Load topic and message.
@@ -195,7 +195,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				{
 					if (!isset($this->messages[$post]->pm))
 					{
-						$this->messages[$post]->pm = array();
+						$this->messages[$post]->pm = [];
 					}
 				}
 
@@ -236,8 +236,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		KunenaHtmlParser::prepareContent($content, 'topic_top');
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		// Get user data, captcha & quick reply.
 		$this->userTopic  = $this->topic->getUserTopic();
@@ -248,18 +248,18 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
-		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
 		$data->{'discussionUrl'}        = $this->topic->getPermaUrl();
 		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
-		$data->author                   = array();
+		$data->author                   = [];
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
 		$data->author                   = $tmp;
-		$data->interactionStatistic     = array();
+		$data->interactionStatistic     = [];
 		$tmp2                           = new CMSObject;
 		$tmp2->{'@type'}                = "InteractionCounter";
 		$tmp2->{'interactionType'}      = "InteractionCounter";
@@ -268,21 +268,21 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp3                           = new CMSObject;
 		$tmp3->{'@type'}                = "ImageObject";
 		$tmp3->{'url'}                  = $this->docImage();
-		$data->publisher                = array();
+		$data->publisher                = [];
 		$tmp4                           = new CMSObject;
 		$tmp4->{'@type'}                = "Organization";
 		$tmp4->{'name'}                 = $this->config->board_title;
 		$tmp4->{'logo'}                 = $tmp3;
 		$data->publisher                = $tmp4;
-		$data->mainEntityOfPage         = array();
+		$data->mainEntityOfPage         = [];
 		$tmp5                           = new CMSObject;
 		$tmp5->{'@type'}                = "WebPage";
-		$tmp5->{'name'}                 = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
+		$tmp5->{'name'}                 = Joomla\CMS\Uri\Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
 		$data->mainEntityOfPage         = $tmp5;
 
 		if ($this->category->allow_ratings && $this->config->ratingenabled && KunenaForumTopicRateHelper::getCount($this->topic->id) > 0)
 		{
-			$data->aggregateRating  = array();
+			$data->aggregateRating  = [];
 			$tmp3                   = new CMSObject;
 			$tmp3->{'@type'}        = "AggregateRating";
 			$tmp3->{'itemReviewed'} = $this->headerText;
@@ -312,8 +312,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		// First collect ids and users.
 		$threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
-		$userlist       = array();
-		$this->threaded = array();
+		$userlist       = [];
+		$this->threaded = [];
 		$location       = $this->pagination->limitstart;
 
 		foreach ($this->messages as $message)
@@ -337,7 +337,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$userlist[(int) $message->modified_by] = (int) $message->modified_by;
 
 			$thankyou_list     = $thankyous[$message->id]->getList();
-			$message->thankyou = array();
+			$message->thankyou = [];
 
 			if (!empty($thankyou_list))
 			{
@@ -354,7 +354,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			if (!isset($this->messages[$this->topic->first_post_id]))
 			{
-				$this->messages = $this->getThreadedOrdering(0, array('edge'));
+				$this->messages = $this->getThreadedOrdering(0, ['edge']);
 			}
 			else
 			{
@@ -381,9 +381,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function getThreadedOrdering($parent = 0, $indent = array())
+	protected function getThreadedOrdering($parent = 0, $indent = [])
 	{
-		$list = array();
+		$list = [];
 
 		if (count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit)
 		{
@@ -524,7 +524,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($this->topic->attachments > 0)
 		{
 			$attachments = KunenaAttachmentHelper::getByMessage($this->topic->first_post_id);
-			$item        = array();
+			$item        = [];
 
 			foreach ($attachments as $attach)
 			{

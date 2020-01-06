@@ -154,19 +154,19 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return;
 		}
 
-		$permalink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
+		$permalink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null);
 
-		$options = array(
+		$options = [
 			'uid'      => $message->id,
 			'actor_id' => $message->userid,
 			'title'    => '',
 			'type'     => 'post',
 			'url'      => $permalink,
 			'image'    => '',
-		);
+		];
 
 		// Add notifications in EasySocial
-		FD::notify('post.reply', $recipients, array(), $options);
+		FD::notify('post.reply', $recipients, [], $options);
 	}
 
 	/**
@@ -241,7 +241,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			return false;
 		}
 
-		$result = array();
+		$result = [];
 
 		foreach ($subscribers as $subscriber)
 		{

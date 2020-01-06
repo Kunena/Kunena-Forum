@@ -139,5 +139,5 @@ function kunena_160_2010_05_30_attachments($parent)
 	// of them to calculate this values. A seperate maintenance task will have to be
 	// created and executed outside of the upgrade itself.
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_ATTACHMENTS'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_ATTACHMENTS'), 'success' => true];
 }

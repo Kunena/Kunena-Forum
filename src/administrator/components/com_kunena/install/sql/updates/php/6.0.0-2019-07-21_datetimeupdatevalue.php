@@ -257,5 +257,5 @@ function kunena_600_2019_07_21_datetimeupdatevalue($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_DATETIME_VALUE_IN_TABLES'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_DATETIME_VALUE_IN_TABLES'), 'success' => true];
 }

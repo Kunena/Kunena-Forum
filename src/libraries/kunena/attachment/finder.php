@@ -37,7 +37,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 	{
 		if ($this->skip)
 		{
-			return array();
+			return [];
 		}
 
 		$query = clone $this->query;
@@ -55,7 +55,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$instances = array();
+		$instances = [];
 
 		if (!empty($results))
 		{

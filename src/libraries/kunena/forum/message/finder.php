@@ -31,7 +31,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $hold = array(0);
+	protected $hold = [0];
 
 	/**
 	 * @var     null
@@ -92,7 +92,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterByCategories(array $categories)
 	{
-		$list = array();
+		$list = [];
 
 		if (!empty($categories))
 		{
@@ -202,7 +202,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByHold(array $hold = array(0))
+	public function filterByHold(array $hold = [0])
 	{
 		$this->hold = $hold;
 

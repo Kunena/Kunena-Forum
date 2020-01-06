@@ -25,13 +25,13 @@ abstract class KunenaForumMessageHelper
 	 * @var     KunenaForumMessage[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_location = array();
+	protected static $_location = [];
 
 	/**
 	 * @param   bool|array|int  $ids        ids
@@ -56,12 +56,12 @@ abstract class KunenaForumMessageHelper
 		}
 		else
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		self::loadMessages($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -156,7 +156,7 @@ abstract class KunenaForumMessageHelper
 
 		if (!$topic->exists())
 		{
-			return array();
+			return [];
 		}
 
 		$total = $topic->getTotal();
@@ -225,7 +225,7 @@ abstract class KunenaForumMessageHelper
 
 		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order    = ($ordering == 'ASC') ? 1 : -1;
-		$list     = array();
+		$list     = [];
 
 		if (!empty($results))
 		{
@@ -257,7 +257,7 @@ abstract class KunenaForumMessageHelper
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = array())
+	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = [])
 	{
 		$reverse     = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby     = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
@@ -327,10 +327,10 @@ abstract class KunenaForumMessageHelper
 
 		if ($childforums)
 		{
-			$categories += KunenaForumCategoryHelper::getChildren($categories, -1, array('action' => 'topic.' . $authorise));
+			$categories += KunenaForumCategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
 		}
 
-		$catlist = array();
+		$catlist = [];
 
 		foreach ($categories as $category)
 		{
@@ -339,7 +339,7 @@ abstract class KunenaForumMessageHelper
 
 		if (empty($catlist))
 		{
-			return array(0, array());
+			return [0, []];
 		}
 
 		$allowed = implode(',', array_keys($catlist));
@@ -386,12 +386,12 @@ abstract class KunenaForumMessageHelper
 		{
 			KunenaError::displayDatabaseError($e);
 
-			return array(0, array());
+			return [0, []];
 		}
 
 		if (!$total)
 		{
-			return array(0, array());
+			return [0, []];
 		}
 
 		// If out of range, use last page
@@ -411,10 +411,10 @@ abstract class KunenaForumMessageHelper
 		{
 			KunenaError::displayDatabaseError($e);
 
-			return array(0, array());
+			return [0, []];
 		}
 
-		$messages = array();
+		$messages = [];
 
 		if (!empty($results))
 		{
@@ -429,7 +429,7 @@ abstract class KunenaForumMessageHelper
 
 		unset($results);
 
-		return array($total, $messages);
+		return [$total, $messages];
 	}
 
 	/**
@@ -459,7 +459,7 @@ abstract class KunenaForumMessageHelper
 
 		if (!isset(self::$_location [$mesid]))
 		{
-			self::loadLocation(array($mesid));
+			self::loadLocation([$mesid]);
 		}
 
 		$location = self::$_location [$mesid];
@@ -541,7 +541,7 @@ abstract class KunenaForumMessageHelper
 			$mesids = explode(',', $mesids);
 		}
 
-		$ids = array();
+		$ids = [];
 
 		foreach ($mesids as $id)
 		{
@@ -558,7 +558,7 @@ abstract class KunenaForumMessageHelper
 			{
 				$ids[$id]                    = $id;
 				self::$_location [$id]       = new stdClass;
-				self::$_location [$id]->hold = array('before' => 0, 'after' => 0);
+				self::$_location [$id]->hold = ['before' => 0, 'after' => 0];
 			}
 		}
 
@@ -603,7 +603,7 @@ abstract class KunenaForumMessageHelper
 					self::$_location [$instance->id] = $instance;
 				}
 
-				$instance->hold[$result->hold] = array('before' => $result->before_count, 'after' => $result->after_count);
+				$instance->hold[$result->hold] = ['before' => $result->before_count, 'after' => $result->after_count];
 			}
 		}
 	}
@@ -617,8 +617,8 @@ abstract class KunenaForumMessageHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
-		self::$_location  = array();
+		self::$_instances = [];
+		self::$_location  = [];
 	}
 
 	/**

@@ -27,7 +27,7 @@ class KunenaUpload
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $validExtensions = array();
+	protected $validExtensions = [];
 
 	/**
 	 * @var     string
@@ -44,7 +44,7 @@ class KunenaUpload
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function getInstance(array $extensions = array())
+	public static function getInstance(array $extensions = [])
 	{
 		$instance = new KunenaUpload;
 
@@ -96,7 +96,7 @@ class KunenaUpload
 	 */
 	public function ajaxUpload(array $options)
 	{
-		static $defaults = array(
+		static $defaults = [
 			'completed'  => false,
 			'filename'   => null,
 			'size'       => 0,
@@ -105,7 +105,7 @@ class KunenaUpload
 			'chunkStart' => 0,
 			'chunkEnd'   => 0,
 			'image_type' => null,
-		);
+		];
 
 		$options += $defaults;
 
@@ -392,7 +392,7 @@ class KunenaUpload
 					break;
 				}
 
-				return array($name, $extension);
+				return [$name, $extension];
 			}
 		}
 
@@ -583,23 +583,23 @@ class KunenaUpload
 		if ($content instanceof Exception)
 		{
 			// Build data from exceptions.
-			$exceptions = array();
+			$exceptions = [];
 			$e          = $content;
 
 			do
 			{
-				$exception = array(
+				$exception = [
 					'code'    => $e->getCode(),
 					'message' => $e->getMessage(),
-				);
+				];
 
 				if (JDEBUG)
 				{
-					$exception += array(
+					$exception += [
 						'type' => get_class($e),
 						'file' => $e->getFile(),
 						'line' => $e->getLine(),
-					);
+					];
 				}
 
 				$exceptions[] = $exception;
@@ -610,7 +610,7 @@ class KunenaUpload
 			// Create response.
 			$response->success = false;
 			$response->message = $content->getcode() . ' ' . $content->getMessage();
-			$response->data    = array('exceptions' => $exceptions);
+			$response->data    = ['exceptions' => $exceptions];
 		}
 		else
 		{
@@ -668,7 +668,7 @@ class KunenaUpload
 				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}
 
-			$avatartypes = array();
+			$avatartypes = [];
 			$avatartypes = strtolower(KunenaConfig::getInstance()->avatartypes);
 			$a           = explode(', ', $avatartypes);
 
@@ -772,11 +772,11 @@ class KunenaUpload
 		// Format string
 		$format = ($format === null) ? '%01.2f %s' : (string) $format;
 
-		$units = array(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
+		$units = [Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'),
 			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'),
 			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'),
 			Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'),
-		);
+		];
 		$mod   = 1024;
 
 		// Determine unit to use

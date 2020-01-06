@@ -66,8 +66,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		}
 
 		$categories        = KunenaForumCategoryHelper::getCategories();
-		$arrayanynomousbox = array();
-		$arraypollcatid    = array();
+		$arrayanynomousbox = [];
+		$arraypollcatid    = [];
 
 		foreach ($categories as $category)
 		{
@@ -116,7 +116,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$this->action = 'edit';
 

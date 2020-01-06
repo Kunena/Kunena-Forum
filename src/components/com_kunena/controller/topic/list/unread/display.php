@@ -38,7 +38,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model = new KunenaModelTopics([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
@@ -100,11 +100,11 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			->filterByUserUnread($this->me)
 			->find();
 
-		$mesIds = array();
+		$mesIds = [];
 
 		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
-		$list = array();
+		$list = [];
 
 		$this->count = 0;
 
@@ -131,7 +131,7 @@ class ComponentKunenaControllerTopicListUnreadDisplay extends ComponentKunenaCon
 			$this->prepareTopics();
 		}
 
-		$actions          = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 		$this->actions    = $this->getTopicActions($this->topics, $actions);
 		$this->headerText = Text::_('COM_KUNENA_UNREAD');
 	}

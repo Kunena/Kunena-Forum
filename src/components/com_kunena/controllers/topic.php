@@ -37,7 +37,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->catid  = $this->app->input->getInt('catid', 0);
@@ -71,7 +71,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$mes_id      = $this->input->getInt('mes_id', 0);
 		$attachments = KunenaAttachmentHelper::getByMessage($mes_id);
-		$list        = array();
+		$list        = [];
 
 		foreach ($attachments as $attach)
 		{
@@ -128,7 +128,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attach_id  = $this->input->getInt('file_id', 0);
-		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
+		$attachs_id = $this->input->get('files_id', [], 'post', 'array');
 
 		if ($attach_id > 0)
 		{
@@ -143,14 +143,14 @@ class KunenaControllerTopic extends KunenaController
 			$instance_userid = $attachment->userid;
 		}
 
-		$response = array();
+		$response = [];
 
 		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
 			if ($attach_id > 0)
 			{
 				$editor_text               = $this->app->input->get->get('editor_text', '', 'raw');
-				$find                      = array('/\[attachment=' . $attach_id . '\](.*?)\[\/attachment\]/su');
+				$find                      = ['/\[attachment=' . $attach_id . '\](.*?)\[\/attachment\]/su'];
 				$replace                   = '';
 				$text                      = preg_replace($find, $replace, $editor_text);
 				$response['text_prepared'] = $text;
@@ -231,7 +231,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attach_id = $this->input->getInt('file_id', 0);
-		$success   = array();
+		$success   = [];
 		$instance  = KunenaAttachmentHelper::get($attach_id);
 
 		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
@@ -319,7 +319,7 @@ class KunenaControllerTopic extends KunenaController
 			}
 
 			$caption = $this->input->getString('caption');
-			$options = array(
+			$options = [
 				'filename'   => $this->input->getString('filename'),
 				'size'       => $this->input->getInt('size'),
 				'mime'       => $this->input->getString('mime'),
@@ -327,7 +327,7 @@ class KunenaControllerTopic extends KunenaController
 				'chunkStart' => $this->input->getInt('chunkStart', 0),
 				'chunkEnd'   => $this->input->getInt('chunkEnd', 0),
 				'image_type' => 'avatar',
-			);
+			];
 
 			// Upload!
 			$upload->addExtensions(KunenaAttachmentHelper::getExtensions($category->id, $me->userid));
@@ -340,7 +340,7 @@ class KunenaControllerTopic extends KunenaController
 				list($basename, $extension) = $upload->splitFilename();
 				$attachment = new KunenaAttachment;
 				$attachment->bind(
-					array(
+					[
 						'mesid'         => 0,
 						'userid'        => (int) $me->userid,
 						'protected'     => null,
@@ -352,7 +352,7 @@ class KunenaControllerTopic extends KunenaController
 						'filename_real' => $response->filename,
 						'caption'       => $caption,
 						'inline'        => null,
-					)
+					]
 				);
 
 				// Resize image if needed.
@@ -379,7 +379,7 @@ class KunenaControllerTopic extends KunenaController
 						$image = new KunenaImage($uploadFile);
 						$image = $image->resize($config->imagewidth, $config->imageheight, false);
 
-						$options = array('quality' => $quality);
+						$options = ['quality' => $quality];
 						$image->toFile($uploadFile, $imageInfo->type, $options);
 
 						unset($image);
@@ -435,7 +435,7 @@ class KunenaControllerTopic extends KunenaController
 	public function post()
 	{
 		$this->id = $this->app->input->getInt('parentid', 0);
-		$fields   = array(
+		$fields   = [
 			'catid'             => $this->catid,
 			'name'              => $this->app->input->getString('authorname', $this->me->getName()),
 			'email'             => $this->app->input->getString('email', null),
@@ -444,14 +444,14 @@ class KunenaControllerTopic extends KunenaController
 			'icon_id'           => $this->app->input->getInt('topic_emoticon', null),
 			'anonymous'         => $this->app->input->getInt('anonymous', 0),
 			'poll_title'        => $this->app->input->getString('poll_title', ''),
-			'poll_options'      => $this->app->input->post->get('polloptionsID', array(), 'array'),
+			'poll_options'      => $this->app->input->post->get('polloptionsID', [], 'array'),
 			'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
 			'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
 			'private'           => (string) $this->app->input->getRaw('private'),
 			'rating'            => 0,
 			'params'            => '',
 			'quote'             => 0,
-		);
+		];
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
@@ -522,7 +522,7 @@ class KunenaControllerTopic extends KunenaController
 					if (!empty($captcha_response))
 					{
 						// For ReCaptcha API 2.0
-						$res = $this->app->triggerEvent('onCheckAnswer', array($this->app->input->getString('g-recaptcha-response')));
+						$res = $this->app->triggerEvent('onCheckAnswer', [$this->app->input->getString('g-recaptcha-response')]);
 					}
 
 					if (!$res[0])
@@ -635,8 +635,8 @@ class KunenaControllerTopic extends KunenaController
 		@ignore_user_abort(true);
 
 		// Mark attachments to be added or deleted.
-		$attachments = $this->app->input->get('attachments', array(), 'post', 'array');
-		$attachment  = $this->app->input->get('attachment', array(), 'post', 'array');
+		$attachments = $this->app->input->get('attachments', [], 'post', 'array');
+		$attachment  = $this->app->input->get('attachment', [], 'post', 'array');
 		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
@@ -745,7 +745,7 @@ class KunenaControllerTopic extends KunenaController
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-				array('mesid' => $message->id, 'parent_id' => $this->id),
+				['mesid' => $message->id, 'parent_id' => $this->id],
 				$category,
 				$topic
 			);
@@ -977,7 +977,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$message = KunenaForumMessageHelper::get($this->id);
 		$topic   = $message->getTopic();
-		$fields  = array(
+		$fields  = [
 			'name'              => $this->app->input->getString('authorname', $message->name),
 			'email'             => $this->app->input->getString('email', $message->email),
 			'subject'           => $this->app->input->post->get('subject', '', 'raw'),
@@ -986,11 +986,11 @@ class KunenaControllerTopic extends KunenaController
 			'icon_id'           => $this->app->input->getInt('topic_emoticon', $topic->icon_id),
 			'anonymous'         => $this->app->input->getInt('anonymous', 0),
 			'poll_title'        => $this->app->input->getString('poll_title', null),
-			'poll_options'      => $this->app->input->get('polloptionsID', array(), 'post', 'array'),
+			'poll_options'      => $this->app->input->get('polloptionsID', [], 'post', 'array'),
 			'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
 			'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
 			'params'            => '',
-		);
+		];
 
 		if (!Session::checkToken('post'))
 		{
@@ -1030,8 +1030,8 @@ class KunenaControllerTopic extends KunenaController
 		@ignore_user_abort(true);
 
 		// Mark attachments to be added or deleted.
-		$attachments = $this->app->input->get('attachments', array(), 'post', 'array');
-		$attachment  = $this->app->input->get('attachment', array(), 'post', 'array');
+		$attachments = $this->app->input->get('attachments', [], 'post', 'array');
+		$attachment  = $this->app->input->get('attachment', [], 'post', 'array');
 
 		$addList    = array_keys(array_intersect_key($attachments, $attachment));
 		$addList    = ArrayHelper::toInteger($addList);
@@ -1160,7 +1160,7 @@ class KunenaControllerTopic extends KunenaController
 			KunenaLog::log(
 				$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
 				KunenaLog::LOG_POST_EDIT,
-				array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
+				['mesid' => $message->id, 'reason' => $fields['modified_reason']],
 				$topic->getCategory(),
 				$topic,
 				!$isMine ? $message->getAuthor() : null
@@ -1365,7 +1365,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_ACTION,
 					KunenaLog::LOG_POST_THANKYOU,
-					array('mesid' => $message->id),
+					['mesid' => $message->id],
 					$category,
 					$message->getTopic(),
 					$message->getAuthor()
@@ -1397,7 +1397,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					KunenaLog::LOG_POST_UNTHANKYOU,
-					array('mesid' => $message->id, 'userid' => $userid),
+					['mesid' => $message->id, 'userid' => $userid],
 					$category,
 					$message->getTopic(),
 					$message->getAuthor()
@@ -1601,7 +1601,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					KunenaLog::LOG_TOPIC_STICKY,
-					array(),
+					[],
 					$topic->getCategory(),
 					$topic
 				);
@@ -1652,7 +1652,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					KunenaLog::LOG_TOPIC_UNSTICKY,
-					array(),
+					[],
 					$topic->getCategory(),
 					$topic
 				);
@@ -1703,7 +1703,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					KunenaLog::LOG_TOPIC_LOCK,
-					array(),
+					[],
 					$topic->getCategory(),
 					$topic
 				);
@@ -1754,7 +1754,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					KunenaLog::LOG_TOPIC_UNLOCK,
-					array(),
+					[],
 					$topic->getCategory(),
 					$topic
 				);
@@ -1817,7 +1817,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
 					$log,
-					isset($message) ? array('mesid' => $message->id) : array(),
+					isset($message) ? ['mesid' => $message->id] : [],
 					$category,
 					$topic
 				);
@@ -1889,7 +1889,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
 					$log,
-					isset($message) ? array('mesid' => $message->id) : array(),
+					isset($message) ? ['mesid' => $message->id] : [],
 					$category,
 					$topic
 				);
@@ -1952,7 +1952,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
 					$log,
-					isset($message) ? array('mesid' => $message->id) : array(),
+					isset($message) ? ['mesid' => $message->id] : [],
 					$category,
 					$topic
 				);
@@ -2026,7 +2026,7 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
 					$log,
-					array('mesid' => $message->id),
+					['mesid' => $message->id],
 					$category,
 					$topic,
 					$message->getAuthor()
@@ -2152,11 +2152,11 @@ class KunenaControllerTopic extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
-					array(
-						'move'    => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
-						'target'  => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
-						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow),
-					),
+					[
+						'move'    => ['id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'],
+						'target'  => ['category_id' => $targetCategory, 'topic_id' => $targetTopic],
+						'options' => ['emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow],
+					],
 					$topic->getCategory(),
 					$topic,
 					$message->getAuthor()
@@ -2266,11 +2266,11 @@ class KunenaControllerTopic extends KunenaController
 			KunenaLog::log(
 				KunenaLog::TYPE_REPORT,
 				$log,
-				array(
+				[
 					'mesid'   => $message->id,
 					'reason'  => $reason,
 					'message' => $text,
-				),
+				],
 				$topic->getCategory(),
 				$topic,
 				$message->getAuthor()
@@ -2307,10 +2307,10 @@ class KunenaControllerTopic extends KunenaController
 					$mailsubject .= $topic->subject;
 				}
 
-				$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
+				$msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
 				$mail = Joomla\CMS\Mail\Mail::getInstance();
-				$mail->setSender(array($this->config->getEmail(), $mailsender));
+				$mail->setSender([$this->config->getEmail(), $mailsender]);
 				$mail->setSubject($mailsubject);
 				$mail->addReplyTo($this->me->email, $this->me->username);
 
@@ -2332,7 +2332,7 @@ class KunenaControllerTopic extends KunenaController
 				{
 				}
 
-				$receivers = array();
+				$receivers = [];
 
 				foreach ($emailToList as $emailTo)
 				{
@@ -2446,7 +2446,7 @@ class KunenaControllerTopic extends KunenaController
 			KunenaLog::log(
 				KunenaLog::TYPE_MODERATION,
 				KunenaLog::LOG_POLL_MODERATE,
-				array(),
+				[],
 				$topic->getCategory(),
 				$topic,
 				null
@@ -2570,7 +2570,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$body      = (string) $this->input->getRaw('private');
-		$attachIds = $this->input->get('attachment_private', array(), 'array');
+		$attachIds = $this->input->get('attachment_private', [], 'array');
 
 		if (!trim($body) && !$attachIds)
 		{
@@ -2618,7 +2618,7 @@ class KunenaControllerTopic extends KunenaController
 		KunenaLog::log(
 			KunenaLog::TYPE_ACTION,
 			KunenaLog::LOG_PRIVATE_POST_CREATE,
-			array('id' => $private->id, 'mesid' => $message->id),
+			['id' => $private->id, 'mesid' => $message->id],
 			$message->getCategory(),
 			$message->getTopic(),
 			$pAuthor
@@ -2644,7 +2644,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$body      = (string) $this->input->getRaw('private');
-		$attachIds = $this->input->get('attachment_private', array(), 'array');
+		$attachIds = $this->input->get('attachment_private', [], 'array');
 		$finder    = new KunenaPrivateMessageFinder;
 		$finder
 			->filterByMessage($message)

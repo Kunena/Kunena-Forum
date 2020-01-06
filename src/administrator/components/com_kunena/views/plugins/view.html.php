@@ -86,7 +86,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'enable', Text::_('JSTATUS'));
 		$sortFields[] = HTMLHelper::_('select.option', 'name', Text::_('COM_PLUGINS_NAME_HEADING'));
 		$sortFields[] = HTMLHelper::_('select.option', 'element', Text::_('COM_PLUGINS_ELEMENT_HEADING'));
@@ -105,7 +105,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
@@ -122,7 +122,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	public function publishedOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 

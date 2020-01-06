@@ -154,7 +154,7 @@ if (!empty($codeTypes))
 					<select id="kpicture-size-list-modal"
 							name="modal-picture-size" class="kbutton">
 						<?php
-						$vid_provider = array('', '20', '40', '80', '100', '150', '200', '250', '500', '1000');
+						$vid_provider = ['', '20', '40', '80', '100', '150', '200', '250', '500', '1000'];
 
 						foreach ($vid_provider as $vid_type)
 {
@@ -237,7 +237,7 @@ if (!empty($codeTypes))
 					<select id="kvideoprovider-list-modal"
 							name="provider" class="kbutton form-control">
 						<?php
-						$vid_provider = array('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube');
+						$vid_provider = ['', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube'];
 
 						foreach ($vid_provider as $vid_type)
 {

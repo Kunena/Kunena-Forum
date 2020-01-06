@@ -25,7 +25,7 @@ Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 Text::script('COM_KUNENA_EDITOR_INSERT');
 Text::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 Text::script('COM_KUNENA_GEN_REMOVE_FILE');
-Text::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, array('script' => true));
+Text::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, ['script' => true]);
 Text::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 Text::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
@@ -518,5 +518,5 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 <?php
 if ($this->config->showhistory && $this->topic->exists())
 {
-	echo $this->subRequest('Topic/Form/History', new Joomla\Input\Input(array('id' => $this->topic->id)));
+	echo $this->subRequest('Topic/Form/History', new Joomla\Input\Input(['id' => $this->topic->id]));
 }

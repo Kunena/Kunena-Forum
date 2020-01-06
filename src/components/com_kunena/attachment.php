@@ -92,7 +92,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 	 * @var     array
 	 * @since   Kunena 2.0
 	 */
-	protected $userstate = array();
+	protected $userstate = [];
 
 	/**
 	 * @param   Input      $input   input
@@ -159,10 +159,10 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 		$handler = $this->get('session_handler', 'none');
 
 		// Initialize the options for Session.
-		$options = array(
+		$options = [
 			'name'   => $name,
 			'expire' => $lifetime,
-		);
+		];
 
 		$session = Session::getInstance($handler, $options);
 		$session->initialise($this->input, $this['dispatcher']);

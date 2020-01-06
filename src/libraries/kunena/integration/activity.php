@@ -30,7 +30,7 @@ class KunenaIntegrationActivity
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $instances = array();
+	protected $instances = [];
 
 	/**
 	 * @return  void
@@ -91,7 +91,7 @@ class KunenaIntegrationActivity
 		{
 			if (method_exists($instance, $method))
 			{
-				$r = call_user_func_array(array($instance, $method), $arguments);
+				$r = call_user_func_array([$instance, $method], $arguments);
 
 				if ($r !== null & $ret === null)
 				{

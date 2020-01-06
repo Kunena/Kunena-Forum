@@ -72,7 +72,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $closures = array();
+	protected $closures = [];
 
 	/**
 	 * @var     boolean
@@ -107,7 +107,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	protected function loadPaths()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -293,7 +293,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$layout = $this->getLayout();
 		}
 
-		$paths = array();
+		$paths = [];
 
 		foreach ($this->includePaths as $path)
 		{
@@ -392,7 +392,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function debug($data = array())
+	public function debug($data = [])
 	{
 		$this->debug = (bool) $data;
 
@@ -650,7 +650,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function getProperties()
 	{
 		$properties = (array) $this;
-		$list       = array();
+		$list       = [];
 
 		foreach ($properties as $property => $value)
 		{
@@ -717,7 +717,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$template = KunenaFactory::getTemplate();
 		}
 
-		$templatePaths = array();
+		$templatePaths = [];
 
 		foreach ($paths as $path)
 		{

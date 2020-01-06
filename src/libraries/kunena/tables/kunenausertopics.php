@@ -85,7 +85,7 @@ class TableKunenaUserTopics extends KunenaTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__kunena_user_topics', array('user_id', 'topic_id'), $db);
+		parent::__construct('#__kunena_user_topics', ['user_id', 'topic_id'], $db);
 	}
 
 	/**

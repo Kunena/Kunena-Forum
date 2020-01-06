@@ -82,7 +82,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	protected function _getTopics()
 	{
 		$finder = new KunenaForumMessageFinder;
-		$finder->filterByHold(array(2, 3));
+		$finder->filterByHold([2, 3]);
 
 		$direction = strtoupper($this->getState('list.direction'));
 
@@ -177,7 +177,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	protected function _getMessages()
 	{
 		$db   = Factory::getDBO();
-		$join = array();
+		$join = [];
 
 		$query = $db->getQuery(true)
 			->select('a.id')
@@ -297,12 +297,12 @@ class KunenaAdminModelTrash extends KunenaModel
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage());
 
-			return array();
+			return [];
 		}
 
 		if (!$total)
 		{
-			return array();
+			return [];
 		}
 
 		// If out of range, use last page
@@ -328,7 +328,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 */
 	public function getViewOptions()
 	{
-		$view_options   = array();
+		$view_options   = [];
 		$view_options[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
 		$view_options[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
 
@@ -352,7 +352,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		$ids  = (array) $this->app->getUserState('com_kunena.purge');
 		$type = (string) $this->app->getUserState('com_kunena.type');
 
-		$items = array();
+		$items = [];
 
 		if ($type == 'topics')
 		{

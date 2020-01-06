@@ -70,7 +70,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	{
 		$category = $this->category;
 		$token    = '&' . Session::getFormToken() . '=1';
-		$actions  = array();
+		$actions  = [];
 
 		// Is user allowed to post new topic?
 		$url             = $category->getNewTopicUrl();
@@ -88,29 +88,29 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			if ($url && $topicicontype == 'B3')
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-										  'icon' => 'glyphicon glyphicon-edit glyphicon-white',)
+					->setProperties(['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					                 'icon' => 'glyphicon glyphicon-edit glyphicon-white',]
 					);
 			}
 			elseif ($url && $topicicontype == 'B4')
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-										  'icon' => 'pencil',)
+					->setProperties(['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					                 'icon' => 'pencil',]
 					);
 			}
 			elseif ($url && $topicicontype == 'fa')
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-										  'icon' => 'fa fa-pencil-alt',)
+					->setProperties(['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					                 'icon' => 'fa fa-pencil-alt',]
 					);
 			}
 			else
 			{
 				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-										  'icon' => 'icon-edit icon-white',)
+					->setProperties(['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					                 'icon' => 'icon-edit icon-white',]
 					);
 			}
 		}
@@ -125,24 +125,24 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				if ($url && $topicicontype == 'B3')
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'glyphicon glyphicon-check',)
+						->setProperties(['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'glyphicon glyphicon-check',]
 						);
 				}
 				elseif ($url && $topicicontype == 'B4')
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'bookmark-fill'));
+						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'bookmark-fill']);
 				}
 				elseif ($url && $topicicontype == 'fa')
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'fa fa-book'));
+						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'fa fa-book']);
 				}
 				else
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
+						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer']);
 				}
 			}
 		}
@@ -158,16 +158,16 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				{
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'glyphicon glyphicon-envelope',)
+						->setProperties(['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'glyphicon glyphicon-envelope',]
 						);
 				}
 				else
 				{
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'glyphicon glyphicon-envelope',)
+						->setProperties(['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'glyphicon glyphicon-envelope',]
 						);
 				}
 			}
@@ -177,16 +177,16 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				{
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'envelope',)
+						->setProperties(['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'envelope',]
 						);
 				}
 				else
 				{
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'envelope-open',)
+						->setProperties(['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'envelope-open',]
 						);
 				}
 			}
@@ -196,16 +196,16 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				{
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'fa fa-envelope',)
+						->setProperties(['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'fa fa-envelope',]
 						);
 				}
 				else
 				{
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'fas fa-envelope-open',)
+						->setProperties(['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'fas fa-envelope-open',]
 						);
 				}
 			}
@@ -215,16 +215,16 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				{
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'icon-envelope',)
+						->setProperties(['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'icon-envelope',]
 						);
 				}
 				else
 				{
 					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-											  'icon' => 'icon-envelope-opened',)
+						->setProperties(['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						                 'icon' => 'icon-envelope-opened',]
 						);
 				}
 			}

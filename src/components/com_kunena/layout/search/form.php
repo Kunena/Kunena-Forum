@@ -33,7 +33,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 */
 	public function displayModeList($id, $attributes = 'class="form-control"')
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCH_POSTS'));
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_SEARCH_SEARCH_TITLES'));
 
@@ -52,7 +52,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 */
 	public function displayDateList($id, $attributes = 'class="form-control"')
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'lastvisit', Text::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'));
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_SEARCH_DATE_YESTERDAY'));
 		$options[] = HTMLHelper::_('select.option', '7', Text::_('COM_KUNENA_SEARCH_DATE_WEEK'));
@@ -78,7 +78,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 */
 	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'after', Text::_('COM_KUNENA_SEARCH_DATE_NEWER'));
 		$options[] = HTMLHelper::_('select.option', 'before', Text::_('COM_KUNENA_SEARCH_DATE_OLDER'));
 
@@ -97,7 +97,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 */
 	public function displaySortByList($id, $attributes = 'class="form-control"')
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'title', Text::_('COM_KUNENA_SEARCH_SORTBY_TITLE'));
 
 		// $options[] = HTMLHelper::_('select.option',  'replycount', Text::_('COM_KUNENA_SEARCH_SORTBY_POSTS'));
@@ -124,7 +124,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 */
 	public function displayOrderList($id, $attributes = 'class="form-control"')
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'inc', Text::_('COM_KUNENA_SEARCH_SORTBY_INC'));
 		$options[] = HTMLHelper::_('select.option', 'dec', Text::_('COM_KUNENA_SEARCH_SORTBY_DEC'));
 
@@ -144,7 +144,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	public function displayLimitList($id, $attributes = 'class="form-control"')
 	{
 		// Limit value list
-		$options = array();
+		$options = [];
 
 		if ($this->config->messages_per_page_search != 5 && $this->config->messages_per_page_search != 10 &&
 			$this->config->messages_per_page_search != 15 && $this->config->messages_per_page_search != 20)
@@ -176,10 +176,10 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	public function displayCategoryList($id, $attributes = 'class="form-control"')
 	{
 		// Category select list
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS'));
 
-		$cat_params = array('sections' => true);
+		$cat_params = ['sections' => true];
 
 		echo HTMLHelper::_(
 			'kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id

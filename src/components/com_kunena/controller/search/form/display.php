@@ -49,7 +49,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		parent::before();
 
 		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch(array(), $this->input);
+		$this->model = new KunenaModelSearch([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 

@@ -123,7 +123,7 @@ defined('_JEXEC') or die;
 				case 'separator':
 				case 'url':
 				case 'component':
-					$attributes = array();
+					$attributes = [];
 
 					$attributes['class'] = 'nav-link';
 

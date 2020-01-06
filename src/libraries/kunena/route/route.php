@@ -30,38 +30,38 @@ abstract class KunenaRoute
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $views = array(
-		'attachment'   => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
-		'announcement' => array('layout' => 'default'),
-		'category'     => array('layout' => 'default', 'catid' => '0'),
-		'common'       => array('layout' => 'default'),
-		'credits'      => array('layout' => 'default'),
-		'home'         => array(),
-		'misc'         => array('layout' => 'default'),
-		'search'       => array('layout' => 'default'),
-		'statistics'   => array('layout' => 'default'),
-		'topic'        => array('layout' => 'default'),
-		'topics'       => array('layout' => 'default'),
-		'user'         => array('layout' => 'default', 'userid' => '0'),
-	);
+	public static $views = [
+		'attachment'   => ['layout' => 'default', 'thumb' => 0, 'download' => 0],
+		'announcement' => ['layout' => 'default'],
+		'category'     => ['layout' => 'default', 'catid' => '0'],
+		'common'       => ['layout' => 'default'],
+		'credits'      => ['layout' => 'default'],
+		'home'         => [],
+		'misc'         => ['layout' => 'default'],
+		'search'       => ['layout' => 'default'],
+		'statistics'   => ['layout' => 'default'],
+		'topic'        => ['layout' => 'default'],
+		'topics'       => ['layout' => 'default'],
+		'user'         => ['layout' => 'default', 'userid' => '0'],
+	];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $layouts = array('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
+	public static $layouts = ['create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $sefviews = array('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
+	public static $sefviews = ['' => 1, 'home' => 1, 'category' => 1, 'topic' => 1];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $parsevars = array('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1);
+	public static $parsevars = ['do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1];
 
 	/**
 	 * @var     integer
@@ -133,19 +133,19 @@ abstract class KunenaRoute
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $subtree = array();
+	public static $subtree = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $parent = array();
+	public static $parent = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $uris = array();
+	public static $uris = [];
 
 	/**
 	 * @var     boolean
@@ -157,7 +157,7 @@ abstract class KunenaRoute
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $filtered = array();
+	protected static $filtered = [];
 
 	/**
 	 * @param   bool  $object  object
@@ -202,7 +202,7 @@ abstract class KunenaRoute
 	 */
 	protected static function prepare($uri = null)
 	{
-		static $current = array();
+		static $current = [];
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$uri || (is_string($uri) && $uri[0] == '&'))
@@ -329,7 +329,7 @@ abstract class KunenaRoute
 	 */
 	protected static function setItemID(Uri $uri)
 	{
-		static $candidates = array();
+		static $candidates = [];
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$view   = $uri->getVar('view');
@@ -344,7 +344,7 @@ abstract class KunenaRoute
 				self::build();
 			}
 
-			$search = array();
+			$search = [];
 
 			if (self::$home)
 			{
@@ -362,7 +362,7 @@ abstract class KunenaRoute
 			$search += self::$search['home'];
 
 			// Find all potential candidates
-			$candidates[$key] = array();
+			$candidates[$key] = [];
 
 			foreach ($search as $id => $dummy)
 			{
@@ -370,11 +370,11 @@ abstract class KunenaRoute
 
 				if ($follow && self::checkHome($follow, $catid))
 				{
-					$candidates[$key] += !empty(self::$search[$view][$follow->id]) ? self::$search[$view][$follow->id] : array();
+					$candidates[$key] += !empty(self::$search[$view][$follow->id]) ? self::$search[$view][$follow->id] : [];
 
 					if ($view == 'topic')
 					{
-						$candidates[$key] += !empty(self::$search['category'][$follow->id]) ? self::$search['category'][$follow->id] : array();
+						$candidates[$key] += !empty(self::$search['category'][$follow->id]) ? self::$search['category'][$follow->id] : [];
 					}
 
 					$candidates[$key][$follow->id] = $follow->id;
@@ -382,11 +382,11 @@ abstract class KunenaRoute
 			}
 
 			// Don't forget lonely candidates
-			$candidates[$key] += !empty(self::$search[$view][0]) ? self::$search[$view][0] : array();
+			$candidates[$key] += !empty(self::$search[$view][0]) ? self::$search[$view][0] : [];
 
 			if ($view == 'topic')
 			{
-				$candidates[$key] += !empty(self::$search['category'][0]) ? self::$search['category'][0] : array();
+				$candidates[$key] += !empty(self::$search['category'][0]) ? self::$search['category'][0] : [];
 			}
 		}
 
@@ -440,7 +440,7 @@ abstract class KunenaRoute
 
 			if (self::$search === false)
 			{
-				self::$search['home'] = array();
+				self::$search['home'] = [];
 
 				foreach (self::$menu as $item)
 				{
@@ -545,7 +545,7 @@ abstract class KunenaRoute
 	 */
 	protected static function checkHome($item, $catid)
 	{
-		static $cache = array();
+		static $cache = [];
 
 		if (!$catid)
 		{
@@ -555,7 +555,7 @@ abstract class KunenaRoute
 		if (!isset($cache[$item->id]))
 		{
 			$params = $item->getParams();
-			$catids = $params->get('catids', array());
+			$catids = $params->get('catids', []);
 
 			if (!is_array($catids))
 			{
@@ -630,7 +630,7 @@ abstract class KunenaRoute
 	 */
 	protected static function checkCategory($item, Joomla\CMS\Uri\Uri $uri)
 	{
-		static $cache = array();
+		static $cache = [];
 		$catid = (int) $uri->getVar('catid');
 		$check = self::check($item, $uri);
 
@@ -641,7 +641,7 @@ abstract class KunenaRoute
 
 		if (!isset($cache[$item->id]))
 		{
-			$cache[$item->id] = array();
+			$cache[$item->id] = [];
 
 			if (!empty($item->query['catid']))
 			{
@@ -709,8 +709,8 @@ abstract class KunenaRoute
 			$uri->delVar(Session::getFormToken());
 
 			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
-			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));
-			$host = $uri->toString(array('scheme', 'host', 'port'));
+			$base = $uri->toString(['scheme', 'host', 'port', 'path']);
+			$host = $uri->toString(['scheme', 'host', 'port']);
 
 			// Referrer should always have host set and it should come from the same base address.
 			if (empty($host) || stripos($base, Uri::base()) !== 0)
@@ -735,7 +735,7 @@ abstract class KunenaRoute
 			$uri->setFragment($anchor);
 		}
 
-		return $uri->toString(array('path', 'query', 'fragment'));
+		return $uri->toString(['path', 'query', 'fragment']);
 	}
 
 	/**
@@ -909,7 +909,7 @@ abstract class KunenaRoute
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$user  = KunenaUserHelper::getMyself();
-		$data  = array(self::$subtree, self::$uris);
+		$data  = [self::$subtree, self::$uris];
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
@@ -962,7 +962,7 @@ abstract class KunenaRoute
 		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
 
-		$vars = array();
+		$vars = [];
 
 		foreach ($aliases as $object)
 		{
@@ -1032,18 +1032,18 @@ abstract class KunenaRoute
 		}
 
 		// If values are both in GET and POST, they are only stored in POST
-		$post = Factory::getApplication()->input->post->getArray(array());
+		$post = Factory::getApplication()->input->post->getArray([]);
 
 		foreach ($post as $key => $value)
 		{
-			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
+			if (in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 			{
 				self::$current->setVar($key, $value);
 			}
 		}
 
 		// Make sure that request URI is not broken
-		$get = Factory::getApplication()->input->get->getArray(array());
+		$get = Factory::getApplication()->input->get->getArray([]);
 
 		foreach ($get as $key => $value)
 		{
@@ -1052,7 +1052,7 @@ abstract class KunenaRoute
 				continue;
 			}
 
-			if (in_array($key, array('query', 'searchuser')))
+			if (in_array($key, ['query', 'searchuser']))
 			{
 				// Allow all values
 			}
@@ -1087,8 +1087,8 @@ abstract class KunenaRoute
 	 */
 	public static function cleanup()
 	{
-		self::$filtered = array();
-		self::$uris     = array();
+		self::$filtered = [];
+		self::$uris     = [];
 	}
 
 	/**

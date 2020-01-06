@@ -37,5 +37,5 @@ function kunena_600_2019_05_18_configuration($parent)
 	// Save configuration
 	$config->save();
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_CONFIGURATION'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_CONFIGURATION'), 'success' => true];
 }

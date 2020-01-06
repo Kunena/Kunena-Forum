@@ -220,7 +220,7 @@ abstract class KunenaDatabaseObjectFinder
 	{
 		if ($this->skip)
 		{
-			return array();
+			return [];
 		}
 
 		$query = clone $this->query;

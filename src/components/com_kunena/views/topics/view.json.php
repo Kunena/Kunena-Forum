@@ -31,7 +31,7 @@ class KunenaViewTopics extends KunenaView
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 55);
 
 		$template = KunenaFactory::getTemplate();
-		$list     = array();
+		$list     = [];
 
 		foreach ($topics as $topic)
 		{
@@ -63,10 +63,10 @@ class KunenaViewTopics extends KunenaView
 			$list[] = $response;
 		}
 
-		$json2 = array(
+		$json2 = [
 			'Count'  => $count,
 			'Topics' => $list,
-		);
+		];
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 

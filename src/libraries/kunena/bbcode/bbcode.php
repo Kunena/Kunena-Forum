@@ -87,7 +87,7 @@ class KunenaBbcode extends Nbbc\BBCode
 		$this->SetURLTarget('_blank');
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
 	}
 
 	/**
@@ -414,7 +414,7 @@ class KunenaBbcode extends Nbbc\BBCode
 			)
 		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-		$output = array();
+		$output = [];
 
 		if ($search !== false)
 		{
@@ -1083,7 +1083,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select(array($db->quoteName('code'), $db->quoteName('location')))
+			$query->select([$db->quoteName('code'), $db->quoteName('location')])
 				->from($db->quoteName('#__kunena_smileys'));
 			$db->setQuery($query);
 			$smileys = $db->loadObjectList();
@@ -1434,9 +1434,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	{
 		// Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
 		// list style is that with image-based markers, which often slows down web sites.
-		$list_styles    = array('1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha');
-		$ci_list_styles = array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian');
-		$ul_types       = array('circle' => 'circle', 'disc' => 'disc', 'square' => 'square');
+		$list_styles    = ['1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha'];
+		$ci_list_styles = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian'];
+		$ul_types       = ['circle' => 'circle', 'disc' => 'disc', 'square' => 'square'];
 		$default        = trim($default);
 
 		if (!$default)
@@ -1867,7 +1867,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$cache = Factory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
 		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
+		$ebay_item = $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
 
 		return $ebay_item;
 	}
@@ -2004,7 +2004,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 				$params->set('ksource', 'kunena');
 				Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
-				Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$article, &$params, 0));
+				Factory::getApplication()->triggerEvent('onContentPrepare', ['text', &$article, &$params, 0]);
 				$article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
 				$html                = $article->text;
@@ -2092,10 +2092,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if ($highlight && !class_exists('GeSHi'))
 		{
-			$paths = array(
+			$paths = [
 				JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi.php',
 				JPATH_ROOT . '/plugins/content/geshi/geshi/geshi.php',
-			);
+			];
 
 			foreach ($paths as $path)
 			{
@@ -2238,7 +2238,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if (!$vid ["type"])
 		{
-			$vid_players = array('divx' => 'divx', 'flash' => 'swf', 'mediaplayer' => 'avi,mp3,wma,wmv', 'quicktime' => 'mov,qt,qti,qtif,qtvr', 'realplayer', 'rm');
+			$vid_players = ['divx' => 'divx', 'flash' => 'swf', 'mediaplayer' => 'avi,mp3,wma,wmv', 'quicktime' => 'mov,qt,qti,qtif,qtvr', 'realplayer', 'rm'];
 
 			foreach ($vid_players as $vid_player => $vid_exts)
 			{
@@ -2272,38 +2272,38 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 		}
 
-		$vid_providers = array(
+		$vid_providers = [
 
-			'bofunk' => array('flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', ''),
+			'bofunk' => ['flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', ''],
 
-			'break' => array('flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', ''),
+			'break' => ['flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', ''],
 
-			'clipfish' => array('flash', 464, 380, 0, 0, 'https://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', ''),
+			'clipfish' => ['flash', 464, 380, 0, 0, 'https://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', ''],
 
-			'dailymotion' => array('flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', array(array(6, 'wmode', 'transparent'))),
+			'dailymotion' => ['flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', [[6, 'wmode', 'transparent']]],
 
-			'metacafe' => array('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array(array(6, 'wmode', 'transparent'))),
+			'metacafe' => ['flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', [[6, 'wmode', 'transparent']]],
 
-			'myspace' => array('iframe', 430, 346, 0, 0, 'https://media.myspace.com/play/video/%vcode%', '', array(array(6, 'wmode', 'transparent'))),
+			'myspace' => ['iframe', 430, 346, 0, 0, 'https://media.myspace.com/play/video/%vcode%', '', [[6, 'wmode', 'transparent']]],
 
-			'rutube' => array('flash', 400, 353, 0, 0, 'https://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)'),
+			'rutube' => ['flash', 400, 353, 0, 0, 'https://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)'],
 
-			'sapo' => array('flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', array(array(6, 'wmode', 'transparent'))),
+			'sapo' => ['flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', [[6, 'wmode', 'transparent']]],
 
-			'veoh' => array('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', ''),
+			'veoh' => ['flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', ''],
 
-			'videojug' => array('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', ''),
+			'videojug' => ['flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', ''],
 
-			'vimeo' => array('iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', ''),
+			'vimeo' => ['iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', ''],
 
-			'youtube' => array('iframe', 425, 355, 0, 0, 'https://www.youtube-nocookie.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
+			'youtube' => ['iframe', 425, 355, 0, 0, 'https://www.youtube-nocookie.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', [[6, 'wmode', 'transparent']]],
 
-			'youku' => array('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', array(array(6, 'wmode', 'transparent'))),
+			'youku' => ['flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', [[6, 'wmode', 'transparent']]],
 
 			// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 			//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
 			//
-		);
+		];
 
 		if (isset($vid_providers [$vid ["type"]]))
 		{
@@ -2339,7 +2339,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if (!is_array($vid_par2))
 		{
-			$vid_par2 = array();
+			$vid_par2 = [];
 		}
 
 		$vid_size = isset($params ["size"]) ? intval($params ["size"]) : 0;
@@ -2385,43 +2385,43 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		switch ($vid_type)
 		{
 			case 'divx' :
-				$vid_par1     = array(array(1, 'classid', 'clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616'), array(1, 'codebase', 'http://go.divx.com/plugin/DivXBrowserPlugin.cab'), array(4, 'type', 'video/divx'), array(4, 'pluginspage', 'http://go.divx.com/plugin/download/'), array(6, 'src', $vid_source), array(6, 'autoplay', 'false'), array(5, 'width', $vid_width), array(5, 'height', $vid_height));
-				$vid_allowpar = array('previewimage');
+				$vid_par1     = [[1, 'classid', 'clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616'], [1, 'codebase', 'http://go.divx.com/plugin/DivXBrowserPlugin.cab'], [4, 'type', 'video/divx'], [4, 'pluginspage', 'http://go.divx.com/plugin/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+				$vid_allowpar = ['previewimage'];
 				break;
 			case 'flash' :
-				$vid_par1     = array(array(1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'), array(1, 'codebase', 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab'), array(2, 'movie', $vid_source), array(4, 'src', $vid_source), array(4, 'type', 'application/x-shockwave-flash'), array(4, 'pluginspage', 'http://www.macromedia.com/go/getflashplayer'), array(6, 'quality', 'high'), array(6, 'allowFullScreen', 'true'), array(6, 'allowScriptAccess', 'never'), array(5, 'width', $vid_width), array(5, 'height', $vid_height));
-				$vid_allowpar = array('flashvars', 'wmode', 'bgcolor', 'quality');
+				$vid_par1     = [[1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'], [1, 'codebase', 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab'], [2, 'movie', $vid_source], [4, 'src', $vid_source], [4, 'type', 'application/x-shockwave-flash'], [4, 'pluginspage', 'http://www.macromedia.com/go/getflashplayer'], [6, 'quality', 'high'], [6, 'allowFullScreen', 'true'], [6, 'allowScriptAccess', 'never'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+				$vid_allowpar = ['flashvars', 'wmode', 'bgcolor', 'quality'];
 				break;
 			case 'iframe' :
 				return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe></div>';
 				break;
 			case 'mediaplayer' :
-				$vid_par1     = array(array(1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95'), array(1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab'), array(4, 'type', 'application/x-mplayer2'), array(4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/'), array(6, 'src', $vid_source), array(6, 'autostart', 'false'), array(6, 'autosize', 'true'), array(5, 'width', $vid_width), array(5, 'height', $vid_height));
-				$vid_allowpar = array();
+				$vid_par1     = [[1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95'], [1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab'], [4, 'type', 'application/x-mplayer2'], [4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/'], [6, 'src', $vid_source], [6, 'autostart', 'false'], [6, 'autosize', 'true'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+				$vid_allowpar = [];
 				break;
 			case 'quicktime' :
-				$vid_par1     = array(array(1, 'classid', 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'), array(1, 'codebase', 'http://www.apple.com/qtactivex/qtplugin.cab'), array(4, 'type', 'video/quicktime'), array(4, 'pluginspage', 'http://www.apple.com/quicktime/download/'), array(6, 'src', $vid_source), array(6, 'autoplay', 'false'), array(6, 'scale', 'aspect'), array(5, 'width', $vid_width), array(5, 'height', $vid_height));
-				$vid_allowpar = array();
+				$vid_par1     = [[1, 'classid', 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'], [1, 'codebase', 'http://www.apple.com/qtactivex/qtplugin.cab'], [4, 'type', 'video/quicktime'], [4, 'pluginspage', 'http://www.apple.com/quicktime/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [6, 'scale', 'aspect'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+				$vid_allowpar = [];
 				break;
 			case 'realplayer' :
-				$vid_par1     = array(array(1, 'classid', 'clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA'), array(4, 'type', 'audio/x-pn-realaudio-plugin'), array(6, 'src', $vid_source), array(6, 'autostart', 'false'), array(6, 'controls', 'ImageWindow,ControlPanel'), array(5, 'width', $vid_width), array(5, 'height', $vid_height));
-				$vid_allowpar = array();
+				$vid_par1     = [[1, 'classid', 'clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA'], [4, 'type', 'audio/x-pn-realaudio-plugin'], [6, 'src', $vid_source], [6, 'autostart', 'false'], [6, 'controls', 'ImageWindow,ControlPanel'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+				$vid_allowpar = [];
 				break;
 			default :
 				return;
 		}
 
-		$vid_par3 = array();
+		$vid_par3 = [];
 
 		foreach ($params as $vid_key => $vid_value)
 		{
 			if (in_array(Joomla\String\StringHelper::strtolower($vid_key), $vid_allowpar))
 			{
-				array_push($vid_par3, array(6, $vid_key, $bbcode->HTMLEncode($vid_value)));
+				array_push($vid_par3, [6, $vid_key, $bbcode->HTMLEncode($vid_value)]);
 			}
 		}
 
-		$vid_object = $vid_param = $vid_embed = array();
+		$vid_object = $vid_param = $vid_embed = [];
 
 		foreach (array_merge($vid_par1, $vid_par2, $vid_par3) as $vid_data)
 		{
@@ -2978,9 +2978,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			// Create a 'stream' transport.
 			$http = new Joomla\CMS\Http\Http($options, $transport);
 
-			$headers = array(
+			$headers = [
 				'Authorization' => "Basic " . $b64_bearer_token_credentials,
-			);
+			];
 
 			$data     = "grant_type=client_credentials";
 			$response = $http->post($url, $data, $headers, '10');
@@ -3016,11 +3016,11 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			// Create a 'stream' transport.
 			$http = new Joomla\CMS\Http\Http($options, $transport);
 
-			$headers = array(
+			$headers = [
 				'Authorization' => "Bearer " . $this->token,
-			);
+			];
 
-			$data     = array();
+			$data     = [];
 			$response = $http->get($url, $headers, '10');
 
 			if ($response->code == 200)

@@ -59,7 +59,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			return false;
 		}
 
-		return FRoute::users(array(), $xhtml);
+		return FRoute::users([], $xhtml);
 	}
 
 	/**
@@ -96,7 +96,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			$alias = $userid;
 		}
 
-		$options = array('id' => $alias);
+		$options = ['id' => $alias];
 
 		if ($task)
 		{
@@ -193,7 +193,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
-		$options = array('layout' => 'edit');
+		$options = ['layout' => 'edit'];
 		$url     = FRoute::profile($options, $xhtml);
 
 		return $url;

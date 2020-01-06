@@ -193,7 +193,7 @@ foreach ($this->sections as $section) :
 									<div class="moderators">
 										<?php
 										// get the Moderator list for display
-										$modslist = array();
+										$modslist = [];
 										foreach ($category->getmoderators() as $moderator)
 										{
 											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, KunenaTemplate::getInstance()->tooltips());

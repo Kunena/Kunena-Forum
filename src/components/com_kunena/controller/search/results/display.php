@@ -43,7 +43,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $data = array();
+	public $data = [];
 
 	/**
 	 * Prepare search results display.
@@ -60,7 +60,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		parent::before();
 
 		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch(array(), $this->input);
+		$this->model = new KunenaModelSearch([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
@@ -70,7 +70,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->searchwords = $this->model->getSearchWords();
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
-		$this->results = array();
+		$this->results = [];
 		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 

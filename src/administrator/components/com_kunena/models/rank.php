@@ -36,7 +36,7 @@ class KunenaAdminModelRank extends KunenaModel
 		$selected = $this->getRank();
 
 		$rankpath = $template->getRankPath();
-		$files1   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files1   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, ['index.php', 'index.html']);
 		$files1   = (array) array_flip($files1);
 
 		foreach ($files1 as $key => &$path)
@@ -45,7 +45,7 @@ class KunenaAdminModelRank extends KunenaModel
 		}
 
 		$rankpath = 'media/kunena/ranks/';
-		$files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, ['index.php', 'index.html']);
 		$files2   = (array) array_flip($files2);
 
 		foreach ($files2 as $key => &$path)
@@ -56,7 +56,7 @@ class KunenaAdminModelRank extends KunenaModel
 		$rank_images = $files1 + $files2;
 		ksort($rank_images);
 
-		$rank_list = array();
+		$rank_list = [];
 
 		foreach ($rank_images as $file => $path)
 		{

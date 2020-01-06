@@ -63,5 +63,5 @@ function kunena_600_2019_05_31_banneddatetimedefault($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_BANNED_DATETIME_DEFAULT'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_BANNED_DATETIME_DEFAULT'), 'success' => true];
 }

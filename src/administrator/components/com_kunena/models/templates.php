@@ -27,7 +27,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->app    = Factory::getApplication();
@@ -47,14 +47,14 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
 		$xml      = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
-		$form = $this->loadForm('com_kunena_template', $xml, array('control' => 'jform', 'load_data' => $loadData, 'file' => false), true, '//config');
+		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
 
 		if (empty($form))
 		{
@@ -324,7 +324,7 @@ class KunenaAdminModelTemplates extends Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', []);
 
 		if (empty($data))
 		{

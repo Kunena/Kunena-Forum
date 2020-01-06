@@ -39,7 +39,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=ranks';
@@ -88,8 +88,8 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		$id = array_shift($cid);
 
@@ -237,8 +237,8 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		$cids = implode(',', $cid);
 

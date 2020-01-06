@@ -597,7 +597,7 @@ class TableKunenaUsers extends KunenaTable
 	public function reset()
 	{
 		parent::reset();
-		$fields = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
+		$fields = ['name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate'];
 
 		foreach ($fields as $field)
 		{
@@ -613,10 +613,10 @@ class TableKunenaUsers extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind($data, $ignore = array())
+	public function bind($data, $ignore = [])
 	{
 		parent::bind($data, $ignore);
-		$fields = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
+		$fields = ['name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate'];
 
 		foreach ($fields as $field)
 		{

@@ -80,7 +80,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		}
 
 		require_once KPATH_SITE . '/models/user.php';
-		$this->model = new KunenaModelUser(array(), $this->input);
+		$this->model = new KunenaModelUser([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
@@ -108,7 +108,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		}
 		else
 		{
-			$filter = array();
+			$filter = [];
 		}
 
 		$finder = new KunenaUserFinder;
@@ -120,7 +120,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		$alias     = 'ku';
-		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
+		$aliasList = ['id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate'];
 
 		if (in_array($this->state->get('list.ordering'), $aliasList))
 		{

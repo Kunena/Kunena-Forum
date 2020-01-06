@@ -176,7 +176,7 @@ class KunenaViewTopics extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topics', &$this->topics, &$params, 0]);
 
 		foreach ($this->topics as $this->topic)
 		{
@@ -224,7 +224,7 @@ class KunenaViewTopics extends KunenaView
 
 				if ($usertype == 'guest')
 				{
-					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 				}
 
 				// FIXME: enable caching after fixing the issues
@@ -233,7 +233,7 @@ class KunenaViewTopics extends KunenaView
 
 			if ($usertype != 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 			}
 
 			echo $contents;
@@ -288,7 +288,7 @@ class KunenaViewTopics extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		foreach ($this->messages as $this->message)
 		{
@@ -326,7 +326,7 @@ class KunenaViewTopics extends KunenaView
 
 				if ($usertype == 'guest')
 				{
-					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 				}
 
 				// FIXME: enable caching after fixing the issues
@@ -335,7 +335,7 @@ class KunenaViewTopics extends KunenaView
 
 			if ($usertype != 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 			}
 
 			echo $contents;

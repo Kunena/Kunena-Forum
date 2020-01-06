@@ -123,7 +123,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 */
 	protected function getGalleries($path)
 	{
-		$files  = array();
+		$files  = [];
 		$images = $this->getGallery($path);
 
 		if ($images)
@@ -173,7 +173,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 */
 	protected function getGalleryOptions()
 	{
-		$options = array();
+		$options = [];
 
 		foreach ($this->galleries as $gallery => $files)
 		{
@@ -181,6 +181,6 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 			$options[] = HTMLHelper::_('select.option', $gallery, $text);
 		}
 
-		return count($options) > 1 ? $options : array();
+		return count($options) > 1 ? $options : [];
 	}
 }

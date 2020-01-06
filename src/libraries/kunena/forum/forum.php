@@ -247,8 +247,8 @@ abstract class KunenaForum
 		$cache->setLifeTime($config->get('cache_time', 60));
 
 		// Setup error logging.
-		$options    = array('logger' => 'w3c', 'text_file' => 'kunena.php');
-		$categories = array('kunena');
+		$options    = ['logger' => 'w3c', 'text_file' => 'kunena.php'];
+		$categories = ['kunena'];
 		$levels     = JDEBUG || $config->debug ? Log::ALL :
 			Log::EMERGENCY | Log::ALERT | Log::CRITICAL | Log::ERROR;
 		Log::addLogger($options, $levels, $categories);
@@ -442,7 +442,7 @@ abstract class KunenaForum
 	 *
 	 * @throws  Exception
 	 */
-	public static function display($viewName, $layout = 'default', $template = null, $params = array())
+	public static function display($viewName, $layout = 'default', $template = null, $params = [])
 	{
 		// Filter input
 		$viewName = preg_replace('/[^A-Z0-9_]/i', '', $viewName);
@@ -485,7 +485,7 @@ abstract class KunenaForum
 			require_once $mpath;
 		}
 
-		$view = new $view(array('base_path' => KPATH_SITE));
+		$view = new $view(['base_path' => KPATH_SITE]);
 
 		if (!($params instanceof Joomla\Registry\Registry))
 		{
@@ -507,7 +507,7 @@ abstract class KunenaForum
 
 		if ($viewName != 'common')
 		{
-			$view->common           = new KunenaViewCommon(array('base_path' => KPATH_SITE));
+			$view->common           = new KunenaViewCommon(['base_path' => KPATH_SITE]);
 			$view->common->embedded = true;
 		}
 

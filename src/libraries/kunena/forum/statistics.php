@@ -124,7 +124,7 @@ class KunenaForumStatistics
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $top = array();
+	public $top = [];
 
 	/**
 	 * @var     boolean
@@ -217,7 +217,7 @@ class KunenaForumStatistics
 	 */
 	public function loadAll($force = false)
 	{
-		$this->top = array();
+		$this->top = [];
 		$this->loadGeneral($force);
 		$this->loadTopicStats($force);
 		$this->loadUserStats($force);
@@ -445,14 +445,14 @@ class KunenaForumStatistics
 
 		if ($this->topTopics < $limit)
 		{
-			$params = array('orderby' => 'posts DESC');
+			$params = ['orderby' => 'posts DESC'];
 			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 
 			if (!$top)
 			{
-				return array();
+				return [];
 			}
 
 			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
@@ -513,7 +513,7 @@ class KunenaForumStatistics
 
 			if (!$top)
 			{
-				return array();
+				return [];
 			}
 
 			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_POLLS');
@@ -593,7 +593,7 @@ class KunenaForumStatistics
 
 			if (!$top)
 			{
-				return array();
+				return [];
 			}
 
 			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
@@ -632,7 +632,7 @@ class KunenaForumStatistics
 
 			if (!$top)
 			{
-				return array();
+				return [];
 			}
 
 			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
@@ -666,9 +666,9 @@ class KunenaForumStatistics
 		if ($this->topThanks < $limit)
 		{
 			$query = $this->_db->getQuery(true);
-			$query->select(array('t.targetuserid'), array('id'))
+			$query->select(['t.targetuserid'], ['id'])
 				->select('COUNT(' . $this->_db->quoteName('t.targetuserid') . ') AS ' . $this->_db->quoteName('count'))
-				->from($this->_db->quoteName(array('#__kunena_thankyou'), array('t')))
+				->from($this->_db->quoteName(['#__kunena_thankyou'], ['t']))
 				->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'))
 				->group($this->_db->quoteName('t.targetuserid'));
 			$query->order($this->_db->quoteName('count') . ' DESC');
@@ -695,7 +695,7 @@ class KunenaForumStatistics
 
 			if (!$top)
 			{
-				return array();
+				return [];
 			}
 
 			$top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_THANKS');

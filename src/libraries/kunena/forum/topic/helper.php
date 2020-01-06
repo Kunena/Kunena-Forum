@@ -25,7 +25,7 @@ abstract class KunenaForumTopicHelper
 	 * @var     KunenaForumTopic[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * Returns KunenaForumTopic object.
@@ -161,12 +161,12 @@ abstract class KunenaForumTopicHelper
 		}
 		else
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		self::loadTopics($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -274,7 +274,7 @@ abstract class KunenaForumTopicHelper
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = array())
+	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = [])
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db     = Factory::getDBO();
@@ -316,7 +316,7 @@ abstract class KunenaForumTopicHelper
 			$categories = KunenaForumCategoryHelper::getCategories($categories, 0);
 		}
 
-		$catlist = array();
+		$catlist = [];
 
 		foreach ($categories as $category)
 		{
@@ -327,12 +327,12 @@ abstract class KunenaForumTopicHelper
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			return array(0, array());
+			return [0, []];
 		}
 
 		$catlist = implode(',', array_keys($catlist));
 
-		$whereuser = array();
+		$whereuser = [];
 
 		if (!empty($params['started']))
 		{
@@ -396,14 +396,14 @@ abstract class KunenaForumTopicHelper
 		{
 			KunenaError::displayDatabaseError($e);
 
-			return array(0, array());
+			return [0, []];
 		}
 
 		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			return array(0, array());
+			return [0, []];
 		}
 
 		// If out of range, use last page
@@ -445,10 +445,10 @@ abstract class KunenaForumTopicHelper
 
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			return array(0, array());
+			return [0, []];
 		}
 
-		$topics = array();
+		$topics = [];
 
 		foreach ($results as $id => $result)
 		{
@@ -461,7 +461,7 @@ abstract class KunenaForumTopicHelper
 		unset($results);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		return array($total, $topics);
+		return [$total, $topics];
 	}
 
 	/**
@@ -596,7 +596,7 @@ abstract class KunenaForumTopicHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
+		self::$_instances = [];
 	}
 
 	/**
@@ -756,12 +756,12 @@ abstract class KunenaForumTopicHelper
 
 		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists())
 		{
-			return array();
+			return [];
 		}
 
 		$session = KunenaFactory::getSession();
 
-		$ids = array();
+		$ids = [];
 
 		foreach ($topics as $topic)
 		{
@@ -810,7 +810,7 @@ abstract class KunenaForumTopicHelper
 			}
 		}
 
-		$list = array();
+		$list = [];
 
 		foreach ($topics as $topic)
 		{

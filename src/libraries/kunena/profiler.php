@@ -23,19 +23,19 @@ class KunenaProfiler extends Profiler
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_kstart = array();
+	protected $_kstart = [];
 
 	/**
 	 * @var     array|KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */
-	protected $_heap = array();
+	protected $_heap = [];
 
 	/**
 	 * @param   string  $prefix  string
@@ -160,13 +160,13 @@ class KunenaProfilerItem
 	 * @var array|KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $start = array();
+	public $start = [];
 
 	/**
 	 * @param   string  $name  name

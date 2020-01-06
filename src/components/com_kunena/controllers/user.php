@@ -358,7 +358,7 @@ class KunenaControllerUser extends KunenaController
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
 
-		$this->app->triggerEvent('OnAfterKunenaProfileUpdate', array($this->user, $success));
+		$this->app->triggerEvent('OnAfterKunenaProfileUpdate', [$this->user, $success]);
 
 		if ($errors)
 		{
@@ -383,9 +383,9 @@ class KunenaControllerUser extends KunenaController
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$log,
-				array(
+				[
 					'edited_by_moderator' => $edited_by_moderator,
-				),
+				],
 				null,
 				null,
 				$this->user
@@ -408,7 +408,7 @@ class KunenaControllerUser extends KunenaController
 	protected function saveUser()
 	{
 		// We only allow users to edit few fields
-		$allow = array('name', 'email', 'password', 'password2', 'params');
+		$allow = ['name', 'email', 'password', 'password2', 'params'];
 
 		if (ComponentHelper::getParams('com_users')->get('change_login_name', 1))
 		{
@@ -800,18 +800,18 @@ class KunenaControllerUser extends KunenaController
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
 					$log,
-					array(
+					[
 						'expiration'     => $delban ? 'NOW' : $expiration,
 						'reason_private' => $reason_private,
 						'reason_public'  => $reason_public,
 						'comment'        => $comment,
-						'options'        => array(
+						'options'        => [
 							'resetProfile'   => (bool) $DelProfileInfo,
 							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
 							'deleteAvatar'   => (bool) $DelAvatar || $DelProfileInfo,
 							'deletePosts'    => (bool) $banDelPosts,
-						),
-					),
+						],
+					],
 					null,
 					null,
 					$user
@@ -869,11 +869,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPosts))
 		{
-			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
+			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
@@ -889,11 +889,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPostsPerm))
 		{
-			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
+			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
@@ -1113,7 +1113,7 @@ class KunenaControllerUser extends KunenaController
 		try
 		{
 			$caption = $this->input->getString('caption');
-			$options = array(
+			$options = [
 				'filename'   => $this->input->getString('filename'),
 				'size'       => $this->input->getInt('size'),
 				'mime'       => $this->input->getString('mime'),
@@ -1121,7 +1121,7 @@ class KunenaControllerUser extends KunenaController
 				'chunkStart' => $this->input->getInt('chunkStart', 0),
 				'chunkEnd'   => $this->input->getInt('chunkEnd', 0),
 				'image_type' => 'avatar',
-			);
+			];
 
 			// Upload!
 			$this->config->avatartypes = strtolower($this->config->avatartypes);
@@ -1228,7 +1228,7 @@ class KunenaControllerUser extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$success = array();
+		$success = [];
 		$kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
@@ -1333,8 +1333,8 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		if (!empty($cid))
 		{
@@ -1344,8 +1344,8 @@ class KunenaControllerUser extends KunenaController
 			{
 				$attachment  = KunenaAttachmentHelper::get($id);
 				$message     = $attachment->getMessage();
-				$attachments = array($attachment->id, 1);
-				$attach      = array();
+				$attachments = [$attachment->id, 1];
+				$attach      = [];
 				$removeList  = array_keys(array_diff_key($attachments, $attach));
 				$removeList  = ArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
@@ -1416,7 +1416,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($ip))
 		{
-			$data                      = array();
+			$data                      = [];
 			$data['username']          = $spammer->username;
 			$data['ip']                = $ip;
 			$data['email']             = $spammer->email;
@@ -1435,7 +1435,7 @@ class KunenaControllerUser extends KunenaController
 			else
 			{
 				// Report failed or refused
-				$reasons = array();
+				$reasons = [];
 				preg_match('/<p>.*<\/p>/', $result->body, $reasons);
 
 				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it

@@ -103,7 +103,7 @@ class KunenaModelUser extends KunenaModel
 
 			if (!$superadmins)
 			{
-				$superadmins = array(0);
+				$superadmins = [0];
 			}
 
 			$this->setState('list.exclude', implode(',', $superadmins));
@@ -140,7 +140,7 @@ class KunenaModelUser extends KunenaModel
 	{
 		// TODO: add strict search from the beginning of the name
 		$search = $this->getState('list.search');
-		$where  = array();
+		$where  = [];
 
 		if ($search)
 		{

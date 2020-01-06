@@ -44,7 +44,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
-		Factory::getApplication()->triggerEvent('onFinderAfterSave', array($context, $table, $isNew));
+		Factory::getApplication()->triggerEvent('onFinderAfterSave', [$context, $table, $isNew]);
 	}
 
 	/**
@@ -73,7 +73,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
-		Factory::getApplication()->triggerEvent('onFinderBeforeSave', array($context, $table, $isNew));
+		Factory::getApplication()->triggerEvent('onFinderBeforeSave', [$context, $table, $isNew]);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		Factory::getApplication()->triggerEvent('onFinderAfterDelete', array($context, $table));
+		Factory::getApplication()->triggerEvent('onFinderAfterDelete', [$context, $table]);
 	}
 
 	/**
@@ -125,6 +125,6 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		Factory::getApplication()->triggerEvent('onFinderBeforeDelete', array($context, $table));
+		Factory::getApplication()->triggerEvent('onFinderBeforeDelete', [$context, $table]);
 	}
 }

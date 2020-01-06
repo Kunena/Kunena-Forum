@@ -195,7 +195,7 @@ abstract class KunenaFactory
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
-		static $loaded = array();
+		static $loaded = [];
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($client == 'site')
@@ -273,7 +273,7 @@ abstract class KunenaFactory
 
 		if (!is_array($strings))
 		{
-			$strings = array();
+			$strings = [];
 		}
 
 		$lang->_strings = array_merge($lang->_strings, $strings);

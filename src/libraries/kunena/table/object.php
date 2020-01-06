@@ -60,7 +60,7 @@ abstract class KunenaTableObject
 	 * @var     array
 	 * @since   Kunena 4.0
 	 */
-	protected static $tbl_keys = array();
+	protected static $tbl_keys = [];
 
 	/**
 	 * DatabaseDriver object.
@@ -110,7 +110,7 @@ abstract class KunenaTableObject
 		}
 
 		$exists   = false;
-		$tbl_keys = array();
+		$tbl_keys = [];
 
 		if ($keys === null)
 		{
@@ -299,7 +299,7 @@ abstract class KunenaTableObject
 
 		$tableKeys = static::$tbl_keys;
 
-		$keys = array();
+		$keys = [];
 
 		if (is_null($fields))
 		{
@@ -401,7 +401,7 @@ abstract class KunenaTableObject
 	 *
 	 * @throws  InvalidArgumentException
 	 */
-	public function bind($src, $ignore = array())
+	public function bind($src, $ignore = [])
 	{
 		// If the source value is not an array or object return false.
 		if (!is_object($src) && !is_array($src))
@@ -556,7 +556,7 @@ abstract class KunenaTableObject
 			static::getFields();
 		}
 
-		$keys = array();
+		$keys = [];
 
 		if (!is_array($fields))
 		{

@@ -199,7 +199,7 @@ class TableKunenaUserBans extends Joomla\CMS\Table\Table
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind($data, $ignore = array())
+	public function bind($data, $ignore = [])
 	{
 		if (isset($data['comments']))
 		{

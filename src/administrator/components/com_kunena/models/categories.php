@@ -71,25 +71,25 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$category->params = new Registry($category->params);
 
-		$catList    = array();
+		$catList    = [];
 		$catList [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_TOPLEVEL'));
 
 		// Make a standard yes/no list
-		$published    = array();
+		$published    = [];
 		$published [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));
 		$published [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_UNPUBLISHED'));
 
 		// Make a standard yes/no list
-		$yesno    = array();
+		$yesno    = [];
 		$yesno [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
 		// Anonymous posts default
-		$post_anonymous    = array();
+		$post_anonymous    = [];
 		$post_anonymous [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
 		$post_anonymous [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
 
-		$cat_params                = array();
+		$cat_params                = [];
 		$cat_params['ordering']    = 'ordering';
 		$cat_params['toplevel']    = Text::_('COM_KUNENA_TOPLEVEL');
 		$cat_params['sections']    = 1;
@@ -97,10 +97,10 @@ class KunenaAdminModelCategories extends KunenaModel
 		$cat_params['catid']       = $category->id;
 		$cat_params['action']      = 'admin';
 
-		$channels_params           = array();
+		$channels_params           = [];
 		$channels_params['catid']  = $category->id;
 		$channels_params['action'] = 'admin';
-		$channels_options          = array();
+		$channels_options          = [];
 		$channels_options []       = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
 		$channels_options []       = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
 
@@ -109,7 +109,7 @@ class KunenaAdminModelCategories extends KunenaModel
 			$category->channels = 'THIS';
 		}
 
-		$topic_ordering_options   = array();
+		$topic_ordering_options   = [];
 		$topic_ordering_options[] = HTMLHelper::_('select.option', 'lastpost', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
 		$topic_ordering_options[] = HTMLHelper::_('select.option', 'creation', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
 		$topic_ordering_options[] = HTMLHelper::_('select.option', 'alpha', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
@@ -118,7 +118,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$aliases = array_keys($category->getAliases());
 
-		$lists                     = array();
+		$lists                     = [];
 		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']      = HTMLHelper::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox form-control"', 'value', 'text', $category->parent_id);
@@ -133,7 +133,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['topic_ordering']  = HTMLHelper::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox form-control" size="1"', 'value', 'text', $category->topic_ordering);
 		$lists ['allow_ratings']   = HTMLHelper::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allow_ratings);
 
-		$options                 = array();
+		$options                 = [];
 		$options[0]              = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
 		$options[1]              = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
 		$options[2]              = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
@@ -144,7 +144,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$lists['display_children'] = HTMLHelper::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox form-control" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-		$topicicons     = array();
+		$topicicons     = [];
 		$topiciconslist = Folder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 
 		foreach ($topiciconslist as $icon)
@@ -267,7 +267,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	public function saveorder($pks = null, $order = null)
 	{
 		$table      = Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
-		$conditions = array();
+		$conditions = [];
 
 		if (empty($pks))
 		{
@@ -306,7 +306,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				if (!$found)
 				{
 					$key          = $table->getKeyName();
-					$conditions[] = array($table->$key, $condition);
+					$conditions[] = [$table->$key, $condition];
 				}
 			}
 		}
@@ -333,7 +333,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	 */
 	protected function getReorderConditions($table)
 	{
-		$condition   = array();
+		$condition   = [];
 		$condition[] = 'parent_id = ' . (int) $table->parent_id;
 
 		return $condition;
@@ -352,7 +352,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	public function getBatchCategories()
 	{
 		$categories         = $this->getAdminCategories();
-		$batch_categories   = array();
+		$batch_categories   = [];
 		$batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 
 		foreach ($categories as $category)
@@ -377,7 +377,7 @@ class KunenaAdminModelCategories extends KunenaModel
 	{
 		if ($this->_admincategories === false)
 		{
-			$params = array(
+			$params = [
 				'ordering'           => $this->getState('list.ordering'),
 				'direction'          => $this->getState('list.direction') == 'asc' ? 1 : -1,
 				'search'             => $this->getState('filter.search'),
@@ -390,15 +390,15 @@ class KunenaAdminModelCategories extends KunenaModel
 				'filter_allow_polls' => $this->getState('filter.allow_polls'),
 				'filter_review'      => $this->getState('filter.review'),
 				'filter_anonymous'   => $this->getState('filter.anonymous'),
-				'action'             => 'admin');
+				'action'             => 'admin'];
 
 			$catid      = $this->getState('item.id', 0);
-			$categories = array();
-			$orphans    = array();
+			$categories = [];
+			$orphans    = [];
 
 			if ($catid)
 			{
-				$categories   = KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, array('unpublished' => 1, 'action' => 'none'));
+				$categories   = KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
 				$categories[] = KunenaForumCategoryHelper::get($catid);
 			}
 			else
@@ -445,7 +445,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 				// Get ACL groups for the category.
 				$access               = $acl->getCategoryAccess($category);
-				$category->accessname = array();
+				$category->accessname = [];
 
 				foreach ($access as $item)
 				{

@@ -45,7 +45,7 @@ class KunenaRouter extends RouterBase
 	 */
 	public function build(&$query)
 	{
-		$segments = array();
+		$segments = [];
 
 		// If Kunena Forum isn't installed or SEF is not enabled, do nothing
 		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed() || !KunenaConfig::getInstance()->sef)
@@ -60,7 +60,7 @@ class KunenaRouter extends RouterBase
 
 		if (isset($query['Itemid']))
 		{
-			static $menuitems = array();
+			static $menuitems = [];
 			$Itemid = $query['Itemid'] = (int) $query['Itemid'];
 
 			if (!isset($menuitems[$Itemid]))
@@ -297,7 +297,7 @@ class KunenaRouter extends RouterBase
 		// If Kunena Forum isn't installed do nothing
 		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 		{
-			return array();
+			return [];
 		}
 
 		$total = count($segments);
@@ -313,7 +313,7 @@ class KunenaRouter extends RouterBase
 
 		// Get current menu item and get query variables from it
 		$active = Factory::getApplication()->getMenu()->getActive();
-		$vars   = isset($active->query) ? $active->query : array('view' => 'home');
+		$vars   = isset($active->query) ? $active->query : ['view' => 'home'];
 
 		if (empty($vars['view']) || $vars['view'] == 'home' || $vars['view'] == 'entrypage')
 		{

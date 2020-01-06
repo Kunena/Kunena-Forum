@@ -34,11 +34,11 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id',
 				'username',
 				'name',
@@ -49,7 +49,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 				'enabled',
 				'banned',
 				'moderator',
-			);
+			];
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
@@ -91,7 +91,7 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 			return false;
 		}
 
-		$ids = array();
+		$ids = [];
 
 		foreach ($items as $item)
 		{
@@ -146,14 +146,14 @@ class KunenaAdminModelUsers extends Joomla\CMS\MVC\Model\ListModel
 	 */
 	public function getModcatslist()
 	{
-		$options = array();
+		$options = [];
 
 		if ($this->me->isAdmin())
 		{
 			$options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action' => 'admin'), 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, ['action' => 'admin'], 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
 	}
 
 	/**

@@ -32,13 +32,13 @@ abstract class KunenaUserHelper
 	 * @var     array|KunenaUser[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array|KunenaUser[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances_name = array();
+	protected static $_instances_name = [];
 
 	/**
 	 * @var     null
@@ -83,8 +83,8 @@ abstract class KunenaUserHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances      = array();
-		self::$_instances_name = array();
+		self::$_instances      = [];
+		self::$_instances_name = [];
 	}
 
 	/**
@@ -101,7 +101,7 @@ abstract class KunenaUserHelper
 
 		// Initialize avatar if configured.
 		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load(array($id));
+		$avatars->load([$id]);
 	}
 
 	/**
@@ -200,7 +200,7 @@ abstract class KunenaUserHelper
 
 			// Preload avatar if configured.
 			$avatars = KunenaFactory::getAvatarIntegration();
-			$avatars->load(array($id));
+			$avatars->load([$id]);
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -217,12 +217,12 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function loadUsers(array $userids = array())
+	public static function loadUsers(array $userids = [])
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Make sure that userids are unique and that indexes are correct
-		$e_userids = array();
+		$e_userids = [];
 
 		foreach ($userids as $userid)
 		{
@@ -268,7 +268,7 @@ abstract class KunenaUserHelper
 			$avatars->load($e_userids);
 		}
 
-		$list = array();
+		$list = [];
 
 		foreach ($userids as $userid)
 		{
@@ -395,8 +395,8 @@ abstract class KunenaUserHelper
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($db->quoteName(array('u.id', 'ku.posts'), array(null, 'count')));
-			$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
+			$query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
+			$query->from($db->quoteName(['#__kunena_users'], ['ku']));
 			$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
 			$query->where($db->quoteName('ku.posts') . ' > 0');
 			$query->order($db->quoteName('ku.posts') . ' DESC');
@@ -447,7 +447,7 @@ abstract class KunenaUserHelper
 		// Check if there's anything to load.
 		if ((is_array($groupIds) && empty($groupIds)) || (is_array($userIds) && empty($userIds)))
 		{
-			return array();
+			return [];
 		}
 
 		$recurs = $recursive ? ' >= ' : ' = ';
@@ -476,14 +476,14 @@ abstract class KunenaUserHelper
 
 		$db->setQuery($query);
 		$results = (array) $db->loadObjectList();
-		$list    = array();
+		$list    = [];
 
 		// Make sure that we list all given users (if provided).
 		if ($userIds)
 		{
 			foreach ($userIds as $userId)
 			{
-				$list[$userId] = array();
+				$list[$userId] = [];
 			}
 		}
 
@@ -544,7 +544,7 @@ abstract class KunenaUserHelper
 				KunenaError::displayDatabaseError($e);
 			}
 
-			$counts          = array();
+			$counts          = [];
 			$counts['user']  = count(self::getOnlineUsers());
 			$counts['guest'] = $count;
 		}
@@ -811,9 +811,9 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function storeCheckStopforumspam($data = array(), $type)
+	public static function storeCheckStopforumspam($data = [], $type)
 	{
-		$options = array();
+		$options = [];
 
 		$transport = new StreamTransport($options);
 
@@ -823,13 +823,13 @@ abstract class KunenaUserHelper
 		// TODO : prevent to do a request with a private or local IP
 		if ($type == 'add')
 		{
-			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key'], 'evidence' => $data['evidence']);
+			$datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key'], 'evidence' => $data['evidence']];
 
 			$response = $http->post('https://www.stopforumspam.com/add', $datatosend);
 		}
 		elseif ($type == 'api')
 		{
-			$datatosend = array('username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email']);
+			$datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email']];
 
 			$response = $http->post('https://www.stopforumspam.com/api', $datatosend);
 		}
@@ -847,11 +847,11 @@ abstract class KunenaUserHelper
 				KunenaLog::log(
 					KunenaLog::TYPE_ACTION,
 					$log,
-					array(
+					[
 						'user_ip_reported'  => $data['ip'],
 						'username_reported' => $data['username'],
 						'email_reported'    => $data['email'],
-					),
+					],
 					null,
 					null,
 					null

@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model = new KunenaModelTopics([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
@@ -115,43 +115,43 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'topics' :
 				$order = 'first_post_time';
 				$finder
-					->filterByHold(array($hold))
+					->filterByHold([$hold])
 					->filterByTime($time, null, false);
 				break;
 			case 'sticky' :
 				$finder
-					->filterByHold(array($hold))
+					->filterByHold([$hold])
 					->where('a.ordering', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'locked' :
 				$finder
-					->filterByHold(array($hold))
+					->filterByHold([$hold])
 					->where('a.locked', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'noreplies' :
 				$finder
-					->filterByHold(array($hold))
+					->filterByHold([$hold])
 					->where('a.posts', '=', 1)
 					->filterByTime($time);
 				break;
 			case 'unapproved' :
 				$authorise = 'topic.approve';
 				$finder
-					->filterByHold(array(1))
+					->filterByHold([1])
 					->filterByTime($time);
 				break;
 			case 'deleted' :
 				$authorise = 'topic.undelete';
 				$finder
-					->filterByHold(array(2, 3))
+					->filterByHold([2, 3])
 					->filterByTime($time);
 				break;
 			case 'replies' :
 			default :
 				$finder
-					->filterByHold(array($hold))
+					->filterByHold([$hold])
 					->filterByTime($time);
 				break;
 		}
@@ -214,7 +214,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$this->prepareTopics();
 		}
 
-		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 
 		$params      = Factory::getApplication()->getMenu()->getActive()->getParams();
 		$title       = $params->get('page_title');

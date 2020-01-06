@@ -198,7 +198,7 @@ abstract class KunenaControllerBase implements Serializable
 	 */
 	public function serialize()
 	{
-		return serialize(array($this->input, $this->options));
+		return serialize([$this->input, $this->options]);
 	}
 
 	/**

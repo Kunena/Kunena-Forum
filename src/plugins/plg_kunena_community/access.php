@@ -38,7 +38,7 @@ class KunenaAccessCommunity
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $tree = array();
+	protected $tree = [];
 
 	/**
 	 * @var     null
@@ -69,7 +69,7 @@ class KunenaAccessCommunity
 	 */
 	public function getAccessTypes()
 	{
-		static $accesstypes = array('jomsocial');
+		static $accesstypes = ['jomsocial'];
 
 		return $accesstypes;
 	}
@@ -150,13 +150,13 @@ class KunenaAccessCommunity
 	 */
 	public function getAccessOptions($accesstype, $category)
 	{
-		$html = array();
+		$html = [];
 
 		if (!$accesstype || $accesstype == 'jomsocial')
 		{
 			$this->loadCategories();
 			$this->loadGroups();
-			$options  = array();
+			$options  = [];
 			$selected = 'jomsocial' == $category->accesstype && isset($this->groups[$category->access]) ? $category->access : null;
 
 			foreach ($this->tree as $item)
@@ -169,11 +169,11 @@ class KunenaAccessCommunity
 				$options[] = HTMLHelper::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
 			}
 
-			$html ['jomsocial']['access'] = array(
+			$html ['jomsocial']['access'] = [
 				'title' => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
 				'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),
-			);
+			];
 		}
 
 		return $html;
@@ -272,7 +272,7 @@ class KunenaAccessCommunity
 	 */
 	public function authoriseCategories($userid, array &$categories)
 	{
-		$allowed = array();
+		$allowed = [];
 
 		if (KunenaFactory::getUser($userid)->exists())
 		{
@@ -320,7 +320,7 @@ class KunenaAccessCommunity
 	{
 		if (empty($userids))
 		{
-			return array(array(), array());
+			return [[], []];
 		}
 
 		$category = $topic->getCategory();
@@ -339,13 +339,13 @@ class KunenaAccessCommunity
 		try
 		{
 			$allow = (array) $db->loadColumn();
-			$deny  = array();
+			$deny  = [];
 		}
 		catch (RuntimeException $e)
 		{
 			KunenaError::displayDatabaseError($e);
 		}
 
-		return array($allow, $deny);
+		return [$allow, $deny];
 	}
 }

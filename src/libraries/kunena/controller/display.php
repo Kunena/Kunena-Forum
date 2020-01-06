@@ -220,7 +220,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function getProperties()
 	{
 		$properties = (array) $this;
-		$list       = array();
+		$list       = [];
 
 		foreach ($properties as $property => $value)
 		{

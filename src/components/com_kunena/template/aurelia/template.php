@@ -31,7 +31,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * @var array
 	 * @since   Kunena 6.0
 	 */
-	protected $default = array('aurelia');
+	protected $default = ['aurelia'];
 
 	/**
 	 * Relative paths to various file types in this template.
@@ -41,7 +41,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * @var array
 	 * @since   Kunena 6.0
 	 */
-	protected $pathTypes = array(
+	protected $pathTypes = [
 		'emoticons'     => 'media/kunena/emoticons',
 		'ranks'         => 'media/kunena/ranks',
 		'icons'         => 'media/kunena/icons',
@@ -49,7 +49,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		'images'        => 'media/kunena/core/images',
 		'js'            => 'media/kunena/core/js',
 		'css'           => 'media/kunena/core/css',
-	);
+	];
 
 	/**
 	 * User group initialization.
@@ -58,7 +58,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected $userClasses = array(
+	protected $userClasses = [
 		'kwho-',
 		'admin'     => 'kwho-admin',
 		'globalmod' => 'kwho-globalmoderator',
@@ -67,7 +67,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		'guest'     => 'kwho-guest',
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
-	);
+	];
 
 	/**
 	 * Logic to load language strings for the template.
@@ -141,8 +141,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/v4-shims.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/all.js', [], ['defer' => true]);
+			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/v4-shims.js', [], ['defer' => true]);
 		}
 
 		$icons = $this->ktemplate->params->get('icons');
@@ -201,11 +201,11 @@ EOF;
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
-		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
-		$names = array('unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply');
+		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod'];
+		$names = ['unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply'];
 
 		// Need special style for buttons in drop-down list
-		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
+		$buttonsDropdown = ['reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented'];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

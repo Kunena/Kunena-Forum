@@ -55,11 +55,11 @@ class KunenaLayoutUserItem extends KunenaLayout
 		}
 
 		// Define all tabs.
-		$tabs = array();
+		$tabs = [];
 
 		if ($showPosts)
 		{
-			$params = array(
+			$params = [
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -72,7 +72,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
 				'display'          => $this->state->get('display', ''),
-			);
+			];
 
 			$tab           = new stdClass;
 			$tab->title    = Text::_('COM_KUNENA_USERPOSTS');
@@ -89,7 +89,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			if ($this->config->category_subscriptions != 'disabled')
 			{
-				$params       = array(
+				$params       = [
 					'embedded' => 1,
 
 					'userid'           => $this->profile->userid,
@@ -97,13 +97,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'filter_order'     => 'time',
 					'limitstart'       => 0,
 					'filter_order_Dir' => 'desc',
-				);
+				];
 				$tab->content .= $this->subRequest('Category/Subscriptions', new Joomla\Input\Input($params), $params);
 			}
 
 			if ($this->config->topic_subscriptions != 'disabled')
 			{
-				$params       = array(
+				$params       = [
 					'embedded'            => 1,
 					'topics_categories'   => 0,
 					'topics_catselection' => 1,
@@ -115,7 +115,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'filter_order'     => 'time',
 					'limitstart'       => 0,
 					'filter_order_Dir' => 'desc',
-				);
+				];
 				$tab->content .= $this->subRequest('Topic/List/User', new Joomla\Input\Input($params), $params);
 			}
 
@@ -129,7 +129,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showFavorites)
 		{
-			$params = array(
+			$params = [
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -141,7 +141,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order'     => 'time',
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
-			);
+			];
 
 			$tab               = new stdClass;
 			$tab->title        = Text::_('COM_KUNENA_FAVORITES');
@@ -156,7 +156,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tab->title   = Text::_('COM_KUNENA_THANK_YOU');
 			$tab->content = '';
 
-			$params       = array(
+			$params       = [
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -168,10 +168,10 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order'     => 'time',
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
-			);
+			];
 			$tab->content .= $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 
-			$params       = array(
+			$params       = [
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -183,7 +183,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order'     => 'time',
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
-			);
+			];
 			$tab->content .= $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
 
 			$tab->active      = false;
@@ -192,7 +192,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showUnapproved)
 		{
-			$params             = array(
+			$params             = [
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
@@ -204,7 +204,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order'     => 'time',
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
-			);
+			];
 			$tab                = new stdClass;
 			$tab->title         = Text::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
 			$tab->content       = $this->subRequest('Message/List/Recent', new Joomla\Input\Input($params), $params);
@@ -214,10 +214,10 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showAttachments)
 		{
-			$params              = array(
+			$params              = [
 				'embedded' => 1,
 				'userid'   => $this->profile->userid,
-			);
+			];
 			$tab                 = new stdClass;
 			$tab->title          = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 			$tab->content        = $this->subRequest('User/Attachments', new Joomla\Input\Input($params), $params);
@@ -254,7 +254,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabs', array($tabs));
+		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabs', [$tabs]);
 
 		$tabs = $tabs + $plugins;
 
@@ -272,7 +272,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displayUnapprovedPosts()
 	{
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -282,7 +282,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -297,7 +297,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displayUserPosts()
 	{
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -307,7 +307,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -322,7 +322,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displayGotThankyou()
 	{
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -332,7 +332,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -347,7 +347,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displaySaidThankyou()
 	{
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -357,7 +357,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -372,7 +372,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displayFavorites()
 	{
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -382,7 +382,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
@@ -402,7 +402,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			return;
 		}
 
-		$params = array(
+		$params = [
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
 			'userid'              => $this->user->id,
@@ -412,7 +412,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'filter_order'        => 'time',
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
-		);
+		];
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
@@ -432,13 +432,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 			return;
 		}
 
-		$params = array(
+		$params = [
 			'userid'           => $this->user->id,
 			'limit'            => 6,
 			'filter_order'     => 'time',
 			'limitstart'       => 0,
 			'filter_order_Dir' => 'desc',
-		);
+		];
 		KunenaForum::display('category', 'user', 'embed', $params);
 	}
 }

@@ -56,7 +56,7 @@ class KunenaView extends HtmlView
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $templatefiles = array();
+	public $templatefiles = [];
 
 	/**
 	 * @var     null
@@ -83,7 +83,7 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$name           = isset($config['name']) ? $config['name'] : $this->getName();
 		$this->document = Factory::getApplication()->getDocument();
@@ -202,7 +202,7 @@ class KunenaView extends HtmlView
 			elseif (!method_exists($this, $layoutFunction) && !is_file(KPATH_SITE . "/views/{$view}/{$layout}.php"))
 			{
 				// Layout was not found (don't allow Joomla to raise an error)
-				$this->displayError(array(Text::_('COM_KUNENA_NO_ACCESS')), 404);
+				$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
@@ -241,7 +241,7 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayError($messages = array(), $code = 404)
+	public function displayError($messages = [], $code = 404)
 	{
 		if ($this->inLayout)
 		{
@@ -337,7 +337,7 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayNoAccess($errors = array())
+	public function displayNoAccess($errors = [])
 	{
 		if ($this->inLayout)
 		{
@@ -379,7 +379,7 @@ class KunenaView extends HtmlView
 		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{
 			$renderer = $document->loadRenderer('modules');
-			$options  = array('style' => 'xhtml');
+			$options  = ['style' => 'xhtml'];
 			$html     .= '<div class="' . $position . '">';
 			$html     .= $renderer->render($position, $options, null);
 			$html     .= '</div>';
@@ -443,7 +443,7 @@ class KunenaView extends HtmlView
 	 * @throws  Exception
 	 * @throws  LogicException
 	 */
-	public function render($layout, $tpl, array $hmvcParams = array())
+	public function render($layout, $tpl, array $hmvcParams = [])
 	{
 		if ($this->inLayout)
 		{
@@ -524,7 +524,7 @@ class KunenaView extends HtmlView
 			$tpl  = isset($tpl) ? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 			// Load the template script
-			$filetofind                 = $this->_createFileName('template', array('name' => $file));
+			$filetofind                 = $this->_createFileName('template', ['name' => $file]);
 			$this->templatefiles[$file] = KunenaPath::find($this->_path['template'], $filetofind);
 		}
 

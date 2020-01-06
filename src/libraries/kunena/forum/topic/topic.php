@@ -53,43 +53,43 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $actions = array(
-		'none'                        => array(),
-		'read'                        => array('Read'),
-		'create'                      => array('NotExists', 'GuestWrite'),
-		'reply'                       => array('Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'),
-		'edit'                        => array('Read', 'NotMoved', 'Unlocked', 'Own'),
-		'move'                        => array('Read'),
-		'approve'                     => array('Read', 'NotMoved'),
-		'delete'                      => array('Read'),
-		'undelete'                    => array('Read'),
-		'permdelete'                  => array('Read', 'Permdelete'),
-		'favorite'                    => array('Read'),
-		'subscribe'                   => array('Read'),
-		'sticky'                      => array('Read'),
-		'lock'                        => array('Read'),
-		'rate'                        => array('Read', 'Unlocked'),
-		'poll.read'                   => array('Read', 'Poll'),
-		'poll.create'                 => array('Own'),
-		'poll.edit'                   => array('Read', 'NoVotes'),
-		'poll.delete'                 => array('Read', 'Own', 'Poll'),
-		'poll.vote'                   => array('Read', 'Poll', 'Vote'),
-		'post.read'                   => array('Read'),
-		'post.thankyou'               => array('Read', 'NotMoved', 'Unlocked'),
-		'post.unthankyou'             => array('Read', 'Unlocked'),
-		'post.reply'                  => array('Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'),
-		'post.edit'                   => array('Read', 'Unlocked'),
-		'post.move'                   => array('Read'),
-		'post.approve'                => array('Read'),
-		'post.delete'                 => array('Read', 'Unlocked'),
-		'post.undelete'               => array('Read'),
-		'post.permdelete'             => array('Read', 'Permdelete'),
-		'post.attachment.read'        => array('Read'),
-		'post.attachment.createimage' => array('Unlocked'),
-		'post.attachment.createfile'  => array('Unlocked'),
-		'post.attachment.delete'      => array(),
+	protected static $actions = [
+		'none'                        => [],
+		'read'                        => ['Read'],
+		'create'                      => ['NotExists', 'GuestWrite'],
+		'reply'                       => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'],
+		'edit'                        => ['Read', 'NotMoved', 'Unlocked', 'Own'],
+		'move'                        => ['Read'],
+		'approve'                     => ['Read', 'NotMoved'],
+		'delete'                      => ['Read'],
+		'undelete'                    => ['Read'],
+		'permdelete'                  => ['Read', 'Permdelete'],
+		'favorite'                    => ['Read'],
+		'subscribe'                   => ['Read'],
+		'sticky'                      => ['Read'],
+		'lock'                        => ['Read'],
+		'rate'                        => ['Read', 'Unlocked'],
+		'poll.read'                   => ['Read', 'Poll'],
+		'poll.create'                 => ['Own'],
+		'poll.edit'                   => ['Read', 'NoVotes'],
+		'poll.delete'                 => ['Read', 'Own', 'Poll'],
+		'poll.vote'                   => ['Read', 'Poll', 'Vote'],
+		'post.read'                   => ['Read'],
+		'post.thankyou'               => ['Read', 'NotMoved', 'Unlocked'],
+		'post.unthankyou'             => ['Read', 'Unlocked'],
+		'post.reply'                  => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'],
+		'post.edit'                   => ['Read', 'Unlocked'],
+		'post.move'                   => ['Read'],
+		'post.approve'                => ['Read'],
+		'post.delete'                 => ['Read', 'Unlocked'],
+		'post.undelete'               => ['Read'],
+		'post.permdelete'             => ['Read', 'Permdelete'],
+		'post.attachment.read'        => ['Read'],
+		'post.attachment.createimage' => ['Unlocked'],
+		'post.attachment.createfile'  => ['Unlocked'],
+		'post.attachment.delete'      => [],
 		// TODO: In the future we might want to restrict this: array('Read','Unlocked'),
-	);
+	];
 
 	/**
 	 * @var     integer
@@ -125,19 +125,19 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authcache = array();
+	protected $_authcache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authccache = array();
+	protected $_authccache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authfcache = array();
+	protected $_authfcache = [];
 
 	/**
 	 * @var     integer
@@ -311,7 +311,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$this->_posts = $this->posts;
 
 		// Clear authentication cache
-		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+		$this->_authfcache = $this->_authccache = $this->_authcache = [];
 
 		if ($cascade)
 		{
@@ -783,7 +783,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		// Clear authentication cache
-		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+		$this->_authfcache = $this->_authccache = $this->_authcache = [];
 
 		// NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
 		if ($this->moved_id == 0)
@@ -1156,7 +1156,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	public function getTopic()
 	{
-		$ids   = array();
+		$ids   = [];
 		$topic = $this;
 
 		// If topic has been moved, find the new topic
@@ -1319,7 +1319,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 */
-	public function newReply($fields = array(), $user = null, $safefields = null)
+	public function newReply($fields = [], $user = null, $safefields = null)
 	{
 		$user     = KunenaUserHelper::get($user);
 		$category = $this->getCategory();
@@ -1360,7 +1360,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			if ($fields)
 			{
-				$message->bind($fields, array('name', 'email', 'subject', 'message'), true);
+				$message->bind($fields, ['name', 'email', 'subject', 'message'], true);
 			}
 		}
 
@@ -1579,7 +1579,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Warning: logic in this function is very complicated and even with full understanding its easy to miss some details!
 
 		// Clear authentication cache
-		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+		$this->_authfcache = $this->_authccache = $this->_authcache = [];
 
 		// Cleanup input
 		if (!($ids instanceof Joomla\CMS\Date\Date))
@@ -1589,7 +1589,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				$ids = explode(',', (string) $ids);
 			}
 
-			$mesids = array();
+			$mesids = [];
 
 			foreach ($ids as $id)
 			{
@@ -1966,7 +1966,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		// Clear authentication cache
-		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+		$this->_authfcache = $this->_authccache = $this->_authcache = [];
 
 		$db        = Factory::getDBO();
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";

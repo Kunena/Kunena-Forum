@@ -25,7 +25,7 @@ abstract class KunenaTemplateHelper
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * isDefault
@@ -72,15 +72,15 @@ abstract class KunenaTemplateHelper
 
 			if (!$data->directory)
 			{
-				return array();
+				return [];
 			}
 
 			// Template found from the root (folder cannot contain more than one template)
-			return array('' => $data);
+			return ['' => $data];
 		}
 
 		$templateDirs = Folder::folders($templateBaseDir);
-		$rows         = array();
+		$rows         = [];
 
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)

@@ -27,7 +27,7 @@ class KunenaUploadHelper
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @return  void

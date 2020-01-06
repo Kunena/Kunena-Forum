@@ -75,13 +75,13 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $myvotes = array();
+	protected $myvotes = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $mytime = array();
+	protected $mytime = [];
 
 	/**
 	 * @param   int  $identifier  identifier
@@ -235,7 +235,7 @@ class KunenaForumTopicPoll extends CMSObject
 		}
 
 		$filter     = Joomla\CMS\Filter\InputFilter::getInstance();
-		$newOptions = array();
+		$newOptions = [];
 
 		foreach ($options as $key => &$value)
 		{
@@ -440,10 +440,10 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery(true);
 
 			// Insert columns.
-			$columns = array('pollid', 'userid', 'votes', 'lastvote', 'lasttime');
+			$columns = ['pollid', 'userid', 'votes', 'lastvote', 'lasttime'];
 
 			// Insert values.
-			$values = array($this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
+			$values = [$this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime)];
 
 			// Prepare the insert query.
 			$query
@@ -471,10 +471,10 @@ class KunenaForumTopicPoll extends CMSObject
 			$query = $this->_db->getQuery(true);
 
 			// Insert columns.
-			$columns = array('votes', 'lastvote', 'lasttime');
+			$columns = ['votes', 'lastvote', 'lasttime'];
 
 			// Insert values.
-			$values = array($this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime));
+			$values = [$this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime)];
 
 			// Prepare the insert query.
 			$query
@@ -638,7 +638,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind(array $data, array $allow = array())
+	public function bind(array $data, array $allow = [])
 	{
 		if (!empty($allow))
 		{
@@ -776,7 +776,7 @@ class KunenaForumTopicPoll extends CMSObject
 		if ($isnew)
 		{
 			$this->load($table->id);
-			$this->options = array();
+			$this->options = [];
 		}
 
 		if ($this->newOptions === false)

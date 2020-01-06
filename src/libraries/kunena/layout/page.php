@@ -55,7 +55,7 @@ class KunenaLayoutPage extends KunenaLayout
 			$template = KunenaFactory::getTemplate();
 		}
 
-		$templatePaths = array();
+		$templatePaths = [];
 
 		foreach ($paths as $path)
 		{

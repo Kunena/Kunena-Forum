@@ -44,13 +44,13 @@ if (!KunenaConfig::getInstance()->get('access_component', 1))
 	if (!$active)
 	{
 		// Prevent access without using a menu item.
-		Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(array('path', 'query')), Log::WARNING, 'kunena');
+		Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
 		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 	elseif ($active->type != 'component' || $active->component != 'com_kunena')
 	{
 		// Prevent spoofed access by using random menu item.
-		Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(array('path', 'query')), Log::WARNING, 'kunena');
+		Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
 		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
 }
@@ -138,10 +138,10 @@ $params->text = '';
 $topics       = new stdClass;
 $topics->text = '';
 PluginHelper::importPlugin('content');
-Factory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
-Factory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
+Factory::getApplication()->triggerEvent('onContentPrepare', ["com_kunena.{$view}", &$topics, &$params, 0]);
+Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
 $contents = (string) $contents;
-Factory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
+Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);
 echo $contents;
 
 // Remove custom error handlers.

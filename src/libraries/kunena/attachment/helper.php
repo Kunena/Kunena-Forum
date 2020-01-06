@@ -26,13 +26,13 @@ abstract class KunenaAttachmentHelper
 	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_messages = array();
+	protected static $_messages = [];
 
 	/**
 	 * Returns KunenaAttachment object.
@@ -100,17 +100,17 @@ abstract class KunenaAttachmentHelper
 		}
 		else
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		if (empty($ids))
 		{
-			return array();
+			return [];
 		}
 
 		self::loadById($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -194,11 +194,11 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function getNumberAttachments($ids = false)
 	{
-		$ids = array($ids);
+		$ids = [$ids];
 
 		self::loadByMessage($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -263,7 +263,7 @@ abstract class KunenaAttachmentHelper
 		{
 			if (!isset(self::$_messages [$mesid]))
 			{
-				self::$_messages [$mesid] = array();
+				self::$_messages [$mesid] = [];
 			}
 		}
 
@@ -298,7 +298,7 @@ abstract class KunenaAttachmentHelper
 		}
 		elseif (is_array($ids))
 		{
-			$ids2 = array();
+			$ids2 = [];
 
 			foreach ($ids as $id)
 			{
@@ -314,17 +314,17 @@ abstract class KunenaAttachmentHelper
 		}
 		else
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		if (empty($ids))
 		{
-			return array();
+			return [];
 		}
 
 		self::loadByMessage($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -693,7 +693,7 @@ abstract class KunenaAttachmentHelper
 		}
 		else
 		{
-			return array();
+			return [];
 		}
 
 		if ($params['orderby'] == 'desc')
@@ -722,7 +722,7 @@ abstract class KunenaAttachmentHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$list = array();
+		$list = [];
 
 		if (!empty($results))
 		{

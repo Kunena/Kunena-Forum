@@ -34,7 +34,7 @@ class KunenaViewTopic extends KunenaView
 	public function displayEdit($tpl = null)
 	{
 		$body     = Factory::getApplication()->input->post->get('body', '', 'raw');
-		$response = array();
+		$response = [];
 
 		if ($this->me->exists() || $this->config->pubwrite)
 		{
@@ -65,7 +65,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayListEmoji($tpl = null)
 	{
-		$response = array();
+		$response = [];
 
 		if ($this->me->exists())
 		{
@@ -124,7 +124,7 @@ class KunenaViewTopic extends KunenaView
 
 		if (empty($category_iconset))
 		{
-			$response = array();
+			$response = [];
 
 			// Set the MIME type and header for JSON output.
 			$this->document->setMimeEncoding('application/json');
@@ -134,7 +134,7 @@ class KunenaViewTopic extends KunenaView
 			echo json_encode($response);
 		}
 
-		$topicIcons = array();
+		$topicIcons = [];
 
 		$template = KunenaFactory::getTemplate();
 
@@ -201,7 +201,7 @@ class KunenaViewTopic extends KunenaView
 		$user = Factory::getApplication()->getIdentity();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
-		$response = array();
+		$response = [];
 		$app      = Factory::getApplication();
 
 		if ($user->id == 0 || KunenaForumTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
@@ -236,7 +236,7 @@ class KunenaViewTopic extends KunenaView
 	{
 		$starid   = $this->app->input->get('starid', 0, 'int');
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
-		$response = array();
+		$response = [];
 		$app      = Factory::getApplication();
 		$user     = KunenaUserHelper::getMyself();
 

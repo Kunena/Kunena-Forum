@@ -29,37 +29,37 @@ abstract class KunenaMenuFix
 	 * @var     array|StdClass[]
 	 * @since   Kunena 6.0
 	 */
-	public static $items = array();
+	public static $items = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $filtered = array();
+	public static $filtered = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $aliases = array();
+	public static $aliases = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $invalid = array();
+	public static $invalid = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $legacy = array();
+	public static $legacy = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $same = array();
+	public static $same = [];
 
 	/**
 	 * @var     null
@@ -125,7 +125,7 @@ abstract class KunenaMenuFix
 		foreach (self::$items as &$item)
 		{
 			// Get parent information.
-			$parent_tree = array();
+			$parent_tree = [];
 
 			if (isset(self::$items[$item->parent_id]))
 			{
@@ -153,7 +153,7 @@ abstract class KunenaMenuFix
 	{
 		if (!isset(self::$structure))
 		{
-			self::$structure = array();
+			self::$structure = [];
 
 			foreach (self::$items as $item)
 			{
@@ -244,7 +244,7 @@ abstract class KunenaMenuFix
 	 */
 	public static function getLegacy()
 	{
-		$items = array();
+		$items = [];
 
 		foreach (self::$legacy as $itemid)
 		{
@@ -263,7 +263,7 @@ abstract class KunenaMenuFix
 	 */
 	public static function fixLegacy()
 	{
-		$errors = array();
+		$errors = [];
 
 		foreach (self::$legacy as $itemid)
 		{
@@ -271,10 +271,10 @@ abstract class KunenaMenuFix
 			KunenaRouteLegacy::convertMenuItem($item);
 			$table = Joomla\CMS\Table\Table::getInstance('menu');
 			$table->load($item->id);
-			$data = array(
+			$data = [
 				'link'   => $item->link,
 				'params' => $item->params,
-			);
+			];
 
 			if (!$table->bind($data) || !$table->check() || !$table->store())
 			{
@@ -316,7 +316,7 @@ abstract class KunenaMenuFix
 	 */
 	public static function getAll()
 	{
-		$items = array();
+		$items = [];
 
 		foreach (self::$filtered as $itemid => $targetid)
 		{
@@ -336,7 +336,7 @@ abstract class KunenaMenuFix
 	 */
 	public static function getAliases()
 	{
-		$items = array();
+		$items = [];
 
 		foreach (self::$aliases as $itemid => $targetid)
 		{
@@ -353,7 +353,7 @@ abstract class KunenaMenuFix
 	 */
 	public static function getInvalid()
 	{
-		$items = array();
+		$items = [];
 
 		foreach (self::$invalid as $itemid => $targetid)
 		{
@@ -370,6 +370,6 @@ abstract class KunenaMenuFix
 	 */
 	public static function getConflicts()
 	{
-		return array();
+		return [];
 	}
 }

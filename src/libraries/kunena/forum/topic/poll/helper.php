@@ -24,7 +24,7 @@ abstract class KunenaForumTopicPollHelper
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * Returns KunenaForumTopic object.

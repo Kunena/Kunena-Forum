@@ -32,18 +32,18 @@ class KunenaAdminModelConfig extends KunenaModel
 	 */
 	public function getConfiglists()
 	{
-		$lists = array();
+		$lists = [];
 
 		// RSS
 		{
 			// Options to be used later
-			$rss_yesno    = array();
+			$rss_yesno    = [];
 			$rss_yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 			$rss_yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
 			// ------
 
-			$rss_type    = array();
+			$rss_type    = [];
 			$rss_type [] = HTMLHelper::_('select.option', 'post', Text::_('COM_KUNENA_A_RSS_TYPE_POST'));
 			$rss_type [] = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_A_RSS_TYPE_TOPIC'));
 			$rss_type [] = HTMLHelper::_('select.option', 'recent', Text::_('COM_KUNENA_A_RSS_TYPE_RECENT'));
@@ -53,7 +53,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			// ------
 
-			$rss_timelimit    = array();
+			$rss_timelimit    = [];
 			$rss_timelimit [] = HTMLHelper::_('select.option', 'week', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_WEEK'));
 			$rss_timelimit [] = HTMLHelper::_('select.option', 'month', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_MONTH'));
 			$rss_timelimit [] = HTMLHelper::_('select.option', 'year', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_YEAR'));
@@ -63,7 +63,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			// ------
 
-			$rss_specification = array();
+			$rss_specification = [];
 
 			$rss_specification [] = HTMLHelper::_('select.option', 'rss0.91', 'RSS 0.91');
 			$rss_specification [] = HTMLHelper::_('select.option', 'rss1.0', 'RSS 1.0');
@@ -75,7 +75,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			// ------
 
-			$rss_author_format    = array();
+			$rss_author_format    = [];
 			$rss_author_format [] = HTMLHelper::_('select.option', 'name', Text::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_NAME'));
 			$rss_author_format [] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_EMAIL'));
 			$rss_author_format [] = HTMLHelper::_('select.option', 'both', Text::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_BOTH'));
@@ -90,7 +90,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			// ------
 
-			$rss_word_count    = array();
+			$rss_word_count    = [];
 			$rss_word_count [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_RSS_WORD_COUNT_ALL'));
 			$rss_word_count [] = HTMLHelper::_('select.option', '-1', Text::_('JNONE'));
 			$rss_word_count [] = HTMLHelper::_('select.option', '50', '50');
@@ -115,7 +115,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 			// ------
 
-			$rss_cache = array();
+			$rss_cache = [];
 
 			$rss_cache [] = HTMLHelper::_('select.option', '0', '0');        // Disable
 			$rss_cache [] = HTMLHelper::_('select.option', '60', '1');
@@ -134,7 +134,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		// Build the html select list
 		// make a standard yes/no list
-		$yesno    = array();
+		$yesno    = [];
 		$yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
@@ -175,7 +175,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['userlist_userhits']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->userlist_userhits);
 		$lists ['reportmsg']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->reportmsg);
 
-		$captcha   = array();
+		$captcha   = [];
 		$captcha[] = HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY'));
 		$captcha[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS'));
 		$captcha[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS'));
@@ -209,13 +209,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists['pollresultsuserslist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollresultsuserslist', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->pollresultsuserslist);
 
 		// New for 1.6 -> Choose ordering system
-		$ordering_system_list     = array();
+		$ordering_system_list     = [];
 		$ordering_system_list[]   = HTMLHelper::_('select.option', 'mesid', Text::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
 		$ordering_system_list[]   = HTMLHelper::_('select.option', 'replyid', Text::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
 		$lists['ordering_system'] = HTMLHelper::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->ordering_system);
 
 		// New for 1.6: datetime
-		$dateformatlist                 = array();
+		$dateformatlist                 = [];
 		$time                           = KunenaDate::getInstance(time() - 80000);
 		$dateformatlist[]               = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_OPTION_DATEFORMAT_NONE'));
 		$dateformatlist[]               = HTMLHelper::_('select.option', 'ago', $time->toKunena('ago'));
@@ -233,7 +233,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		// New for 1.6 -> Thank you button
 		$lists ['showthankyou'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->showthankyou);
 
-		$listUserDeleteMessage       = array();
+		$listUserDeleteMessage       = [];
 		$listUserDeleteMessage[]     = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
 		$listUserDeleteMessage[]     = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));
 		$listUserDeleteMessage[]     = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
@@ -241,13 +241,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$listUserDeleteMessage[]     = HTMLHelper::_('select.option', '4', Text::_('COM_KUNENA_CONFIG_DELETEMESSAGE_ONLY_LAST_MESSAGE'));
 		$lists['userdeletetmessage'] = HTMLHelper::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->userdeletetmessage);
 
-		$latestCategoryIn           = array();
+		$latestCategoryIn           = [];
 		$latestCategoryIn[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_HIDE'));
 		$latestCategoryIn[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_SHOW'));
 		$lists['latestcategory_in'] = HTMLHelper::_('select.genericlist', $latestCategoryIn, 'cfg_latestcategory_in', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->latestcategory_in);
 
-		$optionsShowHide         = array(HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL')));
-		$params                  = array('sections' => false, 'action' => 'read');
+		$optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
+		$params                  = ['sections' => false, 'action' => 'read'];
 		$lists['latestcategory'] = HTMLHelper::_('kunenaforum.categorylist', 'cfg_latestcategory[]', 0, $optionsShowHide, $params, 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $this->config->latestcategory), 'latestcategory');
 
 		$lists['topicicons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicicons', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->topicicons);
@@ -260,13 +260,13 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists['showpopthankyoustats'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->showpopthankyoustats);
 
-		$seerestoredeleted         = array();
+		$seerestoredeleted         = [];
 		$seerestoredeleted[]       = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY'));
 		$seerestoredeleted[]       = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
 		$seerestoredeleted[]       = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS'));
 		$lists ['mod_see_deleted'] = HTMLHelper::_('select.genericlist', $seerestoredeleted, 'cfg_mod_see_deleted', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->mod_see_deleted);
 
-		$listBbcodeImgSecure               = array();
+		$listBbcodeImgSecure               = [];
 		$listBbcodeImgSecure[]             = HTMLHelper::_('select.option', 'text', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT'));
 		$listBbcodeImgSecure[]             = HTMLHelper::_('select.option', 'link', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_LINK'));
 		$listBbcodeImgSecure[]             = HTMLHelper::_('select.option', 'image', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE'));
@@ -296,7 +296,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['show_session_type'] = HTMLHelper::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->show_session_type);
 
-		$userlist_allowed           = array();
+		$userlist_allowed           = [];
 		$userlist_allowed []        = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$userlist_allowed []        = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 		$lists ['userlist_allowed'] = HTMLHelper::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->userlist_allowed);
@@ -311,26 +311,26 @@ class KunenaAdminModelConfig extends KunenaModel
 		// Added new options into K1.6.4
 		$lists ['allowsubscriptions'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->allowsubscriptions);
 
-		$category_subscriptions           = array();
+		$category_subscriptions           = [];
 		$category_subscriptions[]         = HTMLHelper::_('select.option', 'disabled', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_DISABLED'));
 		$category_subscriptions[]         = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_TOPIC'));
 		$category_subscriptions[]         = HTMLHelper::_('select.option', 'post', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_POST'));
 		$lists ['category_subscriptions'] = HTMLHelper::_('select.genericlist', $category_subscriptions, 'cfg_category_subscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->category_subscriptions);
 
-		$topic_subscriptions           = array();
+		$topic_subscriptions           = [];
 		$topic_subscriptions[]         = HTMLHelper::_('select.option', 'disabled', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_DISABLED'));
 		$topic_subscriptions[]         = HTMLHelper::_('select.option', 'first', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_FIRST'));
 		$topic_subscriptions[]         = HTMLHelper::_('select.option', 'every', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY'));
 		$lists ['topic_subscriptions'] = HTMLHelper::_('select.genericlist', $topic_subscriptions, 'cfg_topic_subscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->topic_subscriptions);
 
 		// Added new options into K1.6.6
-		$email_recipient_privacy           = array();
+		$email_recipient_privacy           = [];
 		$email_recipient_privacy[]         = HTMLHelper::_('select.option', 'to', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO'));
 		$email_recipient_privacy[]         = HTMLHelper::_('select.option', 'cc', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC'));
 		$email_recipient_privacy[]         = HTMLHelper::_('select.option', 'bcc', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC'));
 		$lists ['email_recipient_privacy'] = HTMLHelper::_('select.genericlist', $email_recipient_privacy, 'cfg_email_recipient_privacy', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->email_recipient_privacy);
 
-		$uploads                = array();
+		$uploads                = [];
 		$uploads[]              = HTMLHelper::_('select.option', 'everybody', Text::_('COM_KUNENA_EVERYBODY'));
 		$uploads[]              = HTMLHelper::_('select.option', 'registered', Text::_('COM_KUNENA_REGISTERED_USERS'));
 		$uploads[]              = HTMLHelper::_('select.option', 'moderator', Text::_('COM_KUNENA_MODERATORS'));
@@ -360,18 +360,18 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['send_emails']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_send_emails', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->send_emails);
 		$lists ['enable_threaded_layouts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_enable_threaded_layouts', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->enable_threaded_layouts);
 
-		$default_sort           = array();
+		$default_sort           = [];
 		$default_sort[]         = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_OPTION_DEFAULT_SORT_FIRST'));
 		$default_sort[]         = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_OPTION_DEFAULT_SORT_LAST'));
 		$lists ['default_sort'] = HTMLHelper::_('select.genericlist', $default_sort, 'cfg_default_sort', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->default_sort);
 
 		$lists ['fallback_english'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->fallback_english);
 
-		$cache   = array();
+		$cache   = [];
 		$cache[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
 		$cache[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
 
-		$cachetime            = array();
+		$cachetime            = [];
 		$cachetime[]          = HTMLHelper::_('select.option', '60', Text::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));
 		$cachetime[]          = HTMLHelper::_('select.option', '120', Text::_('COM_KUNENA_CFG_OPTION_2_MINUTES'));
 		$cachetime[]          = HTMLHelper::_('select.option', '180', Text::_('COM_KUNENA_CFG_OPTION_3_MINUTES'));
@@ -384,7 +384,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['cache_time'] = HTMLHelper::_('select.genericlist', $cachetime, 'cfg_cache_time', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->cache_time);
 
 		// Added new options into Kunena 2.0.1
-		$mailoptions   = array();
+		$mailoptions   = [];
 		$mailoptions[] = HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_NO'));
 		$mailoptions[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS'));
 		$mailoptions[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS'));
@@ -407,7 +407,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$db->setQuery($query);
 		$lists['legacy_urls_version'] = $db->loadResult();
 
-		$options                        = array();
+		$options                        = [];
 		$options[]                      = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 		$options[]                      = HTMLHelper::_('select.option', '1', 'Kunena 1.x');
 		$lists['legacy_urls_desc']      = version_compare($lists['legacy_urls_version'], '2.0', '<') ? Text::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_YES') : Text::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_NO');
@@ -417,14 +417,14 @@ class KunenaAdminModelConfig extends KunenaModel
 		// Option to select if the stats link need to be showed for all users or only for registred users
 		$lists ['statslink_allowed']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->statslink_allowed);
 		$lists ['superadmin_userlist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_superadmin_userlist', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->superadmin_userlist);
-		$resizeoptions                 = array();
+		$resizeoptions                 = [];
 		$resizeoptions[]               = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RESIZE_RESIZE'));
 		$resizeoptions[]               = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_RESIZE_INTERPOLATION'));
 		$resizeoptions[]               = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_RESIZE_BICUBIC'));
 		$lists ['avatarcrop']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->avatarcrop);
 		$lists ['user_report']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_user_report', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->user_report);
 
-		$searchtime           = array();
+		$searchtime           = [];
 		$searchtime[]         = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_CFG_SEARCH_DATE_YESTERDAY'));
 		$searchtime[]         = HTMLHelper::_('select.option', 7, Text::_('COM_KUNENA_CFG_SEARCH_DATE_WEEK'));
 		$searchtime[]         = HTMLHelper::_('select.option', 14, Text::_('COM_KUNENA_CFG_SEARCH_DATE_2WEEKS'));
@@ -438,7 +438,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['teaser'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->teaser);
 
 		// List of eBay language code
-		$ebay_language   = array();
+		$ebay_language   = [];
 		$ebay_language[] = HTMLHelper::_('select.option', '0', 'en-US');
 		$ebay_language[] = HTMLHelper::_('select.option', '2', 'en-CA');
 		$ebay_language[] = HTMLHelper::_('select.option', '3', 'en-GB');
@@ -463,7 +463,7 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists['ebay_language'] = HTMLHelper::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->ebay_language);
 
-		$useredit          = array();
+		$useredit          = [];
 		$useredit[]        = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_EDIT_ALLOWED_NEVER'));
 		$useredit[]        = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_EDIT_ALLOWED_ALWAYS'));
 		$useredit[]        = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
@@ -496,7 +496,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['plain_email']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_plain_email', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->plain_email);
 		$lists ['smartlinking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_smartlinking', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->smartlinking);
 
-		$rankimages           = array();
+		$rankimages           = [];
 		$rankimages[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_TEXT'));
 		$rankimages[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_RANK_IMAGE'));
 		$rankimages[]         = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_RANK_USERGROUP'));
@@ -511,14 +511,14 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['moderator_permdelete'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_moderator_permdelete', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->moderator_permdelete);
 
-		$avatar_type           = array();
+		$avatar_type           = [];
 		$avatar_type[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_AVATAR_IMAGE'));
 		$avatar_type[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_AVATAR_ICONTYPE'));
 		$lists ['avatar_type'] = HTMLHelper::_('select.genericlist', $avatar_type, 'cfg_avatar_type', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->avatar_type);
 
 		$lists ['sef_redirect'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef_redirect', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->sef_redirect);
 
-		$user_edit_poll   = array();
+		$user_edit_poll   = [];
 		$user_edit_poll[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW'));
 		$user_edit_poll[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW'));
 

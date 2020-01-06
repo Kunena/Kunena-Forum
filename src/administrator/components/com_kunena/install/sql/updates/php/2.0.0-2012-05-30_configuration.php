@@ -87,7 +87,7 @@ function kunena_200_2012_05_30_configuration($parent)
 	if (isset($config->integration_access))
 	{
 		// Load configuration options
-		$types = array('access' => '', 'login' => '', 'avatar' => '', 'profile' => '', 'private' => '', 'activity' => '');
+		$types = ['access' => '', 'login' => '', 'avatar' => '', 'profile' => '', 'private' => '', 'activity' => ''];
 
 		foreach ($types as $type => &$value)
 		{
@@ -96,9 +96,9 @@ function kunena_200_2012_05_30_configuration($parent)
 			unset($config->$field);
 		}
 
-		$integration = array('alphauserpoints' => 'alphauserpoints', 'jomsocial' => 'community', 'communitybuilder' => 'comprofiler', 'uddeim' => 'uddeim');
+		$integration = ['alphauserpoints' => 'alphauserpoints', 'jomsocial' => 'community', 'communitybuilder' => 'comprofiler', 'uddeim' => 'uddeim'];
 
-		$plugins = array();
+		$plugins = [];
 
 		foreach ($integration as $cfgname => $pluginname)
 		{
@@ -159,5 +159,5 @@ function kunena_200_2012_05_30_configuration($parent)
 	// Save configuration
 	$config->save();
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_CONFIGURATION'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_CONFIGURATION'), 'success' => true];
 }

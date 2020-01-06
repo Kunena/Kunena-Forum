@@ -131,8 +131,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 										<?php if (!empty($this->actions)) : ?>
 											<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 											<?php if (isset($this->actions['move'])) :
-												$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+												$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
+												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<button type="submit" name="kcheckgo"
 											        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>

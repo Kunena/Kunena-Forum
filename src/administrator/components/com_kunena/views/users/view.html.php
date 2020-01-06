@@ -115,7 +115,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
 		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USRL_EMAIL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'rank', Text::_('COM_KUNENA_A_RANKS'));
@@ -138,7 +138,7 @@ class KunenaAdminViewUsers extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
@@ -155,7 +155,7 @@ class KunenaAdminViewUsers extends KunenaView
 	public function signatureOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
 
@@ -172,7 +172,7 @@ class KunenaAdminViewUsers extends KunenaView
 	public function blockOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -189,7 +189,7 @@ class KunenaAdminViewUsers extends KunenaView
 	public function bannedOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
@@ -206,7 +206,7 @@ class KunenaAdminViewUsers extends KunenaView
 	public function moderatorOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
 
@@ -223,7 +223,7 @@ class KunenaAdminViewUsers extends KunenaView
 	public function ranksOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'Administrator', Text::_('Administrator'));
 		$options[] = HTMLHelper::_('select.option', 'New Member', Text::_('New Member'));
 

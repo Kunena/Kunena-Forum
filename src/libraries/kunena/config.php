@@ -1421,9 +1421,9 @@ class KunenaConfig extends CMSObject
 		$this->check();
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		$plugins = array();
-		Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
-		$this->plugins = array();
+		$plugins = [];
+		Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', ['kunena.configuration', &$plugins]);
+		$this->plugins = [];
 
 		foreach ($plugins as $name => $registry)
 		{

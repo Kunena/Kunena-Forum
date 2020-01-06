@@ -29,7 +29,7 @@ class KunenaAdminModelBlockips extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct();
 	}

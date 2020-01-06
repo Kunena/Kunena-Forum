@@ -31,11 +31,11 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id',
 				'type',
 				'user',
@@ -47,7 +47,7 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 				'time_start',
 				'time_stop',
 				'operation',
-			);
+			];
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
@@ -412,7 +412,7 @@ class KunenaAdminModelLogs extends Joomla\CMS\MVC\Model\ListModel
 
 		$this->setState('filter.active', !empty($filter_active));
 
-		$group = array();
+		$group = [];
 
 		if ($this->getUserStateFromRequest($this->context . '.group.type', 'group_type', false, 'bool'))
 		{

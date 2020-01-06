@@ -91,8 +91,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->template = KunenaFactory::getTemplate();
 
 		$categories        = KunenaForumCategoryHelper::getCategories();
-		$arrayanynomousbox = array();
-		$arraypollcatid    = array();
+		$arrayanynomousbox = [];
+		$arraypollcatid    = [];
 
 		foreach ($categories as $category)
 		{
@@ -146,7 +146,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
-		$options  = array();
+		$options  = [];
 		$selected = $this->topic->category_id;
 
 		if ($this->config->pickup_category)
@@ -160,14 +160,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$selected = $saved['catid'];
 		}
 
-		$cat_params = array(
+		$cat_params = [
 			'ordering'    => 'ordering',
 			'toplevel'    => 0,
 			'sections'    => 0,
 			'direction'   => 1,
 			'hide_lonely' => 1,
 			'action'      => 'topic.create',
-		);
+		];
 
 		$this->selectcatlist = HTMLHelper::_(
 			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,

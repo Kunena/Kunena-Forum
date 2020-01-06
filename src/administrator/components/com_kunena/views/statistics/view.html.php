@@ -76,7 +76,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	protected function getFilterUserFields()
 	{
-		$filterFields   = array();
+		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 0, 'Guests');
 		$filterFields[] = HTMLHelper::_('select.option', 1, 'Registered users');
 		$filterFields[] = HTMLHelper::_('select.option', 2, 'Regular members');
@@ -94,7 +94,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields = array();
+		$sortFields = [];
 
 		// TODO: translate
 		$sortFields[] = HTMLHelper::_('select.option', 'id', $this->group ? 'Count' : 'Id');
@@ -115,7 +115,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
@@ -129,7 +129,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	protected function getFilterTypeFields()
 	{
-		$filterFields   = array();
+		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 1, 'MOD');
 		$filterFields[] = HTMLHelper::_('select.option', 2, 'ACT');
 		$filterFields[] = HTMLHelper::_('select.option', 3, 'ERR');
@@ -147,7 +147,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	protected function getFilterOperationFields()
 	{
-		$filterFields = array();
+		$filterFields = [];
 
 		$reflection = new ReflectionClass('KunenaLog');
 		$constants  = $reflection->getConstants();
@@ -184,7 +184,7 @@ class KunenaAdminViewStatistics extends KunenaView
 	 */
 	public function getType($id)
 	{
-		static $types = array(1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP');
+		static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
 
 		return isset($types[$id]) ? $types[$id] : '???';
 	}

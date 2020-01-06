@@ -131,7 +131,7 @@ class KunenaForumCategoryUser extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind($data, $ignore = array())
+	public function bind($data, $ignore = [])
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
@@ -221,7 +221,7 @@ class KunenaForumCategoryUser extends CMSObject
 		$table = $this->getTable();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load(array('user_id' => $user->userid, 'category_id' => $category_id));
+		$this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $category_id]);
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());
@@ -250,7 +250,7 @@ class KunenaForumCategoryUser extends CMSObject
 
 		try
 		{
-			$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
+			$result = $table->delete(['category_id' => $this->category_id, 'user_id' => $this->user_id]);
 		}
 		catch (Exception $e)
 		{

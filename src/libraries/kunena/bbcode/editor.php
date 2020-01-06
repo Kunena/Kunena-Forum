@@ -28,7 +28,7 @@ class KunenaBbcodeEditor
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $editor_elements = array();
+	public $editor_elements = [];
 
 	/**
 	 * @param   array  $config  config
@@ -37,7 +37,7 @@ class KunenaBbcodeEditor
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$this->config   = $config;
 		$this->template = KunenaFactory::getTemplate();
@@ -52,7 +52,7 @@ class KunenaBbcodeEditor
 	 *
 	 * @throws  Exception
 	 */
-	public static function getInstance($config = array())
+	public static function getInstance($config = [])
 	{
 		static $instance = false;
 
@@ -79,7 +79,7 @@ class KunenaBbcodeEditor
 	{
 		if (is_subclass_of($element, 'KunenaBbcodeEditorElement'))
 		{
-			$this->insertElements(array($element), $pos, $where);
+			$this->insertElements([$element], $pos, $where);
 		}
 	}
 
@@ -99,7 +99,7 @@ class KunenaBbcodeEditor
 	 */
 	public function insertElements($elements, $pos = null, $where = null)
 	{
-		$new_elements_keys = array();
+		$new_elements_keys = [];
 
 		if (!is_array($elements))
 		{
@@ -178,13 +178,13 @@ class KunenaBbcodeEditor
 		// Hook to manipulate the Editor XML like adding buttons
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		Factory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', array($this));
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeEditorInit', [$this]);
 
 		$js = "bbcodeSettings = {
 		previewParserPath:	'',
 		markupSet: [";
 
-		$itemjs = array();
+		$itemjs = [];
 
 		foreach ($this->editor_elements as $item)
 		{
@@ -215,7 +215,7 @@ class KunenaBbcodeEditor
 	 */
 	public static function parseXML(SimpleXMLElement $xml, $parseMethod)
 	{
-		$elements = array();
+		$elements = [];
 
 		foreach ($xml as $xml_item)
 		{
@@ -237,7 +237,7 @@ class KunenaBbcodeEditor
 
 			$class = "KunenaBbcodeEditor" . strtoupper($xml_item->getName());
 
-			$item = call_user_func(array($class, $parseMethod), $xml_item);
+			$item = call_user_func([$class, $parseMethod], $xml_item);
 
 			$elements[$item->name] = $item;
 		}
@@ -330,7 +330,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $actions = array();
+	protected $actions = [];
 
 	/**
 	 * Create a button that can be added to the BBCode Editor.
@@ -368,7 +368,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 		foreach ($xml as $xml_item)
 		{
-			$item         = array();
+			$item         = [];
 			$item['type'] = $xml_item->getName();
 			$item['tag']  = (string) $xml_item['tag'];
 
@@ -460,7 +460,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 			switch ($action['type'])
 			{
 				case 'wrap-selection':
-					$selection = array();
+					$selection = [];
 
 					$classname = '';
 

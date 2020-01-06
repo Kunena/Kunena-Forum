@@ -43,7 +43,7 @@ class KunenaViewTopic extends KunenaView
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $inline_attachments = array();
+	public $inline_attachments = [];
 
 	/**
 	 * @var     null
@@ -83,7 +83,7 @@ class KunenaViewTopic extends KunenaView
 	{
 		$this->layout = $this->state->get('layout');
 
-		$errors = array();
+		$errors = [];
 
 		if ($this->layout == 'flat')
 		{
@@ -140,7 +140,7 @@ class KunenaViewTopic extends KunenaView
 
 		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists())
 		{
-			$this->displayError(array(Text::_('COM_KUNENA_NO_ACCESS')), 404);
+			$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
 
 			return;
 		}
@@ -173,8 +173,8 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		$this->moderators = $this->get('Moderators');
 		$this->usertopic  = $this->topic->getUserTopic();
@@ -206,7 +206,7 @@ class KunenaViewTopic extends KunenaView
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get('Category');
 		$topic    = $this->get('Topic');
-		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+		KunenaForumTopicHelper::fetchNewStatus([$topic->id => $topic]);
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
@@ -292,8 +292,8 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		$categories        = KunenaForumCategoryHelper::getCategories();
-		$arrayanynomousbox = array();
-		$arraypollcatid    = array();
+		$arrayanynomousbox = [];
+		$arraypollcatid    = [];
 
 		foreach ($categories as $category)
 		{
@@ -313,12 +313,12 @@ class KunenaViewTopic extends KunenaView
 		$this->document->addScriptDeclaration('var arrayanynomousbox={' . $arrayanynomousbox . '}');
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
-		$cat_params = array('ordering'    => 'ordering',
-							'toplevel'    => 0,
-							'sections'    => 0,
-							'direction'   => 1,
-							'hide_lonely' => 1,
-							'action'      => 'topic.create');
+		$cat_params = ['ordering'    => 'ordering',
+		               'toplevel'    => 0,
+		               'sections'    => 0,
+		               'direction'   => 1,
+		               'hide_lonely' => 1,
+		               'action'      => 'topic.create'];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
@@ -332,7 +332,7 @@ class KunenaViewTopic extends KunenaView
 			return false;
 		}
 
-		$options  = array();
+		$options  = [];
 		$selected = $this->topic->category_id;
 
 		if ($this->config->pickup_category)
@@ -415,7 +415,7 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
@@ -484,7 +484,7 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 		$this->_prepareDocument('edit');
 
 		$this->action = 'edit';
@@ -535,7 +535,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function getMessageProfileBox()
 	{
-		static $profiles = array();
+		static $profiles = [];
 
 		$key = $this->profile->userid . '.' . $this->profile->username;
 
@@ -551,7 +551,7 @@ class KunenaViewTopic extends KunenaView
 
 			Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-			Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
+			Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.user', &$this->profile, &$params, 0]);
 
 			// Karma points and buttons
 			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
@@ -618,7 +618,7 @@ class KunenaViewTopic extends KunenaView
 					$contents = (string) $this->loadTemplateFile('profile');
 				}
 
-				$contents .= implode(' ', Factory::getApplication()->triggerEvent('onKunenaDisplay', array('topic.profile', $this, $params)));
+				$contents .= implode(' ', Factory::getApplication()->triggerEvent('onKunenaDisplay', ['topic.profile', $this, $params]));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
 				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -744,7 +744,7 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
 
 		return (string) $this->loadTemplateFile('actions');
 	}
@@ -833,7 +833,7 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
 
 		return (string) $this->loadTemplateFile("message_actions");
 	}
@@ -872,7 +872,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Thank you info and buttons
-		$this->thankyou       = array();
+		$this->thankyou       = [];
 		$this->total_thankyou = 0;
 		$this->more_thankyou  = 0;
 
@@ -899,7 +899,7 @@ class KunenaViewTopic extends KunenaView
 					$canUnthankyou = false;
 				}
 
-				$userids_thankyous = array();
+				$userids_thankyous = [];
 
 				foreach ($thankyous as $userid => $time)
 				{
@@ -1004,7 +1004,7 @@ class KunenaViewTopic extends KunenaView
 
 			if ($usertype == 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);
 			}
 
 			// FIXME: enable caching after fixing the issues
@@ -1018,7 +1018,7 @@ class KunenaViewTopic extends KunenaView
 			return;
 		}
 
-		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
+		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', [$this, 'fillMessageInfo'], $contents);
 		echo $contents;
 		$this->setLayout($layout);
 	}
@@ -1147,7 +1147,7 @@ class KunenaViewTopic extends KunenaView
 		$this->historycount = count($this->history);
 		$this->replycount   = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($this->history);
-		$userlist = array();
+		$userlist = [];
 
 		foreach ($this->history as $message)
 		{
@@ -1164,7 +1164,7 @@ class KunenaViewTopic extends KunenaView
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		echo $this->loadTemplateFile('history');
 	}

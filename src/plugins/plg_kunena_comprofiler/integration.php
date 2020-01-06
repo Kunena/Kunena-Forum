@@ -39,7 +39,7 @@ class KunenaIntegrationComprofiler
 		}
 
 		self::$open = true;
-		$params     = array();
+		$params     = [];
 		self::trigger('onStart', $params);
 	}
 
@@ -63,7 +63,7 @@ class KunenaIntegrationComprofiler
 		$config            = KunenaFactory::getConfig();
 		$params ['config'] = $config;
 		$_PLUGINS->loadPluginGroup('user');
-		$_PLUGINS->trigger('kunenaIntegration', array($event, &$config, &$params));
+		$_PLUGINS->trigger('kunenaIntegration', [$event, &$config, &$params]);
 	}
 
 	/**
@@ -81,7 +81,7 @@ class KunenaIntegrationComprofiler
 		}
 
 		self::$open = false;
-		$params     = array();
+		$params     = [];
 		self::trigger('onEnd', $params);
 	}
 }

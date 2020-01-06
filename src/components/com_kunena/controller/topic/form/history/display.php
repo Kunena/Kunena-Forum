@@ -55,7 +55,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$this->replycount   = $this->topic->getReplies();
 		$this->historycount = count($this->history);
 		KunenaAttachmentHelper::getByMessage($this->history);
-		$userlist = array();
+		$userlist = [];
 
 		foreach ($this->history as $message)
 		{
@@ -84,7 +84,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 				{
 					if (!isset($messages[$post]->pm))
 					{
-						$messages[$post]->pm = array();
+						$messages[$post]->pm = [];
 					}
 
 					$messages[$post]->pm[$pm->id] = $pm;
@@ -104,11 +104,11 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
 		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
-		$this->inline_attachments = array();
+		$this->inline_attachments = [];
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}

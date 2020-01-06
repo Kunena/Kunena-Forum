@@ -154,7 +154,7 @@ class KunenaModelTopic extends KunenaModel
 			else
 			{
 				$topic = KunenaForumTopicHelper::get($this->getState('item.id'));
-				$ids   = array();
+				$ids   = [];
 
 				// If topic has been moved, find the new topic
 				while ($topic->moved_id)
@@ -197,8 +197,8 @@ class KunenaModelTopic extends KunenaModel
 			$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);
 
 			// First collect ids and users
-			$userlist       = array();
-			$this->threaded = array();
+			$userlist       = [];
+			$this->threaded = [];
 			$location       = $this->getState('list.start');
 
 			foreach ($this->messages as $message)
@@ -222,7 +222,7 @@ class KunenaModelTopic extends KunenaModel
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 
 				$thankyou_list     = $thankyous[$message->id]->getList();
-				$message->thankyou = array();
+				$message->thankyou = [];
 
 				if (!empty($thankyou_list))
 				{
@@ -239,7 +239,7 @@ class KunenaModelTopic extends KunenaModel
 			{
 				if (!isset($this->messages[$this->topic->first_post_id]))
 				{
-					$this->messages = $this->getThreadedOrdering(0, array('edge'));
+					$this->messages = $this->getThreadedOrdering(0, ['edge']);
 				}
 				else
 				{
@@ -267,9 +267,9 @@ class KunenaModelTopic extends KunenaModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function getThreadedOrdering($parent = 0, $indent = array())
+	protected function getThreadedOrdering($parent = 0, $indent = [])
 	{
-		$list = array();
+		$list = [];
 
 		if (count($indent) == 1 && $this->getTopic()->getTotal() > $this->getState('list.start') + $this->getState('list.limit'))
 		{

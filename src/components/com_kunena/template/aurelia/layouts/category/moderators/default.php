@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 		<?php
 		echo Text::_('COM_KUNENA_MODERATORS') . ": ";
 
-		$mods_lin = array();
+		$mods_lin = [];
 
 		foreach ($this->moderators as $moderator)
 		{

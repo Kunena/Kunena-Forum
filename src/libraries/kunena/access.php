@@ -54,7 +54,7 @@ class KunenaAccess
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $accesstypes = array('all' => array());
+	protected $accesstypes = ['all' => []];
 
 	/**
 	 * @var     array|null
@@ -145,10 +145,10 @@ class KunenaAccess
 	 */
 	public function clearCache()
 	{
-		$this->adminsByCatid      = array();
-		$this->adminsByUserid     = array();
-		$this->moderatorsByCatid  = array();
-		$this->moderatorsByUserid = array();
+		$this->adminsByCatid      = [];
+		$this->adminsByUserid     = [];
+		$this->moderatorsByCatid  = [];
+		$this->moderatorsByUserid = [];
 
 		// Reset read access for the current session
 		$me = KunenaUserHelper::getMyself();
@@ -167,7 +167,7 @@ class KunenaAccess
 		// Load native category moderators and administrators
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true)
-			->select($db->quoteName(array('user_id', 'category_id', 'role')))
+			->select($db->quoteName(['user_id', 'category_id', 'role']))
 			->from($db->quoteName('#__kunena_user_categories'))
 			->where($db->quoteName('role') . ' IN (1,2)');
 		$db->setQuery($query);
@@ -188,12 +188,12 @@ class KunenaAccess
 			$cache = Factory::getCache('com_kunena', 'output');
 			$cache->store(
 				serialize(
-					array(
+					[
 						'ac' => $this->adminsByCatid,
 						'au' => $this->adminsByUserid,
 						'mc' => $this->moderatorsByCatid,
 						'mu' => $this->moderatorsByUserid,
-					)
+					]
 				), self::$cacheKey, 'com_kunena'
 			);
 		}
@@ -266,7 +266,7 @@ class KunenaAccess
 	 */
 	public function getAccessOptions($category)
 	{
-		$list = array();
+		$list = [];
 
 		// @var KunenaAccess $access
 
@@ -283,11 +283,11 @@ class KunenaAccess
 
 		if (!isset($list [$key]))
 		{
-			$list [$key]['access'] = array(
+			$list [$key]['access'] = [
 				'title' => Text::_('COM_KUNENA_ACCESS_UNKNOWN'),
 				'desc'  => Text::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
 				'input' => $category->access,
-			);
+			];
 		}
 
 		return $list;
@@ -334,7 +334,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		$exists      = 0;
-		$accesstypes = array();
+		$accesstypes = [];
 
 		foreach ($this->accesstypes as $type => $list)
 		{
@@ -379,7 +379,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getCategoryAccess(KunenaForumCategory $category)
 	{
-		$list = array();
+		$list = [];
 
 		$accesstype = $category->accesstype;
 
@@ -411,7 +411,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getAdmins($catid = 0, $all = false)
 	{
-		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : [];
 
 		if ($all && !empty($this->adminsByCatid[0]))
 		{
@@ -433,7 +433,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getModerators($catid = 0, $all = false)
 	{
-		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : [];
 
 		if ($all && !empty($this->moderatorsByCatid[0]))
 		{
@@ -459,7 +459,7 @@ jQuery(document).ready(function ($) {
 			$user = KunenaFactory::getUser($user);
 		}
 
-		return !empty($this->adminsByUserid[$user->userid]) ? $this->adminsByUserid[$user->userid] : array();
+		return !empty($this->adminsByUserid[$user->userid]) ? $this->adminsByUserid[$user->userid] : [];
 	}
 
 	/**
@@ -544,7 +544,7 @@ jQuery(document).ready(function ($) {
 			$user = KunenaFactory::getUser($user);
 		}
 
-		return !empty($this->moderatorsByUserid[$user->userid]) ? $this->moderatorsByUserid[$user->userid] : array();
+		return !empty($this->moderatorsByUserid[$user->userid]) ? $this->moderatorsByUserid[$user->userid] : [];
 	}
 
 	/**
@@ -558,7 +558,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getAllowedCategories($user = null)
 	{
-		static $read = array();
+		static $read = [];
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -577,7 +577,7 @@ jQuery(document).ready(function ($) {
 
 			if ($read[$id] === null)
 			{
-				$list       = array();
+				$list       = [];
 				$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 
 				foreach ($categories as $category)
@@ -729,7 +729,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function authoriseActions(KunenaForumCategory $category, $userid)
 	{
-		$list = array();
+		$list = [];
 
 		if (empty($this->accesstypes[$category->accesstype]))
 		{
@@ -824,10 +824,10 @@ jQuery(document).ready(function ($) {
 
 		if (!$topic->exists())
 		{
-			return array();
+			return [];
 		}
 
-		$modlist = array();
+		$modlist = [];
 
 		if (!empty($this->moderatorsByCatid[0]))
 		{
@@ -839,7 +839,7 @@ jQuery(document).ready(function ($) {
 			$modlist += $this->moderatorsByCatid[$catid];
 		}
 
-		$adminlist = array();
+		$adminlist = [];
 
 		if (!empty($this->adminsByCatid[0]))
 		{
@@ -854,7 +854,7 @@ jQuery(document).ready(function ($) {
 		if ($type)
 		{
 			$subscribers = $this->loadSubscribers($topic, $type);
-			$allow       = $deny = array();
+			$allow       = $deny = [];
 
 			if (!empty($subscribers))
 			{
@@ -888,7 +888,7 @@ jQuery(document).ready(function ($) {
 
 		if (!$moderators)
 		{
-			$modlist = array();
+			$modlist = [];
 		}
 		else
 		{
@@ -901,7 +901,7 @@ jQuery(document).ready(function ($) {
 
 		if (!$admins)
 		{
-			$adminlist = array();
+			$adminlist = [];
 		}
 
 		$db    = Factory::getDBO();
@@ -909,7 +909,7 @@ jQuery(document).ready(function ($) {
 		$query->select('u.id, u.name, u.username, u.email')
 			->from('#__users AS u')
 			->where("u.block=0");
-		$userlist = array();
+		$userlist = [];
 
 		if (!empty($subslist))
 		{
@@ -947,7 +947,7 @@ jQuery(document).ready(function ($) {
 		if (empty($excludeList))
 		{
 			// False, null, '', 0 and array(): get all subscribers
-			$excludeList = array();
+			$excludeList = [];
 		}
 		elseif (is_array($excludeList))
 		{
@@ -961,7 +961,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		$userlist = array_diff_key($userlist, $excludeList);
-		$userids  = array();
+		$userids  = [];
 
 		if (!empty($userlist))
 		{
@@ -1004,7 +1004,7 @@ jQuery(document).ready(function ($) {
 	{
 		$category = $topic->getCategory();
 		$db       = Factory::getDBO();
-		$query    = array();
+		$query    = [];
 
 		if ($type & self::TOPIC_SUBSCRIPTION)
 		{

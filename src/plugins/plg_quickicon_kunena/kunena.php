@@ -46,7 +46,7 @@ class plgQuickiconKunena extends CMSPlugin
 	{
 		if ($context != $this->params->get('context', 'mod_quickicon') || !$this->app->getIdentity()->authorise('core.manage', 'com_kunena'))
 		{
-			return array();
+			return [];
 		}
 
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
@@ -165,12 +165,12 @@ class plgQuickiconKunena extends CMSPlugin
 		// Use one line in J!4.0.
 		$text = preg_replace('|<br />|', ' - ', $text);
 
-		return array(array(
+		return [[
 			'link'   => Route::_($link),
 			'image'  => $img,
 			'text'   => $text,
 			'icon'   => $icon,
-			'access' => array('core.manage', 'com_kunena'),
-			'id'     => 'com_kunena_icon',));
+			'access' => ['core.manage', 'com_kunena'],
+			'id'     => 'com_kunena_icon',]];
 	}
 }

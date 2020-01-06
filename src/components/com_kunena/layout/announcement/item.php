@@ -36,7 +36,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 */
 	public function getActions()
 	{
-		$this->buttons = array();
+		$this->buttons = [];
 
 		if ($this->announcement->isAuthorised('edit'))
 		{
@@ -76,6 +76,6 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Announcement/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
+			->setProperties(['url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal]);
 	}
 }

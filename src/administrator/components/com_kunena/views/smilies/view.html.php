@@ -79,7 +79,7 @@ class KunenaAdminViewSmilies extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'code', Text::_('COM_KUNENA_EMOTICONS_CODE'));
 		$sortFields[] = HTMLHelper::_('select.option', 'location', Text::_('COM_KUNENA_EMOTICONS_URL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
@@ -94,7 +94,7 @@ class KunenaAdminViewSmilies extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 

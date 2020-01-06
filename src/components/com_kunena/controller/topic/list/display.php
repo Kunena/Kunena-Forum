@@ -64,10 +64,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
+	protected function prepareTopics(array $userIds = [], array $mesIds = [])
 	{
 		// Collect user Ids for avatar prefetch when integrated.
-		$lastIds = array();
+		$lastIds = [];
 
 		foreach ($this->topics as $topic)
 		{
@@ -109,9 +109,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			return;
 		}*/
 
-		$options            = array();
+		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
@@ -121,7 +121,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$params->set('kunena_layout', 'list');
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 		KunenaHtmlParser::prepareContent($content, 'topic_list_default');
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic.list', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
 	}
 
 	/**
@@ -222,14 +222,14 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 *
 	 * @throws  Exception
 	 */
-	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
+	protected function getTopicActions(array $topics, $actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'])
 	{
 		if (!$actions)
 		{
 			return;
 		}
 
-		$options                = array();
+		$options                = [];
 		$options['none']        = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options['unsubscribe'] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 		$options['unfavorite']  = HTMLHelper::_('select.option', 'unfavorite', Text::_('COM_KUNENA_UNFAVORITE_SELECTED'));
@@ -288,14 +288,14 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 *
 	 * @throws  Exception
 	 */
-	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
+	protected function getMessageActions(array $messages, $actions = ['approve', 'undelete', 'delete', 'move', 'permdelete'])
 	{
 		if (!$actions)
 		{
 			return;
 		}
 
-		$options               = array();
+		$options               = [];
 		$options['none']       = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options['approve']    = HTMLHelper::_('select.option', 'approve_posts', Text::_('COM_KUNENA_APPROVE_SELECTED'));
 		$options['delete']     = HTMLHelper::_('select.option', 'delete_posts', Text::_('COM_KUNENA_DELETE_SELECTED'));

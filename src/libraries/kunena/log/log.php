@@ -332,7 +332,7 @@ class KunenaLog
 	 * @var     array|KunenaLogEntry[]
 	 * @since   Kunena 5.0
 	 */
-	protected static $entries = array();
+	protected static $entries = [];
 
 	/**
 	 * Flush the log entries to the database for storage.
@@ -354,7 +354,7 @@ class KunenaLog
 
 			foreach (static::$entries as $entry)
 			{
-				$fields = array();
+				$fields = [];
 
 				foreach ($entry->getData() as $field)
 				{
@@ -381,7 +381,7 @@ class KunenaLog
 	 */
 	public static function clear()
 	{
-		static::$entries = array();
+		static::$entries = [];
 	}
 
 	/**

@@ -329,7 +329,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$this->app->triggerEvent('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+		$this->app->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
 	}
 
 	/**
@@ -353,8 +353,8 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url'   => KunenaRoute::_($url), 'name' => $name,
-								  'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,)
+			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
+			                 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

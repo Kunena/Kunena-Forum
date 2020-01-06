@@ -52,7 +52,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function getUserPoints($userid)
 	{
 		$points = null;
-		$params = array('userid' => $userid, 'points' => &$points);
+		$params = ['userid' => $userid, 'points' => &$points];
 		KunenaIntegrationComprofiler::trigger('getUserPoints', $params);
 
 		return $points;
@@ -69,7 +69,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onBeforePost($message)
 	{
-		$params = array('actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message);
+		$params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforePost', $params);
 	}
 
@@ -84,7 +84,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onBeforeReply($message)
 	{
-		$params = array('actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message);
+		$params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforeReply', $params);
 	}
 
@@ -99,7 +99,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onBeforeEdit($message)
 	{
-		$params = array('actor' => $message->get('modified_by'), 'message' => $message);
+		$params = ['actor' => $message->get('modified_by'), 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforeEdit', $params);
 	}
 
@@ -114,7 +114,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterPost($message)
 	{
-		$params = array('actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message);
+		$params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterPost', $params);
 	}
 
@@ -129,7 +129,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterReply($message)
 	{
-		$params = array('actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message);
+		$params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterReply', $params);
 	}
 
@@ -144,7 +144,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterEdit($message)
 	{
-		$params = array('actor' => $message->get('modified_by'), 'message' => $message);
+		$params = ['actor' => $message->get('modified_by'), 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterEdit', $params);
 	}
 
@@ -160,7 +160,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterDelete($message)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'message' => $message);
+		$params = ['actor' => $my->id, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterDelete', $params);
 	}
 
@@ -176,7 +176,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterUndelete($message)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'message' => $message);
+		$params = ['actor' => $my->id, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterUndelete', $params);
 	}
 
@@ -193,7 +193,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
-		$params = array('actor' => $actor, 'target' => $target, 'message' => $message);
+		$params = ['actor' => $actor, 'target' => $target, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterThankyou', $params);
 	}
 
@@ -210,7 +210,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterSubscribe($topic, $action)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
+		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
 		KunenaIntegrationComprofiler::trigger('onAfterSubscribe', $params);
 	}
 
@@ -227,7 +227,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterFavorite($topic, $action)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
+		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
 		KunenaIntegrationComprofiler::trigger('onAfterFavorite', $params);
 	}
 
@@ -244,7 +244,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterSticky($topic, $action)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
+		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
 		KunenaIntegrationComprofiler::trigger('onAfterSticky', $params);
 	}
 
@@ -261,7 +261,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	public function onAfterLock($topic, $action)
 	{
 		$my     = Factory::getApplication()->getIdentity();
-		$params = array('actor' => $my->id, 'topic' => $topic, 'action' => $action);
+		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
 		KunenaIntegrationComprofiler::trigger('onAfterLock', $params);
 	}
 
@@ -278,7 +278,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 */
 	public function onAfterKarma($target, $actor, $delta)
 	{
-		$params = array('actor' => $actor, 'target' => $target, 'delta' => $delta);
+		$params = ['actor' => $actor, 'target' => $target, 'delta' => $delta];
 		KunenaIntegrationComprofiler::trigger('onAfterKarma', $params);
 	}
 }

@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model = new KunenaModelTopics([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
@@ -96,7 +96,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$finder = new KunenaForumTopicFinder;
 		$finder
 			->filterByMoved(false)
-			->filterByHold(array($hold))
+			->filterByHold([$hold])
 			->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))
@@ -122,7 +122,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			case 'plugin':
 				$pluginmode = $this->state->get('list.modetype');
 
-				Factory::getApplication()->triggerEvent('onKunenaGetUserTopics', array($pluginmode, &$finder, &$order, &$categoryIds, $this));
+				Factory::getApplication()->triggerEvent('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]);
 				break;
 
 			default :
@@ -210,7 +210,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			$this->prepareTopics();
 		}
 
-		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -225,12 +225,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			case 'favorites' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
 				$canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=favorites');
-				$actions          = array('unfavorite');
+				$actions          = ['unfavorite'];
 				break;
 			case 'subscriptions' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
 				$canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=subscriptions');
-				$actions          = array('unsubscribe');
+				$actions          = ['unsubscribe'];
 				break;
 			case 'plugin' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));

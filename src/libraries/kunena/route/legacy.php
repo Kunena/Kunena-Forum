@@ -29,7 +29,7 @@ abstract class KunenaRouteLegacy
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public static $functions = array(
+	public static $functions = [
 		'entrypage'       => 1,
 		'listcat'         => 1,
 		'showcat'         => 1,
@@ -74,7 +74,7 @@ abstract class KunenaRouteLegacy
 		'pdf'             => 1,
 		'thankyou'        => 1,
 		'fb_pdf'          => 1,
-	);
+	];
 
 	/**
 	 * @param   string  $view  view
@@ -756,7 +756,7 @@ abstract class KunenaRouteLegacy
 
 		if ($changed)
 		{
-			Log::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", Log::DEBUG, 'kunena');
+			Log::add("Legacy URI {$legacy->toString(['path', 'query'])} was converted to {$uri->toString(['path', 'query'])}", Log::DEBUG, 'kunena');
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

@@ -103,7 +103,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (isset($_POST ['query']) || isset($_POST ['searchword']))
 		{
-			$value = Factory::getApplication()->input->get('catids', array(0), 'post', 'array');
+			$value = Factory::getApplication()->input->get('catids', [0], 'post', 'array');
 			$value = ArrayHelper::toInteger($value);
 		}
 		else
@@ -117,7 +117,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if (isset($_POST ['searchword']))
 		{
-			$value = Factory::getApplication()->input->get('ids', array(0), 'post', 'array');
+			$value = Factory::getApplication()->input->get('ids', [0], 'post', 'array');
 			$value = ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)
@@ -169,7 +169,7 @@ class KunenaModelSearch extends KunenaModel
 	protected function buildWhere()
 	{
 		$db           = Factory::getDBO();
-		$querystrings = array();
+		$querystrings = [];
 
 		foreach ($this->getSearchWords() as $searchword)
 		{
@@ -354,7 +354,7 @@ class KunenaModelSearch extends KunenaModel
 		$splitPattern = '/[\s,]*\'([^\']+)\'[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u';
 		$searchwords  = preg_split($splitPattern, $this->getState('searchwords'), 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
-		$result = array();
+		$result = [];
 
 		foreach ($searchwords as $word)
 		{
@@ -411,13 +411,13 @@ class KunenaModelSearch extends KunenaModel
 			$mode = 'recent';
 		}
 
-		$params     = array(
+		$params     = [
 			'mode'        => $mode,
 			'childforums' => $this->getState('query.childforums'),
 			'where'       => $this->buildWhere(),
 			'orderby'     => $this->buildOrderBy(),
 			'starttime'   => -1,
-		);
+		];
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
 		list($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
@@ -427,8 +427,8 @@ class KunenaModelSearch extends KunenaModel
 			$this->setState('list.start', intval($this->total / $limit) * $limit);
 		}
 
-		$topicids = array();
-		$userids  = array();
+		$topicids = [];
+		$userids  = [];
 
 		foreach ($this->messages as $message)
 		{
@@ -465,9 +465,9 @@ class KunenaModelSearch extends KunenaModel
 	public function getUrlParams()
 	{
 		// Turn internal state into URL, but ignore default values
-		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-						  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-						  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '');
+		$defaults = ['titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
+		             'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+		             'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => ''];
 
 		$url_params = '';
 		$state      = $this->getState();

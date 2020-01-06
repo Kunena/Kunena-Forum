@@ -218,8 +218,8 @@ EOF;
 	 */
 	public function onPrivacyCollectAdminCapabilities()
 	{
-		$capabilities = array(
-			'Kunena' => array(
+		$capabilities = [
+			'Kunena' => [
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_EMAIL'),
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_IP_ADDRESS'),
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_USERPROFILE'),
@@ -229,8 +229,8 @@ EOF;
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_COOKIES'),
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_LOGS'),
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_SOCIAL'),
-			),
-		);
+			],
+		];
 
 		return $capabilities;
 	}
@@ -259,7 +259,7 @@ EOF;
 		$row       = new stdClass;
 		$row->text = &$text;
 
-		Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$row, &$params, 0));
+		Factory::getApplication()->triggerEvent('onContentPrepare', ['text', &$row, &$params, 0]);
 
 		$text = &$row->text;
 

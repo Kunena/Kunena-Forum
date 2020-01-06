@@ -177,7 +177,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
-				return $cache->get(array('KunenaHtmlParser', 'parseBBCode'), array($body));
+				return $cache->get(['KunenaHtmlParser', 'parseBBCode'], [$body]);
 			};
 		}
 	}

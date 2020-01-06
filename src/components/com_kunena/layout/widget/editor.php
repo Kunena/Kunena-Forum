@@ -40,10 +40,10 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			return;
 		}
 
-		$paths = array(
+		$paths = [
 			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
 			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi',
-		);
+		];
 
 		foreach ($paths as $path)
 		{
@@ -53,7 +53,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			}
 
 			$files     = Folder::files($path, ".php");
-			$options   = array();
+			$options   = [];
 			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
@@ -120,38 +120,30 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 
 		foreach ($bbcodes as $item)
 		{
+			$option = 0;
+
 			if ($item == 'video' || $item == 'ebay')
 			{
 				$tag = "show" . $item . "tag";
 
 				if ($config->$tag && $templatesettings->get($item))
 				{
-					$this->addScriptOptions("kunena_show" . $item . "tag", 1);
-				}
-				else
-				{
-					$this->addScriptOptions("kunena_show" . $item . "tag", 0);
+					$option = 1;
 				}
 			}
 			elseif ($item == 'emoticons')
 			{
 				if (!$config->disemoticons && $templatesettings->get($item))
 				{
-					$this->addScriptOptions("kunena_show" . $item . "tag", 1);
-				}
-				else
-				{
-					$this->addScriptOptions("kunena_show" . $item . "tag", 0);
+					$option = 1;
 				}
 			}
 			elseif ($templatesettings->get($item))
 			{
-				$this->addScriptOptions("kunena_show" . $item . "tag", 1);
+				$option = 1;
 			}
-			else
-			{
-				$this->addScriptOptions("kunena_show" . $item . "tag", 0);
-			}
+
+			$this->addScriptOptions("kunena_show" . $item . "tag", $option);
 		}
 	}
 }

@@ -69,7 +69,7 @@ class KunenaForumTopicRate extends CMSObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $users = array();
+	protected $users = [];
 
 	/**
 	 * @param   int  $identifier  identifier

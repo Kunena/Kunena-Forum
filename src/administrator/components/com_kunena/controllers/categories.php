@@ -44,7 +44,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl  = 'administrator/index.php?option=com_kunena&view=categories';
@@ -62,7 +62,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function lock()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
@@ -160,7 +160,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unlock()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
@@ -179,7 +179,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function review()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
@@ -198,7 +198,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unreview()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
@@ -217,7 +217,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_anonymous()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 1);
@@ -236,7 +236,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_anonymous()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 0);
@@ -255,7 +255,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function allow_polls()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 1);
@@ -274,7 +274,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function deny_polls()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 0);
@@ -293,7 +293,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function publish()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
@@ -312,7 +312,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function unpublish()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
@@ -341,7 +341,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -370,7 +370,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -451,8 +451,8 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		$post['access'] = $input->getInt("access-{$accesstype}", $input->getInt('access', null));
-		$post['params'] = $input->get("params-{$accesstype}", array(), 'array');
-		$post['params'] += $input->get("params", array(), 'array');
+		$post['params'] = $input->get("params-{$accesstype}", [], 'array');
+		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
 		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
@@ -471,20 +471,20 @@ class KunenaAdminControllerCategories extends KunenaController
 		elseif (!$category->isCheckedOut($this->me->userid))
 		{
 			// Nobody can change id or statistics
-			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all');
+			$ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all'];
 
 			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
 
 			if (!$this->me->isAdmin($parent) || ($category->exists() && !$this->me->isAdmin($category->getParent())))
 			{
-				$ignore             = array_merge($ignore, array('parent_id', 'ordering'));
+				$ignore             = array_merge($ignore, ['parent_id', 'ordering']);
 				$post ['parent_id'] = $category->parent_id;
 			}
 
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$this->me->isAdmin())
 			{
-				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx', 'params');
+				$access = ['accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx', 'params'];
 
 				if (!$category->exists() || $parent->id != $category->parent_id)
 				{
@@ -505,7 +505,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			$success     = $category->save();
 			$aliases_all = explode(',', $input->getString('aliases_all'));
 
-			$aliases = $input->post->getArray(array('aliases' => ''));
+			$aliases = $input->post->getArray(['aliases' => '']);
 
 			if ($aliases_all)
 			{
@@ -644,7 +644,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			$alias = Joomla\String\StringHelper::increment($alias, 'dash');
 		}
 
-		return array($name, $alias);
+		return [$name, $alias];
 	}
 
 	/**
@@ -669,7 +669,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -786,9 +786,9 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid   = $this->app->input->get('cid', array(), 'array');
+		$cid   = $this->app->input->get('cid', [], 'array');
 		$cid   = ArrayHelper::toInteger($cid);
-		$order = $this->app->input->get('order', array(), 'array');
+		$order = $this->app->input->get('order', [], 'array');
 		$order = ArrayHelper::toInteger($order);
 
 		if (empty($cid))
@@ -889,7 +889,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderup()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
@@ -962,7 +962,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function orderdown()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);
@@ -981,7 +981,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function archive()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 
 		if (!empty($cid))
 		{
@@ -1002,7 +1002,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	public function trash()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 
 		if (!empty($cid))
 		{

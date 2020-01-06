@@ -30,7 +30,7 @@ function kunena_160_2010_05_30_configuration($parent)
 	$config->set('template', 'blue_eagle');
 
 	// Keep integration settings
-	$integration = array('jomsocial' => 'jomsocial', 'cb' => 'communitybuilder', 'uddeim' => 'uddeim', 'aup' => 'alphauserpoints', 'none' => 'none');
+	$integration = ['jomsocial' => 'jomsocial', 'cb' => 'communitybuilder', 'uddeim' => 'uddeim', 'aup' => 'alphauserpoints', 'none' => 'none'];
 
 	if (!$config->get('allowavatar'))
 	{
@@ -105,5 +105,5 @@ function kunena_160_2010_05_30_configuration($parent)
 	// Save configuration
 	$config->save();
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_CONFIGURATION'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_CONFIGURATION'), 'success' => true];
 }

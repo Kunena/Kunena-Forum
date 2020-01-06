@@ -72,7 +72,7 @@ abstract class KunenaMenuHelper
 			$end            = 0;
 			$showAll        = 1;
 			$items          = $menu->getItems('menutype', $params->get('menutype'));
-			$hidden_parents = array();
+			$hidden_parents = [];
 			$lastitem       = 0;
 
 			if ($items)

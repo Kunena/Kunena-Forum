@@ -38,13 +38,13 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $actions = array(
-		'none'   => array(),
-		'read'   => array('Read'),
-		'create' => array('New', 'NotBanned', 'Write'),
-		'edit'   => array('Read', 'NotBanned', 'Write'),
-		'delete' => array('Read', 'NotBanned', 'Write'),
-	);
+	protected static $actions = [
+		'none'   => [],
+		'read'   => ['Read'],
+		'create' => ['New', 'NotBanned', 'Write'],
+		'edit'   => ['Read', 'NotBanned', 'Write'],
+		'delete' => ['Read', 'NotBanned', 'Write'],
+	];
 
 	/**
 	 * @var     string

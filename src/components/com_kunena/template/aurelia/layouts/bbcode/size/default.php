@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 // [size=6]HUGE![/size]
 
 // Change text size.
-$size_css = array(1 => '0.6em', '0.8em', '1em', '1.2em', '1.4em', '1.8em');
+$size_css = [1 => '0.6em', '0.8em', '1em', '1.2em', '1.4em', '1.8em'];
 
 if (isset($size_css[$this->size]))
 {

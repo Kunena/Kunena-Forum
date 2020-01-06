@@ -116,10 +116,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$access = KunenaAccess::getInstance();
 		$hold   = $access->getAllowedHold($this->me, $catid);
 		$moved  = 1;
-		$params = array(
+		$params = [
 			'hold'  => $hold,
 			'moved' => $moved,
-		);
+		];
 
 		switch ($topic_ordering)
 		{
@@ -152,8 +152,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($this->total > 0)
 		{
 			// Collect user ids for avatar prefetch when integrated.
-			$userlist     = array();
-			$lastpostlist = array();
+			$userlist     = [];
+			$lastpostlist = [];
 
 			foreach ($this->topics as $topic)
 			{

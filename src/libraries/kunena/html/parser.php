@@ -48,7 +48,7 @@ abstract class KunenaHtmlParser
 		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$query = $db->getQuery(true)
-			->select(array($db->quoteName('code'), $db->quoteName($column, 'file')))
+			->select([$db->quoteName('code'), $db->quoteName($column, 'file')])
 			->from($db->quoteName('#__kunena_smileys'));
 
 		if ($emoticonbar == true)
@@ -67,7 +67,7 @@ abstract class KunenaHtmlParser
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$smileyArray = array();
+		$smileyArray = [];
 		$template    = KunenaFactory::getTemplate();
 
 		foreach ($smilies as $smiley)
@@ -162,7 +162,7 @@ abstract class KunenaHtmlParser
 	{
 		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
 		$events       = (int) $config->get('jcontentevents', false);
-		$event_target = (array) $config->get('jcontentevent_target', array());
+		$event_target = (array) $config->get('jcontentevent_target', []);
 
 		$name   = '';
 		$plugin = Joomla\CMS\Plugin\PluginHelper::getPlugin('content');
@@ -182,7 +182,7 @@ abstract class KunenaHtmlParser
 			$params->set('ksource', 'kunena');
 
 			Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
-			Factory::getApplication()->triggerEvent('onContentPrepare', array($name, &$row, &$params, 0));
+			Factory::getApplication()->triggerEvent('onContentPrepare', [$name, &$row, &$params, 0]);
 			$content = $row->text;
 		}
 

@@ -11,8 +11,8 @@
  **/
 defined('_JEXEC') or die();
 
-$success = array(-1 => 'FAILED', 0 => 'FAILED', 1 => 'OK');
-$colors  = array(-1 => '#cf7f00', 0 => 'red', 1 => 'green');
+$success = [-1 => 'FAILED', 0 => 'FAILED', 1 => 'OK'];
+$colors  = [-1 => '#cf7f00', 0 => 'red', 1 => 'green'];
 
 ?>
 <table>

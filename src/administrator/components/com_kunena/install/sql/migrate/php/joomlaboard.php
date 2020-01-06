@@ -21,9 +21,9 @@ class KunenaMigratorJoomlaboard
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $versions = array(
-		array('version' => '1.0', 'date' => '1000-01-01', 'table' => 'sb_messages', 'column' => 'id'),
-	);
+	protected $versions = [
+		['version' => '1.0', 'date' => '1000-01-01', 'table' => 'sb_messages', 'column' => 'id'],
+	];
 
 	/**
 	 * @return  KunenaMigratorJoomlaboard|null

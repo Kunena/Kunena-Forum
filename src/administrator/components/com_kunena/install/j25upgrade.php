@@ -223,8 +223,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 		// Get component object
-		$component = Joomla\CMS\Table\Table::getInstance('extension', 'Joomla\CMS\Table\Table', array('dbo' => $this->db_new));
-		$component->load(array('type' => 'component', 'element' => $this->name));
+		$component = Joomla\CMS\Table\Table::getInstance('extension', 'Joomla\CMS\Table\Table', ['dbo' => $this->db_new]);
+		$component->load(['type' => 'component', 'element' => $this->name]);
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db_new->quote($component->extension_id)} WHERE type = 'component' AND link LIKE '%option={$this->name}%'";
@@ -246,7 +246,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		foreach ($menuitems as &$menuitem)
 		{
 			// Get parent information.
-			$parent_tree = array();
+			$parent_tree = [];
 
 			if (isset($menuitems[$menuitem->parent_id]))
 			{
@@ -288,7 +288,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 			if ($update)
 			{
 				// Update menuitem link
-				$query_string = array();
+				$query_string = [];
 
 				foreach ($menuitem->query as $k => $v)
 				{
@@ -298,8 +298,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 				$menuitem->link = 'index.php?' . implode('&', $query_string);
 
 				// Save menu object
-				$menu = Joomla\CMS\Table\Table::getInstance('menu', 'Joomla\CMS\Table\Table', array('dbo' => $this->db_new));
-				$menu->bind(get_object_vars($menuitem), array('tree', 'query'));
+				$menu = Joomla\CMS\Table\Table::getInstance('menu', 'Joomla\CMS\Table\Table', ['dbo' => $this->db_new]);
+				$menu->bind(get_object_vars($menuitem), ['tree', 'query']);
 				$success = $menu->check();
 
 				if ($success)

@@ -179,7 +179,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
-		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
+		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
 
 		if (in_array(false, $result, true))
 		{
@@ -209,7 +209,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		$this->saveInternal();
 
 		// Trigger the onKunenaAfterSave event.
-		Factory::getApplication()->triggerEvent('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
+		Factory::getApplication()->triggerEvent('onKunenaAfterSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
 
 		$this->_saving = false;
 
@@ -320,7 +320,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.
-		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));
+		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
 
 		if (in_array(false, $result, true))
 		{
@@ -343,7 +343,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		$this->_exists = false;
 
 		// Trigger the onKunenaAfterDelete event.
-		Factory::getApplication()->triggerEvent('onKunenaAfterDelete', array("com_kunena.{$this->_name}", $table));
+		Factory::getApplication()->triggerEvent('onKunenaAfterDelete', ["com_kunena.{$this->_name}", $table]);
 
 		return true;
 	}

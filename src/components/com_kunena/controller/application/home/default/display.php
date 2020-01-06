@@ -132,7 +132,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 *
 	 * @throws  Exception
 	 */
-	protected function getDefaultMenuItem(AbstractMenu $menu, $active, $visited = array())
+	protected function getDefaultMenuItem(AbstractMenu $menu, $active, $visited = [])
 	{
 		KunenaFactory::loadLanguage('com_kunena.controllers');
 

@@ -33,7 +33,7 @@ class KunenaViewUser extends KunenaView
 	 */
 	public function displayList($tpl = null)
 	{
-		$response = array();
+		$response = [];
 
 		if ($this->me->exists())
 		{
@@ -75,7 +75,7 @@ class KunenaViewUser extends KunenaView
 	 */
 	public function displayListMention($tpl = null)
 	{
-		$response = array();
+		$response = [];
 
 		if ($this->me->exists())
 		{
@@ -114,7 +114,7 @@ class KunenaViewUser extends KunenaView
 	 */
 	public function displayGalleryimages()
 	{
-		$response = array();
+		$response = [];
 
 		$gallery_name = $this->app->input->get('gallery_name', null, 'string');
 

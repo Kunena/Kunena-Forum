@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 $app    = Factory::getApplication();
-$limits = array();
+$limits = [];
 
 // Make the option list.
 for ($i = 5; $i <= 30; $i += 5)

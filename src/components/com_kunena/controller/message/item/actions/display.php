@@ -658,7 +658,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
+		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
 	}
 
 	/**
@@ -683,8 +683,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-								  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon)
+			->setProperties(['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
+			                 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon]
 			);
 	}
 }

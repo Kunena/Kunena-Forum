@@ -25,13 +25,13 @@ abstract class KunenaForumTopicUserReadHelper
 	 * @var     array|KunenaForumTopicUserRead[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array|KunenaForumTopicUserRead[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_topics = array();
+	protected static $_topics = [];
 
 	/**
 	 * Returns KunenaForumTopicUserRead object.
@@ -91,11 +91,11 @@ abstract class KunenaForumTopicUserReadHelper
 
 		if ($ids === false)
 		{
-			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : array();
+			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : [];
 		}
 		elseif (!is_array($ids))
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		// Convert topic objects into ids
@@ -110,7 +110,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{

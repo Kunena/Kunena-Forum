@@ -33,7 +33,7 @@ class KunenaLogin
 	 * @var     array|KunenaLogin[]
 	 * @since   Kunena 6.0
 	 */
-	protected $instances = array();
+	protected $instances = [];
 
 	/**
 	 * @return  void

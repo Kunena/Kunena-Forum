@@ -58,25 +58,25 @@ class KunenaUserBan extends CMSObject
 	 * @var     array|KunenaUserBan[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instancesByUserid = array();
+	protected static $_instancesByUserid = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instancesByIP = array();
+	protected static $_instancesByIP = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_useridcache = array();
+	protected static $_useridcache = [];
 
 	/**
 	 * @var     Date|null
@@ -196,8 +196,8 @@ class KunenaUserBan extends CMSObject
 	protected function bind($data)
 	{
 		$this->setProperties($data);
-		$this->comments = !empty($this->comments) ? json_decode($this->comments) : array();
-		$this->params   = !empty($this->params) ? json_decode($this->params) : array();
+		$this->comments = !empty($this->comments) ? json_decode($this->comments) : [];
+		$this->params   = !empty($this->params) ? json_decode($this->params) : [];
 	}
 
 	/**
@@ -411,7 +411,7 @@ class KunenaUserBan extends CMSObject
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$list = array();
+		$list = [];
 
 		foreach ($results as $ban)
 		{
@@ -438,7 +438,7 @@ class KunenaUserBan extends CMSObject
 	{
 		if (!$userid)
 		{
-			return array();
+			return [];
 		}
 
 		$c  = __CLASS__;
@@ -460,7 +460,7 @@ class KunenaUserBan extends CMSObject
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$list = array();
+		$list = [];
 
 		foreach ($results as $ban)
 		{

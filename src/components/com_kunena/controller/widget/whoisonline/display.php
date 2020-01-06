@@ -85,8 +85,8 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
-		$this->onlineList = array();
-		$this->hiddenList = array();
+		$this->onlineList = [];
+		$this->hiddenList = [];
 
 		foreach ($users as $userid => $usertime)
 		{

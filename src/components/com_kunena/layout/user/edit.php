@@ -35,7 +35,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
 
 		// Define all tabs.
-		$tabs = array();
+		$tabs = [];
 
 		if ($myProfile)
 		{
@@ -78,7 +78,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabsEdit', array($tabs));
+		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabsEdit', [$tabs]);
 
 		$tabs = $tabs + $plugins;
 

@@ -80,7 +80,7 @@ class KunenaTableMap
 		$this->_tbl        = $table;
 		$this->_tbl_key    = $key;
 		$this->_tbl_mapped = $mapped;
-		$this->{$mapped}   = array();
+		$this->{$mapped}   = [];
 		$this->_db         = $db ? $db : Factory::getDbo();
 
 		// Initialise the table properties.
@@ -107,7 +107,7 @@ class KunenaTableMap
 	 */
 	public function getFields()
 	{
-		static $cache = array();
+		static $cache = [];
 
 		$name = $this->_tbl;
 
@@ -134,9 +134,9 @@ class KunenaTableMap
 	 */
 	public function getMirrorInstance()
 	{
-		static $instance = array();
+		static $instance = [];
 
-		$key = md5(serialize(array($this->_tbl, $this->_tbl_mapped, $this->_tbl_key)));
+		$key = md5(serialize([$this->_tbl, $this->_tbl_mapped, $this->_tbl_key]));
 
 		if (!isset($instance[$key]))
 		{
@@ -294,7 +294,7 @@ class KunenaTableMap
 	 *
 	 * @throws  InvalidArgumentException
 	 */
-	public function bind($src, $ignore = array())
+	public function bind($src, $ignore = [])
 	{
 		// If the source value is not an array or object return false.
 		if (!is_object($src) && !is_array($src))
@@ -340,7 +340,7 @@ class KunenaTableMap
 	public function getProperties()
 	{
 		$properties = (array) $this;
-		$list       = array();
+		$list       = [];
 
 		foreach ($properties as $property => $value)
 		{
@@ -458,7 +458,7 @@ class KunenaTableMap
 			// Create all added items.
 			if ($added)
 			{
-				$values = array();
+				$values = [];
 
 				foreach ($added as $var)
 				{
@@ -467,7 +467,7 @@ class KunenaTableMap
 
 				$query = $this->_db->getQuery(true)
 					->insert($this->_db->quoteName($this->_tbl))
-					->columns(array($this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)))
+					->columns([$this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)])
 					->values($values);
 				$this->_db->setQuery($query);
 				$this->_db->execute();
@@ -530,12 +530,12 @@ class KunenaTableMap
 				return true;
 			}
 
-			$keys = array($keyName => $keyValue);
+			$keys = [$keyName => $keyValue];
 		}
 		elseif (!is_array($keys))
 		{
 			// Load by primary key.
-			$keys = array($this->_tbl_key => $keys);
+			$keys = [$this->_tbl_key => $keys];
 		}
 
 		if ($reset)
@@ -623,7 +623,7 @@ class KunenaTableMap
 		// Turn pk into array.
 		if (!is_array($pk))
 		{
-			$pk = array($k => (int) $pk);
+			$pk = [$k => (int) $pk];
 		}
 
 		// Delete the row by primary key.

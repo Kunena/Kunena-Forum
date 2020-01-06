@@ -108,7 +108,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$parent->tryAuthorise('reply');
 
-		$arraypollcatid = array();
+		$arraypollcatid = [];
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		// Run event.
@@ -119,7 +119,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$this->headerText = Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 
@@ -129,7 +129,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
-		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : array('quote' => $quote));
+		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
 		$this->action = 'post';
 
 		$this->privateMessage       = new KunenaPrivateMessage;

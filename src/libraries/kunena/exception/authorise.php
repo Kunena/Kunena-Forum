@@ -22,7 +22,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $responseCodes = array(
+	protected $responseCodes = [
 		400 => '400 Bad Request',
 		401 => '401 Unauthorized',
 		403 => '403 Forbidden',
@@ -30,7 +30,7 @@ class KunenaExceptionAuthorise extends RuntimeException
 		410 => '410 Gone',
 		500 => '500 Internal Server Error',
 		503 => '503 Service Temporarily Unavailable',
-	);
+	];
 
 	/**
 	 * @return  mixed

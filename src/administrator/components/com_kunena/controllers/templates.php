@@ -35,7 +35,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 * @var     array
 	 * @since   Kunena 2.0
 	 */
-	protected $locked = array('aurelia');
+	protected $locked = ['aurelia'];
 
 	/**
 	 * Construct
@@ -46,7 +46,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
@@ -64,7 +64,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function publish()
 	{
-		$cid = $this->app->input->get('cid', array(), 'array');
+		$cid = $this->app->input->get('cid', [], 'array');
 		$id  = array_shift($cid);
 
 		if (!Session::checkToken('post'))
@@ -123,7 +123,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid      = $this->app->input->get('cid', array(), 'array');
+		$cid      = $this->app->input->get('cid', [], 'array');
 		$template = array_shift($cid);
 
 		if (!$template)
@@ -285,7 +285,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function uninstall()
 	{
-		$cid      = $this->app->input->get('cid', array(), 'array');
+		$cid      = $this->app->input->get('cid', [], 'array');
 		$id       = array_shift($cid);
 		$template = $id;
 
@@ -356,7 +356,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function chooseless()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 		$this->app->setUserState('kunena.templatename', $templatename);
 
@@ -384,7 +384,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function editless()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$filename = $this->app->input->get('filename', '', 'cmd');
@@ -413,7 +413,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function choosecss()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$this->app->setUserState('kunena.templatename', $templatename);
@@ -433,7 +433,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function applyless()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$filename    = $this->app->input->get('filename', '', 'cmd');
@@ -482,7 +482,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function saveless()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$filename    = $this->app->input->get('filename', '', 'cmd');
@@ -535,7 +535,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function editcss()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$filename = $this->app->input->get('filename', '', 'cmd');
@@ -564,7 +564,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function applycss()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 		$filename     = $this->app->input->get('filename', '', 'cmd');
 		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
@@ -610,7 +610,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	public function savecss()
 	{
-		$template     = $this->app->input->getArray(array('cid' => ''));
+		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 		$filename     = $this->app->input->get('filename', '', 'cmd');
 		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
@@ -659,7 +659,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	public function apply()
 	{
 		$template = $this->app->input->get('templatename', '', 'cmd');
-		$menus    = $this->app->input->get('selections', array(), 'array');
+		$menus    = $this->app->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))
@@ -698,7 +698,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	protected function _saveParamFile($template)
 	{
-		$params = $this->app->input->get('jform', array(), 'array');
+		$params = $this->app->input->get('jform', [], 'array');
 
 		$params['wysibb'] = '';
 
@@ -860,7 +860,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	public function save()
 	{
 		$template = $this->app->input->get('templatename', '', 'cmd');
-		$menus    = $this->app->input->get('selections', array(), 'array');
+		$menus    = $this->app->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken('post'))

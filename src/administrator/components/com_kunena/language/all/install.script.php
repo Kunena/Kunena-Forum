@@ -48,7 +48,7 @@ class pkg_kunena_languagesInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		if (!in_array($type, array('install', 'update')))
+		if (!in_array($type, ['install', 'update']))
 		{
 			return true;
 		}
@@ -103,7 +103,7 @@ class pkg_kunena_languagesInstallerScript
 
 		// Remove old K1.7 style language pack.
 		$table = Joomla\CMS\Table\Table::getInstance('extension');
-		$id    = $table->find(array('type' => 'file', 'element' => "kunena_language_pack"));
+		$id    = $table->find(['type' => 'file', 'element' => "kunena_language_pack"]);
 
 		if ($id)
 		{
@@ -123,7 +123,7 @@ class pkg_kunena_languagesInstallerScript
 	public function uninstallLanguage($tag, $name)
 	{
 		$table = Joomla\CMS\Table\Table::getInstance('extension');
-		$id    = $table->find(array('type' => 'file', 'element' => "com_kunena_{$tag}"));
+		$id    = $table->find(['type' => 'file', 'element' => "com_kunena_{$tag}"]);
 
 		if (!$id)
 		{

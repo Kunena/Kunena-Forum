@@ -49,7 +49,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model = new KunenaModelTopics([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state   = $this->model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
@@ -109,28 +109,28 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				$authorise = 'topic.post.approve';
 				$finder
 					->filterByUser(null, 'author')
-					->filterByHold(array(1));
+					->filterByHold([1]);
 				break;
 			case 'deleted' :
 				$authorise = 'topic.post.undelete';
 				$finder
 					->filterByUser($user, 'author')
-					->filterByHold(array(2, 3));
+					->filterByHold([2, 3]);
 				break;
 			case 'mythanks' :
 				$finder
 					->filterByUser($user, 'thanker')
-					->filterByHold(array(0));
+					->filterByHold([0]);
 				break;
 			case 'thankyou' :
 				$finder
 					->filterByUser($user, 'thankee')
-					->filterByHold(array(0));
+					->filterByHold([0]);
 				break;
 			default :
 				$finder
 					->filterByUser($user, 'author')
-					->filterByHold(array(0));
+					->filterByHold([0]);
 				break;
 		}
 
@@ -208,7 +208,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			->find();
 
 		// Load topics...
-		$topicIds = array();
+		$topicIds = [];
 
 		foreach ($this->messages as $message)
 		{
@@ -217,7 +217,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		$this->topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
-		$userIds = $mesIds = array();
+		$userIds = $mesIds = [];
 
 		foreach ($this->messages as $message)
 		{
@@ -234,19 +234,19 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		{
 			case 'unapproved':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				$actions          = array('approve', 'delete', 'move', 'permdelete');
+				$actions          = ['approve', 'delete', 'move', 'permdelete'];
 				break;
 			case 'deleted':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				$actions          = array('undelete', 'delete', 'move', 'permdelete');
+				$actions          = ['undelete', 'delete', 'move', 'permdelete'];
 				break;
 			case 'mythanks':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				$actions          = array('approve', 'delete', 'permdelete');
+				$actions          = ['approve', 'delete', 'permdelete'];
 				break;
 			case 'thankyou':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				$actions          = array('approve', 'delete', 'permdelete');
+				$actions          = ['approve', 'delete', 'permdelete'];
 				break;
 			case 'recent':
 			default:
@@ -257,7 +257,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				if ($view == 'user')
 				{
 					$userName              = $user->getName();
-					$charMapApostropheOnly = array('s', 'S', 'z', 'Z');
+					$charMapApostropheOnly = ['s', 'S', 'z', 'Z'];
 
 					if (in_array(substr($userName, -1), $charMapApostropheOnly))
 					{
@@ -271,7 +271,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 					$this->headerText = Text::sprintf(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
 				}
 
-				$actions = array('approve', 'delete', 'move', 'permdelete');
+				$actions = ['approve', 'delete', 'move', 'permdelete'];
 		}
 
 		$this->actions = $this->getMessageActions($this->messages, $actions);

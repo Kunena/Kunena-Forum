@@ -29,7 +29,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	public static function getList()
 	{
-		return array(
+		return [
 			'categoryOrphaned',
 			'categoryMissingAlias',
 			'categoryWrongAlias',
@@ -60,7 +60,7 @@ abstract class KunenaForumDiagnostics
 			'channelOrphaned',
 			'useravatarOrphaned',
 			'topicsownersOrphaned'
-		);
+		];
 	}
 
 	/**
@@ -134,7 +134,7 @@ abstract class KunenaForumDiagnostics
 			}
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -269,7 +269,7 @@ abstract class KunenaForumDiagnostics
 	 */
 	public static function getFieldInfo($function)
 	{
-		static $fields = array();
+		static $fields = [];
 
 		if (!isset($fields[$function]))
 		{
@@ -323,7 +323,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.*");
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -367,7 +367,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name' => 'link', 'parent_id' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
+		return ['name' => 'link', 'parent_id' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
 	}
 
 	/**
@@ -429,7 +429,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
+		return ['name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
 	}
 
 	/**
@@ -461,7 +461,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
+		return ['name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
 	}
 
 	/**
@@ -505,7 +505,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('item' => 'invalid');
+		return ['item' => 'invalid'];
 	}
 
 	/**
@@ -549,7 +549,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('mesid' => 'invalid');
+		return ['mesid' => 'invalid'];
 	}
 
 	/**
@@ -593,7 +593,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, 'MISSING' AS message");
 		}
 
-		return array('message' => 'invalid');
+		return ['message' => 'invalid'];
 	}
 
 	/**
@@ -610,7 +610,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject');
 		}
 
-		return array('category_id' => 'invalid');
+		return ['category_id' => 'invalid'];
 	}
 
 	/**
@@ -654,7 +654,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject');
 		}
 
-		return array('category_id' => 'invalid');
+		return ['category_id' => 'invalid'];
 	}
 
 	/**
@@ -725,7 +725,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, 'MISSING' AS messages");
 		}
 
-		return array('messages' => 'invalid');
+		return ['messages' => 'invalid'];
 	}
 
 	/**
@@ -769,7 +769,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, poll_id");
 		}
 
-		return array('poll_id' => 'invalid');
+		return ['poll_id' => 'invalid'];
 	}
 
 	/**
@@ -813,7 +813,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, p.title AS poll_title, CONCAT(a.poll_id, ' != ', p.threadid) AS poll_id, t.subject AS real_topic_subject");
 		}
 
-		return array('poll_id' => 'invalid');
+		return ['poll_id' => 'invalid'];
 	}
 
 	/**
@@ -857,7 +857,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject, a.moved_id');
 		}
 
-		return array('moved_id' => 'invalid');
+		return ['moved_id' => 'invalid'];
 	}
 
 	/**
@@ -900,7 +900,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject, m.id AS mesid, m.subject AS message_subject, t.message');
 		}
 
-		return array('mesid' => 'invalid');
+		return ['mesid' => 'invalid'];
 	}
 
 	/**
@@ -942,7 +942,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, CONCAT(a.catid, ' != ', t.category_id) AS catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		}
 
-		return array('catid' => 'invalid');
+		return ['catid' => 'invalid'];
 	}
 
 	/**
@@ -986,7 +986,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		}
 
-		return array('thread' => 'invalid');
+		return ['thread' => 'invalid'];
 	}
 
 	/**
@@ -1030,7 +1030,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.mesid, a.userid, a.folder, a.filename');
 		}
 
-		return array('mesid' => 'invalid');
+		return ['mesid' => 'invalid'];
 	}
 
 	/**
@@ -1074,7 +1074,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('threadid' => 'invalid');
+		return ['threadid' => 'invalid'];
 	}
 
 	/**
@@ -1118,7 +1118,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.title, CONCAT(a.threadid, ' != ', IF(tt.id,tt.id,'0')) AS threadid, t.subject AS topic1_subject, tt.subject AS topic2_subject");
 		}
 
-		return array('threadid' => 'invalid');
+		return ['threadid' => 'invalid'];
 	}
 
 	/**
@@ -1162,7 +1162,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('pollid' => 'invalid');
+		return ['pollid' => 'invalid'];
 	}
 
 	/**
@@ -1206,7 +1206,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('pollid' => 'invalid');
+		return ['pollid' => 'invalid'];
 	}
 
 	/**
@@ -1250,7 +1250,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('postid' => 'invalid');
+		return ['postid' => 'invalid'];
 	}
 
 	/**
@@ -1294,7 +1294,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('category_id' => 'invalid');
+		return ['category_id' => 'invalid'];
 	}
 
 	/**
@@ -1338,7 +1338,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('topic_id' => 'invalid');
+		return ['topic_id' => 'invalid'];
 	}
 
 	/**
@@ -1382,7 +1382,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.message_id, FROM_UNIXTIME(a.time) AS time");
 		}
 
-		return array('category_id' => 'invalid');
+		return ['category_id' => 'invalid'];
 	}
 
 	/**
@@ -1426,7 +1426,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.user_id, a.topic_id, a.category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed');
 		}
 
-		return array('topic_id' => 'invalid');
+		return ['topic_id' => 'invalid'];
 	}
 
 	/**
@@ -1470,7 +1470,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed");
 		}
 
-		return array('category_id' => 'invalid');
+		return ['category_id' => 'invalid'];
 	}
 
 	/**
@@ -1515,7 +1515,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('r.*');
 		}
 
-		return array('topic_id' => 'invalid');
+		return ['topic_id' => 'invalid'];
 	}
 
 	/**
@@ -1559,7 +1559,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('*');
 		}
 
-		return array('channels' => 'invalid');
+		return ['channels' => 'invalid'];
 	}
 
 	/**
@@ -1603,7 +1603,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('t.id, t.first_post_userid, 1');
 		}
 
-		return array('channels' => 'invalid');
+		return ['channels' => 'invalid'];
 	}
 
 	/**
@@ -1647,7 +1647,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('*');
 		}
 
-		return array('channels' => 'invalid');
+		return ['channels' => 'invalid'];
 	}
 
 	//  /**

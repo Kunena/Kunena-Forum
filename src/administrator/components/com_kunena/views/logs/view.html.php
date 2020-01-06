@@ -76,7 +76,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	protected function getFilterUserFields()
 	{
-		$filterFields   = array();
+		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
 		$filterFields[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
 		$filterFields[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
@@ -94,7 +94,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields = array();
+		$sortFields = [];
 
 		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'type', Text::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
@@ -114,7 +114,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
@@ -128,7 +128,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	protected function getFilterTypeFields()
 	{
-		$filterFields   = array();
+		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 1, 'MOD');
 		$filterFields[] = HTMLHelper::_('select.option', 2, 'ACT');
 		$filterFields[] = HTMLHelper::_('select.option', 3, 'ERR');
@@ -146,7 +146,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	protected function getFilterOperationFields()
 	{
-		$filterFields = array();
+		$filterFields = [];
 
 		$reflection = new ReflectionClass('KunenaLog');
 		$constants  = $reflection->getConstants();
@@ -219,7 +219,7 @@ class KunenaAdminViewLogs extends KunenaView
 	 */
 	public function getType($id)
 	{
-		static $types = array(1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP');
+		static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
 
 		return isset($types[$id]) ? $types[$id] : '???';
 	}

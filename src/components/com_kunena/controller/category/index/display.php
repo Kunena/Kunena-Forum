@@ -43,25 +43,25 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $sections = array();
+	public $sections = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $categories = array();
+	public $categories = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $pending = array();
+	public $pending = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $more = array();
+	public $more = [];
 
 	/**
 	 * Prepare category index display.
@@ -145,9 +145,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		return;
 		}*/
 
-		$options            = array();
+		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		if ($catid)
@@ -159,13 +159,13 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$sections = KunenaForumCategoryHelper::getChildren();
 		}
 
-		$sectionIds = array();
+		$sectionIds = [];
 
 		$this->more[$catid] = 0;
 
 		foreach ($sections as $key => $category)
 		{
-			$this->categories[$category->id] = array();
+			$this->categories[$category->id] = [];
 			$this->more[$category->id]       = 0;
 
 			$registry = new Registry;
@@ -211,10 +211,10 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			return;
 		}
 
-		$categoryIds = array();
-		$topicIds    = array();
-		$userIds     = array();
-		$postIds     = array();
+		$categoryIds = [];
+		$topicIds    = [];
+		$userIds     = [];
+		$postIds     = [];
 
 		foreach ($categories as $key => $category)
 		{
@@ -318,7 +318,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		KunenaForumMessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
-		$this->pending = array();
+		$this->pending = [];
 
 		if ($this->me->exists() && !$this->me->isBanned())
 		{

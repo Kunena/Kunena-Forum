@@ -39,7 +39,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=smilies';
@@ -88,8 +88,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		$id = array_shift($cid);
 
@@ -232,8 +232,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		$cids = implode(',', $cid);
 

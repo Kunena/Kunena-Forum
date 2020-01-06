@@ -80,7 +80,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'filename', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE'));
 		$sortFields[] = HTMLHelper::_('select.option', 'filetype', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE'));
 		$sortFields[] = HTMLHelper::_('select.option', 'size', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE'));
@@ -100,7 +100,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 

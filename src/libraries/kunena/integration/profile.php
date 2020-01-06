@@ -91,7 +91,7 @@ class KunenaProfile
 	 */
 	protected function _getTopHits($limit = 0)
 	{
-		return array();
+		return [];
 	}
 
 	/**

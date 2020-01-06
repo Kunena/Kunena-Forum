@@ -44,7 +44,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $categories = array();
+	public $categories = [];
 
 	/**
 	 * Prepare category subscriptions display.
@@ -61,7 +61,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		parent::before();
 
 		require_once KPATH_SITE . '/models/category.php';
-		$this->model = new KunenaModelCategory(array(), $this->input);
+		$this->model = new KunenaModelCategory([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
@@ -90,9 +90,9 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 
 		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($this->state->get('user'));
 
-		$topicIds = array();
-		$userIds  = array();
-		$postIds  = array();
+		$topicIds = [];
+		$userIds  = [];
+		$postIds  = [];
 
 		foreach ($this->categories as $category)
 		{
@@ -139,7 +139,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 */
 	public function getActions()
 	{
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 

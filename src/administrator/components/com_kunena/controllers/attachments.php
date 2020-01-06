@@ -37,7 +37,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
@@ -63,8 +63,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		if (!$cid)
 		{
@@ -79,8 +79,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$attachment = KunenaAttachmentHelper::get($id);
 
 			$message     = $attachment->getMessage();
-			$attachments = array($attachment->id, 1);
-			$attach      = array();
+			$attachments = [$attachment->id, 1];
+			$attach      = [];
 			$removeList  = array_keys(array_diff_key($attachments, $attach));
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);

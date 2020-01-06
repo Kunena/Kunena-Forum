@@ -79,7 +79,7 @@ if (Factory::getLanguage()->isRTL())
 			</table>
 
 			<?php
-			$tabclass = array("row1", "row2");
+			$tabclass = ["row1", "row2"];
 			$k        = 0;
 			?>
 			<?php foreach ($this->top as $top)

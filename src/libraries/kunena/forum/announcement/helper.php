@@ -55,7 +55,7 @@ abstract class KunenaForumAnnouncementHelper
 
 		if (empty(self::$_instances [$id]))
 		{
-			self::$_instances [$id] = new KunenaForumAnnouncement(array('id' => $id));
+			self::$_instances [$id] = new KunenaForumAnnouncement(['id' => $id]);
 			self::$_instances [$id]->load();
 		}
 		elseif ($reload)
@@ -155,8 +155,8 @@ abstract class KunenaForumAnnouncementHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-		self::$_instances = array();
-		$list             = array();
+		self::$_instances = [];
+		$list             = [];
 
 		foreach ($results as $announcement)
 		{
@@ -234,6 +234,6 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
+		self::$_instances = [];
 	}
 }

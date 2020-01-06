@@ -202,7 +202,7 @@ $user = Factory::getApplication()->getIdentity();
 											<?php echo Joomla\CMS\HTML\HTMLHelper::_(
 												'bootstrap.renderModal',
 												'plugin' . $item->extension_id . 'Modal',
-												array(
+												[
 													'url'         => Joomla\CMS\Router\Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
 													'title'       => $item->name,
 													'height'      => '400',
@@ -221,7 +221,7 @@ $user = Factory::getApplication()->getIdentity();
 														. '<button type="button" class="btn btn-outline-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
 														. Joomla\CMS\Language\Text::_("JAPPLY") . '</button>',
-												)
+												]
 											); ?>
 										<?php else : ?>
 											<?php echo $item->name; ?>

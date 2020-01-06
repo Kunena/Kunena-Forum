@@ -52,23 +52,23 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $actions = array(
-		'none'                   => array(),
-		'read'                   => array('Read'),
-		'reply'                  => array('Read', 'NotHold', 'GuestWrite'),
-		'edit'                   => array('Read', 'Own', 'EditTime'),
-		'move'                   => array('Read'),
-		'approve'                => array('Read'),
-		'delete'                 => array('Read', 'Own', 'Delete'),
-		'thankyou'               => array('Read', 'Thankyou'),
-		'unthankyou'             => array('Read'),
-		'undelete'               => array('Read'),
-		'permdelete'             => array('Read', 'Permdelete'),
-		'attachment.read'        => array('Read'),
-		'attachment.createimage' => array('Read', 'AttachmentsImage'),
-		'attachment.createfile'  => array('Read', 'AttachmentsFile'),
-		'attachment.delete'      => array(),
-	);
+	protected static $actions = [
+		'none'                   => [],
+		'read'                   => ['Read'],
+		'reply'                  => ['Read', 'NotHold', 'GuestWrite'],
+		'edit'                   => ['Read', 'Own', 'EditTime'],
+		'move'                   => ['Read'],
+		'approve'                => ['Read'],
+		'delete'                 => ['Read', 'Own', 'Delete'],
+		'thankyou'               => ['Read', 'Thankyou'],
+		'unthankyou'             => ['Read'],
+		'undelete'               => ['Read'],
+		'permdelete'             => ['Read', 'Permdelete'],
+		'attachment.read'        => ['Read'],
+		'attachment.createimage' => ['Read', 'AttachmentsImage'],
+		'attachment.createfile'  => ['Read', 'AttachmentsFile'],
+		'attachment.delete'      => [],
+	];
 
 	/**
 	 * @var     integer
@@ -92,13 +92,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
-	protected $_attachments_add = array();
+	protected $_attachments_add = [];
 
 	/**
 	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
-	protected $_attachments_del = array();
+	protected $_attachments_del = [];
 
 	/**
 	 * @var     null
@@ -122,19 +122,19 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authcache = array();
+	protected $_authcache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authtcache = array();
+	protected $_authtcache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authfcache = array();
+	protected $_authfcache = [];
 
 	/**
 	 * @internal
@@ -332,7 +332,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 */
-	public function newReply($fields = array(), $user = null, $safefields = null)
+	public function newReply($fields = [], $user = null, $safefields = null)
 	{
 		$user     = KunenaUserHelper::get($user);
 		$topic    = $this->getTopic();
@@ -379,7 +379,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		if ($fields['quote'] === true)
 		{
 			$user             = KunenaFactory::getUser($this->userid);
-			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su', '/\[PRIVATE=(.*?)\]/su');
+			$find             = ['/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su', '/\[PRIVATE=(.*?)\]/su'];
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" . $text . "[/quote]";
@@ -393,11 +393,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 			if (is_array($fields))
 			{
-				$message->bind($fields, array('name', 'email', 'subject', 'message'), true);
+				$message->bind($fields, ['name', 'email', 'subject', 'message'], true);
 			}
 		}
 
-		return array($topic, $message);
+		return [$topic, $message];
 	}
 
 	/**
@@ -429,7 +429,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$this->urlNotification = $url;
 
 		// Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
-		Factory::getApplication()->RegisterEvent('onAfterRespond', array($this, 'notificationPost'));
+		Factory::getApplication()->RegisterEvent('onAfterRespond', [$this, 'notificationPost']);
 	}
 
 	/**
@@ -507,7 +507,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (!$url)
 		{
-			$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
+			$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
 		}
 
 		// Get all subscribers, moderators and admins who should get the email.
@@ -542,8 +542,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$topic = $this->getTopic();
 
 			// Make a list from all receivers; split the receivers into two distinct groups.
-			$sentusers = array();
-			$receivers = array(0 => array(), 1 => array());
+			$sentusers = [];
+			$receivers = [0 => [], 1 => []];
 
 			foreach ($emailToList as $emailTo)
 			{
@@ -564,7 +564,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$user = Factory::getUser();
 			$mail = Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
-			$mail->setSender(array($config->getEmail(), $mailsender));
+			$mail->setSender([$config->getEmail(), $mailsender]);
 			$app = Factory::getApplication();
 
 			// Here is after respond sends. so close connection to leave browser, and
@@ -581,13 +581,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
 				$mailer->addTemplateData(
-					array(
+					[
 						'mail'       => $mail,
 						'subject'    => $subject,
 						'message'    => $this,
 						'messageUrl' => $url,
 						'once'       => $once
-					)
+					]
 				);
 
 				$ok = KunenaEmail::send($mailer, $receivers[1]);
@@ -598,13 +598,13 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			{
 				$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
 				$mailer->addTemplateData(
-					array(
+					[
 						'mail'       => $mail,
 						'subject'    => $subject,
 						'message'    => $this,
 						'messageUrl' => $url,
 						'once'       => $once
-					)
+					]
 				);
 
 				if (!KunenaEmail::send($mailer, $receivers[0]))
@@ -1112,7 +1112,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($postDelta < 0)
 		{
-			Factory::getApplication()->triggerEvent('onDeleteKunenaPost', array(array($this->id)));
+			Factory::getApplication()->triggerEvent('onDeleteKunenaPost', [[$this->id]]);
 			$activity->onAfterDelete($this);
 		}
 		elseif ($postDelta > 0)
@@ -1373,11 +1373,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 */
-	public function edit($fields = array(), $user = null)
+	public function edit($fields = [], $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
-		$this->bind($fields, array('name', 'email', 'subject', 'message', 'modified_reason'), true);
+		$this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
 
 		// Update rest of the information
 		$category            = $this->getCategory();

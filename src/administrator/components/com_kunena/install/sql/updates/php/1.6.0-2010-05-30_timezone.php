@@ -79,7 +79,7 @@ function kunena_160_2010_05_30_timezone($parent)
 		}
 
 		unset($config->board_ofset);
-		$result = array('action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_160_TIMEZONE', sprintf('%+d:%02d', $timeshift / 3600, ($timeshift / 60) % 60)), 'success' => true);
+		$result = ['action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_160_TIMEZONE', sprintf('%+d:%02d', $timeshift / 3600, ($timeshift / 60) % 60)), 'success' => true];
 	}
 
 	// Save configuration

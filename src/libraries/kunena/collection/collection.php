@@ -24,7 +24,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $items = array();
+	protected $items = [];
 
 	/**
 	 * Create a new collection.
@@ -33,7 +33,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(array $items = array())
+	public function __construct(array $items = [])
 	{
 		$this->items = $items;
 	}

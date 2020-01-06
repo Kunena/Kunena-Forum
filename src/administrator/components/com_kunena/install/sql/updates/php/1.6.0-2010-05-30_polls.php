@@ -184,7 +184,7 @@ function kunena_160_2010_05_30_polls($parent)
 
 	if ($upgraded)
 	{
-		return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_POLLS'), 'success' => true);
+		return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_POLLS'), 'success' => true];
 	}
 
 	return null;

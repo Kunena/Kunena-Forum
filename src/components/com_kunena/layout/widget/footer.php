@@ -87,7 +87,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 			}
 
 			$doc = Factory::getApplication()->getDocument();
-			$doc->addHeadLink($url, 'alternate', 'rel', array('type' => 'application/rss+xml'));
+			$doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
 			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';
 		}

@@ -61,7 +61,7 @@ class KunenaAdminViewTrash extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields = array();
+		$sortFields = [];
 
 		if ($this->state->get('layout') == 'topics')
 		{
@@ -92,7 +92,7 @@ class KunenaAdminViewTrash extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 

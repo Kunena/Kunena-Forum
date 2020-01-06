@@ -58,7 +58,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$message = '';
-		$ids     = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids     = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids     = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -129,7 +129,7 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_DESTROY,
-						array('topic_ids' => $ids),
+						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -161,7 +161,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -196,7 +196,7 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_DELETE,
-						array('topic_ids' => $ids),
+						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -228,7 +228,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -263,7 +263,7 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_UNDELETE,
-						array('topic_ids' => $ids),
+						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -295,7 +295,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -331,7 +331,7 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_APPROVE,
-						array('topic_ids' => $ids),
+						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -363,12 +363,12 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$topics_ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$topics_ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$topics_ids = ArrayHelper::toInteger($topics_ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($topics_ids);
 
-		$messages_ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		$messages_ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
 		$messages = KunenaForumMessageHelper::getMessages($messages_ids);
@@ -436,10 +436,10 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_MODERATE,
-						array(
-							'move'   => array('id' => $topic->id, 'mode' => 'topic'),
-							'target' => array('category_id' => $target->id),
-						),
+						[
+							'move'   => ['id' => $topic->id, 'mode' => 'topic'],
+							'target' => ['category_id' => $target->id],
+						],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -471,7 +471,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -485,7 +485,7 @@ class KunenaControllerTopics extends KunenaController
 					KunenaLog::log(
 						$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_UNFAVORITE,
-						array('topic_ids' => $ids),
+						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
 						null
@@ -523,7 +523,7 @@ class KunenaControllerTopics extends KunenaController
 
 		$userid = $this->app->input->getInt('userid');
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -558,7 +558,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -610,7 +610,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -661,7 +661,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -712,7 +712,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		$ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;

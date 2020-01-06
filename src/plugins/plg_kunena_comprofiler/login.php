@@ -59,8 +59,8 @@ class KunenaLoginComprofiler
 
 		$cbAuthenticate = new CBAuthentication;
 
-		$messagesToUser = array();
-		$alertmessages  = array();
+		$messagesToUser = [];
+		$alertmessages  = [];
 		$redirect_url   = KunenaRoute::current();
 
 		$loginType   = (isset($ueConfig['login_type']) ? $ueConfig['login_type'] : 0);

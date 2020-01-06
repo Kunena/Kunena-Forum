@@ -55,8 +55,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		foreach ($cid as $id)
 		{
@@ -95,7 +95,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, array('id' => $announcement->id));
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
@@ -123,8 +123,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		foreach ($cid as $id)
 		{
@@ -163,7 +163,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, array('id' => $announcement->id));
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
@@ -183,8 +183,8 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid = $this->input->get('cid', array(), 'array');
-		$cid = ArrayHelper::toInteger($cid, array());
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
@@ -241,7 +241,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, array('id' => $announcement->id));
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
@@ -270,7 +270,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		}
 
 		$now                    = new Joomla\CMS\Date\Date;
-		$fields                 = array();
+		$fields                 = [];
 		$fields['title']        = $this->app->input->getString('title', '');
 		$fields['description']  = $this->app->input->getString('description', '');
 		$fields['sdescription'] = $this->app->input->getString('sdescription', '');
@@ -326,7 +326,7 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, array('id' => $announcement->id));
+			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
 		}
 
 		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

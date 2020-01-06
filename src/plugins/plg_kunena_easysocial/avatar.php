@@ -62,7 +62,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 */
 	public function getEditURL()
 	{
-		return FRoute::profile(array('layout' => 'edit'));
+		return FRoute::profile(['layout' => 'edit']);
 	}
 
 	/**

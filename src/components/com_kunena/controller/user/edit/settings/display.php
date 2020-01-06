@@ -49,7 +49,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item             = new StdClass;
 		$item->name       = 'messageordering';
 		$item->label      = Text::_('COM_KUNENA_USER_ORDER');
-		$options          = array();
+		$options          = [];
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_USER_ORDER_ASC'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_USER_ORDER_DESC'));
@@ -61,7 +61,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item             = new StdClass;
 		$item->name       = 'hidemail';
 		$item->label      = Text::_('COM_KUNENA_USER_HIDEEMAIL');
-		$options          = array();
+		$options          = [];
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
@@ -73,7 +73,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item             = new StdClass;
 		$item->name       = 'showonline';
 		$item->label      = Text::_('COM_KUNENA_USER_SHOWONLINE');
-		$options          = array();
+		$options          = [];
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
@@ -84,7 +84,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item             = new StdClass;
 		$item->name       = 'cansubscribe';
 		$item->label      = Text::_('COM_KUNENA_USER_CANSUBSCRIBE');
-		$options          = array();
+		$options          = [];
 		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
@@ -96,7 +96,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item             = new StdClass;
 		$item->name       = 'userlisttime';
 		$item->label      = Text::_('COM_KUNENA_USER_USERLISTTIME');
-		$options          = array();
+		$options          = [];
 		$options[]        = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_LASTVISIT'));
@@ -121,7 +121,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 			$item             = new StdClass;
 			$item->name       = 'socialshare';
 			$item->label      = Text::_('COM_KUNENA_USER_SOCIALSHARE');
-			$options          = array();
+			$options          = [];
 			$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 			$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 			$item->field      = HTMLHelper::_('select.genericlist', $options, 'socialshare', 'class="kinputbox form-control" size="1"', 'value',

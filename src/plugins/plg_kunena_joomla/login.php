@@ -55,14 +55,14 @@ class KunenaLoginJoomla
 	 */
 	public function loginUser($username, $password, $rememberme, $secretkey = null)
 	{
-		$credentials = array('username' => $username, 'password' => $password);
+		$credentials = ['username' => $username, 'password' => $password];
 
 		if ($secretkey)
 		{
 			$credentials['secretkey'] = $secretkey;
 		}
 
-		$options = array('remember' => $rememberme);
+		$options = ['remember' => $rememberme];
 		$error   = Factory::getApplication()->login($credentials, $options);
 
 		return is_bool($error) ? '' : $error;

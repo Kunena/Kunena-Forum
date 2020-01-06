@@ -31,15 +31,15 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'user',
 				'time_start',
 				'time_stop',
-			);
+			];
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
@@ -189,7 +189,7 @@ class KunenaAdminModelStatistics extends Joomla\CMS\MVC\Model\ListModel
 		$access  = KunenaAccess::getInstance();
 		$userIds = array_keys($access->getAdmins() + $access->getModerators());
 
-		$data = array();
+		$data = [];
 
 		foreach ($userIds as $id)
 		{

@@ -85,7 +85,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByConfiguration(array $ignore = array())
+	public function filterByConfiguration(array $ignore = [])
 	{
 		if ($this->config->userlist_count_users == '1')
 		{

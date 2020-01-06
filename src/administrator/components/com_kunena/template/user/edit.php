@@ -352,7 +352,7 @@ jQuery(function($) {
 
 													foreach ($this->ipslist as $ip => $list)
 														:
-														$userlist = array();
+														$userlist = [];
 														$mescnt = 0;
 
 														foreach ($list as $curuser)

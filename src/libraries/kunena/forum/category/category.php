@@ -65,46 +65,46 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $actions = array(
-		'none'                              => array(),
-		'read'                              => array('Read'),
-		'subscribe'                         => array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
-		'moderate'                          => array('Read', 'NotBanned', 'Moderate'),
-		'admin'                             => array('NotBanned', 'Admin'),
-		'topic.read'                        => array('Read'),
-		'topic.create'                      => array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
-		'topic.reply'                       => array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
-		'topic.edit'                        => array('Read', 'NotBanned', 'Unlocked'),
-		'topic.move'                        => array('Read', 'NotBanned', 'Moderate', 'Channel'),
-		'topic.approve'                     => array('Read', 'NotBanned', 'Moderate'),
-		'topic.delete'                      => array('Read', 'NotBanned', 'Moderate'),
-		'topic.undelete'                    => array('Read', 'NotBanned', 'Moderate'),
-		'topic.permdelete'                  => array('Read', 'NotBanned', 'Moderate'),
-		'topic.favorite'                    => array('Read', 'NotBanned', 'Favorite'),
-		'topic.subscribe'                   => array('Read', 'NotBanned', 'Subscribe'),
-		'topic.sticky'                      => array('Read', 'NotBanned', 'Moderate'),
-		'topic.lock'                        => array('Read', 'NotBanned', 'Moderate'),
-		'topic.poll.read'                   => array('Read', 'Poll'),
-		'topic.poll.create'                 => array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'),
-		'topic.poll.edit'                   => array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
-		'topic.poll.delete'                 => array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
-		'topic.poll.vote'                   => array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
-		'topic.post.read'                   => array('Read'),
-		'topic.post.reply'                  => array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
-		'topic.post.thankyou'               => array('Read', 'NotBanned'), 'Unlocked',
-		'topic.post.unthankyou'             => array('Read', 'NotBanned'), 'Unlocked',
-		'topic.post.edit'                   => array('Read', 'NotBanned', 'Unlocked'),
-		'topic.post.move'                   => array('Read', 'NotBanned', 'Moderate', 'Channel'),
-		'topic.post.approve'                => array('Read', 'NotBanned', 'Moderate'),
-		'topic.post.delete'                 => array('Read', 'NotBanned', 'Unlocked'),
-		'topic.post.undelete'               => array('Read', 'NotBanned', 'Moderate'),
-		'topic.post.permdelete'             => array('Read', 'NotBanned', 'Admin'),
-		'topic.post.attachment.read'        => array('Read'),
-		'topic.post.attachment.createimage' => array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
-		'topic.post.attachment.createfile'  => array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
-		'topic.post.attachment.delete'      => array('NotBanned'),
+	protected static $actions = [
+		'none'                              => [],
+		'read'                              => ['Read'],
+		'subscribe'                         => ['Read', 'CatSubscribe', 'NotBanned', 'NotSection'],
+		'moderate'                          => ['Read', 'NotBanned', 'Moderate'],
+		'admin'                             => ['NotBanned', 'Admin'],
+		'topic.read'                        => ['Read'],
+		'topic.create'                      => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'],
+		'topic.reply'                       => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'],
+		'topic.edit'                        => ['Read', 'NotBanned', 'Unlocked'],
+		'topic.move'                        => ['Read', 'NotBanned', 'Moderate', 'Channel'],
+		'topic.approve'                     => ['Read', 'NotBanned', 'Moderate'],
+		'topic.delete'                      => ['Read', 'NotBanned', 'Moderate'],
+		'topic.undelete'                    => ['Read', 'NotBanned', 'Moderate'],
+		'topic.permdelete'                  => ['Read', 'NotBanned', 'Moderate'],
+		'topic.favorite'                    => ['Read', 'NotBanned', 'Favorite'],
+		'topic.subscribe'                   => ['Read', 'NotBanned', 'Subscribe'],
+		'topic.sticky'                      => ['Read', 'NotBanned', 'Moderate'],
+		'topic.lock'                        => ['Read', 'NotBanned', 'Moderate'],
+		'topic.poll.read'                   => ['Read', 'Poll'],
+		'topic.poll.create'                 => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'],
+		'topic.poll.edit'                   => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],
+		'topic.poll.delete'                 => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],
+		'topic.poll.vote'                   => ['Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'],
+		'topic.post.read'                   => ['Read'],
+		'topic.post.reply'                  => ['Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'],
+		'topic.post.thankyou'               => ['Read', 'NotBanned'], 'Unlocked',
+		'topic.post.unthankyou'             => ['Read', 'NotBanned'], 'Unlocked',
+		'topic.post.edit'                   => ['Read', 'NotBanned', 'Unlocked'],
+		'topic.post.move'                   => ['Read', 'NotBanned', 'Moderate', 'Channel'],
+		'topic.post.approve'                => ['Read', 'NotBanned', 'Moderate'],
+		'topic.post.delete'                 => ['Read', 'NotBanned', 'Unlocked'],
+		'topic.post.undelete'               => ['Read', 'NotBanned', 'Moderate'],
+		'topic.post.permdelete'             => ['Read', 'NotBanned', 'Admin'],
+		'topic.post.attachment.read'        => ['Read'],
+		'topic.post.attachment.createimage' => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
+		'topic.post.attachment.createfile'  => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
+		'topic.post.attachment.delete'      => ['NotBanned'],
 		// TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
-	);
+	];
 
 	/**
 	 * @var     null
@@ -122,7 +122,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $authorised = array();
+	protected $authorised = [];
 
 	/**
 	 * @var     null
@@ -164,13 +164,13 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authcache = array();
+	protected $_authcache = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $_authfcache = array();
+	protected $_authfcache = [];
 
 	/**
 	 * @var     integer
@@ -412,7 +412,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			}
 		}
 
-		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, array('action' => 'topic.create'));
+		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, ['action' => 'topic.create']);
 
 		if ($categories)
 		{
@@ -444,7 +444,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if ($this->_channels === false)
 		{
-			$this->_channels['none'] = array();
+			$this->_channels['none'] = [];
 
 			if (empty($this->channels) || $this->channels == $this->id)
 			{
@@ -471,14 +471,14 @@ class KunenaForumCategory extends KunenaDatabaseObject
 				if (isset($ids['CHILDREN']))
 				{
 					// Children category channels
-					$this->_channels['none'] += KunenaForumCategoryHelper::getChildren($this->id, 1, array($action => 'none'));
+					$this->_channels['none'] += KunenaForumCategoryHelper::getChildren($this->id, 1, [$action => 'none']);
 				}
 			}
 		}
 
 		if (!isset($this->_channels[$action]))
 		{
-			$this->_channels[$action] = array();
+			$this->_channels[$action] = [];
 
 			foreach ($this->_channels['none'] as $channel)
 			{
@@ -1001,7 +1001,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if ($fields)
 		{
-			$message->bind($fields, array('name', 'email', 'subject', 'message'), true);
+			$message->bind($fields, ['name', 'email', 'subject', 'message'], true);
 		}
 
 		$topic              = new KunenaForumTopic;
@@ -1017,12 +1017,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		if ($fields)
 		{
-			$topic->bind($fields, array('subject', 'icon_id'), true);
+			$topic->bind($fields, ['subject', 'icon_id'], true);
 		}
 
 		$message->setTopic($topic);
 
-		return array($topic, $message);
+		return [$topic, $message];
 	}
 
 	/**
@@ -1051,7 +1051,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public function getAdmins($includeGlobal = true)
 	{
 		$access   = KunenaAccess::getInstance();
-		$userlist = array();
+		$userlist = [];
 
 		if (!empty($this->catid))
 		{
@@ -1081,7 +1081,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public function getModerators($includeGlobal = true, $objects = true)
 	{
 		$access   = KunenaAccess::getInstance();
-		$userlist = array();
+		$userlist = [];
 
 		if (!empty($this->id))
 		{
@@ -1150,7 +1150,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @example if ($category->isAuthorised('admin')) $category->addModerators(array($user1, $user2, $user3));
 	 */
-	public function addModerators($users = array())
+	public function addModerators($users = [])
 	{
 		if (empty($users))
 		{
@@ -1346,7 +1346,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function purge($time, $params = array(), $limit = 1000)
+	public function purge($time, $params = [], $limit = 1000)
 	{
 		// FIXME: why time isn't used?
 		if (!$this->exists())
@@ -1401,7 +1401,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function trash($time, $params = array(), $limit = 1000)
+	public function trash($time, $params = [], $limit = 1000)
 	{
 		// FIXME: why time isn't used?
 		if (!$this->exists())
@@ -1654,7 +1654,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 				->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id))
 				->andWhere($db->quoteName('hold') . ' = 0')
 				->andWhere($db->quoteName('moved_id') . ' = 0')
-				->order(array($db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC'));
+				->order([$db->quoteName('moved_id') . ' DESC', $db->quoteName('last_post_id') . ' DESC']);
 			$query->setLimit(1);
 			$db->setQuery($query);
 

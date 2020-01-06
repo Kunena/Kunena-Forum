@@ -49,7 +49,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
@@ -80,7 +80,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 	 *
 	 * @throws  Exception
 	 */
-	public static function getInstance($prefix = 'Kunena', $config = array())
+	public static function getInstance($prefix = 'Kunena', $config = [])
 	{
 		static $instance = null;
 
@@ -392,7 +392,7 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 				// FIXME: check possible redirect loops!
 				$route    = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
-				Log::add("Redirect from " . Uri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
+				Log::add("Redirect from " . Uri::getInstance()->toString(['path', 'query']) . " ({$activeId}) to {$route} ($routed->id)", Log::DEBUG, 'kunena');
 				$this->app->redirect($route);
 			}
 
@@ -439,9 +439,9 @@ class KunenaController extends Joomla\CMS\MVC\Controller\BaseController
 			if ($vFormat == 'html')
 			{
 				Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('start', $view));
+				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['start', $view]);
 				$view->displayAll();
-				Factory::getApplication()->triggerEvent('onKunenaDisplay', array('end', $view));
+				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['end', $view]);
 			}
 			else
 			{

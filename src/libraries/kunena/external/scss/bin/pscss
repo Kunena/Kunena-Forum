@@ -120,21 +120,21 @@ EOT;
         continue;
     }
 
-    $value = parseArgument($i, array('-f', '--style'));
+    $value = parseArgument($i, ['-f', '--style']);
 
     if (isset($value)) {
         $style = $value;
         continue;
     }
 
-    $value = parseArgument($i, array('-i', '--load_paths'));
+    $value = parseArgument($i, ['-i', '--load_paths']);
 
     if (isset($value)) {
         $loadPaths = $value;
         continue;
     }
 
-    $value = parseArgument($i, array('-p', '--precision'));
+    $value = parseArgument($i, ['-p', '--precision']);
 
     if (isset($value)) {
         $precision = $value;

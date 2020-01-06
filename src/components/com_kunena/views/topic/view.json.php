@@ -36,7 +36,7 @@ class KunenaViewTopic extends KunenaView
 		$topic->last_post_message  = KunenaHtmlParser::stripBBCode($topic->last_post_message);
 		$messages                  = KunenaForumMessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
 
-		$list     = array();
+		$list     = [];
 		$template = KunenaFactory::getTemplate();
 
 		foreach ($messages as $message)
@@ -53,10 +53,10 @@ class KunenaViewTopic extends KunenaView
 			$list[] = $response;
 		}
 
-		$json2 = array(
+		$json2 = [
 			'Count'    => $topic,
 			'Messages' => $list,
-		);
+		];
 
 		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 

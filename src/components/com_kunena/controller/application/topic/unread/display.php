@@ -54,7 +54,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$topic = KunenaForumTopicHelper::get($id);
 		$topic->tryAuthorise();
 
-		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+		KunenaForumTopicHelper::fetchNewStatus([$topic->id => $topic]);
 		$message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 

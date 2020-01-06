@@ -25,7 +25,7 @@ abstract class KunenaForumCategoryUserHelper
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * Get an instance of KunenaForumCategoryUser object.
@@ -87,7 +87,7 @@ abstract class KunenaForumCategoryUserHelper
 		}
 		elseif (!is_array($ids))
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		// Convert category objects into ids
@@ -102,7 +102,7 @@ abstract class KunenaForumCategoryUserHelper
 		$ids = array_unique($ids);
 		self::loadCategories($ids, $user);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -195,8 +195,8 @@ abstract class KunenaForumCategoryUserHelper
 		$user = KunenaUserHelper::get($user);
 
 		$items      = self::getCategories($ids, $user);
-		$updateList = array();
-		$insertList = array();
+		$updateList = [];
+		$insertList = [];
 
 		$db   = Factory::getDbo();
 		$time = Factory::getDate()->toUnix();

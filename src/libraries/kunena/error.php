@@ -68,7 +68,7 @@ abstract class KunenaError
 			// Make sure we are able to log fatal errors.
 			class_exists('KunenaLog');
 
-			register_shutdown_function(array('KunenaError', 'shutdownHandler'), self::$debug || self::$admin || KUNENA_PROFILER);
+			register_shutdown_function(['KunenaError', 'shutdownHandler'], self::$debug || self::$admin || KUNENA_PROFILER);
 
 			if (!self::$debug)
 			{
@@ -251,7 +251,7 @@ abstract class KunenaError
 	 */
 	public static function shutdownHandler($debug)
 	{
-		static $types = array(E_ERROR, E_USER_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR);
+		static $types = [E_ERROR, E_USER_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR];
 
 		$error = error_get_last();
 
@@ -322,21 +322,21 @@ abstract class KunenaError
 				$response->messages = null;
 
 				// Build data from exceptions.
-				$exception = array(
+				$exception = [
 					'code'    => 500,
 					'message' => $errorMsg,
-				);
+				];
 
 				if (JDEBUG)
 				{
-					$exception += array(
+					$exception += [
 						'type' => 'Fatal Error',
 						'file' => $error['file'],
 						'line' => $error['line'],
-					);
+					];
 				}
 
-				$response->data = array('exceptions' => array($exception));
+				$response->data = ['exceptions' => [$exception]];
 
 				// Create response.
 				echo json_encode($response);

@@ -50,6 +50,6 @@ class TableKunenaPrivateAttachmentMap extends KunenaTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__kunena_private_attachment_map', array('private_id', 'attachment_id'), $db);
+		parent::__construct('#__kunena_private_attachment_map', ['private_id', 'attachment_id'], $db);
 	}
 }

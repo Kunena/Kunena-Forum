@@ -75,7 +75,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		}
 
 		// Get configuration from menu item.
-		$categoryIds = $params->get('topics_categories', array());
+		$categoryIds = $params->get('topics_categories', []);
 		$reverse     = !$params->get('topics_catselection', 1);
 
 		// Make sure that category list is an array.
@@ -116,7 +116,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			$this->prepareTopics();
 		}
 
-		$actions       = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$actions       = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 
 		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');

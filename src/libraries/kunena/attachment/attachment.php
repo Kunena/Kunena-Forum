@@ -95,12 +95,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected static $actions = array(
-		'read'        => array('Read'),
-		'createimage' => array(),
-		'createfile'  => array(),
-		'delete'      => array('Exists', 'Own'),
-	);
+	protected static $actions = [
+		'read'        => ['Read'],
+		'createimage' => [],
+		'createfile'  => [],
+		'delete'      => ['Exists', 'Own'],
+	];
 
 	/**
 	 * @var     integer
@@ -839,7 +839,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 						$quality = intval(($quality - 1) / 10);
 					}
 
-					$options = array('quality' => $quality);
+					$options = ['quality' => $quality];
 
 					try
 					{
@@ -984,7 +984,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		// Need to load private message (for now allow only one private message per attachment).
 		$map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
-		$map->load(array('attachment_id' => $this->id));
+		$map->load(['attachment_id' => $this->id]);
 		$finder  = new KunenaPrivateMessageFinder;
 		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
 
@@ -1129,7 +1129,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return;
 		}
 
-		$find             = array('/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su');
+		$find             = ['/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su'];
 		$replace          = '';
 		$text             = preg_replace($find, $replace, $editor_text);
 

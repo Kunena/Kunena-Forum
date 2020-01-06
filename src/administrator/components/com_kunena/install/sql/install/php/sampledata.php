@@ -53,7 +53,7 @@ function installSampleData()
 	$db       = Factory::getDBO();
 	$posttime = new Date;
 	$my       = Factory::getApplication()->getIdentity();
-	$queries  = array();
+	$queries  = [];
 
 	$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
 	('announcement', 'view', 'announcement', 1),
@@ -79,7 +79,7 @@ function installSampleData()
 	('moderate', 'layout', 'category.moderate', 0),
 	('category/user', 'layout', 'category.user', 1);";
 
-	$queries[] = array('kunena_aliases', $query);
+	$queries[] = ['kunena_aliases', $query];
 
 	$query = "INSERT INTO `#__kunena_ranks`
 	(`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
@@ -94,7 +94,7 @@ function installSampleData()
 	(9, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')}, 0, 1, 'rankspammer.gif'),
 	(10, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')}, 0, 1, 'rankbanned.gif');";
 
-	$queries[] = array('kunena_ranks', $query);
+	$queries[] = ['kunena_ranks', $query];
 
 	$query = "INSERT INTO `#__kunena_smileys`
 	(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
@@ -165,7 +165,7 @@ function installSampleData()
 	(65, ':arrow:', 'arrow.svg', 'arrow-grey.png', 0),
 	(66, ':idea:', 'idea.svg', 'idea-grey.png', 0)";
 
-	$queries[] = array('kunena_smileys', $query);
+	$queries[] = ['kunena_smileys', $query];
 
 	$section       = KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE');
 	$cat1          = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE');
@@ -185,25 +185,25 @@ function installSampleData()
 		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, ' ', 1, 1, 1, 'THIS', " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')) . ", " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')) . ", 1 , 1, 0, 1, 1, {$posttime->toUnix()}, 'joomla.group', '', '', ''),
 		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, ' ', 1, 2, 1, 'THIS', " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')) . ", " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')) . ", 0 , 0, 1, 0, 0, 0, 'joomla.group', '', '', '');";
 
-	$queries[] = array('kunena_categories', $query);
+	$queries[] = ['kunena_categories', $query];
 
 	$query = "INSERT INTO `#__kunena_messages`
 	(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
 	(1, 0, 1, 2, " . $db->quote($my->id) . ", 'Kunena', " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", " . $posttime->toUnix() . ", '127.0.0.1');";
 
-	$queries[] = array('kunena_messages', $query);
+	$queries[] = ['kunena_messages', $query];
 
 	$query = "INSERT INTO `#__kunena_messages_text`
 	(`mesid`, `message`) VALUES
 	(1, " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ");";
 
-	$queries[] = array('kunena_messages_text', $query);
+	$queries[] = ['kunena_messages_text', $query];
 
 	$query = "INSERT INTO `#__kunena_topics`
 	(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`, `rating`, `params`) VALUES
 	(1, 2, " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", 1, 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, '');";
 
-	$queries[] = array('kunena_topics', $query);
+	$queries[] = ['kunena_topics', $query];
 
 	$counter = 0;
 

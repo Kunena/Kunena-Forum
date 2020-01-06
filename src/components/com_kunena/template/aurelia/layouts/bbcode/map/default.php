@@ -50,7 +50,7 @@ if (!empty($this->config->google_map_api_key))
 {
 	$mapid      = 'kgooglemap' . $this->mapid;
 	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
-	$map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
+	$map_typeId = ['HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN'];
 
 	if (!in_array($map_type, $map_typeId))
 	{

@@ -199,7 +199,7 @@ class TableKunenaMessages extends KunenaTable
 
 		// Load the user data.
 		$query = $this->_db->getQuery(true)
-			->select(array('m.*', 't.message'))
+			->select(['m.*', 't.message'])
 			->from($this->_db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') .
 				' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
@@ -325,10 +325,10 @@ class TableKunenaMessages extends KunenaTable
 		{
 			$query->insert('#__kunena_messages_text')
 				->columns(
-					array(
+					[
 						$this->_db->quoteName('mesid'),
 						$this->_db->quoteName('message'),
-					)
+					]
 				)
 				->values((int) $this->$k . ', ' . $this->_db->quote($this->message));
 		}

@@ -40,7 +40,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onBeforeLoad', array($keys, $reset));
+			$this->_observers->update('onBeforeLoad', [$keys, $reset]);
 		}
 
 		// Workaround Joomla 3.2 change.
@@ -50,7 +50,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		if (empty($keys))
 		{
 			$empty = true;
-			$keys  = array();
+			$keys  = [];
 
 			// If empty, use the value of the current key
 			foreach ($tbl_keys as $key)
@@ -79,7 +79,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 				throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
 			}
 
-			$keys = array($this->getKeyName() => $keys);
+			$keys = [$this->getKeyName() => $keys];
 		}
 
 		if ($reset)
@@ -140,7 +140,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onAfterLoad', array(&$result, $row));
+			$this->_observers->update('onAfterLoad', [&$result, $row]);
 		}
 
 		// Bind the object with the row and return.
@@ -166,7 +166,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onBeforeStore', array($updateNulls, $k));
+			$this->_observers->update('onBeforeStore', [$updateNulls, $k]);
 		}
 
 		if ($this->exists())
@@ -203,7 +203,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onAfterStore', array(&$result));
+			$this->_observers->update('onAfterStore', [&$result]);
 		}
 
 		return true;
@@ -242,8 +242,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 */
 	public function updateObject($nulls = false)
 	{
-		$fields = array();
-		$where  = array();
+		$fields = [];
+		$where  = [];
 
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
@@ -334,8 +334,8 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 	 */
 	protected function insertObject()
 	{
-		$fields = array();
-		$values = array();
+		$fields = [];
+		$values = [];
 
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
@@ -420,7 +420,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 
 		if (is_null($pk))
 		{
-			$pk = array();
+			$pk = [];
 
 			foreach ($tbl_keys as $key)
 			{
@@ -430,7 +430,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		elseif (!is_array($pk))
 		{
 			$key = reset($tbl_keys);
-			$pk  = array($key => $pk);
+			$pk  = [$key => $pk];
 		}
 
 		foreach ($tbl_keys as $key)
@@ -449,7 +449,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onBeforeDelete', array($pk));
+			$this->_observers->update('onBeforeDelete', [$pk]);
 		}
 
 		// Check for a database error.
@@ -486,7 +486,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 		// TODO: remove if when we're only supporting J!3.5+.
 		if (isset($this->_observers))
 		{
-			$this->_observers->update('onAfterDelete', array($pk));
+			$this->_observers->update('onAfterDelete', [$pk]);
 		}
 
 		return true;

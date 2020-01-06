@@ -38,7 +38,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=tools';
@@ -109,7 +109,7 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$ids = $this->app->input->get('prune_forum', array(), 'array');
+		$ids = $this->app->input->get('prune_forum', [], 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -128,7 +128,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$trashdelete = $this->app->input->getInt('trashdelete', 0);
 
-		$where   = array();
+		$where   = [];
 		$where[] = " AND tt.last_post_time < {$prune_date}";
 
 		$controloptions = $this->app->input->getString('controloptions', 0);
@@ -178,9 +178,9 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$where = implode(' ', $where);
 
-		$params = array(
+		$params = [
 			'where' => $where,
-		);
+		];
 
 		$count = 0;
 
@@ -376,12 +376,12 @@ class KunenaAdminControllerTools extends KunenaController
 		if (!Session::checkToken())
 		{
 			$this->setResponse(
-				array(
+				[
 					'success' => false,
 					'header'  => 'An Error Occurred',
 					'message' => 'Please see more details below.',
 					'error'   => Text::_('COM_KUNENA_ERROR_TOKEN'),
-				),
+				],
 				$ajax
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -427,13 +427,13 @@ class KunenaAdminControllerTools extends KunenaController
 		$token    = Session::getFormToken() . '=1';
 		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
-			array(
+			[
 				'success' => true,
 				'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 				'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
 				'message' => $msg,
 				'href'    => $redirect,
-			),
+			],
 			$ajax
 		);
 	}
@@ -492,12 +492,12 @@ class KunenaAdminControllerTools extends KunenaController
 		if (!Session::checkToken('request'))
 		{
 			$this->setResponse(
-				array(
+				[
 					'success' => false,
 					'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
 					'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
 					'error'   => Text::_('COM_KUNENA_ERROR_TOKEN'),
-				),
+				],
 				$ajax
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -576,12 +576,12 @@ class KunenaAdminControllerTools extends KunenaController
 						$msg    = Text::_('COM_KUNENA_AJAX_REQUESTED_RECOUNTED');
 						$this->app->setUserState('com_kunena.admin.recount', null);
 						$this->setResponse(
-							array(
+							[
 								'success' => true,
 								'status'  => '100%',
 								'header'  => $header,
 								'message' => $msg,
-							),
+							],
 							$ajax
 						);
 						$this->setRedirect(KunenaRoute::_($this->baseurl, false), $header);
@@ -614,13 +614,13 @@ class KunenaAdminControllerTools extends KunenaController
 			}
 
 			$this->setResponse(
-				array(
+				[
 					'success' => false,
 					'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 					'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
 					'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
 					'error'   => $e->getMessage(),
-				),
+				],
 				$ajax
 			);
 		}
@@ -628,13 +628,13 @@ class KunenaAdminControllerTools extends KunenaController
 		$token    = Session::getFormToken() . '=1';
 		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
-			array(
+			[
 				'success' => true,
 				'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
 				'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
 				'message' => $msg,
 				'href'    => $redirect,
-			), $ajax
+			], $ajax
 		);
 	}
 

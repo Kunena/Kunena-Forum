@@ -25,7 +25,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @var     KunenaForumMessageThankyou[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * Cleanup
@@ -36,7 +36,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
+		self::$_instances = [];
 	}
 
 	/**
@@ -67,7 +67,7 @@ abstract class KunenaForumMessageThankyouHelper
 		if ($reload || empty(self::$_instances [$id]))
 		{
 			unset(self::$_instances [$id]);
-			self::loadMessages(array($id));
+			self::loadMessages([$id]);
 		}
 
 		return self::$_instances [$id];
@@ -150,7 +150,7 @@ abstract class KunenaForumMessageThankyouHelper
 	public static function getTotal($starttime = null, $endtime = null)
 	{
 		$db    = Factory::getDBO();
-		$where = array();
+		$where = [];
 
 		if (!empty($starttime))
 		{
@@ -418,7 +418,7 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 		elseif (is_array($ids))
 		{
-			$ids2 = array();
+			$ids2 = [];
 
 			foreach ($ids as $id)
 			{
@@ -434,12 +434,12 @@ abstract class KunenaForumMessageThankyouHelper
 		}
 		else
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		self::loadMessages($ids);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{

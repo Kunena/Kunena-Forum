@@ -59,7 +59,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -77,7 +77,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		// The folder and element vars are passed when saving the form.
 		if (empty($data))
@@ -99,7 +99,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 		$pluginfile = 'plugin';
 
 		// Get the form.
-		$form = $this->loadForm('com_kunena.plugin', $pluginfile, array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_kunena.plugin', $pluginfile, ['control' => 'jform', 'load_data' => $loadData]);
 
 		if (empty($form))
 		{
@@ -191,7 +191,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
+	public function getTable($type = 'Extension', $prefix = 'JTable', $config = [])
 	{
 		return Joomla\CMS\Table\Table::getInstance($type, $prefix, $config);
 	}
@@ -217,7 +217,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 
 		$context = $this->option . '.' . $this->name;
 		$table   = $this->getTable();
-		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, true, $data));
+		Factory::getApplication()->triggerEvent($this->event_after_save, [$context, &$table, true, $data]);
 
 		return parent::save($data);
 	}
@@ -231,7 +231,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 */
 	public function getHelp()
 	{
-		return (object) array('key' => $this->helpKey, 'url' => $this->helpURL);
+		return (object) ['key' => $this->helpKey, 'url' => $this->helpURL];
 	}
 
 	/**
@@ -245,7 +245,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
+		$data = Factory::getApplication()->getUserState('com_plugins.edit.plugin.data', []);
 
 		if (empty($data))
 		{
@@ -276,7 +276,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 		Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
-		$results = Factory::getApplication()->triggerEvent('onContentPrepareData', array($context, $data));
+		$results = Factory::getApplication()->triggerEvent('onContentPrepareData', [$context, $data]);
 
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
@@ -404,7 +404,7 @@ class KunenaAdminModelPlugin extends Joomla\CMS\MVC\Model\AdminModel
 	 */
 	protected function getReorderConditions($table)
 	{
-		$condition   = array();
+		$condition   = [];
 		$condition[] = 'type = ' . $this->_db->quote($table->type);
 		$condition[] = 'folder = ' . $this->_db->quote($table->folder);
 

@@ -103,7 +103,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 			->find();
 
 		// Pre-load messages.
-		$messageIds = array();
+		$messageIds = [];
 
 		foreach ($this->attachments as $attachment)
 		{
@@ -113,7 +113,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$messages = KunenaForumMessageHelper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
-		$topicIds = array();
+		$topicIds = [];
 
 		foreach ($messages as $message)
 		{

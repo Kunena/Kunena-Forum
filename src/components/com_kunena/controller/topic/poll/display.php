@@ -102,12 +102,12 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 
 			$this->show_title = true;
 
-			$this->users_voted_list     = array();
-			$this->users_voted_morelist = array();
+			$this->users_voted_list     = [];
+			$this->users_voted_morelist = [];
 
 			if ($this->config->pollresultsuserslist && !empty($this->usersvoted))
 			{
-				$userids_votes = array();
+				$userids_votes = [];
 
 				foreach ($this->usersvoted as $userid => $vote)
 				{

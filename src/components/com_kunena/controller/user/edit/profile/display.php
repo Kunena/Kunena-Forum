@@ -42,7 +42,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 	{
 		parent::before();
 
-		$bd = $this->profile->birthdate ? explode("-", $this->profile->birthdate) : array();
+		$bd = $this->profile->birthdate ? explode("-", $this->profile->birthdate) : [];
 
 		if (count($bd) == 3)
 		{

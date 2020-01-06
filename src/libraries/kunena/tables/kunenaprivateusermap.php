@@ -68,6 +68,6 @@ class TableKunenaPrivateUserMap extends KunenaTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__kunena_private_user_map', array('private_id', 'user_id'), $db);
+		parent::__construct('#__kunena_private_user_map', ['private_id', 'user_id'], $db);
 	}
 }

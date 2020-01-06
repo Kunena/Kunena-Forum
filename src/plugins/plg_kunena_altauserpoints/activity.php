@@ -256,7 +256,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		}
 
 		$aupmedals = AltaUserPointsHelper::getUserMedals('', $userid);
-		$medals    = array();
+		$medals    = [];
 
 		foreach ($aupmedals as $medal)
 		{

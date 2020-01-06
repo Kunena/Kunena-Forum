@@ -40,7 +40,7 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @throws  null
 	 */
-	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
+	public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
 	{
 		$preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
@@ -53,7 +53,7 @@ abstract class JHtmlKunenaForum
 		$catid       = isset($params['catid']) ? (int) $params['catid'] : 0;
 		$hide_lonely = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
 
-		$params                = array();
+		$params                = [];
 		$params['ordering']    = $ordering;
 		$params['direction']   = $direction;
 		$params['unpublished'] = $unpublished;
@@ -70,21 +70,21 @@ abstract class JHtmlKunenaForum
 			}
 		}
 
-		$channels = array();
+		$channels = [];
 
 		if (!isset($categories))
 		{
 			if (!is_array($parent))
 			{
-				$parent = array($parent);
+				$parent = [$parent];
 			}
 
-			$categories = array();
-			$channels   = array();
+			$categories = [];
+			$channels   = [];
 
 			foreach ($parent as $p)
 			{
-				$channels_local = array();
+				$channels_local = [];
 				$category       = KunenaForumCategoryHelper::get($p);
 				$children       = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
 
@@ -106,7 +106,7 @@ abstract class JHtmlKunenaForum
 					}
 				}
 
-				$categories += $category->id > 0 ? array($category->id => $category) + $children : $children;
+				$categories += $category->id > 0 ? [$category->id => $category] + $children : $children;
 
 				if (!empty($channels_local))
 				{
@@ -122,16 +122,16 @@ abstract class JHtmlKunenaForum
 
 		if (!is_array($options))
 		{
-			$options = array();
+			$options = [];
 		}
 
 		if ($selected === false || $selected === null)
 		{
-			$selected = array();
+			$selected = [];
 		}
 		elseif (!is_array($selected))
 		{
-			$selected = array((string) $selected);
+			$selected = [(string) $selected];
 		}
 
 		if ($topleveltxt)
@@ -262,7 +262,7 @@ abstract class JHtmlKunenaForum
 		}
 
 		// Parse attributes
-		$attr = array();
+		$attr = [];
 
 		foreach ($list as $key => $value)
 		{
@@ -289,14 +289,14 @@ abstract class JHtmlKunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function checklist($name, $options, $selected = array(), $class_input = null)
+	public static function checklist($name, $options, $selected = [], $class_input = null)
 	{
 		if ($selected !== true && !is_array($selected))
 		{
 			$selected = (array) $selected;
 		}
 
-		$html   = array();
+		$html   = [];
 		$html[] = '<ul class="checklist">';
 
 		foreach ($options as $item)

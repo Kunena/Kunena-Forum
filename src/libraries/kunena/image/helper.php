@@ -66,7 +66,7 @@ class KunenaImageHelper
 					$quality = intval(($quality - 1) / 10);
 				}
 
-				$options = array('quality' => $quality);
+				$options = ['quality' => $quality];
 
 				// Resize image and copy it to temporary file.
 				$image = new KunenaImage($file);

@@ -42,7 +42,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 		if ($this->position && $document->countModules($this->position))
 		{
 			$renderer = $document->loadRenderer('modules');
-			$options  = array('style' => 'xhtml');
+			$options  = ['style' => 'xhtml'];
 
 			return (string) $renderer->render($this->position, $options, null);
 		}

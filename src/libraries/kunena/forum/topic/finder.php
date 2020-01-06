@@ -31,7 +31,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $hold = array(0);
+	protected $hold = [0];
 
 	/**
 	 * @var     null
@@ -92,7 +92,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterByCategories(array $categories)
 	{
-		$list = array();
+		$list = [];
 
 		foreach ($categories as $category)
 		{
@@ -239,7 +239,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterAnsweredBy(array $users, $negate = false)
 	{
-		$list = array();
+		$list = [];
 
 		foreach ($users as $user)
 		{
@@ -301,7 +301,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByHold(array $hold = array(0))
+	public function filterByHold(array $hold = [0])
 	{
 		$this->hold = $hold;
 

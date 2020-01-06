@@ -32,7 +32,7 @@ class KunenaAdminViewRanks extends KunenaView
 	public static function specialOptions()
 	{
 		// Build the active state filter options.
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
 
@@ -98,7 +98,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 */
 	protected function getSortFields()
 	{
-		$sortFields   = array();
+		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'title', Text::_('JGLOBAL_TITLE'));
 		$sortFields[] = HTMLHelper::_('select.option', 'special', Text::_('COM_KUNENA_RANKS_SPECIAL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'min', Text::_('COM_KUNENA_RANKSMIN'));
@@ -114,7 +114,7 @@ class KunenaAdminViewRanks extends KunenaView
 	 */
 	protected function getSortDirectionFields()
 	{
-		$sortDirection   = array();
+		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 

@@ -129,7 +129,7 @@ class KunenaPagination
 	 * @var    array
 	 * @since  3.0
 	 */
-	protected $additionalUrlParams = array();
+	protected $additionalUrlParams = [];
 
 	/**
 	 * Constructor.
@@ -392,7 +392,7 @@ class KunenaPagination
 			$data->end->link = Route::_((string) $this->uri);
 		}
 
-		$data->pages = array();
+		$data->pages = [];
 		$range       = range($this->pagesStart, $this->pagesStop);
 
 		$range[] = 1;
@@ -467,7 +467,7 @@ class KunenaPagination
 	 */
 	public function getListFooter()
 	{
-		$list                 = array();
+		$list                 = [];
 		$list['prefix']       = $this->prefix;
 		$list['limit']        = $this->limit;
 		$list['limitstart']   = $this->limitstart;
@@ -495,7 +495,7 @@ class KunenaPagination
 	public function getLimitBox($all = false)
 	{
 		$app    = Factory::getApplication();
-		$limits = array();
+		$limits = [];
 
 		// Make the option list.
 		for ($i = 5; $i <= 30; $i += 5)
@@ -580,7 +580,7 @@ class KunenaPagination
 		// Build the page navigation list.
 		$data = $this->_buildDataObject();
 
-		$list           = array();
+		$list           = [];
 		$list['prefix'] = $this->prefix;
 
 		$this->setChrome();
@@ -620,7 +620,7 @@ class KunenaPagination
 		}
 
 		// Make sure it exists
-		$list['pages'] = array();
+		$list['pages'] = [];
 
 		foreach ($data->pages as $i => $page)
 		{
@@ -671,10 +671,10 @@ class KunenaPagination
 	protected function setChrome()
 	{
 		$template                 = KunenaFactory::getTemplate();
-		$this->itemActiveChrome   = array($template, 'getPaginationItemActive');
-		$this->itemInactiveChrome = array($template, 'getPaginationItemInactive');
-		$this->listChrome         = array($template, 'getPaginationListRender');
-		$this->footerChrome       = array($template, 'getPaginationListFooter');
+		$this->itemActiveChrome   = [$template, 'getPaginationItemActive'];
+		$this->itemInactiveChrome = [$template, 'getPaginationItemInactive'];
+		$this->listChrome         = [$template, 'getPaginationListRender'];
+		$this->footerChrome       = [$template, 'getPaginationListFooter'];
 	}
 
 	/**

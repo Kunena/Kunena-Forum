@@ -34,7 +34,7 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 	 */
 	public function getOptions()
 	{
-		$options = array();
+		$options = [];
 
 		if (KunenaUserHelper::getMyself()->isModerator())
 		{

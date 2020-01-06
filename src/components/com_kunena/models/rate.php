@@ -81,7 +81,7 @@ class KunenaModelRate extends KunenaModel
 	 */
 	public function getRateActions()
 	{
-		$actions   = array();
+		$actions   = [];
 		$actions[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$actions[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_BULK_RATE_UNPUBLISH'));
 		$actions[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_BULK_RATE_PUBLISH'));

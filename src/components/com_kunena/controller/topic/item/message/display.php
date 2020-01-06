@@ -115,10 +115,10 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		}
 
 		// Thank you info and buttons.
-		$this->thankyou        = array();
+		$this->thankyou        = [];
 		$this->total_thankyou  = 0;
 		$this->more_thankyou   = 0;
-		$this->thankyou_delete = array();
+		$this->thankyou_delete = [];
 
 		if (isset($this->message->thankyou))
 		{
@@ -136,7 +136,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				$this->total_thankyou = count($this->message->thankyou);
 				$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
 
-				$userids_thankyous = array();
+				$userids_thankyous = [];
 
 				foreach ($thankyous as $userid => $time)
 				{

@@ -103,7 +103,7 @@ class KunenaModelTopics extends KunenaModel
 
 		if ($catid)
 		{
-			$latestcategory    = array($catid);
+			$latestcategory    = [$catid];
 			$latestcategory_in = true;
 
 			// Check if the category is in excluded list
@@ -250,7 +250,7 @@ class KunenaModelTopics extends KunenaModel
 					$topics = false;
 
 					Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-					Factory::getApplication()->triggerEvent('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
+					Factory::getApplication()->triggerEvent('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]);
 
 					if (!empty($topics))
 					{
@@ -314,7 +314,7 @@ class KunenaModelTopics extends KunenaModel
 
 		// Reset topics.
 		$this->total  = 0;
-		$this->topics = array();
+		$this->topics = [];
 
 		switch ($this->getState('list.mode'))
 		{
@@ -359,13 +359,13 @@ class KunenaModelTopics extends KunenaModel
 				break;
 		}
 
-		$params = array(
+		$params = [
 			'reverse'   => !$latestcategory_in,
 			'exclude'   => $this->setState('list.categories.exclude', 0),
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where);
+			'where'     => $where];
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -420,7 +420,7 @@ class KunenaModelTopics extends KunenaModel
 				break;
 		}
 
-		$params = array(
+		$params = [
 			'reverse'    => !$latestcategory_in,
 			'orderby'    => $orderby,
 			'hold'       => 0,
@@ -428,7 +428,7 @@ class KunenaModelTopics extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions);
+			'subscribed' => $subscriptions];
 
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -445,7 +445,7 @@ class KunenaModelTopics extends KunenaModel
 	 */
 	protected function getPosts()
 	{
-		$this->topics = array();
+		$this->topics = [];
 
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
@@ -453,14 +453,14 @@ class KunenaModelTopics extends KunenaModel
 		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
 		$time = $this->getState('list.time');
 
-		$params              = array();
+		$params              = [];
 		$params['mode']      = $this->getState('list.mode');
 		$params['reverse']   = !$this->getState('list.categories.in');
 		$params['starttime'] = $time;
 		$params['user']      = $this->getState('user');
 		list($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
 
-		$topicids = array();
+		$topicids = [];
 
 		foreach ($this->messages as $message)
 		{
@@ -481,7 +481,7 @@ class KunenaModelTopics extends KunenaModel
 
 		$this->topics = KunenaForumTopicHelper::getTopics($topicids, $authorise);
 
-		$userlist = $postlist = array();
+		$userlist = $postlist = [];
 
 		foreach ($this->messages as $message)
 		{
@@ -502,12 +502,12 @@ class KunenaModelTopics extends KunenaModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function _common(array $userlist = array(), array $postlist = array())
+	protected function _common(array $userlist = [], array $postlist = [])
 	{
 		if ($this->total > 0)
 		{
 			// Collect user ids for avatar prefetch when integrated
-			$lastpostlist = array();
+			$lastpostlist = [];
 
 			foreach ($this->topics as $topic)
 			{

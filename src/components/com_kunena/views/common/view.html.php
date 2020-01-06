@@ -176,9 +176,9 @@ class KunenaViewCommon extends KunenaView
 			return;
 		}
 
-		$options            = array();
+		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
@@ -280,7 +280,7 @@ class KunenaViewCommon extends KunenaView
 			}
 		}
 
-		$this->pathway = array();
+		$this->pathway = [];
 
 		foreach ($pathway->getPathway() as $pitem)
 		{
@@ -294,7 +294,7 @@ class KunenaViewCommon extends KunenaView
 			}
 		}
 
-		$result = $this->loadTemplateFile($tpl, array('pathway' => $this->pathway));
+		$result = $this->loadTemplateFile($tpl, ['pathway' => $this->pathway]);
 
 		echo $result;
 	}
@@ -353,8 +353,8 @@ class KunenaViewCommon extends KunenaView
 		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
-		$this->onlineList = array();
-		$this->hiddenList = array();
+		$this->onlineList = [];
+		$this->hiddenList = [];
 
 		foreach ($users as $userid => $usertime)
 		{
@@ -527,7 +527,7 @@ class KunenaViewCommon extends KunenaView
 		$this->menu      = $this->app->getMenu();
 		$this->active    = $this->menu->getActive();
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
-		$this->path      = isset($this->active) ? $this->active->tree : array();
+		$this->path      = isset($this->active) ? $this->active->tree : [];
 		$this->showAll   = $this->parameters->get('showAllChildren');
 		$this->class_sfx = htmlspecialchars($this->parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
@@ -608,7 +608,7 @@ class KunenaViewCommon extends KunenaView
 			// $cache->store($contents, $cachekey, $cachegroup);
 		}
 
-		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillLoginBoxInfo'), $contents);
+		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillLoginBoxInfo'], $contents);
 
 		echo $contents;
 	}
@@ -627,7 +627,7 @@ class KunenaViewCommon extends KunenaView
 		switch ($matches[1])
 		{
 			case 'RETURN_URL':
-				return base64_encode(Uri::getInstance()->toString(array('path', 'query', 'fragment')));
+				return base64_encode(Uri::getInstance()->toString(['path', 'query', 'fragment']));
 			case 'TOKEN':
 				return HTMLHelper::_('form.token');
 			case 'MODULE':

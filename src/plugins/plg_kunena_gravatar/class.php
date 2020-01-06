@@ -200,7 +200,7 @@ class KunenaGravatar
 		if ($this->param_cache === null)
 		{
 			// Time to figure out our request params
-			$params   = array();
+			$params   = [];
 			$params[] = 's=' . $this->getAvatarSize();
 			$params[] = 'r=' . $this->getMaxRating();
 
@@ -302,7 +302,7 @@ class KunenaGravatar
 		$this->param_cache = null;
 
 		$rating        = strtolower($rating);
-		$valid_ratings = array('g' => 1, 'pg' => 1, 'r' => 1, 'x' => 1);
+		$valid_ratings = ['g' => 1, 'pg' => 1, 'r' => 1, 'x' => 1];
 
 		if (!isset($valid_ratings[$rating]))
 		{
@@ -352,7 +352,7 @@ class KunenaGravatar
 
 		// Check $image against recognized gravatar "defaults", and if it doesn't match any of those we need to see if it is a valid URL.
 		$_image         = strtolower($image);
-		$valid_defaults = array('404' => 1, 'mm' => 1, 'identicon' => 1, 'monsterid' => 1, 'wavatar' => 1, 'retro' => 1);
+		$valid_defaults = ['404' => 1, 'mm' => 1, 'identicon' => 1, 'monsterid' => 1, 'wavatar' => 1, 'retro' => 1];
 
 		if (!isset($valid_defaults[$_image]))
 		{

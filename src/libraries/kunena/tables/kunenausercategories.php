@@ -67,7 +67,7 @@ class TableKunenaUserCategories extends KunenaTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__kunena_user_categories', array('user_id', 'category_id'), $db);
+		parent::__construct('#__kunena_user_categories', ['user_id', 'category_id'], $db);
 	}
 
 	/**

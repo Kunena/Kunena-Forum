@@ -81,7 +81,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array(), Input $input = null)
+	public function __construct($config = [], Input $input = null)
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -100,7 +100,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function initialize($params = array(), $embedded = true)
+	public function initialize($params = [], $embedded = true)
 	{
 		if ($embedded)
 		{

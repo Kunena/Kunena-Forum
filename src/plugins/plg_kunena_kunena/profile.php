@@ -73,8 +73,8 @@ class KunenaProfileKunena extends KunenaProfile
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName(array('u.id', 'ku.uhits'), array(null, 'count')));
-		$query->from($db->quoteName(array('#__kunena_users'), array('ku')));
+		$query->select($db->quoteName(['u.id', 'ku.uhits'], [null, 'count']));
+		$query->from($db->quoteName(['#__kunena_users'], ['ku']));
 		$query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
 		$query->where($db->quoteName('ku.uhits') . ' > 0');
 		$query->order($db->quoteName('ku.uhits') . ' DESC');

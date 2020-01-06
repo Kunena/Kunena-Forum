@@ -61,7 +61,7 @@ class TableKunenaUserRead extends KunenaTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__kunena_user_read', array('user_id', 'topic_id'), $db);
+		parent::__construct('#__kunena_user_read', ['user_id', 'topic_id'], $db);
 	}
 
 	/**

@@ -52,7 +52,7 @@ class KunenaAdminModelUser extends KunenaModel
 			return;
 		}
 
-		$topic_list = array();
+		$topic_list = [];
 
 		if (!empty($subslist))
 		{
@@ -113,7 +113,7 @@ class KunenaAdminModelUser extends KunenaModel
 			return;
 		}
 
-		$list = array();
+		$list = [];
 
 		if ($iplist)
 		{
@@ -138,7 +138,7 @@ class KunenaAdminModelUser extends KunenaModel
 			}
 		}
 
-		$useripslist = array();
+		$useripslist = [];
 
 		foreach ($list as $item)
 		{
@@ -166,16 +166,16 @@ class KunenaAdminModelUser extends KunenaModel
 			$modCatList[] = 0;
 		}
 
-		$categoryList = array();
+		$categoryList = [];
 
 		if ($this->me->isAdmin())
 		{
 			$categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
-		$params  = array(
+		$params  = [
 			'sections' => false,
-			'action'   => 'read');
+			'action'   => 'read'];
 		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
@@ -247,7 +247,7 @@ class KunenaAdminModelUser extends KunenaModel
 	 */
 	public function getMovecatslist()
 	{
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, [], [], 'class="inputbox form-control"', 'value', 'text');
 	}
 
 	/**

@@ -50,7 +50,7 @@ function kunena_200_2012_06_10_newindication($parent)
 
 		// Then look at users who have read the thread
 		$query = $db->getQuery(true)
-			->select(array('userid', 'readtopics'))
+			->select(['userid', 'readtopics'])
 			->from($db->quoteName('#__kunena_sessions'))
 			->where("readtopics != '0'");
 		$query->setLimit($limit);
@@ -66,7 +66,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		}
 
 		// Create new data
-		$users = $values = array();
+		$users = $values = [];
 
 		foreach ($sessions as $session)
 		{
@@ -155,5 +155,5 @@ function kunena_200_2012_06_10_newindication($parent)
 		throw new KunenaInstallerException($e->getMessage(), $e->getCode());
 	}
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_NEW_INDICATION'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_NEW_INDICATION'), 'success' => true];
 }

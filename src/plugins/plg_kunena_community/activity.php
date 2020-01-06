@@ -174,7 +174,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		// Get users who have subscribed to the topic, excluding current user.
 		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers(
-			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, array($message->userid)
+			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
 		);
 
 		foreach ($subscribers as $userid)
@@ -185,7 +185,7 @@ class KunenaActivityCommunity extends KunenaActivity
 			$params = new CParameter('');
 			$params->set('actorName', $actor->getDisplayName());
 			$params->set('recipientName', $target->getDisplayName());
-			$params->set('url', Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
+			$params->set('url', Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
 			$params->set('title', $message->displayField('subject')); // (title) tag in language file
 			$params->set('title_url', $message->getPermaUrl()); // Make the title in notification - linkable
 			$params->set('message', $message->displayField('message')); // (message) tag in language file
@@ -250,7 +250,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$params->set('actorName', $actor->getDisplayName());
 		$params->set('recipientName', $target->getDisplayName());
 		$params->set('recipientUrl', 'index.php?option=com_community&view=profile&userid=' . $target->id); // Actor Link
-		$params->set('url', Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
+		$params->set('url', Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
 		$params->set('title', $message->displayField('subject')); // (title) tag in language file
 		$params->set('title_url', $message->getPermaUrl()); // Make the title in notification - linkable
 		$params->set('message', $message->message); // (message) tag in language file

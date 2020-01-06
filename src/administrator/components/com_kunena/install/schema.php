@@ -283,7 +283,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$prefix = $this->db->getPrefix();
 		}
 
-		$tables = array();
+		$tables = [];
 
 		foreach ($schema->getElementsByTagName('table') as $table)
 		{
@@ -338,7 +338,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	public function updateSchema()
 	{
 		$sqls    = $this->getSQL();
-		$results = array();
+		$results = [];
 
 		foreach ($sqls as $sql)
 		{
@@ -392,7 +392,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			throw new KunenaSchemaException($e->getMessage(), $e->getCode());
 		}
 
-		$this->tables[$prefix] = array();
+		$this->tables[$prefix] = [];
 
 		foreach ($list as $table)
 		{
@@ -428,7 +428,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function getSchemaFromFile($filename, $reload = false)
 	{
-		static $schema = array();
+		static $schema = [];
 
 		if (isset($schema[$filename]) && !$reload)
 		{
@@ -587,7 +587,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		$schemaNode = $schema->documentElement;
 		$schemaNode->setAttribute('type', 'diff');
 
-		$nodes = $this->listAllNodes(array('new' => $new->documentElement->childNodes, 'old' => $old->documentElement->childNodes));
+		$nodes = $this->listAllNodes(['new' => $new->documentElement->childNodes, 'old' => $old->documentElement->childNodes]);
 
 		foreach ($nodes as $nodeTag => $nodeList)
 		{
@@ -614,7 +614,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	protected function listAllNodes($nodeLists)
 	{
-		$list = array();
+		$list = [];
 
 		foreach ($nodeLists as $k => $nl)
 		{
@@ -703,8 +703,8 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		}
 
 		$action     = $loc['old']->getAttribute('action');
-		$childNodes = array();
-		$childAll   = $this->listAllNodes(array('new' => $loc['new']->childNodes, 'old' => $loc['old']->childNodes));
+		$childNodes = [];
+		$childAll   = $this->listAllNodes(['new' => $loc['new']->childNodes, 'old' => $loc['old']->childNodes]);
 
 		foreach ($childAll as $childTag => $childList)
 		{
@@ -736,7 +736,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 			$loc['new']->removeAttribute('default');
 		}
 
-		$attrAll = $this->listAllNodes(array('new' => $loc['new']->attributes, 'old' => $loc['old']->attributes));
+		$attrAll = $this->listAllNodes(['new' => $loc['new']->attributes, 'old' => $loc['old']->attributes]);
 
 		if (!$action)
 		{
@@ -855,13 +855,13 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 */
 	public function getSchemaSQL($schema, $drop = false)
 	{
-		$tables = array();
+		$tables = [];
 
 		foreach ($schema->getElementsByTagName('table') as $table)
 		{
 			$str       = '';
 			$tablename = $this->db->getPrefix() . $table->getAttribute('name');
-			$fields    = array();
+			$fields    = [];
 
 			switch ($action = $table->getAttribute('action'))
 			{
@@ -987,7 +987,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 			if (!empty($str))
 			{
-				$tables[$table->getAttribute('name')] = array('name' => $table->getAttribute('name'), 'action' => $action, 'sql' => $str);
+				$tables[$table->getAttribute('name')] = ['name' => $table->getAttribute('name'), 'action' => $action, 'sql' => $str];
 			}
 		}
 
@@ -1220,7 +1220,7 @@ class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
 		if ($tag != 'table' && $tag != 'field' && $tag != 'key')
 		{
 			$action     = $tag;
-			$attributes = array('field', 'key', 'table');
+			$attributes = ['field', 'key', 'table'];
 
 			foreach ($attributes as $attribute)
 			{

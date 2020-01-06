@@ -47,7 +47,7 @@ function kunena_200_2011_12_14_aliases($parent)
 	}
 
 	$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
-	$aliasLit   = $aliasUtf = array();
+	$aliasLit   = $aliasUtf = [];
 
 	// Create SEF: id
 	foreach ($categories as $category)
@@ -113,7 +113,7 @@ function kunena_200_2011_12_14_aliases($parent)
 		}
 	}
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true);
+	return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true];
 }
 
 /**
@@ -179,5 +179,5 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
  */
 function kStringURLSafe($str)
 {
-	return Joomla\String\StringHelper::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));
+	return Joomla\String\StringHelper::trim(preg_replace(['/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'], ['-', ''], $str));
 }

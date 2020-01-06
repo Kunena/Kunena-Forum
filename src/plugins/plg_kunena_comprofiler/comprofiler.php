@@ -131,7 +131,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	{
 		if ($context == 'kunena.user')
 		{
-			$triggerParams = array('userid' => $item->userid, 'userinfo' => &$item);
+			$triggerParams = ['userid' => $item->userid, 'userinfo' => &$item];
 			$integration   = KunenaFactory::getProfile();
 
 			if ($integration instanceof KunenaProfileComprofiler)

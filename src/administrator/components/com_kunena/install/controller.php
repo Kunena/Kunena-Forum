@@ -84,7 +84,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
 
-		echo json_encode(array('success' => false, 'html' => $errstr));
+		echo json_encode(['success' => false, 'html' => $errstr]);
 	}
 
 	/**
@@ -154,13 +154,13 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	{
 		if (!Session::checkToken('post'))
 		{
-			echo json_encode(array('success' => false, 'html' => 'Invalid token!'));
+			echo json_encode(['success' => false, 'html' => 'Invalid token!']);
 
 			return;
 		}
 
-		set_exception_handler(array(__CLASS__, 'exceptionHandler'));
-		set_error_handler(array(__CLASS__, 'errorHandler'));
+		set_exception_handler([__CLASS__, 'exceptionHandler']);
+		set_error_handler([__CLASS__, 'errorHandler']);
 
 		$session = Factory::getSession();
 
@@ -171,7 +171,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 		{
 			$this->model->setAction(null);
 			$this->model->setStep(0);
-			echo json_encode(array('success' => false, 'html' => 'No action defined!'));
+			echo json_encode(['success' => false, 'html' => 'No action defined!']);
 
 			return;
 		}
@@ -181,7 +181,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			// Installation complete: reset and exit installer
 			$this->model->setAction(null);
 			$this->model->setStep(0);
-			echo json_encode(array('success' => true, 'status' => '100%', 'html' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE')));
+			echo json_encode(['success' => true, 'status' => '100%', 'html' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE')]);
 
 			return;
 		}
@@ -206,7 +206,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
-		$newqueue = array();
+		$newqueue = [];
 		$app      = Factory::getApplication();
 
 		foreach ($app->getMessageQueue() as $item)
@@ -233,16 +233,16 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 
 		if ($error)
 		{
-			echo json_encode(array('success' => false, 'status' => "{$percent}%", 'error' => $error, 'log' => $log));
+			echo json_encode(['success' => false, 'status' => "{$percent}%", 'error' => $error, 'log' => $log]);
 		}
 		elseif (isset($this->steps[$this->step + 1]))
 		{
 			$current = end($this->status);
-			echo json_encode(array('success' => true, 'status' => "{$percent}%", 'current' => $current['task'], 'log' => $log));
+			echo json_encode(['success' => true, 'status' => "{$percent}%", 'current' => $current['task'], 'log' => $log]);
 		}
 		else
 		{
-			echo json_encode(array('success' => true, 'status' => '100%', 'current' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log' => $log));
+			echo json_encode(['success' => true, 'status' => '100%', 'current' => Text::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log' => $log]);
 		}
 
 		Factory::getApplication()->close();
@@ -260,7 +260,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			return;
 		}
 
-		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
+		return call_user_func([$this->model, "step" . $this->steps[$this->step]['step']]);
 	}
 
 	/**

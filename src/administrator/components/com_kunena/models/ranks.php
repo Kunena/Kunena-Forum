@@ -28,17 +28,17 @@ class KunenaAdminModelRanks extends Joomla\CMS\MVC\Model\ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id',
 				'title',
 				'min',
 				'special',
 				'image',
-			);
+			];
 		}
 
 		parent::__construct($config);

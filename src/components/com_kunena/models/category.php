@@ -35,7 +35,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $pending = array();
+	protected $pending = [];
 
 	/**
 	 * @var     boolean
@@ -141,7 +141,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	{
 		if ($this->items === false)
 		{
-			$this->items = array();
+			$this->items = [];
 			$user        = KunenaFactory::getUser();
 			list($total, $categories) = KunenaForumCategoryHelper::getLatestSubscriptions($user->userid);
 			$this->items = $categories;
@@ -162,7 +162,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	{
 		if ($this->items === false)
 		{
-			$this->items = array();
+			$this->items = [];
 			$catid       = $this->getState('item.id');
 			$layout      = $this->getState('layout');
 			$flat        = false;
@@ -178,7 +178,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 				if (empty($categories[0]))
 				{
-					return array();
+					return [];
 				}
 			}
 			else
@@ -197,15 +197,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			if (empty($allsubcats))
 			{
-				return array();
+				return [];
 			}
 
 			KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
 
-			$modcats      = array();
-			$lastpostlist = array();
-			$userlist     = array();
-			$topiclist    = array();
+			$modcats      = [];
+			$lastpostlist = [];
+			$userlist     = [];
+			$topiclist    = [];
 
 			foreach ($allsubcats as $subcat)
 			{
@@ -254,7 +254,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
 			}
 
-			$this->pending = array();
+			$this->pending = [];
 
 			if ($this->me->userid && count($modcats))
 			{
@@ -351,9 +351,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$access = KunenaAccess::getInstance();
 			$hold   = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
 			$moved  = $format == 'feed' ? 0 : 1;
-			$params = array(
+			$params = [
 				'hold'  => $hold,
-				'moved' => $moved);
+				'moved' => $moved];
 
 			switch ($topic_ordering)
 			{
@@ -376,7 +376,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			if ($format == 'feed')
 			{
-				$catid = array_keys(KunenaForumCategoryHelper::getChildren($catid, 100) + array($catid => 1));
+				$catid = array_keys(KunenaForumCategoryHelper::getChildren($catid, 100) + [$catid => 1]);
 			}
 
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
@@ -384,8 +384,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			if ($this->total > 0)
 			{
 				// Collect user ids for avatar prefetch when integrated
-				$userlist     = array();
-				$lastpostlist = array();
+				$userlist     = [];
+				$lastpostlist = [];
 
 				foreach ($this->topics as $topic)
 				{

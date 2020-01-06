@@ -34,7 +34,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 */
 	public function getTopicOptions()
 	{
-		$options = array();
+		$options = [];
 
 		// Start with default options.
 		if (!$this->message)
@@ -50,9 +50,9 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 
 		// Then list a few topics.
 		$db     = Factory::getDbo();
-		$params = array(
+		$params = [
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ");
+			'where'   => " AND tt.id != {$db->quote($this->topic->id)} "];
 		list($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
@@ -72,8 +72,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 */
 	public function getCategoryList()
 	{
-		$options = array();
-		$params  = array('sections' => 0, 'catid' => 0);
+		$options = [];
+		$params  = ['sections' => 0, 'catid' => 0];
 
 		return HTMLHelper::_(
 			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',

@@ -25,13 +25,13 @@ abstract class KunenaForumTopicUserHelper
 	 * @var     array|KunenaForumTopicUser[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_instances = array();
+	protected static $_instances = [];
 
 	/**
 	 * @var     array|KunenaForumTopicUser[]
 	 * @since   Kunena 6.0
 	 */
-	protected static $_topics = array();
+	protected static $_topics = [];
 
 	/**
 	 * Returns KunenaForumTopicUser object.
@@ -86,11 +86,11 @@ abstract class KunenaForumTopicUserHelper
 
 		if ($ids === false)
 		{
-			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : array();
+			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : [];
 		}
 		elseif (!is_array($ids))
 		{
-			$ids = array($ids);
+			$ids = [$ids];
 		}
 
 		// Convert topic objects into ids
@@ -105,7 +105,7 @@ abstract class KunenaForumTopicUserHelper
 		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
-		$list = array();
+		$list = [];
 
 		foreach ($ids as $id)
 		{
@@ -201,7 +201,7 @@ abstract class KunenaForumTopicUserHelper
 	public static function getUserIds(array $topics, $value = 'user_id')
 	{
 		// Convert topic objects into ids
-		$ids = array();
+		$ids = [];
 
 		foreach ($topics as $id)
 		{
@@ -237,7 +237,7 @@ abstract class KunenaForumTopicUserHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$list = array();
+		$list = [];
 
 		if (!empty($results))
 		{
@@ -418,8 +418,8 @@ abstract class KunenaForumTopicUserHelper
 	 */
 	public static function cleanup()
 	{
-		self::$_instances = array();
-		self::$_topics    = array();
+		self::$_instances = [];
+		self::$_topics    = [];
 	}
 
 	/**

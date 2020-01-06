@@ -126,9 +126,9 @@ $this->addStyleSheet('rating.css');
 
 										<?php if ($this->actionMove) : ?>
 											<?php
-											$options = array(HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+											$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
 											echo HTMLHelper::_(
-												'kunenaforum.categorylist', 'target', 0, $options, array(),
+												'kunenaforum.categorylist', 'target', 0, $options, [],
 												'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
 												'kchecktarget'
 											);

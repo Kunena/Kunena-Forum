@@ -22,294 +22,507 @@ use Joomla\Database\Exception\ExecutionFailureException;
  * Class KunenaConfig
  *
  * @since   Kunena 6.0
+ * @property int     $id
+ * @property string  $board_title
+ * @property string  $email
+ * @property boolean $board_offline
+ * @property string  $offline_message
+ * @property boolean $enablerss
+ * @property integer $threads_per_page
+ * @property integer $messages_per_page
+ * @property integer $messages_per_page_search
+ * @property boolean $showhistory
+ * @property integer $historylimit
+ * @property boolean $shownew
+ * @property boolean $disemoticons
+ * @property string  $template
+ * @property boolean $showannouncement
+ * @property boolean $avataroncat
+ * @property boolean $showchildcaticon
+ * @property integer $rtewidth
+ * @property integer $rteheight
+ * @property boolean $enableforumjump
+ * @property boolean $reportmsg
+ * @property boolean $username
+ * @property boolean $askemail
+ * @property boolean $showemail
+ * @property boolean $showuserstats
+ * @property boolean $showkarma
+ * @property boolean $useredit
+ * @property integer $useredittime
+ * @property integer $useredittimegrace
+ * @property boolean $editmarkup
+ * @property boolean $allowsubscriptions
+ * @property boolean $subscriptionschecked
+ * @property boolean $allowfavorites
+ * @property integer $maxsig
+ * @property boolean $regonly
+ * @property boolean $pubwrite
+ * @property boolean $floodprotection
+ * @property boolean $mailmod
+ * @property boolean $mailadmin
+ * @property boolean $captcha
+ * @property boolean $mailfull
+ * @property boolean $allowavatarupload
+ * @property boolean $allowavatargallery
+ * @property integer $avatarquality
+ * @property integer $avatarsize
+ * @property integer $imageheight
+ * @property integer $imagewidth
+ * @property integer $imagesize
+ * @property string  $filetypes
+ * @property integer $filesize
+ * @property boolean $showranking
+ * @property boolean $rankimages
+ * @property integer $userlist_rows
+ * @property boolean $userlist_online
+ * @property boolean $userlist_avatar
+ * @property boolean $userlist_posts
+ * @property boolean $userlist_karma
+ * @property boolean $userlist_email
+ * @property boolean $userlist_joindate
+ * @property boolean $userlist_lastvisitdate
+ * @property boolean $userlist_userhits
+ * @property boolean $latestcategory
+ * @property boolean $showstats
+ * @property boolean $showwhoisonline
+ * @property boolean $showgenstats
+ * @property boolean $showpopuserstats
+ * @property integer $popusercount
+ * @property boolean $showpopsubjectstats
+ * @property boolean $popsubjectcount
+ * @property boolean $showspoilertag
+ * @property boolean $showvideotag
+ * @property boolean $showebaytag
+ * @property boolean $trimlongurls
+ * @property integer $trimlongurlsfront
+ * @property integer $trimlongurlsback
+ * @property boolean $autoembedyoutube
+ * @property boolean $autoembedebay
+ * @property boolean $ebaylanguagecode
+ * @property integer $sessiontimeout
+ * @property boolean $highlightcode
+ * @property string  $rss_type
+ * @property string  $rss_timelimit
+ * @property integer $rss_limit
+ * @property string  $rss_included_categories
+ * @property string  $rss_excluded_categories
+ * @property string  $rss_specification
+ * @property boolean $rss_allow_html
+ * @property string  $rss_author_format
+ * @property boolean $rss_author_in_title
+ * @property integer $rss_word_count
+ * @property boolean $rss_old_titles
+ * @property boolean $rss_cache
+ * @property string  $defaultpage
+ * @property string  $default_sort
+ * @property boolean $sef
+ * @property boolean $showimgforguest
+ * @property boolean $showfileforguest
+ * @property integer $pollnboptions
+ * @property boolean $pollallowvoteone
+ * @property boolean $pollenabled
+ * @property integer $poppollscount
+ * @property boolean $showpoppollstats
+ * @property integer $polltimebtvotes
+ * @property integer $pollnbvotesbyuser
+ * @property boolean $pollresultsuserslist
+ * @property boolean $allow_user_edit_poll
+ * @property integer $maxpersotext
+ * @property string  $ordering_system
+ * @property string  $post_dateformat
+ * @property string  $post_dateformat_hover
+ * @property boolean $hide_ip
+ * @property string  $imagetypes
+ * @property boolean $checkmimetypes
+ * @property string  $imagemimetypes
+ * @property integer $imagequality
+ * @property integer $thumbheight
+ * @property integer $thumbwidth
+ * @property string  $hideuserprofileinfo
+ * @property boolean $boxghostmessage
+ * @property integer $userdeletetmessage
+ * @property integer $latestcategory_in
+ * @property boolean $topicicons
+ * @property boolean $debug
+ * @property boolean $catsautosubscribed
+ * @property boolean $showbannedreason
+ * @property boolean $showthankyou
+ * @property boolean $showpopthankyoustats
+ * @property integer $popthankscount
+ * @property boolean $mod_see_deleted
+ * @property string  $bbcode_img_secure
+ * @property boolean $listcat_show_moderators
+ * @property boolean $lightbox
+ * @property integer $show_list_time
+ * @property integer $show_session_type
+ * @property integer $show_session_starttime
+ * @property boolean $userlist_allowed
+ * @property integer $userlist_count_users
+ * @property boolean $enable_threaded_layouts
+ * @property string  $category_subscriptions
+ * @property string  $topic_subscriptions
+ * @property boolean $pubprofile
+ * @property integer $thankyou_max
+ * @property integer $email_recipient_count
+ * @property string  $email_recipient_privacy
+ * @property string  $email_visible_address
+ * @property integer $captcha_post_limit
+ * @property string  $image_upload
+ * @property string  $file_upload
+ * @property string  $topic_layout
+ * @property boolean $time_to_create_page
+ * @property boolean $show_imgfiles_manage_profile
+ * @property boolean $hold_newusers_posts
+ * @property boolean $hold_guest_posts
+ * @property integer $attachment_limit
+ * @property boolean $pickup_category
+ * @property string  $article_display
+ * @property boolean $send_emails
+ * @property boolean $fallback_english
+ * @property boolean $cache
+ * @property integer $cache_time
+ * @property integer $ebay_affiliate_id
+ * @property boolean $iptracking
+ * @property string  $rss_feedburner_url
+ * @property boolean $autolink
+ * @property boolean $access_component
+ * @property boolean $statslink_allowed
+ * @property boolean $superadmin_userlist
+ * @property boolean $legacy_urls
+ * @property boolean $attachment_protection
+ * @property boolean $categoryicons
+ * @property boolean $avatarcrop
+ * @property boolean $user_report
+ * @property integer $searchtime
+ * @property boolean $teaser
+ * @property boolean $ebay_language
+ * @property string  $ebay_api_key
+ * @property string  $twitter_consumer_key
+ * @property string  $twitter_consumer_secret
+ * @property boolean $allow_change_subject
+ * @property integer $max_links
+ * @property boolean $read_only
+ * @property boolean $ratingenabled
+ * @property boolean $url_subject_topic
+ * @property boolean $log_moderation
+ * @property integer $attach_start
+ * @property integer $attach_end
+ * @property string  $google_map_api_key
+ * @property boolean $attachment_utf8
+ * @property boolean $autoembedsoundcloud
+ * @property string  $emailheader
+ * @property boolean $user_status
+ * @property boolean $signature
+ * @property boolean $personal
+ * @property boolean $social
+ * @property boolean $plain_email
+ * @property boolean $moderator_permdelete
+ * @property string  $avatartypes
+ * @property boolean $smartlinking
+ * @property string  $defaultavatar
+ * @property string  $defaultavatarsmall
+ * @property string  $stopforumspam_key
+ * @property boolean $quickreply
+ * @property boolean $avataredit
+ * @property string  $activemenuitem
+ * @property integer $mainmenu_id
+ * @property integer $home_id
+ * @property integer $index_id
+ * @property integer $moderators_id
+ * @property integer $topiclist_id
+ * @property integer $misc_id
+ * @property integer $profile_id
+ * @property integer $search_id
+ * @property integer $avatar_type
+ * @property boolean $sef_redirect
+ * @property boolean $allow_edit_poll
+ * @property boolean $use_system_emails
+ * @property boolean $autoembedinstagram
+ * @property boolean $disable_re
+ * @property boolean $utm_source
+ *
  */
 class KunenaConfig extends CMSObject
 {
 	/**
-	 * @var    integer  ID; input, hidden
+	 * @var    integer  ID
 	 * @since  Kunena 1.5.2
 	 */
 	public $id = 0;
 
 	/**
-	 * @var    string  Board Title; input, text
+	 * @var    string  Board Title
 	 * @since  Kunena 1.0.0
 	 */
 	public $board_title = 'Kunena';
 
 	/**
-	 * @var    string  Email; input, email
+	 * @var    string  Email
 	 * @since  Kunena 1.0.0
 	 */
 	public $email = '';
 
 	/**
-	 * @var    integer  Board offline; select, boolean
+	 * @var    boolean  Board offline
 	 * @since  Kunena 1.0.0
 	 */
 	public $board_offline = 0;
 
 	/**
-	 * @var    string  Offline message; input, text
+	 * @var    string  Offline message
 	 * @since  Kunena 1.0.0
 	 */
 	public $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 
 	/**
-	 * @var    integer Enable RSS; select, boolean
+	 * @var    boolean Enable RSS
 	 * @since  Kunena 1.0.0
 	 */
 	public $enablerss = 1;
 
 	/**
-	 * @var    integer    Threads per page; input, number
+	 * @var    integer    Threads per page
 	 * @since  Kunena 1.0.0
 	 */
 	public $threads_per_page = 20;
 
 	/**
-	 * @var    integer  Messages per page; input, number
+	 * @var    integer  Messages per page
 	 * @since  Kunena 1.0.0
 	 */
 	public $messages_per_page = 6;
 
 	/**
-	 * @var    integer  Messages per page search; input, number
+	 * @var    integer  Messages per page search
 	 * @since  Kunena 1.0.0
 	 */
 	public $messages_per_page_search = 15;
 
 	/**
-	 * @var    integer  Show history; select, boolean
+	 * @var    boolean  Show history
 	 * @since  Kunena 1.0.0
 	 */
 	public $showhistory = 1;
 
 	/**
-	 * @var    integer  History limit; input, number
+	 * @var    integer  History limit
 	 * @since  Kunena 1.0.0
 	 */
 	public $historylimit = 6;
 
 	/**
-	 * @var    integer  Show new; select, boolean
+	 * @var    boolean  Show new
 	 * @since  Kunena 1.0.0
 	 */
 	public $shownew = 1;
 
 	/**
-	 * @var    integer  Disable emoticons; select, boolean
+	 * @var    boolean  Disable emoticons
 	 * @since  Kunena 1.0.0
 	 */
 	public $disemoticons = 0;
 
 	/**
-	 * @var    string  Template; input, hidden
+	 * @var    string  Template
 	 * @since  Kunena 1.0.0
 	 */
 	public $template = 'aurelia';
 
 	/**
-	 * @var    integer  Show announcement; select, boolean
+	 * @var    boolean  Show announcement
 	 * @since  Kunena 1.0.0
 	 */
 	public $showannouncement = 1;
 
 	/**
-	 * @var    integer  Avatar on category; select, boolean
+	 * @var    boolean  Avatar on category
 	 * @since  Kunena 1.0.0
 	 */
 	public $avataroncat = 0;
 
 	/**
-	 * @var    integer  Show child category icon; select, boolean
+	 * @var    boolean  Show child category icon
 	 * @since  Kunena 1.0.0
 	 */
 	public $showchildcaticon = 1;
 
 	/**
-	 * @var    integer  Text area width; input, number
+	 * @var    integer  Text area width
 	 * @since  Kunena 1.0.0
 	 */
 	public $rtewidth = 450;
 
 	/**
-	 * @var    integer  Text area height; input, number
+	 * @var    integer  Text area height
 	 * @since  Kunena 1.0.0
 	 */
 	public $rteheight = 300;
 
 	/**
-	 * @var    integer  Enable forum jump; select, boolean
+	 * @var    boolean  Enable forum jump
 	 * @since  Kunena 1.0.0
 	 */
 	public $enableforumjump = 1;
 
 	/**
-	 * @var    integer  Report message; select, boolean
+	 * @var    boolean  Report message
 	 * @since  Kunena 1.0.0
 	 */
 	public $reportmsg = 1;
 
 	/**
-	 * @var    integer  Username; select, boolean
+	 * @var    boolean  Username
 	 * @since  Kunena 1.0.0
 	 */
 	public $username = 1;
 
 	/**
-	 * @var    integer  Ask email; select, boolean
+	 * @var    boolean  Ask email
 	 * @since  Kunena 1.0.0
 	 */
 	public $askemail = 0;
 
 	/**
-	 * @var    integer  Show email; select, boolean
+	 * @var    boolean  Show email
 	 * @since  Kunena 1.0.0
 	 */
 	public $showemail = 0;
 
 	/**
-	 * @var    integer  Show user statistics; select, boolean
+	 * @var    boolean  Show user statistics
 	 * @since  Kunena 1.0.0
 	 */
 	public $showuserstats = 1;
 
 	/**
-	 * @var    integer  Show karma; select, boolean
+	 * @var    boolean  Show karma
 	 * @since  Kunena 1.0.0
 	 */
 	public $showkarma = 1;
 
 	/**
-	 * @var    integer  User edit; select, boolean
+	 * @var    boolean  User edit
 	 * @since  Kunena 1.0.0
 	 */
 	public $useredit = 1;
 
 	/**
-	 * @var    integer  User edit time; input, number
+	 * @var    integer  User edit time
 	 * @since  Kunena 1.0.0
 	 */
 	public $useredittime = 0;
 
 	/**
-	 * @var    integer  User edit time Grace; input, number
+	 * @var    integer  User edit time Grace
 	 * @since  Kunena 1.0.0
 	 */
 	public $useredittimegrace = 600;
 
 	/**
-	 * @var    integer  Edit markup; select, boolean
+	 * @var    boolean  Edit markup
 	 * @since  Kunena 1.0.0
 	 */
 	public $editmarkup = 1;
 
 	/**
-	 * @var    integer  Allow subscriptions; select, boolean
+	 * @var    boolean  Allow subscriptions
 	 * @since  Kunena 1.0.0
 	 */
 	public $allowsubscriptions = 1;
 
 	/**
-	 * @var    integer  Subscriptions Checked; select, boolean
+	 * @var    boolean  Subscriptions Checked
 	 * @since  Kunena 1.0.0
 	 */
 	public $subscriptionschecked = 1;
 
 	/**
-	 * @var    integer  Allow favorites; select, boolean
+	 * @var    boolean  Allow favorites
 	 * @since  Kunena 1.0.0
 	 */
 	public $allowfavorites = 1;
 
 	/**
-	 * @var    integer  Max subject; input, number
-	 * @since      1.0.0
-	 * @depricated K5.0
-	 */
-	public $maxsubject = 50;
-
-	/**
-	 * @var    integer  Max signature length; input, number
+	 * @var    integer  Max signature length
 	 * @since  Kunena 1.0.0
 	 */
 	public $maxsig = 300;
 
 	/**
-	 * @var    integer  Registered users only
+	 * @var    boolean  Registered users only
 	 * @since  Kunena 1.0.0
 	 */
 	public $regonly = 0;
 
 	/**
-	 * @var    integer  Public write; select, boolean
+	 * @var    boolean  Public write
 	 * @since  Kunena 1.0.0
 	 */
 	public $pubwrite = 0;
 
 	/**
-	 * @var    integer  Flood projection; select, boolean
+	 * @var    boolean  Flood projection
 	 * @since  Kunena 1.0.0
 	 */
 	public $floodprotection = 0;
 
 	/**
-	 * @var    integer  Mail moderators
+	 * @var    boolean  Mail moderators
 	 * @since  Kunena 1.0.0
 	 */
 	public $mailmod = 0;
 
 	/**
-	 * @var    integer  Mail admin
+	 * @var    boolean  Mail admin
 	 * @since  Kunena 1.0.0
 	 */
 	public $mailadmin = 0;
 
 	/**
-	 * @var    integer  CAPTCHA
+	 * @var    boolean  CAPTCHA
 	 * @since  Kunena 1.0.0
 	 */
 	public $captcha = 0;
 
 	/**
-	 * @var    integer  Mail full; select, selection
+	 * @var    boolean  Mail full
 	 * @since  Kunena 1.0.0
 	 */
 	public $mailfull = 1;
 
 	/**
-	 * @var    integer  Allow avatar upload; select, boolean
+	 * @var    boolean  Allow avatar upload
 	 * @since  Kunena 1.0.0
 	 */
 	public $allowavatarupload = 1;
 
 	/**
-	 * @var    integer  Allow avatar gallery; select, boolean
+	 * @var    boolean  Allow avatar gallery
 	 * @since  Kunena 1.0.0
 	 */
 	public $allowavatargallery = 1;
 
 	/**
-	 * @var    integer  Avatar quality; input, number
+	 * @var    integer  Avatar quality
 	 * @since  Kunena 1.0.0
 	 */
 	public $avatarquality = 75;
 
 	/**
-	 * @var    integer  Avatar size; input, number
+	 * @var    integer  Avatar size
 	 * @since  Kunena 1.0.0
 	 */
 	public $avatarsize = 2048;
 
 	/**
-	 * @var    integer  Image height; input, number
+	 * @var    integer  Image height
 	 * @since  Kunena 1.0.0
 	 */
 	public $imageheight = 800;
 
 	/**
-	 * @var    integer  Image width; input, number
+	 * @var    integer  Image width
 	 * @since  Kunena 1.0.0
 	 */
 	public $imagewidth = 800;
@@ -321,25 +534,25 @@ class KunenaConfig extends CMSObject
 	public $imagesize = 150;
 
 	/**
-	 * @var    string  File types; input, text
+	 * @var    string  File types
 	 * @since  Kunena 1.0.0
 	 */
 	public $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 
 	/**
-	 * @var    integer  File size; input, number
+	 * @var    integer  File size
 	 * @since  Kunena 1.0.0
 	 */
 	public $filesize = 120;
 
 	/**
-	 * @var    integer  Show ranking; select, boolean
+	 * @var    boolean  Show ranking
 	 * @since  Kunena 1.0.0
 	 */
 	public $showranking = 1;
 
 	/**
-	 * @var    integer  Rank images; select, boolean
+	 * @var    boolean  Rank images
 	 * @since  Kunena 1.0.0
 	 */
 	public $rankimages = 1;
@@ -351,265 +564,265 @@ class KunenaConfig extends CMSObject
 	public $userlist_rows = 30;
 
 	/**
-	 * @var    integer  User list online
+	 * @var    boolean  User list online
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_online = 1;
 
 	/**
-	 * @var    integer  user list avatar; select, boolean
+	 * @var    boolean  user list avatar
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_avatar = 1;
 
 	/**
-	 * @var    integer  User list posts; select, boolean
+	 * @var    boolean  User list posts
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_posts = 1;
 
 	/**
-	 * @var    integer  User list karma; select, boolean
+	 * @var    boolean  User list karma
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_karma = 1;
 
 	/**
-	 * @var    integer  User list email; select, boolean
+	 * @var    boolean  User list email
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_email = 0;
 
 	/**
-	 * @var    integer  User list join date; select, boolean
+	 * @var    boolean  User list join date
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_joindate = 1;
 
 	/**
-	 * @var    integer  User list lst visit date; select, boolean
+	 * @var    boolean  User list lst visit date
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_lastvisitdate = 1;
 
 	/**
-	 * @var    integer  User list user hits; select, boolean
+	 * @var    boolean  User list user hits
 	 * @since  Kunena 1.0.0
 	 */
 	public $userlist_userhits = 1;
 
 	/**
-	 * @var    string  Latest category; select, integer multiple
+	 * @var    string  Latest category
 	 * @since  Kunena 1.0.0
 	 */
 	public $latestcategory = '';
 
 	/**
-	 * @var    integer  Show stats; select, boolean
+	 * @var    boolean  Show stats
 	 * @since  Kunena 1.0.0
 	 */
 	public $showstats = 1;
 
 	/**
-	 * @var    integer  Show who is online; select, boolean
+	 * @var    boolean  Show who is online
 	 * @since  Kunena 1.0.0
 	 */
 	public $showwhoisonline = 1;
 
 	/**
-	 * @var    integer  Show general statistics; select, boolean
+	 * @var    boolean  Show general statistics
 	 * @since  Kunena 1.0.0
 	 */
 	public $showgenstats = 1;
 
 	/**
-	 * @var    integer  Show population user statistics; select, boolean
+	 * @var    boolean  Show population user statistics
 	 * @since  Kunena 1.0.0
 	 */
 	public $showpopuserstats = 1;
 
 	/**
-	 * @var    integer  Population user count; input, number
+	 * @var    integer  Population user count
 	 * @since  Kunena 1.0.0
 	 */
 	public $popusercount = 5;
 
 	/**
-	 * @var    integer  Show population subject statistics; select, boolean
+	 * @var    boolean  Show population subject statistics
 	 * @since  Kunena 1.0.0
 	 */
 	public $showpopsubjectstats = 1;
 
 	/**
-	 * @var    integer  Population subject count; input, number
+	 * @var    integer  Population subject count
 	 * @since  Kunena 1.0.0
 	 */
 	public $popsubjectcount = 5;
 
 	/**
-	 * @var    integer  Show spoiler tag; select, boolean
+	 * @var    boolean  Show spoiler tag
 	 * @since  Kunena 1.0.5
 	 */
 	public $showspoilertag = 1;
 
 	/**
-	 * @var    integer  Show video tag; select, boolean
+	 * @var    boolean  Show video tag
 	 * @since  Kunena 1.0.5
 	 */
 	public $showvideotag = 1;
 
 	/**
-	 * @var    integer  Show ebay tag; select, boolean
+	 * @var    boolean  Show ebay tag
 	 * @since  Kunena 1.0.5
 	 */
 	public $showebaytag = 1;
 
 	/**
-	 * @var    integer  Trim long URLs; select, boolean
+	 * @var    boolean  Trim long URLs
 	 * @since  Kunena 1.0.5
 	 */
 	public $trimlongurls = 1;
 
 	/**
-	 * @var    integer  Trim long URLs in front; input, number
+	 * @var    integer  Trim long URLs in front
 	 * @since  Kunena 1.0.5
 	 */
 	public $trimlongurlsfront = 40;
 
 	/**
-	 * @var    integer  Trim long URLs in back, input, number
+	 * @var    integer  Trim long URLs in back
 	 * @since  Kunena 1.0.5
 	 */
 	public $trimlongurlsback = 20;
 
 	/**
-	 * @var    integer  Auto embed youtube; select, boolean
+	 * @var    boolean  Auto embed youtube
 	 * @since  Kunena 1.0.5
 	 */
 	public $autoembedyoutube = 1;
 
 	/**
-	 * @var    integer  Auto embed ebay; select, boolean
+	 * @var    boolean  Auto embed ebay
 	 * @since  Kunena 1.0.5
 	 */
 	public $autoembedebay = 1;
 
 	/**
-	 * @var    string  Ebay language code; input, text
+	 * @var    string  Ebay language code
 	 * @since  Kunena 1.0.5
 	 */
 	public $ebaylanguagecode = 'en-us';
 
 	/**
-	 * @var    integer  Session time out. In seconds; input, number
+	 * @var    integer  Session time out. In seconds
 	 * @since  Kunena 1.0.5
 	 */
 	public $sessiontimeout = 1800;
 
 	/**
-	 * @var    integer  Highlight code; select, boolean
+	 * @var    boolean  Highlight code
 	 * @since  Kunena 1.0.5RC2
 	 */
 	public $highlightcode = 0;
 
 	/**
-	 * @var    string  RSS type; select, selection
+	 * @var    string  RSS type
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_type = 'topic';
 
 	/**
-	 * @var    string  RSS time limit; select, selection
+	 * @var    string  RSS time limit
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_timelimit = 'month';
 
 	/**
-	 * @var    integer  RSS limit; input, number
+	 * @var    integer  RSS limit
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_limit = 100;
 
 	/**
-	 * @var    string  RSS included categories; select, selection
+	 * @var    string  RSS included categories
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_included_categories = '';
 
 	/**
-	 * @var    string  RSS excluded categories; select, selection
+	 * @var    string  RSS excluded categories
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_excluded_categories = '';
 
 	/**
-	 * @var    string  RSS specification; select, selection
+	 * @var    string  RSS specification
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_specification = 'rss2.0';
 
 	/**
-	 * @var    integer  RSS allow HTML; select, boolean
+	 * @var    boolean  RSS allow HTML
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_allow_html = 1;
 
 	/**
-	 * @var    string  RSS author format; select, selection
+	 * @var    string  RSS author format
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_author_format = 'name';
 
 	/**
-	 * @var    integer  RSS author in title; select, boolean
+	 * @var    boolean  RSS author in title
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_author_in_title = 1;
 
 	/**
-	 * @var    string  RSS word count; select, selection
+	 * @var    integer  RSS word count
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_word_count = '0';
 
 	/**
-	 * @var    integer  RSS old titles; select, boolean
+	 * @var    boolean  RSS old titles
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_old_titles = 1;
 
 	/**
-	 * @var    integer  RSS cache; input, selection
+	 * @var    integer  RSS cache
 	 * @since  Kunena 1.0.6
 	 */
 	public $rss_cache = 900;
 
 	/**
-	 * @var    string  Default page; select, selection
+	 * @var    string  Default page
 	 * @since  Kunena 1.0.6
 	 */
 	public $defaultpage = 'recent';
 
 	/**
-	 * @var    string  Default sort.  Description for the latest post first; select, selection
+	 * @var    string  Default sort.  Description for the latest post first
 	 * @since  Kunena 1.0.8
 	 */
 	public $default_sort = 'asc';
 
 	/**
-	 * @var    integer  Search engine friendly URLs
+	 * @var    boolean  Search engine friendly URLs
 	 * @since  Kunena 1.5.8
 	 */
 	public $sef = 1;
 
 	/**
-	 * @var    integer  Showing For Guest
+	 * @var    boolean  Showing For Guest
 	 * @since  Kunena 1.6.0
 	 */
 	public $showimgforguest = 1;
 
 	/**
-	 * @var    integer  Show file for guest
+	 * @var    boolean  Show file for guest
 	 * @since  Kunena 1.6.0
 	 */
 	public $showfileforguest = 1;
@@ -621,529 +834,529 @@ class KunenaConfig extends CMSObject
 	public $pollnboptions = 4;
 
 	/**
-	 * @var    integer  Pool allow one ore more time; select, boolean
+	 * @var    boolean  Pool allow one ore more time
 	 * @since  Kunena 1.6.0
 	 */
 	public $pollallowvoteone = 1;
 
 	/**
-	 * @var    integer  Poll enabled.  For poll integration; select, boolean
+	 * @var    boolean  Poll enabled.  For poll integration
 	 * @since  Kunena 1.6.0
 	 */
 	public $pollenabled = 1;
 
 	/**
-	 * @var    integer  Population poll count; input, number
+	 * @var    integer  Population poll count
 	 * @since  Kunena 1.6.0
 	 */
 	public $poppollscount = 5;
 
 	/**
-	 * @var    integer  Show population poll statistics; select, boolean
+	 * @var    boolean  Show population poll statistics
 	 * @since  Kunena 1.6.0
 	 */
 	public $showpoppollstats = 1;
 
 	/**
-	 * @var    integer  Poll time by votes; input, time
+	 * @var    integer  Poll time by votes
 	 * @since  Kunena 1.6.0
 	 */
 	public $polltimebtvotes = '00:15:00';
 
 	/**
-	 * @var    integer  Poll and votes by user; input, number
+	 * @var    integer  Poll and votes by user
 	 * @since  Kunena 1.6.0
 	 */
 	public $pollnbvotesbyuser = 100;
 
 	/**
-	 * @var    integer  Poll result user list; select, boolean
+	 * @var    boolean  Poll result user list
 	 * @since  Kunena 1.6.0
 	 */
 	public $pollresultsuserslist = 1;
 
 	/**
-	 * @var    integer  Poll result user list; select, boolean
+	 * @var    boolean  Poll result user list
 	 * @since  Kunena 1.6.0
 	 */
 	public $allow_user_edit_poll = 0;
 
 	/**
-	 * @var    integer  Max person text; input, number
+	 * @var    integer  Max person text
 	 * @since  Kunena 1.6.0
 	 */
 	public $maxpersotext = 50;
 
 	/**
-	 * @var    string  Ordering system; select, selection
+	 * @var    string  Ordering system
 	 * @since  Kunena 1.6.0
 	 */
 	public $ordering_system = 'mesid';
 
 	/**
-	 * @var    string  Post date format; select, selection
+	 * @var    string  Post date format
 	 * @since  Kunena 1.6.0
 	 */
 	public $post_dateformat = 'ago';
 
 	/**
-	 * @var    string  Post date format hover; select, selection
+	 * @var    string  Post date format hover
 	 * @since  Kunena 1.6.0
 	 */
 	public $post_dateformat_hover = 'datetime';
 
 	/**
-	 * @var    integer  Hide IP; select, boolean
+	 * @var    boolean  Hide IP
 	 * @since  Kunena 1.6.0
 	 */
 	public $hide_ip = 1;
 
 	/**
-	 * @var    string  Image types; textbox, string
+	 * @var    string  Image types
 	 * @since  Kunena 1.6.0
 	 */
 	public $imagetypes = 'jpg,jpeg,gif,png';
 
 	/**
-	 * @var    integer  Check MIM types; select, boolean
+	 * @var    boolean  Check MIM types
 	 * @since  Kunena 1.6.0
 	 */
 	public $checkmimetypes = 1;
 
 	/**
-	 * @var    string  Image MIME types; textbox, string
+	 * @var    string  Image MIME types
 	 * @since  Kunena 1.6.0
 	 */
 	public $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
 
 	/**
-	 * @var    integer  Image quality; input, number
+	 * @var    integer  Image quality
 	 * @since  Kunena 1.6.0
 	 */
 	public $imagequality = 50;
 
 	/**
-	 * @var    integer  Thumbnail height; input, number
+	 * @var    integer  Thumbnail height
 	 * @since  Kunena 1.6.0
 	 */
 	public $thumbheight = 32;
 
 	/**
-	 * @var    integer  Thumbnail width; input, number
+	 * @var    integer  Thumbnail width
 	 * @since  Kunena 1.6.0
 	 */
 	public $thumbwidth = 32;
 
 	/**
 	 * @var    string  Hide user profile info
-	 * @since  Kunena 1.6.0
+	 * @since  1.6.0
 	 */
 	public $hideuserprofileinfo = 'put_empty';
 
 	/**
-	 * @var    integer  Box ghost message; select, selection
+	 * @var    boolean  Box ghost message
 	 * @since  Kunena 1.6.0
 	 */
 	public $boxghostmessage = 0;
 
 	/**
-	 * @var    integer  User delete message; select, selection
+	 * @var    integer  User delete message
 	 * @since  Kunena 1.6.0
 	 */
 	public $userdeletetmessage = 0;
 
 	/**
-	 * @var    integer  Latest category in; select, boolean
+	 * @var    integer  Latest category in
 	 * @since  Kunena 1.6.0
 	 */
 	public $latestcategory_in = 1;
 
 	/**
-	 * @var    integer  Topic icons; select, boolean
+	 * @var    boolean  Topic icons
 	 * @since  Kunena 1.6.0
 	 */
 	public $topicicons = 1;
 
 	/**
-	 * @var    integer  Debug; select, boolean
+	 * @var    boolean  Debug
 	 * @since  Kunena 1.6.0
 	 */
 	public $debug = 0;
 
 	/**
-	 * @var    integer  Category auto subscribe; select, boolean
+	 * @var    boolean  Category auto subscribe
 	 * @since  Kunena 1.6.0
 	 */
 	public $catsautosubscribed = 0;
 
 	/**
-	 * @var    integer  SHow ban reason; select, boolean
+	 * @var    boolean  SHow ban reason
 	 * @since  Kunena 1.6.0
 	 */
 	public $showbannedreason = 0;
 
 	/**
-	 * @var    integer  Show thank you; select, boolean
+	 * @var    boolean  Show thank you
 	 * @since  Kunena 1.6.0
 	 */
 	public $showthankyou = 1;
 
 	/**
-	 * @var    integer  Show population thank you statistics; select, boolean
+	 * @var    boolean  Show population thank you statistics
 	 * @since  Kunena 1.6.0
 	 */
 	public $showpopthankyoustats = 1;
 
 	/**
-	 * @var    integer  Population thank you count; input, number
+	 * @var    integer  Population thank you count
 	 * @since  Kunena 1.6.0
 	 */
 	public $popthankscount = 5;
 
 	/**
-	 * @var    integer  Moderators see deleted topics; select, boolean
+	 * @var    boolean  Moderators see deleted topics
 	 * @since  Kunena 1.6.0
 	 */
 	public $mod_see_deleted = 0;
 
 	/**
-	 * @var    string  BBCode image secure.  Allow only secure image extensions (jpg/gif/png); select, selection
+	 * @var    string  BBCode image secure.  Allow only secure image extensions (jpg/gif/png)
 	 * @since  Kunena 1.6.0
 	 */
 	public $bbcode_img_secure = 'text';
 
 	/**
-	 * @var    integer  List category show moderators; select, boolean
+	 * @var    boolean  List category show moderators
 	 * @since  Kunena 1.6.0
 	 */
 	public $listcat_show_moderators = 1;
 
 	/**
-	 * @var    integer  Major version number; select, boolean
+	 * @var    boolean  Major version number
 	 * @since  Kunena 1.6.1
 	 */
 	public $lightbox = 1;
 
 	/**
-	 * @var    integer  Show list time; select, selection
+	 * @var    integer  Show list time
 	 * @since  Kunena 1.6.1
 	 */
 	public $show_list_time = 720;
 
 	/**
-	 * @var    integer  Show session type; select, selection
+	 * @var    integer  Show session type
 	 * @since  Kunena 1.6.1
 	 */
 	public $show_session_type = 2;
 
 	/**
-	 * @var    integer  Show session start time; select, selection
+	 * @var    integer  Show session start time
 	 * @since  Kunena 1.6.1
 	 */
 	public $show_session_starttime = 1800;
 
 	/**
-	 * @var    integer  User list allowed; select, boolean
+	 * @var    boolean  User list allowed
 	 * @since  Kunena 1.6.2
 	 */
 	public $userlist_allowed = 1;
 
 	/**
-	 * @var    integer  User list count users; select, selection
+	 * @var    integer  User list count users
 	 * @since  Kunena 1.6.4
 	 */
 	public $userlist_count_users = 1;
 
 	/**
-	 * @var    integer  Enable threaded layouts; select, boolean
+	 * @var    boolean  Enable threaded layouts
 	 * @since  Kunena 1.6.4
 	 */
 	public $enable_threaded_layouts = 0;
 
 	/**
-	 * @var    string  Category subscriptions; select, selection
+	 * @var    string  Category subscriptions
 	 * @since  Kunena 1.6.4
 	 */
 	public $category_subscriptions = 'post';
 
 	/**
-	 * @var    string  Topic subscriptions; select, selection
+	 * @var    string  Topic subscriptions
 	 * @since  Kunena 1.6.4
 	 */
 	public $topic_subscriptions = 'every';
 
 	/**
-	 * @var    integer  Public profile; select, boolean
+	 * @var    boolean  Public profile
 	 * @since  Kunena 1.6.4
 	 */
 	public $pubprofile = 1;
 
 	/**
-	 * @var    integer  Thank you max; input, number
+	 * @var    integer  Thank you max
 	 * @since  Kunena 1.6.5
 	 */
 	public $thankyou_max = 10;
 
 	/**
-	 * @var    integer  Email recipient count; select, integer
+	 * @var    integer  Email recipient count
 	 * @since  Kunena 1.6.6
 	 */
 	public $email_recipient_count = 0;
 
 	/**
-	 * @var    string  Email recipient pricing; select, selection
+	 * @var    string  Email recipient pricing
 	 * @since  Kunena 1.6.6
 	 */
 	public $email_recipient_privacy = 'bcc';
 
 	/**
-	 * @var    string  Email visible address; input, text
+	 * @var    string  Email visible address
 	 * @since  Kunena 1.6.6
 	 */
 	public $email_visible_address = '';
 
 	/**
-	 * @var    integer  CAPTCHA post limit; input, number
+	 * @var    integer  CAPTCHA post limit
 	 * @since  Kunena 1.6.6
 	 */
 	public $captcha_post_limit = 0;
 
 	/**
-	 * @var    string  Image upload; select, selection
+	 * @var    string  Image upload
 	 * @since  Kunena 2.0.0
 	 */
 	public $image_upload = 'registered';
 
 	/**
-	 * @var    string  File upload; select, selection
+	 * @var    string  File upload
 	 * @since  Kunena 2.0.0
 	 */
 	public $file_upload = 'registered';
 
 	/**
-	 * @var    string  Topic layout; select, selection
+	 * @var    string  Topic layout
 	 * @since  Kunena 2.0.0
 	 */
 	public $topic_layout = 'flat';
 
 	/**
-	 * @var    integer  Time to create page; select, boolean
+	 * @var    boolean  Time to create page
 	 * @since  Kunena 2.0.0
 	 */
 	public $time_to_create_page = 1;
 
 	/**
-	 * @var    integer  Show image files in mange profile; select, boolean
+	 * @var    boolean  Show image files in mange profile
 	 * @since  Kunena 2.0.0
 	 */
 	public $show_imgfiles_manage_profile = 1;
 
 	/**
-	 * @var    integer  Hold new users posts; select, boolean
+	 * @var    boolean  Hold new users posts
 	 * @since  Kunena 2.0.0
 	 */
 	public $hold_newusers_posts = 0;
 
 	/**
-	 * @var    integer  Hold guest posts; select, boolean
+	 * @var    boolean  Hold guest posts
 	 * @since  Kunena 2.0.0
 	 */
 	public $hold_guest_posts = 0;
 
 	/**
-	 * @var    integer  Attachment limit; input, number
+	 * @var    integer  Attachment limit
 	 * @since  Kunena 2.0.0
 	 */
 	public $attachment_limit = 8;
 
 	/**
-	 * @var    integer  Pickup category; select, boolean
+	 * @var    boolean  Pickup category
 	 * @since  Kunena 2.0.0
 	 */
 	public $pickup_category = 0;
 
 	/**
-	 * @var    string  Article display; select selection
+	 * @var    string  Article display
 	 * @since  Kunena 2.0.0
 	 */
 	public $article_display = 'intro';
 
 	/**
-	 * @var    integer  Send emails; select, boolean
+	 * @var    boolean  Send emails
 	 * @since  Kunena 2.0.0
 	 */
 	public $send_emails = 1;
 
 	/**
-	 * @var    integer  Fallback english; select, boolean
+	 * @var    boolean  Fallback english
 	 * @since  Kunena 2.0.0
 	 */
 	public $fallback_english = 1;
 
 	/**
-	 * @var    integer  Cache; select, boolean
+	 * @var    boolean  Cache
 	 * @since  Kunena 2.0.0
 	 */
 	public $cache = 1;
 
 	/**
-	 * @var    integer  Cache time; input, number
+	 * @var    integer  Cache time
 	 * @since  Kunena 2.0.0
 	 */
 	public $cache_time = 60;
 
 	/**
-	 * @var    integer  Ebay affiliate ID; input, text
+	 * @var    integer  Ebay affiliate ID
 	 * @since  Kunena 2.0.0
 	 */
 	public $ebay_affiliate_id = 5337089937;
 
 	/**
-	 * @var    integer  IP tracking; select, boolean
+	 * @var    boolean  IP tracking
 	 * @since  Kunena 2.0.0
 	 */
 	public $iptracking = 1;
 
 	/**
-	 * @var    string  RSS feebburner URL; input, text
+	 * @var    string  RSS feedburner URL
 	 * @since  Kunena 2.0.3
 	 */
 	public $rss_feedburner_url = '';
 
 	/**
-	 * @var    integer  Auto link; select, boolean
+	 * @var    boolean  Auto link
 	 * @since  Kunena 3.0.0
 	 */
 	public $autolink = 1;
 
 	/**
-	 * @var    integer  Access component; select, boolean
+	 * @var    boolean  Access component
 	 * @since  Kunena 3.0.0
 	 */
 	public $access_component = 1;
 
 	/**
-	 * @var    integer  Statistic link allowed; select, boolean
+	 * @var    boolean  Statistic link allowed
 	 * @since  Kunena 3.0.4
 	 */
 	public $statslink_allowed = 1;
 
 	/**
-	 * @var    integer  Super admin user list; select, boolean
+	 * @var    boolean  Super admin user list
 	 * @since  Kunena 3.0.6
 	 */
 	public $superadmin_userlist = 0;
 
 	/**
-	 * @var     integer  Legacy URLs; select, boolean
+	 * @var     boolean  Legacy URLs
 	 * @since   Kunena 4.0.0
 	 */
 	public $legacy_urls = 1;
 
 	/**
-	 * @var     integer  Attachment protection; select, boolean
+	 * @var     boolean  Attachment protection
 	 * @since   Kunena 4.0.0
 	 */
 	public $attachment_protection = 0;
 
 	/**
-	 * @var     integer  Category icons; select, boolean
+	 * @var     boolean  Category icons
 	 * @since   Kunena 4.0.0
 	 */
 	public $categoryicons = 1;
 
 	/**
-	 * @var     integer  Avatar crop; select, boolean
+	 * @var     boolean  Avatar crop
 	 * @since   Kunena 4.0.0
 	 */
 	public $avatarcrop = 0;
 
 	/**
-	 * @var     integer  User can report himself; select, boolean
+	 * @var     boolean  User can report himself
 	 * @since   Kunena 4.0.0
 	 */
 	public $user_report = 1;
 
 	/**
-	 * @var     integer  Search time; select, boolean
+	 * @var     integer  Search time
 	 * @since   Kunena 4.0.0
 	 */
 	public $searchtime = 365;
 
 	/**
-	 * @var     integer  Teaser; select, boolean
+	 * @var     boolean  Teaser
 	 * @since   Kunena 4.0.0
 	 */
 	public $teaser = 0;
 
 	/**
-	 * @var    integer  Define ebay widget language; select, boolean
+	 * @var    boolean  Define ebay widget language
 	 * @since  Kunena 3.0.7
 	 */
 	public $ebay_language = 0;
 
 	/**
-	 * @var    integer  Define ebay Api key to be allowed to display ebay widget; select, boolean
+	 * @var    string  Define ebay Api key to be allowed to display ebay widget
 	 * @since  Kunena 3.0.7
 	 */
 	public $ebay_api_key = '';
 
 	/**
-	 * @var     string  Define twitter API consumer key; select, boolean
+	 * @var     string  Define twitter API consumer key
 	 * @since   Kunena 4.0.0
 	 */
 	public $twitter_consumer_key = '';
 
 	/**
-	 * @var     string  Define twitter API consumer secret; select, boolean
+	 * @var     string  Define twitter API consumer secret
 	 * @since   Kunena 4.0.0
 	 */
 	public $twitter_consumer_secret = '';
 
 	/**
-	 * @var     string  Allow to define if the user can change the subject of topic on replies; select, boolean
+	 * @var     boolean  Allow to define if the user can change the subject of topic on replies
 	 * @since   Kunena 4.0.0
 	 */
 	public $allow_change_subject = 1;
 
 	/**
-	 * @var     integer  Max Links limit; input, number
+	 * @var     integer  Max Links limit
 	 * @since   Kunena 4.0.0
 	 */
 	public $max_links = 6;
 
 	/**
-	 * @var    integer  Read Only State; select, boolean
+	 * @var    boolean  Read Only State
 	 * @since  Kunena 5.0.0
 	 */
 	public $read_only = 0;
 
 	/**
-	 * @var    integer  Rating integration; select, boolean
+	 * @var    boolean  Rating integration
 	 * @since  Kunena 5.0.0
 	 */
 	public $ratingenabled = 0;
 
 	/**
-	 * @var    integer  Allow to prevent posting if the subject of topic contains URL; select, boolean
+	 * @var    boolean  Allow to prevent posting if the subject of topic contains URL
 	 * @since  Kunena 5.0.0
 	 */
 	public $url_subject_topic = 0;
 
 	/**
-	 * @var    integer Allow to enable log to save moderation actions
+	 * @var    boolean Allow to enable log to save moderation actions
 	 * @since  Kunena 5.0.0
 	 */
 	public $log_moderation = 0;
 
 	/**
-	 * @var    integer Define the number of caracters from start when shorthen attachments filemane
+	 * @var    integer Define the number of characters from start when shorter then attachments filename
 	 * @since  Kunena 5.0.0
 	 */
 	public $attach_start = 0;
 
 	/**
-	 * @var    integer Define the number of caracters from end when shorthen attachments filemane
+	 * @var    integer Define the number of characters from end when shorten then attachments filename
 	 * @since  Kunena 5.0.0
 	 */
 	public $attach_end = 14;
@@ -1155,13 +1368,13 @@ class KunenaConfig extends CMSObject
 	public $google_map_api_key = '';
 
 	/**
-	 * @var    integer Allow to remove utf8 characters from filename of attachments
+	 * @var    boolean Allow to remove utf8 characters from filename of attachments
 	 * @since  Kunena 5.0.0
 	 */
 	public $attachment_utf8 = 1;
 
 	/**
-	 * @var    integer Allow to auto-embded soundcloud item when you put just the URL in a message
+	 * @var    boolean Allow to auto-embded soundcloud item when you put just the URL in a message
 	 * @since  Kunena 5.0.0
 	 */
 	public $autoembedsoundcloud = 1;
@@ -1173,37 +1386,37 @@ class KunenaConfig extends CMSObject
 	public $emailheader = 'media/kunena/email/hero-wide.png';
 
 	/**
-	 * @var    integer
+	 * @var    boolean show user status
 	 * @since  Kunena 5.0.3
 	 */
 	public $user_status = 1;
 
 	/**
-	 * @var    integer Allow user signatures
+	 * @var    boolean Allow user signatures
 	 * @since  Kunena 5.1.0
 	 */
 	public $signature = 1;
 
 	/**
-	 * @var    integer Allow user personal
+	 * @var    boolean Allow user personal
 	 * @since  Kunena 5.1.0
 	 */
 	public $personal = 1;
 
 	/**
-	 * @var    integer Allow user social
+	 * @var    boolean Allow user social
 	 * @since  Kunena 5.1.0
 	 */
 	public $social = 1;
 
 	/**
-	 * @var    integer
+	 * @var    boolean
 	 * @since  Kunena 5.0.4
 	 */
 	public $plain_email = 0;
 
 	/**
-	 * @var    integer
+	 * @var    boolean
 	 * @since  Kunena 5.0.13
 	 */
 	public $moderator_permdelete = 0;
@@ -1215,7 +1428,7 @@ class KunenaConfig extends CMSObject
 	public $avatartypes = 'gif, jpeg, jpg, png';
 
 	/**
-	 * @var    string
+	 * @var    boolean
 	 * @since  Kunena 5.1.0
 	 */
 	public $smartlinking = 0;
@@ -1239,13 +1452,13 @@ class KunenaConfig extends CMSObject
 	public $stopforumspam_key = '';
 
 	/**
-	 * @var    string
+	 * @var    boolean
 	 * @since  Kunena 5.1.0
 	 */
 	public $quickreply = 1;
 
 	/**
-	 * @var    string
+	 * @var    boolean
 	 * @since  Kunena 5.1.0
 	 */
 	public $avataredit = 0;
@@ -1257,91 +1470,91 @@ class KunenaConfig extends CMSObject
 	public $activemenuitem = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $mainmenu_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $home_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $index_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $moderators_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $topiclist_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $misc_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $profile_id = '';
 
 	/**
-	 * @var    string
+	 * @var    integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $search_id = '';
 
 	/**
-	 * @var    string
+	 * @var   integer
 	 * @since  Kunena 5.1.0
 	 */
 	public $avatar_type = 1;
 
 	/**
-	 * @var    string
+	 * @var    boolean
 	 * @since  Kunena 5.1.1
 	 */
 	public $sef_redirect = 1;
 
 	/**
-	 * @var    integer
+	 * @var    boolean
 	 * @since  Kunena 5.1.1
 	 */
 	public $allow_edit_poll = 1;
 
 	/**
-	 * @var    integer
+	 * @var    boolean
 	 * @since  Kunena 5.1.2
 	 */
 	public $use_system_emails = 0;
 
 	/**
-	 * @var    integer  Auto embed instagram; select, boolean
+	 * @var    boolean  Auto embed instagram
 	 * @since  Kunena 5.1.5
 	 */
 	public $autoembedinstagram = 1;
 
 	/**
-	 * @var    integer
+	 * @var    boolean
 	 * @since  Kunena 5.1.14
 	 */
 	public $disable_re = 0;
 
 	/**
-	 * @var    integer  Auto embed instagram; select, boolean
+	 * @var    boolean  utm source
 	 * @since  Kunena 1.0.5
 	 */
 	public $utm_source = 0;

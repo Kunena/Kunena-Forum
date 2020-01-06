@@ -33,7 +33,12 @@ class KunenaSvgIcons
 	 */
 	public static function loadsvg($svgname, $group = 'default', $iconset = '')
 	{
-		if ($group == 'default')
+		if (empty($svgname))
+		{
+			return;
+		}
+
+	    if ($group == 'default')
 		{
 			$file = Uri::root() . 'media/kunena/core/svg/' . $svgname;
 		}

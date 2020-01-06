@@ -1121,12 +1121,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 	{
 		if (!$this->inline)
 		{
-			return;
+			return FALSE;
 		}
 
 		if (empty($editor_text))
 		{
-			return;
+			return FALSE;
 		}
 
 		$find             = ['/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su'];

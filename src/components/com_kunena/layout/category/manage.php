@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Category.Manage
  *
- * @copyright   (C) 2008 - 2020 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -18,6 +18,18 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutCategoryManage extends KunenaLayout
 {
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $total;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $state;
+
 	/**
 	 * Method to return a KunenaPagination object
 	 *

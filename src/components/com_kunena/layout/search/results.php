@@ -21,6 +21,78 @@ use Joomla\CMS\Factory;
 class KunenaLayoutSearchResults extends KunenaLayout
 {
 	/**
+	 * @var     KunenaForumMessage
+	 * @since   Kunena 6.0
+	 */
+	public $message;
+
+	/**
+	 * @var     KunenaForumCategory
+	 * @since   Kunena 6.0
+	 */
+	public $category;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $categoryLink;
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	public $results;
+
+	/**
+	 * @var     KunenaForumTopic
+	 * @since   Kunena 6.0
+	 */
+	public $topic;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $useravatar;
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	public $searchwords;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $author;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $topicAuthor;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $topicTime;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $subjectHtml;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $messageHtml;
+
+	/**
 	 * Method to display the layout of search results
 	 *
 	 * @return  void

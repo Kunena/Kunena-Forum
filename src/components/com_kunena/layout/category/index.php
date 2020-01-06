@@ -21,6 +21,25 @@ use Joomla\CMS\Session\Session;
 class KunenaLayoutCategoryIndex extends KunenaLayout
 {
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	private $total;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $state;
+
+	/**
+	 * @var     KunenaTemplate|void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public $ktemplate;
+
+	/**
 	 * Method to return a KunenaPagination object
 	 *
 	 * @param   integer  $maxpages  Maximum that are allowed for pagination
@@ -39,7 +58,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve category icon
 	 *
-	 * @param   string  $category  The KunenaCategory object
+	 * @param   object  $category  The KunenaCategory object
 	 *
 	 * @return  string
 	 *
@@ -79,7 +98,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve small category icon
 	 *
-	 * @param   string  $subcategory  The KunenaCategory object
+	 * @param   object  $subcategory  The KunenaCategory object
 	 *
 	 * @return  string
 	 *
@@ -136,9 +155,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			$token = '&' . Session::getFormToken() . '=1';
 
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
-
-			return $url;
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
 		}
 
 		return;

@@ -26,6 +26,7 @@ use Joomla\Database\DatabaseDriver;
 /**
  * Class KunenaUser
  *
+ * @property    int    $id
  * @property    int    $userid
  * @property    int    $status
  * @property    string $status_text

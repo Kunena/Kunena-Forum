@@ -26,7 +26,7 @@ require_once KPATH_ADMIN . '/models/categories.php';
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
 	/**
-	 * @var     boolean
+	 * @var     boolean|array
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;
@@ -54,6 +54,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
+
+	/**
+	 * @var     KunenaForumTopic
+	 * @since   Kunena 6.0
+	 */
+	protected $total;
 
 	/**
 	 * @return  void
@@ -531,9 +537,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	 */
 	public function getModerators()
 	{
-		$moderators = $this->getCategory()->getModerators(false);
-
-		return $moderators;
+		return $this->getCategory()->getModerators(false);
 	}
 
 	/**

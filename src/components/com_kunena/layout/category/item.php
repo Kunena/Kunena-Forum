@@ -23,6 +23,50 @@ use Joomla\CMS\Session\Session;
 class KunenaLayoutCategoryItem extends KunenaLayout
 {
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $total;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $state;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $subcategories;
+
+	/**
+	 * @var     void
+	 * @since   Kunena 6.0
+	 */
+	public $sections;
+
+	/**
+	 * @var     KunenaForumCategory
+	 * @since   Kunena 6.0
+	 */
+	public $category;
+
+	/**
+	 * @var     KunenaTemplate|void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public $ktemplate;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public $me;
+
+	/**
 	 * Method to display categories Index sublayout
 	 *
 	 * @return  void

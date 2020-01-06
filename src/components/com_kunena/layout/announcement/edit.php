@@ -22,7 +22,13 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutAnnouncementEdit extends KunenaLayout
 {
 	/**
-	 * Method to create an input in fonction of name given
+	 * @var     KunenaForumAnnouncement
+	 * @since   Kunena 6.0
+	 */
+	public $announcement;
+
+	/**
+	 * Method to create an input in function of name given
 	 *
 	 * @param   string  $name        Name of input to create
 	 * @param   string  $attributes  Attibutes to be added to input

@@ -23,6 +23,12 @@ use Joomla\CMS\Filesystem\Folder;
 class KunenaLayoutWidgetEditor extends KunenaLayout
 {
 	/**
+	 * @var     KunenaTemplate
+	 * @since   Kunena 6.0
+	 */
+	public $ktemplate;
+
+	/**
 	 * Get geshi code types.
 	 *
 	 * @return  array|void
@@ -61,9 +67,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 				$options[] = HTMLHelper::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
-
-			return $list;
+			return HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 		}
 
 		return;

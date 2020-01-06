@@ -25,6 +25,12 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	public $buttons;
 
 	/**
+	 * @var     KunenaForumAnnouncement
+	 * @since   Kunena 6.0
+	 */
+	public $announcement;
+
+	/**
 	 * Method to get moderation actions for announcements
 	 *
 	 * @return  array

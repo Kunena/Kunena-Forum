@@ -19,6 +19,18 @@ defined('_JEXEC') or die;
 class KunenaLayoutTopicEditHistory extends KunenaLayout
 {
 	/**
+	 * @var     KunenaConfig
+	 * @since   Kunena 6.0
+	 */
+	public $config;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $numLink;
+
+	/**
 	 * Method to get the anchor link with number
 	 *
 	 * @param   int  $mesid     The Id of the message

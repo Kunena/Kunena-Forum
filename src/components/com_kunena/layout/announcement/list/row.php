@@ -19,6 +19,12 @@ defined('_JEXEC') or die;
 class KunenaLayoutAnnouncementListRow extends KunenaLayout
 {
 	/**
+	 * @var     KunenaForumAnnouncement
+	 * @since   Kunena 6.0
+	 */
+	public $announcement;
+
+	/**
 	 * Method to check if the user can publish an announcement
 	 *
 	 * @return  boolean
@@ -63,6 +69,8 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function displayField($name, $mode = null)
 	{

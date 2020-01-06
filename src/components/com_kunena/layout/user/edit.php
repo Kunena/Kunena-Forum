@@ -22,6 +22,12 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutUserEdit extends KunenaLayout
 {
 	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $profile;
+
+	/**
 	 * Method to get tabs for edit profile
 	 *
 	 * @return  array

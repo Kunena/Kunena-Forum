@@ -22,6 +22,12 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutSearchForm extends KunenaLayout
 {
 	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $state;
+
+	/**
 	 * Method to display the list to choose between posts or titles
 	 *
 	 * @param   int     $id          Id of the HTML select list

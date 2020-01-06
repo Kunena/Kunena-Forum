@@ -23,6 +23,24 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutTopicModerate extends KunenaLayout
 {
 	/**
+	 * @var     KunenaForumMessage
+	 * @since   Kunena 6.0
+	 */
+	public $message;
+
+	/**
+	 * @var     KunenaForumTopic
+	 * @since   Kunena 6.0
+	 */
+	public $topic;
+
+	/**
+	 * @var     KunenaForumCategory
+	 * @since   Kunena 6.0
+	 */
+	public $category;
+
+	/**
 	 * Method to get the options of the topic
 	 *
 	 * @return  array

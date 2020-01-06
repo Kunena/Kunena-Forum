@@ -22,6 +22,30 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutUserItem extends KunenaLayout
 {
 	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $profile;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $me;
+
+	/**
+	 * @var     KunenaConfig
+	 * @since   Kunena 6.0
+	 */
+	public $config;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $user;
+
+	/**
 	 * Method to get tabs for user profile
 	 *
 	 * @return  array
@@ -283,6 +307,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -308,6 +333,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -333,6 +359,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -358,6 +385,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
@@ -383,6 +411,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
@@ -413,6 +442,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		];
+
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
@@ -439,6 +469,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			'limitstart'       => 0,
 			'filter_order_Dir' => 'desc',
 		];
+
 		KunenaForum::display('category', 'user', 'embed', $params);
 	}
 }

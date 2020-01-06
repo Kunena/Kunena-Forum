@@ -22,6 +22,12 @@ use Joomla\CMS\Language\Text;
 class KunenaLayoutMessageList extends KunenaLayout
 {
 	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $state;
+
+	/**
 	 * Method to display the time filter
 	 *
 	 * @param   int|string  $id      The HTML id for the select list

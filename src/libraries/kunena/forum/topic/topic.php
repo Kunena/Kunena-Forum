@@ -20,6 +20,7 @@ use Joomla\Database\DatabaseDriver;
 /**
  * Class KunenaForumTopic
  *
+ * @property int    $id
  * @property int    $category_id
  * @property string $subject
  * @property int    $icon_id

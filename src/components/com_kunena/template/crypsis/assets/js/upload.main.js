@@ -86,7 +86,11 @@ jQuery(function ($) {
 				})
 					.done(function (data) {
 						$('#files').empty();
-						$('#editor').val(data.text_prepared);
+
+						if (data.text_prepared!==false)
+						{
+							$('#editor').val(data.text_prepared);
+						}
 					})
 					.fail(function () {
 						//TODO: handle the error of ajax request
@@ -118,7 +122,11 @@ jQuery(function ($) {
 				})
 					.done(function (data) {
 						$('#files').empty();
-						$('#editor').val(data.text_prepared);
+
+						if (data.text_prepared!==false)
+						{
+							$('#editor').val(data.text_prepared);
+						}
 					})
 					.fail(function () {
 						//TODO: handle the error of ajax request

@@ -229,6 +229,10 @@ class KunenaControllerTopic extends KunenaController
 				$text             = preg_replace($find, $replace, $editor_text);
 				$success['text_prepared'] = $text;
 			}
+			else
+			{
+				$success['text_prepared'] = false;
+			}
 
 			$success['result'] = $instance->delete();
 			unset($instance);

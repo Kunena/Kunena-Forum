@@ -85,7 +85,7 @@ jQuery(function ($) {
 					.done(function (data) {
 						$('#files').empty();
 					})
-					.fail(function () {
+					.fail(function (jqXHR, textStatus, errorThrown) {
 						//TODO: handle the error of ajax request
 					});
 			});
@@ -116,7 +116,7 @@ jQuery(function ($) {
 					.done(function (data) {
 						$('#files').empty();
 					})
-					.fail(function () {
+					.fail(function (jqXHR, textStatus, errorThrown) {
 						//TODO: handle the error of ajax request
 					});
 			}
@@ -201,7 +201,7 @@ jQuery(function ($) {
 
 			$('#removeInline').show();*/
 		})
-		.fail(function () {
+		.fail(function (jqXHR, textStatus, errorThrown) {
 			//TODO: handle the error of ajax request
 		});
 	});
@@ -239,7 +239,7 @@ jQuery(function ($) {
 
 				$('#removeInline').show();
 			})
-			.fail(function () {
+			.fail(function (jqXHR, textStatus, errorThrown) {
 				//TODO: handle the error of ajax request
 			});
 		});
@@ -306,7 +306,7 @@ jQuery(function ($) {
 				$this.hide();
 				$('#editor').val(data.text_prepared);
 			})
-			.fail(function () {
+			.fail(function (jqXHR, textStatus, errorThrown) {
 				//TODO: handle the error of ajax request
 			});
 		});
@@ -355,7 +355,7 @@ jQuery(function ($) {
 				.done(function (data) {
 					$this.parent().remove();
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
 					//TODO: handle the error of ajax request
 				});
 		});
@@ -519,13 +519,11 @@ jQuery(function ($) {
 			data.uploaded = false;
 			data.context.append(removeButton.clone(true).data(data));
 
-			var error = null;
-			$.each(data.result.data.exceptions, function (index, error) {
-				error = $('<div class="alert alert-error"/>').text(error.message);
-				data.context.find('span')
-					.append('<br>')
-					.append(error);
-			});
+			const messages = {
+				error: [data.result.message],
+			};
+
+			Joomla.renderMessages(messages, '#kattachments-message-container');
 		}
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {
@@ -590,7 +588,7 @@ jQuery(function ($) {
 					});
 				}
 			})
-			.fail(function () {
+			.fail(function (jqXHR, textStatus, errorThrown) {
 				//TODO: handle the error of ajax request
 			});
 	}

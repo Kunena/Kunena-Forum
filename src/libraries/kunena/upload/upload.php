@@ -563,64 +563,6 @@ class KunenaUpload
 	}
 
 	/**
-	 * Return AJAX response in JSON.
-	 *
-	 * @param   mixed  $content  content
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function ajaxResponse($content)
-	{
-		// TODO: Joomla 3.1+ uses Joomla\CMS\Response\JsonResponse (we just emulate it for now).
-		$response           = new StdClass;
-		$response->success  = true;
-		$response->message  = null;
-		$response->messages = null;
-		$response->data     = null;
-
-		if ($content instanceof Exception)
-		{
-			// Build data from exceptions.
-			$exceptions = [];
-			$e          = $content;
-
-			do
-			{
-				$exception = [
-					'code'    => $e->getCode(),
-					'message' => $e->getMessage(),
-				];
-
-				if (JDEBUG)
-				{
-					$exception += [
-						'type' => get_class($e),
-						'file' => $e->getFile(),
-						'line' => $e->getLine(),
-					];
-				}
-
-				$exceptions[] = $exception;
-				$e            = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
-
-			// Create response.
-			$response->success = false;
-			$response->message = $content->getcode() . ' ' . $content->getMessage();
-			$response->data    = ['exceptions' => $exceptions];
-		}
-		else
-		{
-			$response->data = (array) $content;
-		}
-
-		return json_encode($response);
-	}
-
-	/**
 	 * Upload file by passing it by HTML input
 	 *
 	 * @param   array   $fileInput    The file object returned by Joomla\CMS\Input\Input

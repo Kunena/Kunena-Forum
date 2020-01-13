@@ -21,6 +21,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Response\JsonResponse;
 
 /**
  * Kunena User Controller
@@ -1165,7 +1166,7 @@ class KunenaControllerUser extends KunenaController
 		{
 		}
 
-		echo $upload->ajaxResponse($response);
+		echo new JsonResponse($response);
 
 		jexit();
 	}
@@ -1354,7 +1355,12 @@ class KunenaControllerUser extends KunenaController
 
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
-					$message->message = $attachment->removeBBCodeInMessage($message->message);
+					$message_text = $attachment->removeBBCodeInMessage($message->message);
+
+					if ($message_text !== FALSE)
+					{
+						$message->message = $message_text;
+					}
 
 					$message->save();
 

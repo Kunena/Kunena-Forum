@@ -92,7 +92,7 @@ class KunenaControllerTopics extends KunenaController
 			$finder = new KunenaAttachmentFinder;
 			$finder->where('mesid', 'IN', array_keys($messages));
 			$attachments = $finder->find();
-
+			var_dump($attachments);
 			if (!empty($attachments))
 			{
 				foreach ($attachments as $instance)
@@ -103,8 +103,26 @@ class KunenaControllerTopics extends KunenaController
 
 				$db    = Factory::getDBO();
 
-				// TODO : need to find the correct way to convert this query to use
-				$query = "DELETE a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+				$query = $db->getQuery(true)->select(array('a.id'))
+					->from($db->quoteName('#__kunena_attachments', 'a'))
+					->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('a.mesid') . '=' . $db->quoteName('m.id'))
+					->where($db->quoteName('m.id') . ' IS NULL');
+				$db->setQuery($query);
+
+				try
+				{
+					$list = $db->loadObjectList('id');
+				}
+				catch (ExecutionFailureException $e)
+				{
+					KunenaError::displayDatabaseError($e);
+
+					return false;
+				}
+
+				$ids = implode(',', array_keys($list));
+
+				$query = $db->getQuery(true)->delete($db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
 				$db->setQuery($query);
 
 				try

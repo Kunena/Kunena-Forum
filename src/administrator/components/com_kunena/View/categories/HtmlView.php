@@ -37,6 +37,13 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+	
+	/**
+	 * The model state
+	 *
+	 * @var  \JObject
+	 */
+	protected $state;
 
 	/**
 	 * @return  void
@@ -104,7 +111,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault()
+	public function display($tpl = null)
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');

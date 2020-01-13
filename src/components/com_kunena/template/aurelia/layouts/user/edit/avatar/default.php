@@ -36,6 +36,10 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 	<?php echo $this->headerText; ?>
 </h3>
 
+<!-- Placeholder to display errors messages or exception for attachments  -->
+<div id="kavatars-message-container" aria-live="polite"></div>
+<!-- End of placeholder -->
+
 <table class="table table-bordered table-striped">
 
 	<?php if ($this->config->allowavatarupload)

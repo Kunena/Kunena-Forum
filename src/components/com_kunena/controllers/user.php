@@ -21,6 +21,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Response\JsonResponse;
 
 /**
  * Kunena User Controller
@@ -1165,7 +1166,7 @@ class KunenaControllerUser extends KunenaController
 		{
 		}
 
-		echo $upload->ajaxResponse($response);
+		echo new JsonResponse($response);
 
 		jexit();
 	}

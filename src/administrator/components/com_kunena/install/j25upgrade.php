@@ -66,7 +66,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 */
 	protected function getCopyTables()
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 		require_once KPATH_ADMIN . '/install/schema.php';
 
 		$schema = new KunenaModelSchema;
@@ -220,7 +220,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 */
 	protected function migrateExtensionCustom()
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
 		// Get component object
 		$component = Joomla\CMS\Table\Table::getInstance('extension', 'Joomla\CMS\Table\Table', ['dbo' => $this->db_new]);

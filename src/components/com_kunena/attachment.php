@@ -271,7 +271,7 @@ class KunenaApplication extends Joomla\CMS\Application\WebApplication
 
 $app = new KunenaApplication;
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
 try
 {

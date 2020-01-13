@@ -36,7 +36,7 @@ class plgSystemKunena extends CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Check if Kunena API exists
-		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
 		if (!is_file($api))
 		{

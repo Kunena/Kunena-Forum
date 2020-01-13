@@ -67,6 +67,8 @@ jQuery(function ($) {
 		$('#remove-all').hide();
 		$('#insert-all').hide();
 
+		var files_id = [];
+
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) === false) {
 			$(filesedit).each(function (index, file) {
@@ -78,6 +80,8 @@ jQuery(function ($) {
 					$('#kattach-' + file.id).remove();
 				}
 
+				files_id.push(attachid);
+        
 				$.ajax({
 					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + file.id,
 					type: 'POST'
@@ -110,6 +114,8 @@ jQuery(function ($) {
 					$('#kattach-' + fileid).remove();
 				}
 
+				files_id.push(attachid);
+        
 				$.ajax({
 					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + fileid  + '&editor_text=' + editor_text,
 					type: 'POST'
@@ -126,6 +132,17 @@ jQuery(function ($) {
 						//TODO: handle the error of ajax request
 					});
 			}
+		});
+
+		$.ajax({
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + files_id,
+			type: 'POST'
+		})
+		.done(function (data) {
+			$('#files').empty();
+		})
+		.fail(function () {
+			//TODO: handle the error of ajax request
 		});
 
 		$('#alert_max_file').remove();

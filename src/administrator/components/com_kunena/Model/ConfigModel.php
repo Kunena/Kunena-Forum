@@ -19,9 +19,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Model;
-use function defined;
 
 /**
  * Config Model for Kunena
@@ -231,7 +228,7 @@ class ConfigModel extends AdminModel
 
 		// New for 1.6: datetime
 		$dateformatlist                 = [];
-		$time                           = KunenaDate::getInstance(time() - 80000);
+		$time                           = \KunenaDate::getInstance(time() - 80000);
 		$dateformatlist[]               = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_OPTION_DATEFORMAT_NONE'));
 		$dateformatlist[]               = HTMLHelper::_('select.option', 'ago', $time->toKunena('ago'));
 		$dateformatlist[]               = HTMLHelper::_('select.option', 'datetime_today', $time->toKunena('datetime_today'));

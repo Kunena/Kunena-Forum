@@ -19,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\View\View;
-use function defined;
 
 /**
  * Trash view for Kunena backend
@@ -35,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  \Exception
 	 */
-	public function displayDefault()
+	public function display($tpl = null)
 	{
 		$this->setLayout($this->state->get('layout'));
 		$this->trash_items       = $this->get('Trashitems');

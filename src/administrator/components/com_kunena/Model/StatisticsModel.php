@@ -64,7 +64,7 @@ class StatisticsModel extends AdminModel
 			];
 		}
 
-		$this->me = \KunenaForumCategoryHelper::getMyself();
+		$this->me = \KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}

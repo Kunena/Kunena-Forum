@@ -37,13 +37,6 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
-	
-	/**
-	 * The model state
-	 *
-	 * @var  \JObject
-	 */
-	protected $state;
 
 	/**
 	 * @return  void
@@ -111,7 +104,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function display($tpl = null)
+	public function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
@@ -131,7 +124,7 @@ class HtmlView extends BaseHtmlView
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->user              = Factory::getApplication()->getIdentity();
-		$this->me                = KunenaForumCategoryHelper::getMyself();
+		$this->me                = \KunenaUserHelper::getMyself();
 		$this->userId            = $this->user->get('id');
 		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
 		$this->filterPublished   = $this->escape($this->state->get('filter.published'));

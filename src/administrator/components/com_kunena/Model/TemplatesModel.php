@@ -19,7 +19,6 @@ use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use stdClass;
 
 /**
@@ -60,7 +59,7 @@ class TemplatesModel extends AdminModel
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
-		$xml      = Template::getInstance($template)->getConfigXml();
+		$xml      = \KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
@@ -338,7 +337,7 @@ class TemplatesModel extends AdminModel
 		if (empty($data))
 		{
 			$template = $this->getState('template');
-			$data     = Template::getInstance($template)->params->toArray();
+			$data     = \KunenaTemplate::getInstance($template)->params->toArray();
 		}
 
 		return $data;

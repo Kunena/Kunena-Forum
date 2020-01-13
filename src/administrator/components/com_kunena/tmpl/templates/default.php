@@ -38,7 +38,6 @@ HTMLHelper::_('dropdown.init');
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit"
 							   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 
 					<table class="table table-striped">
@@ -56,7 +55,6 @@ HTMLHelper::_('dropdown.init');
 						<tfoot>
 						<tr>
 							<td colspan="7">
-								<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 							</td>
 						</tr>
 						</tfoot>

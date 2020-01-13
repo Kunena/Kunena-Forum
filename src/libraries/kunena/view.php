@@ -100,14 +100,6 @@ class KunenaView extends HtmlView
 			$config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 		}
 
-		if ($this->app->isClient('administrator'))
-		{
-			$templateAdmin = KunenaFactory::getAdminTemplate();
-			$templateAdmin->initialize();
-
-			$config['template_path'] = $templateAdmin->getTemplatePaths($name);
-		}
-
 		parent::__construct($config);
 
 		if ($this->app->isClient('site'))

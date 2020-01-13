@@ -15,7 +15,6 @@ namespace Kunena\Forum\Administrator\Model;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Kunena\Forum\Libraries\Model;
 use function defined;
 
 /**

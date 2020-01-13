@@ -2362,7 +2362,7 @@ HTMLHelper::_('dropdown.init');
 					</article>
 				</form>
 				<?php // Load the setting comfirmation box form. ?>
-				<?php echo $this->loadTemplateFile('setting'); ?>
+				<?php //echo $this->loadTemplateFile('setting'); ?>
 				<div class="clearfix"></div>
 			</div>
 		</div>

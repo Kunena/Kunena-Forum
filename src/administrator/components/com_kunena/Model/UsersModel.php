@@ -19,8 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\User\Helper;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
 use function defined;
@@ -69,7 +67,7 @@ class UsersModel extends AdminModel
 			];
 		}
 
-		$this->me = KunenaForumCategoryHelper::getMyself();
+		$this->me = \KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}

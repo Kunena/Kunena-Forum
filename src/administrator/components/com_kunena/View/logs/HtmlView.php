@@ -41,7 +41,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  ReflectionException
 	 */
-	public function displayDefault($tpl = null)
+	public function display($tpl = null)
 	{
 		$this->state      = $this->get('state');
 		$this->group      = $this->state->get('group');

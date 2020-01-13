@@ -19,8 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\View\View;
-use function defined;
 
 /**
  * Users view for Kunena backend
@@ -29,6 +27,14 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * The model state
+	 *
+	 * @var    \JObject
+	 * @since  4.0.0
+	 */
+	protected $state;
+
 	/**
 	 * DisplayDefault
 	 *
@@ -42,6 +48,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setToolbar();
 		$this->users      = $this->get('items');
+		$this->state         = $this->get('State');
 		$this->pagination = $this->get('Pagination');
 		$this->modcatlist = $this->get('Modcatslist');
 
@@ -61,7 +68,7 @@ class HtmlView extends BaseHtmlView
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
 
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

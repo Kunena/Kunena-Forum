@@ -18,19 +18,16 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\User\Helper;
 use Joomla\Database\QueryInterface;
 use RuntimeException;
-use function defined;
 
 /**
  * Users Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class UsersModel extends AdminModel
+class UsersModel extends ListModel
 {
 	/**
 	 * @inheritDoc
@@ -51,7 +48,7 @@ class UsersModel extends AdminModel
 	 *
 	 * @throws  \Exception
 	 */
-	public function __construct($config = [])
+	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
 		{
@@ -115,7 +112,7 @@ class UsersModel extends AdminModel
 			$ids[] = $item->id;
 		}
 
-		$instances = KunenaForumCategoryHelper::loadUsers($ids);
+		$instances = \KunenaUserHelper::loadUsers($ids);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $instances;

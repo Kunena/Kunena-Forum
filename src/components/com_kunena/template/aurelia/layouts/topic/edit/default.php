@@ -361,6 +361,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<h2>
 				<?php echo Text::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?>
 			</h2>
+			<!-- Placeholder to display errors messages or exception for attachments  -->
+			<div id="kattachments-message-container" aria-live="polite"></div>
+			<!-- End of placeholder -->
 			<div class="shadow-lg p-3 mb-5 rounded">
 				<div class="form-group row krow<?php echo 1 + $this->k ^= 1; ?> p-3 mb-5" id="kpost-attachments">
 					<div class="controls">

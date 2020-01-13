@@ -85,7 +85,12 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 
-			$message->message = $attachment->removeBBCodeInMessage($message->message);
+			$message_text = $attachment->removeBBCodeInMessage($message->message);
+
+			if ($message_text !== FALSE)
+			{
+				$message->message = $message_text;
+			}
 
 			$message->save();
 

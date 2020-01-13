@@ -17,6 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\CMS\Response\JsonResponse;
 
 /**
  * Kunena Topic Controller
@@ -419,7 +420,7 @@ class KunenaControllerTopic extends KunenaController
 		{
 		}
 
-		echo $upload->ajaxResponse($response);
+		echo new JsonResponse($response);
 
 		jexit();
 	}

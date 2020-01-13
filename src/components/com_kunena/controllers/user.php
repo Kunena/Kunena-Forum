@@ -1354,7 +1354,12 @@ class KunenaControllerUser extends KunenaController
 
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
-					$message->message = $attachment->removeBBCodeInMessage($message->message);
+					$message_text = $attachment->removeBBCodeInMessage($message->message);
+
+					if ($message_text !== FALSE)
+					{
+						$message->message = $message_text;
+					}
 
 					$message->save();
 

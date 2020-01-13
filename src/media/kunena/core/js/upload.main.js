@@ -94,6 +94,7 @@ jQuery(function ($) {
 		}
 
 		var child = $('#kattach-list').find('input');
+		var editor_text = $('#editor').val();
 
 		child.each(function (i, el) {
 			var elem = $(el);
@@ -110,11 +111,16 @@ jQuery(function ($) {
 				}
 
 				$.ajax({
-					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + fileid,
+					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + fileid  + '&editor_text=' + editor_text,
 					type: 'POST'
 				})
 					.done(function (data) {
 						$('#files').empty();
+
+						if (data.text_prepared!==false)
+						{
+							$('#editor').val(data.text_prepared);
+						}
 					})
 					.fail(function () {
 						//TODO: handle the error of ajax request

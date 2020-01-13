@@ -780,7 +780,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return  boolean  True if mime is image.
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 4.0
 	 */
 	public function isImageMime($mime)
 	{

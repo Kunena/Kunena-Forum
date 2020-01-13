@@ -36,7 +36,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  \Exception
 	 */
-	public function displayDefault()
+	public function display($tpl = null)
 	{
 		$this->lists = $this->get('Configlists');
 

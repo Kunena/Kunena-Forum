@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -45,6 +46,7 @@ class ConfigModel extends AdminModel
 	public function getConfiglists()
 	{
 		$lists = [];
+		$this->config = ComponentHelper::getParams('com_config');
 
 		// RSS
 		{

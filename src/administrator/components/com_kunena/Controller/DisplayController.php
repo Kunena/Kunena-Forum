@@ -11,9 +11,9 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Component Controller
@@ -50,6 +50,9 @@ class DisplayController extends BaseController
 		\KunenaFactory::loadLanguage('com_kunena.views','admin');
 		\KunenaFactory::loadLanguage('com_kunena.libraries','admin');
 		\KunenaFactory::loadLanguage('com_kunena.sys','admin');
+
+		$document = Factory::getApplication()->getDocument();
+		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');
 
 		return parent::display($cachable, $urlparams);
 	}

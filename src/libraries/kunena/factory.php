@@ -44,6 +44,23 @@ abstract class KunenaFactory
 	}
 
 	/**
+	 * Get a Kunena template object
+	 *
+	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return  KunenaAdminTemplate|KunenaTemplate
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function getAdminTemplate()
+	{
+		require_once KPATH_ADMIN . '/tmpl/template.php';
+		$template = new KunenaAdminTemplate;
+
+		return $template;
+	}
+
+	/**
 	 * Get Kunena user object
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.

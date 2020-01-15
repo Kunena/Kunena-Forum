@@ -710,7 +710,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		// Add all paths for the template overrides.
 		if ($app->isClient('administrator'))
 		{
-			return;
+			$template = KunenaFactory::getAdminTemplate();
 		}
 		else
 		{

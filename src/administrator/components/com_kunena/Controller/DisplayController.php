@@ -50,6 +50,7 @@ class DisplayController extends BaseController
 		\KunenaFactory::loadLanguage('com_kunena.views','admin');
 		\KunenaFactory::loadLanguage('com_kunena.libraries','admin');
 		\KunenaFactory::loadLanguage('com_kunena.sys','admin');
+		\KunenaFactory::loadLanguage('com_kunena','site');
 
 		$document = Factory::getApplication()->getDocument();
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');

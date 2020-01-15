@@ -54,7 +54,7 @@ class KunenaAdminTemplate
 		}
 
 		$array   = [];
-		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/' . $path;
+		$array[] = KPATH_ADMIN. '/tmpl/' . $path;
 
 		return $array;
 	}

@@ -101,7 +101,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault()
+	public function display($tpl = null)
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
@@ -116,7 +116,6 @@ class HtmlView extends BaseHtmlView
 			$this->ordering[$item->parent_id][] = $item->id;
 		}
 
-		$this->setToolBarDefault();
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
@@ -138,6 +137,9 @@ class HtmlView extends BaseHtmlView
 		$this->saveOrder         = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
 		$this->saveOrderingUrl   = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
 		$this->filterLevels      = $this->escape($this->state->get('filter.levels'));
+
+		$this->setToolBarDefault();
+
 		$this->display();
 	}
 

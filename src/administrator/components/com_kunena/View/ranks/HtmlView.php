@@ -55,7 +55,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->setToolbar();
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
@@ -70,6 +69,8 @@ class HtmlView extends BaseHtmlView
 		$this->filterActive       = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering       = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection      = $this->escape($this->state->get('list.direction'));
+
+		$this->setToolbar();
 
 		return parent::display($tpl);
 	}

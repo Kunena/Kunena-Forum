@@ -92,7 +92,7 @@ class KunenaControllerTopics extends KunenaController
 			$finder = new KunenaAttachmentFinder;
 			$finder->where('mesid', 'IN', array_keys($messages));
 			$attachments = $finder->find();
-			var_dump($attachments);
+
 			if (!empty($attachments))
 			{
 				foreach ($attachments as $instance)

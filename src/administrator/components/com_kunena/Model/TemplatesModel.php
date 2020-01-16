@@ -82,12 +82,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplates()
 	{
 		// Get template xml file info
-		$rows = \Kunena\Forum\Libraries\Template\Helper::parseXmlFiles();
+		$rows = \KunenaTemplateHelper::parseXmlFiles();
 
 		// Set dynamic template information
 		foreach ($rows as $row)
 		{
-			$row->published = \Kunena\Forum\Libraries\Template\Helper::isDefault($row->directory);
+			$row->published = \KunenaTemplateHelper::isDefault($row->directory);
 		}
 
 		$this->setState('list.total', count($rows));

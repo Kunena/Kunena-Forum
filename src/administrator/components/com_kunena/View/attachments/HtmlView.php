@@ -18,7 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use function defined;
+use Joomla\CMS\MVC\View\GenericDataException;
 
 /**
  * Attachments view for Kunena backend
@@ -38,13 +38,18 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->setToolbar();
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
 
 		$this->filterSearch     = $this->escape($this->state->get('list.search'));
 		$this->filterTitle      = $this->escape($this->state->get('filter.title'));
@@ -56,6 +61,8 @@ class HtmlView extends BaseHtmlView
 		$this->filterActive     = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering     = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection    = $this->escape($this->state->get('list.direction'));
+
+		$this->setToolbar();
 
 		return parent::display($tpl);
 	}

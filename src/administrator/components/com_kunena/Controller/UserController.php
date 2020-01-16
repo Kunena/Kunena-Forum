@@ -14,16 +14,17 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use function defined;
 use Joomla\CMS\MVC\Controller\FormController;
 
-require_once __DIR__ . '/users.php';
+require_once __DIR__ . '/UsersController.php';
 
 /**
  * Kunena User Controller
  *
  * @since   Kunena 3.0
  */
-class UserController extends UsersController
+class UserController extends FormController
 {
 }

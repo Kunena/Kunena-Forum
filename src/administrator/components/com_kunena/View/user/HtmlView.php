@@ -18,9 +18,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\View\View;
 use Joomla\Utilities\ArrayHelper;
 use StdClass;
 use function defined;
@@ -32,6 +29,20 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	protected $config;
+
+	protected $avatar;
+	protected $editavatar;
+	protected $maxsig = '';
+	protected $maxpersotext = '';
+	protected $social;
+	protected $selectMod;
+	protected $sub;
+	protected $ipslist;
+	protected $selectOrder;
+	protected $settings;
+	protected $selectRank;
+	protected $modCats;
 	/**
 	 * @return  void
 	 *
@@ -47,9 +58,9 @@ class HtmlView extends BaseHtmlView
 		$this->subscatslist = $this->get('catsubcriptions');
 		$this->ipslist      = $this->get('IPlist');
 
-		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof Avatar) && $this->user->avatar ? true : false;
-		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+		$avatarint        = \KunenaFactory::getAvatarIntegration();
+		$this->editavatar = ($avatarint instanceof \KunenaAvatarKunena) && $this->user->avatar ? true : false;
+		$this->avatar     = $this->user->getAvatarImage(\KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
@@ -118,7 +129,7 @@ class HtmlView extends BaseHtmlView
 		);
 		$this->settings[] = $item;
 
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->ktemplate = \KunenaFactory::getTemplate();
 		$social          = $this->ktemplate->params->get('socialshare');
 
 		if ($social != 0)

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\View\Attachments;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -34,7 +35,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{

@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  \Exception
 	 */
-	public function displayDefault()
+	public function displayDefault($tpl = null)
 	{
 		$help_url = 'https://docs.kunena.org/en/';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
@@ -49,6 +49,6 @@ class HtmlView extends BaseHtmlView
 			ToolbarHelper::spacer();
 		}
 
-		$this->display();
+		return parent::display($tpl);
 	}
 }

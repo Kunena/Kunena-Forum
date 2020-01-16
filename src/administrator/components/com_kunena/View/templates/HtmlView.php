@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->setToolBarDefault();
 
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

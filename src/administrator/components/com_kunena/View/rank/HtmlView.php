@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView
 		$this->rankpath      = $this->ktemplate->getRankPath();
 		$this->listranks     = $this->get('Rankspaths');
 
-		parent::display($tpl);
+		return parent::display($tpl);
 	}
 
 	/**

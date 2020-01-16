@@ -14,11 +14,14 @@ namespace Kunena\Forum\Administrator\View\User;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Utilities\ArrayHelper;
+use KunenaAvatarKunena;
+use KunenaFactory;
 use StdClass;
 use function defined;
 
@@ -32,25 +35,37 @@ class HtmlView extends BaseHtmlView
 	protected $config;
 
 	protected $avatar;
+
 	protected $editavatar;
+
 	protected $maxsig = '';
+
 	protected $maxpersotext = '';
+
 	protected $social;
+
 	protected $selectMod;
+
 	protected $sub;
+
 	protected $ipslist;
+
 	protected $selectOrder;
+
 	protected $settings;
+
 	protected $selectRank;
+
 	protected $modCats;
+
 	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
-	public function displayEdit()
+	public function displayEdit($tpl = null)
 	{
 		$this->setToolBarEdit();
 		$this->user         = $this->get('user');
@@ -58,9 +73,9 @@ class HtmlView extends BaseHtmlView
 		$this->subscatslist = $this->get('catsubcriptions');
 		$this->ipslist      = $this->get('IPlist');
 
-		$avatarint        = \KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof \KunenaAvatarKunena) && $this->user->avatar ? true : false;
-		$this->avatar     = $this->user->getAvatarImage(\KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+		$avatarint        = KunenaFactory::getAvatarIntegration();
+		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) && $this->user->avatar ? true : false;
+		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
@@ -129,7 +144,7 @@ class HtmlView extends BaseHtmlView
 		);
 		$this->settings[] = $item;
 
-		$this->ktemplate = \KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 		$social          = $this->ktemplate->params->get('socialshare');
 
 		if ($social != 0)
@@ -151,7 +166,8 @@ class HtmlView extends BaseHtmlView
 		$this->selectRank  = $this->get('listuserranks');
 		$this->social      = $this->user->socialButtons();
 		$this->social      = ArrayHelper::toObject($this->social);
-		$this->display();
+
+		return parent::display($tpl);
 	}
 
 	/**
@@ -179,7 +195,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayMove()
 	{

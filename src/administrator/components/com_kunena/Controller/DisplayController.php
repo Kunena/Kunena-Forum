@@ -51,6 +51,7 @@ class DisplayController extends BaseController
 		\KunenaFactory::loadLanguage('com_kunena.libraries','admin');
 		\KunenaFactory::loadLanguage('com_kunena.sys','admin');
 		\KunenaFactory::loadLanguage('com_kunena.install','admin');
+		\KunenaFactory::loadLanguage('com_kunena.models','admin');
 		\KunenaFactory::loadLanguage('com_kunena','site');
 
 		$document = Factory::getApplication()->getDocument();

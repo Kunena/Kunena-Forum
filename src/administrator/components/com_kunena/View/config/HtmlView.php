@@ -29,6 +29,8 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	public $config;
+
 	/**
 	 * @param   null  $tpl tmpl
 	 *
@@ -48,7 +50,7 @@ class HtmlView extends BaseHtmlView
 			$this->setToolBarDefault();
 		}
 
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\Image\Image;
+use Joomla\CMS\Image\Image;
 use Joomla\CMS\Table\Table;
 
 /**

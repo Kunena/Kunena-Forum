@@ -18,8 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\MVC\Model\ListModel;
 use KunenaForumCategoryHelper;
 use RuntimeException;
 use function defined;
@@ -29,7 +27,7 @@ use function defined;
  *
  * @since  3.0
  */
-class UserModel extends AdminModel
+class UserModel extends \KunenaModel
 {
 	/**
 	 * @inheritDoc
@@ -37,17 +35,6 @@ class UserModel extends AdminModel
 	public function getForm($data = array(), $loadData = true)
 	{
 		// TODO: Implement getForm() method.
-	}
-
-	public function __construct($config = array())
-	{
-		$userid = $this->getState($this->getName() . '.id');
-		$this->user   = \KunenaUserHelper::get($userid);
-		$this->config = \KunenaConfig::getInstance();
-		$this->social = $this->user->socialButtons();
-		$this->ipslist = $this->getIPlist();
-
-		parent::__construct($config);
 	}
 
 	/**
@@ -220,7 +207,7 @@ class UserModel extends AdminModel
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$user = KunenaForumCategoryHelper::get($userid);
+		$user = \KunenaUserHelper::get($userid);
 
 		return $user;
 	}

@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView
 		$document->setTitle(Text::_('COM_KUNENA_A_BADWORDS_MANAGER'));
 
 		$this->setToolbar();
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

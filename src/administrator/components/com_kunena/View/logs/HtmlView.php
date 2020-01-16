@@ -74,7 +74,8 @@ class HtmlView extends BaseHtmlView
 		$document->setTitle(Text::_('Forum Logs'));
 
 		$this->setToolbar();
-		$this->display();
+
+		return parent::display($tpl);
 	}
 
 	/**

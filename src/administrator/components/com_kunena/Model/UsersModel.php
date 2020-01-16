@@ -14,12 +14,15 @@ namespace Kunena\Forum\Administrator\Model;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
+use KunenaUser;
+use KunenaUserHelper;
 use RuntimeException;
 
 /**
@@ -46,7 +49,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = array())
 	{
@@ -66,7 +69,7 @@ class UsersModel extends ListModel
 			];
 		}
 
-		$this->me = \KunenaUserHelper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -74,11 +77,11 @@ class UsersModel extends ListModel
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return  boolean|\Kunena\Forum\Libraries\User\KunenaUser
+	 * @return  boolean|KunenaUser
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function getItems()
 	{
@@ -112,7 +115,7 @@ class UsersModel extends ListModel
 			$ids[] = $item->id;
 		}
 
-		$instances = \KunenaUserHelper::loadUsers($ids);
+		$instances = KunenaUserHelper::loadUsers($ids);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $instances;
@@ -156,7 +159,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function getModcatslist()
 	{
@@ -180,7 +183,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

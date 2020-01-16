@@ -21,9 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\User\Helper;
-use Kunena\Forum\Libraries\View\View;
 
 /**
  * About view for Kunena backend
@@ -55,7 +52,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEdit()
+	public function displayEdit($tpl = 'edit')
 	{
 		$this->category = $this->get('AdminCategory');
 
@@ -69,7 +66,7 @@ class HtmlView extends BaseHtmlView
 		$this->options    = $this->get('AdminOptions');
 		$this->moderators = $this->get('AdminModerators');
 		$this->setToolBarEdit();
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

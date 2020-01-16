@@ -19,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\View\View;
 use function defined;
 
 /**
@@ -49,7 +48,7 @@ class HtmlView extends BaseHtmlView
 		$document->setTitle(Text::_('COM_KUNENA_A_EMAIL_MANAGER'));
 
 		$this->setToolbar();
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

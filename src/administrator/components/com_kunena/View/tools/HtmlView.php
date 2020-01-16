@@ -18,11 +18,6 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Login\Login;
-use Kunena\Forum\Libraries\Menu\Fix;
-use Kunena\Forum\Libraries\User\Helper;
-use Kunena\Forum\Libraries\View\View;
 use function defined;
 
 /**
@@ -39,10 +34,10 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault()
+	public function displayDefault($tpl = null)
 	{
 		$this->setToolBarDefault();
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

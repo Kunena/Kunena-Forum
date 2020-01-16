@@ -18,7 +18,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\View\View;
 
 /**
  * Trash view for Kunena backend
@@ -56,7 +55,7 @@ class HtmlView extends BaseHtmlView
 		$this->listDirection  = $this->escape($this->state->get('list.direction'));
 
 		$this->setToolBarDefault();
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

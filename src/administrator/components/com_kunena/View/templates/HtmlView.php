@@ -38,12 +38,12 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  \Exception
 	 */
-	public function displayDefault()
+	public function displayDefault($tpl = null)
 	{
 		$this->setToolBarDefault();
 		$this->templates  = $this->get('templates');
 		$this->pagination = $this->get('Pagination');
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

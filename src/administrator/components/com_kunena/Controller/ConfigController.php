@@ -14,12 +14,12 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\String\StringHelper;
+use KunenaRoute;
 use function defined;
 
 /**
@@ -48,7 +48,7 @@ class ConfigController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -64,7 +64,7 @@ class ConfigController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function apply()
@@ -81,7 +81,7 @@ class ConfigController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function save($url = null)
@@ -151,7 +151,7 @@ class ConfigController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function setdefault()

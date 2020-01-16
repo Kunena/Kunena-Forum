@@ -43,6 +43,7 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$this->lists = $this->get('Configlists');
+		$this->config = \KunenaConfig::getInstance();
 
 		// Only set the toolbar if not modal
 		if ($this->getLayout() !== 'modal')

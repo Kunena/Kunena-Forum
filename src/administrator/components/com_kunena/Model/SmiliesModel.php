@@ -25,7 +25,7 @@ use function defined;
  *
  * @since  3.0
  */
-class SmiliesModel extends AdminModel
+class SmiliesModel extends ListModel
 {
 	/**
 	 * @inheritDoc

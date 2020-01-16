@@ -14,13 +14,13 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Attachment\Helper;
-use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\MVC\Controller\FormController;
+use KunenaForumCategoryHelper;
+use KunenaRoute;
 use function defined;
 
 /**
@@ -43,7 +43,7 @@ class AttachmentsController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -58,7 +58,7 @@ class AttachmentsController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function delete()

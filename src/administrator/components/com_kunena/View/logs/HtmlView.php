@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\View\View;
 use ReflectionClass;
 use ReflectionException;
 use function defined;

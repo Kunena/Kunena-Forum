@@ -15,7 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\View\View;
 use function defined;
 
 /**
@@ -28,6 +27,17 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	public $listOrdering;
+	public $listDirection;
+	public $pagination;
+	public $filterElement;
+	public $filterEnabled;
+	public $filterSearch;
+	public $total;
+	public $limit;
+	public $filterName;
+	public $filterAccess;
+
 	/**
 	 * Display the view
 	 *

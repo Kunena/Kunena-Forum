@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -49,7 +50,7 @@ class KunenaAdminViewConfig extends KunenaView
 	 */
 	protected function setToolBarDefault()
 	{
-		$bar = Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
+		$bar = Toolbar::getInstance('toolbar');
 
 		ToolbarHelper::spacer();
 		ToolbarHelper::apply();

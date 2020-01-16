@@ -17,12 +17,8 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
-use Kunena\Forum\Libraries\Log\Finder;
-use Kunena\Forum\Libraries\User\KunenaUser;
+use KunenaLogFinder;
 use function defined;
 
 /**
@@ -30,7 +26,7 @@ use function defined;
  *
  * @since 5.0
  */
-class LogsModel extends AdminModel
+class LogsModel extends ListModel
 {
 	/**
 	 * @inheritDoc
@@ -161,7 +157,7 @@ class LogsModel extends AdminModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new Finder;
+		$finder = new KunenaLogFinder;
 
 		// Filter by type.
 		$filter = $this->getState('filter.type');
@@ -360,9 +356,9 @@ class LogsModel extends AdminModel
 
 		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
+		\KunenaUserHelper::loadUsers($userIds);
 
-		Helper::getTopics($items->map(function ($item, $key) {
+		\KunenaForumTopicHelper::getTopics($items->map(function ($item, $key) {
 			return $item->topic_id;
 		})->all());
 

@@ -15,7 +15,6 @@ namespace Kunena\Forum\Administrator\Model;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use function defined;
@@ -25,7 +24,7 @@ use function defined;
  *
  * @since 3.0
  */
-class RanksModel extends AdminModel
+class RanksModel extends ListModel
 {
 	/**
 	 * @inheritDoc

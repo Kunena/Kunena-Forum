@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\View\Config;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -29,11 +30,13 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @param   null  $tpl tmpl
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

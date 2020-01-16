@@ -20,9 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\MVC\Controller\FormController;
+use KunenaRoute;
 use function defined;
 
 /**
@@ -45,7 +44,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -72,7 +71,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function clean()
@@ -128,7 +127,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function cancel()

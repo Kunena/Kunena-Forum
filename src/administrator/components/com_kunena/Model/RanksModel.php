@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use function defined;
 
 /**
  * Ranks Model for Kunena

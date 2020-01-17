@@ -17,8 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use KunenaUserHelper;
-use function defined;
 
 /**
  * View class for a list of plugins.
@@ -96,7 +94,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault($tpl = null)
+	public function display($tpl = null)
 	{
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
@@ -114,8 +112,6 @@ class HtmlView extends BaseHtmlView
 		$this->listOrdering  = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
-		$user = KunenaUserHelper::getMyself();
-
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
@@ -124,7 +120,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->setToolbar();
 
-		return $this->display($tpl);
+		return parent::display($tpl);
 	}
 
 	/**

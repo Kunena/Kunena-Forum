@@ -61,55 +61,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEdit($tpl = 'edit')
-	{
-		$this->category = $this->get('AdminCategory');
-
-		// FIXME: better access control and gracefully handle no rights
-		// Prevent fatal error if no rights:
-		if (!$this->category)
-		{
-			return;
-		}
-
-		$this->options    = $this->get('AdminOptions');
-		$this->moderators = $this->get('AdminModerators');
-		$this->setToolBarEdit();
-		return parent::display($tpl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarEdit()
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		ToolbarHelper::spacer();
-		ToolbarHelper::apply('apply');
-		ToolbarHelper::save('save');
-		ToolbarHelper::save2new('save2new');
-
-		// If an existing item, can save to a copy.
-		if ($this->category->exists())
-		{
-			ToolbarHelper::save2copy('save2copy');
-		}
-
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
 	public function display($tpl = null)
 	{
 		$this->categories = $this->get('AdminCategories');

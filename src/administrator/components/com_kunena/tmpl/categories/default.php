@@ -350,7 +350,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 											echo HTMLHelper::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 										}
 										?>
-										<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories&layout=edit&catid=' . (int) $item->id); ?>">
+										<a href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=edit&catid=' . (int) $item->id); ?>">
 											<?php echo $this->escape($item->name); ?>
 										</a>
 										<small>

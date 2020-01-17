@@ -12,6 +12,7 @@ namespace Kunena\Forum\Administrator\View\Plugins;
 defined('_JEXEC') or die;
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -55,7 +56,7 @@ class HtmlView extends BaseHtmlView
 	 * @var    \JForm
 	 * @since  4.0.0
 	 */
-	protected $filterForm;
+	public $filterForm;
 
 	/**
 	 * The active search filters
@@ -63,7 +64,7 @@ class HtmlView extends BaseHtmlView
 	 * @var    array
 	 * @since  4.0.0
 	 */
-	protected $activeFilters;
+	public $activeFilters;
 
 	protected $listOrdering;
 
@@ -102,6 +103,8 @@ class HtmlView extends BaseHtmlView
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->user = Factory::getApplication()->getIdentity();
 
 		$this->filterSearch  = $this->escape($this->state->get('filter.search'));
 		$this->filterEnabled = $this->escape($this->state->get('filter.enabled'));

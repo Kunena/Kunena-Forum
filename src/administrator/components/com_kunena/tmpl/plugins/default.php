@@ -174,9 +174,9 @@ if ($saveOrder)
 						$k                  = 0;
 						if ($this->pagination->total > 0) :
 							foreach ($this->items as $i => $item) :
-								$canEdit = $user->authorise('core.edit', 'com_plugins');
-								$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
-								$canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
+								$canEdit = $this->user->authorise('core.edit', 'com_plugins');
+								$canCheckin = $this->user->authorise('core.manage', 'com_checkin') || $item->checked_out == $this->user->get('id') || $item->checked_out == 0;
+								$canChange  = $this->user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
 								?>
 								<tr>
 									<td class="center hidden-phone">

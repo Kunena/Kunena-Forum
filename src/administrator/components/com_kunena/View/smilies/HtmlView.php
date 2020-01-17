@@ -42,6 +42,7 @@ class HtmlView extends BaseHtmlView
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
+		$this->ktemplate  = \KunenaTemplate::getInstance();
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();

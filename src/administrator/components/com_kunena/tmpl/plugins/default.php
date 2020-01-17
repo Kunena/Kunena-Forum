@@ -13,28 +13,22 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
-HTMLHelper::_('bootstrap.tooltip');
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+
 HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
 
-$user = Factory::getApplication()->getIdentity();
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn  = $this->escape($this->state->get('list.direction'));
+$saveOrder = $listOrder == 'ordering';
 
+if ($saveOrder)
+{
+	$saveOrderingUrl = 'index.php?option=com_plugins&task=plugins.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
+	HTMLHelper::_('draggablelist.draggable');
+}
 ?>
-
-<script type="text/javascript">
-	Joomla.orderTable = function () {
-		var table = document.getElementById("sortTable");
-		var direction = document.getElementById("directionTable");
-		var order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
-
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
@@ -45,6 +39,7 @@ $user = Factory::getApplication()->getIdentity();
 				</div>
 				<hr class="hr-condensed">
 				<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
+					<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
 					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
@@ -104,19 +99,19 @@ $user = Factory::getApplication()->getIdentity();
 								       onclick="Joomla.checkAll(this)"/>
 							</th>
 							<th width="1%" class="nowrap center">
-								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'enabled', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'enabled', $listDirn, $listOrder); ?>
 							</th>
 							<th class="title">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $listDirn, $listOrder); ?>
 							</th>
 							<th width="15%" class="nowrap hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $listDirn, $listOrder); ?>
 							</th>
 							<th width="10%" class="hidden-phone center">
-								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $listDirn, $listOrder); ?>
 							</th>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $listDirn, $listOrder); ?>
 							</th>
 						</tr>
 						<tr>

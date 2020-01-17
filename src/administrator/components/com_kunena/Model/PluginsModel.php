@@ -16,7 +16,7 @@ use JDatabaseQuery;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
@@ -27,16 +27,8 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class PluginsModel extends AdminModel
+class PluginsModel extends ListModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * Constructor.
 	 *
@@ -48,7 +40,7 @@ class PluginsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = [])
+	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
 		$this->option = 'com_kunena';
 
@@ -63,7 +55,7 @@ class PluginsModel extends AdminModel
 			];
 		}
 
-		parent::__construct($config);
+		parent::__construct($config, $factory);
 	}
 
 	/**

@@ -18,12 +18,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Bbcode\KunenaBbcodeEditor;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\MVC\Controller\FormController;
 use function defined;
 
 /**
@@ -31,7 +29,7 @@ use function defined;
  *
  * @since   Kunena 2.0
  */
-class PluginsController extends FormController
+class PluginsController extends AdminController
 {
 	/**
 	 * @var     null|string
@@ -136,7 +134,7 @@ class PluginsController extends FormController
 			}
 		}
 
-		$editor = KunenaBbcodeEditor::getInstance();
+		$editor = \KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();
 
 		$extension    = $this->input->get('extension');
@@ -145,23 +143,18 @@ class PluginsController extends FormController
 	}
 
 	/**
-	 * Getmodel
+	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string  $name    name
-	 * @param   string  $prefix  prefix
-	 * @param   array   $config  config
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
 	 *
-	 * @return  object
+	 * @return  object  The model.
 	 *
 	 * @since   Kunena 2.0
 	 */
-	public function getModel($name = '', $prefix = '', $config = [])
+	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = array('ignore_request' => true))
 	{
-		if (empty($name))
-		{
-			$name = 'plugin';
-		}
-
 		return parent::getModel($name, $prefix, $config);
 	}
 

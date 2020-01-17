@@ -11,10 +11,13 @@ namespace Kunena\Forum\Administrator\View\Plugins;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use KunenaUserHelper;
 use function defined;
 
 /**
@@ -27,16 +30,60 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	public $listOrdering;
-	public $listDirection;
-	public $pagination;
-	public $filterElement;
-	public $filterEnabled;
-	public $filterSearch;
-	public $total;
-	public $limit;
-	public $filterName;
-	public $filterAccess;
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 */
+	protected $items;
+
+	/**
+	 * The pagination object
+	 *
+	 * @var    \Joomla\CMS\Pagination\Pagination
+	 */
+	protected $pagination;
+
+	/**
+	 * The model state
+	 *
+	 * @var    \JObject
+	 */
+	protected $state;
+
+	/**
+	 * Form object for search filters
+	 *
+	 * @var    \JForm
+	 * @since  4.0.0
+	 */
+	protected $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var    array
+	 * @since  4.0.0
+	 */
+	protected $activeFilters;
+
+	protected $listOrdering;
+
+	protected $listDirection;
+
+	protected $filterElement;
+
+	protected $filterEnabled;
+
+	protected $filterSearch;
+
+	protected $total;
+
+	protected $limit;
+
+	protected $filterName;
+
+	protected $filterAccess;
 
 	/**
 	 * Display the view
@@ -47,7 +94,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -66,6 +113,14 @@ class HtmlView extends BaseHtmlView
 		$this->filterActive  = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering  = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
+		$user = KunenaUserHelper::getMyself();
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
 
 		$this->setToolbar();
 

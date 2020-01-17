@@ -81,7 +81,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @throws  Exception
 	 */
-	public function __construct($config = [], Input $input = null)
+	public function __construct($config = [])
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -89,7 +89,7 @@ class KunenaModel extends BaseDatabaseModel
 		$this->app    = Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
-		$this->input  = $input ? $input : $this->app->input;
+		$this->input  = $this->app->input;
 	}
 
 	/**

@@ -65,9 +65,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEdit($tpl = null)
+	public function display($tpl = null)
 	{
-		$this->setToolBarEdit();
 		$this->user         = $this->get('user');
 		$this->sub          = $this->get('subscriptions');
 		$this->subscatslist = $this->get('catsubcriptions');
@@ -166,6 +165,8 @@ class HtmlView extends BaseHtmlView
 		$this->selectRank  = $this->get('listuserranks');
 		$this->social      = $this->user->socialButtons();
 		$this->social      = ArrayHelper::toObject($this->social);
+
+		$this->setToolBarEdit();
 
 		return parent::display($tpl);
 	}

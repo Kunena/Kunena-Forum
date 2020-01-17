@@ -17,7 +17,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Filesystem\Folder;
 
@@ -26,7 +25,7 @@ use Joomla\CMS\Filesystem\Folder;
  *
  * @since 2.0
  */
-class CategoriesModel extends ListModel
+class CategoriesModel extends \KunenaModel
 {
 	/**
 	 * @var     string

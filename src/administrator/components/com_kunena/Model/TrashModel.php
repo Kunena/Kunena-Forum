@@ -18,20 +18,16 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Forum\Message\Finder;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
-use Kunena\Forum\Libraries\Model;
 use Joomla\Database\Exception\ExecutionFailureException;
-use function defined;
 
 /**
  * Trash Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class TrashModel extends AdminModel
+class TrashModel extends \KunenaModel
 {
 	/**
 	 * @inheritDoc
@@ -334,7 +330,7 @@ class TrashModel extends AdminModel
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
-		return KunenaForumCategoryHelper::getMessages($ids, 'none');
+		return \KunenaForumMessageHelper::getMessages($ids, 'none');
 	}
 
 	/**

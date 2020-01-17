@@ -35,8 +35,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->setLayout($this->state->get('layout'));
 		$this->trash_items       = $this->get('Trashitems');
+		$this->setLayout($this->state->get('layout'));
 		$this->pagination        = $this->get('Navigation');
 		$this->view_options_list = $this->get('ViewOptions');
 

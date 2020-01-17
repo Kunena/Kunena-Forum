@@ -27,6 +27,14 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * The model state
+	 *
+	 * @var    \JObject
+	 * @since  4.0.0
+	 */
+	protected $state;
+
+	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -35,6 +43,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		$this->state         = $this->get('State');
 		$this->trash_items       = $this->get('Trashitems');
 		$this->setLayout($this->state->get('layout'));
 		$this->pagination        = $this->get('Navigation');

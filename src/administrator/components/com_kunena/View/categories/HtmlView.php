@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\MVC\View\GenericDataException;
 
 /**
  * About view for Kunena backend
@@ -34,6 +35,14 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+
+	/**
+	 * The model state
+	 *
+	 * @var    \JObject
+	 * @since  4.0.0
+	 */
+	protected $state;
 
 	/**
 	 * @return  void
@@ -105,6 +114,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
+		$this->state      = $this->get('State');
 
 		$this->batch_categories = $this->get('BatchCategories');
 
@@ -118,6 +128,12 @@ class HtmlView extends BaseHtmlView
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+		    throw new GenericDataException(implode("\n", $errors), 500);
+		}
 
 		$this->user              = Factory::getApplication()->getIdentity();
 		$this->me                = \KunenaUserHelper::getMyself();
@@ -140,7 +156,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->setToolBarDefault();
 
-		$this->display();
+		return parent::display($tpl);
 	}
 
 	/**

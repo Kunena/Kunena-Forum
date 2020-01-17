@@ -12,7 +12,6 @@ namespace Kunena\Forum\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
-use JDatabaseQuery;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,7 +19,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
-use function defined;
 
 /**
  * Class KunenaAdminModelPlugins

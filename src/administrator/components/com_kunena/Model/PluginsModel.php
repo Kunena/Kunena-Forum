@@ -303,4 +303,21 @@ class PluginsModel extends ListModel
 
 		return $query;
 	}
+
+	/**
+	 * Get the filter form
+	 *
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load current data
+	 *
+	 * @return  Form|boolean  The Form object or false on error
+	 *
+	 * @since   6.0
+	 */
+	public function getFilterForm($data = array(), $loadData = true)
+	{
+		$form      = parent::getFilterForm($data, $loadData);
+
+		return $form;
+	}
 }

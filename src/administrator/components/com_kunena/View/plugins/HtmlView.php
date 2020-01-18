@@ -97,7 +97,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->items      = $this->get('Items');
+	    $model               = $this->getModel();
+	    $this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
@@ -105,6 +106,8 @@ class HtmlView extends BaseHtmlView
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->user = Factory::getApplication()->getIdentity();
+		
+		$this->filterForm    = $model->getFilterForm();
 
 		$this->filterSearch  = $this->escape($this->state->get('filter.search'));
 		$this->filterEnabled = $this->escape($this->state->get('filter.enabled'));

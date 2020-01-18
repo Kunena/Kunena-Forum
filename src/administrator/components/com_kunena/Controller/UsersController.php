@@ -26,16 +26,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
-use KunenaAccess;
-use KunenaFactory;
-use KunenaForum;
-use KunenaForumCategory;
-use KunenaForumCategoryHelper;
-use KunenaForumMessageHelper;
-use KunenaRoute;
-use KunenaUser;
-use KunenaUserHelper;
-use function defined;
 
 /**
  * Kunena Users Controller

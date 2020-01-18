@@ -39,7 +39,7 @@ class CategoryModel extends \KunenaModel
 	 */
 	public function getAdminCategory()
 	{
-		$category = \KunenaForumCategoryHelper::get($this->getState('item.id'));
+		$category = \KunenaForumCategoryHelper::get($this->getState($this->getName() . '.id'));
 
 		if (!$this->me->isAdmin($category))
 		{
@@ -108,12 +108,20 @@ class CategoryModel extends \KunenaModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$this->context = 'com_kunena.admin.category';
-
-		$value = Factory::getApplication()->input->getInt('catid');
-		$this->setState($this->getName() . 'item.id', $value);
-
-		// List state information.
-		parent::populateState($ordering, $direction);
+	    $this->context = 'com_kunena.admin.category';
+	    
+	    $app = Factory::getApplication();
+	    
+	    // Adjust the context to support modal layouts.
+	    $layout        = $app->input->get('layout');
+	    $this->context = 'com_kunena.admin.category';
+	    
+	    if ($layout)
+	    {
+	        $this->context .= '.' . $layout;
+	    }
+	    
+	    $value = Factory::getApplication()->input->getInt('catid');
+	    $this->setState($this->getName() . '.id', $value);
 	}
 }

@@ -166,6 +166,8 @@ class HtmlView extends BaseHtmlView
 		$this->social      = $this->user->socialButtons();
 		$this->social      = ArrayHelper::toObject($this->social);
 
+		$this->config = \KunenaConfig::getInstance();
+
 		$this->setToolBarEdit();
 
 		return parent::display($tpl);

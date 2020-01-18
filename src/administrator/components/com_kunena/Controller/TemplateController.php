@@ -16,13 +16,13 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Controller\FormController;
 
-require_once __DIR__ . '/UsersController.php';
+require_once __DIR__ . '/TemplatesController.php';
 
 /**
- * Kunena User Controller
+ * Kunena Template Controller
  *
- * @since   Kunena 3.0
+ * @since   Kunena 6.0
  */
-class UserController extends FormController
+class TemplateController extends FormController
 {
 }

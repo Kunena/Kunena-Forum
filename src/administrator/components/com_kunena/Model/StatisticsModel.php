@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Log\Finder;
@@ -25,14 +24,13 @@ use Kunena\Forum\Libraries\Log\Log;
 use Kunena\Forum\Libraries\User\Helper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
-use function defined;
 
 /**
  * Statistics Model for Kunena
  *
  * @since 5.0
  */
-class StatisticsModel extends AdminModel
+class StatisticsModel extends ListModel
 {
 	/**
 	 * @inheritDoc
@@ -147,7 +145,7 @@ class StatisticsModel extends AdminModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new Finder;
+		$finder = new \KunenaLogFinder;
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');
@@ -170,7 +168,7 @@ class StatisticsModel extends AdminModel
 			$finder->filterByTime($start, $stop);
 		}
 
-		$access = Access::getInstance();
+		$access = \KunenaAccess::getInstance();
 		$finder->where($field, 'IN', array_keys($access->getAdmins() + $access->getModerators()));
 		$finder->where('type', '!=', 3);
 
@@ -208,7 +206,7 @@ class StatisticsModel extends AdminModel
 			return $this->cache[$store];
 		}
 
-		$access  = Access::getInstance();
+		$access  = \KunenaAccess::getInstance();
 		$userIds = array_keys($access->getAdmins() + $access->getModerators());
 
 		$data = [];
@@ -299,7 +297,7 @@ class StatisticsModel extends AdminModel
 
 		unset($items);
 
-		Helper::loadUsers($userIds);
+		\KunenaUserHelper::loadUsers($userIds);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $data;

@@ -14,21 +14,13 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
-use Category;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use KunenaFactory;
-use KunenaForumCategoryHelper;
-use KunenaRoute;
-use RuntimeException;
-use TableKunenaCategories;
-use function defined;
 
 /**
  * Kunena Categories Controller
@@ -95,7 +87,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -114,7 +106,7 @@ class CategoriesController extends FormController
 	 */
 	protected function setVariable($cid, $variable, $value)
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
@@ -133,7 +125,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = \KunenaForumCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -193,7 +185,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -212,7 +204,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -231,7 +223,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -250,7 +242,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -269,7 +261,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -288,7 +280,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -307,7 +299,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -326,7 +318,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -345,7 +337,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -360,12 +352,12 @@ class CategoriesController extends FormController
 	 */
 	public function add()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -374,7 +366,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
-		$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=create&catid={$id}", false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create&catid={$id}", false));
 	}
 
 	/**
@@ -389,12 +381,12 @@ class CategoriesController extends FormController
 	 */
 	public function edit()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -407,13 +399,13 @@ class CategoriesController extends FormController
 		if (!$id)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 		else
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$id}", false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$id}", false));
 		}
 	}
 
@@ -433,18 +425,18 @@ class CategoriesController extends FormController
 
 		if ($category->exists())
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$category->id}", false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$category->id}", false));
 		}
 		else
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
 		}
 	}
 
 	/**
 	 * Save
 	 *
-	 * @return  Category|void
+	 * @return  \KunenaForumCategory|void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
@@ -453,17 +445,17 @@ class CategoriesController extends FormController
 	 */
 	protected function _save()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if ($this->app->isClient('site'))
 		{
-			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+			\KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 		}
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -484,8 +476,8 @@ class CategoriesController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
-		$parent   = KunenaForumCategoryHelper::get(intval($post ['parent_id']));
+		$category = \KunenaForumCategoryHelper::get(intval($post ['catid']));
+		$parent   = \KunenaForumCategoryHelper::get(intval($post ['parent_id']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
@@ -573,7 +565,7 @@ class CategoriesController extends FormController
 		{
 			foreach ((array) $post['rmmod'] as $userid => $value)
 			{
-				$user = KunenaFactory::getUser($userid);
+				$user = \KunenaFactory::getUser($userid);
 
 				if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user))
 				{
@@ -598,7 +590,7 @@ class CategoriesController extends FormController
 	public function save2new()
 	{
 		$this->_save();
-		$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
 	}
 
 	/**
@@ -617,12 +609,12 @@ class CategoriesController extends FormController
 
 		if ($this->app->isClient('administrator'))
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 		}
 		else
 		{
 			$post_catid = $this->app->input->post->get('catid', '', 'raw');
-			$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $post_catid));
+			$this->setRedirect(\KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $post_catid));
 		}
 	}
 
@@ -649,7 +641,7 @@ class CategoriesController extends FormController
 		$this->app->setUserState('com_kunena.category_catid', 0);
 
 		$this->_save();
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -667,7 +659,7 @@ class CategoriesController extends FormController
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
 	{
-		while (KunenaForumCategoryHelper::getAlias($category_id, $alias))
+		while (\KunenaForumCategoryHelper::getAlias($category_id, $alias))
 		{
 			$name  = StringHelper::increment($name);
 			$alias = StringHelper::increment($alias, 'dash');
@@ -688,12 +680,12 @@ class CategoriesController extends FormController
 	 */
 	public function remove()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -704,7 +696,7 @@ class CategoriesController extends FormController
 		if (empty($cid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -712,7 +704,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = \KunenaForumCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -748,7 +740,7 @@ class CategoriesController extends FormController
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_DELETED', $count));
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -763,19 +755,19 @@ class CategoriesController extends FormController
 	 */
 	public function cancel()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
 		$id = $this->app->input->getInt('catid', 0);
 
-		$category = KunenaForumCategoryHelper::get($id);
+		$category = \KunenaForumCategoryHelper::get($id);
 
 		if (!$category->isAuthorised('admin'))
 		{
@@ -790,7 +782,7 @@ class CategoriesController extends FormController
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)), 'notice');
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -805,12 +797,12 @@ class CategoriesController extends FormController
 	 */
 	public function saveorder()
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -823,14 +815,14 @@ class CategoriesController extends FormController
 		if (empty($cid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
 		$success = false;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = \KunenaForumCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -864,7 +856,7 @@ class CategoriesController extends FormController
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_NEW_ORDERING_SAVED'));
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -882,7 +874,7 @@ class CategoriesController extends FormController
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -922,7 +914,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -939,7 +931,7 @@ class CategoriesController extends FormController
 	 */
 	protected function orderUpDown($id, $direction)
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		\KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!$id)
 		{
@@ -953,7 +945,7 @@ class CategoriesController extends FormController
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get($id);
+		$category = \KunenaForumCategoryHelper::get($id);
 
 		if (!$category->getParent()->tryAuthorise('admin'))
 		{
@@ -970,7 +962,7 @@ class CategoriesController extends FormController
 		}
 
 		$db  = Factory::getDbo();
-		$row = new TableKunenaCategories($db);
+		$row = new \TableKunenaCategories($db);
 		$row->load($id);
 
 		// Ensure that we have the right ordering
@@ -995,7 +987,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
@@ -1015,7 +1007,7 @@ class CategoriesController extends FormController
 		if (!empty($cid))
 		{
 			$this->setVariable($cid, 'published', 2);
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 		}
 	}
 
@@ -1036,7 +1028,7 @@ class CategoriesController extends FormController
 		if (!empty($cid))
 		{
 			$this->setVariable($cid, 'published', -2);
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 		}
 	}
 
@@ -1066,7 +1058,7 @@ class CategoriesController extends FormController
 		if ($cat_parent == 0 || empty($cid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 			return false;
 		}
@@ -1101,7 +1093,7 @@ class CategoriesController extends FormController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_SUCCESS'));
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
 
 		return true;
 	}

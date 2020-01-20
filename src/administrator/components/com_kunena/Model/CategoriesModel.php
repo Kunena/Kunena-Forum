@@ -13,19 +13,29 @@ namespace Kunena\Forum\Administrator\Model;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Filesystem\Folder;
+use KunenaAccess;
+use KunenaFactory;
+use KunenaForumCategory;
+use KunenaForumCategoryHelper;
+use KunenaModel;
+use KunenaTemplate;
+use RuntimeException;
 
 /**
  * Categories Model for Kunena
  *
  * @since 2.0
  */
-class CategoriesModel extends \KunenaModel
+class CategoriesModel extends KunenaModel
 {
 	/**
 	 * @var     string
@@ -46,12 +56,12 @@ class CategoriesModel extends \KunenaModel
 	protected $_admincategory = false;
 
 	/**
-	 * @return  Joomla\CMS\Pagination\Pagination
+	 * @return  Pagination
 	 * @since   Kunena 6.0
 	 */
 	public function getAdminNavigation()
 	{
-		$navigation = new \Joomla\CMS\Pagination\Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}
@@ -178,7 +188,7 @@ class CategoriesModel extends \KunenaModel
 	 */
 	public function getAdminCategory()
 	{
-		$category = \KunenaForumCategoryHelper::get($this->getState('item.id'));
+		$category = KunenaForumCategoryHelper::get($this->getState('item.id'));
 
 		if (!$this->me->isAdmin($category))
 		{
@@ -269,7 +279,7 @@ class CategoriesModel extends \KunenaModel
 	 */
 	public function saveorder($pks = null, $order = null)
 	{
-		$table      = Joomla\CMS\Table\Table::getInstance('KunenaCategories', 'Table');
+		$table      = Table::getInstance('KunenaCategories', 'Table');
 		$conditions = [];
 
 		if (empty($pks))
@@ -401,18 +411,18 @@ class CategoriesModel extends \KunenaModel
 
 			if ($catid)
 			{
-				$categories   = \KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
-				$categories[] = \KunenaForumCategoryHelper::get($catid);
+				$categories   = KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
+				$categories[] = KunenaForumCategoryHelper::get($catid);
 			}
 			else
 			{
-				$orphans = \KunenaForumCategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
 			}
 
-			$categories = array_merge($categories, \KunenaForumCategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
 			$categories = array_merge($orphans, $categories);
 
-			$categories = \KunenaForumCategoryHelper::getIndentation($categories);
+			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState('list.total', count($categories));
 
 			if ($this->getState('list.limit'))
@@ -425,13 +435,13 @@ class CategoriesModel extends \KunenaModel
 			}
 
 			$admin = 0;
-			$acl   = \KunenaAccess::getInstance();
+			$acl   = KunenaAccess::getInstance();
 
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:
 				$parent   = $category->getParent();
-				$siblings = array_keys(\KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
+				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 
 				if ($parent)
 				{
@@ -467,7 +477,7 @@ class CategoriesModel extends \KunenaModel
 				// Checkout?
 				if ($this->me->isAdmin($category) && $category->isCheckedOut(0))
 				{
-					$category->editor = \KunenaFactory::getUser($category->checked_out)->getName();
+					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				}
 				else
 				{
@@ -492,11 +502,13 @@ class CategoriesModel extends \KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @param   string  $ordering   ordering
+	 * @param   string  $direction  direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
 	 */
 	protected function populateState($ordering = 'a.lft', $direction = 'asc')
 	{

@@ -16,6 +16,8 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use KunenaForumCategory;
+use KunenaForumCategoryHelper;
 use RuntimeException;
 
 /**
@@ -23,7 +25,7 @@ use RuntimeException;
  *
  * @since  6.0
  */
-class CategoryModel extends \KunenaModel
+class CategoryModel extends CategoriesModel
 {
 	/**
 	 * @var     KunenaForumCategory
@@ -36,10 +38,11 @@ class CategoryModel extends \KunenaModel
 	 *
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function getAdminCategory()
 	{
-		$category = \KunenaForumCategoryHelper::get($this->getState($this->getName() . '.id'));
+		$category = KunenaForumCategoryHelper::get($this->getState($this->getName() . '.id'));
 
 		if (!$this->me->isAdmin($category))
 		{
@@ -100,28 +103,31 @@ class CategoryModel extends \KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-	    $this->context = 'com_kunena.admin.category';
-	    
-	    $app = Factory::getApplication();
-	    
-	    // Adjust the context to support modal layouts.
-	    $layout        = $app->input->get('layout');
-	    $this->context = 'com_kunena.admin.category';
-	    
-	    if ($layout)
-	    {
-	        $this->context .= '.' . $layout;
-	    }
-	    
-	    $value = Factory::getApplication()->input->getInt('catid');
-	    $this->setState($this->getName() . '.id', $value);
+		$this->context = 'com_kunena.admin.category';
+
+		$app = Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout        = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.category';
+
+		if ($layout)
+		{
+			$this->context .= '.' . $layout;
+		}
+
+		$value = Factory::getApplication()->input->getInt('catid');
+		$this->setState($this->getName() . '.id', $value);
 	}
 }

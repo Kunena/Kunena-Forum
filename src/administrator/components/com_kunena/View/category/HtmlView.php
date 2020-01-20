@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\View\Category;
 defined('_JEXEC') or die();
 
 use Exception;
+use JObject;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -39,7 +40,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \JObject
+	 * @var    JObject
 	 * @since  4.0.0
 	 */
 	protected $state;

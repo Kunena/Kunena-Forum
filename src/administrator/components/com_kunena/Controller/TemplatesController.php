@@ -21,14 +21,15 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Path\KunenaPath;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Template\Helper;
 use Joomla\CMS\MVC\Controller\FormController;
+use KunenaCacheHelper;
+use KunenaFactory;
+use KunenaForumCategoryHelper;
+use KunenaPath;
+use KunenaRoute;
+use KunenaTemplateHelper;
 use function defined;
 
 /**
@@ -194,14 +195,14 @@ class TemplatesController extends FormController
 		}
 		else
 		{
-			$success = File::upload($file ['tmp_name'], $tmp . $file ['name'], false, true);
+			$success = File::upload($file ['tmp_name'], $dest . $file ['name'], false, true);
 
 			if ($success)
 			{
 				try
 				{
 					$archive = new Archive;
-					$archive->extract($tmp . $file ['name'], $tmp_kunena);
+					$archive->extract($dest . $file ['name'], $tmp_kunena);
 				}
 				catch (Exception $e)
 				{
@@ -214,7 +215,7 @@ class TemplatesController extends FormController
 
 			if (is_dir($tmp_kunena))
 			{
-				$templates = KunenaForumCategoryHelper::parseXmlFiles($tmp_kunena);
+				$templates = KunenaTemplateHelper::parseXmlFiles($tmp_kunena);
 
 				if (!empty($templates))
 				{
@@ -270,7 +271,7 @@ class TemplatesController extends FormController
 					}
 
 					// Clear all cache, just in case.
-					\Kunena\Forum\Libraries\Cache\Helper::clearAll();
+					KunenaCacheHelper::clearAll();
 				}
 				else
 				{
@@ -329,7 +330,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		if (Helper::isDefault($template))
+		if (KunenaTemplateHelper::isDefault($template))
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -345,7 +346,7 @@ class TemplatesController extends FormController
 			$retval = Folder::delete($tpl);
 
 			// Clear all cache, just in case.
-			\Kunena\Forum\Libraries\Cache\Helper::clearAll();
+			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
 		}
 		else

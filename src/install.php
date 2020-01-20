@@ -33,8 +33,7 @@ class Pkg_KunenaInstallerScript
 			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.5',
-			'7.1' => '7.1.0',
-			'0'   => '7.2.18', // Preferred version
+			'0'   => '7.3.13', // Preferred version
 		),
 		'MySQL'   => array(
 			'8.0' => '8.0',

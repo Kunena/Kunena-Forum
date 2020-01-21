@@ -183,9 +183,9 @@ class HtmlView extends BaseHtmlView
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('apply');
+		ToolbarHelper::apply('user.apply');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('save');
+		ToolbarHelper::save('user.save');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		ToolbarHelper::spacer();

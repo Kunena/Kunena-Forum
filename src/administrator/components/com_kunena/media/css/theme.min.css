@@ -8433,3 +8433,13 @@ hr {
 .swal-modal .swal-footer {
 	text-align: center
 }
+
+select.form-control {
+	background-color: var(--atum-bg-light);
+}
+
+#smileyList img
+{
+	height: 32px;
+	width: 32px;
+}

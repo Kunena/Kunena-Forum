@@ -15,7 +15,6 @@ namespace Kunena\Forum\Administrator\View\Category;
 defined('_JEXEC') or die();
 
 use Exception;
-use JObject;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -91,9 +90,9 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('apply');
-		ToolbarHelper::save('save');
-		ToolbarHelper::save2new('save2new');
+		ToolbarHelper::apply('category.apply');
+		ToolbarHelper::save('category.save');
+		ToolbarHelper::save2new('category.save2new');
 
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())

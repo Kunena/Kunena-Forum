@@ -55,7 +55,7 @@ class UserController extends FormController
 	}
 
 	/**
-	 * Save
+	 * Method to save the form data.
 	 *
 	 * @return  void
 	 *
@@ -74,6 +74,39 @@ class UserController extends FormController
 			return;
 		}
 
+		$this->saveInternal('save');
+
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Apply
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0
+	 *
+	 * @throws  Exception
+	 */
+	public function apply()
+	{
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+			return;
+		}
+
+		$this->saveInternal('apply');
+	}
+	
+	/**
+	 * Internal method to save an user
+	 * 
+	 * @param string $type
+	 */
+	protected function saveInternal($type)
+	{
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
 		$signature    = $this->app->input->getString('signature', '');
@@ -138,107 +171,25 @@ class UserController extends FormController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
 			}
 
-			$this->setModerate($user, $modCatids);
-		}
-
-		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Apply
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0
-	 *
-	 * @throws  Exception
-	 */
-	public function apply()
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-
-			return;
-		}
-
-		$newview      = $this->app->input->getString('newview');
-		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '');
-		$deleteSig    = $this->app->input->getInt('deleteSig');
-		$moderator    = $this->app->input->getInt('moderator');
-		$uid          = $this->app->input->getInt('uid');
-		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
-		$neworder     = $this->app->input->getInt('neworder');
-		$modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
-		$modCatids    = ArrayHelper::toInteger($modCatids);
-
-		if ($uid)
-		{
-			$user = \KunenaFactory::getUser($uid);
-
-			// Prepare variables
-			if ($deleteSig == 1)
+			if (type == 'save')
 			{
-				$user->signature = '';
+				$this->setModerate($user, $modCatids);
 			}
 			else
 			{
-				$user->signature = $signature;
-			}
+				// Update moderator rights
+				$categories = \KunenaForumCategoryHelper::getCategories(false, false, 'admin');
 
-			$user->personalText = $this->app->input->getString('personaltext', '');
-			$birthdate          = $this->app->input->getString('birthdate');
+				foreach ($categories as $category)
+				{
+					$category->setModerator($user, in_array($category->id, $modCatids));
+				}
 
-			if ($birthdate)
-			{
-				$date = Factory::getDate($birthdate);
-
-				$birthdate = $date->format('Y-m-d');
-			}
-
-			$user->birthdate = $birthdate;
-			$user->location  = trim($this->app->input->getString('location', ''));
-			$user->gender    = $this->app->input->getInt('gender', '');
-			$this->cleanSocial($user, $this->app);
-			$user->websitename  = $this->app->input->getString('websitename', '');
-			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
-			$user->hideEmail    = $this->app->input->getInt('hidemail');
-			$user->showOnline   = $this->app->input->getInt('showonline');
-			$user->canSubscribe = $this->app->input->getInt('cansubscribe');
-			$user->userListtime = $this->app->input->getInt('userlisttime');
-			$user->socialshare  = $this->app->input->getInt('socialshare');
-
-			$user->view     = $newview;
-			$user->ordering = $neworder;
-			$user->rank     = $newrank;
-
-			if ($deleteAvatar == 1)
-			{
-				$user->avatar = '';
-			}
-
-			if (!$user->save())
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_FAILED'), 'error');
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
-			}
-
-			// Update moderator rights
-			$categories = \KunenaForumCategoryHelper::getCategories(false, false, 'admin');
-
-			foreach ($categories as $category)
-			{
-				$category->setModerator($user, in_array($category->id, $modCatids));
-			}
-
-			// Global moderator is a special case
-			if (\KunenaUserHelper::getMyself()->isAdmin())
-			{
-				\KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+				// Global moderator is a special case
+				if (\KunenaUserHelper::getMyself()->isAdmin())
+				{
+					\KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+				}
 			}
 		}
 	}

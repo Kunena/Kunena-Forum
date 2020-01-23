@@ -372,7 +372,7 @@ class CategoriesController extends FormController
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
-		$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=create&catid={$id}", false));
+		$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=category&layout=create&catid={$id}", false));
 	}
 
 	/**
@@ -411,7 +411,7 @@ class CategoriesController extends FormController
 		}
 		else
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$id}", false));
+			$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=category&layout=edit&catid={$id}", false));
 		}
 	}
 

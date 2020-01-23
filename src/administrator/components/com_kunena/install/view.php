@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
  * The HTML Kunena configuration view.
@@ -73,7 +74,7 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 	public function setToolBar()
 	{
 		// Set the titlebar text
-		JToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . Text::_('COM_KUNENA_INSTALLER'), 'kunena.png');
+		ToolbarHelper::title('<span>Kunena ' . KunenaForum::version() . '</span> ' . Text::_('COM_KUNENA_INSTALLER'), 'kunena.png');
 	}
 
 	/**

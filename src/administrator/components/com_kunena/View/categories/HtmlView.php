@@ -127,9 +127,9 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
+		ToolbarHelper::addNew('categories.add', 'COM_KUNENA_NEW_CATEGORY');
 
-		ToolbarHelper::editList();
+		ToolbarHelper::editList('categories.edit');
 		ToolbarHelper::divider();
 		ToolbarHelper::publish();
 		ToolbarHelper::unpublish();

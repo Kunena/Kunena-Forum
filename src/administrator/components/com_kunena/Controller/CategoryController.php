@@ -85,6 +85,7 @@ class CategoryController extends FormController
 	protected function _save()
 	{
 		\KunenaFactory::loadLanguage('com_kunena', 'admin');
+		$me = \KunenaUserHelper::getMyself();
 
 		if ($this->app->isClient('site'))
 		{
@@ -123,7 +124,7 @@ class CategoryController extends FormController
 			// Category exists and user is not admin in category
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 		}
-		elseif (!$category->exists() && !$this->me->isAdmin($parent))
+		elseif (!$category->exists() && !$me->isAdmin($parent))
 		{
 			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'notice');
@@ -134,14 +135,14 @@ class CategoryController extends FormController
 			$ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all'];
 
 			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
-			if (!$this->me->isAdmin($parent) || ($category->exists() && !$this->me->isAdmin($category->getParent())))
+			if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent())))
 			{
 				$ignore             = array_merge($ignore, ['parent_id', 'ordering']);
 				$post ['parent_id'] = $category->parent_id;
 			}
 
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
-			if (!$this->me->isAdmin())
+			if (!$me->isAdmin())
 			{
 				$access = ['accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx', 'params'];
 
@@ -177,9 +178,9 @@ class CategoryController extends FormController
 			}
 
 			// Update read access
-			$read                = $this->app->getUserState("com_kunena.user{$this->me->userid}_read");
+			$read                = $this->app->getUserState("com_kunena.user{$me->userid}_read");
 			$read[$category->id] = $category->id;
-			$this->app->setUserState("com_kunena.user{$this->me->userid}_read", null);
+			$this->app->setUserState("com_kunena.user{$me->userid}_read", null);
 
 			if (!$success)
 			{

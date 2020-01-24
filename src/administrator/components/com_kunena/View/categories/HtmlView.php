@@ -41,8 +41,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \JObject
-	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @since  6.0
 	 */
 	protected $state;
 
@@ -107,17 +107,19 @@ class HtmlView extends BaseHtmlView
 		$this->saveOrderingUrl   = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
 		$this->filterLevels      = $this->escape($this->state->get('filter.levels'));
 
-		$this->setToolBarDefault();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDefault()
+	protected function addToolbar()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
@@ -131,8 +133,8 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::editList('categories.edit');
 		ToolbarHelper::divider();
-		ToolbarHelper::publish();
-		ToolbarHelper::unpublish();
+		ToolbarHelper::publish('categories.publish');
+		ToolbarHelper::unpublish('categories.unpublish');
 		ToolbarHelper::divider();
 
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');

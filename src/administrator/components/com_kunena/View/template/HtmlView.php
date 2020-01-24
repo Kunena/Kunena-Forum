@@ -55,17 +55,19 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 
-		$this->setToolBarEdit();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEdit()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();

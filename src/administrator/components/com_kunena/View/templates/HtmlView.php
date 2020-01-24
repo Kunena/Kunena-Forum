@@ -43,17 +43,19 @@ class HtmlView extends BaseHtmlView
 		$this->templates  = $this->get('templates');
 		$this->pagination = $this->get('Pagination');
 
-		$this->setToolBarDefault();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDefault()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
@@ -115,7 +117,7 @@ class HtmlView extends BaseHtmlView
 		$this->params       = $this->get('editparams');
 		$this->details      = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
-		$template           = Template::getInstance($this->templatename);
+		$template           = \KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';

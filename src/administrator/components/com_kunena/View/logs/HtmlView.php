@@ -73,7 +73,7 @@ class HtmlView extends BaseHtmlView
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('Forum Logs'));
 
-		$this->setToolbar();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
@@ -179,11 +179,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
-		// Get the toolbar object instance
-		$bar = Toolbar::getInstance('toolbar');
-
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 

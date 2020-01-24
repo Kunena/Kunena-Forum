@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 						data-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
-				<button class="btn btn-outline-danger" type="submit" onclick="Joomla.submitbutton('remove');">
+				<button class="btn btn-outline-danger" type="submit" onclick="Joomla.submitbutton('categories.remove');">
 					<?php echo Text::_('COM_KUNENA_CATEGORIES_DELETE_MODAL_BUTTON_LABEL'); ?>
 				</button>
 			</div>

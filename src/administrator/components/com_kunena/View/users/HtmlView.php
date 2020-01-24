@@ -30,8 +30,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \JObject
-	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @since  6.0
 	 */
 	protected $state;
 
@@ -46,7 +46,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->setToolbar();
 		$this->users      = $this->get('items');
 		$this->state         = $this->get('State');
 		$this->pagination = $this->get('Pagination');
@@ -68,17 +67,19 @@ class HtmlView extends BaseHtmlView
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
 
+		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 
 	/**
-	 * setToolbar
+	 * Add the page title and toolbar.
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');

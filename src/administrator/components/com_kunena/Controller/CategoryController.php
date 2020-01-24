@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Joomla\String\StringHelper;
 
 /**
  * Kunena Category Controller
@@ -70,6 +71,96 @@ class CategoryController extends FormController
 			$post_catid = $this->app->input->post->get('catid', '', 'raw');
 			$this->setRedirect(\KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $post_catid));
 		}
+	}
+
+	/**
+	 * Apply
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function apply()
+	{
+		$category = $this->_save();
+
+		if ($category->exists())
+		{
+			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$category->id}", false));
+		}
+		else
+		{
+			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+		}
+	}
+
+	/**
+	 * Method to save a category like a copy of existing one.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function save2copy()
+	{
+		$post_catid = $this->app->input->post->get('catid', '', 'raw');
+		$post_alias = $this->app->input->post->get('alias', '', 'raw');
+		$post_name  = $this->app->input->post->get('name', '', 'raw');
+
+		list($title, $alias) = $this->_generateNewTitle($post_catid, $post_alias, $post_name);
+
+		$this->app->setUserState('com_kunena.category_title', $title);
+		$this->app->setUserState('com_kunena.category_alias', $alias);
+		$this->app->setUserState('com_kunena.category_catid', 0);
+
+		$this->_save();
+		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Save2new
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function save2new()
+	{
+		$this->_save();
+		$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+	}
+
+	/**
+	 * Method to change the title & alias.
+	 *
+	 * @param   integer  $category_id  The id of the category.
+	 * @param   string   $alias        The alias.
+	 * @param   string   $name         The name.
+	 *
+	 * @return  array  Contains the modified title and alias.
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  Exception
+	 */
+	protected function _generateNewTitle($category_id, $alias, $name)
+	{
+		while (\KunenaForumCategoryHelper::getAlias($category_id, $alias))
+		{
+			$name  = StringHelper::increment($name);
+			$alias = StringHelper::increment($alias, 'dash');
+		}
+
+		return [$name, $alias];
 	}
 
 	/**

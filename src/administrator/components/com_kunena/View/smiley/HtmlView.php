@@ -38,21 +38,25 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
-		$this->setToolbar();
+		
 		$this->state           = $this->get('state');
 		$this->smiley_selected = $this->get('smiley');
 		$this->smileypath      = $this->ktemplate->getSmileyPath();
 		$this->listsmileys     = $this->get('Smileyspaths');
 
+		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
 		ToolbarHelper::spacer();

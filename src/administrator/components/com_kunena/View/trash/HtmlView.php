@@ -29,8 +29,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \JObject
-	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @since  6.0
 	 */
 	protected $state;
 
@@ -63,7 +63,8 @@ class HtmlView extends BaseHtmlView
 		$this->listOrdering   = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection  = $this->escape($this->state->get('list.direction'));
 
-		$this->setToolBarDefault();
+		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 
@@ -113,11 +114,13 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDefault()
+	protected function addToolbar()
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');

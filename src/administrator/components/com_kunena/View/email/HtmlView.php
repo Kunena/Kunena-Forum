@@ -47,7 +47,8 @@ class HtmlView extends BaseHtmlView
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_A_EMAIL_MANAGER'));
 
-		$this->setToolbar();
+		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 
@@ -58,7 +59,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');

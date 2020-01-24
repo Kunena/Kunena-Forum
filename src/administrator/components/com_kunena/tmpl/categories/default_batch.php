@@ -51,7 +51,7 @@ use Joomla\CMS\Language\Text;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('batch_categories');">
+						onclick="Joomla.submitbutton('categories.batch_categories');">
 					<?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
 				</button>
 			</div>

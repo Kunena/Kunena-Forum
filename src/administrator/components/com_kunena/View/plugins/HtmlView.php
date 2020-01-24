@@ -46,14 +46,15 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \JObject
+	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @since  6.0
 	 */
 	protected $state;
 
 	/**
 	 * Form object for search filters
 	 *
-	 * @var    \JForm
+	 * @var    \Joomla\CMS\Form\Form
 	 * @since  4.0.0
 	 */
 	public $filterForm;
@@ -97,8 +98,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-	    $model               = $this->getModel();
-	    $this->items      = $this->get('Items');
+		$model               = $this->getModel();
+		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
@@ -124,7 +125,7 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		$this->setToolbar();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
@@ -136,7 +137,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   K1.6
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		ToolbarHelper::spacer();

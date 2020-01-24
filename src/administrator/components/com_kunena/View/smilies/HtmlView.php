@@ -54,17 +54,19 @@ class HtmlView extends BaseHtmlView
 		$this->listOrdering   = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection  = $this->escape($this->state->get('list.direction'));
 
-		$this->setToolbar();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');

@@ -39,21 +39,25 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
-		$this->setToolbar();
+
 		$this->state         = $this->get('state');
 		$this->rank_selected = $this->get('rank');
 		$this->rankpath      = $this->ktemplate->getRankPath();
 		$this->listranks     = $this->get('Rankspaths');
 
+		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbar()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
 		ToolbarHelper::spacer();

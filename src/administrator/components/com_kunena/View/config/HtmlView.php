@@ -48,18 +48,20 @@ class HtmlView extends BaseHtmlView
 		// Only set the toolbar if not modal
 		if ($this->getLayout() !== 'modal')
 		{
-			$this->setToolBarDefault();
+			$this->addToolbar();
 		}
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDefault()
+	protected function addToolbar()
 	{
 		$bar = Toolbar::getInstance('toolbar');
 

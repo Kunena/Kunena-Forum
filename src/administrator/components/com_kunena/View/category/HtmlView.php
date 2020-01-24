@@ -39,8 +39,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    JObject
-	 * @since  4.0.0
+	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @since  6.0
 	 */
 	protected $state;
 
@@ -76,17 +76,19 @@ class HtmlView extends BaseHtmlView
 		$this->options    = $this->get('AdminOptions');
 		$this->moderators = $this->get('AdminModerators');
 
-		$this->setToolBarEdit();
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
 
 	/**
+	 * Add the page title and toolbar.
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEdit()
+	protected function addToolbar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
@@ -97,7 +99,7 @@ class HtmlView extends BaseHtmlView
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())
 		{
-			ToolbarHelper::save2copy('save2copy');
+			ToolbarHelper::save2copy('category.save2copy');
 		}
 
 		ToolbarHelper::cancel();

@@ -34,7 +34,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('subscribeuserstocategories');">
+						onclick="Joomla.submitbutton('users.subscribeuserstocategories');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

@@ -64,7 +64,7 @@ class UserController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function save()
+	public function save($key = NULL, $urlVar = NULL)
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -99,7 +99,7 @@ class UserController extends FormController
 
 		$this->saveInternal('apply');
 	}
-	
+
 	/**
 	 * Internal method to save an user
 	 * 
@@ -171,7 +171,7 @@ class UserController extends FormController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
 			}
 
-			if (type == 'save')
+			if ($type == 'save')
 			{
 				$this->setModerate($user, $modCatids);
 			}
@@ -190,6 +190,8 @@ class UserController extends FormController
 				{
 					\KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 				}
+
+				$this->setRedirect(\KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
 			}
 		}
 	}

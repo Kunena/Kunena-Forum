@@ -87,10 +87,10 @@ class HtmlView extends BaseHtmlView
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
 		ToolbarHelper::spacer();
-		ToolbarHelper::editList();
-		ToolbarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
+		ToolbarHelper::editList('users.edit');
+		ToolbarHelper::custom('users.logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::custom('users.move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
@@ -101,12 +101,12 @@ class HtmlView extends BaseHtmlView
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		ToolbarHelper::custom('users.trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
 
 		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');

@@ -47,6 +47,7 @@ class DisplayController extends BaseController
 		$layout = $this->input->get('layout', 'default');
 		$id     = $this->input->getInt('id');
 
+		\KunenaFactory::loadLanguage('com_kunena','admin');
 		\KunenaFactory::loadLanguage('com_kunena.views','admin');
 		\KunenaFactory::loadLanguage('com_kunena.libraries','admin');
 		\KunenaFactory::loadLanguage('com_kunena.sys','admin');

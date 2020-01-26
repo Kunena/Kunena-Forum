@@ -59,16 +59,16 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
-		ToolbarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
+		ToolbarHelper::addNew('template.add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
+		ToolbarHelper::custom('template.edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		ToolbarHelper::custom('template.publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
+		ToolbarHelper::custom('template.uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		ToolbarHelper::custom('template.choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::custom('template.chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		ToolbarHelper::divider();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);

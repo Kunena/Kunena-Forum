@@ -56,7 +56,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -66,8 +66,8 @@ class HtmlView extends BaseHtmlView
 		$bar = Toolbar::getInstance('toolbar');
 
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply();
-		ToolbarHelper::save('save');
+		ToolbarHelper::apply('config.apply');
+		ToolbarHelper::save('config.save');
 		ToolbarHelper::divider();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 

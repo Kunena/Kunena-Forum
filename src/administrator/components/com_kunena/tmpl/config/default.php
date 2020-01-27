@@ -29,7 +29,7 @@ HTMLHelper::_('dropdown.init');
 					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
 				</div>
 				<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena'); ?>" method="post"
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config'); ?>" method="post"
 					  id="adminForm" name="adminForm">
 					<input type="hidden" name="view" value="config"/>
 					<input type="hidden" name="task" value=""/>

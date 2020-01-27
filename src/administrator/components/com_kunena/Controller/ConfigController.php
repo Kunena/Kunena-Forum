@@ -19,11 +19,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\String\StringHelper;
+use KunenaConfig;
 use KunenaRoute;
 use function defined;
 
 /**
  * Kunena Backend Config Controller
+ *
+ * @property  KunenaConfig
  *
  * @since   Kunena 2.0
  */
@@ -54,7 +57,7 @@ class ConfigController extends FormController
 	{
 		parent::__construct($config);
 		$this->baseurl       = 'administrator/index.php?option=com_kunena&view=config';
-		$this->kunenabaseurl = 'administrator/index.php?option=com_kunena';
+		$this->kunenabaseurl = 'administrator/index.php?option=com_kunena&view=cpanel';
 	}
 
 	/**
@@ -69,32 +72,32 @@ class ConfigController extends FormController
 	 */
 	public function apply()
 	{
-		$this->save($this->baseurl);
+		$this->save(null, $this->baseurl);
 	}
 
 	/**
 	 * Save
 	 *
-	 * @param   null  $url  url
+	 * @param   null  $key    key
+	 * @param   null  $urlVar urlvar
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function save($url = null)
+	public function save($key = null, $urlVar = null)
 	{
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
 
 			return;
 		}
 
-		$properties  = $this->config->getProperties();
+		$properties  = KunenaConfig::getInstance()->getProperties();
 		$post_config = $this->app->input->post->getArray();
 
 		foreach ($post_config as $postsetting => $postvalue)
@@ -115,7 +118,7 @@ class ConfigController extends FormController
 					if (empty($postvalue))
 					{
 						$this->app->enqueueMessage(Text::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'));
-						$this->setRedirect(KunenaRoute::_($url, false));
+						$this->setRedirect(KunenaRoute::_($urlVar, false));
 
 						return;
 					}
@@ -125,23 +128,23 @@ class ConfigController extends FormController
 				// in the config class. Anything else posted gets ignored.
 				if (array_key_exists($postname, $properties))
 				{
-					$this->config->set($postname, $postvalue);
+					KunenaConfig::getInstance()->set($postname, $postvalue);
 				}
 			}
 		}
 
-		$this->config->save();
+		KunenaConfig::getInstance()->save();
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONFIGSAVED'));
 
-		if (empty($url))
+		if ($this->task == 'apply')
 		{
-			$this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($url, false));
+		$this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
 	}
 
 	/**
@@ -164,9 +167,9 @@ class ConfigController extends FormController
 			return;
 		}
 
-		$this->config->reset();
-		$this->config->save();
+		KunenaConfig::getInstance()->reset();
+		KunenaConfig::getInstance()->save();
 
-		$this->setRedirect('index.php?option=com_kunena&view=config', Text::_('COM_KUNENA_CONFIG_DEFAULT'));
+		$this->setRedirect($this->baseurl, Text::_('COM_KUNENA_CONFIG_DEFAULT'));
 	}
 }

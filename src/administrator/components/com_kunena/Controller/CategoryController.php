@@ -49,14 +49,16 @@ class CategoryController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @see     BaseController
+	 *
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
 	 * @param   Input                $input    Input
 	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
 	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -128,8 +130,8 @@ class CategoryController extends FormController
 	/**
 	 * Cancel
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
 	 *
 	 * @return  void
 	 *
@@ -139,6 +141,10 @@ class CategoryController extends FormController
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{
+		$post_catid = $this->app->input->post->get('catid', '', 'raw');
+		$category   = KunenaForumCategoryHelper::get($post_catid);
+		$category->checkin();
+
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

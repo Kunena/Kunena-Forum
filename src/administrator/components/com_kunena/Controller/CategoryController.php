@@ -82,16 +82,22 @@ class CategoryController extends FormController
 	public function save($key = null, $urlVar = null)
 	{
 		$this->_save();
+		$post_catid = $this->app->input->post->get('catid', '', 'raw');
 
 		if ($this->app->isClient('administrator'))
 		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			if ($this->task == 'apply')
+			{
+				$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$post_catid}", false));
+			}
+			else
+			{
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
 		}
 		else
 		{
-			$post_catid = $this->app->input->post->get('catid', '', 'raw');
-
-			$this->setRedirect(KunenaRoute::_($this->basecategoryurl .'&catid=' . $post_catid));
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . '&catid=' . $post_catid));
 		}
 	}
 
@@ -117,6 +123,23 @@ class CategoryController extends FormController
 		{
 			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
 		}
+	}
+
+	/**
+	 * Cancel
+	 *
+	 * @param   null  $key    key
+	 * @param   null  $urlVar urlvar
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws Exception
+	 */
+	public function cancel($key = null, $urlVar = null)
+	{
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**

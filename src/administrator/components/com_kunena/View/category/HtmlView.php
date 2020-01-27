@@ -102,7 +102,7 @@ class HtmlView extends BaseHtmlView
 			ToolbarHelper::save2copy('category.save2copy');
 		}
 
-		ToolbarHelper::cancel();
+		ToolbarHelper::cancel('category.cancel');
 		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);

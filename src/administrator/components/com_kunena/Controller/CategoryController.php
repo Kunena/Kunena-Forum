@@ -14,10 +14,18 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
+use KunenaFactory;
+use KunenaForumCategory;
+use KunenaForumCategoryHelper;
+use KunenaRoute;
+use KunenaUserHelper;
 
 /**
  * Kunena Category Controller
@@ -33,43 +41,57 @@ class CategoryController extends FormController
 	protected $baseurl = null;
 
 	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
+	 * @var     string
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
 	 */
-	public function __construct($config = [])
+	protected $basecategoryurl = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface  $factory  The factory.
+	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
+	 * @param   Input                $input    Input
+	 *
+	 * @since   Kunena 2.0
+	 *
+	 * @see     BaseController
+	 * @throws Exception
+	 */
+	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config);
 
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=categories';
+		$this->baseurl         = 'administrator/index.php?option=com_kunena&view=categories';
+		$this->basecategoryurl = 'administrator/index.php?option=com_kunena&view=category';
 	}
 
 	/**
 	 * Save changes on the category
 	 *
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function save($key = NULL, $urlVar = NULL)
+	public function save($key = null, $urlVar = null)
 	{
 		$this->_save();
 
 		if ($this->app->isClient('administrator'))
 		{
-			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 		else
 		{
 			$post_catid = $this->app->input->post->get('catid', '', 'raw');
-			$this->setRedirect(\KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $post_catid));
+
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl .'&catid=' . $post_catid));
 		}
 	}
 
@@ -89,11 +111,11 @@ class CategoryController extends FormController
 
 		if ($category->exists())
 		{
-			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$category->id}", false));
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$category->id}", false));
 		}
 		else
 		{
-			$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
 		}
 	}
 
@@ -120,7 +142,7 @@ class CategoryController extends FormController
 		$this->app->setUserState('com_kunena.category_catid', 0);
 
 		$this->_save();
-		$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(KunenaRoute::_($this->basecategoryurl, false));
 	}
 
 	/**
@@ -136,7 +158,7 @@ class CategoryController extends FormController
 	public function save2new()
 	{
 		$this->_save();
-		$this->setRedirect(\KunenaRoute::_($this->baseurl2 . "&layout=create", false));
+		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
 	}
 
 	/**
@@ -154,7 +176,7 @@ class CategoryController extends FormController
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
 	{
-		while (\KunenaForumCategoryHelper::getAlias($category_id, $alias))
+		while (KunenaForumCategoryHelper::getAlias($category_id, $alias))
 		{
 			$name  = StringHelper::increment($name);
 			$alias = StringHelper::increment($alias, 'dash');
@@ -166,7 +188,7 @@ class CategoryController extends FormController
 	/**
 	 * Internal method to save category
 	 *
-	 * @return  \KunenaForumCategory|void
+	 * @return  KunenaForumCategory|void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
@@ -175,18 +197,18 @@ class CategoryController extends FormController
 	 */
 	protected function _save()
 	{
-		\KunenaFactory::loadLanguage('com_kunena', 'admin');
-		$me = \KunenaUserHelper::getMyself();
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		$me = KunenaUserHelper::getMyself();
 
 		if ($this->app->isClient('site'))
 		{
-			\KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 		}
 
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -207,8 +229,8 @@ class CategoryController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = \KunenaForumCategoryHelper::get(intval($post ['catid']));
-		$parent   = \KunenaForumCategoryHelper::get(intval($post ['parent_id']));
+		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
+		$parent   = KunenaForumCategoryHelper::get(intval($post ['parent_id']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
@@ -220,7 +242,7 @@ class CategoryController extends FormController
 			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'notice');
 		}
-		elseif (!$category->isCheckedOut($this->me->userid))
+		elseif (!$category->isCheckedOut($me->userid))
 		{
 			// Nobody can change id or statistics
 			$ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all'];
@@ -286,7 +308,7 @@ class CategoryController extends FormController
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)), 'notice');
 		}
 
- 		if ($success)
+		if ($success)
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($category->name)));
 		}
@@ -295,7 +317,7 @@ class CategoryController extends FormController
 		{
 			foreach ((array) $post['rmmod'] as $userid => $value)
 			{
-				$user = \KunenaFactory::getUser($userid);
+				$user = KunenaFactory::getUser($userid);
 
 				if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user))
 				{

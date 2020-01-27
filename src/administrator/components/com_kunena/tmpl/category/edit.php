@@ -33,7 +33,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
 					: <?php echo $this->escape($this->category->name); ?></div>
 				<hr class="hr-condensed">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=category') ?>"
 				      method="post" id="adminForm"
 				      name="adminForm">
 					<input type="hidden" name="task" value=""/>

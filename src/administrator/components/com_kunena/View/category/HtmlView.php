@@ -15,13 +15,11 @@ namespace Kunena\Forum\Administrator\View\Category;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\MVC\View\GenericDataException;
+use KunenaForumCategory;
 
 /**
  * About view for Kunena backend
@@ -31,7 +29,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @var     array|Category[]
+	 * @var     array|KunenaForumCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public $category = [];
@@ -39,7 +37,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @var    CMSObject
 	 * @since  6.0
 	 */
 	protected $state;
@@ -55,11 +53,13 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @param   null  $tpl  tmpl
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

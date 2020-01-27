@@ -81,7 +81,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
+		ToolbarHelper::custom('attachments.delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
 
 		ToolbarHelper::spacer();
 	}

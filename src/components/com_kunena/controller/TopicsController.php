@@ -9,20 +9,33 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
+use KunenaAttachmentFinder;
+use KunenaError;
+use KunenaFactory;
+use KunenaForum;
+use KunenaForumCategoryHelper;
+use KunenaForumMessageHelper;
+use KunenaForumTopicHelper;
+use KunenaLog;
 
 /**
  * Kunena Topics Controller
  *
  * @since   Kunena 2.0
  */
-class KunenaControllerTopics extends KunenaController
+class TopicsController extends FormController
 {
 	/**
 	 * @return  void

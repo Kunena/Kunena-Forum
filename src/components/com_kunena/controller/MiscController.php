@@ -9,16 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Uri\Uri;
+use KunenaPath;
+use KunenaRoute;
 
 /**
  * Kunena Misc Controller
  *
  * @since   Kunena 2.0
  */
-class KunenaControllerMisc extends KunenaController
+class MiscController extends FormController
 {
 	/**
 	 * @param   array  $config  config

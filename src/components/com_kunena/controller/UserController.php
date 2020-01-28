@@ -9,19 +9,45 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Response\JsonResponse;
+use KunenaAttachmentHelper;
+use KunenaConfig;
+use KunenaExceptionAuthorise;
+use KunenaFactory;
+use KunenaForum;
+use KunenaForumMessageHelper;
+use KunenaLog;
+use KunenaLogin;
+use KunenaPath;
+use KunenaProfileKunena;
+use KunenaRoute;
+use KunenaUpload;
+use KunenaUser;
+use KunenaUserBan;
+use KunenaUserHelper;
+use RuntimeException;
+use stdClass;
 
 /**
  * Kunena User Controller
@@ -30,13 +56,13 @@ use Joomla\CMS\Response\JsonResponse;
  *
  * @since   Kunena 2.0
  */
-class KunenaControllerUser extends KunenaController
+class UserController extends FormController
 {
 	/**
 	 * @param   bool  $cachable   cachable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return  Joomla\CMS\MVC\Controller\BaseController|void
+	 * @return  BaseController|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -101,11 +127,10 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
@@ -114,7 +139,7 @@ class KunenaControllerUser extends KunenaController
 	{
 		$model = $this->getModel('user');
 
-		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=list');
+		$uri = new Uri('index.php?option=com_kunena&view=user&layout=list');
 
 		$state      = $model->getState();
 		$search     = $state->get('list.search');
@@ -138,8 +163,6 @@ class KunenaControllerUser extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @return  void
-	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
@@ -162,8 +185,6 @@ class KunenaControllerUser extends KunenaController
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
@@ -357,7 +378,7 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('system');
+		PluginHelper::importPlugin('system');
 
 		$this->app->triggerEvent('OnAfterKunenaProfileUpdate', [$this->user, $success]);
 
@@ -570,7 +591,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-		$user     = new Joomla\CMS\User\User($this->user->id);
+		$user     = new User($this->user->id);
 
 		// Bind the form fields to the user table and save.
 		if (!$user->bind($post) || !$user->save(true))
@@ -636,7 +657,7 @@ class KunenaControllerUser extends KunenaController
 
 		if ($birthdate == null)
 		{
-			$now       = new Joomla\CMS\Date\Date;
+			$now       = new Date;
 			$birthdate = $now->format('Y-m-d');
 		}
 
@@ -840,7 +861,7 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
 		}
 
-		$now       = new Joomla\CMS\Date\Date;
+		$now       = new Date;
 		$birthdate = $now->format('Y-m-d');
 
 		if (!empty($DelProfileInfo))
@@ -1357,7 +1378,7 @@ class KunenaControllerUser extends KunenaController
 				{
 					$message_text = $attachment->removeBBCodeInMessage($message->message);
 
-					if ($message_text !== FALSE)
+					if ($message_text !== false)
 					{
 						$message->message = $message_text;
 					}

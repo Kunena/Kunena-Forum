@@ -9,19 +9,27 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use KunenaForumAnnouncementHelper;
+use KunenaLog;
 
 /**
  * Kunena Announcements Controller
  *
  * @since   Kunena 2.0
  */
-class KunenaControllerAnnouncement extends KunenaController
+class AnnouncementController extends FormController
 {
 	/**
 	 * @return  void
@@ -269,7 +277,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$now                    = new Joomla\CMS\Date\Date;
+		$now                    = new Date;
 		$fields                 = [];
 		$fields['title']        = $this->app->input->getString('title', '');
 		$fields['description']  = $this->app->input->getString('description', '');

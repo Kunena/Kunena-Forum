@@ -9,11 +9,21 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use KunenaFactory;
+use KunenaForumCategoryHelper;
+use KunenaForumCategoryUserHelper;
+use KunenaRoute;
+use KunenaUserHelper;
 
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
@@ -22,7 +32,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
  *
  * @since   Kunena 2.0
  */
-class KunenaControllerCategory extends KunenaAdminControllerCategories
+class CategoryController extends FormController
 {
 	/**
 	 * @param   array  $config  config

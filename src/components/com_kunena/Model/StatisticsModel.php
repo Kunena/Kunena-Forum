@@ -9,13 +9,18 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
+use Joomla\CMS\MVC\Model\ListModel;
+
 defined('_JEXEC') or die();
 
 /**
- * Credits Model for Kunena
+ * Statistics Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class KunenaModelCredits extends KunenaModel
+class StatisticsModel extends ListModel
 {
 }

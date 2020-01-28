@@ -9,18 +9,26 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
+use KunenaError;
+use KunenaFactory;
+use KunenaUserHelper;
 
 /**
  * User Model for Kunena
  *
  * @since   Kunena 6.0
  */
-class KunenaModelUser extends KunenaModel
+class UserModel extends ListModel
 {
 	/**
 	 * @return  void

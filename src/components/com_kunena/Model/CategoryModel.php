@@ -9,12 +9,26 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
+use KunenaAccess;
+use KunenaError;
+use KunenaFactory;
+use KunenaForumCategory;
+use KunenaForumCategoryHelper;
+use KunenaForumMessageHelper;
+use KunenaForumTopic;
+use KunenaForumTopicHelper;
+use KunenaUserHelper;
 
 require_once KPATH_ADMIN . '/models/categories.php';
 
@@ -23,7 +37,7 @@ require_once KPATH_ADMIN . '/models/categories.php';
  *
  * @since   Kunena 2.0
  */
-class KunenaModelCategory extends KunenaAdminModelCategories
+class CategoryModel extends ListModel
 {
 	/**
 	 * @var     boolean|array

@@ -9,18 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Utilities\ArrayHelper;
+use KunenaFactory;
+use KunenaRoute;
 
 /**
  * Search Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class KunenaModelSearch extends KunenaModel
+class SearchModel extends ListModel
 {
 	/**
 	 * @var     null
@@ -50,7 +57,7 @@ class KunenaModelSearch extends KunenaModel
 	protected function populateState()
 	{
 		// Get search word list
-		$value = Joomla\String\StringHelper::trim($this->app->input->get('query', '', 'string'));
+		$value = \Joomla\String\StringHelper::trim($this->app->input->get('query', '', 'string'));
 
 		if ($value == Text::_('COM_KUNENA_GEN_SEARCH_BOX'))
 		{
@@ -173,7 +180,7 @@ class KunenaModelSearch extends KunenaModel
 
 		foreach ($this->getSearchWords() as $searchword)
 		{
-			$searchword = $db->escape(Joomla\String\StringHelper::trim($searchword));
+			$searchword = $db->escape(\Joomla\String\StringHelper::trim($searchword));
 
 			if (empty($searchword))
 			{
@@ -187,7 +194,7 @@ class KunenaModelSearch extends KunenaModel
 			{
 				$not        = 'NOT';
 				$operator   = 'AND';
-				$searchword = Joomla\String\StringHelper::substr($searchword, 1);
+				$searchword = \Joomla\String\StringHelper::substr($searchword, 1);
 			}
 
 			if (!$this->getState('query.titleonly'))
@@ -258,8 +265,8 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$time_start_day = Factory::getDate($this->getState('query.searchatdate'))->toUnix();
-			$time_end_day   = new DateTime($this->getState('query.searchatdate'));
-			$time_end_day->add(new DateInterval("PT23H59M59S"));
+			$time_end_day   = new \DateTime($this->getState('query.searchatdate'));
+			$time_end_day->add(new \DateInterval("PT23H59M59S"));
 
 			$querystrings[] = " m.time > {$time_start_day} AND m.time < {$time_end_day->getTimestamp()}";
 		}
@@ -359,7 +366,7 @@ class KunenaModelSearch extends KunenaModel
 		foreach ($searchwords as $word)
 		{
 			// Do not accept one letter strings
-			if (Joomla\String\StringHelper::strlen($word) > 1)
+			if (\Joomla\String\StringHelper::strlen($word) > 1)
 			{
 				$result [] = $word;
 			}
@@ -438,7 +445,7 @@ class KunenaModelSearch extends KunenaModel
 
 		if ($topicids)
 		{
-			$topics = KunenaForumTopicHelper::getTopics($topicids);
+			$topics = \KunenaForumTopicHelper::getTopics($topicids);
 
 			foreach ($topics as $topic)
 			{
@@ -446,8 +453,8 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		KunenaUserHelper::loadUsers($userids);
-		KunenaForumMessageHelper::loadLocation($this->messages);
+		\KunenaUserHelper::loadUsers($userids);
+		\KunenaForumMessageHelper::loadLocation($this->messages);
 
 		if (empty($this->messages))
 		{
@@ -466,8 +473,8 @@ class KunenaModelSearch extends KunenaModel
 	{
 		// Turn internal state into URL, but ignore default values
 		$defaults = ['titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-		             'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-		             'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => ''];
+					 'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+					 'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => ''];
 
 		$url_params = '';
 		$state      = $this->getState();

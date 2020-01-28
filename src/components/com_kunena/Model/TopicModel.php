@@ -9,6 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
+use Exception;
+use Joomla\CMS\MVC\Model\ListModel;
+use KunenaAccess;
+use KunenaAttachmentHelper;
+use KunenaFactory;
+use KunenaForumCategory;
+use KunenaForumCategoryHelper;
+use KunenaForumMessage;
+use KunenaForumMessageHelper;
+use KunenaForumMessageThankyouHelper;
+use KunenaForumTopic;
+use KunenaForumTopicHelper;
+use KunenaForumTopicPoll;
+use KunenaUserHelper;
+
 defined('_JEXEC') or die();
 
 /**
@@ -16,7 +34,7 @@ defined('_JEXEC') or die();
  *
  * @since   Kunena 2.0
  */
-class KunenaModelTopic extends KunenaModel
+class TopicModel extends ListModel
 {
 	/**
 	 * @var     boolean

@@ -9,18 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Plugin\PluginHelper;
+use KunenaAccess;
+use KunenaFactory;
+use KunenaForumCategoryHelper;
+use KunenaForumMessageHelper;
+use KunenaForumTopicHelper;
+use KunenaUserHelper;
 
 /**
  * Topics Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class KunenaModelTopics extends KunenaModel
+class TopicsModel extends ListModel
 {
 	/**
 	 * @var     boolean
@@ -249,7 +261,7 @@ class KunenaModelTopics extends KunenaModel
 					$total  = 0;
 					$topics = false;
 
-					Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+					PluginHelper::importPlugin('kunena');
 					Factory::getApplication()->triggerEvent('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]);
 
 					if (!empty($topics))

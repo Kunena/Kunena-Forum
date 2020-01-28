@@ -9,9 +9,17 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\View\Topic;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\Input\Input;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,13 +27,28 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Object\CMSObject;
+use KunenaAttachmentHelper;
+use KunenaControllerDisplay;
+use KunenaDate;
+use KunenaFactory;
+use KunenaForumCategoryHelper;
+use KunenaForumMessage;
+use KunenaForumMessageHelper;
+use KunenaForumTopicHelper;
+use KunenaHtmlParser;
+use KunenaLayout;
+use KunenaPagination;
+use KunenaRequest;
+use KunenaRoute;
+use KunenaUserHelper;
+use LogicException;
 
 /**
  * Topic View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewTopic extends KunenaView
+class HtmlView extends BaseHtmlView
 {
 	/**
 	 * @var     null
@@ -166,12 +189,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
@@ -314,11 +337,11 @@ class KunenaViewTopic extends KunenaView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$cat_params = ['ordering'    => 'ordering',
-		               'toplevel'    => 0,
-		               'sections'    => 0,
-		               'direction'   => 1,
-		               'hide_lonely' => 1,
-		               'action'      => 'topic.create'];
+					   'toplevel'    => 0,
+					   'sections'    => 0,
+					   'direction'   => 1,
+					   'hide_lonely' => 1,
+					   'action'      => 'topic.create'];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
@@ -408,12 +431,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
@@ -477,12 +500,12 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 		$this->_prepareDocument('edit');
@@ -542,14 +565,14 @@ class KunenaViewTopic extends KunenaView
 		if (!isset($profiles [$key]))
 		{
 			// Run events
-			$params = new Joomla\Registry\Registry;
+			$params = new Registry;
 
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
 			$params->set('kunena_layout', $this->state->get('layout'));
 
-			Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+			PluginHelper::importPlugin('kunena');
 
 			Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.user', &$this->profile, &$params, 0]);
 
@@ -742,7 +765,7 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
 
@@ -831,7 +854,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
 
@@ -1157,12 +1180,12 @@ class KunenaViewTopic extends KunenaView
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
@@ -1195,7 +1218,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
-			$uri  = new Joomla\CMS\Uri\Uri('index.php');
+			$uri  = new Uri('index.php');
 			$uri->setQuery($vars);
 
 			// Make sure we do not return into a task.
@@ -1597,14 +1620,14 @@ class KunenaViewTopic extends KunenaView
 	 * easier to read and gain some context awareness.
 	 *
 	 * @param   string               $path    path
-	 * @param   Joomla\Input\Input   $input   input
+	 * @param   Input   $input   input
 	 * @param   array                $options options
 	 *
 	 * @return  KunenaControllerDisplay
 	 *
 	 * @since   Kunena 4.0
 	 */
-	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)
+	public function subRequest($path, Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

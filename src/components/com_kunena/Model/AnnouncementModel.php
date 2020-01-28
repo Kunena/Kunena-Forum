@@ -9,17 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Model;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
+use KunenaForumAnnouncement;
+use KunenaForumAnnouncementHelper;
+use KunenaUserHelper;
 
 /**
  * Announcement Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class KunenaModelAnnouncement extends KunenaModel
+class AnnouncementModel  extends ListModel
 {
 	/**
 	 * @var     boolean

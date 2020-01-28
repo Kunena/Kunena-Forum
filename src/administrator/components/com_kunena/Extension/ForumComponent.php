@@ -1,29 +1,30 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_kunena
+ * Kunena Component
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package         Kunena.Administrator
+ * @subpackage      Extension
+ *
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
 namespace Kunena\Forum\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
-use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 
 /**
  * Component class for com_kunena
  *
- * @since  4.0.0
+ * @since   Kunena 6.0
  */
 class ForumComponent extends MVCComponent implements BootableExtensionInterface, RouterServiceInterface
 {
@@ -41,10 +42,9 @@ class ForumComponent extends MVCComponent implements BootableExtensionInterface,
 	 *
 	 * @return  void
 	 *
-	 * @since   4.0.0
+	 * @since   Kunena 6.0
 	 */
 	public function boot(ContainerInterface $container)
 	{
-		//$this->getRegistry()->register('forumadministrator', new AdministratorService);
 	}
 }

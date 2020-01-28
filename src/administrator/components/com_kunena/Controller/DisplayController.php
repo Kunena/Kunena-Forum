@@ -1,24 +1,29 @@
 <?php
 /**
- * @package     Forum.Administrator
- * @subpackage  com_kunena
+ * Kunena Component
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package         Kunena.Administrator
+ * @subpackage      Controllers
+ *
+ * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
 namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use KunenaFactory;
 
 /**
  * Component Controller
  *
- * @since  1.5
+ * @since   Kunena 6.0
  */
 class DisplayController extends BaseController
 {
@@ -26,7 +31,8 @@ class DisplayController extends BaseController
 	 * The default view.
 	 *
 	 * @var    string
-	 * @since  1.6
+	 *
+	 * @since  Kunena 6.0
 	 */
 	protected $default_view = 'cpanel';
 
@@ -34,12 +40,14 @@ class DisplayController extends BaseController
 	 * Method to display a view.
 	 *
 	 * @param   boolean  $cachable   If true, the view output will be cached
-	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link \JFilterInput::clean()}.
+	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see
+	 *                               {@link \JFilterInput::clean()}.
 	 *
-	 * @return BaseController
+	 * @return  BaseController
 	 *
-	 * @since   1.5
-	 * @throws \Exception
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
@@ -47,15 +55,15 @@ class DisplayController extends BaseController
 		$layout = $this->input->get('layout', 'default');
 		$id     = $this->input->getInt('id');
 
-		\KunenaFactory::loadLanguage('com_kunena','admin');
-		\KunenaFactory::loadLanguage('com_kunena.views','admin');
-		\KunenaFactory::loadLanguage('com_kunena.libraries','admin');
-		\KunenaFactory::loadLanguage('com_kunena.sys','admin');
-		\KunenaFactory::loadLanguage('com_kunena.install','admin');
-		\KunenaFactory::loadLanguage('com_kunena.models','admin');
-		\KunenaFactory::loadLanguage('com_kunena.controllers','admin');
-		\KunenaFactory::loadLanguage('com_plugins','admin');
-		\KunenaFactory::loadLanguage('com_kunena','site');
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.models', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+		KunenaFactory::loadLanguage('com_plugins', 'admin');
+		KunenaFactory::loadLanguage('com_kunena', 'site');
 
 		$document = Factory::getApplication()->getDocument();
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');

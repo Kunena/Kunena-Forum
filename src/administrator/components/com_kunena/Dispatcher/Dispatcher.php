@@ -27,6 +27,8 @@ class Dispatcher extends ComponentDispatcher
 	 * Kunena have to check for extension permission
 	 *
 	 * @return  void
+	 *
+	 * @since   Kunena 6.0
 	 */
 	protected function checkAccess()
 	{

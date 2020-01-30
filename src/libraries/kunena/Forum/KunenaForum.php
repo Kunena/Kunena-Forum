@@ -469,33 +469,6 @@ abstract class KunenaForum
 		KunenaFactory::loadLanguage('com_kunena.model');
 		KunenaFactory::loadLanguage('com_kunena.view');
 
-		require_once KPATH_SITE . '/views/common/view.html.php';
-		require_once KPATH_SITE . '/models/common.php';
-
-		if (!class_exists($view))
-		{
-			$vpath = KPATH_SITE . '/views/' . $viewName . '/view.html.php';
-
-			if (!is_file($vpath))
-			{
-				return;
-			}
-
-			require_once $vpath;
-		}
-
-		if ($viewName != 'common' && !class_exists($model))
-		{
-			$mpath = KPATH_SITE . '/models/' . $viewName . '.php';
-
-			if (!is_file($mpath))
-			{
-				return;
-			}
-
-			require_once $mpath;
-		}
-
 		$view = new $view(['base_path' => KPATH_SITE]);
 
 		if (!($params instanceof Registry))

@@ -106,8 +106,6 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		parent::before();
 
-		require_once KPATH_SITE . '/models/category.php';
-
 		$catid = $this->input->getInt('catid');
 
 		KunenaFactory::loadLanguage('com_kunena.models', 'admin');

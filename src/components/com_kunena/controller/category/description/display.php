@@ -44,8 +44,6 @@ class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisp
 	{
 		parent::before();
 
-		require_once KPATH_SITE . '/models/category.php';
-
 		$catid = $this->input->getInt('catid');
 
 		$this->category = Helper::get($catid);

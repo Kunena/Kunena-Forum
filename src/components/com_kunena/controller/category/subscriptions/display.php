@@ -70,7 +70,6 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	{
 		parent::before();
 
-		require_once KPATH_SITE . '/models/category.php';
 		$this->model = new CategoryModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();

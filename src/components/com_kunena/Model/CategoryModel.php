@@ -26,8 +26,6 @@ use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\Helper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 
-require_once KPATH_ADMIN . '/models/categories.php';
-
 /**
  * Category Model for Kunena
  *

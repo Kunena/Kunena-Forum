@@ -93,7 +93,6 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		require_once KPATH_SITE . '/models/category.php';
 		$this->model = new CategoryModel;
 
 		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();

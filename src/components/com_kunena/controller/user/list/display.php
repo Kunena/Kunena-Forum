@@ -90,7 +90,6 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		require_once KPATH_SITE . '/models/user.php';
 		$this->model = new UserModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();

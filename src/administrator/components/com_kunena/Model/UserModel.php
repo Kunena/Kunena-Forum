@@ -193,10 +193,11 @@ class UserModel extends Model
 			$categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
 
+		// Todo: fix params
 		$params  = [
 			'sections' => false,
 			'action'   => 'read'];
-		$modCats = HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 
 		return $modCats;
 	}
@@ -267,7 +268,7 @@ class UserModel extends Model
 	 */
 	public function getMovecatslist()
 	{
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, [], [], 'class="inputbox form-control"', 'value', 'text');
+		return HTMLHelper::_('select.genericlist', '', 'catid', 'class="inputbox form-control"', 'value', 'text');
 	}
 
 	/**

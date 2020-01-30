@@ -8434,6 +8434,12 @@ hr {
 	text-align: center
 }
 
+select.input-medium,
+select option{
+	background-color: var(--atum-bg-light);
+	color: #495057;
+	border-color: #eaeaea;
+}
 select.form-control {
 	background-color: var(--atum-bg-light);
 }

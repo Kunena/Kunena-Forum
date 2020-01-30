@@ -629,7 +629,7 @@ class View extends HtmlView
 			$title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
 		}
 
-		return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
+		return HTMLHelper::_('link', $category->getUri(), $content, $title, $class, '');
 	}
 
 	/**
@@ -683,6 +683,6 @@ class View extends HtmlView
 			}
 		}
 
-		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
+		return HTMLHelper::_('link', $uri, $content, $title, $class, $rel);
 	}
 }

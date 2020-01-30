@@ -157,7 +157,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$filterFields = [];
 
-		$reflection = new ReflectionClass('KunenaLog');
+		$reflection = new ReflectionClass('Kunena\Forum\Libraries\Log\Log');
 		$constants  = $reflection->getConstants();
 		ksort($constants);
 

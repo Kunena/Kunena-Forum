@@ -79,7 +79,7 @@ class CategoryList extends FormField
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return HTMLHelper::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, $attribs, 'value', 'text', $this->value);
+		return HTMLHelper::_('select.genericlist', $options,  $this->element, 'class="input-block-level" multiple="multiple" size="5"', $this->value);
 	}
 
 	/**

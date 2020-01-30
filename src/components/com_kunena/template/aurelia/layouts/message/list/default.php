@@ -114,7 +114,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 									<label>
 										<?php if (!empty($this->moreUri))
 										{
-											echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'nofollow');
+											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'nofollow');
 										} ?>
 										<?php
 										if (!empty($this->actions))
@@ -125,7 +125,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 											if (isset($this->actions['move']))
 												:
 												$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+												echo HTMLHelper::_('select.genericlist', $options, 'target', 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 											       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>

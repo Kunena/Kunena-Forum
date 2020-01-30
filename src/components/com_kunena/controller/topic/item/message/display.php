@@ -174,7 +174,7 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 		{
 			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
 			{
-				$this->reportMessageLink = HTMLHelper::_('kunenaforum.link',
+				$this->reportMessageLink = HTMLHelper::_('link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
 					. '&mesid=' . intval($this->message->id),

@@ -130,13 +130,13 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 									<label>
 										<?php if (!empty($this->topics) && !empty($this->moreUri))
 										{
-											echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
+											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
 										} ?>
 										<?php if (!empty($this->actions)) : ?>
 											<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 											<?php if (isset($this->actions['move'])) :
 												$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+												echo HTMLHelper::_('link.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<button type="submit" name="kcheckgo"
 											        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>

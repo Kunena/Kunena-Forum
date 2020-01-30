@@ -245,7 +245,7 @@ class Layout extends Base
 			$class .= ' locked';
 		}
 
-		$link = HTMLHelper::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
+		$link = HTMLHelper::_('link', $category->getUrl(), $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -339,7 +339,7 @@ class Layout extends Base
 			$class .= ' locked';
 		}
 
-		$link = HTMLHelper::_('kunenaforum.link', $url, $content, $title, $class, $con);
+		$link = HTMLHelper::_('link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -420,6 +420,6 @@ class Layout extends Base
 			$class .= ' locked';
 		}
 
-		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $con);
+		return HTMLHelper::_('link', $uri, $content, $title, $class, $con);
 	}
 }

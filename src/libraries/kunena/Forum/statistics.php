@@ -474,7 +474,7 @@ class Statistics
 			{
 				$item          = clone $item;
 				$item->count   = $item->posts;
-				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}
@@ -537,7 +537,7 @@ class Statistics
 			{
 				$item          = clone $item;
 				$item->count   = $polls[$item->id]->count;
-				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

@@ -341,7 +341,7 @@ class KunenaLayoutCategoryItem extends Layout
 			$title = Text::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		}
 
-		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return HTMLHelper::_('link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	/**

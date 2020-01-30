@@ -20,7 +20,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Model\Model;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -81,7 +81,7 @@ class UserModel extends Model
 				$topic_list[] = $sub->thread;
 			}
 
-			$topic_list = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topic_list);
+			$topic_list = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topic_list);
 		}
 
 		return $topic_list;
@@ -98,7 +98,7 @@ class UserModel extends Model
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$subscatslist = Helper::getSubscriptions($userid);
+		$subscatslist = CategoryHelper::getSubscriptions($userid);
 
 		return $subscatslist;
 	}
@@ -213,7 +213,7 @@ class UserModel extends Model
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$user = \Kunena\Forum\Libraries\User\Helper::get($userid);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
 
 		return $user;
 	}

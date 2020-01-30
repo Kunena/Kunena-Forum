@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -68,7 +68,7 @@ class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->profile = Helper::get($userid);
+		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('ban');
 
 		$this->banInfo = Ban::getInstanceByUserid($userid, true);

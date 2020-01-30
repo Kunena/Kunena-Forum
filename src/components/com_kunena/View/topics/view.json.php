@@ -14,9 +14,10 @@ namespace Kunena\Forum\Site\View\Topics;
 defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Forum\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\View;
 use stdClass;
 use function defined;
@@ -39,7 +40,7 @@ class json extends View
 	 */
 	public function display($tpl = null)
 	{
-		list($count, $topics) = Topic\Helper::getLatestTopics(false, 0, 55);
+		list($count, $topics) = TopicHelper::getLatestTopics(false, 0, 55);
 
 		$template = KunenaFactory::getTemplate();
 		$list     = [];
@@ -47,7 +48,7 @@ class json extends View
 		foreach ($topics as $topic)
 		{
 			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users    = Helper::get($lastuser);
+			$users    = KunenaUserHelper::get($lastuser);
 
 			$response           = new stdClass;
 			$response->id       = $topic->id;

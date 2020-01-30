@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
 use function defined;
 
@@ -74,7 +74,7 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me               = Helper::getMyself();
+		$this->me               = KunenaUserHelper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();

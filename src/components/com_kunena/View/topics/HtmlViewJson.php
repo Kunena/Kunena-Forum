@@ -10,7 +10,7 @@
  **/
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\View\View;
 
@@ -34,7 +34,7 @@ class KunenaViewTopics extends View
 	 */
 	public function display($tpl = null)
 	{
-		list($count, $topics) = Helper::getLatestTopics(false, 0, 55);
+		list($count, $topics) = TopicHelper::getLatestTopics(false, 0, 55);
 
 		$template = KunenaFactory::getTemplate();
 		$list     = [];
@@ -42,7 +42,7 @@ class KunenaViewTopics extends View
 		foreach ($topics as $topic)
 		{
 			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users    = \Kunena\Forum\Libraries\User\Helper::get($lastuser);
+			$users    = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($lastuser);
 
 			$response           = new stdClass;
 			$response->id       = $topic->id;

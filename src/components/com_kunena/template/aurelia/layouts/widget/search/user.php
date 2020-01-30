@@ -18,7 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use function defined;
 
-$me    = \Kunena\Forum\Libraries\User\Helper::getMyself();
+$me    = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 $state = $this->state;
 ?>
 

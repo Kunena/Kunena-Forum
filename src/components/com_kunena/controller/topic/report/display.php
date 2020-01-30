@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use function defined;
@@ -70,7 +70,7 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
-		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if (!$this->config->reportmsg)
 		{
@@ -86,12 +86,12 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 
 		if (!$mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
 			$this->topic->tryAuthorise();
 		}
 		else
 		{
-			$this->message = Helper::get($mesid);
+			$this->message = MessageHelper::get($mesid);
 			$this->message->tryAuthorise();
 			$this->topic = $this->message->getTopic();
 		}

@@ -19,9 +19,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Login\Login;
-use Kunena\Forum\Libraries\Menu\Fix;
+use Kunena\Forum\Libraries\Menu\MenuFix;
 use function defined;
 
 /**
@@ -105,14 +105,14 @@ class HtmlView extends BaseHtmlView
 	{
 		$id = $this->app->input->get('id', 0, 'int');
 
-		$topic           = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+		$topic           = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
 		$acl             = Access::getInstance();
 		$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
 
-		$this->cat_subscribers_users = Helper::loadUsers($cat_subscribers);
+		$this->cat_subscribers_users = CategoryHelper::loadUsers($cat_subscribers);
 
 		$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
-		$this->topic_subscribers_users = Helper::loadUsers($topic_subscribers);
+		$this->topic_subscribers_users = CategoryHelper::loadUsers($topic_subscribers);
 
 		$this->cat_topic_subscribers = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
 
@@ -188,9 +188,9 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function displayMenu()
 	{
-		$this->legacy    = Fix::getLegacy();
-		$this->invalid   = Fix::getInvalid();
-		$this->conflicts = Fix::getConflicts();
+		$this->legacy    = MenuFix::getLegacy();
+		$this->invalid   = MenuFix::getInvalid();
+		$this->conflicts = MenuFix::getConflicts();
 
 		$this->setToolBarMenu();
 		$this->display();

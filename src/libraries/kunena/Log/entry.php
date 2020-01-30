@@ -56,11 +56,11 @@ class Entry
 
 		$this->data = [
 			'type'        => (int) $type,
-			'user_id'     => \Kunena\Forum\Libraries\User\Helper::getMyself()->userid,
+			'user_id'     => \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid,
 			'category_id' => $category ? $category->id : 0,
 			'topic_id'    => $topic ? $topic->id : 0,
 			'target_user' => $user ? $user->userid : 0,
-			'ip'          => Factory::getApplication()->isClient('site') && \Kunena\Forum\Libraries\User\Helper::getUserIp() !== null ? \Kunena\Forum\Libraries\User\Helper::getUserIp() : '',
+			'ip'          => Factory::getApplication()->isClient('site') && \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp() !== null ? \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp() : '',
 			'time'        => $now->toUnix(),
 			'operation'   => $operation,
 			'data'        => json_encode($data),

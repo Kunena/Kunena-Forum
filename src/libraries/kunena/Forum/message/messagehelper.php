@@ -157,7 +157,7 @@ abstract class MessageHelper
 	 */
 	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
 
 		if (!$topic->exists())
 		{
@@ -228,7 +228,7 @@ abstract class MessageHelper
 			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 		}
 
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic_id)->getTotal($hold) - $start - 1;
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order    = ($ordering == 'ASC') ? 1 : -1;
 		$list     = [];
 
@@ -328,11 +328,11 @@ abstract class MessageHelper
 			$categories = false;
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categories, $reverse, 'topic.' . $authorise);
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($categories, $reverse, 'topic.' . $authorise);
 
 		if ($childforums)
 		{
-			$categories += \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
+			$categories += \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
 		}
 
 		$catlist = [];
@@ -452,12 +452,12 @@ abstract class MessageHelper
 	{
 		if (is_null($direction))
 		{
-			$direction = \Kunena\Forum\Libraries\User\Helper::getMyself()->getMessageOrdering();
+			$direction = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getMessageOrdering();
 		}
 
 		if (!$hold)
 		{
-			$me           = \Kunena\Forum\Libraries\User\Helper::getMyself();
+			$me           = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 			$mes_instance = self::get($mesid);
 			$hold         = \Kunena\Forum\Libraries\Access\Access::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
 		}

@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
@@ -120,7 +120,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 			throw new Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
-		$attachment = \Kunena\Forum\Libraries\Attachment\Helper::get($id);
+		$attachment = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($id);
 		$attachment->tryAuthorise();
 
 		$path = $attachment->getPath($thumb);
@@ -225,7 +225,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 	}

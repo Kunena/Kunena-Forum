@@ -259,7 +259,7 @@ class TableKunenaMessages extends KunenaTable
 	 */
 	public function check()
 	{
-		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->catid);
+		$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->catid);
 
 		if (!$category->exists())
 		{

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
@@ -140,7 +140,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							:
 							foreach ($this->items as $item)
 								:
-								$user = Helper::get($item->user_id);
+								$user = KunenaUserHelper::get($item->user_id);
 								?>
 								<tr>
 									<td>

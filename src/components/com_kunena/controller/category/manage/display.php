@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Template\Template;
@@ -97,7 +97,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	 */
 	protected function before()
 	{
-		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if (!$this->me->isAdmin())
 		{
@@ -112,7 +112,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$this->category = Helper::get($catid);
+		$this->category = CategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
 		$category = $this->category;

@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
@@ -55,14 +55,14 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$catid = $this->input->getInt('catid', 0);
 		$id    = $this->input->getInt('id', 0);
 
-		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
+		$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
 		$category->tryAuthorise();
 
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
 		$topic->tryAuthorise();
 
-		\Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus([$topic->id => $topic]);
-		$message = Helper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
+		\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus([$topic->id => $topic]);
+		$message = MessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
 		while (@ob_end_clean())

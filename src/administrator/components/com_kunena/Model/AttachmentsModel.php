@@ -19,7 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use function defined;
 
 /**
@@ -154,7 +154,7 @@ class AttachmentsModel extends ListModel
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();
-		$results = Helper::getById($ids);
+		$results = AttachmentHelper::getById($ids);
 		$userids = [];
 		$mesids  = [];
 
@@ -164,8 +164,8 @@ class AttachmentsModel extends ListModel
 			$mesids[$result->mesid]   = $result->mesid;
 		}
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userids);
-		\Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($mesids);
+		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userids);
+		\Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($mesids);
 
 		return $results;
 	}

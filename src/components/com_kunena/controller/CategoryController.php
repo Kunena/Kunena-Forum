@@ -18,13 +18,11 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Administrator\Controller\CategoriesController;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Utilities\ArrayHelper;
 use function defined;
-
-require_once KPATH_ADMIN . '/controllers/categories.php';
 
 /**
  * Kunena Category Controller
@@ -108,7 +106,7 @@ class CategoryController extends CategoriesController
 		else
 		{
 			// One category
-			$category = Helper::get($catid);
+			$category = CategoryHelper::get($catid);
 
 			if (!$category->isAuthorised('read'))
 			{
@@ -131,7 +129,7 @@ class CategoryController extends CategoriesController
 				}
 
 				// Mark all unread topics in selected categories as read.
-				\Kunena\Forum\Libraries\Forum\Category\User\Helper::markRead(array_keys($categories));
+				\Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::markRead(array_keys($categories));
 
 				if (count($categories) > 1)
 				{
@@ -165,7 +163,7 @@ class CategoryController extends CategoriesController
 			return;
 		}
 
-		$category = Helper::get($this->app->input->getInt('catid', 0));
+		$category = CategoryHelper::get($this->app->input->getInt('catid', 0));
 
 		if (!$category->isAuthorised('read'))
 		{
@@ -206,7 +204,7 @@ class CategoryController extends CategoriesController
 			return;
 		}
 
-		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		$userid = $this->app->input->getInt('userid');
 
@@ -216,7 +214,7 @@ class CategoryController extends CategoriesController
 			: array_keys($this->app->input->get('categories', [], 'post'));
 		$catids = ArrayHelper::toInteger($catids);
 
-		$categories = Helper::getCategories($catids);
+		$categories = CategoryHelper::getCategories($catids);
 
 		foreach ($categories as $category)
 		{

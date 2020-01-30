@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Exception;
-use Kunena\Forum\Libraries\Template\Helper;
+use Kunena\Forum\Libraries\Template\TemplateHelper;
 use Kunena\Forum\Libraries\Template\Template;
 use stdClass;
 
@@ -69,12 +69,12 @@ class TemplateModel extends AdminModel
 		$app = Factory::getApplication();
 
 		$template = $app->getUserState('kunena.edit.template');
-		$details  = Helper::parseXmlFile($template);
+		$details  = TemplateHelper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = Helper::parseXmlFile($template);
+			$details  = TemplateHelper::parseXmlFile($template);
 		}
 
 		return $details;

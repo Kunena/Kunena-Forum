@@ -20,12 +20,12 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Forum\Message\Finder;
+use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
@@ -66,7 +66,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 		$this->model = new TopicsModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state   = $this->model->getState();
-		$this->me      = Helper::getMyself();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -106,7 +106,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$userid = null;
 		}
 
-		$user = is_numeric($userid) ? Helper::get($userid) : null;
+		$user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
@@ -114,7 +114,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 		$authorise   = 'read';
 		$order       = 'time';
 
-		$finder = new Finder;
+		$finder = new MessageFinder;
 		$finder->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))
@@ -148,7 +148,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 				break;
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categoryIds, $reverse, $authorise);
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new Pagination($finder->count(), $start, $limit);
@@ -229,7 +229,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
 
-		$this->topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topicIds, 'none');
+		$this->topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = [];
 
@@ -304,7 +304,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
-		$user  = Helper::get($this->state->get('user'));
+		$user  = KunenaUserHelper::get($this->state->get('user'));
 
 		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$menu_item       = $this->app->getMenu()->getActive();

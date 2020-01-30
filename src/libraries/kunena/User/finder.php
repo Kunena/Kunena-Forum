@@ -156,6 +156,6 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	{
 		$results = parent::find();
 
-		return Helper::loadUsers($results);
+		return KunenaUserHelper::loadUsers($results);
 	}
 }

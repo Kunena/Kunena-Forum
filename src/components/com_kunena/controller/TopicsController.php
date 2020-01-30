@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Attachment\Finder;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
@@ -73,7 +73,7 @@ class TopicsController extends KunenaController
 		$ids     = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids     = ArrayHelper::toInteger($ids);
 
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -82,7 +82,7 @@ class TopicsController extends KunenaController
 		}
 		else
 		{
-			$messages = Helper::getMessagesByTopics($ids);
+			$messages = MessageHelper::getMessagesByTopics($ids);
 
 			foreach ($topics as $topic)
 			{
@@ -92,7 +92,7 @@ class TopicsController extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = Text::_('COM_KUNENA_BULKMSG_DELETED');
-					\Kunena\Forum\Libraries\Forum\Category\Helper::recount($topic->getCategory()->id);
+					\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
@@ -195,7 +195,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -262,7 +262,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -329,7 +329,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -396,12 +396,12 @@ class TopicsController extends KunenaController
 		$topics_ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$topics_ids = ArrayHelper::toInteger($topics_ids);
 
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topics_ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topics_ids);
 
 		$messages_ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
-		$messages = Helper::getMessages($messages_ids);
+		$messages = MessageHelper::getMessages($messages_ids);
 
 		if (!$topics && !$messages)
 		{
@@ -410,7 +410,7 @@ class TopicsController extends KunenaController
 		}
 		else
 		{
-			$target = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->app->input->getInt('target', 0));
+			$target = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->app->input->getInt('target', 0));
 
 			if (empty($target->id))
 			{
@@ -504,9 +504,9 @@ class TopicsController extends KunenaController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
-		if (\Kunena\Forum\Libraries\Forum\Topic\Helper::favorite(array_keys($topics), 0))
+		if (\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::favorite(array_keys($topics), 0))
 		{
 			if ($this->config->log_moderation)
 			{
@@ -556,9 +556,9 @@ class TopicsController extends KunenaController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids);
 
-		if (\Kunena\Forum\Libraries\Forum\Topic\Helper::subscribe(array_keys($topics), 0, $userid))
+		if (\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::subscribe(array_keys($topics), 0, $userid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'));
 		}
@@ -592,7 +592,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = Helper::getMessages($ids);
+		$messages = MessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -644,7 +644,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = Helper::getMessages($ids);
+		$messages = MessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -695,7 +695,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = Helper::getMessages($ids);
+		$messages = MessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -746,7 +746,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = Helper::getMessages($ids);
+		$messages = MessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{

@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -58,9 +58,9 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 		$mesid       = $this->input->getInt('mesid');
 		$saved       = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
-		$this->message  = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
+		$this->message  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
 		$this->topic    = $this->message->getTopic();
@@ -78,7 +78,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$categories        = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+		$categories        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -144,7 +144,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{

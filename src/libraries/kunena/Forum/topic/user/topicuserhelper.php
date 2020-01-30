@@ -30,13 +30,13 @@ use function defined;
 abstract class TopicUserHelper
 {
 	/**
-	 * @var     array|User[]
+	 * @var     array|TopicUser[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
 
 	/**
-	 * @var     array|User[]
+	 * @var     array|TopicUser[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_topics = [];
@@ -48,7 +48,7 @@ abstract class TopicUserHelper
 	 * @param   mixed           $user    user
 	 * @param   bool            $reload  reload
 	 *
-	 * @return  User
+	 * @return  TopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -62,11 +62,11 @@ abstract class TopicUserHelper
 		}
 
 		$topic = intval($topic);
-		$user  = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($topic < 1)
 		{
-			return new User(null, $user);
+			return new TopicUser(null, $user);
 		}
 
 		if ($reload || empty(self::$_instances [$user->userid][$topic]))
@@ -82,7 +82,7 @@ abstract class TopicUserHelper
 	 * @param   bool|array  $ids   ids
 	 * @param   mixed       $user  user
 	 *
-	 * @return  User[]
+	 * @return  TopicUser[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -90,7 +90,7 @@ abstract class TopicUserHelper
 	 */
 	public static function getTopics($ids = false, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($ids === false)
 		{
@@ -175,7 +175,7 @@ abstract class TopicUserHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new User;
+				$instance = new TopicUser;
 
 				if (!empty($results))
 				{
@@ -187,7 +187,7 @@ abstract class TopicUserHelper
 			}
 			else
 			{
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new User($id, $user->userid);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new TopicUser($id, $user->userid);
 			}
 		}
 

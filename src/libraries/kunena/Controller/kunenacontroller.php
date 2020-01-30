@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Response\ResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -69,7 +69,7 @@ class KunenaController extends BaseController
 	{
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
 		if ($this->me->userid && !$this->me->exists())

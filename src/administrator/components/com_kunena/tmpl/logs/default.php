@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -248,10 +248,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							foreach ($this->items as $item)
 								:
 								$date = new KunenaDate($item->time);
-								$user     = \Kunena\Forum\Libraries\User\Helper::get($item->user_id);
-								$category = Helper::get($item->category_id);
-								$topic    = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($item->topic_id);
-								$target   = \Kunena\Forum\Libraries\User\Helper::get($item->target_user);
+								$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($item->user_id);
+								$category = CategoryHelper::get($item->category_id);
+								$topic    = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($item->topic_id);
+								$target   = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($item->target_user);
 
 								$document = Factory::getApplication()->getDocument();
 								// TODO : move this part of javascript outside of foreach

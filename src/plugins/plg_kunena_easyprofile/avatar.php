@@ -19,7 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\KunenaFactory;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Registry\Registry;
 use function defined;
 

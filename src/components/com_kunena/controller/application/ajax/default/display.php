@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Request\Request;
 use Kunena\Forum\Libraries\Response\ResponseJson;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 
@@ -126,7 +126,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();

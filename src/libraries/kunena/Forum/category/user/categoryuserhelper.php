@@ -42,7 +42,7 @@ abstract class CategoryUserHelper
 	 * @param   mixed     $user      The user id to load - Can be only an integer.
 	 * @param   bool      $reload    Reload objects from the database.
 	 *
-	 * @return  User    The user category object.
+	 * @return  CategoryUser    The user category object.
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -56,11 +56,11 @@ abstract class CategoryUserHelper
 		}
 
 		$category = intval($category);
-		$user     = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($category === null)
 		{
-			return new User(null, $user);
+			return new CategoryUser(null, $user);
 		}
 
 		if ($reload || empty(self::$_instances [$user->userid][$category]))
@@ -78,7 +78,7 @@ abstract class CategoryUserHelper
 	 * @param   bool|array|int  $ids   The category ids to load.
 	 * @param   mixed           $user  The user id to load.
 	 *
-	 * @return  User[]
+	 * @return  CategoryUser[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -86,12 +86,12 @@ abstract class CategoryUserHelper
 	 */
 	public static function getCategories($ids = false, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($ids === false)
 		{
 			// Get categories which are seen by current user
-			$ids = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+			$ids = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		}
 		elseif (!is_array($ids))
 		{
@@ -174,14 +174,14 @@ abstract class CategoryUserHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new User;
+				$instance = new CategoryUser;
 				$instance->bind($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
 			}
 			else
 			{
-				self::$_instances [$user->userid][$id] = new User($id, $user);
+				self::$_instances [$user->userid][$id] = new CategoryUser($id, $user);
 			}
 		}
 
@@ -200,7 +200,7 @@ abstract class CategoryUserHelper
 	 */
 	public static function markRead(array $ids, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		$items      = self::getCategories($ids, $user);
 		$updateList = [];

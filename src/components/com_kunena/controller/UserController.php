@@ -39,7 +39,7 @@ use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Response\JsonResponse;
@@ -326,7 +326,7 @@ class UserController extends KunenaController
 		}
 
 		// Check permission
-		$moderator = Helper::getMyself()->isModerator();
+		$moderator = KunenaUserHelper::getMyself()->isModerator();
 		$my        = $this->app->getIdentity();
 
 		if (!$moderator)
@@ -599,7 +599,7 @@ class UserController extends KunenaController
 		}
 
 		// Reload the user.
-		if (Helper::getMyself()->userid == $this->user->id)
+		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
 		{
 			$this->user->load($this->user->id);
 			$session = Factory::getSession();
@@ -836,7 +836,7 @@ class UserController extends KunenaController
 					$user
 				);
 
-				Helper::recountBanned();
+				KunenaUserHelper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);
@@ -890,11 +890,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -910,11 +910,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -1047,7 +1047,7 @@ class UserController extends KunenaController
 		}
 
 		$status     = $this->app->input->getInt('status', 0);
-		$me         = Helper::getMyself();
+		$me         = KunenaUserHelper::getMyself();
 		$me->status = $status;
 
 		try
@@ -1088,7 +1088,7 @@ class UserController extends KunenaController
 		}
 
 		$status_text     = $this->app->input->post->getString('status_text', '');
-		$me              = Helper::getMyself();
+		$me              = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
 
 		try
@@ -1250,7 +1250,7 @@ class UserController extends KunenaController
 		$success = [];
 		$kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-		if (Helper::getMyself()->userid == $kuser->userid || Helper::getMyself()->isAdmin() || Helper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$this->deleteOldAvatars();
 
@@ -1361,7 +1361,7 @@ class UserController extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment  = \Kunena\Forum\Libraries\Attachment\Helper::get($id);
+				$attachment  = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($id);
 				$message     = $attachment->getMessage();
 				$attachments = [$attachment->id, 1];
 				$attach      = [];
@@ -1447,7 +1447,7 @@ class UserController extends KunenaController
 			$data['stopforumspam_key'] = $this->config->stopforumspam_key;
 			$data['evidence']          = $evidence;
 
-			$result = Helper::storeCheckStopforumspam($data, 'add');
+			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
 
 			if ($result != false)
 			{

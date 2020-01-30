@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -42,7 +42,7 @@ class KunenaLayoutAnnouncementList extends Layout
 	{
 		$options = [];
 
-		if (Helper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->isModerator())
 		{
 			$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 			$options[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_UNPUBLISH'));

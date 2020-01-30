@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
@@ -165,7 +165,7 @@ class KunenaProfile extends Profile
 
 		if (!($user instanceof KunenaUser))
 		{
-			$user = Helper::get($user);
+			$user = KunenaUserHelper::get($user);
 		}
 
 		if ($user === false)

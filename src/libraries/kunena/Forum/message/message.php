@@ -192,7 +192,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return MessageHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -217,7 +217,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function isNew($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
 		{
@@ -231,14 +231,14 @@ class Message extends KunenaDatabaseObject
 			return false;
 		}
 
-		$allreadtime = \Kunena\Forum\Libraries\Forum\Category\User\Helper::get($this->getCategory(), $user)->allreadtime;
+		$allreadtime = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
 
 		if ($allreadtime && $this->time < $allreadtime)
 		{
 			return false;
 		}
 
-		$read = \Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::get($this->getTopic(), $user);
+		$read = \Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper::get($this->getTopic(), $user);
 
 		if ($this->id == $read->message_id || $this->time < $read->time)
 		{
@@ -257,7 +257,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->catid);
+		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->catid);
 	}
 
 	/**
@@ -271,7 +271,7 @@ class Message extends KunenaDatabaseObject
 	{
 		if (!$this->_topic)
 		{
-			$this->_topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->thread);
+			$this->_topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->thread);
 		}
 
 		return $this->_topic;
@@ -361,7 +361,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function newReply($fields = [], $user = null, $safefields = null)
 	{
-		$user     = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 		$topic    = $this->getTopic();
 		$category = $this->getCategory();
 
@@ -373,18 +373,18 @@ class Message extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = \Kunena\Forum\Libraries\User\Helper::getUserIp();
+		$message->ip      = \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp();
 
 		// Add IP to user.
 		if (KunenaConfig::getInstance()->iptracking)
 		{
 			if (empty($user->ip))
 			{
-				$user->ip = \Kunena\Forum\Libraries\User\Helper::getUserIp();
+				$user->ip = \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp();
 			}
 		}
 
-		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
+		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
 		{
 			if (isset($fields['subject']))
 			{
@@ -716,7 +716,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getPermaUri($category = null)
 	{
-		$category = $category ? \Kunena\Forum\Libraries\Forum\Category\Helper::get($category) : $this->getCategory();
+		$category = $category ? \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category) : $this->getCategory();
 
 		if (!$this->exists() || !$category->exists())
 		{
@@ -797,11 +797,11 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function save()
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if ($user->userid == 0 && $this->userid)
 		{
-			$user = \Kunena\Forum\Libraries\User\Helper::get($this->userid);
+			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
 		}
 
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
@@ -1051,7 +1051,7 @@ class Message extends KunenaDatabaseObject
 			}
 		}
 
-		\Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper::recount();
+		\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
 
 		return true;
 	}
@@ -1071,11 +1071,11 @@ class Message extends KunenaDatabaseObject
 	{
 		if ($ids === false)
 		{
-			$attachments = \Kunena\Forum\Libraries\Attachment\Helper::getByMessage($this->id, $action);
+			$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getByMessage($this->id, $action);
 		}
 		else
 		{
-			$attachments = \Kunena\Forum\Libraries\Attachment\Helper::getById($ids, $action);
+			$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getById($ids, $action);
 
 			foreach ($attachments as $id => $attachment)
 			{
@@ -1103,7 +1103,7 @@ class Message extends KunenaDatabaseObject
 		// If post was published and then moved, we need to update old topic
 		if (!$this->_hold && $this->_thread && $this->_thread != $this->thread)
 		{
-			$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->_thread);
+			$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->_thread);
 
 			if (!$topic->update($this, -1))
 			{
@@ -1181,7 +1181,7 @@ class Message extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return \Kunena\Forum\Libraries\Forum\Topic\User\Helper
+	 * @return \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1193,7 +1193,7 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  \Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper
+	 * @return  \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1201,7 +1201,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getThankyou()
 	{
-		return \Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper::get($this->id);
+		return \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::get($this->id);
 	}
 
 	/**
@@ -1213,7 +1213,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getParent()
 	{
-		return Helper::get($this->parent);
+		return MessageHelper::get($this->parent);
 	}
 
 	/**
@@ -1225,7 +1225,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\Helper::getAuthor($this->userid, $this->name);
+		return \Kunena\Forum\Libraries\User\KunenaUserHelper::getAuthor($this->userid, $this->name);
 	}
 
 	/**
@@ -1247,7 +1247,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getModifier()
 	{
-		return \Kunena\Forum\Libraries\User\Helper::get($this->modified_by);
+		return \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->modified_by);
 	}
 
 	/**
@@ -1339,7 +1339,7 @@ class Message extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
+			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		}
 
 		if (empty($this->_authcache[$user->userid][$action]))
@@ -1402,7 +1402,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function edit($fields = [], $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		$this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
 
@@ -1424,7 +1424,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function makeAnonymous($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($user->userid == $this->userid && $this->modified_by == $this->userid)
 		{
@@ -1515,7 +1515,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getNbAttachments()
 	{
-		$attachments = \Kunena\Forum\Libraries\Attachment\Helper::getNumberAttachments($this->id);
+		$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getNumberAttachments($this->id);
 
 		$attachs           = new StdClass;
 		$attachs->inline   = 0;
@@ -1584,7 +1584,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function check()
 	{
-		$author = \Kunena\Forum\Libraries\User\Helper::get($this->userid);
+		$author = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
 
 		// Check username
 		if (!$this->userid)
@@ -1617,7 +1617,7 @@ class Message extends KunenaDatabaseObject
 				return false;
 			}
 		}
-		elseif (!\Kunena\Forum\Libraries\User\Helper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
+		elseif (!\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
 		{
 			$this->setError(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
 

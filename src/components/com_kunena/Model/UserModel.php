@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * User Model for Kunena
@@ -313,7 +313,7 @@ class UserModel extends ListModel
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			$items = Helper::loadUsers($items);
+			$items = KunenaUserHelper::loadUsers($items);
 		}
 
 		return $items;

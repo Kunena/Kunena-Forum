@@ -234,7 +234,7 @@ class MessageFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	{
 		$results = parent::find();
 
-		return Helper::getMessages($results, $access);
+		return MessageHelper::getMessages($results, $access);
 	}
 
 	/**

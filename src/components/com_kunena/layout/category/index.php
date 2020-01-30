@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -165,7 +165,7 @@ class KunenaLayoutCategoryIndex extends Layout
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
 		// Is user allowed to mark forums as read?
-		if (Helper::getMyself()->exists() && $numTopics)
+		if (KunenaUserHelper::getMyself()->exists() && $numTopics)
 		{
 			$token = '&' . Session::getFormToken() . '=1';
 

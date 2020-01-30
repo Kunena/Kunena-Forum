@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use function defined;
 
@@ -77,7 +77,7 @@ class KunenaLayoutTopicModerate extends Layout
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
 			'where'   => " AND tt.id != {$db->quote($this->topic->id)} "];
-		list($total, $topics) = Helper::getLatestTopics($this->category->id, 0, 30, $params);
+		list($total, $topics) = TopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
 		{

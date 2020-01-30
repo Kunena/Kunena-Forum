@@ -22,9 +22,9 @@ use Joomla\CMS\User\UserHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Diagnostics;
 use Kunena\Forum\Libraries\Login\Login;
-use Kunena\Forum\Libraries\Menu\Fix;
+use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\MVC\Controller\FormController;
 use RuntimeException;
@@ -127,7 +127,7 @@ class ToolsController extends FormController
 		$ids = $this->app->input->get('prune_forum', [], 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($ids, false, 'admin');
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($ids, false, 'admin');
 
 		if (!$categories)
 		{
@@ -538,8 +538,8 @@ class ToolsController extends FormController
 						if ($state->topics)
 						{
 							// Update topic statistics
-							\Kunena\Forum\Libraries\Attachment\Helper::cleanup();
-							\Kunena\Forum\Libraries\Forum\Topic\Helper::recount(false, $state->start, $state->start + $count);
+							\Kunena\Forum\Libraries\Attachment\AttachmentHelper::cleanup();
+							\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
@@ -551,7 +551,7 @@ class ToolsController extends FormController
 						if ($state->usertopics)
 						{
 							// Update user's topic statistics
-							\Kunena\Forum\Libraries\Forum\Topic\User\Helper::recount(false, $state->start, $state->start + $count);
+							\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
@@ -563,8 +563,8 @@ class ToolsController extends FormController
 						if ($state->categories)
 						{
 							// Update category statistics
-							\Kunena\Forum\Libraries\Forum\Category\Helper::recount();
-							\Kunena\Forum\Libraries\Forum\Category\Helper::fixAliases();
+							\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::recount();
+							\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::fixAliases();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
 						}
 						break;
@@ -572,9 +572,9 @@ class ToolsController extends FormController
 						if ($state->users)
 						{
 							// Update user statistics
-							\Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper::recountThankyou();
-							Helper::recount();
-							Helper::recountPostsNull();
+							\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recountThankyou();
+							KunenaUserHelper::recount();
+							KunenaUserHelper::recountPostsNull();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
 						break;
@@ -582,7 +582,7 @@ class ToolsController extends FormController
 						if ($state->polls)
 						{
 							// Update user statistics
-							\Kunena\Forum\Libraries\Forum\Topic\Poll\Helper::recount();
+							\Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper::recount();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
 						break;
@@ -730,8 +730,8 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$legacy = Fix::getLegacy();
-		$errors = Fix::fixLegacy();
+		$legacy = MenuFix::getLegacy();
+		$errors = MenuFix::fixLegacy();
 
 		if ($errors)
 		{

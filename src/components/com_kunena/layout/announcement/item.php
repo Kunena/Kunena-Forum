@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -66,7 +66,7 @@ class KunenaLayoutAnnouncementItem extends Layout
 
 		if ($this->buttons)
 		{
-			$this->buttons['cpanel'] = $this->getButton(Helper::getUri('list'), 'list', 'announcement', 'communication');
+			$this->buttons['cpanel'] = $this->getButton(AnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
 		}
 
 		return $this->buttons;

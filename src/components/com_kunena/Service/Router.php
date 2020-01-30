@@ -19,6 +19,8 @@ use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Site\Service\KunenaNomenuRules as NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Menu\AbstractMenu;
@@ -28,7 +30,7 @@ use Joomla\CMS\Profiler\Profiler;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -208,7 +210,7 @@ class Router extends RouterView
 			{
 				$numeric = true;
 
-				$alias = Helper::get($catid)->alias;
+				$alias = CategoryHelper::get($catid)->alias;
 
 				// If category alias is empty, use category id; otherwise use alias
 				$segments[] = empty($alias) ? $catid : $alias;
@@ -240,7 +242,7 @@ class Router extends RouterView
 
 			if ($id)
 			{
-				$subject = KunenaRoute::stringURLSafe(Helper::get($id)->subject);
+				$subject = KunenaRoute::stringURLSafe(TopicHelper::get($id)->subject);
 
 				if (empty($subject))
 				{
@@ -340,7 +342,7 @@ class Router extends RouterView
 			}
 			else
 			{
-				$segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(Helper::get((int) $query['userid'])->getName());
+				$segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaUserHelper::get((int) $query['userid'])->getName());
 			}
 
 			unset($query['userid']);

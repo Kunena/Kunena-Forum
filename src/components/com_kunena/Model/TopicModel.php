@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site\Model;
 use Exception;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Message\Message;
@@ -141,7 +141,7 @@ class TopicModel extends ListModel
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->getState('item.catid'));
+		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->getState('item.catid'));
 	}
 
 	/**
@@ -160,13 +160,13 @@ class TopicModel extends ListModel
 			if ($mesid)
 			{
 				// Find actual topic by fetching current message
-				$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
-				$topic   = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($message->thread);
+				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
+				$topic   = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($message->thread);
 				$this->setState('list.start', intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
 			}
 			else
 			{
-				$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->getState('item.id'));
+				$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->getState('item.id'));
 				$ids   = [];
 
 				// If topic has been moved, find the new topic
@@ -179,7 +179,7 @@ class TopicModel extends ListModel
 					}
 
 					$ids[$topic->moved_id] = 1;
-					$topic                 = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic->moved_id);
+					$topic                 = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic->moved_id);
 				}
 			}
 
@@ -202,12 +202,12 @@ class TopicModel extends ListModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessagesByTopic($this->getState('item.id'),
+			$this->messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessagesByTopic($this->getState('item.id'),
 				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded
 			);
 
 			// Get thankyous for all messages in the page
-			$thankyous = \Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper::getByMessage($this->messages);
+			$thankyous = \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::getByMessage($this->messages);
 
 			// First collect ids and users
 			$userlist       = [];
@@ -261,10 +261,10 @@ class TopicModel extends ListModel
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
+			\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
 
 			// Get attachments
-			Helper::getByMessage($this->messages);
+			AttachmentHelper::getByMessage($this->messages);
 		}
 
 		return $this->messages;

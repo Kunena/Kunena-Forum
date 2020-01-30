@@ -122,8 +122,8 @@ class TableKunenaAttachments extends KunenaTable
 	 */
 	public function check()
 	{
-		$user    = \Kunena\Forum\Libraries\User\Helper::get($this->userid);
-		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->mesid);
+		$user    = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
+		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->mesid);
 
 		if ($user->userid != 0 && !$user->exists())
 		{

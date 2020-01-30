@@ -23,7 +23,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Cache\Helper;
+use Kunena\Forum\Libraries\Cache\CacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use function defined;
 
@@ -1724,7 +1724,7 @@ class KunenaConfig extends CMSObject
 		}
 
 		// Clear cache.
-		Helper::clear();
+		CacheHelper::clear();
 	}
 
 	/**

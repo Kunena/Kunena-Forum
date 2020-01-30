@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -99,10 +99,10 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 
 		$mesid = $this->input->getInt('mesid', 0);
 
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
 		$this->detail   = $this->input->get('detail', false);
-		$this->message  = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
+		$this->message  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
 		$this->topic     = $this->message->getTopic();
@@ -156,7 +156,7 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 					$userids_thankyous[] = $userid;
 				}
 
-				$loaded_users = Helper::loadUsers($userids_thankyous);
+				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
 				foreach ($loaded_users as $userid => $user)
 				{

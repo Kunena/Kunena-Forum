@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Table\KunenaTableMap;
@@ -201,7 +201,7 @@ class Message extends KunenaDatabaseObject
 		{
 			$this->_attachments->setKey($this->id)->save();
 			$ids         = $this->_attachments->getMapped();
-			$attachments = Helper::getById($ids, 'none');
+			$attachments = AttachmentHelper::getById($ids, 'none');
 
 			foreach ($attachments as $attachment)
 			{

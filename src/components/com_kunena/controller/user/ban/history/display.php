@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -74,8 +74,8 @@ class ComponentUserControllerBanHistoryDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->me      = Helper::getMyself();
-		$this->profile = Helper::get($userid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('ban');
 
 		$this->banHistory = Ban::getUserHistory($this->profile->userid);

@@ -18,7 +18,7 @@ use function defined;
 $content = $this->execute('Category/Topics');
 
 // Display breadcrumb path to the current category.
-$parents   = \Kunena\Forum\Libraries\Forum\Category\Helper::getParents($content->category->id);
+$parents   = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 foreach ($parents as $parent)

@@ -124,7 +124,7 @@ class Announcement extends KunenaDatabaseObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return AnnouncementHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -334,7 +334,7 @@ class Announcement extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
+			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		}
 
 		// Use local authentication cache to speed up the authentication calls.

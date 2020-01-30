@@ -21,7 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 
@@ -69,7 +69,7 @@ class UsersModel extends ListModel
 			];
 		}
 
-		$this->me = Helper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -115,7 +115,7 @@ class UsersModel extends ListModel
 			$ids[] = $item->id;
 		}
 
-		$instances = Helper::loadUsers($ids);
+		$instances = KunenaUserHelper::loadUsers($ids);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $instances;
@@ -164,7 +164,7 @@ class UsersModel extends ListModel
 	public function getModcatslist()
 	{
 		$options = [];
-		$me      = Helper::getMyself();
+		$me      = KunenaUserHelper::getMyself();
 
 		if ($me->isAdmin())
 		{

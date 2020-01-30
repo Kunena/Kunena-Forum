@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use function defined;
 
-if (\Kunena\Forum\Libraries\User\Helper::getMyself()->socialshare == 0 && \Kunena\Forum\Libraries\User\Helper::getMyself()->exists())
+if (\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->socialshare == 0 && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists())
 {
 	return false;
 }

@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -42,7 +42,7 @@ HTMLHelper::_('dropdown.init');
 			<div class="card card-block bg-faded p-2">
 				<div class="module-title nav-header">
 					<i class="icon-flag-2"></i>
-					<?php echo Helper::getTotalAttachments() . ' ' . Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
+					<?php echo AttachmentHelper::getTotalAttachments() . ' ' . Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 				</div>
 				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>"

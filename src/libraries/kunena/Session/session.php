@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\User\Helper;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -96,7 +96,7 @@ class Session extends CMSObject
 		else
 		{
 			// Deal with users who do not (yet) have all read time set.
-			$userCategory      = Helper::get(0, (int) $identifier);
+			$userCategory      = CategoryUserHelper::get(0, (int) $identifier);
 			$this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
 		}
 	}
@@ -283,7 +283,7 @@ class Session extends CMSObject
 		}
 
 		// Read indication has moved outside of the session table -- let's update it too.
-		$userCategory = Helper::get(0, $this->userid);
+		$userCategory = CategoryUserHelper::get(0, $this->userid);
 
 		if ($userCategory->allreadtime != $this->allreadtime)
 		{

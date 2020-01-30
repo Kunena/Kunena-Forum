@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use function defined;
 
-$markAllReadUrl = \Kunena\Forum\Libraries\Forum\Category\Helper::get()->getMarkReadUrl();
+$markAllReadUrl = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get()->getMarkReadUrl();
 $config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 $status         = $config->user_status;
 $config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params;

@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Route\Legacy;
 
@@ -50,7 +50,7 @@ function kunena_200_2011_12_14_aliases($parent)
 		kCreateAlias('legacy', $func, $func, 1);
 	}
 
-	$categories = Helper::getCategories(false, false, 'none');
+	$categories = CategoryHelper::getCategories(false, false, 'none');
 	$aliasLit   = $aliasUtf = [];
 
 	// Create SEF: id

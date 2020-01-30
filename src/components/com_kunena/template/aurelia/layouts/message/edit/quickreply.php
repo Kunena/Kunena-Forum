@@ -34,7 +34,7 @@ $category = isset($this->category) ? $this->category : $message->getCategory();
 
 $config = isset($this->config) ? $this->config : \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 
-$me = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\Helper::getMyself();
+$me = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addStyleSheet('jquery.atwho.css');

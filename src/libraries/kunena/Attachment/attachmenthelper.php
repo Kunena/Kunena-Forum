@@ -449,10 +449,10 @@ abstract class AttachmentHelper
 	{
 		if ($category !== null)
 		{
-			$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($category);
+			$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category);
 		}
 
-		$user   = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user   = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
 		$types  = explode(',', $config->imagetypes);
 
@@ -525,8 +525,8 @@ abstract class AttachmentHelper
 	 */
 	public static function getFileExtensions($category = null, $user = null)
 	{
-		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($category);
-		$user     = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category);
+		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 		$config   = KunenaFactory::getConfig();
 		$types    = explode(',', $config->filetypes);
 

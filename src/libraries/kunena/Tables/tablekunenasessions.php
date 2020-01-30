@@ -17,11 +17,9 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Sessions
@@ -114,7 +112,7 @@ class TableKunenaSessions extends KunenaTable
 	 */
 	public function check()
 	{
-		$user = Helper::get($this->userid);
+		$user = KunenaUserHelper::get($this->userid);
 
 		if (!$user->exists())
 		{

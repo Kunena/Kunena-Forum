@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Template\Template;
 use Joomla\Database\Exception\ExecutionFailureException;
 use function defined;
@@ -94,12 +94,12 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 		if (!$mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
 			$this->topic->tryAuthorise('move');
 		}
 		else
 		{
-			$this->message = Helper::get($mesid);
+			$this->message = MessageHelper::get($mesid);
 			$this->message->tryAuthorise('move');
 			$this->topic = $this->message->getTopic();
 		}

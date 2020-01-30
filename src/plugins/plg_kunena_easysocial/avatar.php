@@ -16,8 +16,8 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Exception;
 use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\KunenaFactory;
-use Kunena\Forum\Libraries\KunenaProfiler;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
 /**

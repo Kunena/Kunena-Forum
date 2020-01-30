@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -78,7 +78,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		parent::before();
 
 		$mesid = $this->input->getInt('mesid');
-		$me    = Helper::getMyself();
+		$me    = KunenaUserHelper::getMyself();
 
 		$this->message = Message::getInstance($mesid);
 		$this->topic   = $this->message->getTopic();

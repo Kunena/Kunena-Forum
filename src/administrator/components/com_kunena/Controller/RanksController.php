@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Upload\Helper;
+use Kunena\Forum\Libraries\Upload\UploadHelper;
 use Joomla\CMS\MVC\Controller\FormController;
 use RuntimeException;
 use function defined;
@@ -212,7 +212,7 @@ class RanksController extends FormController
 		$file = $this->app->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\UploadHelper::upload()
-		$upload = Helper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');
+		$upload = UploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');
 
 		if ($upload)
 		{

@@ -173,7 +173,7 @@ class Poll extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reset = false)
 	{
-		return Helper::get($identifier, $reset);
+		return PollHelper::get($identifier, $reset);
 	}
 
 	/**
@@ -439,7 +439,7 @@ class Poll extends CMSObject
 			}
 		}
 
-		$votes->lasttime = \Kunena\Forum\Libraries\User\Helper::getMyself()->getTime();
+		$votes->lasttime = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getTime();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 
@@ -720,7 +720,7 @@ class Poll extends CMSObject
 		}
 
 		// Remove poll from the topic
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->threadid);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->threadid);
 
 		if ($success && $topic->exists() && $topic->poll_id)
 		{

@@ -21,7 +21,7 @@ use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -74,7 +74,7 @@ class ComponentUserControllerEditDisplay extends KunenaControllerDisplay
 		$userid = $this->input->getInt('userid');
 
 		$this->user    = Factory::getUser($userid);
-		$this->profile = Helper::get($userid);
+		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
 		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());

@@ -14,7 +14,7 @@ namespace Kunena\Forum\Libraries\User;
 
 defined('_JEXEC') or die();
 
-Helper::initialize();
+KunenaUserHelper::initialize();
 
 use BadMethodCallException;
 use Exception;

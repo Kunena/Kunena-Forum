@@ -288,7 +288,7 @@ class KunenaUser extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return KunenaUserHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -332,7 +332,7 @@ class KunenaUser extends CMSObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = Helper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		$input     = $this->_app->input;
@@ -413,7 +413,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function isMyself()
 	{
-		$result = Helper::getMyself()->userid == $this->userid;
+		$result = KunenaUserHelper::getMyself()->userid == $this->userid;
 
 		return $result;
 	}
@@ -558,7 +558,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function getStatus()
 	{
-		return Helper::getStatus($this->userid);
+		return KunenaUserHelper::getStatus($this->userid);
 	}
 
 	/**
@@ -796,7 +796,7 @@ class KunenaUser extends CMSObject
 		}
 
 		$config = KunenaFactory::getConfig();
-		$me     = Helper::getMyself();
+		$me     = KunenaUserHelper::getMyself();
 
 		if (!$config->pubprofile && !$me->exists())
 		{
@@ -968,7 +968,7 @@ class KunenaUser extends CMSObject
 		// Are we creating a new user
 		$isnew = !$this->_exists;
 
-		$moderator = Helper::getMyself()->isModerator();
+		$moderator = KunenaUserHelper::getMyself()->isModerator();
 		$my        = Factory::getApplication()->getIdentity();
 
 		if (!$moderator)
@@ -1102,7 +1102,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function getEmail($profile)
 	{
-		$me     = Helper::getMyself();
+		$me     = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig();
 
 		if ($me->isModerator() || $me->isAdmin())
@@ -1140,7 +1140,7 @@ class KunenaUser extends CMSObject
 		if (!isset($this->_email))
 		{
 			$config = KunenaFactory::getConfig();
-			$me     = Helper::getMyself();
+			$me     = KunenaUserHelper::getMyself();
 
 			$this->_email = '';
 
@@ -1287,7 +1287,7 @@ class KunenaUser extends CMSObject
 		if ($this->userid)
 		{
 			$config = KunenaFactory::getConfig();
-			$me     = Helper::getMyself();
+			$me     = KunenaUserHelper::getMyself();
 
 			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
 			{

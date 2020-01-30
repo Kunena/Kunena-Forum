@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -72,7 +72,7 @@ class ComponentUserControllerBanManagerDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->me = Helper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		// TODO: add authorisation
 		// TODO: add pagination
@@ -80,7 +80,7 @@ class ComponentUserControllerBanManagerDisplay extends KunenaControllerDisplay
 
 		if (!empty($this->userBans))
 		{
-			Helper::loadUsers(array_keys($this->userBans));
+			KunenaUserHelper::loadUsers(array_keys($this->userBans));
 		}
 
 		$this->headerText = Text::_('COM_KUNENA_BAN_BANMANAGER');

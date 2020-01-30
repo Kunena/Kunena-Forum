@@ -20,7 +20,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\Finder;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -82,8 +82,8 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 		$limit  = $this->input->getInt('limit', 30);
 
 		$this->template = KunenaFactory::getTemplate();
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
-		$this->profile  = \Kunena\Forum\Libraries\User\Helper::get($userid);
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->profile  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
 		$this->moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -124,7 +124,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$messageIds[] = (int) $attachment->mesid;
 		}
 
-		$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($messageIds, 'none');
+		$messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
 		$topicIds = [];
@@ -134,7 +134,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$topicIds[] = $message->thread;
 		}
 
-		Helper::getTopics($topicIds, 'none');
+		TopicHelper::getTopics($topicIds, 'none');
 
 		$this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 	}

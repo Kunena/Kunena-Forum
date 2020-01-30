@@ -22,6 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use function defined;
 
 /**
@@ -64,7 +65,7 @@ class MesssageThankyou extends CMSObject
 	 * @param   null  $identifier  identifier
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  Helper
+	 * @return  Message
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -72,7 +73,7 @@ class MesssageThankyou extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return MessageHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -102,7 +103,7 @@ class MesssageThankyou extends CMSObject
 	public function save($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->id);
+		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->id);
 
 		if (!$user->exists())
 		{
@@ -219,7 +220,7 @@ class MesssageThankyou extends CMSObject
 	public function delete($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->id);
+		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->id);
 
 		if (!$user->exists())
 		{

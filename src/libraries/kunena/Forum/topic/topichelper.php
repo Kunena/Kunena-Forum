@@ -18,9 +18,12 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Topic\User\User;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -94,12 +97,12 @@ abstract class TopicHelper
 	{
 		// Pre-load all items
 		// Codestyle fixes: use real url
-		\Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
+		TopicUserHelper::getTopics($ids, $user);
 		$count = 0;
 
 		foreach ($ids as $id)
 		{
-			$usertopic = \Kunena\Forum\Libraries\Forum\Topic\User\Helper::get($id, $user);
+			$usertopic = TopicUserHelper::get($id, $user);
 
 			if ($usertopic->subscribed != (int) $value)
 			{
@@ -127,12 +130,12 @@ abstract class TopicHelper
 	public static function favorite($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
-		\Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
+		TopicUserHelper::getTopics($ids, $user);
 		$count = 0;
 
 		foreach ($ids as $id)
 		{
-			$usertopic = \Kunena\Forum\Libraries\Forum\Topic\User\Helper::get($id, $user);
+			$usertopic = TopicUserHelper::get($id, $user);
 
 			if ($usertopic->favorite != (int) $value)
 			{
@@ -255,7 +258,7 @@ abstract class TopicHelper
 	 * @param   mixed  $ids   ids
 	 * @param   mixed  $user  user
 	 *
-	 * @return  User[]
+	 * @return  TopicUserHelper[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -268,7 +271,7 @@ abstract class TopicHelper
 			$ids = array_keys(self::$_instances);
 		}
 
-		return \Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
+		return TopicUserHelper::getTopics($ids, $user);
 	}
 
 	/**
@@ -299,7 +302,7 @@ abstract class TopicHelper
 		$exclude   = isset($params['exclude']) ? (int) $params['exclude'] : 0;
 		$orderby   = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
-		$user      = isset($params['user']) ? \Kunena\Forum\Libraries\User\Helper::get($params['user']) : \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$user      = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
 		$hold      = isset($params['hold']) ? (string) $params['hold'] : 0;
 		$moved     = isset($params['moved']) ? (string) $params['moved'] : 0;
 		$where     = isset($params['where']) ? (string) $params['where'] : '';
@@ -319,11 +322,11 @@ abstract class TopicHelper
 
 		if (!$exclude)
 		{
-			$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categories, $reverse);
+			$categories = CategoryHelper::getCategories($categories, $reverse);
 		}
 		else
 		{
-			$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categories, 0);
+			$categories = CategoryHelper::getCategories($categories, 0);
 		}
 
 		$catlist = [];
@@ -762,7 +765,7 @@ abstract class TopicHelper
 	 */
 	public static function fetchNewStatus(array $topics, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists())
 		{

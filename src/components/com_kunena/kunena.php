@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Service\Router;
 use stdClass;
 use function defined;
@@ -85,7 +85,7 @@ $ksession = KunenaFactory::getSession(true);
 if ($ksession->userid > 0)
 {
 	// Create user if it does not exist
-	$kuser = Helper::getMyself();
+	$kuser = KunenaUserHelper::getMyself();
 
 	if (!$kuser->exists())
 	{

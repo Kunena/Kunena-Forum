@@ -493,7 +493,7 @@ class Ban extends CMSObject
 	 */
 	public function getUser()
 	{
-		return Helper::get((int) $this->userid);
+		return KunenaUserHelper::get((int) $this->userid);
 	}
 
 	/**
@@ -505,7 +505,7 @@ class Ban extends CMSObject
 	 */
 	public function getCreator()
 	{
-		return Helper::get((int) $this->created_by);
+		return KunenaUserHelper::get((int) $this->created_by);
 	}
 
 	/**
@@ -517,7 +517,7 @@ class Ban extends CMSObject
 	 */
 	public function getModifier()
 	{
-		return Helper::get((int) $this->modified_by);
+		return KunenaUserHelper::get((int) $this->modified_by);
 	}
 
 	/**
@@ -868,8 +868,8 @@ class Ban extends CMSObject
 	public function canBan()
 	{
 		$userid = $this->userid;
-		$me     = Helper::getMyself();
-		$user   = Helper::get($userid);
+		$me     = KunenaUserHelper::getMyself();
+		$user   = KunenaUserHelper::get($userid);
 
 		if (!$me->isModerator())
 		{

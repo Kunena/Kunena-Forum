@@ -16,7 +16,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\View\View;
 
@@ -123,7 +123,7 @@ class KunenaViewTopic extends View
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category         = Helper::get($catid);
+		$category         = CategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 		$app              = Factory::getApplication();
 
@@ -209,13 +209,13 @@ class KunenaViewTopic extends View
 		$response = [];
 		$app      = Factory::getApplication();
 
-		if ($user->id == 0 || \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topicid)->first_post_userid == $this->me->userid)
+		if ($user->id == 0 || \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topicid)->first_post_userid == $this->me->userid)
 		{
-			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getSelected($topicid);
+			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper::getSelected($topicid);
 		}
 		else
 		{
-			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getRate($topicid, $user->id);
+			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper::getRate($topicid, $user->id);
 		}
 
 		// Set the MIME type and header for JSON output.
@@ -243,19 +243,19 @@ class KunenaViewTopic extends View
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = [];
 		$app      = Factory::getApplication();
-		$user     = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if ($user->exists() || $this->config->ratingenabled)
 		{
-			$rate           = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::get($topicid);
+			$rate           = \Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper::get($topicid);
 			$rate->stars    = $starid;
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
 
-			$selected = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getSelected($topicid);
+			$selected = \Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper::getSelected($topicid);
 
-			$topic         = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topicid);
+			$topic         = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topicid);
 			$topic->rating = $selected;
 			$topic->save();
 		}
@@ -285,7 +285,7 @@ class KunenaViewTopic extends View
 		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 
-		$category = Helper::get($catid);
+		$category = CategoryHelper::get($catid);
 
 		$response = $category->topictemplate;
 

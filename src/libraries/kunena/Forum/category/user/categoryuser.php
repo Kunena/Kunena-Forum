@@ -71,7 +71,7 @@ class CategoryUser extends CMSObject
 		$this->setProperties($table->getProperties());
 		$this->_exists     = false;
 		$this->category_id = $category;
-		$this->user_id     = \Kunena\Forum\Libraries\User\Helper::get($user)->userid;
+		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -84,7 +84,7 @@ class CategoryUser extends CMSObject
 	 * @param   string  $type    The categories table name to be used
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
-	 * @return  Table|User The categories table object
+	 * @return  Table|\Kunena\Forum\Libraries\User\KunenaUser The categories table object
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -108,7 +108,7 @@ class CategoryUser extends CMSObject
 	 * @param   mixed     $user    user
 	 * @param   bool      $reload  reload
 	 *
-	 * @return  User
+	 * @return  CategoryUser
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -116,7 +116,7 @@ class CategoryUser extends CMSObject
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
-		return Helper::get($id, $user, $reload);
+		return CategoryUserHelper::get($id, $user, $reload);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class CategoryUser extends CMSObject
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->category_id);
+		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->category_id);
 	}
 
 	/**
@@ -223,7 +223,7 @@ class CategoryUser extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();

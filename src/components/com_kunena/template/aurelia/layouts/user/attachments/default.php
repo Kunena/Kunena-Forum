@@ -38,7 +38,7 @@ $attachments = $this->attachments;
 			<th class="col-md-1 center">
 				#
 			</th>
-			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
+			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
 :
 				?>
 				<th class="col-md-1 center">
@@ -63,7 +63,7 @@ $attachments = $this->attachments;
 			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
 			</th>
-			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
+			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
 :
 				?>
 				<th class="col-md-1 center">
@@ -162,7 +162,7 @@ $attachments = $this->attachments;
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
 	</div>
-	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
+	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
 	:
 		?>
 		<a href="#modaldeleteall" class="btn btn-outline-primary border float-right"

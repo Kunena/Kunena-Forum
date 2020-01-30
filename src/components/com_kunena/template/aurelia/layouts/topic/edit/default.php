@@ -119,7 +119,7 @@ $this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 $this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
-$me              = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\Helper::getMyself();
+$me              = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollenabled)
@@ -287,7 +287,7 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 				<label for="subject"
 				       class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 				<div class="col-md-10">
-					<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !\Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator($this->message->getCategory())) : ?>
+					<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
 						<input class="form-control" type="text" name="subject" id="subject"
 						       value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
 					<?php else : ?>

@@ -23,10 +23,12 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -267,7 +269,7 @@ class Statistics
 	{
 		if ($this->memberCount === null)
 		{
-			$this->memberCount = Helper::getTotalCount();
+			$this->memberCount = KunenaUserHelper::getTotalCount();
 		}
 	}
 
@@ -282,7 +284,7 @@ class Statistics
 	{
 		if ($this->lastUserId === null)
 		{
-			$this->lastUserId = Helper::getLastId();
+			$this->lastUserId = KunenaUserHelper::getLastId();
 		}
 	}
 
@@ -298,7 +300,7 @@ class Statistics
 		if ($this->sectionCount === null)
 		{
 			$this->sectionCount = $this->categoryCount = 0;
-			$categories         = Category\Helper::getCategories(false, false, 'none');
+			$categories         = CategoryHelper::getCategories(false, false, 'none');
 
 			foreach ($categories as $category)
 			{
@@ -457,7 +459,7 @@ class Statistics
 		if ($this->topTopics < $limit)
 		{
 			$params = ['orderby' => 'posts DESC'];
-			list($total, $this->topTopics) = Topic\Helper::getLatestTopics(false, 0, $limit, $params);
+			list($total, $this->topTopics) = TopicHelper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 
@@ -519,7 +521,7 @@ class Statistics
 			}
 
 			// Codestyler fixes: use real dir
-			$this->topPolls = Topic\Helper::getTopics(array_keys($polls));
+			$this->topPolls = TopicHelper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
 
@@ -599,7 +601,7 @@ class Statistics
 
 		if ($this->topPosters < $limit)
 		{
-			$this->topPosters = Helper::getTopPosters($limit);
+			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
 
 			$top = reset($this->topPosters);
 
@@ -615,7 +617,7 @@ class Statistics
 			foreach ($this->topPosters as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = Helper::get($item->id)->getLink(null, null, '');
+				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -654,7 +656,7 @@ class Statistics
 			foreach ($this->topProfiles as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = Helper::get($item->id)->getLink(null, null, '');
+				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -718,7 +720,7 @@ class Statistics
 			foreach ($this->topThanks as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = Helper::get($item->id)->getLink(null, null, '');
+				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

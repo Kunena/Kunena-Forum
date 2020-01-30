@@ -16,11 +16,14 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Administrator\Helper\UserHelper;
 use Kunena\Forum\Libraries;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\View\View;
@@ -131,7 +134,7 @@ class raw extends View
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category         = Helper::get($catid);
+		$category         = CategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 		$app              = Factory::getApplication();
 
@@ -217,13 +220,13 @@ class raw extends View
 		$response = [];
 		$app      = Factory::getApplication();
 
-		if ($user->id == 0 || Forum\Topic\Helper::get($topicid)->first_post_userid == $this->me->userid)
+		if ($user->id == 0 || TopicHelper::get($topicid)->first_post_userid == $this->me->userid)
 		{
-			$response = Rate\Helper::getSelected($topicid);
+			$response = RateHelper::getSelected($topicid);
 		}
 		else
 		{
-			$response = Rate\Helper::getRate($topicid, $user->id);
+			$response = RateHelper::getRate($topicid, $user->id);
 		}
 
 		// Set the MIME type and header for JSON output.
@@ -251,19 +254,19 @@ class raw extends View
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = [];
 		$app      = Factory::getApplication();
-		$user     = Libraries\User\Helper::getMyself();
+		$user     = UserHelper::getMyself();
 
 		if ($user->exists() || $this->config->ratingenabled)
 		{
-			$rate           = Rate\Helper::get($topicid);
+			$rate           = RateHelper::get($topicid);
 			$rate->stars    = $starid;
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
 
-			$selected = Rate\Helper::getSelected($topicid);
+			$selected = RateHelper::getSelected($topicid);
 
-			$topic         = Forum\Topic\Helper::get($topicid);
+			$topic         = TopicHelper::get($topicid);
 			$topic->rating = $selected;
 			$topic->save();
 		}
@@ -293,7 +296,7 @@ class raw extends View
 		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 
-		$category = Helper::get($catid);
+		$category = CategoryHelper::get($catid);
 
 		$response = $category->topictemplate;
 

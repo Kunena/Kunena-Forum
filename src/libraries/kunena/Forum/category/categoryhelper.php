@@ -206,7 +206,7 @@ abstract class CategoryHelper
 	 */
 	public static function getSubscriptions($user = null)
 	{
-		$user  = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
@@ -318,7 +318,7 @@ abstract class CategoryHelper
 		$count = 0;
 
 		// Pre-load all items
-		$usercategories = User\Helper::getCategories($ids, $user);
+		$usercategories = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::getCategories($ids, $user);
 
 		foreach ($usercategories as $usercategory)
 		{
@@ -365,7 +365,7 @@ abstract class CategoryHelper
 			$limit = $config->threads_per_page;
 		}
 
-		$userids = is_array($user) ? implode(",", $user) : \Kunena\Forum\Libraries\User\Helper::get($user)->userid;
+		$userids = is_array($user) ? implode(",", $user) : \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where   = isset($params['where']) ? (string) $params['where'] : '';
 		$allowed = implode(',', array_keys(Access::getInstance()->getAllowedCategories()));
@@ -454,7 +454,7 @@ abstract class CategoryHelper
 	 */
 	public static function getNewTopics($catids)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
 		{
@@ -982,7 +982,7 @@ abstract class CategoryHelper
 		if ($rows)
 		{
 			// If something changed, clean our cache
-			\Kunena\Forum\Libraries\Cache\Helper::clearCategories();
+			\Kunena\Forum\Libraries\Cache\CacheHelper::clearCategories();
 		}
 
 		return $rows;
@@ -1130,4 +1130,4 @@ abstract class CategoryHelper
 	}
 }
 
-Helper::initialize();
+CategoryHelper::initialize();

@@ -21,8 +21,8 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
-use Kunena\Forum\Libraries\Forum\Topic\Finder;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -54,7 +54,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 		$this->model = new TopicsModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state   = $this->model->getState();
-		$this->me      = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me      = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', true);
@@ -97,7 +97,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 			$hold = '0';
 		}
 
-		$this->user = \Kunena\Forum\Libraries\User\Helper::get($this->state->get('user'));
+		$this->user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->state->get('user'));
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
@@ -105,7 +105,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
-		$finder = new Finder;
+		$finder = new TopicFinder;
 		$finder
 			->filterByMoved(false)
 			->filterByHold([$hold])
@@ -200,7 +200,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 
 		if ($categoryIds !== null)
 		{
-			$categories = Helper::getCategories($categoryIds, $reverse, $authorise);
+			$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 			$finder->filterByCategories($categories);
 		}
 

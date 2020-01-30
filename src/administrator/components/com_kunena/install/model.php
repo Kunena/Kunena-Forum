@@ -29,8 +29,8 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Bbcode\KunenaBbcodeEditor;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Menu\Fix;
-use Kunena\Forum\Libraries\Menu\Helper;
+use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
@@ -226,11 +226,11 @@ class KunenaModelInstall extends BaseDatabaseModel
 		// Remove all Kunena related menu items, including aliases
 		if (class_exists('KunenaMenuFix'))
 		{
-			$items = Fix::getAll();
+			$items = MenuFix::getAll();
 
 			foreach ($items as $item)
 			{
-				Fix::delete($item->id);
+				MenuFix::delete($item->id);
 			}
 		}
 
@@ -1255,10 +1255,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$this->createMenu();
 
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
-		\Kunena\Forum\Libraries\Forum\Category\Helper::fixAliases();
+		\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::fixAliases();
 
 		// Clean cache, just in case
-		Helper::cleanCache();
+		MenuHelper::cleanCache();
 
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
@@ -2256,24 +2256,24 @@ class KunenaModelInstall extends BaseDatabaseModel
 			{
 				case 0:
 					// Update topic statistics
-					\Kunena\Forum\Libraries\Forum\Topic\Helper::recount(false, $state->start, $state->start + $count);
+					\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::recount(false, $state->start, $state->start + $count);
 					$state->start += $count;
 					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
 					break;
 				case 1:
 					// Update usertopic statistics
-					\Kunena\Forum\Libraries\Forum\Topic\User\Helper::recount(false, $state->start, $state->start + $count);
+					\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::recount(false, $state->start, $state->start + $count);
 					$state->start += $count;
 					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
 					break;
 				case 2:
 					// Update user statistics
-					\Kunena\Forum\Libraries\User\Helper::recount();
+					\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
 					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USER'), true, '', 'recount');
 					break;
 				case 3:
 					// Update category statistics
-					\Kunena\Forum\Libraries\Forum\Category\Helper::recount();
+					\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::recount();
 					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
 					break;
 				default:
@@ -3123,7 +3123,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		// $debug = $lang->setDebug(false);
 
 		$this->createMenuJ25($menu, $submenu);
-		Helper::cleanCache();
+		MenuHelper::cleanCache();
 
 		// $lang->setDebug($debug);
 	}
@@ -3398,7 +3398,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			return true;
 		}
 
-		\Kunena\Forum\Libraries\Forum\Message\Thankyou\Helper::recount();
+		\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
 
 		return true;
 	}

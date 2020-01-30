@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Finder;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use function defined;
 
@@ -94,7 +94,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me     = Helper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');

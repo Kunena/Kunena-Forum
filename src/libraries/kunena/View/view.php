@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Site\Controller\SearchController;
 use LogicException;
@@ -110,7 +110,7 @@ class View extends HtmlView
 		$this->document->setBase('');
 		$this->profiler  = KunenaProfiler::instance('Kunena');
 		$this->app       = Factory::getApplication();
-		$this->me        = Helper::getMyself();
+		$this->me        = KunenaUserHelper::getMyself();
 		$this->config    = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 

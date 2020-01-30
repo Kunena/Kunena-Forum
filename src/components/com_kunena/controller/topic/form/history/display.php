@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Joomla\Registry\Registry;
 use function defined;
@@ -51,17 +51,17 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 		parent::before();
 
 		$id       = $this->input->getInt('id');
-		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
-		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
 		$this->category = $this->topic->getCategory();
-		$this->history  = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessagesByTopic(
+		$this->history  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
 		$this->replycount   = $this->topic->getReplies();
 		$this->historycount = count($this->history);
-		Helper::getByMessage($this->history);
+		AttachmentHelper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -101,7 +101,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 
 		$this->history = $messages;
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
+		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
 		$params = new Registry;
@@ -114,7 +114,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments        = Helper::getByMessage($this->history);
+		$this->attachments        = AttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = [];
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;

@@ -25,7 +25,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Model\Model;
 use Kunena\Forum\Libraries\Template\Template;
 use RuntimeException;
@@ -188,7 +188,7 @@ class CategoriesModel extends Model
 	 */
 	public function getAdminCategory()
 	{
-		$category = Helper::get($this->getState('item.id'));
+		$category = CategoryHelper::get($this->getState('item.id'));
 
 		if (!$this->me->isAdmin($category))
 		{
@@ -411,18 +411,18 @@ class CategoriesModel extends Model
 
 			if ($catid)
 			{
-				$categories   = Helper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
-				$categories[] = Helper::get($catid);
+				$categories   = CategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
+				$categories[] = CategoryHelper::get($catid);
 			}
 			else
 			{
-				$orphans = Helper::getOrphaned($this->getState('filter.levels') - 1, $params);
+				$orphans = CategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
 			}
 
-			$categories = array_merge($categories, Helper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
+			$categories = array_merge($categories, CategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
 			$categories = array_merge($orphans, $categories);
 
-			$categories = Helper::getIndentation($categories);
+			$categories = CategoryHelper::getIndentation($categories);
 			$this->setState('list.total', count($categories));
 
 			if ($this->getState('list.limit'))
@@ -441,7 +441,7 @@ class CategoriesModel extends Model
 			{
 				// TODO: Following is needed for J!2.5 only:
 				$parent   = $category->getParent();
-				$siblings = array_keys(Helper::getCategoryTree($category->parent_id));
+				$siblings = array_keys(CategoryHelper::getCategoryTree($category->parent_id));
 
 				if ($parent)
 				{

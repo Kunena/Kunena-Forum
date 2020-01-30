@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -86,9 +86,9 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 			$limitstart = 0;
 		}
 
-		$moderator           = \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator();
-		$this->pagination    = new Pagination(Helper::getCount(!$moderator), $limitstart, $limit);
-		$this->announcements = Helper::getAnnouncements(
+		$moderator           = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator();
+		$this->pagination    = new Pagination(AnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
+		$this->announcements = AnnouncementHelper::getAnnouncements(
 			$this->pagination->limitstart,
 			$this->pagination->limit,
 			!$moderator

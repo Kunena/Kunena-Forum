@@ -24,6 +24,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\Authorise;
@@ -254,7 +255,7 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return AttachmentHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -508,7 +509,7 @@ class Attachment extends KunenaDatabaseObject
 	{
 		if ($this->shortname === null)
 		{
-			$this->shortname = Helper::shortenFileName($this->getFilename(false), $front, $back, $filler);
+			$this->shortname = AttachmentHelper::shortenFileName($this->getFilename(false), $front, $back, $filler);
 		}
 
 		return $escape ? htmlspecialchars($this->shortname, ENT_COMPAT, 'UTF-8') : $this->shortname;
@@ -650,7 +651,7 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\Helper::get($this->userid);
+		return \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
 	}
 
 	/**
@@ -694,7 +695,7 @@ class Attachment extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
+			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		}
 
 		// Unknown action - throw invalid argument exception.
@@ -773,7 +774,7 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public function getMessage()
 	{
-		return \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->mesid);
+		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->mesid);
 	}
 
 	/**
@@ -792,7 +793,7 @@ class Attachment extends KunenaDatabaseObject
 		$input     = Factory::getApplication()->input;
 		$fileInput = $input->files->get($key, null, 'raw');
 
-		$upload = Upload::getInstance(Helper::getExtensions($catid, $this->userid));
+		$upload = Upload::getInstance(AttachmentHelper::getExtensions($catid, $this->userid));
 
 		$uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
 
@@ -917,7 +918,7 @@ class Attachment extends KunenaDatabaseObject
 		}
 
 		// Hash, size and MIME are set during saving, so let's deal with all other variables.
-		$this->userid = is_null($this->userid) ? \Kunena\Forum\Libraries\User\Helper::getMyself() : $this->userid;
+		$this->userid = is_null($this->userid) ? \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself() : $this->userid;
 		$this->folder = is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
 
 		if (!$this->filename_real)
@@ -933,7 +934,7 @@ class Attachment extends KunenaDatabaseObject
 			}
 
 			// Find available filename.
-			$this->filename = Helper::getAvailableFilename(
+			$this->filename = AttachmentHelper::getAvailableFilename(
 				$this->folder, $basename, $extension, $this->protected
 			);
 		}
@@ -1020,7 +1021,7 @@ class Attachment extends KunenaDatabaseObject
 		}
 		else
 		{
-			$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($private->posts()->getMapped());
+			$messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($private->posts()->getMapped());
 
 			foreach ($messages as $message)
 			{

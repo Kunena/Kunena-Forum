@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
 use Nbbc\BBCodeLibrary;
 use stdClass;
@@ -1612,7 +1612,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me = Helper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if (!Factory::getApplication()->getIdentity()->guest)
 		{
@@ -1670,7 +1670,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me        = Helper::getMyself();
+		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
@@ -2532,7 +2532,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!empty($default))
 		{
-			$attachment = \Kunena\Forum\Libraries\Attachment\Helper::get($default);
+			$attachment = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($default);
 			unset($attachments [$attachment->id]);
 		}
 		elseif (empty($content))
@@ -3247,7 +3247,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me        = Helper::getMyself();
+		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 

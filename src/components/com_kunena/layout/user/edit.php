@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
 use function defined;
@@ -49,7 +49,7 @@ class KunenaLayoutUserEdit extends Layout
 	 */
 	public function getTabsEdit()
 	{
-		$myProfile = $this->profile->isMyself() || Helper::getMyself()->isAdmin() || Helper::getMyself()->isModerator();
+		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
 
 		// Define all tabs.
 		$tabs = [];

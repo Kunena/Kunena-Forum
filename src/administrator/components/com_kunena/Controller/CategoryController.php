@@ -24,7 +24,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
@@ -142,7 +142,7 @@ class CategoryController extends FormController
 	public function cancel($key = null, $urlVar = null)
 	{
 		$post_catid = $this->app->input->post->get('catid', '', 'raw');
-		$category   = Helper::get($post_catid);
+		$category   = CategoryHelper::get($post_catid);
 		$category->checkin();
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -205,7 +205,7 @@ class CategoryController extends FormController
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
 	{
-		while (Helper::getAlias($category_id, $alias))
+		while (CategoryHelper::getAlias($category_id, $alias))
 		{
 			$name  = StringHelper::increment($name);
 			$alias = StringHelper::increment($alias, 'dash');
@@ -227,7 +227,7 @@ class CategoryController extends FormController
 	protected function _save()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
-		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if ($this->app->isClient('site'))
 		{
@@ -258,8 +258,8 @@ class CategoryController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = Helper::get(intval($post ['catid']));
-		$parent   = Helper::get(intval($post ['parent_id']));
+		$category = CategoryHelper::get(intval($post ['catid']));
+		$parent   = CategoryHelper::get(intval($post ['parent_id']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{

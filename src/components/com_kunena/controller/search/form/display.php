@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
 use function defined;
 
@@ -87,7 +87,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me = Helper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		$this->isModerator = ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus());
 		$this->error       = $this->model->getError();

@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Joomla\Utilities\ArrayHelper;
 use function defined;
 
@@ -68,7 +68,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = Helper::get($id);
+			$announcement = AnnouncementHelper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
@@ -136,7 +136,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = Helper::get($id);
+			$announcement = AnnouncementHelper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
@@ -194,7 +194,7 @@ class AnnouncementController extends KunenaController
 		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid, []);
 
-		$announcement = Helper::get(array_pop($cid));
+		$announcement = AnnouncementHelper::get(array_pop($cid));
 
 		$this->setRedirect($announcement->getUrl('edit', false));
 	}
@@ -222,7 +222,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = Helper::get($id);
+			$announcement = AnnouncementHelper::get($id);
 
 			try
 			{
@@ -256,7 +256,7 @@ class AnnouncementController extends KunenaController
 			}
 		}
 
-		$this->setRedirect(Helper::getUrl('list', false));
+		$this->setRedirect(AnnouncementHelper::getUrl('list', false));
 	}
 
 	/**
@@ -289,7 +289,7 @@ class AnnouncementController extends KunenaController
 		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
 		$id           = $this->app->input->getInt('id');
-		$announcement = Helper::get($id);
+		$announcement = AnnouncementHelper::get($id);
 
 		if ($fields['created'] == null)
 		{

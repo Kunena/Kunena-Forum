@@ -19,8 +19,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
-use Kunena\Forum\Libraries\Forum\Topic\Finder;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -47,7 +47,7 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 	{
 		parent::before();
 
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$access         = Access::getInstance();
 		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
@@ -100,9 +100,9 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 			$categoryIds = false;
 		}
 
-		$categories = Helper::getCategories($categoryIds, $reverse);
+		$categories = CategoryHelper::getCategories($categoryIds, $reverse);
 
-		$finder = new Finder;
+		$finder = new TopicFinder;
 		$finder
 			->filterByCategories($categories)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)

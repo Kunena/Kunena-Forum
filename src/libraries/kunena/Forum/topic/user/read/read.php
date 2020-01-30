@@ -59,7 +59,7 @@ class Read extends CMSObject
 	 */
 	public function __construct($topic = null, $user = null)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
 
 		// Always fill empty data
 		$this->_db = Factory::getDBO();
@@ -72,7 +72,7 @@ class Read extends CMSObject
 		$this->_exists     = false;
 		$this->topic_id    = $topic->exists() ? $topic->id : null;
 		$this->category_id = $topic->exists() ? $topic->category_id : null;
-		$this->user_id     = \Kunena\Forum\Libraries\User\Helper::get($user)->userid;
+		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -113,7 +113,7 @@ class Read extends CMSObject
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
-		return Helper::get($id, $user, $reload);
+		return TopicUserReadHelper::get($id, $user, $reload);
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Read extends CMSObject
 	 */
 	public function getTopic()
 	{
-		return Helper::get($this->topic_id);
+		return TopicUserReadHelper::get($this->topic_id);
 	}
 
 	/**
@@ -179,7 +179,7 @@ class Read extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();

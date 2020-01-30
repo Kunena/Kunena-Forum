@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site\Controller\Application\Topic\Flat;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Layout\Page;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use function defined;
@@ -55,7 +55,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	protected function before()
 	{
 		$layout = $this->input->getWord('layout');
-		Helper::getMyself()->setTopicLayout($layout);
+		KunenaUserHelper::getMyself()->setTopicLayout($layout);
 
 		parent::before();
 	}

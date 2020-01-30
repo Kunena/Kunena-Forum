@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -77,10 +77,10 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->input->getInt('id'));
+		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->input->getInt('id'));
 		$this->category = $this->topic->getCategory();
 		$this->config   = KunenaFactory::getConfig();
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 
 		// Need to check if poll is allowed in this category.
 		$this->topic->tryAuthorise('poll.read');
@@ -127,7 +127,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 					$userids_votes[] = $userid;
 				}
 
-				$loaded_users = Helper::loadUsers($userids_votes);
+				$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
 
 				$i = 0;
 

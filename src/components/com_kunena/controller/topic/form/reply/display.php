@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -66,17 +66,17 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -148,7 +148,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		$this->privateMessage       = new Message;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;

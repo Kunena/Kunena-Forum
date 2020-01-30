@@ -26,7 +26,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * About view for Kunena backend
@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		$this->user              = Factory::getApplication()->getIdentity();
-		$this->me                = Helper::getMyself();
+		$this->me                = KunenaUserHelper::getMyself();
 		$this->userId            = $this->user->get('id');
 		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
 		$this->filterPublished   = $this->escape($this->state->get('filter.published'));

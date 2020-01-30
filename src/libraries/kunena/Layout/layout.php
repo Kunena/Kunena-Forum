@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RunTimeException;
 use function defined;
 
@@ -295,7 +295,7 @@ class Layout extends Base
 						break;
 					case 'unread':
 					case 'last':
-						if (!Helper::getMyself()->userid && KunenaConfig::getInstance()->teaser)
+						if (!KunenaUserHelper::getMyself()->userid && KunenaConfig::getInstance()->teaser)
 						{
 							$title = Parser::stripBBCode($topic->first_post_message, 200, false);
 						}

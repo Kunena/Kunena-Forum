@@ -62,7 +62,7 @@ abstract class TopicUserReadHelper
 		}
 
 		$topic = intval($topic);
-		$user  = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($topic < 1)
 		{
@@ -95,7 +95,7 @@ abstract class TopicUserReadHelper
 	 */
 	public static function getTopics($ids = false, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		if ($ids === false)
 		{

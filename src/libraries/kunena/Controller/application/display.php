@@ -34,7 +34,7 @@ use Kunena\Forum\Libraries\Layout\Page;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
@@ -145,10 +145,10 @@ class Display extends KunenaControllerDisplay
 			}
 			catch (Authorise $e)
 			{
-				$banned = Helper::getMyself()->isBanned();
+				$banned = KunenaUserHelper::getMyself()->isBanned();
 				$userid = $this->input->getInt('userid');
 
-				if (Factory::getApplication()->getIdentity()->guest && Helper::get($userid)->exists())
+				if (Factory::getApplication()->getIdentity()->guest && KunenaUserHelper::get($userid)->exists())
 				{
 					$this->setResponseStatus($e->getResponseCode());
 					$this->output->setLayout('login');
@@ -162,7 +162,7 @@ class Display extends KunenaControllerDisplay
 					$this->output->setLayout('unauthorized');
 					$this->document->setTitle($e->getResponseStatus());
 
-					$bannedtime = Ban::getInstanceByUserid(Helper::getMyself()->userid, true);
+					$bannedtime = Ban::getInstanceByUserid(KunenaUserHelper::getMyself()->userid, true);
 
 					$this->content = Layout::factory('Widget/Custom')
 						->set('header', Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
@@ -172,7 +172,7 @@ class Display extends KunenaControllerDisplay
 						);
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}
-				elseif (!Helper::get($userid)->exists())
+				elseif (!KunenaUserHelper::get($userid)->exists())
 				{
 					$layout = $this->input->getCmd('layout');
 
@@ -263,7 +263,7 @@ class Display extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me       = Helper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();

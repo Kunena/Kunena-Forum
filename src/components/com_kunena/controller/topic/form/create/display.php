@@ -19,7 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -99,10 +99,10 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$categories        = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+		$categories        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -131,7 +131,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		Template::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$this->category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
+		$this->category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -187,7 +187,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{

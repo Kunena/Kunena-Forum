@@ -33,7 +33,7 @@ $size     = $this->size;
 
 		<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
 		<a href="<?php echo $url; ?>" title="<?php echo $this->escape($filename); ?>">
-			<?php echo $this->escape(\Kunena\Forum\Libraries\Attachment\Helper::shortenFilename($filename)); ?>
+			<?php echo $this->escape(\Kunena\Forum\Libraries\Attachment\AttachmentHelper::shortenFilename($filename)); ?>
 		</a>
 
 		<br/>

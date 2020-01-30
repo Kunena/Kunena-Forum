@@ -350,7 +350,7 @@ class TopicFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	{
 		$results = parent::find();
 
-		return Helper::getTopics($results, $access);
+		return TopicHelper::getTopics($results, $access);
 	}
 
 	/**

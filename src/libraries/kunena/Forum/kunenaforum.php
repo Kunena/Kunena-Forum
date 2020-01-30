@@ -18,7 +18,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\View\Common\HtmlView;
 use Joomla\Registry\Registry;
 use stdClass;
@@ -153,7 +153,7 @@ abstract class KunenaForum
 		$config = KunenaFactory::getConfig();
 
 		return !$config->board_offline
-			|| ($checkAdmin && self::installed() && Helper::getMyself()->isAdmin());
+			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
 
 	/**

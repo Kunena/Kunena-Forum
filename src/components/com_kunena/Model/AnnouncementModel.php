@@ -19,7 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 
 /**
  * Announcement Model for Kunena
@@ -82,7 +82,7 @@ class AnnouncementModel  extends ListModel
 	 */
 	public function getAnnouncement()
 	{
-		return Helper::get($this->getState('item.id'));
+		return AnnouncementHelper::get($this->getState('item.id'));
 	}
 
 	/**
@@ -112,7 +112,7 @@ class AnnouncementModel  extends ListModel
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
 
-		$this->total = Helper::getCount(!$this->me->isModerator());
+		$this->total = AnnouncementHelper::getCount(!$this->me->isModerator());
 
 		// If out of range, use last page
 		if ($limit && $this->total < $start)
@@ -120,7 +120,7 @@ class AnnouncementModel  extends ListModel
 			$start = intval($this->total / $limit) * $limit;
 		}
 
-		$announces = Helper::getAnnouncements($start, $limit, !$this->me->isModerator());
+		$announces = AnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
 		if ($this->total < $start)
 		{
@@ -140,7 +140,7 @@ class AnnouncementModel  extends ListModel
 	public function getannouncementActions()
 	{
 		$actions = [];
-		$user    = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$user    = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 		if ($user->isModerator())
 		{

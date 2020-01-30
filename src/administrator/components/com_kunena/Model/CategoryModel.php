@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use RuntimeException;
 
 /**
@@ -42,7 +42,7 @@ class CategoryModel extends CategoriesModel
 	 */
 	public function getAdminCategory()
 	{
-		$category = Helper::get($this->getState($this->getName() . '.id'));
+		$category = CategoryHelper::get($this->getState($this->getName() . '.id'));
 
 		if (!$this->me->isAdmin($category))
 		{

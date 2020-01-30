@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -56,7 +56,7 @@ class ComponentAnnouncementControllerEditDisplay extends KunenaControllerDisplay
 
 		$id = $this->input->getInt('id', null);
 
-		$this->announcement = Helper::get($id);
+		$this->announcement = AnnouncementHelper::get($id);
 		$this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
 		$Itemid = $this->input->getInt('Itemid');

@@ -24,7 +24,7 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -98,7 +98,7 @@ class Model extends BaseDatabaseModel
 		parent::__construct($config);
 
 		$this->app    = Factory::getApplication();
-		$this->me     = Helper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->input  = $this->app->input;
 	}

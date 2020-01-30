@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Session\Session;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use KunenaAdminTemplate;
 use function defined;
@@ -93,7 +93,7 @@ abstract class KunenaFactory
 	 */
 	public static function getUser($id = null, $reload = false)
 	{
-		return Helper::get($id, $reload);
+		return KunenaUserHelper::get($id, $reload);
 	}
 
 	/**

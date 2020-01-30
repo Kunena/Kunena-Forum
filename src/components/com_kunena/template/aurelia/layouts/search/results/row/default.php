@@ -24,7 +24,7 @@ $author               = $message->getAuthor();
 $isReply              = $message->id != $topic->first_post_id;
 $config               = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 $name                 = $config->username ? $author->username : $author->name;
-$me                   = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\Helper::getMyself();
+$me                   = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 $this->ktemplate      = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 

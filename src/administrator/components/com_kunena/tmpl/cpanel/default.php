@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Statistics;
 use Kunena\Forum\Libraries\Integration\Plugins;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 ?>
 
@@ -139,8 +139,8 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo Helper::getTotalCount(); ?></h3>
-									<p class="mb-0"><?php $lastid = Helper::getLastId();
+									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount(); ?></h3>
+									<p class="mb-0"><?php $lastid = KunenaUserHelper::getLastId();
 										$user                     = KunenaUser::getInstance($lastid)->registerDate;
 										echo KunenaDate::getInstance($user)->toKunena('ago'); ?></p>
 								</div>
@@ -162,7 +162,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo \Kunena\Forum\Libraries\Attachment\Helper::getTotalAttachments(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getTotalAttachments(); ?></h3>
 									<p class="mb-0">photo.png (topic id: 44343)</p>
 								</div>
 								<div class="col-auto">
@@ -267,7 +267,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo Helper::getTotalRanks(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalRanks(); ?></h3>
 									<p class="mb-0">Groups</p>
 								</div>
 								<div class="col-auto">

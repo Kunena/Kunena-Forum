@@ -70,7 +70,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 		{
 			foreach ($results as $id => $result)
 			{
-				$instances[$id] = Helper::get($id);
+				$instances[$id] = AttachmentHelper::get($id);
 			}
 		}
 

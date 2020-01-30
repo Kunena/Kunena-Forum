@@ -27,7 +27,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Menu\Fix;
+use Kunena\Forum\Libraries\Menu\MenuFix;
 use RuntimeException;
 use stdClass;
 use function defined;
@@ -638,7 +638,7 @@ class ToolsModel extends AdminModel
 	 */
 	protected function _getJoomlaMenuDetails()
 	{
-		$items = Fix::getAll();
+		$items = MenuFix::getAll();
 
 		if (!empty($items))
 		{

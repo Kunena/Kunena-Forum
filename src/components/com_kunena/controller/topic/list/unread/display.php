@@ -21,8 +21,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Topic\Finder;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -54,7 +54,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 		$this->model = new TopicsModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
 		$access         = Access::getInstance();
 		$start          = $this->state->get('list.start');
@@ -102,7 +102,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$finder = new Finder;
+		$finder = new TopicFinder;
 
 		$this->topics = $finder
 			->start($start)
@@ -115,7 +115,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 
 		$mesIds = [];
 
-		$mesIds += Helper::fetchNewStatus($this->topics, $this->me->userid);
+		$mesIds += TopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
 		$list = [];
 

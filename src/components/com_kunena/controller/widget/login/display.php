@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Login\Login;
@@ -139,7 +139,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			return false;
 		}
 
-		$this->me   = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me   = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
 		$this->my = Factory::getApplication()->getIdentity();
@@ -171,7 +171,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			// Display announcements.
 			if ($this->me->isModerator())
 			{
-				$this->announcementsUrl = Helper::getUrl('list');
+				$this->announcementsUrl = AnnouncementHelper::getUrl('list');
 			}
 		}
 

@@ -17,10 +17,10 @@ defined('_JEXEC') or die('Unauthorized Access');
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Access;
+use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Integration\Activity;
-use Kunena\Forum\Libraries\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\String\StringHelper;
 use function defined;
 

@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Site\Model\UserModel;
@@ -103,9 +103,9 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me      = Helper::getMyself();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->user    = Factory::getUser($userid);
-		$this->profile = Helper::get($userid);
+		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();

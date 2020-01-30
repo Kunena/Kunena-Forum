@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\Rate;
 
 /**
@@ -78,7 +78,7 @@ class RateModel extends ListModel
 	 */
 	public function getRate()
 	{
-		return Helper::get($this->getState('item.topicid'));
+		return RateHelper::get($this->getState('item.topicid'));
 	}
 
 	/**

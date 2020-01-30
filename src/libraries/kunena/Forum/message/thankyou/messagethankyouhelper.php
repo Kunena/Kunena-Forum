@@ -29,7 +29,7 @@ use function defined;
 abstract class MessageThankyouHelper
 {
 	/**
-	 * @var     Thankyou[]
+	 * @var     MesssageThankyou[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
@@ -50,7 +50,7 @@ abstract class MessageThankyouHelper
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  Helper|void
+	 * @return  MesssageThankyou|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -58,7 +58,7 @@ abstract class MessageThankyouHelper
 	 */
 	public static function get($identifier, $reload = false)
 	{
-		if ($identifier instanceof Helper)
+		if ($identifier instanceof MesssageThankyou)
 		{
 			return $identifier;
 		}
@@ -128,7 +128,7 @@ abstract class MessageThankyouHelper
 
 		foreach ($ids as $id)
 		{
-			self::$_instances [$id] = new Thankyou($id);
+			self::$_instances [$id] = new MesssageThankyou($id);
 		}
 
 		if (!empty($results))
@@ -252,7 +252,7 @@ abstract class MessageThankyouHelper
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = Factory::getDBO();
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
@@ -303,7 +303,7 @@ abstract class MessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('m.catid, m.thread, m.id')
@@ -411,7 +411,7 @@ abstract class MessageThankyouHelper
 	 *
 	 * @param   bool|array|int  $ids  ids
 	 *
-	 * @return  Thankyou[]
+	 * @return  MesssageThankyou[]
 	 *
 	 * @since   Kunena 6.0
 	 *

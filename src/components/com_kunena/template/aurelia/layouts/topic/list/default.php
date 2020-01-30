@@ -26,7 +26,7 @@ $view            = Factory::getApplication()->input->getWord('view');
 $layout          = Factory::getApplication()->input->getWord('layout');
 $this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
-$me              = \Kunena\Forum\Libraries\User\Helper::getMyself();
+$me              = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 
 if (\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->ratingenabled)
 {

@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -443,7 +443,7 @@ abstract class KunenaRoute
 
 		if (self::$search === false)
 		{
-			$user         = Helper::getMyself();
+			$user         = KunenaUserHelper::getMyself();
 			$language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
 			self::$search = false;
 
@@ -661,8 +661,8 @@ abstract class KunenaRoute
 
 			if (!empty($item->query['catid']))
 			{
-				$cache[$item->id]                        = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($item->query['catid']);
-				$cache[$item->id][$item->query['catid']] = \Kunena\Forum\Libraries\Forum\Category\Helper::get($item->query['catid']);
+				$cache[$item->id]                        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($item->query['catid']);
+				$cache[$item->id][$item->query['catid']] = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($item->query['catid']);
 			}
 		}
 
@@ -890,7 +890,7 @@ abstract class KunenaRoute
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user  = Helper::getMyself();
+		$user  = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
@@ -924,7 +924,7 @@ abstract class KunenaRoute
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user  = Helper::getMyself();
+		$user  = KunenaUserHelper::getMyself();
 		$data  = [self::$subtree, self::$uris];
 		$cache = self::getCache();
 

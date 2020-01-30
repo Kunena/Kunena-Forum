@@ -26,7 +26,7 @@ use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
@@ -194,7 +194,7 @@ class UserController extends FormController
 			else
 			{
 				// Update moderator rights
-				$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories(false, false, 'admin');
+				$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'admin');
 
 				foreach ($categories as $category)
 				{
@@ -202,7 +202,7 @@ class UserController extends FormController
 				}
 
 				// Global moderator is a special case
-				if (Helper::getMyself()->isAdmin())
+				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
 					Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 				}
@@ -227,7 +227,7 @@ class UserController extends FormController
 	protected function setModerate(KunenaUser $user, $modCatids)
 	{
 		// Update moderator rights
-		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories(false, false, 'admin');
+		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'admin');
 
 		foreach ($categories as $category)
 		{
@@ -235,7 +235,7 @@ class UserController extends FormController
 		}
 
 		// Global moderator is a special case
-		if (Helper::getMyself()->isAdmin())
+		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
 			Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 		}

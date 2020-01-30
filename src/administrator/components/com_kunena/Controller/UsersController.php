@@ -28,7 +28,7 @@ use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
@@ -154,7 +154,7 @@ class UsersController extends AdminController
 		{
 			foreach ($cid as $id)
 			{
-				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $mes)
 				{
@@ -239,7 +239,7 @@ class UsersController extends AdminController
 		{
 			foreach ($uids as $id)
 			{
-				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $object)
 				{
@@ -251,7 +251,7 @@ class UsersController extends AdminController
 					}
 					else
 					{
-						$target = Helper::get($catid);
+						$target = CategoryHelper::get($catid);
 
 						if (!$topic->move($target, false, false, '', false))
 						{
@@ -351,7 +351,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$users = \Kunena\Forum\Libraries\User\Helper::loadUsers($cid);
+		$users = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($cid);
 
 		$my        = Factory::getApplication()->getIdentity();
 		$usernames = [];
@@ -562,7 +562,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\Helper::get($userid);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
 
 		$this->setModerate($user, $modCatids);
 
@@ -603,7 +603,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user     = \Kunena\Forum\Libraries\User\Helper::get($userid);
+		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
 		$category = null;
 
 		if ($category instanceof Category)
@@ -613,7 +613,7 @@ class UsersController extends AdminController
 
 		$category = intval($category);
 
-		$usercategory = \Kunena\Forum\Libraries\User\Helper::get($category, $user);
+		$usercategory = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($category, $user);
 
 		if ($usercategory->role == 1)
 		{
@@ -815,8 +815,8 @@ class UsersController extends AdminController
 		}
 
 		// Update moderator rights
-		$categories = Helper::getCategories(false, false, 'admin');
-		$users      = \Kunena\Forum\Libraries\User\Helper::loadUsers($cid);
+		$categories = CategoryHelper::getCategories(false, false, 'admin');
+		$users      = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($cid);
 
 		foreach ($users as $user)
 		{
@@ -993,7 +993,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$categories = Helper::getCategories($catids);
+		$categories = CategoryHelper::getCategories($catids);
 
 		foreach ($userids as $userid)
 		{

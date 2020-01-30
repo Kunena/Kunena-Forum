@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use function defined;
 
 $this->profile = \Kunena\Forum\Libraries\Factory\KunenaFactory::getUser($this->user->id);
-$this->me      = \Kunena\Forum\Libraries\User\Helper::getMyself();
+$this->me      = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 $tabs          = $this->getTabsEdit();
 $avatar        = \Kunena\Forum\Libraries\Factory\KunenaFactory::getAvatarIntegration();
 ?>

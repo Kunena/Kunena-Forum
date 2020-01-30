@@ -319,7 +319,7 @@ abstract class Legacy
 
 				// Convert URI to have both id and mesid
 				$id      = $uri->getVar('id');
-				$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
 				$mesid   = $uri->getVar('mesid');
 
 				if ($message->exists())
@@ -384,7 +384,7 @@ abstract class Legacy
 
 				// Convert URI to have both id and mesid
 				$id      = $uri->getVar('id');
-				$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
 				$mesid   = null;
 
 				if ($message->exists())
@@ -472,7 +472,7 @@ abstract class Legacy
 				}
 
 				// Convert URI to have both id and mesid
-				$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
 				$mesid   = null;
 
 				if ($message->exists())
@@ -718,7 +718,7 @@ abstract class Legacy
 					$uri->setVar('task', 'thankyou');
 					$uri->delVar('pid');
 
-					$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+					$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
 
 					if ($message->exists())
 					{

@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Html\Parser;
 use Joomla\Registry\Registry;
@@ -93,13 +93,13 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		// Prefetch all users/avatars to avoid user by user queries during template iterations.
 		if (!empty($userIds))
 		{
-			\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
+			\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
 		}
 
 		$topicIds = array_keys($this->topics);
-		\Kunena\Forum\Libraries\Forum\Topic\Helper::getUserTopics($topicIds);
+		\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getUserTopics($topicIds);
 
-		$mesIds += \Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus($this->topics);
+		$mesIds += \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus($this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...
@@ -111,7 +111,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		// Load position information for all selected messages.
 		if ($mesIds)
 		{
-			Helper::loadLocation($mesIds);
+			MessageHelper::loadLocation($mesIds);
 		}
 
 		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));

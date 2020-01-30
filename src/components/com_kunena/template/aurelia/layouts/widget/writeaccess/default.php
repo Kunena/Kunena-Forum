@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use function defined;
 
-$topic  = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->id);
+$topic  = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->id);
 $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 ?>
 
@@ -51,7 +51,7 @@ $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 					</li>
 				<?php }
 
-				if ($topic->isAuthorised('reply', \Kunena\Forum\Libraries\User\Helper::getMyself()))
+				if ($topic->isAuthorised('reply', \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()))
 				{ ?>
 					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
@@ -80,9 +80,9 @@ $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->image_upload == 'admin' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin() ||
-						$config->image_upload == 'moderator' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator() ||
-						$config->image_upload == 'registered' && \Kunena\Forum\Libraries\User\Helper::getMyself()->exists())
+					elseif ($config->image_upload == 'admin' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isAdmin() ||
+						$config->image_upload == 'moderator' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator() ||
+						$config->image_upload == 'registered' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -111,9 +111,9 @@ $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->file_upload == 'admin' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin() ||
-						$config->file_upload == 'moderator' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator() ||
-						$config->file_upload == 'registered' && \Kunena\Forum\Libraries\User\Helper::getMyself()->exists())
+					elseif ($config->file_upload == 'admin' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isAdmin() ||
+						$config->file_upload == 'moderator' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator() ||
+						$config->file_upload == 'registered' && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -131,7 +131,7 @@ $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 
 				if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->useredit)
 				{
-					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != \Kunena\Forum\Libraries\User\Helper::getMyself()->userid)
+					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid)
 					{
 						?>
 						<li>
@@ -139,9 +139,9 @@ $config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 						</li>
 						<?php
 					}
-					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != \Kunena\Forum\Libraries\User\Helper::getMyself()->userid)
+					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid)
 					{
-						if (\Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin())
+						if (\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isAdmin())
 						{
 							?>
 							<li>

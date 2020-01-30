@@ -164,7 +164,7 @@ class Rate extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return Helper::get($identifier, $reload);
+		return RateHelper::get($identifier, $reload);
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Rate extends CMSObject
 	public function save($user)
 	{
 		$user  = KunenaFactory::getUser($user);
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->topic_id);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
 
 		$this->getUsers();
 
@@ -229,7 +229,7 @@ class Rate extends CMSObject
 			$this->_db->execute();
 			$activityIntegration = KunenaFactory::getActivityIntegration();
 
-			$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->topic_id);
+			$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
 			$activityIntegration->onAfterRate($user->userid, $topic);
 
 			$response = new JsonResponse(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');

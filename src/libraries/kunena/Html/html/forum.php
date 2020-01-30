@@ -66,11 +66,11 @@ abstract class Forum
 
 		if ($catid)
 		{
-			$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
+			$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
 
-			if (!$category->getParent()->isAuthorised($action) && !\Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin())
+			if (!$category->getParent()->isAuthorised($action) && !\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isAdmin())
 			{
-				$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getParents($catid, $levels, $params);
+				$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getParents($catid, $levels, $params);
 			}
 		}
 
@@ -89,8 +89,8 @@ abstract class Forum
 			foreach ($parent as $p)
 			{
 				$channels_local = [];
-				$category       = \Kunena\Forum\Libraries\Forum\Category\Helper::get($p);
-				$children       = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($p, $levels, $params);
+				$category       = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($p);
+				$children       = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($p, $levels, $params);
 
 				if ($params['action'] == 'topic.create')
 				{
@@ -98,7 +98,7 @@ abstract class Forum
 
 					if (empty($children) && !isset($channels_local[$category->id]))
 					{
-						$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get();
+						$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get();
 					}
 
 					foreach ($channels_local as $id => $channel)
@@ -140,7 +140,7 @@ abstract class Forum
 
 		if ($topleveltxt)
 		{
-			$me         = \Kunena\Forum\Libraries\User\Helper::getMyself();
+			$me         = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 			$disabled   = ($action == 'admin' && !$me->isAdmin());
 			$options [] = HTMLHelper::_('select.option', '0', Text::_($topleveltxt), 'value', 'text', $disabled);
 
@@ -153,7 +153,7 @@ abstract class Forum
 		}
 		else
 		{
-			$toplevel = -\Kunena\Forum\Libraries\Forum\Category\Helper::get($parent)->level;
+			$toplevel = -\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($parent)->level;
 		}
 
 		foreach ($categories as $category)

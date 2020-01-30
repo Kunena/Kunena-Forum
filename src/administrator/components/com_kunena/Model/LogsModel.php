@@ -19,7 +19,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Log\Finder;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
@@ -359,9 +359,9 @@ class LogsModel extends ListModel
 
 		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
+		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
 
-		Helper::getTopics($items->map(function ($item, $key) {
+		TopicHelper::getTopics($items->map(function ($item, $key) {
 			return $item->topic_id;
 		})->all());
 

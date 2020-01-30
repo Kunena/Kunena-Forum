@@ -27,7 +27,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Object\CMSObject;
-use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -144,7 +144,7 @@ class HtmlView extends BaseHtmlView
 				$mesid = $this->topic->first_post_id;
 			}
 
-			$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
+			$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
 
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
@@ -157,7 +157,7 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 
-		if (!\Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id)->exists())
+		if (!\Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->topic->first_post_id)->exists())
 		{
 			$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
 
@@ -225,7 +225,7 @@ class HtmlView extends BaseHtmlView
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get('Category');
 		$topic    = $this->get('Topic');
-		\Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus([$topic->id => $topic]);
+		\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus([$topic->id => $topic]);
 
 		$message = Message::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
@@ -310,7 +310,7 @@ class HtmlView extends BaseHtmlView
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
-		$categories        = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
+		$categories        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -340,7 +340,7 @@ class HtmlView extends BaseHtmlView
 					   'action'      => 'topic.create'];
 
 		$this->catid    = $this->state->get('item.catid');
-		$this->category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->catid);
+		$this->category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		if (!$this->topic->category_id)
@@ -371,7 +371,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
@@ -406,12 +406,12 @@ class HtmlView extends BaseHtmlView
 
 		if (!$this->mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->state->get('item.id'));
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->state->get('item.id'));
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->mesid);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -448,7 +448,7 @@ class HtmlView extends BaseHtmlView
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -474,7 +474,7 @@ class HtmlView extends BaseHtmlView
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
+		$this->message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
 
 		try
 		{
@@ -517,7 +517,7 @@ class HtmlView extends BaseHtmlView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = Helper::getExtensions($this->category);
+		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{
@@ -925,7 +925,7 @@ class HtmlView extends BaseHtmlView
 					$userids_thankyous[] = $userid;
 				}
 
-				$loaded_users = \Kunena\Forum\Libraries\User\Helper::loadUsers($userids_thankyous);
+				$loaded_users = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userids_thankyous);
 
 				$thankyou_delete = '';
 
@@ -1162,10 +1162,10 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$this->history      = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
+		$this->history      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
 		$this->historycount = count($this->history);
 		$this->replycount   = $this->topic->getReplies();
-		Helper::getByMessage($this->history);
+		AttachmentHelper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -1173,7 +1173,7 @@ class HtmlView extends BaseHtmlView
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
+		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
 		$params = new Registry;

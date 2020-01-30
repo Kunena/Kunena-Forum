@@ -19,9 +19,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
-use Kunena\Forum\Libraries\Forum\Message\Finder;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Model\Model;
 
 /**
@@ -97,7 +98,7 @@ class TrashModel extends Model
 	 */
 	protected function _getTopics()
 	{
-		$finder = new Finder;
+		$finder = new MessageFinder;
 		$finder->filterByHold([2, 3]);
 
 		$direction = strtoupper($this->getState('list.direction'));
@@ -332,7 +333,7 @@ class TrashModel extends Model
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
-		return \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids, 'none');
+		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($ids, 'none');
 	}
 
 	/**
@@ -372,11 +373,11 @@ class TrashModel extends Model
 
 		if ($type == 'topics')
 		{
-			$items = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids, 'none');
+			$items = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids, 'none');
 		}
 		elseif ($type == 'messages')
 		{
-			$items = Helper::getMessages($ids, 'none');
+			$items = MessageHelper::getMessages($ids, 'none');
 		}
 
 		return $items;

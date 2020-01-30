@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Template\Helper;
+use Kunena\Forum\Libraries\Template\TemplateHelper;
 use Kunena\Forum\Libraries\Template\Template;
 use stdClass;
 
@@ -42,7 +42,7 @@ class TemplatesModel extends AdminModel
 	{
 		parent::__construct($config);
 		$this->app    = Factory::getApplication();
-		$this->me     = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me     = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 	}
 
@@ -85,12 +85,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplates()
 	{
 		// Get template xml file info
-		$rows = Helper::parseXmlFiles();
+		$rows = TemplateHelper::parseXmlFiles();
 
 		// Set dynamic template information
 		foreach ($rows as $row)
 		{
-			$row->published = Helper::isDefault($row->directory);
+			$row->published = TemplateHelper::isDefault($row->directory);
 		}
 
 		$this->setState('list.total', count($rows));
@@ -111,12 +111,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplatedetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$details  = Helper::parseXmlFile($template);
+		$details  = TemplateHelper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = Helper::parseXmlFile($template);
+			$details  = TemplateHelper::parseXmlFile($template);
 		}
 
 		return $details;

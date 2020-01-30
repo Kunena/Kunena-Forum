@@ -21,8 +21,8 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
-use Kunena\Forum\Libraries\Forum\Topic\Finder;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -54,7 +54,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$this->model = new TopicsModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
-		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
 		$holding        = $this->getOptions()->get('topics_deletedtopics');
 		$this->embedded = $this->getOptions()->get('embedded', true);
@@ -119,7 +119,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
-		$finder = new Finder;
+		$finder = new TopicFinder;
 		$finder->filterByMoved(false);
 
 		switch ($this->state->get('list.mode'))
@@ -168,7 +168,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 				break;
 		}
 
-		$categories = Helper::getCategories($categoryIds, $reverse, $authorise);
+		$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new Pagination($finder->count(), $start, $limit);

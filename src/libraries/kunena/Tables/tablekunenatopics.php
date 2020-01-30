@@ -19,12 +19,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use RuntimeException;
 use UnexpectedValueException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Topics
@@ -259,7 +257,7 @@ class TableKunenaTopics extends KunenaTable
 	 */
 	public function check()
 	{
-		$category = Helper::get($this->category_id);
+		$category = CategoryHelper::get($this->category_id);
 
 		if (!$category->exists())
 		{

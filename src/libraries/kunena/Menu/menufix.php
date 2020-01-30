@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Route\Legacy;
 use StdClass;
 use function defined;
 
-Fix::initialize();
+MenuFix::initialize();
 
 /**
  * Class KunenaMenuFix
@@ -290,7 +290,7 @@ abstract class MenuFix
 			}
 		}
 
-		Helper::cleanCache();
+		MenuHelper::cleanCache();
 
 		return !empty($errors) ? $errors : null;
 	}
@@ -312,7 +312,7 @@ abstract class MenuFix
 
 		$table  = Table::getInstance('menu');
 		$result = $table->delete($itemid);
-		Helper::cleanCache();
+		MenuHelper::cleanCache();
 
 		return $result;
 	}

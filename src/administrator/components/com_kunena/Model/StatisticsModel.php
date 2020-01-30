@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Log\Finder;
 use Kunena\Forum\Libraries\Log\Log;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
 
@@ -62,7 +62,7 @@ class StatisticsModel extends ListModel
 			];
 		}
 
-		$this->me = Helper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -297,7 +297,7 @@ class StatisticsModel extends ListModel
 
 		unset($items);
 
-		Helper::loadUsers($userIds);
+		KunenaUserHelper::loadUsers($userIds);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $data;

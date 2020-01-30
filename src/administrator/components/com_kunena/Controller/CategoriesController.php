@@ -22,7 +22,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use RuntimeException;
@@ -131,7 +131,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = Helper::getCategories($cid);
+		$categories = CategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -451,7 +451,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = Helper::getCategories($cid);
+		$categories = CategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -514,7 +514,7 @@ class CategoriesController extends FormController
 
 		$id = $this->app->input->getInt('catid', 0);
 
-		$category = Helper::get($id);
+		$category = CategoryHelper::get($id);
 
 		if (!$category->isAuthorised('admin'))
 		{
@@ -569,7 +569,7 @@ class CategoriesController extends FormController
 
 		$success = false;
 
-		$categories = Helper::getCategories($cid);
+		$categories = CategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -692,7 +692,7 @@ class CategoriesController extends FormController
 			return;
 		}
 
-		$category = Helper::get($id);
+		$category = CategoryHelper::get($id);
 
 		if (!$category->getParent()->tryAuthorise('admin'))
 		{

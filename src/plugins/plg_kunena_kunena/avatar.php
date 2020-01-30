@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Image\Helper;
+use Kunena\Forum\Libraries\Image\ImageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -131,7 +131,7 @@ class KunenaAvatar extends Avatar
 
 		if (!is_file("{$path}/{$resized}/{$file}"))
 		{
-			Helper::version($origPath, "{$path}/{$resized}", $file, $sizex,
+			ImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex,
 				$sizey, intval($config->avatarquality), KunenaImage::SCALE_INSIDE, intval($config->avatarcrop)
 			);
 

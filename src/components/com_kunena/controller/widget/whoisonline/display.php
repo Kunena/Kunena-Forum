@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -60,12 +60,12 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		$me        = Helper::getMyself();
+		$me        = KunenaUserHelper::getMyself();
 		$moderator = intval($me->isModerator()) + intval($me->isAdmin());
 
-		$users = Helper::getOnlineUsers();
-		Helper::loadUsers(array_keys($users));
-		$onlineusers = Helper::getOnlineCount();
+		$users = KunenaUserHelper::getOnlineUsers();
+		KunenaUserHelper::loadUsers(array_keys($users));
+		$onlineusers = KunenaUserHelper::getOnlineCount();
 
 		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
@@ -98,7 +98,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 
 		foreach ($users as $userid => $usertime)
 		{
-			$user = Helper::get($userid);
+			$user = KunenaUserHelper::get($userid);
 
 			if (!$user->showOnline)
 			{

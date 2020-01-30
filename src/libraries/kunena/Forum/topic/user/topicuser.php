@@ -68,7 +68,7 @@ class TopicUser extends CMSObject
 	 */
 	public function __construct($topic = null, $user = null)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
 
 		// Always fill empty data
 		$this->_db = Factory::getDBO();
@@ -81,7 +81,7 @@ class TopicUser extends CMSObject
 		$this->_exists     = false;
 		$this->topic_id    = $topic->id;
 		$this->category_id = $topic->category_id;
-		$this->user_id     = \Kunena\Forum\Libraries\User\Helper::get($user)->userid;
+		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -114,7 +114,7 @@ class TopicUser extends CMSObject
 	 * @param   mixed  $user    user
 	 * @param   bool   $reload  reload
 	 *
-	 * @return  User
+	 * @return  TopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -122,7 +122,7 @@ class TopicUser extends CMSObject
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
-		return Helper::get($id, $user, $reload);
+		return TopicUserHelper::get($id, $user, $reload);
 	}
 
 	/**
@@ -162,7 +162,7 @@ class TopicUser extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
+		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();
@@ -302,7 +302,7 @@ class TopicUser extends CMSObject
 	 */
 	public function getTopic()
 	{
-		return \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->topic_id);
+		return \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
 	}
 
 	/**

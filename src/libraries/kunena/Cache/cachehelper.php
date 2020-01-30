@@ -82,7 +82,7 @@ abstract class CacheHelper
 	 */
 	public static function clearMenu()
 	{
-		\Kunena\Forum\Libraries\Menu\Helper::cleanCache();
+		\Kunena\Forum\Libraries\Menu\MenuHelper::cleanCache();
 	}
 
 	/**

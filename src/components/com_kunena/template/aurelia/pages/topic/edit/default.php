@@ -20,7 +20,7 @@ use function defined;
 $content = $this->execute('Topic/Form/Edit');
 
 // Display breadcrumb path to the current category / topic / message / moderate.
-$parents   = \Kunena\Forum\Libraries\Forum\Category\Helper::getParents($content->category->id);
+$parents   = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 foreach ($parents as $parent)

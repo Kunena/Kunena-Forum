@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\MVC\Controller\FormController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -213,7 +213,7 @@ class TemplatesController extends FormController
 
 			if (is_dir($tmp_kunena))
 			{
-				$templates = \Kunena\Forum\Libraries\Template\Helper::parseXmlFiles($tmp_kunena);
+				$templates = \Kunena\Forum\Libraries\Template\TemplateHelper::parseXmlFiles($tmp_kunena);
 
 				if (!empty($templates))
 				{
@@ -269,7 +269,7 @@ class TemplatesController extends FormController
 					}
 
 					// Clear all cache, just in case.
-					\Kunena\Forum\Libraries\Cache\Helper::clearAll();
+					\Kunena\Forum\Libraries\Cache\CacheHelper::clearAll();
 				}
 				else
 				{
@@ -310,7 +310,7 @@ class TemplatesController extends FormController
 		}
 
 		// Initialize variables
-		$otemplate = \Kunena\Forum\Libraries\Template\Helper::parseXmlFile($id);
+		$otemplate = \Kunena\Forum\Libraries\Template\TemplateHelper::parseXmlFile($id);
 
 		if (!$otemplate)
 		{
@@ -328,7 +328,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		if (\Kunena\Forum\Libraries\Template\Helper::isDefault($template))
+		if (\Kunena\Forum\Libraries\Template\TemplateHelper::isDefault($template))
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -344,7 +344,7 @@ class TemplatesController extends FormController
 			$retval = Folder::delete($tpl);
 
 			// Clear all cache, just in case.
-			\Kunena\Forum\Libraries\Cache\Helper::clearAll();
+			\Kunena\Forum\Libraries\Cache\CacheHelper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
 		}
 		else

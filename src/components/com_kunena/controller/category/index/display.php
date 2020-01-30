@@ -23,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -88,7 +88,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->me        = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->me        = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Get sections to display.
@@ -163,11 +163,11 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 		if ($catid)
 		{
-			$sections = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($catid);
+			$sections = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($catid);
 		}
 		else
 		{
-			$sections = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren();
+			$sections = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren();
 		}
 
 		$sectionIds = [];
@@ -215,7 +215,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		$this->sections = $sections;
-		$categories     = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($sectionIds);
+		$categories     = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
@@ -291,7 +291,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$subcategories = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($categoryIds);
+		$subcategories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($categoryIds);
 
 		foreach ($subcategories as $category)
 		{
@@ -316,7 +316,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topicIds, 'none');
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -325,8 +325,8 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
-		\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
-		Helper::getMessages($postIds);
+		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
+		MessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		$this->pending = [];
@@ -334,7 +334,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		if ($this->me->exists() && !$this->me->isBanned())
 		{
 			// Load new topic counts.
-			\Kunena\Forum\Libraries\Forum\Category\Helper::getNewTopics(array_keys($categories + $subcategories));
+			\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getNewTopics(array_keys($categories + $subcategories));
 
 			// Get categories which are moderated by current user.
 			$access   = Access::getInstance();
@@ -392,7 +392,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				// Fix last post position when user can see unapproved or deleted posts.
 				if (!$topic_ordering)
 				{
-					Helper::loadLocation($postIds);
+					MessageHelper::loadLocation($postIds);
 				}
 			}
 		}

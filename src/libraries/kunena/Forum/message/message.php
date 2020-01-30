@@ -35,7 +35,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -772,7 +772,7 @@ class Message extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function publish($value = Forum::PUBLISHED)
+	public function publish($value = KunenaForum::PUBLISHED)
 	{
 		if ($this->hold == $value)
 		{

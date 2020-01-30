@@ -21,7 +21,7 @@ use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Attachment\Finder;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Helper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -206,7 +206,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('delete') && $topic->publish(Forum::TOPIC_DELETED))
+				if ($topic->isAuthorised('delete') && $topic->publish(KunenaForum::TOPIC_DELETED))
 				{
 					$message = Text::_('COM_KUNENA_BULKMSG_DELETED');
 				}
@@ -273,7 +273,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('undelete') && $topic->publish(Forum::PUBLISHED))
+				if ($topic->isAuthorised('undelete') && $topic->publish(KunenaForum::PUBLISHED))
 				{
 					$message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
 				}
@@ -340,7 +340,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('approve') && $topic->publish(Forum::PUBLISHED))
+				if ($topic->isAuthorised('approve') && $topic->publish(KunenaForum::PUBLISHED))
 				{
 					$message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
 					$topic->sendNotification();
@@ -602,7 +602,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('approve') && $message->publish(Forum::PUBLISHED))
+				if ($message->isAuthorised('approve') && $message->publish(KunenaForum::PUBLISHED))
 				{
 					$message->sendNotification();
 					$success++;
@@ -654,7 +654,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('delete') && $message->publish(Forum::DELETED))
+				if ($message->isAuthorised('delete') && $message->publish(KunenaForum::DELETED))
 				{
 					$success++;
 				}
@@ -705,7 +705,7 @@ class TopicsController extends KunenaController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('undelete') && $message->publish(Forum::PUBLISHED))
+				if ($message->isAuthorised('undelete') && $message->publish(KunenaForum::PUBLISHED))
 				{
 					$success++;
 				}

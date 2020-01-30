@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\View\View;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\View\View;
 use stdClass;
 use function defined;
 

@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\User\Ban;
@@ -322,7 +322,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'posts', 'embed', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	/**
@@ -348,7 +348,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'posts', 'embed', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	/**
@@ -374,7 +374,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'posts', 'embed', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	/**
@@ -400,7 +400,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'posts', 'embed', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	/**
@@ -426,7 +426,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'user', 'embed', $params);
+		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
 	/**
@@ -457,7 +457,7 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir'    => 'desc',
 		];
 
-		Forum::display('topics', 'user', 'embed', $params);
+		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
 	/**
@@ -484,6 +484,6 @@ class KunenaLayoutUserItem extends Layout
 			'filter_order_Dir' => 'desc',
 		];
 
-		Forum::display('category', 'user', 'embed', $params);
+		KunenaForum::display('category', 'user', 'embed', $params);
 	}
 }

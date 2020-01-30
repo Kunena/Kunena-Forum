@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Image\KunenaImage;
@@ -1141,14 +1141,14 @@ class TopicController extends KunenaController
 
 				try
 				{
-					$message->publish(Forum::DELETED);
+					$message->publish(KunenaForum::DELETED);
 				}
 				catch (Exception $e)
 				{
 					$this->app->enqueueMessage($e->getMessage(), 'notice');
 				}
 
-				if ($message->publish(Forum::DELETED))
+				if ($message->publish(KunenaForum::DELETED))
 				{
 					$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
 				}
@@ -1830,7 +1830,7 @@ class TopicController extends KunenaController
 			$message = $target = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->mesid);
 			$topic   = $message->getTopic();
 			$log     = Log::LOG_POST_DELETE;
-			$hold    = Forum::DELETED;
+			$hold    = KunenaForum::DELETED;
 			$msg     = Text::_('COM_KUNENA_POST_SUCCESS_DELETE');
 		}
 		else
@@ -1838,7 +1838,7 @@ class TopicController extends KunenaController
 			// Delete topic
 			$topic = $target = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->id);
 			$log   = Log::LOG_TOPIC_DELETE;
-			$hold  = Forum::TOPIC_DELETED;
+			$hold  = KunenaForum::TOPIC_DELETED;
 			$msg   = Text::_('COM_KUNENA_TOPIC_SUCCESS_DELETE');
 		}
 
@@ -1916,7 +1916,7 @@ class TopicController extends KunenaController
 
 		$category = $topic->getCategory();
 
-		if ($target->isAuthorised('undelete') && $target->publish(Forum::PUBLISHED))
+		if ($target->isAuthorised('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
 			{
@@ -2053,7 +2053,7 @@ class TopicController extends KunenaController
 		$topic    = $message->getTopic();
 		$category = $topic->getCategory();
 
-		if ($target->isAuthorised('approve') && $target->publish(Forum::PUBLISHED))
+		if ($target->isAuthorised('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			if ($this->config->log_moderation)
 			{

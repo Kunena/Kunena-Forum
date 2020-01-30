@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
 use Kunena\Forum\Libraries\Html\Parser;
@@ -483,7 +483,7 @@ class Topic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function publish($value = Forum::PUBLISHED)
+	public function publish($value = KunenaForum::PUBLISHED)
 	{
 		if ($value < 0 || $value > 3)
 		{
@@ -619,7 +619,7 @@ class Topic extends KunenaDatabaseObject
 		{
 			if (!isset($this->hold))
 			{
-				$this->hold = Forum::TOPIC_DELETED;
+				$this->hold = KunenaForum::TOPIC_DELETED;
 			}
 
 			// If message isn't visible anymore, check if we need to update cache
@@ -693,7 +693,7 @@ class Topic extends KunenaDatabaseObject
 		if (!$this->first_post_id || !$this->last_post_id)
 		{
 			// If topic has no visible posts, mark it deleted and recount
-			$this->hold = $exists ? $message->hold : Forum::TOPIC_DELETED;
+			$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
 			$this->recount();
 		}
 

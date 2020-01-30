@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Category\Helper;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\Utilities\ArrayHelper;
@@ -213,7 +213,7 @@ class TrashController extends FormController
 
 			foreach ($messages as $target)
 			{
-				if ($target->publish(Forum::PUBLISHED))
+				if ($target->publish(KunenaForum::PUBLISHED))
 				{
 					$nb_items++;
 				}
@@ -229,13 +229,13 @@ class TrashController extends FormController
 
 			foreach ($topics as $target)
 			{
-				if ($target->getState() == Forum::UNAPPROVED)
+				if ($target->getState() == KunenaForum::UNAPPROVED)
 				{
-					$status = Forum::UNAPPROVED;
+					$status = KunenaForum::UNAPPROVED;
 				}
 				else
 				{
-					$status = Forum::PUBLISHED;
+					$status = KunenaForum::PUBLISHED;
 				}
 
 				if ($target->publish($status))

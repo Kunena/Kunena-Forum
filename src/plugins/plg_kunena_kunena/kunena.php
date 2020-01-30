@@ -15,7 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Kunena;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Integration\Profile;
 use function defined;
@@ -36,7 +36,7 @@ class PlgKunenaKunena extends CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && Forum::isCompatible('4.0')))
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
 		{
 			return;
 		}

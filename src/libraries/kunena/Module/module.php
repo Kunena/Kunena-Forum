@@ -98,7 +98,7 @@ abstract class Module
 		}
 
 		// Initialize Kunena.
-		\Kunena\Forum\Libraries\Forum\Forum::setup();
+		\Kunena\Forum\Libraries\Forum\KunenaForum::setup();
 
 		// Display module.
 		$this->_display();

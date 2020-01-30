@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\Helper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -236,12 +236,12 @@ class Access
 				continue;
 			}
 
-			if ($item->role == Forum::ADMINISTRATOR)
+			if ($item->role == KunenaForum::ADMINISTRATOR)
 			{
 				$this->adminsByUserid [$userid] [$catid] = 1;
 				$this->adminsByCatid [$catid] [$userid]  = 1;
 			}
-			elseif ($item->role == Forum::MODERATOR)
+			elseif ($item->role == KunenaForum::MODERATOR)
 			{
 				$this->moderatorsByUserid [$userid] [$catid] = 1;
 				$this->moderatorsByCatid [$catid] [$userid]  = 1;

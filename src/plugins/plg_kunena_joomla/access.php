@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use StdClass;
@@ -281,7 +281,7 @@ class AccessJoomla
 			$item              = new StdClass;
 			$item->user_id     = (int) $userid;
 			$item->category_id = 0;
-			$item->role        = Forum::ADMINISTRATOR;
+			$item->role        = KunenaForum::ADMINISTRATOR;
 			$list[]            = $item;
 		}
 

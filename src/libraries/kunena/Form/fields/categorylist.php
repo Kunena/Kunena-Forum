@@ -43,7 +43,7 @@ class CategoryList extends FormField
 	 */
 	protected function getInput()
 	{
-		if (!class_exists('KunenaForum') || !\Kunena\Forum\Libraries\Forum\Forum::installed())
+		if (!class_exists('KunenaForum') || !\Kunena\Forum\Libraries\Forum\KunenaForum::installed())
 		{
 			echo '<a href="' . Route::_('index.php?option=com_kunena') . '">PLEASE COMPLETE KUNENA INSTALLATION</a>';
 

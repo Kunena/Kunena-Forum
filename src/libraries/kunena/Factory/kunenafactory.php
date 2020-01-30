@@ -254,7 +254,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link Config} object, only creating it if it doesn't already exist.
 	 *
-	 * @return  Config
+	 * @return  KunenaConfig
 	 *
 	 * @since   Kunena 6.0
 	 *

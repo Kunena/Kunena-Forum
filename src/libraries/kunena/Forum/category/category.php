@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Html\Parser;
@@ -1059,7 +1059,7 @@ class Category extends KunenaDatabaseObject
 
 		$topic              = new Topic;
 		$topic->category_id = $catid;
-		$topic->hold        = Forum::TOPIC_CREATION;
+		$topic->hold        = KunenaForum::TOPIC_CREATION;
 		$topic->rating      = 0;
 		$topic->params      = '';
 

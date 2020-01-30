@@ -884,7 +884,7 @@ abstract class KunenaRoute
 	 */
 	public static function cacheLoad()
 	{
-		if (!Config::getInstance()->get('cache_url'))
+		if (!KunenaConfig::getInstance()->get('cache_url'))
 		{
 			return;
 		}
@@ -913,7 +913,7 @@ abstract class KunenaRoute
 	 */
 	public static function cacheStore()
 	{
-		if (!Config::getInstance()->get('cache_url'))
+		if (!KunenaConfig::getInstance()->get('cache_url'))
 		{
 			return;
 		}

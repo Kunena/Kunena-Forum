@@ -24,7 +24,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Controller;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -90,7 +89,7 @@ class KunenaController extends BaseController
 	 * @param   string  $prefix  prefix
 	 * @param   mixed   $config  config
 	 *
-	 * @return  Controller
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -219,7 +218,7 @@ class KunenaController extends BaseController
 			if ($task != 'display')
 			{
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
-				if (!\Kunena\Forum\Libraries\Forum\Forum::enabled(true))
+				if (!\Kunena\Forum\Libraries\Forum\KunenaForum::enabled(true))
 				{
 					throw new \Kunena\Forum\Libraries\Exception\Authorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 				}
@@ -382,8 +381,6 @@ class KunenaController extends BaseController
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-			// Version warning, disable J4 for now.
-			require_once KPATH_ADMIN . '/install/version.php';
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
 		}

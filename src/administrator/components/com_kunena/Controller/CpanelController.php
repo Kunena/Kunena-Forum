@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\MVC\Controller\FormController;
 use stdClass;
 use function defined;
@@ -68,7 +68,7 @@ class CpanelController extends FormController
 	{
 		$updateInfo = null;
 
-		if (Forum::installed() && Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_installer'))
+		if (KunenaForum::installed() && Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
 			$db         = Factory::getDbo();
@@ -111,7 +111,7 @@ class CpanelController extends FormController
 			}
 		}
 
-		if (!empty($updateInfo->version) && version_compare(Forum::version(), $updateInfo->version, '<'))
+		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates
 			Factory::getApplication()->enqueueMessage(Text::_('Kunena Update Found.  <a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');

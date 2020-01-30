@@ -31,7 +31,7 @@ use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Log\Log;
@@ -900,7 +900,7 @@ class UserController extends KunenaController
 
 			foreach ($messages as $mes)
 			{
-				$mes->publish(Forum::DELETED);
+				$mes->publish(KunenaForum::DELETED);
 			}
 
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));

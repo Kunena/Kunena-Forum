@@ -254,7 +254,7 @@ class KunenaUser extends CMSObject
 	 * @param   string  $type    The user table name to be used.
 	 * @param   string  $prefix  The user table prefix to be used.
 	 *
-	 * @return  Table|Table|KunenaUser    The user table object.
+	 * @return  Table|KunenaUser    The user table object.
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -423,7 +423,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  boolean
 	 *
@@ -441,7 +441,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  boolean
 	 *

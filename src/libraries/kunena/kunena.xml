@@ -11,7 +11,7 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>Kunena Framework.</description>
-    <namespace>Kunena\Forum\Libraries2</namespace>
+    <namespace>Kunena\Forum\Libraries</namespace>
     <files>
         <folder>Access</folder>
         <folder>Activity</folder>

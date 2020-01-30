@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-
 use Kunena\Forum\Libraries\Tree\Tree;
 use RuntimeException;
 

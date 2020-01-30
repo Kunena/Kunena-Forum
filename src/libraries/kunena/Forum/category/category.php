@@ -43,44 +43,44 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\Category
  *
- * @property int    $id
- * @property int    $parent_id
- * @property string $name
- * @property string $alias
- * @property int    $icon_id
- * @property int    $locked
- * @property string $accesstype
- * @property int    $access
- * @property int    $pub_access
- * @property int    $pub_recurse
- * @property int    $admin_access
- * @property int    $admin_recurse
- * @property int    $ordering
- * @property int    $published
- * @property string $channels
- * @property int    $checked_out
- * @property string $checked_out_time
- * @property int    $review
- * @property int    $allow_anonymous
- * @property int    $post_anonymous
- * @property int    $hits
- * @property string $description
- * @property string $headerdesc
- * @property string $class_sfx
- * @property int    $allow_polls
- * @property string $topic_ordering
- * @property string $iconset
- * @property int    $numTopics
- * @property int    $numPosts
- * @property int    $last_topic_id
- * @property int    $last_post_id
- * @property int    $last_post_time
- * @property string $params
- * @property string $topictemplate
- * @property string $sectionheaderdesc
- * @property int    $allow_ratings
- *
  * @since   Kunena 6.0
+ * @property int     $id
+ * @property int     $parent_id
+ * @property string  $name
+ * @property string  $alias
+ * @property int     $icon_id
+ * @property int     $locked
+ * @property string  $accesstype
+ * @property int     $access
+ * @property int     $pub_access
+ * @property int     $pub_recurse
+ * @property int     $admin_access
+ * @property int     $admin_recurse
+ * @property int     $ordering
+ * @property integer $published
+ * @property string  $channels
+ * @property int     $checked_out
+ * @property string  $checked_out_time
+ * @property int     $review
+ * @property int     $allow_anonymous
+ * @property int     $post_anonymous
+ * @property int     $hits
+ * @property string  $description
+ * @property string  $headerdesc
+ * @property string  $class_sfx
+ * @property int     $allow_polls
+ * @property string  $topic_ordering
+ * @property string  $iconset
+ * @property int     $numTopics
+ * @property int     $numPosts
+ * @property int     $last_topic_id
+ * @property int     $last_post_id
+ * @property int     $last_post_time
+ * @property string  $params
+ * @property string  $topictemplate
+ * @property string  $sectionheaderdesc
+ * @property int     $allow_ratings
+ *
  */
 class Category extends KunenaDatabaseObject
 {
@@ -232,6 +232,24 @@ class Category extends KunenaDatabaseObject
 	public $published;
 
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $numTopics;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $numPosts;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $last_post_time;
+
+	/**
 	 * @param   mixed|array  $properties  properties
 	 *
 	 * @since   Kunena 6.0
@@ -365,7 +383,7 @@ class Category extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @todo  Currently new topics needs to be calculated manually, make it automatic.
+	 * @todo    Currently new topics needs to be calculated manually, make it automatic.
 	 */
 	public function getNewCount($count = null)
 	{
@@ -1643,8 +1661,8 @@ class Category extends KunenaDatabaseObject
 
 	/**
 	 * @param   Topic  $topic       topic
-	 * @param   int               $topicdelta  topicdelta
-	 * @param   int               $postdelta   postdelta
+	 * @param   int    $topicdelta  topicdelta
+	 * @param   int    $postdelta   postdelta
 	 *
 	 * @return  boolean
 	 *

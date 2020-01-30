@@ -9,17 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Topic;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutTopicList
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicList extends KunenaLayout
+class KunenaLayoutTopicList extends Layout
 {
 	/**
 	 * Method to return HTML select list for time filter

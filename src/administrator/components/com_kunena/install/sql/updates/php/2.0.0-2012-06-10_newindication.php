@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 2.0.0: Convert new indication into new format
 /**

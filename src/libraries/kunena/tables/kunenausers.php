@@ -9,12 +9,17 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Tables;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
+use UnexpectedValueException;
+use function defined;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -24,7 +29,7 @@ require_once __DIR__ . '/kunena.php';
  *
  * @since   Kunena 4.0
  */
-class TableKunenaUsers extends KunenaTable
+class KunenaUsers extends KunenaTable
 {
 	/**
 	 * User ID
@@ -524,7 +529,7 @@ class TableKunenaUsers extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function load($userid = null, $reset = true)
 	{
@@ -552,20 +557,21 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = $this->_db->getQuery(true);
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
 		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
-			->from($this->_db->quoteName('#__users', 'u'))
-			->leftJoin($this->_db->quoteName($this->_tbl, 'ku') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('ku.userid'))
-			->where($this->_db->quoteName('u.id') . ' = ' . $this->_db->quote($this->$k));
-		$this->_db->setQuery($query);
+			->from($db->quoteName('#__users', 'u'))
+			->leftJoin($db->quoteName($this->_tbl, 'ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
+			->where($db->quoteName('u.id') . ' = ' . $db->quote($this->$k));
+		$db->setQuery($query);
 
 		try
 		{
-			$data = $this->_db->loadAssoc();
+			$data = $db->loadAssoc();
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 
 			return false;
 		}

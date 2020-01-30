@@ -9,16 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Application\Topic\Unread;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicUnreadDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.
@@ -27,7 +34,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function exists()
 	{
@@ -48,14 +55,14 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$catid = $this->input->getInt('catid', 0);
 		$id    = $this->input->getInt('id', 0);
 
-		$category = KunenaForumCategoryHelper::get($catid);
+		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
 		$category->tryAuthorise();
 
-		$topic = KunenaForumTopicHelper::get($id);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
 		$topic->tryAuthorise();
 
-		KunenaForumTopicHelper::fetchNewStatus([$topic->id => $topic]);
-		$message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
+		\Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus([$topic->id => $topic]);
+		$message = Helper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
 		while (@ob_end_clean())
@@ -72,7 +79,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

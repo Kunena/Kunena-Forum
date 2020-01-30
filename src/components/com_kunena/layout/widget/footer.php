@@ -9,16 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Widget;
+
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * KunenaLayoutWidgetFooter
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetFooter extends KunenaLayout
+class KunenaLayoutWidgetFooter extends Layout
 {
 	/**
 	 * Method to get the time of page generation
@@ -27,7 +36,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function getTime()
 	{
@@ -51,7 +60,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	protected function getRSS()
@@ -77,7 +86,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 			$itemid = KunenaRoute::fixMissingItemID();
 
-			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			if (CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}") . '?format=feed&type=rss';
 			}
@@ -89,7 +98,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 			$doc = Factory::getApplication()->getDocument();
 			$doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
-			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';
+			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . \Kunena\Forum\Libraries\Icons\Icons::rss($text = true) . '</a>';
 		}
 		else
 		{

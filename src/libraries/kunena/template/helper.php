@@ -9,17 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Template;
+
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
+use stdClass;
+use function defined;
 
 /**
  * Kunena Template Helper Class
  *
  * @since  K2.0
  */
-abstract class KunenaTemplateHelper
+abstract class Helper
 {
 	/**
 	 * @var     array
@@ -36,11 +41,11 @@ abstract class KunenaTemplateHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function isDefault($template)
 	{
-		$config         = KunenaFactory::getConfig();
+		$config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 		$defaultemplate = $config->template;
 
 		return $defaultemplate == $template ? 1 : 0;
@@ -165,12 +170,12 @@ abstract class KunenaTemplateHelper
 
 		if ($data->version == '@kunenaversion@')
 		{
-			$data->version = KunenaForum::version();
+			$data->version = \Kunena\Forum\Libraries\Forum\Forum::version();
 		}
 
 		if ($data->creationdate == '@kunenaversiondate@')
 		{
-			$data->creationdate = KunenaForum::versionDate();
+			$data->creationdate = \Kunena\Forum\Libraries\Forum\Forum::versionDate();
 		}
 
 		if (!$data->version)

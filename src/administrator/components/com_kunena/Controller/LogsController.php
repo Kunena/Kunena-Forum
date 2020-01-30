@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\MVC\Controller\FormController;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**

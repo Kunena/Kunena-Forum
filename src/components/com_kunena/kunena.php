@@ -8,16 +8,32 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Site\Service\Router;
+use stdClass;
+use function defined;
 
 // Display offline message if Kunena hasn't been fully installed.
-if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
+if (!class_exists('KunenaForum') || !Forum::isCompatible('4.0') || !Forum::installed())
 {
 	$lang = Factory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
@@ -37,7 +53,7 @@ $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
 // Prevent direct access to the component if the option has been disabled.
-if (!KunenaConfig::getInstance()->get('access_component', 1))
+if (!Config::getInstance()->access_component)
 {
 	$active = Factory::getApplication()->getMenu()->getActive();
 
@@ -56,10 +72,10 @@ if (!KunenaConfig::getInstance()->get('access_component', 1))
 }
 
 // Load router
-require_once KPATH_SITE . '/router.php';
+Router::getInstance();
 
 // Initialize Kunena Framework.
-KunenaForum::setup();
+Forum::setup();
 
 // Initialize custom error handlers.
 KunenaError::initialize();
@@ -70,7 +86,7 @@ $ksession = KunenaFactory::getSession(true);
 if ($ksession->userid > 0)
 {
 	// Create user if it does not exist
-	$kuser = KunenaUserHelper::getMyself();
+	$kuser = Helper::getMyself();
 
 	if (!$kuser->exists())
 	{
@@ -84,7 +100,6 @@ if ($ksession->userid > 0)
 	}
 }
 
-// Support legacy urls (they need to be redirected).
 $app   = Factory::getApplication();
 $input = $app->input;
 $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
@@ -93,44 +108,14 @@ $subview = $input->getWord('layout', 'default');
 $task    = $input->getCmd('task', 'display');
 
 // Import plugins and event listeners.
-Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+PluginHelper::importPlugin('kunena');
 
 // Get HMVC controller and if exists, execute it.
 $controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
 
-if ($controller)
-{
-	KunenaRoute::cacheLoad();
-	$contents = $controller->execute();
-	KunenaRoute::cacheStore();
-}
-elseif (is_file(KPATH_SITE . "/controllers/{$view}.php"))
-{
-	// Execute old MVC.
-	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
-	$controller = KunenaController::getInstance();
-	KunenaRoute::cacheLoad();
-	ob_start();
-	$controller->execute($task);
-	$contents = ob_get_clean();
-	KunenaRoute::cacheStore();
-	$controller->redirect();
-}
-else
-{
-	// Legacy URL support.
-	$uri = KunenaRoute::current(true);
-
-	if ($uri)
-	{
-		// FIXME: using wrong Itemid
-		Factory::getApplication()->redirect(KunenaRoute::_($uri, false));
-	}
-	else
-	{
-		throw new Exception("Kunena view '{$view}' not found", 404);
-	}
-}
+KunenaRoute::cacheLoad();
+$contents = $controller->execute();
+KunenaRoute::cacheStore();
 
 // Prepare and display the output.
 $params       = new stdClass;

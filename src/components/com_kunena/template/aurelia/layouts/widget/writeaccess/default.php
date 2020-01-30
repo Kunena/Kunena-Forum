@@ -8,20 +8,24 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
-$topic  = KunenaForumTopicHelper::get($this->id);
-$config = KunenaFactory::getConfig();
+$topic  = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->id);
+$config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 ?>
 
 <div class="kfrontend shadow-lg rounded mt-4 border">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-			     data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
+			     data-target="#writeaccess"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></div>
 		</div>
 	</div>
 
@@ -47,7 +51,7 @@ $config = KunenaFactory::getConfig();
 					</li>
 				<?php }
 
-				if ($topic->isAuthorised('reply', KunenaUserHelper::getMyself()))
+				if ($topic->isAuthorised('reply', \Kunena\Forum\Libraries\User\Helper::getMyself()))
 				{ ?>
 					<li>
 						<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
@@ -76,9 +80,9 @@ $config = KunenaFactory::getConfig();
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->image_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
-						$config->image_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
-						$config->image_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					elseif ($config->image_upload == 'admin' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin() ||
+						$config->image_upload == 'moderator' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator() ||
+						$config->image_upload == 'registered' && \Kunena\Forum\Libraries\User\Helper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -107,9 +111,9 @@ $config = KunenaFactory::getConfig();
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->file_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
-						$config->file_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
-						$config->file_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					elseif ($config->file_upload == 'admin' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin() ||
+						$config->file_upload == 'moderator' && \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator() ||
+						$config->file_upload == 'registered' && \Kunena\Forum\Libraries\User\Helper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -127,7 +131,7 @@ $config = KunenaFactory::getConfig();
 
 				if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->useredit)
 				{
-					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != \Kunena\Forum\Libraries\User\Helper::getMyself()->userid)
 					{
 						?>
 						<li>
@@ -135,9 +139,9 @@ $config = KunenaFactory::getConfig();
 						</li>
 						<?php
 					}
-					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != \Kunena\Forum\Libraries\User\Helper::getMyself()->userid)
 					{
-						if (KunenaUserHelper::getMyself()->isAdmin())
+						if (\Kunena\Forum\Libraries\User\Helper::getMyself()->isAdmin())
 						{
 							?>
 							<li>

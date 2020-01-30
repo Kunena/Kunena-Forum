@@ -9,17 +9,32 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Integration\Activity;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Login\Login;
+use function defined;
 
 /**
  * Class plgKunenaComprofiler
  *
  * @since   Kunena 6.0
  */
-class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaComprofiler extends CMSPlugin
 {
 	/**
 	 * @var     string
@@ -42,7 +57,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 		global $ueConfig;
 
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && Forum::isCompatible('4.0') && Forum::installed()))
 		{
 			return;
 		}
@@ -52,7 +67,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 		// Do not load if CommunityBuilder is not installed
 		if ((!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
-			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler'))
+			if (PluginHelper::isEnabled('kunena', 'comprofiler'))
 			{
 				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
@@ -144,7 +159,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return  KunenaAccess|KunenaAccessComprofiler|void
+	 * @return  Access|KunenaAccessComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -163,7 +178,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return  KunenaLogin|KunenaLoginComprofiler|void
+	 * @return  Login|KunenaLoginComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -182,7 +197,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  KunenaAvatar|void
+	 * @return  Avatar|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -195,13 +210,13 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 
 		require_once __DIR__ . "/avatar.php";
 
-		return new KunenaAvatarComprofiler($this->params);
+		return new AvatarComprofiler($this->params);
 	}
 
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return  KunenaProfile|void
+	 * @return  Profile|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -239,7 +254,7 @@ class plgKunenaComprofiler extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return  KunenaActivity|void
+	 * @return  Activity|void
 	 *
 	 * @since   Kunena 6.0
 	 */

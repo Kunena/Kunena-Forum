@@ -14,9 +14,11 @@ namespace Kunena\Forum\Administrator\View\Users;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -30,7 +32,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @var    CMSObject
 	 * @since  6.0
 	 */
 	protected $state;
@@ -42,12 +44,12 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
 		$this->users      = $this->get('items');
-		$this->state         = $this->get('State');
+		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
 		$this->modcatlist = $this->get('Modcatslist');
 

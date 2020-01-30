@@ -11,9 +11,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Layout\Layout;
 
 HTMLHelper::_('behavior.multiselect');
 
@@ -67,7 +69,7 @@ if ($saveOrder)
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 							       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
@@ -162,7 +164,7 @@ if ($saveOrder)
 						<tfoot>
 						<tr>
 							<td colspan="10">
-								<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+								<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 							</td>
 						</tr>
 						</tfoot>
@@ -192,11 +194,11 @@ if ($saveOrder)
 											   id="title-><?php echo $item->extension_id; ?>">
 												<?php echo $item->name; ?>
 											</a>
-											<?php echo Joomla\CMS\HTML\HTMLHelper::_(
+											<?php echo HTMLHelper::_(
 												'bootstrap.renderModal',
 												'plugin' . $item->extension_id . 'Modal',
 												[
-													'url'         => Joomla\CMS\Router\Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
+													'url'         => Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
 													'title'       => $item->name,
 													'height'      => '400',
 													'width'       => '800px',
@@ -207,13 +209,13 @@ if ($saveOrder)
 													'keyboard'    => false,
 													'footer'      => '<button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#closeBtn\').click();">'
-														. Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+														. Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
 														. '<button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#saveBtn\').click();">'
-														. Joomla\CMS\Language\Text::_("JSAVE") . '</button>'
+														. Text::_("JSAVE") . '</button>'
 														. '<button type="button" class="btn btn-outline-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
-														. Joomla\CMS\Language\Text::_("JAPPLY") . '</button>',
+														. Text::_("JAPPLY") . '</button>',
 												]
 											); ?>
 										<?php else : ?>

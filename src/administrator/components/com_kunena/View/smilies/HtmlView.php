@@ -19,6 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
 /**
@@ -42,7 +43,7 @@ class HtmlView extends BaseHtmlView
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-		$this->ktemplate  = \KunenaTemplate::getInstance();
+		$this->ktemplate  = Template::getInstance();
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
@@ -61,7 +62,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

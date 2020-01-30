@@ -9,17 +9,25 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Log;
+
 defined('_JEXEC') or die();
 
-use Joomla\Database\QueryInterface;
+use Exception;
+use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\QueryInterface;
+use Kunena\Forum\Libraries\Collection\Collection;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use function defined;
 
 /**
  * Class KunenaLogFinder
  *
  * @since 5.0
  */
-class KunenaLogFinder extends KunenaDatabaseObjectFinder
+class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 {
 	/**
 	 * @var     string
@@ -40,14 +48,14 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
-	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
+	 * @param   Date  $starting  Starting date or null if older than ending date.
+	 * @param   Date  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return  $this
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
+	public function filterByTime(Date $starting = null, Date $ending = null)
 	{
 		if ($starting && $ending)
 		{
@@ -110,7 +118,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get log entries.
 	 *
-	 * @return  array|KunenaCollection
+	 * @return  array|Collection
 	 *
 	 * @since   Kunena 5.0
 	 *
@@ -131,7 +139,7 @@ class KunenaLogFinder extends KunenaDatabaseObjectFinder
 
 		try
 		{
-			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
+			$results = new Collection((array) $this->db->loadObjectList('id'));
 		}
 		catch (ExecutionFailureException $e)
 		{

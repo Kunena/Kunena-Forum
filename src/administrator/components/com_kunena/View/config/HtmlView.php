@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
 /**
@@ -43,7 +44,7 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$this->lists = $this->get('Configlists');
-		$this->config = \KunenaConfig::getInstance();
+		$this->config = KunenaConfig::getInstance();
 
 		// Only set the toolbar if not modal
 		if ($this->getLayout() !== 'modal')

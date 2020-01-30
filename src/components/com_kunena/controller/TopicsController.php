@@ -17,25 +17,24 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
-use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Attachment\Finder;
+use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Database\Exception\ExecutionFailureException;
-use KunenaAttachmentFinder;
-use KunenaError;
-use KunenaFactory;
-use KunenaForum;
-use KunenaForumCategoryHelper;
-use KunenaForumMessageHelper;
-use KunenaForumTopicHelper;
-use KunenaLog;
+use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Log\Log;
+use function defined;
 
 /**
  * Kunena Topics Controller
  *
  * @since   Kunena 2.0
  */
-class TopicsController extends FormController
+class TopicsController extends KunenaController
 {
 	/**
 	 * @return  void
@@ -74,7 +73,7 @@ class TopicsController extends FormController
 		$ids     = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids     = ArrayHelper::toInteger($ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -83,7 +82,7 @@ class TopicsController extends FormController
 		}
 		else
 		{
-			$messages = KunenaForumMessageHelper::getMessagesByTopics($ids);
+			$messages = Helper::getMessagesByTopics($ids);
 
 			foreach ($topics as $topic)
 			{
@@ -93,7 +92,7 @@ class TopicsController extends FormController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = Text::_('COM_KUNENA_BULKMSG_DELETED');
-					KunenaForumCategoryHelper::recount($topic->getCategory()->id);
+					\Kunena\Forum\Libraries\Forum\Category\Helper::recount($topic->getCategory()->id);
 				}
 				else
 				{
@@ -102,7 +101,7 @@ class TopicsController extends FormController
 			}
 
 			// Delete attachments in each message
-			$finder = new KunenaAttachmentFinder;
+			$finder = new Finder;
 			$finder->where('mesid', 'IN', array_keys($messages));
 			$attachments = $finder->find();
 
@@ -157,9 +156,9 @@ class TopicsController extends FormController
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_DESTROY,
+					Log::log(
+						Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_DESTROY,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -196,7 +195,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = KunenaForumTopicHelper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -207,7 +206,7 @@ class TopicsController extends FormController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('delete') && $topic->publish(KunenaForum::TOPIC_DELETED))
+				if ($topic->isAuthorised('delete') && $topic->publish(Forum::TOPIC_DELETED))
 				{
 					$message = Text::_('COM_KUNENA_BULKMSG_DELETED');
 				}
@@ -224,9 +223,9 @@ class TopicsController extends FormController
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_DELETE,
+					Log::log(
+						Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_DELETE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -263,7 +262,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = KunenaForumTopicHelper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -274,7 +273,7 @@ class TopicsController extends FormController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('undelete') && $topic->publish(KunenaForum::PUBLISHED))
+				if ($topic->isAuthorised('undelete') && $topic->publish(Forum::PUBLISHED))
 				{
 					$message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
 				}
@@ -291,9 +290,9 @@ class TopicsController extends FormController
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_UNDELETE,
+					Log::log(
+						Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_UNDELETE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -330,7 +329,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = KunenaForumTopicHelper::getTopics($ids);
+		$topics  = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -341,7 +340,7 @@ class TopicsController extends FormController
 		{
 			foreach ($topics as $topic)
 			{
-				if ($topic->isAuthorised('approve') && $topic->publish(KunenaForum::PUBLISHED))
+				if ($topic->isAuthorised('approve') && $topic->publish(Forum::PUBLISHED))
 				{
 					$message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
 					$topic->sendNotification();
@@ -359,9 +358,9 @@ class TopicsController extends FormController
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_APPROVE,
+					Log::log(
+						Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_APPROVE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -397,12 +396,12 @@ class TopicsController extends FormController
 		$topics_ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$topics_ids = ArrayHelper::toInteger($topics_ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($topics_ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topics_ids);
 
 		$messages_ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
-		$messages = KunenaForumMessageHelper::getMessages($messages_ids);
+		$messages = Helper::getMessages($messages_ids);
 
 		if (!$topics && !$messages)
 		{
@@ -411,7 +410,7 @@ class TopicsController extends FormController
 		}
 		else
 		{
-			$target = KunenaForumCategoryHelper::get($this->app->input->getInt('target', 0));
+			$target = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->app->input->getInt('target', 0));
 
 			if (empty($target->id))
 			{
@@ -464,9 +463,9 @@ class TopicsController extends FormController
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_MODERATE,
+					Log::log(
+						Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_MODERATE,
 						[
 							'move'   => ['id' => $topic->id, 'mode' => 'topic'],
 							'target' => ['category_id' => $target->id],
@@ -505,17 +504,17 @@ class TopicsController extends FormController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
-		if (KunenaForumTopicHelper::favorite(array_keys($topics), 0))
+		if (\Kunena\Forum\Libraries\Forum\Topic\Helper::favorite(array_keys($topics), 0))
 		{
 			if ($this->config->log_moderation)
 			{
 				foreach ($topics as $topic)
 				{
-					KunenaLog::log(
-						$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_TOPIC_UNFAVORITE,
+					Log::log(
+						$this->me->userid == $topic->getAuthor()->userid ? Log::TYPE_ACTION : Log::TYPE_MODERATION,
+						Log::LOG_TOPIC_UNFAVORITE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -557,9 +556,9 @@ class TopicsController extends FormController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($ids);
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($ids);
 
-		if (KunenaForumTopicHelper::subscribe(array_keys($topics), 0, $userid))
+		if (\Kunena\Forum\Libraries\Forum\Topic\Helper::subscribe(array_keys($topics), 0, $userid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'));
 		}
@@ -593,7 +592,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = KunenaForumMessageHelper::getMessages($ids);
+		$messages = Helper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -603,7 +602,7 @@ class TopicsController extends FormController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('approve') && $message->publish(KunenaForum::PUBLISHED))
+				if ($message->isAuthorised('approve') && $message->publish(Forum::PUBLISHED))
 				{
 					$message->sendNotification();
 					$success++;
@@ -645,7 +644,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = KunenaForumMessageHelper::getMessages($ids);
+		$messages = Helper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -655,7 +654,7 @@ class TopicsController extends FormController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('delete') && $message->publish(KunenaForum::DELETED))
+				if ($message->isAuthorised('delete') && $message->publish(Forum::DELETED))
 				{
 					$success++;
 				}
@@ -696,7 +695,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = KunenaForumMessageHelper::getMessages($ids);
+		$messages = Helper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -706,7 +705,7 @@ class TopicsController extends FormController
 		{
 			foreach ($messages as $message)
 			{
-				if ($message->isAuthorised('undelete') && $message->publish(KunenaForum::PUBLISHED))
+				if ($message->isAuthorised('undelete') && $message->publish(Forum::PUBLISHED))
 				{
 					$success++;
 				}
@@ -747,7 +746,7 @@ class TopicsController extends FormController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = KunenaForumMessageHelper::getMessages($ids);
+		$messages = Helper::getMessages($ids);
 
 		if (!$messages)
 		{

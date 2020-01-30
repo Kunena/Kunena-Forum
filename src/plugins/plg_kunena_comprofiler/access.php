@@ -9,10 +9,19 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+
+use Kunena\Forum\Libraries\Tree\Tree;
+use function defined;
 
 require_once dirname(__FILE__) . '/integration.php';
 
@@ -195,8 +204,6 @@ class KunenaAccessComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @return  void
-	 *
 	 * @throws  Exception
 	 */
 	protected function loadCategories()
@@ -206,7 +213,7 @@ class KunenaAccessComprofiler
 			$this->categories = [];
 			$params           = ['categories' => &$this->categories, 'groups' => $this->groups];
 			KunenaIntegrationComprofiler::trigger('loadCategories', $params);
-			$this->tree = new KunenaTree($this->categories);
+			$this->tree = new Tree($this->categories);
 
 			if ($this->groups !== false)
 			{
@@ -245,8 +252,8 @@ class KunenaAccessComprofiler
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   KunenaForumCategory  $category  category
-	 * @param   int                  $userid    userid
+	 * @param   Category  $category  category
+	 * @param   int       $userid    userid
 	 *
 	 * @return  array
 	 *
@@ -254,7 +261,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
+	public function getAuthoriseActions(Category $category, $userid)
 	{
 		$actions = [];
 		$params  = ['category' => $category, 'userid' => $userid, 'actions' => &$actions];
@@ -267,7 +274,7 @@ class KunenaAccessComprofiler
 	/**
 	 * Authorise list of categories.
 	 *
-	 * Function accepts array of id indexed KunenaForumCategory objects and removes unauthorised
+	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes unauthorised
 	 * categories from the list.
 	 *
 	 * Results for the current user are saved into session.

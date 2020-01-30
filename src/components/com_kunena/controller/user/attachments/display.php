@@ -9,16 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\Attachments;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Attachment\Finder;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserAttachmentsDisplay
+ * Class ComponentUserControllerAttachmentsDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
+class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -53,7 +67,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return  KunenaExceptionAuthorise|void
+	 * @return  Authorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -68,27 +82,27 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$limit  = $this->input->getInt('limit', 30);
 
 		$this->template = KunenaFactory::getTemplate();
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->profile  = KunenaUserHelper::get($userid);
+		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->profile  = \Kunena\Forum\Libraries\User\Helper::get($userid);
 		$this->moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri = new Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
-		$finder = new KunenaAttachmentFinder;
+		$finder = new Finder;
 		$finder->where('userid', '=', $userid);
 
 		$this->total      = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+		$this->pagination = new Pagination($this->total, $start, $limit);
 
-		if (!KunenaConfig::getInstance()->show_imgfiles_manage_profile || !$this->me->exists() && !KunenaConfig::getInstance()->pubprofile)
+		if (!$this->config->show_imgfiles_manage_profile || !$this->me->exists() && !$this->config->pubprofile)
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
 		if ($this->moreUri)
@@ -110,7 +124,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 			$messageIds[] = (int) $attachment->mesid;
 		}
 
-		$messages = KunenaForumMessageHelper::getMessages($messageIds, 'none');
+		$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
 		$topicIds = [];
@@ -120,7 +134,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 			$topicIds[] = $message->thread;
 		}
 
-		KunenaForumTopicHelper::getTopics($topicIds, 'none');
+		Helper::getTopics($topicIds, 'none');
 
 		$this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 	}

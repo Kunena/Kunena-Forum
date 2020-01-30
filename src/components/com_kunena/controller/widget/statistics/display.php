@@ -9,9 +9,17 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Widget\Statistics;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetStatisticsDisplay
@@ -51,21 +59,21 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->config = KunenaConfig::getInstance();
+		$this->config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		$statistics = KunenaForumStatistics::getInstance();
+		$statistics = Statistics::getInstance();
 		$statistics->loadGeneral();
 		$this->setProperties($statistics);
 

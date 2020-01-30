@@ -9,14 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
+
 /**
- * Class KunenaAvatarComprofiler
+ * Class \Kunena\Forum\Libraries\Integration\AvatarComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarComprofiler extends KunenaAvatar
+class AvatarComprofiler extends Avatar
 {
 	/**
 	 * @var     null
@@ -25,7 +33,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	protected $params = null;
 
 	/**
-	 * KunenaAvatarComprofiler constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarComprofiler constructor.
 	 *
 	 * @param   object  $params params
 	 *

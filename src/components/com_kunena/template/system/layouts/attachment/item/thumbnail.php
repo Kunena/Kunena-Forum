@@ -9,19 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Application\CMSApplication;
+use function defined;
 
 $attachment = $this->attachment;
 
 echo $this->subLayout('Widget/Lightbox');
 
-$config = KunenaConfig::getInstance();
+$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 $name           = preg_replace('/.html/', '', $attachment->getUrl());
 
-if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
+if (CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
 {
 	$name = preg_replace('/.html/', '', $attachment->getUrl());
 }
@@ -45,7 +51,7 @@ else
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo KunenaIcons::file(); ?>
+		<?php echo \Kunena\Forum\Libraries\Icons\Icons::file(); ?>
 	</a>
 	<?php
 }

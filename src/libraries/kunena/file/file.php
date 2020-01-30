@@ -9,6 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\File;
+
 defined('_JEXEC') or die;
 
 /**
@@ -16,7 +19,7 @@ defined('_JEXEC') or die;
  *
  * @since   Kunena 6.0
  */
-class KunenaFile
+class File
 {
 	/**
 	 * @param   string  $file  file

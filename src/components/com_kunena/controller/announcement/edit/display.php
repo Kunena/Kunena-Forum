@@ -9,17 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Announement\Edit;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerAnnouncementEditDisplay
+ * Class ComponentAnnouncementControllerEditDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerDisplay
+class ComponentAnnouncementControllerEditDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -41,7 +48,7 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
@@ -49,23 +56,23 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 
 		$id = $this->input->getInt('id', null);
 
-		$this->announcement = KunenaForumAnnouncementHelper::get($id);
+		$this->announcement = Helper::get($id);
 		$this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
 
 			if ($id)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&&id={$id}&Itemid={$itemid}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&&id={$id}&Itemid={$itemid}", false));
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=create&Itemid={$itemid}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=create&Itemid={$itemid}", false));
 			}
 
 			$controller->redirect();
@@ -79,7 +86,7 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

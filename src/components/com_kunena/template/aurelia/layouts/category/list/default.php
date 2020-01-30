@@ -8,16 +8,20 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use function defined;
 
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
+		<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
 		      name="kcategoryform" id="kcategoryform">
 			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
@@ -48,7 +52,7 @@ use Joomla\CMS\Language\Text;
 				<?php endif; ?>
 			</h3>
 
-			<table class="table table-striped<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
+			<table class="table table-striped<?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->borderless(); ?>">
 
 				<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 					<thead>

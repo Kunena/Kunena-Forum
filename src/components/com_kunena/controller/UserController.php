@@ -15,39 +15,38 @@ namespace Kunena\Forum\Site\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Session\Session;
-use Joomla\CMS\User\User;
-use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\User;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Log\Log;
+use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Response\JsonResponse;
-use KunenaAttachmentHelper;
-use KunenaConfig;
-use KunenaExceptionAuthorise;
-use KunenaFactory;
-use KunenaForum;
-use KunenaForumMessageHelper;
-use KunenaLog;
-use KunenaLogin;
-use KunenaPath;
-use KunenaProfileKunena;
-use KunenaRoute;
-use KunenaUpload;
-use KunenaUser;
-use KunenaUserBan;
-use KunenaUserHelper;
 use RuntimeException;
 use stdClass;
+use function defined;
 
 /**
  * Kunena User Controller
@@ -56,7 +55,7 @@ use stdClass;
  *
  * @since   Kunena 2.0
  */
-class UserController extends FormController
+class UserController extends KunenaController
 {
 	/**
 	 * @param   bool  $cachable   cachable
@@ -86,7 +85,7 @@ class UserController extends FormController
 			$profileIntegration = KunenaFactory::getProfile();
 			$layout             = $this->app->input->getCmd('layout', 'default');
 
-			if ($profileIntegration instanceof KunenaProfileKunena)
+			if ($profileIntegration instanceof Profile)
 			{
 				// Continue
 			}
@@ -113,21 +112,20 @@ class UserController extends FormController
 		{
 			if (!KunenaFactory::getConfig()->userlist_allowed && $this->app->getIdentity()->guest)
 			{
-				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+				throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
 		// Else the user does not exists.
 		if (!$this->me)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
 		}
 
 		parent::display();
 	}
 
 	/**
-	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -155,7 +153,7 @@ class UserController extends FormController
 			$uri->setVar('limitstart', $search);
 		}
 
-		$this->setRedirect(KunenaRoute::_($uri, false));
+		$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_($uri, false));
 	}
 
 	/**
@@ -325,25 +323,25 @@ class UserController extends FormController
 
 		if (!Session::checkToken('post'))
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			throw new Authorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 
 		// Check permission
-		$moderator = KunenaUserHelper::getMyself()->isModerator();
+		$moderator = Helper::getMyself()->isModerator();
 		$my        = $this->app->getIdentity();
 
 		if (!$moderator)
 		{
 			if ($userid != $my->id)
 			{
-				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+				throw new Authorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 			}
 		}
 
 		// Make sure that the user exists.
 		if (!$this->me->exists())
 		{
-			throw new KunenaExceptionAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new Authorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		if (!$userid)
@@ -384,7 +382,7 @@ class UserController extends FormController
 
 		if ($errors)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
+			throw new Authorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
 		if ($this->user->userid == $this->me->userid)
@@ -400,10 +398,10 @@ class UserController extends FormController
 
 		if ($this->config->log_moderation)
 		{
-			$log = KunenaLog::LOG_USER_EDIT;
+			$log = Log::LOG_USER_EDIT;
 
-			KunenaLog::log(
-				KunenaLog::TYPE_ACTION,
+			Log::log(
+				Log::TYPE_ACTION,
 				$log,
 				[
 					'edited_by_moderator' => $edited_by_moderator,
@@ -602,7 +600,7 @@ class UserController extends FormController
 		}
 
 		// Reload the user.
-		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
+		if (Helper::getMyself()->userid == $this->user->id)
 		{
 			$this->user->load($this->user->id);
 			$session = Factory::getSession();
@@ -726,7 +724,7 @@ class UserController extends FormController
 			return;
 		}
 
-		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
+		$ban = Ban::getInstanceByUserid($user->userid, true);
 
 		try
 		{
@@ -784,12 +782,12 @@ class UserController extends FormController
 			{
 				$this->app->logout($user->userid);
 				$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
-				$log     = KunenaLog::LOG_USER_BLOCK;
+				$log     = Log::LOG_USER_BLOCK;
 			}
 			else
 			{
 				$message = Text::_('COM_KUNENA_USER_UNBLOCKED_DONE');
-				$log     = KunenaLog::LOG_USER_UNBLOCK;
+				$log     = Log::LOG_USER_UNBLOCK;
 			}
 		}
 		else
@@ -797,12 +795,12 @@ class UserController extends FormController
 			if ($ban->isEnabled())
 			{
 				$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
-				$log     = KunenaLog::LOG_USER_BAN;
+				$log     = Log::LOG_USER_BAN;
 			}
 			else
 			{
 				$message = Text::_('COM_KUNENA_USER_UNBANNED_DONE');
-				$log     = KunenaLog::LOG_USER_UNBAN;
+				$log     = Log::LOG_USER_UNBAN;
 			}
 		}
 
@@ -819,8 +817,8 @@ class UserController extends FormController
 		{
 			if ($this->config->log_moderation)
 			{
-				KunenaLog::log(
-					KunenaLog::TYPE_MODERATION,
+				Log::log(
+					Log::TYPE_MODERATION,
 					$log,
 					[
 						'expiration'     => $delban ? 'NOW' : $expiration,
@@ -839,7 +837,7 @@ class UserController extends FormController
 					$user
 				);
 
-				KunenaUserHelper::recountBanned();
+				Helper::recountBanned();
 			}
 
 			$this->app->enqueueMessage($message);
@@ -893,17 +891,17 @@ class UserController extends FormController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
 			foreach ($messages as $mes)
 			{
-				$mes->publish(KunenaForum::DELETED);
+				$mes->publish(Forum::DELETED);
 			}
 
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
@@ -913,11 +911,11 @@ class UserController extends FormController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -973,7 +971,7 @@ class UserController extends FormController
 		$remember  = $this->input->getBool('remember', false);
 		$secretkey = $input->$method->get('secretkey', '', 'RAW');
 
-		$login = KunenaLogin::getInstance();
+		$login = Login::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
@@ -1008,7 +1006,7 @@ class UserController extends FormController
 			return;
 		}
 
-		$login = KunenaLogin::getInstance();
+		$login = Login::getInstance();
 
 		if (!$this->app->getIdentity()->guest)
 		{
@@ -1050,7 +1048,7 @@ class UserController extends FormController
 		}
 
 		$status     = $this->app->input->getInt('status', 0);
-		$me         = KunenaUserHelper::getMyself();
+		$me         = Helper::getMyself();
 		$me->status = $status;
 
 		try
@@ -1091,7 +1089,7 @@ class UserController extends FormController
 		}
 
 		$status_text     = $this->app->input->post->getString('status_text', '');
-		$me              = KunenaUserHelper::getMyself();
+		$me              = Helper::getMyself();
 		$me->status_text = $status_text;
 
 		try
@@ -1128,7 +1126,7 @@ class UserController extends FormController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		$upload = KunenaUpload::getInstance();
+		$upload = \Kunena\Forum\Libraries\Upload\Upload::getInstance();
 		$user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		// We are converting all exceptions into JSON.
@@ -1162,7 +1160,7 @@ class UserController extends FormController
 
 				KunenaPath::setPermissions(KPATH_MEDIA . '/avatars/users/avatar' . $user->userid . '.' . $extension);
 
-				// Save in the table KunenaUser
+				// Save in the table \Kunena\Forum\Libraries\User\KunenaUser
 				$kuser            = $user;
 				$kuser->avatar    = 'users/avatar' . $user->userid . '.' . $extension;
 				$kuser->timestamp = round(microtime(true));
@@ -1253,11 +1251,11 @@ class UserController extends FormController
 		$success = [];
 		$kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		if (Helper::getMyself()->userid == $kuser->userid || Helper::getMyself()->isAdmin() || Helper::getMyself()->isModerator())
 		{
 			$this->deleteOldAvatars();
 
-			// Save in the table KunenaUser
+			// Save in the table \Kunena\Forum\Libraries\User\KunenaUser
 			$kuser->avatar = '';
 			$success       = $kuser->save();
 		}
@@ -1317,7 +1315,7 @@ class UserController extends FormController
 		}
 		else
 		{
-			$avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultavatar;
+			$avatar->path = Uri::root() . 'media/kunena/avatars/' . Config::getInstance()->defaultavatar;
 		}
 
 		header('Content-type: application/json');
@@ -1364,7 +1362,7 @@ class UserController extends FormController
 
 			foreach ($cid as $id)
 			{
-				$attachment  = KunenaAttachmentHelper::get($id);
+				$attachment  = \Kunena\Forum\Libraries\Attachment\Helper::get($id);
 				$message     = $attachment->getMessage();
 				$attachments = [$attachment->id, 1];
 				$attach      = [];
@@ -1450,7 +1448,7 @@ class UserController extends FormController
 			$data['stopforumspam_key'] = $this->config->stopforumspam_key;
 			$data['evidence']          = $evidence;
 
-			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
+			$result = Helper::storeCheckStopforumspam($data, 'add');
 
 			if ($result != false)
 			{

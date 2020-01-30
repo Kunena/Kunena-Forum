@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseDriver;
 
 /**
@@ -35,7 +36,7 @@ DEFINE('KUNENA_INPUT_DATABASE', '_DB_');
  *
  * @since  K1.6
  */
-class KunenaModelSchema extends Joomla\CMS\MVC\Model\BaseDatabaseModel
+class KunenaModelSchema extends BaseDatabaseModel
 {
 	/**
 	 * Flag to indicate model state initialization.

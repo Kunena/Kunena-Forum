@@ -9,16 +9,21 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Topic\Poll;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use function defined;
 
 /**
- * Class KunenaForumTopicPollHelper
+ * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPollHelper
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaForumTopicPollHelper
+abstract class Helper
 {
 	/**
 	 * @var     array
@@ -27,12 +32,12 @@ abstract class KunenaForumTopicPollHelper
 	protected static $_instances = [];
 
 	/**
-	 * Returns KunenaForumTopic object.
+	 * Returns \Kunena\Forum\Libraries\Forum\Topic\Poll\Poll object.
 	 *
 	 * @param   int   $identifier  The poll to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumTopicPoll
+	 * @return  Poll
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -40,7 +45,7 @@ abstract class KunenaForumTopicPollHelper
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
-		if ($identifier instanceof KunenaForumTopicPoll)
+		if ($identifier instanceof Poll)
 		{
 			return $identifier;
 		}
@@ -49,12 +54,12 @@ abstract class KunenaForumTopicPollHelper
 
 		if ($id < 1)
 		{
-			return new KunenaForumTopicPoll;
+			return new Poll;
 		}
 
 		if ($reload || empty(self::$_instances [$id]))
 		{
-			self::$_instances [$id] = new KunenaForumTopicPoll($id);
+			self::$_instances [$id] = new Poll($id);
 		}
 
 		return self::$_instances [$id];

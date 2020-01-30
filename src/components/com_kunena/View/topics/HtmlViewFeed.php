@@ -11,15 +11,19 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\View\View;
 
 /**
  * Topics View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewTopics extends KunenaView
+class KunenaViewTopics extends View
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -37,7 +41,7 @@ class KunenaViewTopics extends KunenaView
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
-		KunenaHtmlParser::$relative = false;
+		Parser::$relative = false;
 		$config                     = KunenaFactory::getConfig();
 		$cache                      = Factory::getCache('com_kunena_rss', 'output');
 
@@ -316,16 +320,16 @@ class KunenaViewTopics extends KunenaView
 
 			if ((bool) $this->config->rss_allow_html)
 			{
-				$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
 			}
 			else
 			{
-				$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
 			}
 		}
 
 		// Assign values to feed item
-		$item              = new Joomla\CMS\Document\Feed\FeedItem;
+		$item              = new FeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;

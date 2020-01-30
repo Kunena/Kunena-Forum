@@ -8,18 +8,22 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use function defined;
 
 ?>
 <ul class="nav float-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-mobile">
-			<?php echo KunenaIcons::user(); ?>
+			<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
 			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>
@@ -34,7 +38,7 @@ use Joomla\CMS\Router\Route;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo KunenaIcons::user(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
 								<label for="kmobile-username" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
@@ -50,7 +54,7 @@ use Joomla\CMS\Router\Route;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo KunenaIcons::lock(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::lock(); ?>
 								<label for="kmobile-passwd" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
@@ -62,7 +66,7 @@ use Joomla\CMS\Router\Route;
 					</div>
 				</div>
 
-				<?php $login = KunenaLogin::getInstance(); ?>
+				<?php $login = \Kunena\Forum\Libraries\Login\Login::getInstance(); ?>
 				<?php
 				if ($login->getTwoFactorMethods() > 1)
 					:
@@ -71,7 +75,7 @@ use Joomla\CMS\Router\Route;
 						<div class="controls">
 							<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo KunenaIcons::star(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::star(); ?>
 								<label for="kmobile-secretkey" class="element-invisible">
 									<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>

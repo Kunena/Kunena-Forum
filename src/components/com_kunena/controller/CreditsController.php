@@ -12,24 +12,24 @@
 
 namespace Kunena\Forum\Site\Controller;
 
-use Exception;
-use Joomla\CMS\MVC\Controller\FormController;
-
 defined('_JEXEC') or die();
+
+use Kunena\Forum\Libraries\Controller\KunenaController;
+use function defined;
 
 /**
  * Kunena Credits Controller
  *
  * @since   Kunena 2.0
  */
-class CreditsController extends FormController
+class CreditsController extends KunenaController
 {
 	/**
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function __construct($config = [])
 	{

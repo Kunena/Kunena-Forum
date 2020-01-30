@@ -8,11 +8,15 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use function defined;
 
 echo $this->subLayout('Widget/Datepicker');
 ?>
@@ -22,7 +26,7 @@ echo $this->subLayout('Widget/Datepicker');
 </h2>
 
 <div class="shadow-lg p-3 mb-5 rounded">
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
+	<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
 		  name="editform" id="editform">
 		<input type="hidden" name="task" value="save"/>
 		<?php echo $this->displayInput('id'); ?>
@@ -61,7 +65,7 @@ echo $this->subLayout('Widget/Datepicker');
 			</label>
 			<div class="controls" id="ann-date">
 				<div class="input-group date">
-					<?php echo $this->displayInput('created', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'addcreated'); ?>
+					<?php echo $this->displayInput('created', '<span class="input-group-addon">' . \Kunena\Forum\Libraries\Icons\Icons::grid() . '</span>', 'addcreated'); ?>
 				</div>
 			</div>
 		</div>
@@ -72,7 +76,7 @@ echo $this->subLayout('Widget/Datepicker');
 			</label>
 			<div class="controls" id="ann-date2">
 				<div class="input-group date">
-					<?php echo $this->displayInput('publish_up', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'publish_up'); ?>
+					<?php echo $this->displayInput('publish_up', '<span class="input-group-addon">' . \Kunena\Forum\Libraries\Icons\Icons::grid() . '</span>', 'publish_up'); ?>
 				</div>
 			</div>
 		</div>
@@ -83,7 +87,7 @@ echo $this->subLayout('Widget/Datepicker');
 			</label>
 			<div class="controls" id="ann-date3">
 				<div class="input-group date">
-					<?php echo $this->displayInput('publish_down', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'publish_down'); ?>
+					<?php echo $this->displayInput('publish_down', '<span class="input-group-addon">' . \Kunena\Forum\Libraries\Icons\Icons::grid() . '</span>', 'publish_down'); ?>
 				</div>
 			</div>
 		</div>

@@ -14,9 +14,11 @@ namespace Kunena\Forum\Administrator\View\Trash;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -29,7 +31,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @var    CMSObject
 	 * @since  6.0
 	 */
 	protected $state;
@@ -39,12 +41,12 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
-		$this->state         = $this->get('State');
-		$this->trash_items       = $this->get('Trashitems');
+		$this->state       = $this->get('State');
+		$this->trash_items = $this->get('Trashitems');
 		$this->setLayout($this->state->get('layout'));
 		$this->pagination        = $this->get('Navigation');
 		$this->view_options_list = $this->get('ViewOptions');
@@ -115,7 +117,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -139,7 +141,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayPurge()
 	{

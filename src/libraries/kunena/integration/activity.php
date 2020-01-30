@@ -9,16 +9,21 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Integration;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
+use function defined;
 
 /**
  * Class KunenaIntegrationActivity
  *
  * @since 3.0.4
  */
-class KunenaIntegrationActivity
+class Activity
 {
 	/**
 	 * @var     mixed
@@ -33,15 +38,13 @@ class KunenaIntegrationActivity
 	protected $instances = [];
 
 	/**
-	 * @return  void
-	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function __construct()
 	{
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		$classes = Factory::getApplication()->triggerEvent('onKunenaGetActivity');
 
@@ -61,7 +64,7 @@ class KunenaIntegrationActivity
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function getInstance()
 	{

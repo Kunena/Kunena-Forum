@@ -14,8 +14,15 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
-
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Integration\Plugins;
+use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
 ?>
+
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
@@ -103,7 +110,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 										</a>
 									</h6>
 									<h3 class="fw-700 text-cyan">
-										<?php $count = KunenaForumStatistics::getInstance()->loadCategoryCount();
+										<?php $count = Statistics::getInstance()->loadCategoryCount();
 										echo $count['sections'] . ' / ' . $count['categories']; ?>
 									</h3>
 									<p class="mb-0">Last Edit: Welcome</p>
@@ -132,8 +139,8 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount(); ?></h3>
-									<p class="mb-0"><?php $lastid = KunenaUserHelper::getLastId();
+									<h3 class="fw-700 text-cyan"><?php echo Helper::getTotalCount(); ?></h3>
+									<p class="mb-0"><?php $lastid = Helper::getLastId();
 										$user                     = KunenaUser::getInstance($lastid)->registerDate;
 										echo KunenaDate::getInstance($user)->toKunena('ago'); ?></p>
 								</div>
@@ -155,7 +162,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo KunenaAttachmentHelper::getTotalAttachments(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo \Kunena\Forum\Libraries\Attachment\Helper::getTotalAttachments(); ?></h3>
 									<p class="mb-0">photo.png (topic id: 44343)</p>
 								</div>
 								<div class="col-auto">
@@ -176,7 +183,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo KunenaForumStatistics::getTotalEmoticons() ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo Statistics::getTotalEmoticons() ?></h3>
 									<p class="mb-0"><?php echo Text::_('COM_KUNENA_EDITOR_SMILIES') ?></p>
 								</div>
 								<div class="col-auto">
@@ -239,7 +246,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo count(KunenaTemplate::getInstance()->getTemplatePaths()); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo count(Template::getInstance()->getTemplatePaths()); ?></h3>
 									<p class="mb-0">Installed</p>
 								</div>
 								<div class="col-auto">
@@ -260,7 +267,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalRanks(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo Helper::getTotalRanks(); ?></h3>
 									<p class="mb-0">Groups</p>
 								</div>
 								<div class="col-auto">
@@ -281,7 +288,7 @@ use Kunena\Forum\Administrator\Install\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo KunenaIntegrationPlugins::getTotalPlugins(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo Plugins::getTotalPlugins(); ?></h3>
 									<p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></p>
 								</div>
 								<div class="col-auto">

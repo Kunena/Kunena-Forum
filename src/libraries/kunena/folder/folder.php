@@ -9,16 +9,20 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Folder;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Filesystem\File;
+use function defined;
 
 /**
  * Class KunenaFolder
  *
  * @since   Kunena 6.0
  */
-class KunenaFolder
+class Folder
 {
 	/**
 	 * Create index.html file into the given folder, if it doesn't exist.

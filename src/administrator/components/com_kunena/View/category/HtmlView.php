@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use KunenaForumCategory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
 
 /**
  * About view for Kunena backend
@@ -29,7 +29,7 @@ use KunenaForumCategory;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @var     array|KunenaForumCategory[]
+	 * @var     array|Category[]
 	 * @since   Kunena 6.0
 	 */
 	public $category = [];

@@ -9,16 +9,24 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Integration;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class KunenaProfile
  *
  * @since   Kunena 6.0
  */
-class KunenaProfile
+class Profile
 {
 	/**
 	 * @var     boolean
@@ -29,7 +37,7 @@ class KunenaProfile
 	/**
 	 * @param   null  $integration  integration
 	 *
-	 * @return  boolean|KunenaProfile
+	 * @return  boolean|Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -39,7 +47,7 @@ class KunenaProfile
 	{
 		if (self::$instance === false)
 		{
-			Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+			PluginHelper::importPlugin('kunena');
 
 			$classes = Factory::getApplication()->triggerEvent('onKunenaGetProfile');
 
@@ -56,7 +64,7 @@ class KunenaProfile
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaProfile;
+				self::$instance = new Profile;
 			}
 		}
 
@@ -159,7 +167,7 @@ class KunenaProfile
 	 * @param   integer  $userid  userid
 	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @return  void
+	 * @return  void|Profile
 	 *
 	 * @since   Kunena 6.0
 	 */

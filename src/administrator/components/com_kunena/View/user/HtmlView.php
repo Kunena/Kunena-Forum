@@ -20,8 +20,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Utilities\ArrayHelper;
-use KunenaAvatarKunena;
-use KunenaFactory;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use StdClass;
 use function defined;
 
@@ -73,7 +74,7 @@ class HtmlView extends BaseHtmlView
 		$this->ipslist      = $this->get('IPlist');
 
 		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) && $this->user->avatar ? true : false;
+		$this->editavatar = ($avatarint instanceof Avatar) && $this->user->avatar ? true : false;
 		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
@@ -166,7 +167,7 @@ class HtmlView extends BaseHtmlView
 		$this->social      = $this->user->socialButtons();
 		$this->social      = ArrayHelper::toObject($this->social);
 
-		$this->config = \KunenaConfig::getInstance();
+		$this->config = KunenaConfig::getInstance();
 
 		$this->addToolbar();
 
@@ -175,7 +176,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

@@ -19,8 +19,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\String\StringHelper;
-use KunenaConfig;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**

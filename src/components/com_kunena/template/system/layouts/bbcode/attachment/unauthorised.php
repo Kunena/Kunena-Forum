@@ -9,7 +9,12 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
+
+use function defined;
 
 $attachment = $this->attachment;
 
@@ -20,7 +25,7 @@ $exception = $attachment->tryAuthorise('read', $user, false);
 
 if (!$exception)
 {
-	$exception = new KunenaExceptionAuthorise('Bad Request.', 400);
+	$exception = new \Kunena\Forum\Libraries\Exception\Authorise('Bad Request.', 400);
 }
 ?>
 <div class="kmsgattach">

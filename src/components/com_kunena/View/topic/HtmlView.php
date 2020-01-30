@@ -27,20 +27,16 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Object\CMSObject;
-use KunenaAttachmentHelper;
-use KunenaControllerDisplay;
-use KunenaDate;
-use KunenaFactory;
-use KunenaForumCategoryHelper;
-use KunenaForumMessage;
-use KunenaForumMessageHelper;
-use KunenaForumTopicHelper;
-use KunenaHtmlParser;
-use KunenaLayout;
-use KunenaPagination;
-use KunenaRequest;
-use KunenaRoute;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Request\Request;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use LogicException;
 
 /**
@@ -148,7 +144,7 @@ class HtmlView extends BaseHtmlView
 				$mesid = $this->topic->first_post_id;
 			}
 
-			$message = KunenaForumMessageHelper::get($mesid);
+			$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
 
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
@@ -161,7 +157,7 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 
-		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists())
+		if (!\Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id)->exists())
 		{
 			$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
 
@@ -229,9 +225,9 @@ class HtmlView extends BaseHtmlView
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get('Category');
 		$topic    = $this->get('Topic');
-		KunenaForumTopicHelper::fetchNewStatus([$topic->id => $topic]);
+		\Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus([$topic->id => $topic]);
 
-		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
+		$message = Message::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
 		while (@ob_end_clean())
 		{
@@ -314,7 +310,7 @@ class HtmlView extends BaseHtmlView
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
-		$categories        = KunenaForumCategoryHelper::getCategories();
+		$categories        = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -344,7 +340,7 @@ class HtmlView extends BaseHtmlView
 					   'action'      => 'topic.create'];
 
 		$this->catid    = $this->state->get('item.catid');
-		$this->category = KunenaForumCategoryHelper::get($this->catid);
+		$this->category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		if (!$this->topic->category_id)
@@ -375,7 +371,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = Helper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
@@ -410,12 +406,12 @@ class HtmlView extends BaseHtmlView
 
 		if (!$this->mesid)
 		{
-			$this->topic = KunenaForumTopicHelper::get($this->state->get('item.id'));
-			$parent      = KunenaForumMessageHelper::get($this->topic->first_post_id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->state->get('item.id'));
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = KunenaForumMessageHelper::get($this->mesid);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -452,7 +448,7 @@ class HtmlView extends BaseHtmlView
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = Helper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -478,7 +474,7 @@ class HtmlView extends BaseHtmlView
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->message = KunenaForumMessageHelper::get($mesid);
+		$this->message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
 
 		try
 		{
@@ -521,7 +517,7 @@ class HtmlView extends BaseHtmlView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = Helper::getExtensions($this->category);
 
 		if ($saved)
 		{
@@ -632,7 +628,7 @@ class HtmlView extends BaseHtmlView
 					$this->usermedals    = null;
 				}
 
-				$this->personalText = KunenaHtmlParser::parseText($this->profile->personalText);
+				$this->personalText = Parser::parseText($this->profile->personalText);
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
 
@@ -929,7 +925,7 @@ class HtmlView extends BaseHtmlView
 					$userids_thankyous[] = $userid;
 				}
 
-				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+				$loaded_users = \Kunena\Forum\Libraries\User\Helper::loadUsers($userids_thankyous);
 
 				$thankyou_delete = '';
 
@@ -986,7 +982,7 @@ class HtmlView extends BaseHtmlView
 				}
 			}
 
-			$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->profile->signature, null, $this->config->maxsig);
+			$this->signatureHtml = Parser::parseBBCode($this->profile->signature, null, $this->config->maxsig);
 			$this->attachments   = $this->message->getAttachments();
 
 			// Link to individual message
@@ -1097,7 +1093,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   integer  $maxpages max pages
 	 *
-	 * @return  KunenaPagination
+	 * @return  Pagination
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1106,7 +1102,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		$uri = KunenaRoute::normalize(null, true);
@@ -1166,10 +1162,10 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$this->history      = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
+		$this->history      = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
 		$this->historycount = count($this->history);
 		$this->replycount   = $this->topic->getReplies();
-		KunenaAttachmentHelper::getByMessage($this->history);
+		Helper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -1177,7 +1173,7 @@ class HtmlView extends BaseHtmlView
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
 
-		KunenaUserHelper::loadUsers($userlist);
+		\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
 
 		// Run events
 		$params = new Registry;
@@ -1371,7 +1367,7 @@ class HtmlView extends BaseHtmlView
 				{
 					// Create Meta Description form the content of the first message
 					// better for search results display but NOT for search ranking!
-					$description = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 182);
+					$description = Parser::stripBBCode($this->topic->first_post_message, 182);
 					$description = preg_replace('/\s+/', ' ', $description); // Remove newlines
 					$description = trim($description); // Remove trailing spaces and beginning
 
@@ -1602,7 +1598,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @param   string  $path path
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -1629,7 +1625,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function subRequest($path, Input $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path . '/Display', $input, $options)
+		return Request::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());
 	}
 

@@ -9,14 +9,21 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Category;
+
 defined('_JEXEC') or die;
+
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use function defined;
 
 /**
  * KunenaLayoutCategoryManage
  *
  * @since  K5.1
  */
-class KunenaLayoutCategoryManage extends KunenaLayout
+class KunenaLayoutCategoryManage extends Layout
 {
 	/**
 	 * @var     integer
@@ -35,13 +42,13 @@ class KunenaLayoutCategoryManage extends KunenaLayout
 	 *
 	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
-	 * @return  KunenaPagination
+	 * @return  Pagination
 	 *
 	 * @since   Kunena 5.1
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination;

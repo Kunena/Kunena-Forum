@@ -13,7 +13,7 @@ namespace Nbbc;
 //
 //  This file is part of NBBC, the New BBCode Parser.
 //
-//  NBBC implements a fully-validating, high-speed, extensible parser for the
+//  NBBC implements \a fully-validating, high-speed, extensible parser for the
 //  BBCode document language.  Its output is XHTML 1.0 Strict conformant no
 //  matter what its input is.  NBBC supports the full standard BBCode language,
 //  as well as comments, columns, enhanced quotes, spoilers, acronyms, wiki
@@ -50,7 +50,7 @@ namespace Nbbc;
 //
 // -----------------------------------------------------------------------------
 //
-//  This file implements the NBBC lexical analyzer, which breaks down the
+//  This file implements \the NBBC lexical analyzer, which breaks down the
 //  input text from characters into tokens.  This uses an event-based
 //  interface, somewhat like lex or flex uses, wherein each time
 //  $this->NextToken is called, the next token is returned until it returns

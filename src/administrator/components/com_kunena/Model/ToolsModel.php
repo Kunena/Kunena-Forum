@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Administrator\Install\Version;
+use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Menu\Fix;
@@ -423,7 +423,7 @@ class ToolsModel extends AdminModel
 		$this->maxExecTime       = ini_get('max_execution_time');
 		$this->maxExecMem        = ini_get('memory_limit');
 		$this->fileuploads       = ini_get('upload_max_filesize');
-		$this->kunenaVersionInfo = Version::getVersionHTML();
+		$this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
 		// Get Kunena default template
 		$ktemplate              = KunenaFactory::getTemplate();

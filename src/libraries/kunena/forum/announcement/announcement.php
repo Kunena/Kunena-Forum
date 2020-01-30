@@ -9,11 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Announcement;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
  * Class KunenaForumAnnouncement
@@ -32,7 +46,7 @@ use Joomla\CMS\Session\Session;
  *
  * @since   Kunena 6.0
  */
-class KunenaForumAnnouncement extends KunenaDatabaseObject
+class Announcement extends KunenaDatabaseObject
 {
 	/**
 	 * @var     array
@@ -102,7 +116,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param   null  $identifier  Announcement id to load.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumAnnouncement
+	 * @return  Announcement
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -110,7 +124,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return KunenaForumAnnouncementHelper::get($identifier, $reload);
+		return Helper::get($identifier, $reload);
 	}
 
 	/**
@@ -138,13 +152,13 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @param   string  $layout  layout
 	 *
-	 * @return  Joomla\CMS\Uri\Uri
+	 * @return  Uri
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getUri($layout = 'default')
 	{
-		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{
@@ -184,13 +198,13 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @param   string  $task  task
 	 *
-	 * @return  Joomla\CMS\Uri\Uri
+	 * @return  Uri
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getTaskUri($task = null)
 	{
-		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($task)
 		{
@@ -227,11 +241,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'title':
-				return KunenaHtmlParser::parseText($this->title, '', 'announcement_title');
+				return Parser::parseText($this->title, '', 'announcement_title');
 			case 'sdescription':
-				return KunenaHtmlParser::parseBBCode($this->sdescription, '', '', '', 'announcement_sdescription');
+				return Parser::parseBBCode($this->sdescription, '', '', '', 'announcement_sdescription');
 			case 'description':
-				return KunenaHtmlParser::parseBBCode($this->description, '', '', '', 'announcement_description');
+				return Parser::parseBBCode($this->description, '', '', '', 'announcement_description');
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'publish_up':
@@ -307,7 +321,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @since   Kunena 4.0
 	 *
 	 * @throws  InvalidArgumentException
-	 * @throws  KunenaExceptionAuthorise
+	 * @throws  Authorise
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -320,7 +334,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = KunenaUserHelper::getMyself();
+			$user = \Kunena\Forum\Libraries\User\Helper::getMyself();
 		}
 
 		// Use local authentication cache to speed up the authentication calls.
@@ -388,7 +402,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  Authorise|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -396,7 +410,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	{
 		if ($this->exists())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		return null;
@@ -405,7 +419,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  Authorise|null
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -415,12 +429,12 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	{
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if ($this->published != 1 && !$user->isModerator())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		return null;
@@ -429,7 +443,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  Authorise|null
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -441,15 +455,15 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 
 		if ($banned)
 		{
-			$banned = KunenaUserBan::getInstanceByUserid($user->userid, true);
+			$banned = Ban::getInstanceByUserid($user->userid, true);
 
 			if (!$banned->isLifetime())
 			{
-				return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+				return new Authorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
 			else
 			{
-				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+				return new Authorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 			}
 		}
 
@@ -459,7 +473,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  Authorise|null
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -470,12 +484,12 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 		// Check that user is global moderator
 		if (!$user->exists())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+			return new Authorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+			return new Authorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
 		return null;

@@ -9,20 +9,29 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
-use Joomla\String\StringHelper;
+namespace Kunena\Forum\Site\Controller\User\Edit\Avatar;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserEditAvatarDisplay
+ * Class ComponentUserControllerEditAvatarDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
+class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -81,9 +90,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 
-		if (!($avatar instanceof KunenaAvatarKunena))
+		if (!($avatar instanceof Avatar))
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
 
 		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';

@@ -9,12 +9,18 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Tables;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
+use RuntimeException;
+use UnexpectedValueException;
+use function defined;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -170,7 +176,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -213,7 +219,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error::displayDatabaseError($e);
 
 			return false;
 		}
@@ -249,11 +255,11 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function check()
 	{
-		$category = KunenaForumCategoryHelper::get($this->catid);
+		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($this->catid);
 
 		if (!$category->exists())
 		{
@@ -298,7 +304,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function store($updateNulls = false)
 	{
@@ -341,7 +347,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error::displayDatabaseError($e);
 
 			return false;
 		}

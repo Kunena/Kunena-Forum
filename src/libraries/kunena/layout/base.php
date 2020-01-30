@@ -9,20 +9,36 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Layout;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use InvalidArgumentException;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Log\Log;
+use Kunena\Forum\Libraries\Compat\Joomla\Layout\LayoutBase;
+use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Request\Request;
+use RuntimeException;
+use Throwable;
+use function defined;
 
 /**
- * Implements Kunena layouts for the views.
+ * implements \Kunena layouts for the views.
  *
  * This class is part of Kunena HMVC implementation, allowing calls to
  * any layout file.
  *
  * <code>
- *    echo KunenaLayout::factory('Pagination')->set('pagination', $this->pagination);
- *    echo KunenaLayout::factory('Pagination/Footer')->set('pagination', $this->pagination);
+ *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination')->set('pagination', $this->pagination);
+ *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination/Footer')->set('pagination', $this->pagination);
  * </code>
  *
  * Individual layout classes are located in /components/com_kunena/layout,
@@ -33,14 +49,14 @@ use Joomla\CMS\Log\Log;
  * Default layout can be overridden by ->setLayout():
  *
  * <code>
- *    echo KunenaLayout::factory('Pagination')->set('pagination', $this->pagination)->setLayout('mini');
+ *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination')->set('pagination', $this->pagination)->setLayout('mini');
  * </code>
  *
  * @see     KunenaRequest
  *
  * @since   Kunena 6.0
  */
-class KunenaLayoutBase extends KunenaCompatLayoutBase
+class Base extends LayoutBase
 {
 	/**
 	 * Layout name.
@@ -95,7 +111,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		// Setup dependencies.
 		$this->_name        = $name;
 		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
-		$this->debug        = JDEBUG || KunenaConfig::getInstance()->get('debug');
+		$this->debug        = JDEBUG || Config::getInstance()->get('debug');
 	}
 
 	/**
@@ -261,7 +277,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string  $layout  The layout name.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  Layout|LayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -388,9 +404,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   array  $data  data
 	 *
-	 * @return  KunenaLayoutBase Instance of $this to allow chaining.
+	 * @return  LayoutBase Instance of $this to allow chaining.
 	 *
-	 * @since   Kunena 6.0
+	 * @since    Kunena 6.0
 	 */
 	public function debug($data = [])
 	{
@@ -451,9 +467,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Add script options to the document.
 	 *
-	 * @param   string   $key     key
-	 * @param   boolean  $options options
-	 * @param   boolean  $merge   merge
+	 * @param   string   $key      key
+	 * @param   boolean  $options  options
+	 * @param   boolean  $merge    merge
 	 *
 	 * @return  mixed
 	 *
@@ -483,7 +499,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   string  $path  The paths queue.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  Layout|LayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -499,7 +515,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   array  $paths  The paths queue.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  Layout|LayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -559,7 +575,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string  $property  The name of the property.
 	 * @param   mixed   $value     The value of the property to set.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  Layout|LayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -615,7 +631,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @param   mixed  $properties  Either an associative array or another object.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  Layout|LayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -666,12 +682,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Display layout from current layout.
 	 *
-	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
+	 * By using $this->subLayout() instead of \Kunena\Forum\Libraries\Layout\Layout::factory() you can make your template files both
 	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
 	 *
 	 * @param   string  $path  path
 	 *
-	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return  BaseLayout|Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -689,13 +705,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * <code>
 	 *    // Output pagination/pages layout with current cart instance.
-	 *    echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
+	 *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination/Pages')->set('pagination', $this->pagination);
 	 * </code>
 	 *
 	 * @param   mixed   $paths  String or array of strings.
 	 * @param   string  $base   Base path.
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -766,26 +782,26 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		// Create default layout object.
-		return new KunenaLayout($path, $templatePaths);
+		return new Layout($path, $templatePaths);
 	}
 
 	/**
 	 * Display arbitrary MVC triad from current layout.
 	 *
-	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
+	 * By using $this->subRequest() instead of \Kunena\Forum\Libraries\Request\Request::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
-	 * @param   string              $path     path
-	 * @param   Joomla\Input\Input  $input    input
-	 * @param   mixed               $options  options
+	 * @param   string  $path     path
+	 * @param   Input   $input    input
+	 * @param   mixed   $options  options
 	 *
-	 * @return  KunenaControllerDisplay|KunenaLayout
+	 * @return  KunenaControllerDisplay|Layout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function subRequest($path, Joomla\Input\Input $input = null, $options = null)
+	public function subRequest($path, Input $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path . '/Display', $input, $options)
+		return Request::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());
 	}
 }

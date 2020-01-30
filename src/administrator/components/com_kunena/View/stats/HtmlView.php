@@ -14,10 +14,12 @@ namespace Kunena\Forum\Administrator\View\Stats;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Forum\Statistics;
 use function defined;
 
 /**
@@ -34,7 +36,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function displayDefault($tpl = null)
@@ -44,7 +46,7 @@ class HtmlView extends BaseHtmlView
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
 
-		$kunena_stats = \KunenaForumStatistics::getInstance();
+		$kunena_stats = Statistics::getInstance();
 		$kunena_stats->loadAll(true);
 		$this->kunena_stats = $kunena_stats;
 

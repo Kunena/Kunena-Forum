@@ -24,12 +24,10 @@ use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\MVC\Controller\FormController;
-use KunenaCacheHelper;
-use KunenaFactory;
-use KunenaForumCategoryHelper;
-use KunenaPath;
-use KunenaRoute;
-use KunenaTemplateHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
@@ -215,7 +213,7 @@ class TemplatesController extends FormController
 
 			if (is_dir($tmp_kunena))
 			{
-				$templates = KunenaTemplateHelper::parseXmlFiles($tmp_kunena);
+				$templates = \Kunena\Forum\Libraries\Template\Helper::parseXmlFiles($tmp_kunena);
 
 				if (!empty($templates))
 				{
@@ -271,7 +269,7 @@ class TemplatesController extends FormController
 					}
 
 					// Clear all cache, just in case.
-					KunenaCacheHelper::clearAll();
+					\Kunena\Forum\Libraries\Cache\Helper::clearAll();
 				}
 				else
 				{
@@ -312,7 +310,7 @@ class TemplatesController extends FormController
 		}
 
 		// Initialize variables
-		$otemplate = KunenaForumCategoryHelper::parseXmlFile($id);
+		$otemplate = \Kunena\Forum\Libraries\Template\Helper::parseXmlFile($id);
 
 		if (!$otemplate)
 		{
@@ -330,7 +328,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		if (KunenaTemplateHelper::isDefault($template))
+		if (\Kunena\Forum\Libraries\Template\Helper::isDefault($template))
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -346,7 +344,7 @@ class TemplatesController extends FormController
 			$retval = Folder::delete($tpl);
 
 			// Clear all cache, just in case.
-			KunenaCacheHelper::clearAll();
+			\Kunena\Forum\Libraries\Cache\Helper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
 		}
 		else
@@ -659,7 +657,7 @@ class TemplatesController extends FormController
 			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 		}
 	}
-	
+
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *

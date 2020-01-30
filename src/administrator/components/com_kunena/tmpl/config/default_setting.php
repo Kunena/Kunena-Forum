@@ -13,8 +13,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 ?>
+
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post"
 	  name="settingFormModal"
 	  id="settingFormModal">

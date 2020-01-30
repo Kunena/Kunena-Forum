@@ -10,16 +10,24 @@
  * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Forum\Forum;
+use function defined;
 
 /**
  * Class plgKunenaCommunity
  *
  * @since   Kunena 6.0
  */
-class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaCommunity extends CMSPlugin
 {
 	/**
 	 * plgKunenaCommunity constructor.
@@ -32,7 +40,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && Forum::isCompatible('4.0') && Forum::installed()))
 		{
 			return;
 		}
@@ -42,7 +50,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'community'))
+			if (PluginHelper::isEnabled('kunena', 'community'))
 			{
 				$db    = Factory::getDBO();
 				$query = $db->getQuery(true);
@@ -68,7 +76,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return  KunenaAccess|KunenaAccessCommunity|void
+	 * @return  Access|KunenaAccessCommunity|void
 	 *
 	 * @since   Kunena
 	 * @todo  Should we remove category ACL integration?
@@ -106,7 +114,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  KunenaAvatarCommunity|null|void
+	 * @return  AvatarCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -118,7 +126,7 @@ class plgKunenaCommunity extends Joomla\CMS\Plugin\CMSPlugin
 
 		require_once __DIR__ . "/avatar.php";
 
-		return new KunenaAvatarCommunity($this->params);
+		return new AvatarCommunity($this->params);
 	}
 
 	/**

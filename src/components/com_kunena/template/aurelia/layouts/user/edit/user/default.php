@@ -9,9 +9,14 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use function defined;
 
 ?>
 	<h3>
@@ -26,7 +31,7 @@ use Joomla\CMS\Language\Text;
 			</td>
 			<td>
 				<input type="text" name="username" id="username" class="form-control"
-				       value="<?php echo $this->escape($this->user->get('username')); ?>"
+					   value="<?php echo $this->escape($this->user->get('username')); ?>"
 					<?php
 					if (!$this->changeUsername)
 					{
@@ -40,7 +45,7 @@ use Joomla\CMS\Language\Text;
 			</td>
 			<td>
 				<input class="required form-control" type="text" id="name" name="name"
-				       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
+					   value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
 			</td>
 		</tr>
 		<tr>
@@ -49,11 +54,11 @@ use Joomla\CMS\Language\Text;
 			</td>
 			<td>
 				<input class="required validate-email form-control" type="text" id="email" name="email"
-				       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
+					   value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
 			</td>
 		</tr>
 		<?php if ($this->user->get('password'))
-			:
+		:
 			?>
 			<tr>
 				<td>
@@ -61,7 +66,7 @@ use Joomla\CMS\Language\Text;
 				</td>
 				<td>
 					<input class="validate-password form-control" type="password" id="password" name="password"
-					       value="" size="40"/>
+						   value="" size="40"/>
 				</td>
 			</tr>
 			<tr>
@@ -70,7 +75,7 @@ use Joomla\CMS\Language\Text;
 				</td>
 				<td>
 					<input class="validate-passverify form-control" type="password" id="password2" name="password2"
-					       value="" size="40"/>
+						   value="" size="40"/>
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -78,7 +83,7 @@ use Joomla\CMS\Language\Text;
 	</table>
 
 <?php if (!empty($this->frontendForm))
-	:
+:
 	?>
 	<h3>
 		<?php echo Text::_('COM_KUNENA_GLOBAL_SETTINGS'); ?>
@@ -88,7 +93,7 @@ use Joomla\CMS\Language\Text;
 		<tbody>
 
 		<?php foreach ($this->frontendForm as $field)
-			:
+		:
 			?>
 			<tr>
 				<td class="col-md-3">
@@ -104,8 +109,10 @@ use Joomla\CMS\Language\Text;
 	</table>
 <?php endif;
 
-if (KunenaLogin::getTwoFactorMethods() > 1) : ?>
+if (\Kunena\Forum\Libraries\Login\Login::getTwoFactorMethods() > 1)
+:
+	?>
 	<a class="btn btn-outline-primary border"
-	   href="<?php echo Joomla\CMS\Router\Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
+	   href="<?php echo Route::_('index.php?option=com_users&view=profile&layout=edit'); ?>"
 	   data-toggle="modal" id="2fa_settings"><?php echo Text::_('COM_KUNENA_2FA_SETTINGS'); ?></a>
 <?php endif;

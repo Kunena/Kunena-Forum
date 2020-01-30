@@ -10,6 +10,7 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_SYSTEM_KUNENA_DESC</description>
+    <namespace>Kunena\Forum\Plugin\System\Kunena</namespace>
     <files>
         <filename plugin="kunena">kunena.php</filename>
         <folder>language</folder>

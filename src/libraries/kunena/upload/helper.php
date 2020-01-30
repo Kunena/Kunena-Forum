@@ -9,19 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Upload;
+
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Filesystem\Path;
+use function defined;
 
 /**
  * Kunena Upload Backend Helper Class
  *
  * @since   Kunena 6.0
  */
-class KunenaUploadHelper
+class Helper
 {
 	/**
 	 * @var     array

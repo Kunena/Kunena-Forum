@@ -9,17 +9,21 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Integration;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
+use function defined;
 
 /**
  * Class KunenaIntegrationActivity
  *
  * @since 3.0.4
  */
-class KunenaIntegrationPlugins
+class Plugins
 {
 	/**
 	 * Returns total kunena plugins.
@@ -28,7 +32,7 @@ class KunenaIntegrationPlugins
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function getTotalPlugins()
 	{
@@ -46,7 +50,7 @@ class KunenaIntegrationPlugins
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 		}
 
 		return (int) $total;

@@ -9,14 +9,23 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Attachment;
+
 defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\Collection\Collection;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaAttachmentFinder
  *
  * @since   Kunena 5.0
  */
-class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
+class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 {
 	/**
 	 * @var     string
@@ -27,7 +36,7 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get log entries.
 	 *
-	 * @return  array|KunenaCollection
+	 * @return  array|Collection
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -61,11 +70,11 @@ class KunenaAttachmentFinder extends KunenaDatabaseObjectFinder
 		{
 			foreach ($results as $id => $result)
 			{
-				$instances[$id] = KunenaAttachmentHelper::get($id);
+				$instances[$id] = Helper::get($id);
 			}
 		}
 
-		$instances = new KunenaCollection($instances);
+		$instances = new Collection($instances);
 
 		unset($results);
 

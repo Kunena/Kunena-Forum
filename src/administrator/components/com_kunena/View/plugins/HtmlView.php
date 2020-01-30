@@ -13,10 +13,13 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -39,14 +42,14 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The pagination object
 	 *
-	 * @var    \Joomla\CMS\Pagination\Pagination
+	 * @var    Pagination
 	 */
 	protected $pagination;
 
 	/**
 	 * The model state
 	 *
-	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @var    CMSObject
 	 * @since  6.0
 	 */
 	protected $state;
@@ -54,7 +57,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * Form object for search filters
 	 *
-	 * @var    \Joomla\CMS\Form\Form
+	 * @var    Form
 	 * @since  4.0.0
 	 */
 	public $filterForm;
@@ -107,7 +110,7 @@ class HtmlView extends BaseHtmlView
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->user = Factory::getApplication()->getIdentity();
-		
+
 		$this->filterForm    = $model->getFilterForm();
 
 		$this->filterSearch  = $this->escape($this->state->get('filter.search'));

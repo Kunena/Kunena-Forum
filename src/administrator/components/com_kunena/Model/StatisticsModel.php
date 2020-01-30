@@ -62,7 +62,7 @@ class StatisticsModel extends ListModel
 			];
 		}
 
-		$this->me = \KunenaUserHelper::getMyself();
+		$this->me = Helper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -145,7 +145,7 @@ class StatisticsModel extends ListModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new \KunenaLogFinder;
+		$finder = new Finder;
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');
@@ -168,7 +168,7 @@ class StatisticsModel extends ListModel
 			$finder->filterByTime($start, $stop);
 		}
 
-		$access = \KunenaAccess::getInstance();
+		$access = Access::getInstance();
 		$finder->where($field, 'IN', array_keys($access->getAdmins() + $access->getModerators()));
 		$finder->where('type', '!=', 3);
 
@@ -206,7 +206,7 @@ class StatisticsModel extends ListModel
 			return $this->cache[$store];
 		}
 
-		$access  = \KunenaAccess::getInstance();
+		$access  = Access::getInstance();
 		$userIds = array_keys($access->getAdmins() + $access->getModerators());
 
 		$data = [];
@@ -297,7 +297,7 @@ class StatisticsModel extends ListModel
 
 		unset($items);
 
-		\KunenaUserHelper::loadUsers($userIds);
+		Helper::loadUsers($userIds);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $data;

@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use KunenaFactory;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * Component Controller

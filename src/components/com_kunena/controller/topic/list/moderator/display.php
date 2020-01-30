@@ -9,18 +9,29 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\KunenaList\Moderator;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Finder;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicListDisplay
+ * Class ComponentTopicControllerListDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunenaControllerTopicListDisplay
+class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Prepare topic list for moderators.
@@ -36,8 +47,8 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	{
 		parent::before();
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$access         = KunenaAccess::getInstance();
+		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$access         = Access::getInstance();
 		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
@@ -46,16 +57,16 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
-			if (KunenaConfig::getInstance()->moderator_id)
+			if ($this->config->moderators_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->moderator_id;
+				$itemidfix = $this->config->moderators_id;
 			}
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
+				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
 				$itemidfix = $getid->id;
 			}
 
@@ -65,7 +76,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=moderator&Itemid={$itemidfix}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=moderator&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 
@@ -89,16 +100,16 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			$categoryIds = false;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse);
+		$categories = Helper::getCategories($categoryIds, $reverse);
 
-		$finder = new KunenaForumTopicFinder;
+		$finder = new Finder;
 		$finder
 			->filterByCategories($categories)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
 			->where('locked', '=', 0);
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$this->pagination = new Pagination($finder->count(), $start, $limit);
 
 		if ($this->moreUri)
 		{

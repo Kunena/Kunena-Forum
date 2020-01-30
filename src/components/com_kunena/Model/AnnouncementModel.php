@@ -18,9 +18,8 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use KunenaForumAnnouncement;
-use KunenaForumAnnouncementHelper;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
 
 /**
  * Announcement Model for Kunena
@@ -65,17 +64,17 @@ class AnnouncementModel  extends ListModel
 	}
 
 	/**
-	 * @return  KunenaForumAnnouncement
+	 * @return  Announcement
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getNewAnnouncement()
 	{
-		return new KunenaForumAnnouncement;
+		return new Announcement;
 	}
 
 	/**
-	 * @return  KunenaForumAnnouncement
+	 * @return  Announcement
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -83,7 +82,7 @@ class AnnouncementModel  extends ListModel
 	 */
 	public function getAnnouncement()
 	{
-		return KunenaForumAnnouncementHelper::get($this->getState('item.id'));
+		return Helper::get($this->getState('item.id'));
 	}
 
 	/**
@@ -102,7 +101,7 @@ class AnnouncementModel  extends ListModel
 	}
 
 	/**
-	 * @return  KunenaForumAnnouncement[]
+	 * @return  Announcement[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -113,7 +112,7 @@ class AnnouncementModel  extends ListModel
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
 
-		$this->total = KunenaForumAnnouncementHelper::getCount(!$this->me->isModerator());
+		$this->total = Helper::getCount(!$this->me->isModerator());
 
 		// If out of range, use last page
 		if ($limit && $this->total < $start)
@@ -121,7 +120,7 @@ class AnnouncementModel  extends ListModel
 			$start = intval($this->total / $limit) * $limit;
 		}
 
-		$announces = KunenaForumAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
+		$announces = Helper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
 		if ($this->total < $start)
 		{
@@ -141,7 +140,7 @@ class AnnouncementModel  extends ListModel
 	public function getannouncementActions()
 	{
 		$actions = [];
-		$user    = KunenaUserHelper::getMyself();
+		$user    = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		if ($user->isModerator())
 		{

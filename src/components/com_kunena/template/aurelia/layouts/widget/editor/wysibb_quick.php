@@ -9,9 +9,13 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 $this->addScript('jquery.wysibb.js');
 $this->addStyleSheet('wbbtheme.css');
@@ -84,7 +88,7 @@ Text::script('COM_KUNENA_WYSIBB_EDITOR_SM7');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
-$this->ktemplate  = KunenaFactory::getTemplate();
+$this->ktemplate  = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
 $settings         = $templatesettings->get('wysibb');
 ?>

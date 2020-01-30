@@ -9,14 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Kunena;
+
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\Profile;
+use function defined;
 
 /**
  * Class PlgKunenaKunena
  *
  * @since   Kunena 6.0
  */
-class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
+class PlgKunenaKunena extends CMSPlugin
 {
 	/**
 	 * @param   object $subject  subject
@@ -27,7 +36,7 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
+		if (!(class_exists('KunenaForum') && Forum::isCompatible('4.0')))
 		{
 			return;
 		}
@@ -38,7 +47,7 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 	}
 
 	/**
-	 * @return  KunenaAvatarKunena|void
+	 * @return  Avatar|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -51,11 +60,11 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 
 		require_once __DIR__ . "/avatar.php";
 
-		return new KunenaAvatarKunena($this->params);
+		return new Avatar($this->params);
 	}
 
 	/**
-	 * @return  KunenaProfileKunena|void
+	 * @return  Profile|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -68,6 +77,6 @@ class PlgKunenaKunena extends Joomla\CMS\Plugin\CMSPlugin
 
 		require_once __DIR__ . "/profile.php";
 
-		return new KunenaProfileKunena($this->params);
+		return new Profile($this->params);
 	}
 }

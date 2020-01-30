@@ -9,16 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Category;
+
 defined('_JEXEC') or die;
 
+use Exception;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
  * KunenaLayoutCategoryIndex
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutCategoryIndex extends KunenaLayout
+class KunenaLayoutCategoryIndex extends Layout
 {
 	/**
 	 * @var     integer
@@ -33,7 +48,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	public $state;
 
 	/**
-	 * @var     KunenaTemplate|void
+	 * @var     Template|void
 	 * @since   Kunena 6.0
 	 *
 	 */
@@ -44,12 +59,12 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 *
 	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
-	 * @return  KunenaPagination
+	 * @return  Pagination
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination;
@@ -75,22 +90,22 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($category->icon))
 			{
-				return KunenaIcons::caticon($category->icon, true, true);
+				return Icons::caticon($category->icon, true, true);
 			}
 			else
 			{
-				return KunenaIcons::caticon($caticonpath, true, true);
+				return Icons::caticon($caticonpath, true, true);
 			}
 		}
 		else
 		{
 			if (!empty($category->icon))
 			{
-				return KunenaIcons::caticon($category->icon, false, true);
+				return Icons::caticon($category->icon, false, true);
 			}
 			else
 			{
-				return KunenaIcons::caticon($caticonpath, false, true);
+				return Icons::caticon($caticonpath, false, true);
 			}
 		}
 	}
@@ -115,22 +130,22 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		{
 			if (!empty($subcategory->icon))
 			{
-				return KunenaIcons::caticon($subcategory->icon, true, false);
+				return Icons::caticon($subcategory->icon, true, false);
 			}
 			else
 			{
-				return KunenaIcons::caticon($defaultcategoryicon, true, false);
+				return Icons::caticon($defaultcategoryicon, true, false);
 			}
 		}
 		else
 		{
 			if (!empty($subcategory->icon))
 			{
-				return KunenaIcons::caticon($subcategory->icon, false, false);
+				return Icons::caticon($subcategory->icon, false, false);
 			}
 			else
 			{
-				return KunenaIcons::caticon($defaultcategoryicon, false, false);
+				return Icons::caticon($defaultcategoryicon, false, false);
 			}
 		}
 	}
@@ -151,7 +166,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
 		// Is user allowed to mark forums as read?
-		if (KunenaUserHelper::getMyself()->exists() && $numTopics)
+		if (Helper::getMyself()->exists() && $numTopics)
 		{
 			$token = '&' . Session::getFormToken() . '=1';
 
@@ -176,11 +191,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
-		if (KunenaConfig::getInstance()->enablerss)
+		if (Config::getInstance()->enablerss)
 		{
 			$params = '&catid=' . (int) $catid;
 
-			if (Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix'))
+			if (CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
 				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}") . '?format=feed&type=rss';
 			}

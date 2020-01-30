@@ -8,10 +8,14 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 if ($this->config->showuserstats)
 {
@@ -23,7 +27,7 @@ if ($this->config->showuserstats)
 <div class="row">
 	<div class="col-md-3">
 		<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
-			<?php echo $this->profile->getLink($this->avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, $this->config->avataredit); ?>
+			<?php echo $this->profile->getLink($this->avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), null, $this->config->avataredit); ?>
 		</div>
 
 		<?php if ($this->config->user_status)
@@ -180,7 +184,7 @@ if ($this->config->showuserstats)
 				?>
 				<li class="list-group-item">
 					<strong><?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-					<span><?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></span>
+					<span><?php echo \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc'); ?></span>
 				</li>
 			<?php endif; ?>
 
@@ -201,27 +205,27 @@ if ($this->config->showuserstats)
 				<?php echo $this->private->shownewIcon($this->profile->userid, 'btn btn-outline-primary border btn-sm', 'glyphicon glyphicon-comment'); ?>
 			<?php endif; ?>
 			<?php
-			if (KunenaUser::getInstance()->getEmail($this->profile))
+			if (\Kunena\Forum\Libraries\User\KunenaUser::getInstance()->getEmail($this->profile))
 			:
 				?>
 				<a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->profile->email; ?>"
-				   rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
+				   rel="nofollow"><?php echo \Kunena\Forum\Libraries\Icons\Icons::email(); ?></a>
 			<?php endif; ?>
 			<?php
 			if (!empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL()))
 			:
 				?>
 				<a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
+				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
 			<?php elseif (empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL()))
 			:
 				?>
 				<a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe(); ?></a>
+				   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::globe(); ?></a>
 			<?php elseif (!empty($this->profile->getWebsiteName()) && empty($this->profile->getWebsiteURL()))
 			:
 				?>
-				<button class="btn btn-outline-primary border btn-sm"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></button>
+				<button class="btn btn-outline-primary border btn-sm"><?php echo \Kunena\Forum\Libraries\Icons\Icons::globe() . ' ' . $this->profile->getWebsiteName(); ?></button>
 			<?php endif; ?>
 		</div>
 	</div>

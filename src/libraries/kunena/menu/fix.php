@@ -10,20 +10,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Menu;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Route\Legacy;
+use StdClass;
+use function defined;
 
-KunenaMenuFix::initialize();
+Fix::initialize();
 
 /**
  * Class KunenaMenuFix
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaMenuFix
+abstract class Fix
 {
 	/**
 	 * @var     array|StdClass[]
@@ -196,7 +204,7 @@ abstract class KunenaMenuFix
 					self::$same[$item->route][$item->id]                                 = $item;
 					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
 
-					if (KunenaRouteLegacy::isLegacy($view))
+					if (Legacy::isLegacy($view))
 					{
 						self::$legacy[$item->id] = $item->id;
 					}
@@ -268,8 +276,8 @@ abstract class KunenaMenuFix
 		foreach (self::$legacy as $itemid)
 		{
 			$item = self::$items[$itemid];
-			KunenaRouteLegacy::convertMenuItem($item);
-			$table = Joomla\CMS\Table\Table::getInstance('menu');
+			Legacy::convertMenuItem($item);
+			$table = Table::getInstance('menu');
 			$table->load($item->id);
 			$data = [
 				'link'   => $item->link,
@@ -282,7 +290,7 @@ abstract class KunenaMenuFix
 			}
 		}
 
-		KunenaMenuHelper::cleanCache();
+		Helper::cleanCache();
 
 		return !empty($errors) ? $errors : null;
 	}
@@ -302,9 +310,9 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		$table  = Joomla\CMS\Table\Table::getInstance('menu');
+		$table  = Table::getInstance('menu');
 		$result = $table->delete($itemid);
-		KunenaMenuHelper::cleanCache();
+		Helper::cleanCache();
 
 		return $result;
 	}

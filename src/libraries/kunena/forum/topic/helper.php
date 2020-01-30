@@ -9,31 +9,40 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Topic;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Topic\User\User;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use function defined;
 
 /**
- * Class KunenaForumTopicHelper
+ * Class \Kunena\Forum\Libraries\Forum\Topic\TopicHelper
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaForumTopicHelper
+abstract class Helper
 {
 	/**
-	 * @var     KunenaForumTopic[]
+	 * @var     Topic[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
 
 	/**
-	 * Returns KunenaForumTopic object.
+	 * Returns \Kunena\Forum\Libraries\Forum\Topic\Topic object.
 	 *
 	 * @param   int   $identifier  The topic to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumTopic
+	 * @return  Topic
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -41,7 +50,7 @@ abstract class KunenaForumTopicHelper
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
-		if ($identifier instanceof KunenaForumTopic)
+		if ($identifier instanceof Topic)
 		{
 			return $identifier;
 		}
@@ -50,12 +59,12 @@ abstract class KunenaForumTopicHelper
 
 		if ($id < 1)
 		{
-			return new KunenaForumTopic;
+			return new Topic;
 		}
 
 		if (empty(self::$_instances[$id]))
 		{
-			$instance = new KunenaForumTopic;
+			$instance = new Topic;
 
 			// Only load topics which haven't been preloaded before (including missing ones).
 			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
@@ -84,12 +93,13 @@ abstract class KunenaForumTopicHelper
 	public static function subscribe($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
-		KunenaForumTopicUserHelper::getTopics($ids, $user);
+		// Codestyle fixes: use real url
+		\Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
 		$count = 0;
 
 		foreach ($ids as $id)
 		{
-			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
+			$usertopic = \Kunena\Forum\Libraries\Forum\Topic\User\Helper::get($id, $user);
 
 			if ($usertopic->subscribed != (int) $value)
 			{
@@ -117,12 +127,12 @@ abstract class KunenaForumTopicHelper
 	public static function favorite($ids, $value = true, $user = null)
 	{
 		// Pre-load all items
-		KunenaForumTopicUserHelper::getTopics($ids, $user);
+		\Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
 		$count = 0;
 
 		foreach ($ids as $id)
 		{
-			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
+			$usertopic = \Kunena\Forum\Libraries\Forum\Topic\User\Helper::get($id, $user);
 
 			if ($usertopic->favorite != (int) $value)
 			{
@@ -140,7 +150,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed   $ids        ids
 	 * @param   string  $authorise  authorise
 	 *
-	 * @return  KunenaForumTopic[]
+	 * @return  Topic[]
 	 *
 	 * @since   Kunena
 	 *
@@ -228,7 +238,7 @@ abstract class KunenaForumTopicHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new KunenaForumTopic($results[$id]);
+				$instance = new Topic($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			}
@@ -245,7 +255,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   mixed  $ids   ids
 	 * @param   mixed  $user  user
 	 *
-	 * @return  KunenaForumTopicUser[]
+	 * @return  User[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -258,7 +268,7 @@ abstract class KunenaForumTopicHelper
 			$ids = array_keys(self::$_instances);
 		}
 
-		return KunenaForumTopicUserHelper::getTopics($ids, $user);
+		return \Kunena\Forum\Libraries\Forum\Topic\User\Helper::getTopics($ids, $user);
 	}
 
 	/**
@@ -267,7 +277,7 @@ abstract class KunenaForumTopicHelper
 	 * @param   int    $limit       limit
 	 * @param   array  $params      params
 	 *
-	 * @return  array|KunenaForumTopic[]
+	 * @return  array|Topic[]
 	 *
 	 * @since   Kunena
 	 *
@@ -289,7 +299,7 @@ abstract class KunenaForumTopicHelper
 		$exclude   = isset($params['exclude']) ? (int) $params['exclude'] : 0;
 		$orderby   = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
-		$user      = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
+		$user      = isset($params['user']) ? \Kunena\Forum\Libraries\User\Helper::get($params['user']) : \Kunena\Forum\Libraries\User\Helper::getMyself();
 		$hold      = isset($params['hold']) ? (string) $params['hold'] : 0;
 		$moved     = isset($params['moved']) ? (string) $params['moved'] : 0;
 		$where     = isset($params['where']) ? (string) $params['where'] : '';
@@ -309,11 +319,11 @@ abstract class KunenaForumTopicHelper
 
 		if (!$exclude)
 		{
-			$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
+			$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categories, $reverse);
 		}
 		else
 		{
-			$categories = KunenaForumCategoryHelper::getCategories($categories, 0);
+			$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($categories, 0);
 		}
 
 		$catlist = [];
@@ -452,7 +462,7 @@ abstract class KunenaForumTopicHelper
 
 		foreach ($results as $id => $result)
 		{
-			$instance = new KunenaForumTopic($result);
+			$instance = new Topic($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$topics[$id]            = $instance;
@@ -752,7 +762,7 @@ abstract class KunenaForumTopicHelper
 	 */
 	public static function fetchNewStatus(array $topics, $user = null)
 	{
-		$user = KunenaUserHelper::get($user);
+		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists())
 		{

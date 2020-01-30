@@ -22,8 +22,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
-use KunenaConfig;
-use KunenaDate;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 
 /**
  * Config Model for Kunena

@@ -21,8 +21,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use KunenaUser;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 
 /**
@@ -69,7 +69,7 @@ class UsersModel extends ListModel
 			];
 		}
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = Helper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -115,7 +115,7 @@ class UsersModel extends ListModel
 			$ids[] = $item->id;
 		}
 
-		$instances = KunenaUserHelper::loadUsers($ids);
+		$instances = Helper::loadUsers($ids);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $instances;

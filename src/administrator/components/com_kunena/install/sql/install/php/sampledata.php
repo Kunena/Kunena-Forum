@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 // This file contains initial sample data for the forum
 

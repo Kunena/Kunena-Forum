@@ -9,11 +9,20 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Tables;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use RuntimeException;
+use UnexpectedValueException;
+use function defined;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -221,7 +230,7 @@ class TableKunenaTopics extends KunenaTable
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			Error::displayDatabaseError($e);
 
 			return false;
 		}
@@ -250,7 +259,7 @@ class TableKunenaTopics extends KunenaTable
 	 */
 	public function check()
 	{
-		$category = KunenaForumCategoryHelper::get($this->category_id);
+		$category = Helper::get($this->category_id);
 
 		if (!$category->exists())
 		{

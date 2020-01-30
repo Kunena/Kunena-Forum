@@ -9,20 +9,34 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Category\Topics;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Site\Model\CategoryModel;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
+class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -37,7 +51,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	public $headerText;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -49,13 +63,13 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	public $total;
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
-	 * @var     KunenaPagination
+	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -80,9 +94,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		parent::before();
 
 		require_once KPATH_SITE . '/models/category.php';
-		$this->model = new KunenaModelCategory;
+		$this->model = new CategoryModel;
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		$catid      = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
@@ -90,11 +104,11 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$Itemid     = $this->input->getInt('Itemid');
 		$format     = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 
@@ -106,14 +120,14 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		// TODO:
 		$direction = 'DESC';
 
-		$this->category = KunenaForumCategoryHelper::get($catid);
+		$this->category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
 		$this->category->tryAuthorise();
 
 		$this->headerText = $this->category->name;
 
 		$topic_ordering = $this->category->topic_ordering;
 
-		$access = KunenaAccess::getInstance();
+		$access = Access::getInstance();
 		$hold   = $access->getAllowedHold($this->me, $catid);
 		$moved  = 1;
 		$params = [
@@ -140,12 +154,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 				$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
 		}
 
-		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = \Kunena\Forum\Libraries\Forum\Topic\Helper::getLatestTopics($catid, $limitstart, $limit, $params);
 
 		if ($limitstart > 1 && !$this->topics)
 		{
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 
@@ -165,29 +179,27 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			// Prefetch all users/avatars to avoid user by user queries during template iterations.
 			if (!empty($userlist))
 			{
-				KunenaUserHelper::loadUsers($userlist);
+				\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
 			}
 
-			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
-			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+			\Kunena\Forum\Libraries\Forum\Topic\Helper::getUserTopics(array_keys($this->topics));
+			$lastreadlist = \Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus($this->topics);
 
 			// Fetch last / new post positions when user can see unapproved or deleted posts.
-			if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
+			if ($lastreadlist || $this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
 			{
-				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
+				Helper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
 
-		$config = KunenaConfig::getInstance();
-
-		if (!$config->read_only)
+		if (!$this->config->read_only)
 		{
 			$this->topicActions = $this->model->getTopicActions();
 		}
 
 		$this->actionMove = $this->model->getActionMove();
 
-		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
+		$this->pagination = new Pagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
 		$doc  = Factory::getApplication()->getDocument();
 		$page = $this->pagination->pagesCurrent;
@@ -238,9 +250,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$config    = Factory::getConfig();
 		$robots    = $config->get('robots');
 
-		if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
 		{
-			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
+			$image = Uri::base() . $this->config->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 

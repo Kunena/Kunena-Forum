@@ -8,8 +8,13 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
+
+use function defined;
 
 $display = isset($this->display);
 
@@ -21,7 +26,10 @@ if ($count == 0)
 {
 	return;
 }
-elseif ($count == 1 && empty($display)) return;
+elseif ($count == 1 && empty($display))
+{
+	return;
+}
 $last = 0;
 ?>
 

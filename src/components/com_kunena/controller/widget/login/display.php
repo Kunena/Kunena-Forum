@@ -9,11 +9,20 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Widget\Login;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Login\Login;
 use Joomla\Registry\Registry;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetLoginDisplay
@@ -113,14 +122,14 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$login = KunenaLogin::getInstance();
+		$login = Login::getInstance();
 
 		$params         = new Registry($login->getParams());
 		$this->plglogin = $params->get('login', '1');
@@ -130,7 +139,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			return false;
 		}
 
-		$this->me   = KunenaUserHelper::getMyself();
+		$this->me   = \Kunena\Forum\Libraries\User\Helper::getMyself();
 		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
 		$this->my = Factory::getApplication()->getIdentity();
@@ -162,7 +171,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			// Display announcements.
 			if ($this->me->isModerator())
 			{
-				$this->announcementsUrl = KunenaForumAnnouncementHelper::getUrl('list');
+				$this->announcementsUrl = Helper::getUrl('list');
 			}
 		}
 

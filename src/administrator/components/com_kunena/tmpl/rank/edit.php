@@ -15,6 +15,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
 	"function update_rank(newimage) {

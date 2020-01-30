@@ -9,17 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Announcement;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
  * KunenaLayoutAnnouncementList
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementList extends KunenaLayout
+class KunenaLayoutAnnouncementList extends Layout
 {
 	/**
 	 * Method to get moderation action in announcements list
@@ -30,13 +36,13 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function getOptions()
 	{
 		$options = [];
 
-		if (KunenaUserHelper::getMyself()->isModerator())
+		if (Helper::getMyself()->isModerator())
 		{
 			$options[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 			$options[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_UNPUBLISH'));

@@ -2,14 +2,15 @@
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
     <name>PLG_KUNENA_EASYBLOG</name>
-    <version>0.0.1</version>
-    <creationDate>2016-01-10</creationDate>
+    <version>0.0.2</version>
+    <creationDate>2020-01-10</creationDate>
     <author>Onlinecommunityhub</author>
     <authorEmail>info@onlinecommunityhub.nl</authorEmail>
     <authorUrl>https://onlinecommunityhub.nl</authorUrl>
     <license>GNU/GPL version 3 or later; see LICENSE.txt</license>
     <copyright>Copyright of Ruud van Lent (2015)</copyright>
     <description>PLG_KUNENA_EASYBLOG_DESCRIPTION</description>
+    <namespace>Kunena\Forum\Plugin\Kunena\Easyblog</namespace>
     <files>
         <filename plugin="easyblog">easyblog.php</filename>
         <filename>avatar.php</filename>

@@ -9,20 +9,24 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Database\Object;
+
 defined('_JEXEC') or die;
 
+use DomainException;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Database\QueryInterface;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\DatabaseQuery;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\QueryInterface;
 
 /**
  * Class KunenaDatabaseObjectFinder
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaDatabaseObjectFinder
+abstract class Finder
 {
 	/**
 	 * Table associated with the model.
@@ -214,7 +218,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function find()
 	{
@@ -235,7 +239,7 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 		}
 
 		return $results;
@@ -261,7 +265,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function count()
 	{
@@ -285,7 +289,7 @@ abstract class KunenaDatabaseObjectFinder
 		}
 		catch (ExecutionFailureException $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 		}
 
 		return $count;

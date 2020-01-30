@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 $attachment = $this->attachment;
 $config     = KunenaFactory::getConfig();
@@ -33,11 +34,11 @@ if ($config->access_component)
 	<a href="<?php echo $url; ?>" title="<?php echo $attachment->getFilename(); ?>">
 		<?php
 		if ($attachment->isImage())
-		{
+	{
 			echo '<img src="' . $src . ' " height="40" width="40" />';
 		}
 		else
-		{
+	{
 			echo '<i class="icon-flag-2 icon-big"></i>';
 		}
 		?>

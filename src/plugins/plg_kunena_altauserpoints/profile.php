@@ -9,17 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Altauserpoints;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use RuntimeException;
+use function defined;
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
  *
  * @since  5.0
  */
-class KunenaProfileAltaUserPoints extends KunenaProfile
+class KunenaProfileAltaUserPoints extends Profile
 {
 	/**
 	 * @var     null

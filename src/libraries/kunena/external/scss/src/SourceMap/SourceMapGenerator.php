@@ -240,7 +240,7 @@ class SourceMapGenerator
 	 * Generates the mappings string
 	 *
 	 * @return  string
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function generateMappings()
 	{

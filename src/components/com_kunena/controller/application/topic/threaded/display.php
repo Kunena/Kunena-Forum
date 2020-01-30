@@ -9,14 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Application\Topic\Threaded;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicThreadedDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.
@@ -29,7 +38,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	 */
 	public function exists()
 	{
-		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
+		$this->page = Page::factory("{$this->input->getCmd('view')}/default");
 
 		return (bool) $this->page->getPath();
 	}
@@ -47,7 +56,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	protected function before()
 	{
 		$layout = $this->input->getWord('layout');
-		KunenaUserHelper::getMyself()->setTopicLayout($layout);
+		Helper::getMyself()->setTopicLayout($layout);
 
 		parent::before();
 	}

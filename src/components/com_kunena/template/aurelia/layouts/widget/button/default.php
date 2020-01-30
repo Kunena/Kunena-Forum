@@ -8,11 +8,15 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use function defined;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
@@ -29,7 +33,7 @@ $success = !empty($this->success) ? ' btn-outline-success' : '';
 $primary = !empty($this->primary) ? ' btn-outline-primary' : '';
 $normal  = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-outline-primary border';
 $icon    = $this->icon;
-$ktemplate     = KunenaFactory::getTemplate();
+$ktemplate     = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $topicicontype = $ktemplate->params->get('topicicontype');
 ?>
 

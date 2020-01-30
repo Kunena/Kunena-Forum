@@ -9,20 +9,29 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Request;
+
 defined('_JEXEC') or die();
 
+use InvalidArgumentException;
+use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use function defined;
+
 /**
- * Implements Kunena Request class.
+ * implements \Kunena Request class.
  *
  * This class is part of Kunena HMVC implementation, allowing calls to
  * any display controller in the component.
  *
  * <code>
  *    // Executes the controller and sets the layout for the view.
- *    echo KunenaRequest::factory('User/Login')->execute()->set('layout', 'form');
+ *    echo \Kunena\Forum\Libraries\Request\Request::factory('User/Login')->execute()->set('layout', 'form');
  *
  *    // If there are no parameters for the view, this shorthand works also.
- *    echo KunenaRequest::factory('User/Registration');
+ *    echo \Kunena\Forum\Libraries\Request\Request::factory('User/Registration');
  * </code>
  *
  * Individual controller classes are located in /components/com_kunena/controller
@@ -31,20 +40,20 @@ defined('_JEXEC') or die();
  * @see     KunenaLayout
  * @since   Kunena 6.0
  */
-class KunenaRequest
+class Request
 {
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string              $path     Controller path.
-	 * @param   Joomla\Input\Input  $input    input
-	 * @param   mixed               $options  options
+	 * @param   string  $path     Controller path.
+	 * @param   Input   $input    input
+	 * @param   mixed   $options  options
 	 *
-	 * @return  KunenaControllerBase|KunenaControllerDisplay
+	 * @return  KunenaControllerBase| KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function factory($path, Joomla\Input\Input $input = null, $options = null)
+	public static function factory($path, Input $input = null, $options = null)
 	{
 		// Normalize input.
 		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));

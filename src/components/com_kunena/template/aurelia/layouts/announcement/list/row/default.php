@@ -8,11 +8,15 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use function defined;
 
 $row          = $this->row;
 $announcement = $this->announcement;
@@ -62,7 +66,7 @@ $announcement = $this->announcement;
 	<?php endif; ?>
 
 	<td>
-		<?php if (KunenaConfig::getInstance()->username)
+		<?php if (\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->username)
 			:
 			?>
 			<?php echo $announcement->getAuthor()->username; ?>

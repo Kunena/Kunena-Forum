@@ -16,16 +16,16 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
-use KunenaFactory;
-use KunenaForumCategory;
-use KunenaForumCategoryHelper;
-use KunenaRoute;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
  * Kunena Category Controller
@@ -142,7 +142,7 @@ class CategoryController extends FormController
 	public function cancel($key = null, $urlVar = null)
 	{
 		$post_catid = $this->app->input->post->get('catid', '', 'raw');
-		$category   = KunenaForumCategoryHelper::get($post_catid);
+		$category   = Helper::get($post_catid);
 		$category->checkin();
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -205,7 +205,7 @@ class CategoryController extends FormController
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name)
 	{
-		while (KunenaForumCategoryHelper::getAlias($category_id, $alias))
+		while (Helper::getAlias($category_id, $alias))
 		{
 			$name  = StringHelper::increment($name);
 			$alias = StringHelper::increment($alias, 'dash');
@@ -217,7 +217,7 @@ class CategoryController extends FormController
 	/**
 	 * Internal method to save category
 	 *
-	 * @return  KunenaForumCategory|void
+	 * @return Category|void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
@@ -227,7 +227,7 @@ class CategoryController extends FormController
 	protected function _save()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
-		$me = KunenaUserHelper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		if ($this->app->isClient('site'))
 		{
@@ -258,8 +258,8 @@ class CategoryController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
-		$parent   = KunenaForumCategoryHelper::get(intval($post ['parent_id']));
+		$category = Helper::get(intval($post ['catid']));
+		$parent   = Helper::get(intval($post ['parent_id']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{

@@ -9,6 +9,16 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Collection;
+
+use ArrayAccess;
+use ArrayIterator;
+use Closure;
+use Countable;
+use IteratorAggregate;
+use function defined;
+
 defined('_JEXEC') or die();
 
 /**
@@ -16,7 +26,7 @@ defined('_JEXEC') or die();
  *
  * @since   Kunena 6.0
  */
-class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
+class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
 	/**
 	 * The items in the collection.
@@ -79,7 +89,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return  KunenaCollection
+	 * @return  Collection
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -93,7 +103,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return  KunenaCollection
+	 * @return  Collection
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -109,7 +119,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @param   Closure  $callback  callback
 	 *
-	 * @return  KunenaCollection
+	 * @return  Collection
 	 *
 	 * @since   Kunena 6.0
 	 */

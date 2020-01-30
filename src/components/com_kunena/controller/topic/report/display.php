@@ -9,16 +9,26 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Report;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicReportDisplay
+ * Class ComponentTopicControllerReportDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -27,13 +37,13 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	protected $name = 'Topic/Report';
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     KunenaForumMessage|null
+	 * @var     Message|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
@@ -60,28 +70,28 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
-		$me = KunenaUserHelper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		if (!$this->config->reportmsg)
 		{
 			// Deny access if report feature has been disabled.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (!$me->exists())
 		{
 			// Deny access if user is guest.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		if (!$mesid)
 		{
-			$this->topic = KunenaForumTopicHelper::get($id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
 			$this->topic->tryAuthorise();
 		}
 		else
 		{
-			$this->message = KunenaForumMessageHelper::get($mesid);
+			$this->message = Helper::get($mesid);
 			$this->message->tryAuthorise();
 			$this->topic = $this->message->getTopic();
 		}

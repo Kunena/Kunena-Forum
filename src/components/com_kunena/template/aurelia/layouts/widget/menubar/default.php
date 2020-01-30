@@ -8,8 +8,13 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
+use function defined;
+
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border"
@@ -23,7 +28,7 @@ defined('_JEXEC') or die;
 	</div>
 	<button class="navbar-toggler float-right" aria-expanded="false" aria-controls="knav-usercollapse"
 			aria-label="Toggle navigation" type="button" data-target=".knav-usercollapse" data-toggle="collapse">
-		<?php echo KunenaIcons::user(); ?>
+		<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
 	</button>
 	<div class="knav-usercollapse navbar-collapse collapse">
 		<?php echo $this->subRequest('Widget/Login'); ?>

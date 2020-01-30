@@ -9,20 +9,27 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Message\Thankyou;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use function defined;
 
 /**
  * Kunena Forum Message Thank You Helper Class
  *
  * @since 2.0
  */
-abstract class KunenaForumMessageThankyouHelper
+abstract class Helper
 {
 	/**
-	 * @var     KunenaForumMessageThankyou[]
+	 * @var     Thankyou[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
@@ -43,7 +50,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumMessageThankyou|void
+	 * @return  Helper|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -51,7 +58,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 */
 	public static function get($identifier, $reload = false)
 	{
-		if ($identifier instanceof KunenaForumMessageThankyou)
+		if ($identifier instanceof Helper)
 		{
 			return $identifier;
 		}
@@ -121,7 +128,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 		foreach ($ids as $id)
 		{
-			self::$_instances [$id] = new KunenaForumMessageThankyou($id);
+			self::$_instances [$id] = new Thankyou($id);
 		}
 
 		if (!empty($results))
@@ -245,7 +252,7 @@ abstract class KunenaForumMessageThankyouHelper
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = Factory::getDBO();
-		$categories = KunenaForumCategoryHelper::getCategories();
+		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
@@ -296,7 +303,7 @@ abstract class KunenaForumMessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories();
+		$categories = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('m.catid, m.thread, m.id')
@@ -404,7 +411,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 *
 	 * @param   bool|array|int  $ids  ids
 	 *
-	 * @return  KunenaForumMessageThankyou[]
+	 * @return  Thankyou[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -422,7 +429,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 			foreach ($ids as $id)
 			{
-				if ($id instanceof KunenaForumMessage)
+				if ($id instanceof Message)
 				{
 					$id = $id->id;
 				}

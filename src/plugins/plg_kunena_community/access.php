@@ -9,11 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+
+use Kunena\Forum\Libraries\Tree\Tree;
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaAccessCommunity
@@ -206,7 +218,7 @@ class KunenaAccessCommunity
 				KunenaError::displayDatabaseError($e);
 			}
 
-			$this->tree = new KunenaTree($this->categories);
+			$this->tree = new Tree($this->categories);
 
 			if ($this->groups !== false)
 			{
@@ -234,7 +246,7 @@ class KunenaAccessCommunity
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('g.memberid AS user_id, c.id AS category_id, ' . KunenaForum::ADMINISTRATOR . ' AS role')
+		$query->select('g.memberid AS user_id, c.id AS category_id, ' . Forum::ADMINISTRATOR . ' AS role')
 			->from($db->quoteName('#__kunena_categories', 'c'))
 			->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype=\'jomsocial\' AND c.access = g.groupid')
 			->where('c.published = 1')
@@ -257,7 +269,7 @@ class KunenaAccessCommunity
 	/**
 	 * Authorise list of categories.
 	 *
-	 * Function accepts array of id indexed KunenaForumCategory objects and removes unauthorised
+	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes unauthorised
 	 * categories from the list.
 	 *
 	 * Results for the current user are saved into session.

@@ -9,14 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Announcement;
+
 defined('_JEXEC') or die;
+
+use Exception;
+use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * KunenaLayoutAnnouncementItem
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementItem extends KunenaLayout
+class KunenaLayoutAnnouncementItem extends Layout
 {
 	/**
 	 * @var     array
@@ -25,7 +35,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	public $buttons;
 
 	/**
-	 * @var     KunenaForumAnnouncement
+	 * @var     Announcement
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;
@@ -56,7 +66,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 
 		if ($this->buttons)
 		{
-			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
+			$this->buttons['cpanel'] = $this->getButton(Helper::getUri('list'), 'list', 'announcement', 'communication');
 		}
 
 		return $this->buttons;
@@ -72,7 +82,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @param   int     $id      Id of the button.
 	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -81,7 +91,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
-		return KunenaLayout::factory('Widget/Announcement/Button')
+		return Layout::factory('Widget/Announcement/Button')
 			->setProperties(['url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal]);
 	}
 }

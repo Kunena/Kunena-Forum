@@ -12,7 +12,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Pagination\PaginationObject;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
  * Class KunenaAdminTemplate
@@ -25,6 +27,7 @@ class KunenaAdminTemplate
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function initialize()
 	{
@@ -54,7 +57,7 @@ class KunenaAdminTemplate
 		}
 
 		$array   = [];
-		$array[] = KPATH_ADMIN. '/tmpl/' . $path;
+		$array[] = KPATH_ADMIN . '/tmpl/' . $path;
 
 		return $array;
 	}
@@ -62,13 +65,13 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The current pagination object
+	 * @param   PaginationObject  $item  The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *
 	 * @since   3.0
 	 */
-	public function paginationItem(Joomla\CMS\Pagination\PaginationObject $item)
+	public function paginationItem(PaginationObject $item)
 	{
 		// Special cases for "Start", "Prev", "Next", "End".
 		switch ($item->text)

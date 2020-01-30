@@ -9,20 +9,26 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Announcement;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutAnnouncementEdit
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementEdit extends KunenaLayout
+class KunenaLayoutAnnouncementEdit extends Layout
 {
 	/**
-	 * @var     KunenaForumAnnouncement
+	 * @var     Announcement
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;

@@ -8,19 +8,33 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
 
+namespace Kunena\Forum\Site\Controller\Topic\KunenaList;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Html\Parser;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicListDisplay
+ * Class ComponentTopicControllerListDisplay
  *
  * @since   Kunena 4.0
  */
-abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
+abstract class ComponentTopicControllerListDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -35,13 +49,13 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	public $me;
 
 	/**
-	 * @var     array|KunenaForumTopic[]
+	 * @var     array|Topic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
-	 * @var     KunenaPagination
+	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -79,17 +93,17 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		// Prefetch all users/avatars to avoid user by user queries during template iterations.
 		if (!empty($userIds))
 		{
-			KunenaUserHelper::loadUsers($userIds);
+			\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
 		}
 
 		$topicIds = array_keys($this->topics);
-		KunenaForumTopicHelper::getUserTopics($topicIds);
+		\Kunena\Forum\Libraries\Forum\Topic\Helper::getUserTopics($topicIds);
 
-		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics);
+		$mesIds += \Kunena\Forum\Libraries\Forum\Topic\Helper::fetchNewStatus($this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...
-		if ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
+		if ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
 		{
 			$mesIds += $lastIds;
 		}
@@ -97,10 +111,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		// Load position information for all selected messages.
 		if ($mesIds)
 		{
-			KunenaForumMessageHelper::loadLocation($mesIds);
+			Helper::loadLocation($mesIds);
 		}
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
 		$cache   = Factory::getCache('com_kunena', 'output');
 
 		/*
@@ -115,12 +129,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'list');
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
-		KunenaHtmlParser::prepareContent($content, 'topic_list_default');
+		PluginHelper::importPlugin('kunena');
+		Parser::prepareContent($content, 'topic_list_default');
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
 	}
 

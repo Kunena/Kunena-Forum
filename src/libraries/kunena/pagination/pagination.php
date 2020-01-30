@@ -10,12 +10,19 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Pagination;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Pagination\PaginationObject;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use stdClass;
+use function defined;
 
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
@@ -24,7 +31,7 @@ use Joomla\CMS\Router\Route;
  * @subpackage  Pagination
  * @since       1.5
  */
-class KunenaPagination
+class Pagination
 {
 	/**
 	 * @var    integer  The record number to start displaying from.
@@ -87,7 +94,7 @@ class KunenaPagination
 	public $stickyStop = null;
 
 	/**
-	 * @var     Joomla\CMS\Uri\Uri
+	 * @var     Uri
 	 * @since   Kunena 6.0
 	 */
 	public $uri = null;
@@ -192,7 +199,7 @@ class KunenaPagination
 	 * @param   int  $start      How many items to display from the beginning (1 2 ...)
 	 * @param   int  $end        How many items to display from the end (... 49 50)
 	 *
-	 * @return  KunenaPagination  Method supports chaining.
+	 * @return  Pagination  Method supports chaining.
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -236,13 +243,13 @@ class KunenaPagination
 	/**
 	 * Set URI for pagination.
 	 *
-	 * @param   Joomla\CMS\Uri\Uri  $uri  Joomla\CMS\Uri\Uri object.
+	 * @param   Uri  $uri  Joomla\CMS\Uri\Uri object.
 	 *
-	 * @return  KunenaPagination  Method supports chaining.
+	 * @return  Pagination  Method supports chaining.
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function setUri(Joomla\CMS\Uri\Uri $uri)
+	public function setUri(Uri $uri)
 	{
 		$this->uri = clone $uri;
 
@@ -337,7 +344,7 @@ class KunenaPagination
 
 		if (!$this->uri)
 		{
-			$this->uri = KunenaRoute::$current;
+			$this->uri = \Kunena\Forum\Libraries\Route\KunenaRoute::$current;
 		}
 
 		// Build the additional URL parameters string.
@@ -348,7 +355,7 @@ class KunenaPagination
 
 		$limitstartKey = $this->prefix . 'limitstart';
 
-		$data->all = new Joomla\CMS\Pagination\PaginationObject(Text::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
+		$data->all = new PaginationObject(Text::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
 
 		if (!$this->viewall)
 		{
@@ -358,8 +365,8 @@ class KunenaPagination
 		}
 
 		// Set the start and previous data objects.
-		$data->start    = new Joomla\CMS\Pagination\PaginationObject(Text::_('JLIB_HTML_START'), $this->prefix);
-		$data->previous = new Joomla\CMS\Pagination\PaginationObject(Text::_('JPREV'), $this->prefix);
+		$data->start    = new PaginationObject(Text::_('JLIB_HTML_START'), $this->prefix);
+		$data->previous = new PaginationObject(Text::_('JPREV'), $this->prefix);
 
 		if ($this->pagesCurrent > 1)
 		{
@@ -375,8 +382,8 @@ class KunenaPagination
 		}
 
 		// Set the next and end data objects.
-		$data->next = new Joomla\CMS\Pagination\PaginationObject(Text::_('JNEXT'), $this->prefix);
-		$data->end  = new Joomla\CMS\Pagination\PaginationObject(Text::_('JLIB_HTML_END'), $this->prefix);
+		$data->next = new PaginationObject(Text::_('JNEXT'), $this->prefix);
+		$data->end  = new PaginationObject(Text::_('JLIB_HTML_END'), $this->prefix);
 
 		if ($this->pagesCurrent < $this->pagesTotal)
 		{
@@ -403,7 +410,7 @@ class KunenaPagination
 		{
 			$offset = ($i - 1) * $this->limit;
 
-			$data->pages[$i] = new Joomla\CMS\Pagination\PaginationObject($i, $this->prefix);
+			$data->pages[$i] = new PaginationObject($i, $this->prefix);
 
 			if ($i != $this->pagesCurrent || $this->viewall)
 			{
@@ -463,7 +470,7 @@ class KunenaPagination
 	 *
 	 * @since   1.5
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function getListFooter()
 	{
@@ -490,7 +497,7 @@ class KunenaPagination
 	 *
 	 * @since   1.5
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function getLimitBox($all = false)
 	{
@@ -568,7 +575,7 @@ class KunenaPagination
 	 *
 	 * @since   1.5
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function getPagesLinks()
 	{
@@ -666,11 +673,11 @@ class KunenaPagination
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function setChrome()
 	{
-		$template                 = KunenaFactory::getTemplate();
+		$template                 = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 		$this->itemActiveChrome   = [$template, 'getPaginationItemActive'];
 		$this->itemInactiveChrome = [$template, 'getPaginationItemInactive'];
 		$this->listChrome         = [$template, 'getPaginationListRender'];
@@ -784,15 +791,15 @@ class KunenaPagination
 	/**
 	 * Method to create an active pagination link to the item
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The object with which to make an active link.
+	 * @param   PaginationObject  $item  The object with which to make an active link.
 	 *
 	 * @return  string  HTML link
 	 *
 	 * @since   1.5
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
-	protected function _item_active(Joomla\CMS\Pagination\PaginationObject $item)
+	protected function _item_active(PaginationObject $item)
 	{
 		$app = Factory::getApplication();
 
@@ -818,15 +825,15 @@ class KunenaPagination
 	/**
 	 * Method to create an inactive pagination string
 	 *
-	 * @param   Joomla\CMS\Pagination\PaginationObject  $item  The item to be processed
+	 * @param   PaginationObject  $item  The item to be processed
 	 *
 	 * @return  string
 	 *
 	 * @since   1.5
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
-	protected function _item_inactive(Joomla\CMS\Pagination\PaginationObject $item)
+	protected function _item_inactive(PaginationObject $item)
 	{
 		$app = Factory::getApplication();
 

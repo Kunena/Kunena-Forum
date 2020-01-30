@@ -8,16 +8,15 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
+**/
 
-/** @var KunenaForumCategory $section */
-/** @var KunenaForumCategory $category */
-/** @var KunenaForumCategory $subcategory */
+namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use function defined;
 
 if ($this->config->enableforumjump)
 {
@@ -44,7 +43,7 @@ if ($config->get('displayModule'))
 
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
-	$Itemid = KunenaRoute::getCategoryItemid($section);
+	$Itemid = \Kunena\Forum\Libraries\Route\KunenaRoute::getCategoryItemid($section);
 
 	if ($config->get('displayModule'))
 	{
@@ -55,25 +54,25 @@ foreach ($this->sections as $section) :
 			<?php if (count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
 					<a class="btn btn-outline-primary btn-sm"
-					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::pencil(); ?></a>
 				<?php endif; ?>
 				<button class="btn btn-outline-primary btn-sm" type="button"
 				        data-toggle="collapse"
 				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
-				        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
+				        aria-controls="section<?php echo $section->id; ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></button>
 			<?php endif; ?>
 		</h2>
 
 		<h1 class="card-header">
-			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false); ?>
 			<small class="hidden-xs-down nowrap">
-				<?php echo KunenaForumCategory::getInstance()->totalCount($section->getTopics()); ?>
+				<?php echo \Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->totalCount($section->getTopics()); ?>
 			</small>
 		</h1>
 
 		<div class="<?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show shadow-lg rounded"
 		     id="section<?php echo $section->id; ?>">
-			<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
+			<table class="table<?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>
 					<thead>
 					<tr>
@@ -116,27 +115,27 @@ foreach ($this->sections as $section) :
 							<td colspan="6">
 								<div>
 									<h3>
-										<?php echo $this->getCategoryLink($category, $category->name, null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
+										<?php echo $this->getCategoryLink($category, $category->name, null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false); ?>
 										<small class="nowrap">
-											<span id="kcatcount"><?php echo KunenaForumCategory::getInstance()->totalCount($category->getTopics()); ?></span>
+											<span id="kcatcount"><?php echo \Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->totalCount($category->getTopics()); ?></span>
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
 													<sup class="knewchar"> (<?php echo $new . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
 														)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-													<span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-															title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
+													<span <?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(true); ?>
+															title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::lock(); ?></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-													<span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-															title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
+													<span <?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(true); ?>
+															title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo \Kunena\Forum\Libraries\Icons\Icons::shield(); ?></span>
 												<?php endif; ?>
 
-												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
+												<?php if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->enablerss) : ?>
 													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>"
 													   rel="alternate" type="application/rss+xml">
-														 <?php echo KunenaIcons::rss(); ?>
+														 <?php echo \Kunena\Forum\Libraries\Icons\Icons::rss(); ?>
 													</a>
 												<?php endif; ?>
 											</span>
@@ -156,13 +155,13 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php $totaltopics = KunenaForumCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
+													<?php $totaltopics = \Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->totalCount($subcategory->getTopics()); ?>
 
-													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
-														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
+													<?php if (\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->showchildcaticon) : ?>
+														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
 															. $totaltopics . ')</small>';
 													else : ?>
-														<?php echo $this->getCategoryLink($subcategory, '', null, KunenaTemplate::getInstance()->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
+														<?php echo $this->getCategoryLink($subcategory, '', null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
 															. $totaltopics . ')</small>';
 													endif;
 
@@ -176,7 +175,7 @@ foreach ($this->sections as $section) :
 
 											<?php if (!empty($this->more[$category->id])) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($category, Text::_('COM_KUNENA_SEE_MORE'), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
+													<?php echo $this->getCategoryLink($category, Text::_('COM_KUNENA_SEE_MORE'), null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false); ?>
 													<small class="hidden-xs-down muted">
 														(<?php echo Text::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>
 														)
@@ -188,7 +187,7 @@ foreach ($this->sections as $section) :
 									</div>
 								<?php endif; ?>
 
-								<?php if ($category->getmoderators() && KunenaConfig::getInstance()->listcat_show_moderators) : ?>
+								<?php if ($category->getmoderators() && \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->listcat_show_moderators) : ?>
 									<br/>
 									<div class="moderators">
 										<?php
@@ -196,7 +195,7 @@ foreach ($this->sections as $section) :
 										$modslist = [];
 										foreach ($category->getmoderators() as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '', null, KunenaTemplate::getInstance()->tooltips());
+											$modslist[] = \Kunena\Forum\Libraries\Factory\KunenaFactory::getUser($moderator)->getLink(null, null, '', null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips());
 										}
 
 										echo Text::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
@@ -207,7 +206,7 @@ foreach ($this->sections as $section) :
 								<?php if (!empty($this->pending[$category->id])) : ?>
 									<div class="alert alert-warning" role="alert" style="margin-top:10px;">
 										<a class="alert-link"
-										   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
+										   href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
 										   title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
 										   rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
 									</div>
@@ -219,7 +218,7 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time = $last->getLastPostTime();
-								$this->ktemplate = KunenaFactory::getTemplate();
+								$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 								?>
 
@@ -227,15 +226,15 @@ foreach ($this->sections as $section) :
 									<div class="row">
 										<?php if ($avatar) : ?>
 										<div class="col-xs-6 col-md-3" id="kcat-avatar">
-											<?php echo $author->getLink($avatar, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
+											<?php echo $author->getLink($avatar, null, '', '', \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), $category->id, \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->avataredit); ?>
 										</div>
 										<div class="col-xs-6 col-md-9" id="kcat-last">
 											<?php else : ?>
 											<div class="col-md-12" id="kcat-last">
 												<?php endif; ?>
-												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, KunenaTemplate::getInstance()->tooltips(), 30, false, true) ?></span>
+												<span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), 30, false, true) ?></span>
 												<br>
-												<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips(), $category->id)); ?></span>
+												<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>
 												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>

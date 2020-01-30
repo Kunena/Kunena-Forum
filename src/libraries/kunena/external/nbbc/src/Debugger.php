@@ -13,7 +13,7 @@ namespace Nbbc;
 //
 //  This file is part of NBBC, the New BBCode Parser.
 //
-//  NBBC implements a fully-validating, high-speed, extensible parser for the
+//  NBBC implements \a fully-validating, high-speed, extensible parser for the
 //  BBCode document language.  Its output is XHTML 1.0 Strict conformant no
 //  matter what its input is.  NBBC supports the full standard BBCode language,
 //  as well as comments, columns, enhanced quotes, spoilers, acronyms, wiki

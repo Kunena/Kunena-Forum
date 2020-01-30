@@ -8,6 +8,9 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
+use Kunena\Forum\Libraries\Installer;
+
 defined('_JEXEC') or die();
 
 /**
@@ -53,7 +56,7 @@ class KunenaMigratorJoomlaboard
 	{
 		foreach ($this->versions as $version)
 		{
-			if (KunenaInstaller::getTableColumn($version['table'], $version['column']))
+			if (Installer::getTableColumn($version['table'], $version['column']))
 			{
 				return $version->version;
 			}

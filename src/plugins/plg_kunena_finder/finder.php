@@ -3,10 +3,17 @@
  * @copyright      Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
+
+namespace Kunena\Forum\Plugin\Kunena\Finder;
+
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use function defined;
 
 /**
  * Finder Kunena Plugin
@@ -15,7 +22,7 @@ use Joomla\CMS\Log\Log;
  * @subpackage     Kunena.finder
  * @since          2.5
  */
-class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaFinder extends CMSPlugin
 {
 	/**
 	 * Finder after save message method
@@ -41,7 +48,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Log::add('onKunenaAfterSave table: ' . $table_content, Log::INFO);
 		Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
 		Factory::getApplication()->triggerEvent('onFinderAfterSave', [$context, $table, $isNew]);
@@ -70,7 +77,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		Log::add('onKunenaBeforeSave table: ' . $table_content, Log::INFO);
 		Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
 		Factory::getApplication()->triggerEvent('onFinderBeforeSave', [$context, $table, $isNew]);
@@ -96,7 +103,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		Log::add('onKunenaAfterDelete table: ' . $table_content, Log::INFO);
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		Factory::getApplication()->triggerEvent('onFinderAfterDelete', [$context, $table]);
@@ -122,7 +129,7 @@ class plgKunenaFinder extends Joomla\CMS\Plugin\CMSPlugin
 		ob_end_clean();
 		Log::add('onKunenaBeforeDelete table: ' . $table_content, Log::INFO);
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('finder');
+		PluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
 		Factory::getApplication()->triggerEvent('onFinderBeforeDelete', [$context, $table]);

@@ -9,21 +9,27 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\Edit\User;
+
+defined('_JEXEC') or die();
+
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use StdClass;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserEditUserDisplay
+ * Class ComponentUserControllerEditUserDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaControllerUserEditDisplay
+class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -32,13 +38,13 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	protected $name = 'User/Edit/User';
 
 	/**
-	 * @var
+	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $changeUsername;
 
 	/**
-	 * @var
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $frontendForm;
@@ -90,7 +96,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

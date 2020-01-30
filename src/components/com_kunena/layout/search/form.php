@@ -9,17 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Search;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutSearchForm
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutSearchForm extends KunenaLayout
+class KunenaLayoutSearchForm extends Layout
 {
 	/**
 	 * @var     object

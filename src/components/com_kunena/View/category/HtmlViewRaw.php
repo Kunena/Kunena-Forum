@@ -12,13 +12,14 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\View\View;
 
 /**
  * Category View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewCategory extends KunenaView
+class KunenaViewCategory extends View
 {
 	/**
 	 * @param   null  $tpl  tpl

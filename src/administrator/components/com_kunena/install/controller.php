@@ -11,11 +11,14 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
  * The Kunena Installer Controller
@@ -37,7 +40,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	protected $steps = null;
 
 	/**
-	 * @var     boolean|Joomla\CMS\MVC\Model\BaseDatabaseModel|null
+	 * @var     boolean|BaseDatabaseModel|null
 	 * @since   Kunena 6.0
 	 */
 	protected $model = null;
@@ -286,7 +289,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 
 		if (class_exists('KunenaForum') && !KunenaForum::isDev())
 		{
-			$installer = new Joomla\CMS\Installer\Installer;
+			$installer = new Installer;
 			$component = ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 

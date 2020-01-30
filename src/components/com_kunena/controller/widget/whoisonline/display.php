@@ -9,12 +9,20 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Widget\Whoisonline;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerStatisticsWhoisonlineDisplay
+ * Class ComponentStatisticsControllerWhoisonlineDisplay
  *
  * @since   Kunena 4.0
  */
@@ -39,25 +47,25 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->config = KunenaConfig::getInstance();
+		$this->config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 
 		if (!$this->config->get('showwhoisonline'))
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		$me        = KunenaUserHelper::getMyself();
+		$me        = Helper::getMyself();
 		$moderator = intval($me->isModerator()) + intval($me->isAdmin());
 
-		$users = KunenaUserHelper::getOnlineUsers();
-		KunenaUserHelper::loadUsers(array_keys($users));
-		$onlineusers = KunenaUserHelper::getOnlineCount();
+		$users = Helper::getOnlineUsers();
+		Helper::loadUsers(array_keys($users));
+		$onlineusers = Helper::getOnlineCount();
 
 		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
@@ -90,7 +98,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 
 		foreach ($users as $userid => $usertime)
 		{
-			$user = KunenaUserHelper::get($userid);
+			$user = Helper::get($userid);
 
 			if (!$user->showOnline)
 			{
@@ -119,7 +127,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

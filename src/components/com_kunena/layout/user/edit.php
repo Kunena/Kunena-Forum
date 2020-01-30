@@ -9,17 +9,29 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\User;
+
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use stdClass;
+use function defined;
 
 /**
  * KunenaLayoutUserItem
  *
  * @since   Kunena 5.1
  */
-class KunenaLayoutUserEdit extends KunenaLayout
+class KunenaLayoutUserEdit extends Layout
 {
 	/**
 	 * @var     KunenaUser
@@ -38,7 +50,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 	 */
 	public function getTabsEdit()
 	{
-		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
+		$myProfile = $this->profile->isMyself() || Helper::getMyself()->isAdmin() || Helper::getMyself()->isModerator();
 
 		// Define all tabs.
 		$tabs = [];
@@ -63,7 +75,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 
 		if ($myProfile)
 		{
-			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
+			if (config::getInstance()->allowavatarupload || Config::getInstance()->allowavatargallery)
 			{
 				$tab            = new stdClass;
 				$tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
@@ -82,9 +94,9 @@ class KunenaLayoutUserEdit extends KunenaLayout
 			$tabs['settings'] = $tab;
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
-		$plugins = Factory::getApplication()->triggerEvent('onKunenaUserTabsEdit', [$tabs]);
+		$plugins = Factory::getApplication()->triggerEvent('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', [$tabs]);
 
 		$tabs = $tabs + $plugins;
 

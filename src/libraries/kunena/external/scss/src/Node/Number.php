@@ -28,7 +28,7 @@ use Leafo\ScssPhp\Type;
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
-class Number extends Node implements ArrayAccess
+class Number extends Node implements \ArrayAccess
 {
 	/**
 	 * @var integer

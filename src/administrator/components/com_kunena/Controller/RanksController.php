@@ -212,7 +212,7 @@ class RanksController extends FormController
 		$file = $this->app->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\UploadHelper::upload()
-		$upload = KunenaForumCategoryHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');
+		$upload = Helper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');
 
 		if ($upload)
 		{

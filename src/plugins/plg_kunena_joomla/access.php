@@ -9,20 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Joomla;
+
 defined('_JEXEC') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\User\User;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Forum;
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
+use StdClass;
+use function defined;
 
 /**
  * Kunena Access Control for Joomla 2.5+
  *
  * @since   Kunena 6.0
  */
-class KunenaAccessJoomla
+class AccessJoomla
 {
 	/**
 	 * @var     null
@@ -37,7 +47,7 @@ class KunenaAccessJoomla
 	protected $params = null;
 
 	/**
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -65,13 +75,13 @@ class KunenaAccessJoomla
 	/**
 	 * Get access groups for the selected category.
 	 *
-	 * @param   KunenaForumCategory  $category  Category
+	 * @param   Category  $category  Category
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getCategoryAccess(KunenaForumCategory $category)
+	public function getCategoryAccess(Category $category)
 	{
 		$list = [];
 
@@ -271,7 +281,7 @@ class KunenaAccessJoomla
 			$item              = new StdClass;
 			$item->user_id     = (int) $userid;
 			$item->category_id = 0;
-			$item->role        = KunenaForum::ADMINISTRATOR;
+			$item->role        = Forum::ADMINISTRATOR;
 			$list[]            = $item;
 		}
 
@@ -279,8 +289,8 @@ class KunenaAccessJoomla
 	}
 
 	/**
-	 * @param   string  $action action
-	 * @param   null    $asset  asset
+	 * @param   string  $action  action
+	 * @param   null    $asset   asset
 	 *
 	 * @return  array
 	 * @since   Kunena 6.0
@@ -297,7 +307,7 @@ class KunenaAccessJoomla
 		}
 
 		// Get all asset rules
-		$rules = Joomla\CMS\Access\Access::getAssetRules($asset, true);
+		$rules = Access::getAssetRules($asset, true);
 		$data  = $rules->getData();
 
 		// Get all action rules for the asset
@@ -399,17 +409,17 @@ class KunenaAccessJoomla
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   KunenaForumCategory  $category  category
-	 * @param   int                  $userid    userid
+	 * @param   Category  $category  category
+	 * @param   int       $userid    userid
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getAuthoriseActions(KunenaForumCategory $category, $userid)
+	public function getAuthoriseActions(Category $category, $userid)
 	{
 		$category->params = new Registry($category->params);
-		$groups           = (array) Joomla\CMS\Access\Access::getGroupsByUser($userid, true);
+		$groups           = (array) Access::getGroupsByUser($userid, true);
 		$post             = array_intersect($groups, (array) $category->params->get('access_post', [2, 6, 8]));
 		$reply            = array_intersect($groups, (array) $category->params->get('access_reply', [2, 6, 8]));
 
@@ -421,8 +431,8 @@ class KunenaAccessJoomla
 	/**
 	 * Authorise list of categories.
 	 *
-	 * Function accepts array of id indexed KunenaForumCategory objects and removes unauthorised
-	 * categories from the list.
+	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes
+	 * unauthorised categories from the list.
 	 *
 	 * Results for the current user are saved into session.
 	 *
@@ -438,14 +448,14 @@ class KunenaAccessJoomla
 		$user = Factory::getUser($userid);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof Joomla\CMS\User\User))
+		if (!($user instanceof User))
 		{
-			$user = Joomla\CMS\User\User::getInstance();
+			$user = User::getInstance();
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
-		$groups       = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
+		$groups_r     = (array) Access::getGroupsByUser($user->id, true);
+		$groups       = (array) Access::getGroupsByUser($user->id, false);
 
 		$catlist = [];
 

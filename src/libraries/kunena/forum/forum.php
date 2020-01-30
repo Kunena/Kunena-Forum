@@ -9,10 +9,20 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum;
+
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Site\View\Common\HtmlView;
+use Joomla\Registry\Registry;
+use stdClass;
+use function defined;
 
 /**
  * class KunenaForum
@@ -24,7 +34,7 @@ use Joomla\CMS\Log\Log;
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaForum
+abstract class Forum
 {
 	/**
 	 * @return  void
@@ -114,16 +124,16 @@ abstract class KunenaForum
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *    if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *    if (class_exists('KunenaForum') && \Kunena\Forum\Libraries\Forum\Forum::enabled() && \Kunena\Forum\Libraries\Forum\Forum::isCompatible('2.0.0')) {
 	 *        // Initialize the framework (new in 2.0.0)
-	 *        KunenaForum::setup();
+	 *        \Kunena\Forum\Libraries\Forum\Forum::setup();
 	 *        // It's now safe to display something or to save Kunena objects
 	 * }
 	 * </code>
 	 *
-	 * @see     KunenaForum::installed()
-	 * @see     KunenaForum::isCompatible()
-	 * @see     KunenaForum::setup()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::isCompatible()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::setup()
 	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
@@ -131,11 +141,11 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function enabled($checkAdmin = true)
 	{
-		if (!Joomla\CMS\Component\ComponentHelper::isEnabled('com_kunena'))
+		if (!ComponentHelper::isEnabled('com_kunena'))
 		{
 			return false;
 		}
@@ -143,7 +153,7 @@ abstract class KunenaForum
 		$config = KunenaFactory::getConfig();
 
 		return !$config->board_offline
-			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
+			|| ($checkAdmin && self::installed() && Helper::getMyself()->isAdmin());
 	}
 
 	/**
@@ -157,16 +167,17 @@ abstract class KunenaForum
 	 *
 	 * <code>
 	 *    // Check if Kunena Forum has been installed and compatible with your code
-	 *    if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
+	 *    if (class_exists('KunenaForum') && \Kunena\Forum\Libraries\Forum\Forum::installed() &&
+	 * \Kunena\Forum\Libraries\Forum\Forum::isCompatible('2.0.0')) {
 	 *        // Initialize the framework (new in 2.0.0)
-	 *        KunenaForum::setup();
+	 *        \Kunena\Forum\Libraries\Forum\Forum::setup();
 	 *        // Start using the framework
 	 *    }
 	 * </code>
 	 *
-	 * @see     KunenaForum::enabled()
-	 * @see     KunenaForum::isCompatible()
-	 * @see     KunenaForum::setup()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::enabled()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::isCompatible()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::setup()
 	 *
 	 * @return  boolean True if Kunena has been fully installed.
 	 *
@@ -212,14 +223,14 @@ abstract class KunenaForum
 	 * <code>
 	 *    // We have already checked that Kunena 2.0+ has been installed and is online
 	 *
-	 *    if (KunenaForum::isCompatible('2.0.0')) {
-	 *        KunenaForum::setup();
+	 *    if (\Kunena\Forum\Libraries\Forum\Forum::isCompatible('2.0.0')) {
+	 *        \Kunena\Forum\Libraries\Forum\Forum::setup();
 	 *    } else {
-	 *        KunenaFactory::loadLanguage();
+	 *        \Kunena\Forum\Libraries\Factory\KunenaFactory::loadLanguage();
 	 *    }
 	 * </code>
 	 *
-	 * @see   KunenaForum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
@@ -227,7 +238,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function setup()
 	{
@@ -263,14 +274,14 @@ abstract class KunenaForum
 	 * you may want to use.
 	 *
 	 * <code>
-	 *    if (KunenaForum::isCompatible('2.0.1')) {
+	 *    if (\Kunena\Forum\Libraries\Forum\Forum::isCompatible('2.0.1')) {
 	 *        // We can do it in the new way
 	 *    } else {
 	 *        // Use the old code instead
 	 *    }
 	 * </code>
 	 *
-	 * @see     KunenaForum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\Forum::installed()
 	 *
 	 * @param   string  $version  Minimum required version.
 	 *
@@ -431,16 +442,16 @@ abstract class KunenaForum
 	 *
 	 * </code>
 	 *
-	 * @param   string                          $viewName  Name of the view.
-	 * @param   string                          $layout    Name of the layout.
-	 * @param   null|string                     $template  Name of the template file.
-	 * @param   array|Joomla\Registry\Registry  $params    Extra parameters to control the model.
+	 * @param   string          $viewName  Name of the view.
+	 * @param   string          $layout    Name of the layout.
+	 * @param   null|string     $template  Name of the template file.
+	 * @param   array|Registry  $params    Extra parameters to control the model.
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = [])
 	{
@@ -487,9 +498,9 @@ abstract class KunenaForum
 
 		$view = new $view(['base_path' => KPATH_SITE]);
 
-		if (!($params instanceof Joomla\Registry\Registry))
+		if (!($params instanceof Registry))
 		{
-			$params = new Joomla\Registry\Registry($params);
+			$params = new Registry($params);
 		}
 
 		$params->set('layout', $layout);
@@ -507,7 +518,7 @@ abstract class KunenaForum
 
 		if ($viewName != 'common')
 		{
-			$view->common           = new KunenaViewCommon(['base_path' => KPATH_SITE]);
+			$view->common           = new HtmlView(['base_path' => KPATH_SITE]);
 			$view->common->embedded = true;
 		}
 

@@ -206,7 +206,7 @@ class lessc
 	 *
 	 * @return  array|bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function tryImport($importPath, $parentBlock, $out)
 	{
@@ -294,7 +294,7 @@ class lessc
 	 * @param $importDir
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileImportedProps($props, $block, $out, $sourceParser, $importDir)
 	{
@@ -338,7 +338,7 @@ class lessc
 	 * @param $block
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileBlock($block)
 	{
@@ -372,7 +372,7 @@ class lessc
 	 * @param $block
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileCSSBlock($block)
 	{
@@ -393,7 +393,7 @@ class lessc
 	 * @param $media
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileMedia($media)
 	{
@@ -449,7 +449,7 @@ class lessc
 	 * @param $selectors
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileNestedBlock($block, $selectors)
 	{
@@ -467,7 +467,7 @@ class lessc
 	 * @param $root
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileRoot($root)
 	{
@@ -482,7 +482,7 @@ class lessc
 	 * @param $out
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileProps($block, $out)
 	{
@@ -547,7 +547,7 @@ class lessc
 	 *
 	 * @return  string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileMediaQuery($queries)
 	{
@@ -736,7 +736,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileSelectors($selectors)
 	{
@@ -777,7 +777,7 @@ class lessc
 	 *
 	 * @return bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function patternMatch($block, $orderedArgs, $keywordArgs)
 	{
@@ -894,7 +894,7 @@ class lessc
 	 *
 	 * @return  array|null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function patternMatchAll($blocks, $orderedArgs, $keywordArgs, $skip = [])
 	{
@@ -927,7 +927,7 @@ class lessc
 	 *
 	 * @return  array|null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function findBlocks($searchIn, $path, $orderedArgs, $keywordArgs, $seen = [])
 	{
@@ -996,7 +996,7 @@ class lessc
 	 * @param $keywordValues
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function zipSetArgs($args, $orderedValues, $keywordValues)
 	{
@@ -1060,7 +1060,7 @@ class lessc
 	 * @param $out
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileProp($prop, $block, $out)
 	{
@@ -1250,7 +1250,7 @@ class lessc
 	 *
 	 * @return  string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileValue($value)
 	{
@@ -1335,7 +1335,7 @@ class lessc
 	 *
 	 * @return  float|int
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_pow($args)
 	{
@@ -1358,7 +1358,7 @@ class lessc
 	 *
 	 * @return int
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_mod($args)
 	{
@@ -1372,7 +1372,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_tan($num)
 	{
@@ -1384,7 +1384,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_sin($num)
 	{
@@ -1396,7 +1396,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_cos($num)
 	{
@@ -1408,7 +1408,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_atan($num)
 	{
@@ -1422,7 +1422,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_asin($num)
 	{
@@ -1436,7 +1436,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_acos($num)
 	{
@@ -1450,7 +1450,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_sqrt($num)
 	{
@@ -1462,7 +1462,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_extract($value)
 	{
@@ -1569,7 +1569,7 @@ class lessc
 	 *
 	 * @return  string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_rgbahex($color)
 	{
@@ -1590,7 +1590,7 @@ class lessc
 	 *
 	 * @return  string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_argb($color)
 	{
@@ -1604,7 +1604,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_e($arg)
 	{
@@ -1634,7 +1634,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib__sprintf($args)
 	{
@@ -1678,7 +1678,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_floor($arg)
 	{
@@ -1692,7 +1692,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_ceil($arg)
 	{
@@ -1706,7 +1706,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_round($arg)
 	{
@@ -1720,7 +1720,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_unit($arg)
 	{
@@ -1745,7 +1745,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function colorArgs($args)
 	{
@@ -1766,7 +1766,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_darken($args)
 	{
@@ -1783,7 +1783,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_lighten($args)
 	{
@@ -1800,7 +1800,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_saturate($args)
 	{
@@ -1817,7 +1817,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_desaturate($args)
 	{
@@ -1834,7 +1834,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_spin($args)
 	{
@@ -1853,7 +1853,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_fadeout($args)
 	{
@@ -1868,7 +1868,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_fadein($args)
 	{
@@ -1883,7 +1883,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_hue($color)
 	{
@@ -1897,7 +1897,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_saturation($color)
 	{
@@ -1911,7 +1911,7 @@ class lessc
 	 *
 	 * @return  float
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_lightness($color)
 	{
@@ -1943,7 +1943,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_fade($args)
 	{
@@ -1958,7 +1958,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_percentage($arg)
 	{
@@ -1975,7 +1975,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_mix($args)
 	{
@@ -2025,7 +2025,7 @@ class lessc
 	 *
 	 * @return  array|null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function lib_contrast($args)
 	{
@@ -2055,7 +2055,7 @@ class lessc
 	 *
 	 * @return  array|null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function assertColor($value, $error = "expected color value")
 	{
@@ -2075,7 +2075,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function assertNumber($value, $error = "expecting number")
 	{
@@ -2094,7 +2094,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function assertArgs($value, $expectedArgs, $name = "")
 	{
@@ -2296,7 +2296,7 @@ class lessc
 	 *
 	 * @return  array|bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function funcToColor($func)
 	{
@@ -2397,7 +2397,7 @@ class lessc
 	 *
 	 * @return  array|bool|null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function reduce($value, $forExpression = false)
 	{
@@ -2668,7 +2668,7 @@ class lessc
 	 *
 	 * @return  array|string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function evaluate($exp)
 	{
@@ -2797,7 +2797,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function op_number_color($op, $lft, $rgt)
 	{
@@ -2814,7 +2814,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function op_color_number($op, $lft, $rgt)
 	{
@@ -2834,7 +2834,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function op_color_color($op, $left, $right)
 	{
@@ -2876,7 +2876,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function lib_red($color)
 	{
@@ -2895,7 +2895,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function lib_green($color)
 	{
@@ -2914,7 +2914,7 @@ class lessc
 	 *
 	 * @return  mixed
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function lib_blue($color)
 	{
@@ -2937,7 +2937,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function op_number_number($op, $left, $right)
 	{
@@ -3084,7 +3084,7 @@ class lessc
 	 * @param $args
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function injectVariables($args)
 	{
@@ -3132,7 +3132,7 @@ class lessc
 	 *
 	 * @return  string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function compile($string, $name = null)
 	{
@@ -3169,7 +3169,7 @@ class lessc
 	 *
 	 * @return int|string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function compileFile($fname, $outFname = null)
 	{
@@ -3207,7 +3207,7 @@ class lessc
 	 *
 	 * @return bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function checkedCompile($in, $out)
 	{
@@ -3242,7 +3242,7 @@ class lessc
 	 *
 	 * @return  array lessphp cache structure
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function cachedCompile($in, $force = false)
 	{
@@ -3311,7 +3311,7 @@ class lessc
 	 *
 	 * @return int|string
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function parse($str = null, $initialVariables = null)
 	{
@@ -3485,7 +3485,7 @@ class lessc
 	 * @param   null  $msg
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function throwError($msg = null)
 	{
@@ -3505,7 +3505,7 @@ class lessc
 	 *
 	 * @return bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function ccompile($in, $out, $less = null)
 	{
@@ -3524,7 +3524,7 @@ class lessc
 	 *
 	 * @return  array
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function cexecute($in, $force = false, $less = null)
 	{
@@ -3837,7 +3837,7 @@ class lessc_parser
 	 *
 	 * @return  null
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function parse($buffer)
 	{
@@ -3909,7 +3909,7 @@ class lessc_parser
 	 *
 	 * @return bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function parseChunk()
 	{
@@ -4802,7 +4802,7 @@ class lessc_parser
 	 *
 	 * @return bool
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function argumentDef(&$args, &$isVararg)
 	{
@@ -5603,7 +5603,7 @@ class lessc_parser
 	 * @param   null    $count
 	 *
 	 * @since LESSC
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function throwError($msg = "parse error", $count = null)
 	{

@@ -11,7 +11,7 @@ namespace Nbbc;
 //
 //  This file is part of NBBC, the New BBCode Parser.
 //
-//  NBBC implements a fully-validating, high-speed, extensible parser for the
+//  NBBC implements \a fully-validating, high-speed, extensible parser for the
 //  BBCode document language.  Its output is XHTML 1.0 Strict conformant no
 //  matter what its input is.  NBBC supports the full standard BBCode language,
 //  as well as comments, columns, enhanced quotes, spoilers, acronyms, wiki
@@ -50,7 +50,7 @@ namespace Nbbc;
 /**
  * A parser that converts BBCode formatted strings into HTML.
  *
- * This file implements the New BBCode parser.  Usage is simple: Just create
+ * This file implements \the New BBCode parser.  Usage is simple: Just create
  * a BBCode object, and then call $bbcode->Parse() with a string containing
  * BBCode, and it returns HTML.
  *

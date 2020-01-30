@@ -9,23 +9,34 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Category\Index;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\Registry\Registry;
-use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Registry\Registry;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
+class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -34,7 +45,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	protected $name = 'Category/Index';
 
 	/**
-	 * @var     KunenaUser
+	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
@@ -71,13 +82,13 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->me        = KunenaUserHelper::getMyself();
+		$this->me        = \Kunena\Forum\Libraries\User\Helper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Get sections to display.
@@ -87,13 +98,13 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$defaultmenu = $this->input->getInt('defaultmenu');
 		$layout      = $this->input->getInt('layout');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
 			$controller = BaseController::getInstance("kunena");
 
-			if (KunenaConfig::getInstance()->index_id)
+			if ($this->config->index_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->index_id;
+				$itemidfix = $this->config->index_id;
 			}
 			else
 			{
@@ -101,11 +112,11 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 				if ($view == 'home')
 				{
-					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
+					$getid = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
 				}
 				else
 				{
-					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+					$getid = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
 				}
 
 				$itemidfix = $getid->id;
@@ -120,22 +131,22 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			{
 				if ($defaultmenu)
 				{
-					$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemidfix}", false));
+					$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemidfix}", false));
 				}
 				else
 				{
-					$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
+					$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
 				}
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();
 		}
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
 
 		/*
 		$cache   = Factory::getCache('com_kunena', 'output');
@@ -152,11 +163,11 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		if ($catid)
 		{
-			$sections = KunenaForumCategoryHelper::getCategories($catid);
+			$sections = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories($catid);
 		}
 		else
 		{
-			$sections = KunenaForumCategoryHelper::getChildren();
+			$sections = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren();
 		}
 
 		$sectionIds = [];
@@ -204,7 +215,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		$this->sections = $sections;
-		$categories     = KunenaForumCategoryHelper::getChildren($sectionIds);
+		$categories     = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
@@ -280,7 +291,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$subcategories = KunenaForumCategoryHelper::getChildren($categoryIds);
+		$subcategories = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($categoryIds);
 
 		foreach ($subcategories as $category)
 		{
@@ -305,7 +316,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
+		$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -314,8 +325,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
-		KunenaUserHelper::loadUsers($userIds);
-		KunenaForumMessageHelper::getMessages($postIds);
+		\Kunena\Forum\Libraries\User\Helper::loadUsers($userIds);
+		Helper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		$this->pending = [];
@@ -323,10 +334,10 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		if ($this->me->exists() && !$this->me->isBanned())
 		{
 			// Load new topic counts.
-			KunenaForumCategoryHelper::getNewTopics(array_keys($categories + $subcategories));
+			\Kunena\Forum\Libraries\Forum\Category\Helper::getNewTopics(array_keys($categories + $subcategories));
 
 			// Get categories which are moderated by current user.
-			$access   = KunenaAccess::getInstance();
+			$access   = Access::getInstance();
 			$moderate = $access->getAdminStatus($this->me) + $access->getModeratorStatus($this->me);
 
 			if (!empty($moderate[0]))
@@ -375,13 +386,13 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 				else
 				{
-					$topic_ordering = KunenaConfig::getInstance()->default_sort == 'asc' ? false : true;
+					$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
 				}
 
 				// Fix last post position when user can see unapproved or deleted posts.
 				if (!$topic_ordering)
 				{
-					KunenaForumMessageHelper::loadLocation($postIds);
+					Helper::loadLocation($postIds);
 				}
 			}
 		}
@@ -406,7 +417,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 		}
 
-		KunenaHtmlParser::prepareContent($content, 'index_top');
+		Parser::prepareContent($content, 'index_top');
 	}
 
 	/**
@@ -416,7 +427,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -425,9 +436,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
-		if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
 		{
-			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
+			$image = Uri::base() . $this->config->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -496,7 +507,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . KunenaConfig::getInstance()->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 

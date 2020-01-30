@@ -9,6 +9,17 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Tables;
+
+use Exception;
+use InvalidArgumentException;
+use Joomla\CMS\Table\Table;
+use Kunena\Forum\Libraries\Error;
+use RuntimeException;
+use UnexpectedValueException;
+use function defined;
+
 defined('_JEXEC') or die();
 
 /**
@@ -16,7 +27,7 @@ defined('_JEXEC') or die();
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaTable extends Joomla\CMS\Table\Table
+abstract class KunenaTable extends Table
 {
 	/**
 	 * @var     boolean
@@ -120,7 +131,7 @@ abstract class KunenaTable extends Joomla\CMS\Table\Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			KunenaError::displayDatabaseError($e);
+			Error::displayDatabaseError($e);
 
 			return false;
 		}

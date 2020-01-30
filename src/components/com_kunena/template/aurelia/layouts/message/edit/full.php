@@ -8,15 +8,19 @@
  * @copyright   Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use function defined;
 
 $message  = $this->message;
-$template = KunenaTemplate::getInstance();
+$template = \Kunena\Forum\Libraries\Template\Template::getInstance();
 
 if (!$message->isAuthorised('reply'))
 {
@@ -26,8 +30,8 @@ if (!$message->isAuthorised('reply'))
 $author   = isset($this->author) ? $this->author : $message->getAuthor();
 $topic    = isset($this->topic) ? $this->topic : $message->getTopic();
 $category = isset($this->category) ? $this->category : $message->getCategory();
-$config   = isset($this->config) ? $this->config : KunenaFactory::getConfig();
-$me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$config   = isset($this->config) ? $this->config : \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
+$me       = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addStyleSheet('jquery.atwho.css');
@@ -38,16 +42,16 @@ $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/edit.js');
 
-if (KunenaFactory::getTemplate()->params->get('formRecover'))
+if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('sisyphus.js');
 }
 
-$template = KunenaTemplate::getInstance();
+$template = \Kunena\Forum\Libraries\Template\Template::getInstance();
 $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
 
-if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
+if ($me->canDoCaptcha() && \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->quickreply)
 {
 	$this->captchaDisplay = $template->recaptcha($message->id);
 	$this->captchaEnabled = true;
@@ -56,7 +60,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 
 <div class="kreply col-md-12 card" id="kreply<?php echo $message->displayField('id'); ?>_form"
      style="display: inline-block;">
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
+	<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
 	      enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 		<input type="hidden" name="task" value="post"/>
 		<input type="hidden" name="parentid" value="<?php echo $topic->last_post_id; ?>"/>
@@ -72,7 +76,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 			:
 			?>
 			<input type="hidden" id="kurl_users" name="kurl_users"
-			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+			       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -169,7 +173,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 					</div>
 				</div>
 			<?php endif; ?>
-			<a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
+			<a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . \Kunena\Forum\Libraries\Route\KunenaRoute::getItemID()) ?>"
 			   role="button" class="btn btn-outline-primary border btn-small btn-link float-right"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 			<br/>
@@ -192,7 +196,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 			       aria-hidden="true"/>
 		</div>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
+		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>"/>
 	</form>
 </div>

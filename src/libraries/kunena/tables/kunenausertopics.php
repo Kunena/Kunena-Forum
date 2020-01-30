@@ -9,10 +9,15 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Tables;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use RuntimeException;
+use function defined;
 
 require_once __DIR__ . '/kunena.php';
 
@@ -22,7 +27,7 @@ require_once __DIR__ . '/kunena.php';
  *
  * @since   Kunena 6.0
  */
-class TableKunenaUserTopics extends KunenaTable
+class KunenaUserTopics extends KunenaTable
 {
 	/**
 	 * @var     null
@@ -93,12 +98,12 @@ class TableKunenaUserTopics extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function check()
 	{
-		$user  = KunenaUserHelper::get($this->user_id);
-		$topic = KunenaForumTopicHelper::get($this->topic_id);
+		$user  = \Kunena\Forum\Libraries\User\Helper::get($this->user_id);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->topic_id);
 
 		if (!$user->exists())
 		{

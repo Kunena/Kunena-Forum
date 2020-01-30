@@ -9,14 +9,21 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+
 defined('_JEXEC') or die();
+
+use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Libraries\Forum\Forum;
+use function defined;
 
 /**
  * Class plgKunenaGravatar
  *
  * @since   Kunena 6.0
  */
-class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
+class plgKunenaGravatar extends CMSPlugin
 {
 	/**
 	 * plgKunenaGravatar constructor.
@@ -29,7 +36,7 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && Forum::isCompatible('4.0') && Forum::installed()))
 		{
 			return;
 		}
@@ -40,7 +47,7 @@ class plgKunenaGravatar extends Joomla\CMS\Plugin\CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  KunenaAvatar|void
+	 * @return KunenaAvatarGravatar|void
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -9,33 +9,39 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Topic;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutTopicModerate
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicModerate extends KunenaLayout
+class KunenaLayoutTopicModerate extends Layout
 {
 	/**
-	 * @var     KunenaForumMessage
+	 * @var     \Kunena\Forum\Libraries\Forum\Message\Message
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     \Kunena\Forum\Libraries\Forum\Topic\Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     \Kunena\Forum\Libraries\Forum\Category\Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -47,7 +53,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function getTopicOptions()
@@ -71,7 +77,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
 			'where'   => " AND tt.id != {$db->quote($this->topic->id)} "];
-		list($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
+		list($total, $topics) = Helper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
 		{

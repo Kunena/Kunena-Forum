@@ -9,17 +9,21 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Template;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use function defined;
 
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
  *
  * @since   Kunena 6.0
  */
-class KunenaTemplateLegacy
+class Legacy
 {
 	/**
 	 * @return  void
@@ -114,15 +118,15 @@ define('KUNENA_PATH_UPLOADED_LEGACY', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED
 /**
  *
  */
-define('KUNENA_VERSION', KunenaForum::version());
+define('KUNENA_VERSION', \Kunena\Forum\Libraries\Forum\Forum::version());
 /**
  *
  */
-define('KUNENA_VERSION_DATE', KunenaForum::versionDate());
+define('KUNENA_VERSION_DATE', \Kunena\Forum\Libraries\Forum\Forum::versionDate());
 /**
  *
  */
-define('KUNENA_VERSION_NAME', KunenaForum::versionName());
+define('KUNENA_VERSION_NAME', \Kunena\Forum\Libraries\Forum\Forum::versionName());
 /**
  *
  */
@@ -164,7 +168,7 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
 /**
  *
  */
-define('KUNENA_RELTMPLTPATH', KunenaFactory::getTemplate()->name);
+define('KUNENA_RELTMPLTPATH', \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->name);
 /**
  *
  */

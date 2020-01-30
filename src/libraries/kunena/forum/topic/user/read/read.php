@@ -9,14 +9,22 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Topic\User\Read;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\Tables\KunenaTable;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class KunenaForumTopicUserRead
+ * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
  *
  * @since   Kunena
  * @property int $topic_id
@@ -25,7 +33,7 @@ use Joomla\Database\DatabaseDriver;
  * @property int $time
  * @property int $user_id
  */
-class KunenaForumTopicUserRead extends CMSObject
+class Read extends CMSObject
 {
 	/**
 	 * @var     boolean
@@ -51,7 +59,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 */
 	public function __construct($topic = null, $user = null)
 	{
-		$topic = KunenaForumTopicHelper::get($topic);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topic);
 
 		// Always fill empty data
 		$this->_db = Factory::getDBO();
@@ -64,7 +72,7 @@ class KunenaForumTopicUserRead extends CMSObject
 		$this->_exists     = false;
 		$this->topic_id    = $topic->exists() ? $topic->id : null;
 		$this->category_id = $topic->exists() ? $topic->category_id : null;
-		$this->user_id     = KunenaUserHelper::get($user)->userid;
+		$this->user_id     = \Kunena\Forum\Libraries\User\Helper::get($user)->userid;
 	}
 
 	/**
@@ -73,11 +81,11 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   string  $type    Topics table name to be used.
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
-	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaUserRead
+	 * @return  boolean|Table|KunenaTable|KunenaUser
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'KunenaUserRead', $prefix = 'Table')
+	public function getTable($type = '\Kunena\Forum\Libraries\User\KunenaUserRead', $prefix = 'Table')
 	{
 		static $tabletype = null;
 
@@ -89,7 +97,7 @@ class KunenaForumTopicUserRead extends CMSObject
 		}
 
 		// Create the user table object
-		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -97,7 +105,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 * @param   mixed  $user    user
 	 * @param   bool   $reload  reload
 	 *
-	 * @return  KunenaForumTopicUserRead
+	 * @return  Read
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -105,11 +113,11 @@ class KunenaForumTopicUserRead extends CMSObject
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false)
 	{
-		return KunenaForumTopicUserReadHelper::get($id, $user, $reload);
+		return Helper::get($id, $user, $reload);
 	}
 
 	/**
-	 * @return  KunenaForumTopicUserRead
+	 * @return  Read
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -117,7 +125,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	 */
 	public function getTopic()
 	{
-		return KunenaForumTopicUserReadHelper::get($this->topic_id);
+		return Helper::get($this->topic_id);
 	}
 
 	/**
@@ -148,7 +156,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	}
 
 	/**
-	 * Method to load a KunenaForumTopicUserRead object by id.
+	 * Method to load a \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object by id.
 	 *
 	 * @param   int    $topic_id  Topic id to be loaded.
 	 * @param   mixed  $user      user
@@ -171,7 +179,7 @@ class KunenaForumTopicUserRead extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = KunenaUserHelper::get($user);
+		$user = \Kunena\Forum\Libraries\User\Helper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();
@@ -193,7 +201,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	}
 
 	/**
-	 * Method to save the KunenaForumTopicUserRead object to the database.
+	 * Method to save the \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object to the database.
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new entry.
 	 *
@@ -233,7 +241,7 @@ class KunenaForumTopicUserRead extends CMSObject
 			$this->setError($table->getError());
 		}
 
-		// Fill up KunenaForumTopicUserRead object in case we created a new topic.
+		// Fill up \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object in case we created a new topic.
 		if ($result && $isnew)
 		{
 			$this->load();
@@ -243,7 +251,7 @@ class KunenaForumTopicUserRead extends CMSObject
 	}
 
 	/**
-	 * Method to delete the KunenaForumTopicUserRead object from the database.
+	 * Method to delete the \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read object from the database.
 	 *
 	 * @return  boolean  True on success.
 	 *

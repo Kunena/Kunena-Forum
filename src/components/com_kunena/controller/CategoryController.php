@@ -16,14 +16,13 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Administrator\Controller\CategoriesController;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Utilities\ArrayHelper;
-use KunenaFactory;
-use KunenaForumCategoryHelper;
-use KunenaForumCategoryUserHelper;
-use KunenaRoute;
-use KunenaUserHelper;
+use function defined;
 
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
@@ -32,7 +31,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
  *
  * @since   Kunena 2.0
  */
-class CategoryController extends FormController
+class CategoryController extends CategoriesController
 {
 	/**
 	 * @param   array  $config  config
@@ -62,11 +61,11 @@ class CategoryController extends FormController
 
 		if (!$catid)
 		{
-			$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
+			$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
 		}
 		else
 		{
-			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
+			$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
 		}
 	}
 
@@ -109,7 +108,7 @@ class CategoryController extends FormController
 		else
 		{
 			// One category
-			$category = KunenaForumCategoryHelper::get($catid);
+			$category = Helper::get($catid);
 
 			if (!$category->isAuthorised('read'))
 			{
@@ -132,7 +131,7 @@ class CategoryController extends FormController
 				}
 
 				// Mark all unread topics in selected categories as read.
-				KunenaForumCategoryUserHelper::markRead(array_keys($categories));
+				\Kunena\Forum\Libraries\Forum\Category\User\Helper::markRead(array_keys($categories));
 
 				if (count($categories) > 1)
 				{
@@ -166,7 +165,7 @@ class CategoryController extends FormController
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get($this->app->input->getInt('catid', 0));
+		$category = Helper::get($this->app->input->getInt('catid', 0));
 
 		if (!$category->isAuthorised('read'))
 		{
@@ -207,7 +206,7 @@ class CategoryController extends FormController
 			return;
 		}
 
-		$me = KunenaUserHelper::getMyself();
+		$me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		$userid = $this->app->input->getInt('userid');
 
@@ -217,7 +216,7 @@ class CategoryController extends FormController
 			: array_keys($this->app->input->get('categories', [], 'post'));
 		$catids = ArrayHelper::toInteger($catids);
 
-		$categories = KunenaForumCategoryHelper::getCategories($catids);
+		$categories = Helper::getCategories($catids);
 
 		foreach ($categories as $category)
 		{

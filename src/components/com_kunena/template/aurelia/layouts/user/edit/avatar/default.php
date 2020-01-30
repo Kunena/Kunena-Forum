@@ -8,12 +8,16 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use function defined;
 
 Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
@@ -28,9 +32,9 @@ $this->addScript('jquery.fileupload-image.js');
 $this->addScript('upload.avatar.js');
 $this->addStyleSheet('fileupload.css');
 
-$this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
+$this->addScriptOptions('com_kunena.avatar_remove_url', \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.avatar_preload_url', \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.avatar_delete', \Kunena\Forum\Libraries\Icons\Icons::delete());
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -51,7 +55,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 			</td>
 			<td>
 					<span class="btn btn-outline-primary fileinput-button">
-						<?php echo KunenaIcons::plus(); ?>
+						<?php echo \Kunena\Forum\Libraries\Icons\Icons::plus(); ?>
 						<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_AVATAR_BUTTON') ?></span>
 						<!-- The file input field used as target for the file upload widget -->
 						<input id="fileupload" type="file" name="file" multiple>
@@ -79,7 +83,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 			<td class="col-md-3">
 				<label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
-				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+				       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 			</td>
 			<td>
 

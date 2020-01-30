@@ -832,7 +832,7 @@ class Parser
 	 *
 	 * @return \Leafo\ScssPhp\Block
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function popBlock()
 	{

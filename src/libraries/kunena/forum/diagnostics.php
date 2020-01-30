@@ -9,18 +9,22 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\Database\QueryInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\QueryInterface;
+use function defined;
 
 /**
  * Class KunenaForumDiagnostics
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaForumDiagnostics
+abstract class Diagnostics
 {
 	/**
 	 * @return  array
@@ -70,7 +74,7 @@ abstract class KunenaForumDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function count($function)
 	{
@@ -90,7 +94,7 @@ abstract class KunenaForumDiagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				KunenaError::displayDatabaseError($e);
+				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -104,7 +108,7 @@ abstract class KunenaForumDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function getItems($function)
 	{
@@ -130,7 +134,7 @@ abstract class KunenaForumDiagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				KunenaError::displayDatabaseError($e);
+				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -144,7 +148,7 @@ abstract class KunenaForumDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function fix($function)
 	{
@@ -162,7 +166,7 @@ abstract class KunenaForumDiagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				KunenaError::displayDatabaseError($e);
+				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -216,7 +220,7 @@ abstract class KunenaForumDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function delete($function)
 	{
@@ -234,7 +238,7 @@ abstract class KunenaForumDiagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				KunenaError::displayDatabaseError($e);
+				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -390,7 +394,7 @@ abstract class KunenaForumDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected static function notice_categoryWrongAlias()
 	{
@@ -405,7 +409,7 @@ abstract class KunenaForumDiagnostics
 
 		$list = (array) $db->loadObjectList();
 
-		$ids = new stdClass;
+		$ids = new \stdClass;
 
 		foreach ($list as $item)
 		{

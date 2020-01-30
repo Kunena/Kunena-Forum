@@ -131,7 +131,7 @@ class Base64VLQEncoder
 	 * @param   string  $aValue  The value to encode
 	 *
 	 * @return  string The encoded value
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function encode($aValue)
 	{
@@ -161,7 +161,7 @@ class Base64VLQEncoder
 	 * @param   string  $encoded  The encoded value to decode
 	 *
 	 * @return integer The decoded value
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function decode($encoded)
 	{
@@ -199,7 +199,7 @@ class Base64VLQEncoder
 	 *
 	 * @return  string
 	 *
-	 * @throws  Exception If the number is invalid
+	 * @throws  \Exception If the number is invalid
 	 */
 	public function base64Encode($number)
 	{
@@ -218,7 +218,7 @@ class Base64VLQEncoder
 	 *
 	 * @return integer
 	 *
-	 * @throws  Exception If the number is invalid
+	 * @throws  \Exception If the number is invalid
 	 */
 	public function base64Decode($char)
 	{

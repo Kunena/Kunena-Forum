@@ -9,18 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
-use Joomla\CMS\Session\Session;
+namespace Kunena\Forum\Site\Controller\Category\Index\Actions;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerCategoryIndexActionsDisplay
+ * Class ComponentCategoryControllerIndexActionsDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControllerDisplay
+class ComponentCategoryControllerIndexActionsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -29,7 +41,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	protected $name = 'Category/Index/Actions';
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -55,9 +67,9 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 		parent::before();
 
 		$catid = $this->input->getInt('id');
-		$me    = KunenaUserHelper::getMyself();
+		$me    = Helper::getMyself();
 
-		$this->category = KunenaForumCategory::getInstance($catid);
+		$this->category = Category::getInstance($catid);
 
 		$token = Session::getFormToken();
 
@@ -116,7 +128,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 * @param   string  $type   Type of the button.
 	 * @param   bool    $id     Id of the button.
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -125,7 +137,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{
-		return KunenaLayout::factory('Widget/Button')
+		return Layout::factory('Widget/Button')
 			->setProperties(['url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id]);
 	}
 }

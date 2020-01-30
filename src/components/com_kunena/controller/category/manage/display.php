@@ -9,20 +9,34 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Category\Manage;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Template\Template;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDisplay
+class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -37,7 +51,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	public $headerText;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     Category
 	 * @since   Kunena 5.1
 	 */
 	public $category;
@@ -55,7 +69,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	public $topics;
 
 	/**
-	 * @var     KunenaPagination
+	 * @var     Pagination
 	 * @since   Kunena 5.1
 	 */
 	public $pagination;
@@ -75,7 +89,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	/**
 	 * Prepare category display.
 	 *
-	 * @return  KunenaExceptionAuthorise|void
+	 * @return  Authorise|void
 	 *
 	 * @since   Kunena 5.1
 	 *
@@ -83,11 +97,11 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 	 */
 	protected function before()
 	{
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		if (!$this->me->isAdmin())
 		{
-			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		parent::before();
@@ -100,7 +114,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$this->category = KunenaForumCategoryHelper::get($catid);
+		$this->category = Helper::get($catid);
 		$this->category->tryAuthorise();
 
 		$category = $this->category;
@@ -168,8 +182,8 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 		$cat_params = ['sections' => 1, 'catid' => 0];
 
 		$lists                     = [];
-		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
-		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
+		$lists ['accesstypes']     = Access::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists']     = Access::getInstance()->getAccessOptions($category);
 		$lists ['categories']      = HTMLHelper::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox form-control"', 'value', 'text', $category->parent_id);
 		$lists ['channels']        = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
@@ -203,7 +217,7 @@ class ComponentKunenaControllerCategoryManageDisplay extends KunenaControllerDis
 
 		if (empty($category->iconset))
 		{
-			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
+			$value = Template::getInstance()->params->get('DefaultIconset');
 		}
 		else
 		{

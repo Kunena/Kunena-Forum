@@ -9,18 +9,27 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Application\Misc;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Component\ComponentHelper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -37,7 +46,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	/**
 	 * Return custom display layout.
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -106,7 +115,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		}
 
 		// Display layout with given parameters.
-		$content = KunenaLayoutPage::factory('Misc/Default')
+		$content = Page::factory('Misc/Default')
 			->set('header', $this->header)
 			->set('body', $this->body);
 
@@ -133,14 +142,14 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 
 		if (!$Itemid)
 		{
-			if (KunenaConfig::getInstance()->custom_id)
+			if ($this->config->custom_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->custom_id;
+				$itemidfix = $this->config->custom_id;
 			}
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
 				$itemidfix = $getid->id;
 			}
 
@@ -150,7 +159,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

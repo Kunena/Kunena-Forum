@@ -14,13 +14,14 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\View\View;
 
 /**
  * Users View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewUser extends KunenaView
+class KunenaViewUser extends View
 {
 	/**
 	 * @param   null  $tpl  tpl

@@ -10,6 +10,7 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_COMMUNITY_DESCRIPTION</description>
+    <namespace>Kunena\Forum\Plugin\Kunena\Community</namespace>
     <files>
         <filename plugin="community">community.php</filename>
         <filename>access.php</filename>

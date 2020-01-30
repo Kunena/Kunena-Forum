@@ -10,10 +10,14 @@
  * @link            https://www.kunena.org
  **/
 
-use Joomla\CMS\Filter\OutputFilter;
-use Joomla\CMS\HTML\HTMLHelper;
+namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use function defined;
 
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // Note. It is important to remove spaces between elements.
@@ -107,12 +111,12 @@ defined('_JEXEC') or die;
 		{
 			if ($item->level > 1)
 			{
-				require Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
+				require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 			}
 			else
 			{
 				echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
-				require Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
+				require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 				echo ' <b class="caret"></b></a>';
 			}
 		}
@@ -169,7 +173,7 @@ defined('_JEXEC') or die;
 					break;
 
 				default:
-					require Joomla\CMS\Helper\ModuleHelper::getLayoutPath('mod_menu', 'default_url');
+					require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 					break;
 			}
 		}

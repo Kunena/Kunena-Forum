@@ -9,18 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Item\Actions;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicItemActionsDisplay
+ * Class ComponentTopicControllerItemActionsDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -29,7 +41,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	protected $name = 'Topic/Item/Actions';
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -56,7 +68,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 		$id = $this->input->getInt('id');
 
-		$this->topic = KunenaForumTopic::getInstance($id);
+		$this->topic = Topic::getInstance($id);
 
 		$catid = $this->topic->category_id;
 		$token = Session::getFormToken();
@@ -75,7 +87,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		if ($this->topic->isAuthorised('reply'))
@@ -301,7 +313,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		}
 
 		// Add buttons for changing between different layout modes.
-		if (KunenaFactory::getConfig()->enable_threaded_layouts)
+		if ($this->config->enable_threaded_layouts)
 		{
 			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&{$token}=1";
 
@@ -327,7 +339,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			}
 		}
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		$this->app->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
 	}
@@ -343,7 +355,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
 	 * @param   string  $icon     icon
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -352,9 +364,9 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
-		return KunenaLayout::factory('Widget/Button')
+		return Layout::factory('Widget/Button')
 			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
-			                 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
+							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

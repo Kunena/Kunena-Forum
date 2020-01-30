@@ -9,17 +9,26 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Message;
+
 defined('_JEXEC') or die();
 
-use Joomla\Utilities\ArrayHelper;
+use Exception;
+use Joomla\CMS\Date\Date;
 use Joomla\Database\QueryInterface;
+use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class KunenaForumMessageFinder
+ * Class \Kunena\Forum\Libraries\Forum\Message\MessageFinder
  *
  * @since   Kunena 6.0
  */
-class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
+class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 {
 	/**
 	 * @var     string
@@ -50,7 +59,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		parent::__construct();
 
-		$this->limit = KunenaConfig::getInstance()->messages_per_page;
+		$this->limit = KunenaFactory::getConfig()->messages_per_page;
 	}
 
 	/**
@@ -98,7 +107,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		{
 			foreach ($categories as $category)
 			{
-				if ($category instanceof KunenaForumCategory)
+				if ($category instanceof Category)
 				{
 					$list[] = (int) $category->id;
 				}
@@ -118,14 +127,14 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Joomla\CMS\Date\Date  $starting  Starting date or null if older than ending date.
-	 * @param   Joomla\CMS\Date\Date  $ending    Ending date or null if newer than starting date.
+	 * @param   Date  $starting  Starting date or null if older than ending date.
+	 * @param   Date  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByTime(Joomla\CMS\Date\Date $starting = null, Joomla\CMS\Date\Date $ending = null)
+	public function filterByTime(Date $starting = null, Date $ending = null)
 	{
 		if ($starting && $ending)
 		{
@@ -214,7 +223,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param   string  $access  Kunena action access control check.
 	 *
-	 * @return  array|KunenaForumMessage[]
+	 * @return  array|Message[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -225,7 +234,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		$results = parent::find();
 
-		return KunenaForumMessageHelper::getMessages($results, $access);
+		return Helper::getMessages($results, $access);
 	}
 
 	/**

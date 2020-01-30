@@ -8,10 +8,14 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
@@ -22,7 +26,7 @@ use Joomla\CMS\Language\Text;
 		</div>
 		<h5>
 			<a class="btn-link"
-			   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=list'); ?>"
+			   href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=list'); ?>"
 			   title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
 				<?php echo $this->announcement->displayField('title'); ?>
 			</a>
@@ -42,7 +46,7 @@ use Joomla\CMS\Language\Text;
 			?>
 			<div>
 				<a class="btn-link"
-				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"
+				   href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"
 				   title="<?php echo $this->announcement->displayField('title') ?>">
 					<?php echo Text::_('COM_KUNENA_ANN_READMORE'); ?>
 				</a>

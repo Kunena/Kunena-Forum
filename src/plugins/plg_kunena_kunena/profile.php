@@ -9,16 +9,29 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Kunena;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use RuntimeException;
+use function defined;
 
 /**
- * Class KunenaProfileKunena
+ * Class \Kunena\Forum\Libraries\Integration\Profile
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileKunena extends KunenaProfile
+class KunenaProfile extends Profile
 {
 	/**
 	 * @var     null
@@ -81,7 +94,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
-			$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
+			$filter = Access::getUsersByGroup(8);
 			$query->andwhere('u.id NOT IN (' . implode(',', $filter) . ')');
 		}
 
@@ -152,7 +165,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 		if (!($user instanceof KunenaUser))
 		{
-			$user = KunenaUserHelper::get($user);
+			$user = Helper::get($user);
 		}
 
 		if ($user === false)

@@ -9,31 +9,39 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Announcement;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Class KunenaForumAnnouncementHelper
+ * Class AnnouncementHelper
  *
  * @since   Kunena 1.0
  */
-abstract class KunenaForumAnnouncementHelper
+abstract class Helper
 {
 	/**
-	 * @var     KunenaForumAnnouncement[]
+	 * @var     Announcement[]
 	 * @since   Kunena 6.0
 	 */
 	public static $_instances = false;
 
 	/**
-	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
+	 * Returns the global Announcement object, only creating it if it doesn't already exist.
 	 *
 	 * @param   int   $identifier  Announcement to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumAnnouncement
+	 * @return  Announcement
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -41,21 +49,21 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
-		if ($identifier instanceof KunenaForumAnnouncement)
+		if ($identifier instanceof Announcement)
 		{
 			return $identifier;
 		}
 
 		if (!is_numeric($identifier))
 		{
-			return new KunenaForumAnnouncement;
+			return new Announcement;
 		}
 
 		$id = intval($identifier);
 
 		if (empty(self::$_instances [$id]))
 		{
-			self::$_instances [$id] = new KunenaForumAnnouncement(['id' => $id]);
+			self::$_instances [$id] = new Announcement(['id' => $id]);
 			self::$_instances [$id]->load();
 		}
 		elseif ($reload)
@@ -91,13 +99,13 @@ abstract class KunenaForumAnnouncementHelper
 	 *
 	 * @param   string  $layout  layout
 	 *
-	 * @return  Joomla\CMS\Uri\Uri
+	 * @return  Uri
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getUri($layout = null)
 	{
-		$uri = new Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=announcement');
+		$uri = new Uri('index.php?option=com_kunena&view=announcement');
 
 		if ($layout)
 		{
@@ -114,7 +122,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * @param   int   $limit   limit
 	 * @param   bool  $filter  filter
 	 *
-	 * @return  KunenaForumAnnouncement[]
+	 * @return  Announcement[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -165,7 +173,7 @@ abstract class KunenaForumAnnouncementHelper
 				continue;
 			}
 
-			$instance = new KunenaForumAnnouncement($announcement);
+			$instance = new Announcement($announcement);
 			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
 			$list[]                           = $instance;

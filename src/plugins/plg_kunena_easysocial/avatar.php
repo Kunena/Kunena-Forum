@@ -9,14 +9,23 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Exception;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\KunenaFactory;
+use Kunena\Forum\Libraries\KunenaProfiler;
+use function defined;
+
 /**
- * Class KunenaAvatarEasySocial
+ * Class \Kunena\Forum\Libraries\Integration\AvatarEasySocial
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarEasySocial extends KunenaAvatar
+class AvatarEasySocial extends Avatar
 {
 	/**
 	 * @var     null
@@ -25,7 +34,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	protected $params = null;
 
 	/**
-	 * KunenaAvatarEasySocial constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
 	 *
 	 * @param   object  $params params
 	 *

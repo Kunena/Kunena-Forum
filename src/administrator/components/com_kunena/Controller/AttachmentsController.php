@@ -19,8 +19,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\MVC\Controller\FormController;
-use KunenaAttachmentHelper;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
@@ -84,7 +84,7 @@ class AttachmentsController extends FormController
 
 		foreach ($cid as $id)
 		{
-			$attachment = KunenaAttachmentHelper::get($id);
+			$attachment = Helper::get($id);
 
 			$message     = $attachment->getMessage();
 			$attachments = [$attachment->id, 1];
@@ -93,7 +93,12 @@ class AttachmentsController extends FormController
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 
-			$message->message = $attachment->removeBBCodeInMessage($message->message);
+			$message_text = $attachment->removeBBCodeInMessage($message->message);
+
+			if ($message_text !== false)
+			{
+				$message->message = $message_text;
+			}
 
 			$message->save();
 

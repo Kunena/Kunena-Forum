@@ -9,14 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+
 defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class KunenaAvatarGravatar
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarGravatar extends KunenaAvatar
+class KunenaAvatarGravatar extends Avatar
 {
 	/**
 	 * @var     null

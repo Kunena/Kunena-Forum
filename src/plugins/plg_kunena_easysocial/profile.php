@@ -9,17 +9,24 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
-use Joomla\CMS\Uri\Uri;
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\KunenaFactory;
+use function defined;
 
 /**
  * @package     Kunena
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileEasySocial extends KunenaProfile
+class KunenaProfileEasySocial extends Profile
 {
 	/**
 	 * @var     null

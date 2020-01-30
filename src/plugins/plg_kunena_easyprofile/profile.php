@@ -9,17 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Easyprofile;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class KunenaProfileEasyprofile
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileEasyprofile extends KunenaProfile
+class KunenaProfileEasyprofile extends Profile
 {
 	/**
 	 * @var     null

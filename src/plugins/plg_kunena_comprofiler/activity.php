@@ -9,9 +9,15 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Integration\Activity;
+use function defined;
 
 require_once dirname(__FILE__) . '/integration.php';
 
@@ -20,7 +26,7 @@ require_once dirname(__FILE__) . '/integration.php';
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityComprofiler extends KunenaActivity
+class KunenaActivityComprofiler extends Activity
 {
 	/**
 	 * @var     null

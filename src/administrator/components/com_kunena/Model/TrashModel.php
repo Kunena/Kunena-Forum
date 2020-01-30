@@ -19,15 +19,17 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
 use Kunena\Forum\Libraries\Forum\Message\Finder;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Model\Model;
 
 /**
  * Trash Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class TrashModel extends \KunenaModel
+class TrashModel extends Model
 {
 	/**
 	 * @inheritDoc
@@ -330,7 +332,7 @@ class TrashModel extends \KunenaModel
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
-		return \KunenaForumMessageHelper::getMessages($ids, 'none');
+		return \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids, 'none');
 	}
 
 	/**
@@ -374,7 +376,7 @@ class TrashModel extends \KunenaModel
 		}
 		elseif ($type == 'messages')
 		{
-			$items = KunenaForumCategoryHelper::getMessages($ids, 'none');
+			$items = Helper::getMessages($ids, 'none');
 		}
 
 		return $items;

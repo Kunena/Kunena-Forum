@@ -17,6 +17,9 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Exception;
+use Kunena\Forum\Libraries\Template\Helper;
+use Kunena\Forum\Libraries\Template\Template;
+use stdClass;
 
 /**
  * template Model for Kunena
@@ -41,7 +44,7 @@ class TemplateModel extends AdminModel
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
-		$xml      = \KunenaTemplate::getInstance($template)->getConfigXml();
+		$xml      = Template::getInstance($template)->getConfigXml();
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
@@ -58,18 +61,20 @@ class TemplateModel extends AdminModel
 	 * @return  boolean|stdClass
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function getTemplatedetails()
 	{
 		$app = Factory::getApplication();
 
 		$template = $app->getUserState('kunena.edit.template');
-		$details  = \KunenaTemplateHelper::parseXmlFile($template);
+		$details  = Helper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = \KunenaTemplateHelper::parseXmlFile($template);
+			$details  = Helper::parseXmlFile($template);
 		}
 
 		return $details;
@@ -77,6 +82,9 @@ class TemplateModel extends AdminModel
 
 	/**
 	 * Method to auto-populate the model state.
+	 *
+	 * @param   null  $ordering  ordering
+	 * @param   null  $direction direction
 	 *
 	 * @return  void
 	 *

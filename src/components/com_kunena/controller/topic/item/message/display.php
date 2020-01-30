@@ -9,18 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Item\Message;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicItemMessageDisplay
+ * Class ComponentTopicControllerItemMessageDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -41,13 +54,13 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 	public $message;
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -86,10 +99,10 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$mesid = $this->input->getInt('mesid', 0);
 
-		$this->me       = KunenaUserHelper::getMyself();
+		$this->me       = Helper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
 		$this->detail   = $this->input->get('detail', false);
-		$this->message  = KunenaForumMessageHelper::get($mesid);
+		$this->message  = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
 		$this->message->tryAuthorise();
 
 		$this->topic     = $this->message->getTopic();
@@ -104,9 +117,9 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$this->captchaEnabled = false;
 
-		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
+		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && $this->config->quickreply)
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaDisplay = Template::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else
@@ -143,7 +156,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 					$userids_thankyous[] = $userid;
 				}
 
-				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+				$loaded_users = Helper::loadUsers($userids_thankyous);
 
 				foreach ($loaded_users as $userid => $user)
 				{

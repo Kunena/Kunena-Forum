@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -44,7 +45,7 @@ class TrashController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -60,7 +61,7 @@ class TrashController extends FormController
 	 * @since   Kunena 2.0
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function purge()
 	{
@@ -179,7 +180,7 @@ class TrashController extends FormController
 	 * @since   Kunena 2.0
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function restore()
 	{
@@ -271,7 +272,7 @@ class TrashController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function cancel()

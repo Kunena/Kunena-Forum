@@ -9,15 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Message\Item\Actions;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -33,7 +46,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	protected $name = 'Message/Item/Actions';
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -65,9 +78,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		parent::before();
 
 		$mesid = $this->input->getInt('mesid');
-		$me    = KunenaUserHelper::getMyself();
+		$me    = Helper::getMyself();
 
-		$this->message = KunenaForumMessage::getInstance($mesid);
+		$this->message = Message::getInstance($mesid);
 		$this->topic   = $this->message->getTopic();
 
 		$id     = $this->message->thread;
@@ -219,7 +232,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
 		}
 
-		$login = KunenaLogin::getInstance();
+		$login = Login::getInstance();
 
 		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold
 			&& !$this->config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
@@ -673,7 +686,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 *
 	 * @param   string  $icon    icon
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -682,9 +695,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{
-		return KunenaLayout::factory('Widget/Button')
+		return Layout::factory('Widget/Button')
 			->setProperties(['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon]
+							 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon]
 			);
 	}
 }

@@ -14,10 +14,10 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 HTMLHelper::_('bootstrap.popover');
-
 ?>
 
 <div id="kunena" class="container-fluid">

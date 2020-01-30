@@ -15,6 +15,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+
 $document = Factory::getApplication()->getDocument();
 $document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 

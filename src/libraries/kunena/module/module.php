@@ -9,17 +9,23 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Module;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
+use stdClass;
+use function defined;
 
 /**
  * Class KunenaModule
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaModule
+abstract class Module
 {
 	/**
 	 * CSS file to be loaded.
@@ -36,18 +42,18 @@ abstract class KunenaModule
 	protected $module = null;
 
 	/**
-	 * @var     Joomla\Registry\Registry
+	 * @var     Registry
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
 
 	/**
-	 * @param   stdClass                  $module  module
-	 * @param   Joomla\Registry\Registry  $params  params
+	 * @param   stdClass  $module  module
+	 * @param   Registry  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function __construct($module, $params)
 	{
@@ -63,7 +69,7 @@ abstract class KunenaModule
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	final public function display()
 	{
@@ -92,7 +98,7 @@ abstract class KunenaModule
 		}
 
 		// Initialize Kunena.
-		KunenaForum::setup();
+		\Kunena\Forum\Libraries\Forum\Forum::setup();
 
 		// Display module.
 		$this->_display();

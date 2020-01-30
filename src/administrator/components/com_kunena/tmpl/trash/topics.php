@@ -14,6 +14,9 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 ?>
@@ -84,7 +87,7 @@ HTMLHelper::_('dropdown.init');
 							<div class="btn-group pull-right hidden-phone">
 								<label for="limit"
 								       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-								<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+								<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable"
@@ -180,7 +183,7 @@ HTMLHelper::_('dropdown.init');
 							<tfoot>
 							<tr>
 								<td colspan="8">
-									<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+									<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 								</td>
 							</tr>
 							</tfoot>

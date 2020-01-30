@@ -8,11 +8,16 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
+
+use function defined;
 
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template     = KunenaTemplate::getInstance();
+$template     = \Kunena\Forum\Libraries\Template\Template::getInstance();
 $direction    = $template->params->get('avatarPosition');
 $sideProfile  = $this->profile->getSideProfile($this);
 $quick        = $template->params->get('quick');

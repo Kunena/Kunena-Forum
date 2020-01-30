@@ -9,13 +9,29 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Route;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Cache\CacheController;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Component\ComponentHelper;
+use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\KunenaProfiler;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 KunenaRoute::initialize();
 
@@ -162,7 +178,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   bool  $object  object
 	 *
-	 * @return  boolean|Joomla\CMS\Uri\Uri|null|string
+	 * @return  boolean|Uri|null|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -193,7 +209,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   null  $uri  uri
 	 *
-	 * @return  boolean|Joomla\CMS\Uri\Uri|null
+	 * @return  boolean|Uri|null
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -268,7 +284,7 @@ abstract class KunenaRoute
 
 		if ($legacy_urls && $uri->getVar('func'))
 		{
-			$result = KunenaRouteLegacy::convert($uri);
+			$result = Legacy::convert($uri);
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			if (!$result)
@@ -285,7 +301,7 @@ abstract class KunenaRoute
 			case 'announcement':
 				if ($legacy_urls)
 				{
-					KunenaRouteLegacy::convert($uri);
+					Legacy::convert($uri);
 				}
 				break;
 
@@ -304,7 +320,7 @@ abstract class KunenaRoute
 				break;
 
 			default:
-				if (!$legacy_urls || !KunenaRouteLegacy::convert($uri))
+				if (!$legacy_urls || !Legacy::convert($uri))
 				{
 					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -318,7 +334,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Joomla\CMS\Uri\Uri  $uri  uri
+	 * @param   Uri  $uri  uri
 	 *
 	 * @return  integer
 	 *
@@ -427,11 +443,11 @@ abstract class KunenaRoute
 
 		if (self::$search === false)
 		{
-			$user         = KunenaUserHelper::getMyself();
+			$user         = Helper::getMyself();
 			$language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
 			self::$search = false;
 
-			if (KunenaConfig::getInstance()->get('cache_mid'))
+			if (Config::getInstance()->get('cache_mid'))
 			{
 				// FIXME: Experimental caching.
 				$cache        = self::getCache();
@@ -490,7 +506,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @return  Joomla\CMS\Cache\CacheController
+	 * @return  CacheController
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -575,8 +591,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item  item
-	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
+	 * @param   mixed  $item  item
+	 * @param   Uri    $uri   uri
 	 *
 	 * @return  integer
 	 *
@@ -619,8 +635,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item  item
-	 * @param   Joomla\CMS\Uri\Uri  $uri   url
+	 * @param   mixed  $item  item
+	 * @param   Uri    $uri   url
 	 *
 	 * @return  integer
 	 *
@@ -628,7 +644,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws  null
 	 */
-	protected static function checkCategory($item, Joomla\CMS\Uri\Uri $uri)
+	protected static function checkCategory($item, Uri $uri)
 	{
 		static $cache = [];
 		$catid = (int) $uri->getVar('catid');
@@ -645,8 +661,8 @@ abstract class KunenaRoute
 
 			if (!empty($item->query['catid']))
 			{
-				$cache[$item->id]                        = KunenaForumCategoryHelper::getChildren($item->query['catid']);
-				$cache[$item->id][$item->query['catid']] = KunenaForumCategoryHelper::get($item->query['catid']);
+				$cache[$item->id]                        = \Kunena\Forum\Libraries\Forum\Category\Helper::getChildren($item->query['catid']);
+				$cache[$item->id][$item->query['catid']] = \Kunena\Forum\Libraries\Forum\Category\Helper::get($item->query['catid']);
 			}
 		}
 
@@ -654,14 +670,14 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   mixed               $item  item
-	 * @param   Joomla\CMS\Uri\Uri  $uri   uri
+	 * @param   mixed  $item  item
+	 * @param   Uri    $uri   uri
 	 *
 	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected static function check($item, Joomla\CMS\Uri\Uri $uri)
+	protected static function check($item, Uri $uri)
 	{
 		$hits = 0;
 
@@ -702,7 +718,7 @@ abstract class KunenaRoute
 
 		if ($referrer)
 		{
-			$uri = new Joomla\CMS\Uri\Uri($referrer);
+			$uri = new Uri($referrer);
 
 			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
 			$uri->delVar('task');
@@ -727,7 +743,7 @@ abstract class KunenaRoute
 			}
 
 			$default = self::_($default);
-			$uri     = new Joomla\CMS\Uri\Uri($default);
+			$uri     = new Uri($default);
 		}
 
 		if ($anchor)
@@ -754,7 +770,7 @@ abstract class KunenaRoute
 	{
 		if (self::$adminApp)
 		{
-			if ($uri instanceof Joomla\CMS\Uri\Uri)
+			if ($uri instanceof Uri)
 			{
 				$uri = $uri->toString();
 			}
@@ -772,7 +788,7 @@ abstract class KunenaRoute
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof Joomla\CMS\Uri\Uri ? $uri->toString() : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof Uri ? $uri->toString() : (string) $uri);
 
 		if (!$uri || (is_string($uri) && $uri[0] == '&'))
 		{
@@ -811,10 +827,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Joomla\CMS\Uri\Uri  $uri     uri
-	 * @param   bool                $object  object
+	 * @param   Uri   $uri     uri
+	 * @param   bool  $object  object
 	 *
-	 * @return  Joomla\CMS\Uri\Uri|string
+	 * @return  Uri|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -868,13 +884,13 @@ abstract class KunenaRoute
 	 */
 	public static function cacheLoad()
 	{
-		if (!KunenaConfig::getInstance()->get('cache_url'))
+		if (!Config::getInstance()->get('cache_url'))
 		{
 			return;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user  = KunenaUserHelper::getMyself();
+		$user  = Helper::getMyself();
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
@@ -897,7 +913,7 @@ abstract class KunenaRoute
 	 */
 	public static function cacheStore()
 	{
-		if (!KunenaConfig::getInstance()->get('cache_url'))
+		if (!Config::getInstance()->get('cache_url'))
 		{
 			return;
 		}
@@ -908,7 +924,7 @@ abstract class KunenaRoute
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$user  = KunenaUserHelper::getMyself();
+		$user  = Helper::getMyself();
 		$data  = [self::$subtree, self::$uris];
 		$cache = self::getCache();
 
@@ -931,7 +947,7 @@ abstract class KunenaRoute
 
 		if (!isset(self::$filtered[$string]))
 		{
-			self::$filtered[$string] = Joomla\CMS\Application\ApplicationHelper::stringURLSafe($string);
+			self::$filtered[$string] = ApplicationHelper::stringURLSafe($string);
 
 			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
 			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
@@ -966,7 +982,7 @@ abstract class KunenaRoute
 
 		foreach ($aliases as $object)
 		{
-			if (Joomla\String\StringHelper::strtolower($alias) == Joomla\String\StringHelper::strtolower($object->alias))
+			if (StringHelper::strtolower($alias) == StringHelper::strtolower($object->alias))
 			{
 				$var         = $object->type != 'legacy' ? $object->type : 'view';
 				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
@@ -1014,7 +1030,7 @@ abstract class KunenaRoute
 		$uri = clone Uri::getInstance();
 
 		// Get current route.
-		self::$current = new Joomla\CMS\Uri\Uri('index.php');
+		self::$current = new Uri('index.php');
 
 		if ($active)
 		{
@@ -1092,7 +1108,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumCategory  $category  category
+	 * @param  Category  $category  category
 	 * @param   bool                 $xhtml     xhtml
 	 *
 	 * @return  boolean
@@ -1102,13 +1118,13 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
+	public static function getCategoryUrl(Category $category, $xhtml = true)
 	{
 		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
 
 	/**
-	 * @param   KunenaForumCategory  $category  category
+	 * @param  Category  $category  category
 	 *
 	 * @return  integer
 	 *
@@ -1117,7 +1133,7 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public static function getCategoryItemid(KunenaForumCategory $category)
+	public static function getCategoryItemid(Category $category)
 	{
 		return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
 	}
@@ -1184,10 +1200,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumTopic     $topic     topic
+	 * @param   Topic     $topic     topic
 	 * @param   bool                 $xhtml     xhtml
 	 * @param   null                 $action    actions
-	 * @param   KunenaForumCategory  $category  category
+	 * @param  Category  $category  category
 	 *
 	 * @return  boolean
 	 *
@@ -1196,7 +1212,7 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
+	public static function getTopicUrl(Topic $topic, $xhtml = true, $action = null, Category $category = null)
 	{
 		if (!$category)
 		{
@@ -1207,10 +1223,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaForumMessage   $message   message
+	 * @param   Message   $message   message
 	 * @param   bool                 $xhtml     xhtml
-	 * @param   KunenaForumTopic     $topic     topic
-	 * @param   KunenaForumCategory  $category  category
+	 * @param   Topic     $topic     topic
+	 * @param  Category  $category  category
 	 *
 	 * @return  boolean
 	 *
@@ -1219,7 +1235,7 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
+	public static function getMessageUrl(Message $message, $xhtml = true, Topic $topic = null, Category $category = null)
 	{
 		// FIXME: not yet fully implemented...
 		if (!$category)
@@ -1252,7 +1268,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * This method implements unicode slugs instead of transliteration.
+	 * This method implements \unicode slugs instead of transliteration.
 	 * It has taken from Joomla 1.7.3 with the difference that urls are not lower case.
 	 *
 	 * @param   string  $string  String to process

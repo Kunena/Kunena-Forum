@@ -8,12 +8,16 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use function defined;
 
 ?>
 <div class="kloginform center">
@@ -27,7 +31,7 @@ use Joomla\CMS\Router\Route;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo KunenaIcons::user(); ?>
+						<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
 						<label for="klogin-username" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 						</label>
@@ -42,7 +46,7 @@ use Joomla\CMS\Router\Route;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo KunenaIcons::lock(); ?>
+						<?php echo \Kunena\Forum\Libraries\Icons\Icons::lock(); ?>
 						<label for="klogin-passwd" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 						</label>
@@ -54,7 +58,7 @@ use Joomla\CMS\Router\Route;
 			</div>
 		</div>
 
-		<?php $login = KunenaLogin::getInstance(); ?>
+		<?php $login = \Kunena\Forum\Libraries\Login\Login::getInstance(); ?>
 		<?php
 		if ($login->getTwoFactorMethods() > 1)
 			:
@@ -63,7 +67,7 @@ use Joomla\CMS\Router\Route;
 				<div class="controls">
 					<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo KunenaIcons::star(); ?>
+						<?php echo \Kunena\Forum\Libraries\Icons\Icons::star(); ?>
 						<label for="kk-lgn-secretkey" class="element-invisible">
 							<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 						</label>

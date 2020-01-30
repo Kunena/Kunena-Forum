@@ -8,12 +8,16 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use function defined;
 
 // FIXME: change into JForm.
 
@@ -31,7 +35,7 @@ $this->addScript('assets/js/search.js');
 
 ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post"
+<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post"
       xmlns="http://www.w3.org/1999/html"
       xmlns="http://www.w3.org/1999/html">
 	<input type="hidden" name="task" value="results"/>
@@ -39,7 +43,7 @@ $this->addScript('assets/js/search.js');
 		:
 		?>
 		<input type="hidden" id="kurl_users" name="kurl_users"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -48,7 +52,7 @@ $this->addScript('assets/js/search.js');
 			<button class="btn btn-outline-primary border btn-sm" type="button"
 			        data-toggle="collapse"
 			        data-target="#search" aria-expanded="false"
-			        aria-controls="search"><?php echo KunenaIcons::collapse(); ?></button>
+			        aria-controls="search"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></button>
 		</div>
 	</div>
 	<h1>
@@ -106,7 +110,7 @@ $this->addScript('assets/js/search.js');
 		<button type="button" class="btn btn-outline-primary border btn-sm float-right"
 		        data-toggle="collapse"
 		        data-target="#search-options" aria-expanded="false"
-		        aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
+		        aria-controls="search-options"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></button>
 		<h2>
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
@@ -141,7 +145,7 @@ $this->addScript('assets/js/search.js');
 						<div class="control-group">
 							<div class="controls" id="searchatdate">
 								<div class="input-group date">
-									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'searchatdate'); ?>
+									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . \Kunena\Forum\Libraries\Icons\Icons::grid() . '</span>', 'searchatdate'); ?>
 								</div>
 							</div>
 						</div>
@@ -226,10 +230,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-outline-primary border">
-				<?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
+				<?php echo \Kunena\Forum\Libraries\Icons\Icons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
 			</button>
 			<button type="reset" class="btn btn-outline-primary border" onclick="window.history.back();">
-				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
+				<?php echo \Kunena\Forum\Libraries\Icons\Icons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>
 	</div>

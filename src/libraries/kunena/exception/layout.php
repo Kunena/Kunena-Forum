@@ -9,13 +9,19 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Exception;
+
 defined('_JEXEC') or die();
+
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaExceptionLayout
  *
  * @since   Kunena 6.0
  */
-class KunenaExceptionLayout extends RuntimeException
+class Layout extends RuntimeException
 {
 }

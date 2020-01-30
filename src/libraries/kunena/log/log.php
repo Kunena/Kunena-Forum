@@ -9,16 +9,24 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Log;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Implements Kunena Log.
+ * implements \Kunena Log.
  *
  * @since 5.0
  */
-class KunenaLog
+class Log
 {
 	/**
 	 * @since   Kunena 5.0
@@ -329,7 +337,7 @@ class KunenaLog
 	const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
 
 	/**
-	 * @var     array|KunenaLogEntry[]
+	 * @var     array| Entry[]
 	 * @since   Kunena 5.0
 	 */
 	protected static $entries = [];
@@ -390,8 +398,8 @@ class KunenaLog
 	 * @param   int                  $type       Log entry type.
 	 * @param   string               $operation  Performed operation.
 	 * @param   string|array         $data       JSON encoded string.
-	 * @param   KunenaForumCategory  $category   Target category.
-	 * @param   KunenaForumTopic     $topic      Target topic.
+	 * @param  Category  $category   Target category.
+	 * @param   Topic     $topic      Target topic.
 	 * @param   KunenaUser           $user       Target user.
 	 *
 	 * @return  void
@@ -404,24 +412,24 @@ class KunenaLog
 		$type,
 		$operation,
 		$data,
-		KunenaForumCategory $category = null,
-		KunenaForumTopic $topic = null,
+		Category $category = null,
+		Topic $topic = null,
 		KunenaUser $user = null
 	)
 	{
-		static::$entries[] = new KunenaLogEntry($type, $operation, $data, $category, $topic, $user);
+		static::$entries[] = new Entry($type, $operation, $data, $category, $topic, $user);
 	}
 
 	/**
 	 * Add a KunenaLogEntry entry to the Kunena log.
 	 *
-	 * @param   KunenaLogEntry  $entry  An instance of an entry to be logged.
+	 * @param   Entry  $entry  An instance of an entry to be logged.
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public static function addEntry(KunenaLogEntry $entry)
+	public static function addEntry(Entry $entry)
 	{
 		static::$entries[] = $entry;
 	}

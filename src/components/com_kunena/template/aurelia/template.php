@@ -9,18 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Template\Template;
+use function defined;
 
 /**
  * Aurelia template.
  *
  * @since   Kunena 4.0
  */
-class KunenaTemplateAurelia extends KunenaTemplate
+class KunenaTemplateAurelia extends Template
 {
 	/**
 	 * List of parent template names.

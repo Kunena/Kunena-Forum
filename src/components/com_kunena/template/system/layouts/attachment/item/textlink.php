@@ -9,13 +9,17 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 $attachment = $this->attachment;
 
-$config = KunenaConfig::getInstance();
+$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 ?>
@@ -24,6 +28,6 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
    rel="noopener noreferrer"
    data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 " data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), $config->attach_start, $config->attach_end); ?>">
-	<?php echo KunenaIcons::info(); ?>
+   title="<?php echo \Kunena\Forum\Libraries\Attachment\Helper::shortenFileName($attachment->getFilename(), $config->attach_start, $config->attach_end); ?>">
+	<?php echo \Kunena\Forum\Libraries\Icons\Icons::info(); ?>
 </a>

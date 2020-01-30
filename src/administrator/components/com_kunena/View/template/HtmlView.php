@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Template\Template;
 
 /**
  * Template view for Kunena backend
@@ -40,7 +41,7 @@ class HtmlView extends BaseHtmlView
 		$this->params       = $this->get('editparams');
 		$this->details      = $this->get('templatedetails');
 		$this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template           = \KunenaTemplate::getInstance($this->templatename);
+		$template           = Template::getInstance($this->templatename);
 		$template->initializeBackend();
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
@@ -62,7 +63,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

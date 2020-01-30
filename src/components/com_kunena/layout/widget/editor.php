@@ -9,21 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Widget;
+
 defined('_JEXEC') or die;
 
+use Exception;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Template\Template;
+use function defined;
 
 /**
  * KunenaLayoutTopicEditEditor
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetEditor extends KunenaLayout
+class KunenaLayoutWidgetEditor extends Layout
 {
 	/**
-	 * @var     KunenaTemplate
+	 * @var     Template
 	 * @since   Kunena 6.0
 	 */
 	public $ktemplate;
@@ -86,7 +96,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	{
 		$this->ktemplate  = KunenaFactory::getTemplate();
 		$templatesettings = $this->ktemplate->params;
-		$config           = KunenaConfig::getInstance();
+		$config           = Config::getInstance();
 
 		$bbcodes = [
 			"spoiler",

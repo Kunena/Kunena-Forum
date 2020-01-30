@@ -9,18 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\KunenaList;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Finder;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Site\Model\UserModel;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserListDisplay
+ * Class ComponentUserControllerListDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
+class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     object
@@ -72,20 +85,17 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$config = KunenaConfig::getInstance();
-
-		if (!$config->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
+		if (!$this->config->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		require_once KPATH_SITE . '/models/user.php';
-		$this->model = new KunenaModelUser([], $this->input);
+		$this->model = new UserModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me     = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me     = Helper::getMyself();
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -93,31 +103,31 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&layout=list&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=user&layout=list&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 
 		// Exclude super admins.
 		if ($this->config->superadmin_userlist)
 		{
-			$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
+			$filter = Access::getUsersByGroup(8);
 		}
 		else
 		{
 			$filter = [];
 		}
 
-		$finder = new KunenaUserFinder;
+		$finder = new Finder;
 		$finder
 			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
 		$this->total      = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+		$this->pagination = new Pagination($this->total, $start, $limit);
 
 		$alias     = 'ku';
 		$aliasList = ['id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate'];

@@ -9,17 +9,30 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Form\Reply;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\KunenaPrivate\Message;
+use Kunena\Forum\Libraries\Template\Template;
+use Joomla\Registry\Registry;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicFormReplyDisplay
+ * Class ComponentTopicControllerFormReplyDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -53,23 +66,23 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = KunenaUserHelper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
-			$this->topic = KunenaForumTopicHelper::get($id);
-			$parent      = KunenaForumMessageHelper::get($this->topic->first_post_id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = KunenaForumMessageHelper::get($mesid);
+			$parent      = \Kunena\Forum\Libraries\Forum\Message\Helper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$doc = Factory::getApplication()->getDocument();
@@ -98,7 +111,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaDisplay = Template::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else
@@ -109,15 +122,15 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$parent->tryAuthorise('reply');
 
 		$arraypollcatid = [];
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		// Run event.
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
@@ -132,10 +145,10 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
 		$this->action = 'post';
 
-		$this->privateMessage       = new KunenaPrivateMessage;
+		$this->privateMessage       = new Message;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = Helper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;

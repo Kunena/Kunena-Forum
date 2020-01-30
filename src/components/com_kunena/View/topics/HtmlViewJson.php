@@ -8,6 +8,12 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\Helper;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\View\View;
+
 defined('_JEXEC') or die;
 
 /**
@@ -15,7 +21,7 @@ defined('_JEXEC') or die;
  *
  * @since       version
  */
-class KunenaViewTopics extends KunenaView
+class KunenaViewTopics extends View
 {
 	/**
 	 * @param   null  $tpl tmpl
@@ -28,7 +34,7 @@ class KunenaViewTopics extends KunenaView
 	 */
 	public function display($tpl = null)
 	{
-		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 55);
+		list($count, $topics) = Helper::getLatestTopics(false, 0, 55);
 
 		$template = KunenaFactory::getTemplate();
 		$list     = [];
@@ -36,16 +42,16 @@ class KunenaViewTopics extends KunenaView
 		foreach ($topics as $topic)
 		{
 			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users    = KunenaUserHelper::get($lastuser);
+			$users    = \Kunena\Forum\Libraries\User\Helper::get($lastuser);
 
 			$response           = new stdClass;
 			$response->id       = $topic->id;
-			$response->subject  = KunenaHtmlParser::parseText($topic->subject);
+			$response->subject  = Parser::parseText($topic->subject);
 			$response->category = $topic->getCategory()->name;
 			$response->icon     = $topic->getIcon($topic->getCategory()->iconset);
-			$response->message  = KunenaHtmlParser::stripBBCode($topic->last_post_message);
+			$response->message  = Parser::stripBBCode($topic->last_post_message);
 			$response->started  = $topic->getFirstPostTime()->toKunena('config_post_dateformat');
-			$response->tooltip  = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+			$response->tooltip  = Parser::stripBBCode($topic->last_post_message, 200, false);
 			$response->author   = $topic->getLastPostAuthor()->username;
 			$response->avatar   = $topic->getLastPostAuthor()->getAvatarImage($template->params->get('avatarType'), 'thumb');
 			$response->rank     = $users->getRank($topic->getCategory()->id, 'title');

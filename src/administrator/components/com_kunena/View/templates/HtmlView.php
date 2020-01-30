@@ -14,11 +14,13 @@ namespace Kunena\Forum\Administrator\View\Templates;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
 /**
@@ -28,15 +30,14 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-
-	public $templates = [] ;
+	public $templates = [];
 
 	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -50,7 +51,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -79,7 +80,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayAdd()
 	{
@@ -107,7 +108,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayEdit()
 	{
@@ -117,7 +118,7 @@ class HtmlView extends BaseHtmlView
 		$this->params       = $this->get('editparams');
 		$this->details      = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
-		$template           = \KunenaTemplate::getInstance($this->templatename);
+		$template           = Template::getInstance($this->templatename);
 		$template->initializeBackend();
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
@@ -161,7 +162,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayChooseless()
 	{
@@ -205,7 +206,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayEditless()
 	{
@@ -242,7 +243,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayChoosecss()
 	{
@@ -290,7 +291,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayEditcss()
 	{

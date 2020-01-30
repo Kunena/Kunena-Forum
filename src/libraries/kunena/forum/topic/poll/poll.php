@@ -9,16 +9,28 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Topic\Poll;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Tables\KunenaTable;
+use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
+use StdClass;
+use function defined;
 
 /**
- * Class KunenaForumTopicPoll
+ * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
  *
  * @property string $title
  * @property int    $threadid
@@ -27,7 +39,7 @@ use Joomla\Database\DatabaseDriver;
  *
  * @since   Kunena 6.0
  */
-class KunenaForumTopicPoll extends CMSObject
+class Poll extends CMSObject
 {
 	/**
 	 * @var     boolean
@@ -98,7 +110,7 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * Method to load a KunenaForumTopicPoll object by id.
+	 * Method to load a \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object by id.
 	 *
 	 * @param   int  $id  The poll id to be loaded.
 	 *
@@ -128,7 +140,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return  boolean|Joomla\CMS\Table\Table|KunenaTable|TableKunenaPolls
+	 * @return  boolean|Table|KunenaTable|TableKunenaPolls
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -144,16 +156,16 @@ class KunenaForumTopicPoll extends CMSObject
 		}
 
 		// Create the user table object
-		return Joomla\CMS\Table\Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
-	 * Returns KunenaForumTopicPoll object.
+	 * Returns \Kunena\Forum\Libraries\Forum\Topic\Poll object.
 	 *
 	 * @param   mixed  $identifier  Poll to load - Can be only an integer.
 	 * @param   bool   $reset       reset
 	 *
-	 * @return  KunenaForumTopicPoll
+	 * @return  Poll
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -161,7 +173,7 @@ class KunenaForumTopicPoll extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reset = false)
 	{
-		return KunenaForumTopicPollHelper::get($identifier, $reset);
+		return Helper::get($identifier, $reset);
 	}
 
 	/**
@@ -234,7 +246,7 @@ class KunenaForumTopicPoll extends CMSObject
 			return;
 		}
 
-		$filter     = Joomla\CMS\Filter\InputFilter::getInstance();
+		$filter     = InputFilter::getInstance();
 		$newOptions = [];
 
 		foreach ($options as $key => &$value)
@@ -427,7 +439,7 @@ class KunenaForumTopicPoll extends CMSObject
 			}
 		}
 
-		$votes->lasttime = KunenaUserHelper::getMyself()->getTime();
+		$votes->lasttime = \Kunena\Forum\Libraries\User\Helper::getMyself()->getTime();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 
@@ -649,7 +661,7 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * Method to delete the KunenaForumTopicPoll object from the database.
+	 * Method to delete the \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object from the database.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -708,7 +720,7 @@ class KunenaForumTopicPoll extends CMSObject
 		}
 
 		// Remove poll from the topic
-		$topic = KunenaForumTopicHelper::get($this->threadid);
+		$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->threadid);
 
 		if ($success && $topic->exists() && $topic->poll_id)
 		{
@@ -737,7 +749,7 @@ class KunenaForumTopicPoll extends CMSObject
 	}
 
 	/**
-	 * Method to save the KunenaForumTopicPoll object to the database.
+	 * Method to save the \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object to the database.
 	 *
 	 * @param   bool  $updateOnly  Save the object only if not a new poll.
 	 *
@@ -772,7 +784,7 @@ class KunenaForumTopicPoll extends CMSObject
 			return false;
 		}
 
-		// Set the id for the KunenaForumTopic object in case we created a new topic.
+		// Set the id for the \Kunena\Forum\Libraries\Forum\Topic\Topic object in case we created a new topic.
 		if ($isnew)
 		{
 			$this->load($table->id);

@@ -49,8 +49,6 @@ class CpanelController extends FormController
 	 */
 	public function __construct($config = [])
 	{
-		\JLoader::registerNamespace('Kunena\\Forum\\Libraries\\', JPATH_LIBRARIES . '/kunena');
-
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena';
 	}

@@ -9,16 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\Ban\History;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserBanHistoryDisplay
+ * Class ComponentUserControllerBanHistoryDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDisplay
+class ComponentUserControllerBanHistoryDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -39,7 +48,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 	public $profile;
 
 	/**
-	 * @var     array|KunenaUserBan[]
+	 * @var     array|Ban[]
 	 * @since   Kunena 6.0
 	 */
 	public $banHistory;
@@ -65,11 +74,11 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 
 		$userid = $this->input->getInt('userid');
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->profile = KunenaUserHelper::get($userid);
+		$this->me      = Helper::getMyself();
+		$this->profile = Helper::get($userid);
 		$this->profile->tryAuthorise('ban');
 
-		$this->banHistory = KunenaUserBan::getUserHistory($this->profile->userid);
+		$this->banHistory = Ban::getUserHistory($this->profile->userid);
 
 		$this->headerText = Text::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
 	}

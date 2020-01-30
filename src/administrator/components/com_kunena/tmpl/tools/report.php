@@ -15,6 +15,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
 	"

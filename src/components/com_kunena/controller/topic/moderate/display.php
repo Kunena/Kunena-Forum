@@ -9,19 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Topic\Moderate;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Template\Template;
 use Joomla\Database\Exception\ExecutionFailureException;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicModerateDisplay
+ * Class ComponentTopicControllerModerateDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -30,13 +39,13 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	protected $name = 'Topic/Moderate';
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     \Kunena\Forum\Libraries\Forum\Topic\Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     KunenaForumMessage|null
+	 * @var     \Kunena\Forum\Libraries\Forum\Message\Message|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
@@ -73,7 +82,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
@@ -85,19 +94,19 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		if (!$mesid)
 		{
-			$this->topic = KunenaForumTopicHelper::get($id);
+			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
 			$this->topic->tryAuthorise('move');
 		}
 		else
 		{
-			$this->message = KunenaForumMessageHelper::get($mesid);
+			$this->message = Helper::get($mesid);
 			$this->message->tryAuthorise('move');
 			$this->topic = $this->message->getTopic();
 		}
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$this->category = $this->topic->getCategory();
@@ -109,7 +118,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
 			Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
-		$this->template = KunenaTemplate::getInstance();
+		$this->template = Template::getInstance();
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
 		$this->topicIcons = $this->template->getTopicIcons(false);
 
@@ -131,7 +140,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		if ($this->message)
 		{
-			$this->banHistory = KunenaUserBan::getUserHistory($this->message->userid);
+			$this->banHistory = \Kunena\Forum\Libraries\User\Ban::getUserHistory($this->message->userid);
 			$this->me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
@@ -157,7 +166,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$this->banInfo = KunenaUserBan::getInstanceByUserid($this->app->getIdentity()->id, true);
+		$this->banInfo = \Kunena\Forum\Libraries\User\Ban::getInstanceByUserid($this->app->getIdentity()->id, true);
 	}
 
 	/**
@@ -167,7 +176,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

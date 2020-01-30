@@ -8,13 +8,17 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use function defined;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
@@ -31,7 +35,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 		: <?php echo $this->escape($this->category->name); ?>
 	</div>
 	<div class="card-body">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+		<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
 		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value="save"/>

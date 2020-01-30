@@ -9,16 +9,29 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Poll;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicPollDisplay
+ * Class ComponentTopicControllerPollDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -27,19 +40,19 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	public $me;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     KunenaForumTopicPoll
+	 * @var     Poll
 	 * @since   Kunena 6.0
 	 */
 	public $poll;
@@ -64,10 +77,10 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->topic    = KunenaForumTopicHelper::get($this->input->getInt('id'));
+		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($this->input->getInt('id'));
 		$this->category = $this->topic->getCategory();
 		$this->config   = KunenaFactory::getConfig();
-		$this->me       = KunenaUserHelper::getMyself();
+		$this->me       = Helper::getMyself();
 
 		// Need to check if poll is allowed in this category.
 		$this->topic->tryAuthorise('poll.read');
@@ -114,7 +127,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 					$userids_votes[] = $userid;
 				}
 
-				$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
+				$loaded_users = Helper::loadUsers($userids_votes);
 
 				$i = 0;
 
@@ -164,7 +177,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title));
 			}
 
 			if (!empty($params_keywords))
@@ -174,7 +187,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setKeywords(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setKeywords(Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title));
 			}
 
 			if (!empty($params_description))
@@ -184,7 +197,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+				$this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title));
 			}
 		}
 	}

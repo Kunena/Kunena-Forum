@@ -9,8 +9,12 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Joomla\Plugin\Finder\Kunena;
+
 defined('_JEXEC') or die('');
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Component\ComponentHelper;
@@ -18,6 +22,12 @@ use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
 use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
+use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
+use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
 
 /**
  * Finder adapter for com_kunena.
@@ -341,12 +351,12 @@ class plgFinderKunena extends Adapter
 		}
 
 		// Check if Kunena has been installed.
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
+		if (!class_exists('KunenaForum') || !Forum::isCompatible('4.0') || !Forum::installed())
 		{
 			return false;
 		}
 
-		KunenaForum::setup();
+		Forum::setup();
 
 		return true;
 	}
@@ -397,14 +407,14 @@ class plgFinderKunena extends Adapter
 	{
 		Log::add('FinderIndexerAdapter::getItem', Log::INFO);
 
-		$message = KunenaForumMessageHelper::get($id);
+		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
 
 		// Convert the item to a result object.
 		$item = $this->createIndexerResult($message);
 		unset($message);
 
 		// Why should we cleanup here? Maybe we need the instances later on?!
-		// KunenaForumMessageHelper::cleanup();
+		// \Kunena\Forum\Libraries\Forum\Message\Helper::cleanup();
 
 		return $item;
 	}
@@ -443,7 +453,7 @@ class plgFinderKunena extends Adapter
 		}
 
 		// Convert the items to result objects.
-		$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
+		$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids, 'none');
 		$items    = array();
 
 		foreach ($messages as &$message)
@@ -451,7 +461,7 @@ class plgFinderKunena extends Adapter
 			$items[] = $this->createIndexerResult($message);
 		}
 
-		KunenaForumMessageHelper::cleanup();
+		\Kunena\Forum\Libraries\Forum\Message\Helper::cleanup();
 		KunenaRoute::cleanup();
 
 		return $items;
@@ -482,7 +492,7 @@ class plgFinderKunena extends Adapter
 		$item->alias = KunenaRoute::stringURLSafe($message->subject);
 
 		// Set body context.
-		$item->body    = KunenaHtmlParser::stripBBCode($message->message);
+		$item->body    = \Kunena\Forum\Libraries\Html\Parser::stripBBCode($message->message);
 		$item->summary = $item->body;
 
 		// Set other information.
@@ -519,7 +529,7 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getUrl($id, $extension, $view)
 	{
-		$item = KunenaForumMessageHelper::get($id);
+		$item = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
 
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
@@ -572,7 +582,7 @@ class plgFinderKunena extends Adapter
 			$query->where('c.id = ' . $db->quote($cat_id));
 			$db->setQuery($query);
 			$ids               = $db->loadColumn();
-			$messages[$cat_id] = KunenaForumMessageHelper::getMessages($ids);
+			$messages[$cat_id] = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids);
 		}
 
 		return $messages[$cat_id];
@@ -603,7 +613,7 @@ class plgFinderKunena extends Adapter
 
 			foreach ($results as $result)
 			{
-				$list[] = new KunenaForumMessage($result);
+				$list[] = new \Kunena\Forum\Libraries\Forum\Message\Message($result);
 			}
 
 			$messages[$topic_id] = $list;
@@ -621,18 +631,18 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getAccessLevel($item)
 	{
-		$category = KunenaForumCategoryHelper::get($item);
+		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($item);
 		$user     = Factory::getUser(0);
 
 		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof Joomla\CMS\User\User))
+		if (!($user instanceof \Joomla\CMS\User\User))
 		{
-			$user = Joomla\CMS\User\User::getInstance();
+			$user = \Joomla\CMS\User\User::getInstance();
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
-		$groups       = (array) Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
+		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
+		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
 
 		$catlist = array();
 

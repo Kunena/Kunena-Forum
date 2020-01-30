@@ -67,6 +67,11 @@ class KunenaNomenuRules implements RulesInterface
 	 */
 	public function parse(&$segments, &$vars)
 	{
+		$vars['view'] = 'mywalk';
+		$vars['id'] = substr($segments[0], strpos($segments[0], '-') + 1);
+		array_shift($segments);
+		array_shift($segments);
+
 		return;
 	}
 
@@ -82,7 +87,16 @@ class KunenaNomenuRules implements RulesInterface
 	 */
 	public function build(&$query, &$segments)
 	{
+		if (!isset($query['view']) || (isset($query['view']) && $query['view'] !== 'default') || isset($query['format']))
+		{
+			return;
+		}
 
+		$segments[] = $query['view'] . '-' . $query['id'];
+		$segments[] = $query['slug'];
+		unset($query['view']);
+		unset($query['id']);
+		unset($query['slug']);
 	}
 }
 

@@ -10,16 +10,25 @@
  * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaProfileCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileCommunity extends KunenaProfile
+class KunenaProfileCommunity extends Profile
 {
 	/**
 	 * @var     null

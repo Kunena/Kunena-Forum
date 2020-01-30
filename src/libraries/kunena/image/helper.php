@@ -9,17 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Image;
+
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
  * Helper class for image manipulation.
  *
  * @since   Kunena 6.0
  */
-class KunenaImageHelper
+class Helper
 {
 	/**
 	 * Create new re-sized version of the original image.
@@ -48,7 +53,7 @@ class KunenaImageHelper
 			}
 
 			// Make sure that index.html exists in the folder.
-			KunenaFolder::createIndex($folder);
+			\Kunena\Forum\Libraries\Folder\Folder::createIndex($folder);
 
 			$info = KunenaImage::getImageFileProperties($file);
 

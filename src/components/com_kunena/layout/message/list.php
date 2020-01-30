@@ -9,17 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Message;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutMessageList
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutMessageList extends KunenaLayout
+class KunenaLayoutMessageList extends Layout
 {
 	/**
 	 * @var     object

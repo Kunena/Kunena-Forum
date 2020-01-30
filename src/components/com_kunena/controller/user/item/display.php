@@ -9,21 +9,35 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\item;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\User;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\Helper;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Site\Model\UserModel;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserItemDisplay
+ * Class ComponentUserControllerItemDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
+class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -32,7 +46,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	public $me;
 
 	/**
-	 * @var     Joomla\CMS\User\User
+	 * @var     User
 	 * @since   Kunena 6.0
 	 */
 	public $user;
@@ -80,19 +94,19 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');
 
 		require_once KPATH_SITE . '/models/user.php';
-		$this->model = new KunenaModelUser([], $this->input);
+		$this->model = new UserModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me      = KunenaUserHelper::getMyself();
+		$this->me      = Helper::getMyself();
 		$this->user    = Factory::getUser($userid);
-		$this->profile = KunenaUserHelper::get($userid);
+		$this->profile = Helper::get($userid);
 		$this->profile->tryAuthorise('read');
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
@@ -104,7 +118,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		$this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 		$this->banInfo = $this->config->showbannedreason
-			? KunenaUserBan::getInstanceByUserid($this->profile->userid)
+			? Ban::getInstanceByUserid($this->profile->userid)
 			: null;
 
 		// Update profile hits.
@@ -117,18 +131,18 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
 		{
 			$controller = BaseController::getInstance("kunena");
 
-			if (KunenaConfig::getInstance()->profile_id)
+			if ($this->config->profile_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->profile_id;
+				$itemidfix = $this->config->profile_id;
 			}
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
 				$itemidfix = $getid->id;
 			}
 
@@ -139,11 +153,11 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 			if (!$userid)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();
@@ -179,8 +193,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		}
 
 		$menu_item = $this->app->getMenu()->getActive();
-		$config    = Factory::getConfig();
-		$robots    = $config->get('robots');
+		$robots    = $this->config->get('robots');
 		$image     = '';
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
@@ -190,11 +203,11 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		{
 			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
-		elseif ($this->profile->avatar == null || KunenaConfig::getInstance()->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
+		elseif ($this->profile->avatar == null || $this->config->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
 		{
-			if (File::exists(JPATH_SITE . '/' . KunenaConfig::getInstance()->emailheader))
+			if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
 			{
-				$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
+				$image = Uri::base() . $this->config->emailheader;
 			}
 		}
 		else

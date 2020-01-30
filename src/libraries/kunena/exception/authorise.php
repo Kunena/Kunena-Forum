@@ -9,14 +9,20 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Exception;
+
 defined('_JEXEC') or die();
+
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaExceptionAuthorise
  *
  * @since   Kunena 6.0
  */
-class KunenaExceptionAuthorise extends RuntimeException
+class Authorise extends RuntimeException
 {
 	/**
 	 * @var     array

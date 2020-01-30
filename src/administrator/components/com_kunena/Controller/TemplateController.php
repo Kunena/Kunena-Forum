@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Application\CMSApplication;
@@ -24,7 +25,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Filesystem\File;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
  * Kunena Template Controller

@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\UserHelper;
-use Kunena\Forum\Administrator\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Diagnostics;
 use Kunena\Forum\Libraries\Login\Login;
@@ -703,7 +702,7 @@ class ToolsController extends FormController
 	{
 		require_once KPATH_ADMIN . '/install/model.php';
 
-		$installer = new KunenaModelInstall;
+		$installer = new \KunenaModelInstall;
 		$installer->deleteMenu();
 		$installer->createMenu();
 

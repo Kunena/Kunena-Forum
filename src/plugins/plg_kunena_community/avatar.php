@@ -9,16 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use function defined;
 
 /**
- * Class KunenaAvatarCommunity
+ * Class \Kunena\Forum\Libraries\Integration\AvatarCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarCommunity extends KunenaAvatar
+class AvatarCommunity extends Avatar
 {
 	/**
 	 * @var     null
@@ -27,7 +35,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 	protected $params = null;
 
 	/**
-	 * KunenaAvatarCommunity constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarCommunity constructor.
 	 *
 	 * @param   object  $params params
 	 *

@@ -9,17 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\User\Edit;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use StdClass;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserEditSettingsDisplay
+ * Class ComponentUserControllerEditSettingsDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaControllerUserEditDisplay
+class ComponentUserControllerEditSettingsDisplay extends ComponentUserControllerEditDisplay
 {
 	/**
 	 * @var     string
@@ -140,7 +146,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

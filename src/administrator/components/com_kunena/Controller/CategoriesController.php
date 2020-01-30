@@ -21,11 +21,11 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use KunenaFactory;
-use KunenaForumCategoryHelper;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use RuntimeException;
-use TableKunenaCategories;
 use function defined;
 
 /**
@@ -131,7 +131,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = Helper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -385,7 +385,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function edit($key = NULL, $urlVar = NULL)
+	public function edit($key = null, $urlVar = null)
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -451,7 +451,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = Helper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -500,7 +500,7 @@ class CategoriesController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function cancel($key = NULL)
+	public function cancel($key = null)
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -514,7 +514,7 @@ class CategoriesController extends FormController
 
 		$id = $this->app->input->getInt('catid', 0);
 
-		$category = KunenaForumCategoryHelper::get($id);
+		$category = Helper::get($id);
 
 		if (!$category->isAuthorised('admin'))
 		{
@@ -569,7 +569,7 @@ class CategoriesController extends FormController
 
 		$success = false;
 
-		$categories = KunenaForumCategoryHelper::getCategories($cid);
+		$categories = Helper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -692,7 +692,7 @@ class CategoriesController extends FormController
 			return;
 		}
 
-		$category = KunenaForumCategoryHelper::get($id);
+		$category = Helper::get($id);
 
 		if (!$category->getParent()->tryAuthorise('admin'))
 		{

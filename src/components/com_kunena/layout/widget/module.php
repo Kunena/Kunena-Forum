@@ -9,16 +9,21 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Widget;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutWidgetModule
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetModule extends KunenaLayout
+class KunenaLayoutWidgetModule extends Layout
 {
 	/**
 	 * @var     null
@@ -33,7 +38,7 @@ class KunenaLayoutWidgetModule extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function renderPosition()
 	{

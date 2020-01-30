@@ -14,13 +14,18 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\View\View;
 
 /**
  * Topic View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewTopic extends KunenaView
+class KunenaViewTopic extends View
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -38,7 +43,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->me->exists() || $this->config->pubwrite)
 		{
-			$msgbody              = KunenaHtmlParser::parseBBCode($body, $this);
+			$msgbody              = Parser::parseBBCode($body, $this);
 			$response ['preview'] = $msgbody;
 		}
 
@@ -118,7 +123,7 @@ class KunenaViewTopic extends KunenaView
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category         = KunenaForumCategoryHelper::get($catid);
+		$category         = Helper::get($catid);
 		$category_iconset = $category->iconset;
 		$app              = Factory::getApplication();
 
@@ -204,13 +209,13 @@ class KunenaViewTopic extends KunenaView
 		$response = [];
 		$app      = Factory::getApplication();
 
-		if ($user->id == 0 || KunenaForumTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
+		if ($user->id == 0 || \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topicid)->first_post_userid == $this->me->userid)
 		{
-			$response = KunenaForumTopicRateHelper::getSelected($topicid);
+			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getSelected($topicid);
 		}
 		else
 		{
-			$response = KunenaForumTopicRateHelper::getRate($topicid, $user->id);
+			$response = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getRate($topicid, $user->id);
 		}
 
 		// Set the MIME type and header for JSON output.
@@ -238,19 +243,19 @@ class KunenaViewTopic extends KunenaView
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = [];
 		$app      = Factory::getApplication();
-		$user     = KunenaUserHelper::getMyself();
+		$user     = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
 		if ($user->exists() || $this->config->ratingenabled)
 		{
-			$rate           = KunenaForumTopicRateHelper::get($topicid);
+			$rate           = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::get($topicid);
 			$rate->stars    = $starid;
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
 
-			$selected = KunenaForumTopicRateHelper::getSelected($topicid);
+			$selected = \Kunena\Forum\Libraries\Forum\Topic\Rate\Helper::getSelected($topicid);
 
-			$topic         = KunenaForumTopicHelper::get($topicid);
+			$topic         = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($topicid);
 			$topic->rating = $selected;
 			$topic->save();
 		}
@@ -280,7 +285,7 @@ class KunenaViewTopic extends KunenaView
 		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 
-		$category = KunenaForumCategoryHelper::get($catid);
+		$category = Helper::get($catid);
 
 		$response = $category->topictemplate;
 

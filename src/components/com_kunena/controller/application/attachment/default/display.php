@@ -9,10 +9,23 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Application\Attachment;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use RuntimeException;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationAttachmentDefaultDisplay
@@ -21,7 +34,7 @@ use Joomla\CMS\Language\Text;
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.
@@ -42,7 +55,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  KunenaExceptionAuthorise
+	 * @throws  Authorise
 	 * @throws  RuntimeException
 	 * @throws  null
 	 */
@@ -56,7 +69,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		{
 			// In case of an error we want to set HTTP error code.
 			// We want to wrap the exception to be able to display correct HTTP status code.
-			$error = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+			$error = new Authorise($e->getMessage(), $e->getCode(), $e);
 			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 
 			echo $error->getResponseStatus();
@@ -95,20 +108,20 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		if ($format != 'raw' || !$id)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			throw new Authorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+			throw new Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
-		$attachment = KunenaAttachmentHelper::get($id);
+		$attachment = \Kunena\Forum\Libraries\Attachment\Helper::get($id);
 		$attachment->tryAuthorise();
 
 		$path = $attachment->getPath($thumb);
@@ -121,12 +134,12 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		if (!$path)
 		{
 			// File doesn't exist.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (headers_sent())
 		{
-			throw new KunenaExceptionAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
+			throw new Authorise('HTTP headers were already sent. Sending attachment failed.', 500);
 		}
 
 		// Close all output buffers, just in case.
@@ -213,8 +226,8 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->config   = KunenaConfig::getInstance();
+		$this->me       = Helper::getMyself();
+		$this->config   = Config::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 	}
 }

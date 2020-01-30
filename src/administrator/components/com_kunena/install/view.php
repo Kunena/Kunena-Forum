@@ -12,14 +12,16 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
  * The HTML Kunena configuration view.
  *
  * @since   Kunena 6.0
  */
-class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
+class KunenaViewInstall extends HtmlView
 {
 	/**
 	 * @var     null
@@ -94,7 +96,7 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 		echo $this->escape($schema->getSchema()->saveXML());
 		echo '</textarea>';
 
-		if (KunenaForum::isDev())
+		if  (KunenaForum::isDev())
 		{
 			echo '<textarea cols="80" rows="20">';
 
@@ -125,7 +127,7 @@ class KunenaViewInstall extends Joomla\CMS\MVC\View\HtmlView
 		echo $this->escape($diff->saveXML());
 		echo '</textarea>';
 
-		if (KunenaForum::isDev())
+		if  (KunenaForum::isDev())
 		{
 			echo '<textarea cols="80" rows="20">';
 

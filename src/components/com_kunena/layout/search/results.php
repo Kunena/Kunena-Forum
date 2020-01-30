@@ -9,25 +9,34 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Search;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Joomla\Registry\Registry;
+use function defined;
 
 /**
  * KunenaLayoutSearchResults
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutSearchResults extends KunenaLayout
+class KunenaLayoutSearchResults extends Layout
 {
 	/**
-	 * @var     KunenaForumMessage
+	 * @var     \Kunena\Forum\Libraries\Forum\Message\Message
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var     KunenaForumCategory
+	 * @var     \Kunena\Forum\Libraries\Forum\Category\Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -45,7 +54,7 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	public $results;
 
 	/**
-	 * @var     KunenaForumTopic
+	 * @var     \Kunena\Forum\Libraries\Forum\Topic\Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -63,13 +72,13 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	public $searchwords;
 
 	/**
-	 * @var     KunenaUser
+	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $author;
 
 	/**
-	 * @var     KunenaUser
+	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $topicAuthor;
@@ -99,18 +108,18 @@ class KunenaLayoutSearchResults extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function displayRows()
 	{
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->results, &$params, 0]);
 
 		foreach ($this->results as $this->message)
@@ -118,8 +127,8 @@ class KunenaLayoutSearchResults extends KunenaLayout
 			$this->topic        = $this->message->getTopic();
 			$this->category     = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-			$ressubject         = KunenaHtmlParser::parseText($this->message->subject);
-			$resmessage         = KunenaHtmlParser::parseBBCode($this->message->message, 500);
+			$ressubject         = Parser::parseText($this->message->subject);
+			$resmessage         = Parser::parseBBCode($this->message->message, 500);
 
 			$profile          = KunenaFactory::getUser((int) $this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');

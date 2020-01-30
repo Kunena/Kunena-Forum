@@ -9,18 +9,27 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Credits;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since  4.0
  */
-class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
+class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -66,19 +75,19 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		if (Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'powered'))
+		if (PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$this->baseurl = 'index.php?option=com_kunena';
-			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+			$this->app->redirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_($this->baseurl, false));
 		}
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 

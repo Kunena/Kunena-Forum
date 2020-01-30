@@ -10,6 +10,7 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_KUNENA_DESCRIPTION</description>
+    <namespace>Kunena\Forum\Plugin\Kunena\Kunena</namespace>
     <files>
         <filename plugin="kunena">kunena.php</filename>
         <filename>avatar.php</filename>

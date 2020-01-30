@@ -14,13 +14,18 @@ namespace Kunena\Forum\Site\Model;
 
 defined('_JEXEC') or die();
 
+use DateInterval;
+use DateTime;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use KunenaFactory;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 
 /**
  * Search Model for Kunena
@@ -57,7 +62,7 @@ class SearchModel extends ListModel
 	protected function populateState()
 	{
 		// Get search word list
-		$value = \Joomla\String\StringHelper::trim($this->app->input->get('query', '', 'string'));
+		$value = StringHelper::trim($this->app->input->get('query', '', 'string'));
 
 		if ($value == Text::_('COM_KUNENA_GEN_SEARCH_BOX'))
 		{
@@ -180,7 +185,7 @@ class SearchModel extends ListModel
 
 		foreach ($this->getSearchWords() as $searchword)
 		{
-			$searchword = $db->escape(\Joomla\String\StringHelper::trim($searchword));
+			$searchword = $db->escape(StringHelper::trim($searchword));
 
 			if (empty($searchword))
 			{
@@ -194,7 +199,7 @@ class SearchModel extends ListModel
 			{
 				$not        = 'NOT';
 				$operator   = 'AND';
-				$searchword = \Joomla\String\StringHelper::substr($searchword, 1);
+				$searchword = StringHelper::substr($searchword, 1);
 			}
 
 			if (!$this->getState('query.titleonly'))
@@ -265,8 +270,8 @@ class SearchModel extends ListModel
 		else
 		{
 			$time_start_day = Factory::getDate($this->getState('query.searchatdate'))->toUnix();
-			$time_end_day   = new \DateTime($this->getState('query.searchatdate'));
-			$time_end_day->add(new \DateInterval("PT23H59M59S"));
+			$time_end_day   = new DateTime($this->getState('query.searchatdate'));
+			$time_end_day->add(new DateInterval("PT23H59M59S"));
 
 			$querystrings[] = " m.time > {$time_start_day} AND m.time < {$time_end_day->getTimestamp()}";
 		}
@@ -366,7 +371,7 @@ class SearchModel extends ListModel
 		foreach ($searchwords as $word)
 		{
 			// Do not accept one letter strings
-			if (\Joomla\String\StringHelper::strlen($word) > 1)
+			if (StringHelper::strlen($word) > 1)
 			{
 				$result [] = $word;
 			}
@@ -427,7 +432,7 @@ class SearchModel extends ListModel
 		];
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
-		list($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
+		list($this->total, $this->messages) = Helper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
 
 		if ($this->total < $limitstart)
 		{
@@ -445,7 +450,7 @@ class SearchModel extends ListModel
 
 		if ($topicids)
 		{
-			$topics = \KunenaForumTopicHelper::getTopics($topicids);
+			$topics = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topicids);
 
 			foreach ($topics as $topic)
 			{
@@ -453,8 +458,8 @@ class SearchModel extends ListModel
 			}
 		}
 
-		\KunenaUserHelper::loadUsers($userids);
-		\KunenaForumMessageHelper::loadLocation($this->messages);
+		\Kunena\Forum\Libraries\User\Helper::loadUsers($userids);
+		Helper::loadLocation($this->messages);
 
 		if (empty($this->messages))
 		{

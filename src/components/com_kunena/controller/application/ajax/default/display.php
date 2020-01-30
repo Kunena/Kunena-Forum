@@ -9,18 +9,32 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Application\Ajax;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Request\Request;
+use Kunena\Forum\Libraries\Response\ResponseJson;
+use Kunena\Forum\Libraries\User\Helper;
+use function defined;
+
 
 /**
  * Class ComponentKunenaControllerApplicationAjaxDefaultDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.
@@ -53,7 +67,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		if (!method_exists($this, $function))
 		{
 			// Invalid page request.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Run before executing action.
@@ -61,22 +75,22 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		if ($result === false)
 		{
-			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			$content = new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif (!Session::checkToken())
 		{
 			// Invalid access token.
-			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			$content = new Authorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			$content = new Authorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
+			$content = new Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
 		}
 		else
 		{
@@ -84,7 +98,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 			try
 			{
-				$content = KunenaRequest::factory($display, $this->input, $this->options)
+				$content = Request::factory($display, $this->input, $this->options)
 					->setPrimary()->execute()->render();
 			}
 			catch (Exception $e)
@@ -113,8 +127,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->config   = KunenaConfig::getInstance();
+		$this->me       = Helper::getMyself();
+		$this->config   = Config::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
@@ -160,13 +174,13 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		header('Content-type: application/json', true);
 
 		// Create JSON response.
-		$response = new KunenaResponseJson($content);
+		$response = new ResponseJson($content);
 
 		// In case of an error we want to set HTTP error code.
 		if (!$response->success)
 		{
 			// We want to wrap the exception to be able to display correct HTTP status code.
-			$error = new KunenaExceptionAuthorise($response->message, $response->code);
+			$error = new Authorise($response->message, $response->code);
 			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 		}
 

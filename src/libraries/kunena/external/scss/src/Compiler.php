@@ -181,7 +181,7 @@ class Compiler
 	 *
 	 * @return  string
 	 * @throws CompilerException
-	 * @throws  Exception\ParserException
+	 * @throws  \Exception\ParserException
 	 */
 	public function compile($code, $path = null)
 	{
@@ -357,7 +357,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $rootBlock
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileRoot(Block $rootBlock)
 	{
@@ -751,7 +751,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $media
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileMedia(Block $media)
 	{
@@ -1101,7 +1101,7 @@ class Compiler
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileKeyframeBlock(Block $block, $selectors)
 	{
@@ -1131,7 +1131,7 @@ class Compiler
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 * @param   array                 $selectors
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileNestedBlock(Block $block, $selectors)
 	{
@@ -1165,7 +1165,7 @@ class Compiler
 	 *
 	 * @param   \Leafo\ScssPhp\Block  $block
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function compileBlock(Block $block)
 	{
@@ -2482,7 +2482,7 @@ class Compiler
 	 * @param   array   $argValues
 	 *
 	 * @return  array|null
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	private function fncall($name, $argValues)
 	{
@@ -3803,7 +3803,7 @@ class Compiler
 	 * @param   string  $path
 	 * @param   array   $out
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function importFile($path, $out)
 	{
@@ -3945,7 +3945,7 @@ class Compiler
 	 *
 	 * @param   string  $name
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function handleImportLoop($name)
 	{
@@ -3981,7 +3981,7 @@ class Compiler
 	 * @param   array   $returnValue
 	 *
 	 * @return  boolean Returns true if returnValue is set; otherwise, false
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function callScssFunction($name, $argValues, &$returnValue)
 	{
@@ -4151,7 +4151,7 @@ class Compiler
 	 * @param   array  $argDef
 	 * @param   array  $argValues
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function applyArguments($argDef, $argValues)
 	{
@@ -4532,7 +4532,7 @@ class Compiler
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function assertMap($value)
 	{
@@ -4555,7 +4555,7 @@ class Compiler
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function assertList($value)
 	{
@@ -4576,7 +4576,7 @@ class Compiler
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function assertColor($value)
 	{
@@ -4597,7 +4597,7 @@ class Compiler
 	 *
 	 * @return integer|float
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public function assertNumber($value)
 	{

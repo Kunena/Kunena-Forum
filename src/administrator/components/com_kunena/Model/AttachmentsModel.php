@@ -18,9 +18,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use KunenaAttachmentHelper;
-use KunenaForumMessageHelper;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\Attachment\Attachment;
+use Kunena\Forum\Libraries\Attachment\Helper;
 use function defined;
 
 /**
@@ -144,7 +143,7 @@ class AttachmentsModel extends ListModel
 	 * @param   int     $limitstart  limitstart
 	 * @param   int     $limit       limit
 	 *
-	 * @return  \KunenaAttachment[]
+	 * @return  Attachment[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -155,7 +154,7 @@ class AttachmentsModel extends ListModel
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();
-		$results = KunenaAttachmentHelper::getById($ids);
+		$results = Helper::getById($ids);
 		$userids = [];
 		$mesids  = [];
 
@@ -165,8 +164,8 @@ class AttachmentsModel extends ListModel
 			$mesids[$result->mesid]   = $result->mesid;
 		}
 
-		KunenaUserHelper::loadUsers($userids);
-		KunenaForumMessageHelper::getMessages($mesids);
+		\Kunena\Forum\Libraries\User\Helper::loadUsers($userids);
+		\Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($mesids);
 
 		return $results;
 	}

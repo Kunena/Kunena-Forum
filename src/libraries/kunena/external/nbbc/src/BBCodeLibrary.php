@@ -11,7 +11,7 @@ namespace Nbbc;
 //
 //  This file is part of NBBC, the New BBCode Parser.
 //
-//  NBBC implements a fully-validating, high-speed, extensible parser for the
+//  NBBC implements \a fully-validating, high-speed, extensible parser for the
 //  BBCode document language.  Its output is XHTML 1.0 Strict conformant no
 //  matter what its input is.  NBBC supports the full standard BBCode language,
 //  as well as comments, columns, enhanced quotes, spoilers, acronyms, wiki
@@ -55,7 +55,7 @@ namespace Nbbc;
 /**
  * Represents the default implementation of most BBCode tags.
  *
- * This class implements the standard BBCode language and our extensions,
+ * This class implements \the standard BBCode language and our extensions,
  * as well as a default set of smileys.  While this is not strictly necessary
  * for the parser to work, without these definitions, the parser has nothing
  * to do.  Generally, the definitions in this file are sufficient for most

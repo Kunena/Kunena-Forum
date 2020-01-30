@@ -9,18 +9,26 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Easyprofile;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\KunenaFactory;
+use Joomla\Registry\Registry;
+use function defined;
 
 /**
- * Class KunenaAvatarEasyprofile
+ * Class \Kunena\Forum\Libraries\Integration\AvatarEasyprofile
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarEasyprofile extends KunenaAvatar
+class AvatarEasyprofile extends Avatar
 {
 	/**
 	 * @var     null
@@ -29,7 +37,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 	protected $params = null;
 
 	/**
-	 * KunenaAvatarEasyprofile constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarEasyprofile constructor.
 	 *
 	 * @param   object  $params params
 	 *
@@ -90,7 +98,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 				->where('alias = \'avatar\'');
 			$db->setQuery($query);
 			$params   = $db->loadResult();
-			$registry = new Joomla\Registry\Registry;
+			$registry = new Registry;
 			$registry->loadString($params);
 			$params = $registry->toArray();
 

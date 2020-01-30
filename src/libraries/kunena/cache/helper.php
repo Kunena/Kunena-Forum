@@ -9,17 +9,21 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Cache;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use function defined;
 
 /**
- * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
+ * Class Helper has helper functions to clear all caches that affects Kunena.
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaCacheHelper
+abstract class Helper
 {
 	/**
 	 * Clear all cache types. Please avoid using this function except after installation and
@@ -29,7 +33,7 @@ abstract class KunenaCacheHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function clearAll()
 	{
@@ -78,7 +82,7 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearMenu()
 	{
-		KunenaMenuHelper::cleanCache();
+		\Kunena\Forum\Libraries\Menu\Helper::cleanCache();
 	}
 
 	/**
@@ -88,11 +92,11 @@ abstract class KunenaCacheHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	public static function clearAccess()
 	{
-		KunenaAccess::getInstance()->clearCache();
+		\Kunena\Forum\Libraries\Access\Access::getInstance()->clearCache();
 	}
 
 	/**

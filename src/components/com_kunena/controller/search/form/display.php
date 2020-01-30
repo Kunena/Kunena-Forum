@@ -9,18 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Search\Form;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Site\Model\SearchModel;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerSearchFormDisplay
+ * Class ComponentSearchControllerFormDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
+class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -29,7 +39,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	protected $name = 'Search/Form';
 
 	/**
-	 * @var     KunenaModelSearch
+	 * @var     SearchModel
 	 * @since   Kunena 6.0
 	 */
 	public $model;
@@ -49,22 +59,22 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		parent::before();
 
 		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch([], $this->input);
+		$this->model = new SearchModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
-			if (KunenaConfig::getInstance()->search_id)
+			if ($this->config->search_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->search_id;
+				$itemidfix = $this->config->search_id;
 			}
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
+				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
 				$itemidfix = $getid->id;
 			}
 
@@ -74,13 +84,13 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = Helper::getMyself();
 
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus());
 		$this->error       = $this->model->getError();
 	}
 

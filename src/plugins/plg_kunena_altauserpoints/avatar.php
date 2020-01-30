@@ -9,17 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Altauserpoints;
+
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Uri\Uri;
+use Exception;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
 
 /**
- * Class KunenaAvatarAltaUserPoints
+ * Class \Kunena\Forum\Libraries\Integration\AvatarAltaUserPoints
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarAltaUserPoints extends KunenaAvatar
+class AvatarAltaUserPoints extends Avatar
 {
 	/**
 	 * @var     null
@@ -28,7 +35,7 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	protected $params = null;
 
 	/**
-	 * KunenaAvatarAltaUserPoints constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarAltaUserPoints constructor.
 	 *
 	 * @param   object  $params params
 	 *

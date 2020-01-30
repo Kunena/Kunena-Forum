@@ -9,11 +9,22 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Controller;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use InvalidArgumentException;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Layout\Base;
+use Kunena\Forum\Libraries\KunenaProfiler;
+use function defined;
 
 /**
  * Class KunenaControllerDisplay
@@ -23,7 +34,7 @@ use Joomla\CMS\Language\Text;
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	/**
-	 * @var     null|KunenaLayout
+	 * @var     null|Layout
 	 * @since   Kunena 6.0
 	 */
 	public $output = null;
@@ -35,7 +46,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $layout = 'default';
 
 	/**
-	 * @var     KunenaConfig
+	 * @var     Config
 	 * @since   Kunena 6.0
 	 */
 	public $config;
@@ -56,7 +67,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @var     Document
 	 * @since   Kunena 6.0
 	 */
-	private $document;
+	protected $document;
 
 	/**
 	 * @internal
@@ -87,18 +98,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			$output = $this->execute();
 		}
-		catch (KunenaExceptionAuthorise $e)
+		catch (Authorise $e)
 		{
 			if (!$this->primary)
 			{
-				return (string) KunenaLayout::factory('Empty');
+				return (string) Layout::factory('Empty');
 			}
 
 			$document = Factory::getApplication()->getDocument();
 			$document->setTitle($e->getResponseStatus());
 			Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			Factory::getApplication()->sendHeaders();
-			$output = KunenaLayout::factory('Misc/Default', 'pages')
+			$output = Layout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
 		}
@@ -114,7 +125,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$document->setTitle($title);
 			Factory::getApplication()->setHeader('Status', $title, true);
 			Factory::getApplication()->sendHeaders();
-			$output = KunenaLayout::factory('Misc/Default', 'pages')
+			$output = Layout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
 		}
@@ -125,7 +136,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @see     KunenaControllerBase::execute()
 	 *
-	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout|null
+	 * @return  Layout|null
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -144,7 +155,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			{
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
-				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+				return Layout::factory('Empty')->setOptions($this->getOptions());
 			}
 
 			// Display layout with given parameters.
@@ -153,7 +164,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Run after executing action.
 			$this->after();
 		}
-		catch (KunenaExceptionAuthorise $e)
+		catch (Authorise $e)
 		{
 			if ($this->primary)
 			{
@@ -162,7 +173,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 			else
 			{
-				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+				$this->output = Layout::factory('Empty')->setOptions($this->getOptions());
 			}
 		}
 
@@ -183,7 +194,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function before()
 	{
 		$this->layout = $this->input->getCmd('layout', 'default');
-		$this->config = KunenaConfig::getInstance();
+		$this->config = Config::getInstance();
 
 		if ($this->primary)
 		{
@@ -194,7 +205,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Initialize and display the layout.
 	 *
-	 * @return  Joomla\CMS\Layout\BaseLayout|KunenaLayout
+	 * @return  Base|Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -203,7 +214,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory($this->name)
+		$content = Layout::factory($this->name)
 			->setProperties($this->getProperties())
 			->setOptions($this->getOptions());
 
@@ -289,7 +300,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @param   string  $layout  The layout name.
 	 *
-	 * @return  KunenaControllerDisplay|KunenaLayout
+	 * @return  KunenaControllerDisplay|Layout
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -386,7 +397,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 			else
 			{
-				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
+				$title = $title . ' - ' . $this->config->board_title;
 			}
 		}
 

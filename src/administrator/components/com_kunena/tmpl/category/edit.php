@@ -16,6 +16,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 

@@ -9,17 +9,24 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Announement\Item;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerAnnouncementItemDisplay
+ * Class ComponentAnnouncementControllerItemDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerDisplay
+class ComponentAnnouncementControllerItemDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -40,7 +47,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
@@ -48,16 +55,16 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 
 		$id = $this->input->getInt('id', null);
 
-		$this->announcement = KunenaForumAnnouncementHelper::get($id);
+		$this->announcement = Helper::get($id);
 		$this->announcement->tryAuthorise();
 
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 	}
@@ -69,7 +76,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function prepareDocument()
 	{

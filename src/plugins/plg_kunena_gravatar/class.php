@@ -15,9 +15,14 @@
  * @link      https://github.com/emberlabs/gravatarlib
  * @since   Kunena
  */
+
+namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+
 defined('_JEXEC') or die();
 
+use InvalidArgumentException;
 use Joomla\CMS\Uri\Uri;
+use function defined;
 
 /**
  * @package Gravatar

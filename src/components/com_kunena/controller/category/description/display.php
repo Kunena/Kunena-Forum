@@ -9,14 +9,21 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Category\Description;
+
+defined('_JEXEC') or die();
+
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControllerDisplay
+class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -41,7 +48,7 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 
 		$catid = $this->input->getInt('catid');
 
-		$this->category = KunenaForumCategoryHelper::get($catid);
+		$this->category = Helper::get($catid);
 		$this->category->tryAuthorise();
 	}
 }

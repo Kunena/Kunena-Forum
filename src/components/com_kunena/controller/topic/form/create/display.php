@@ -9,19 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Topic\Form\Create;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\KunenaPrivate\Message;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\Template;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicFormCreateDisplay
+ * Class ComponentTopicControllerFormCreateDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -55,16 +67,16 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 		$format = Factory::getApplication()->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
 		{
-			if (KunenaConfig::getInstance()->search_id)
+			if ($this->config->search_id)
 			{
-				$itemidfix = KunenaConfig::getInstance()->search_id;
+				$itemidfix = $this->config->search_id;
 			}
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
 				$itemidfix = $getid->id;
 			}
 
@@ -77,20 +89,20 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 			if ($catid)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
+				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();
 		}
 
-		$this->me       = KunenaUserHelper::getMyself();
+		$this->me       = \Kunena\Forum\Libraries\User\Helper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$categories        = KunenaForumCategoryHelper::getCategories();
+		$categories        = \Kunena\Forum\Libraries\Forum\Category\Helper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -112,14 +124,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->config->read_only)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		// FIXME: We need to proxy this...
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		Template::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$this->category = KunenaForumCategoryHelper::get($catid);
+		$this->category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -132,7 +144,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaDisplay = Template::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else
@@ -142,7 +154,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if (!$this->topic->category_id)
 		{
-			throw new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+			throw new Authorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
@@ -175,14 +187,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = Helper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->privateMessage       = new KunenaPrivateMessage;
+		$this->privateMessage       = new Message;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);

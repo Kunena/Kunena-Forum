@@ -9,17 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Search\Results;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Site\Model\SearchModel;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerSearchResultsDisplay
+ * Class ComponentSearchControllerResultsDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
+class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -28,7 +39,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	protected $name = 'Search/Results';
 
 	/**
-	 * @var     KunenaModelSearch
+	 * @var     SearchModel
 	 * @since   Kunena 6.0
 	 */
 	public $model;
@@ -60,15 +71,15 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		parent::before();
 
 		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch([], $this->input);
+		$this->model = new SearchModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me               = KunenaUserHelper::getMyself();
+		$this->me               = Helper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus());
 
 		$this->results = [];
 		$this->total   = $this->model->getTotal();
@@ -94,7 +105,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 			}
 		}
 
-		$this->pagination = new KunenaPagination(
+		$this->pagination = new Pagination(
 			$this->total,
 			$this->state->get('list.start'),
 			$this->state->get('list.limit')

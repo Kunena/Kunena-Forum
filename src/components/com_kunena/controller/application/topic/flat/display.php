@@ -9,14 +9,22 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Application\Topic\Flat;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use function defined;
 /**
  * Class ComponentKunenaControllerApplicationTopicFlatDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.
@@ -29,7 +37,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	 */
 	public function exists()
 	{
-		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
+		$this->page = Page::factory("{$this->input->getCmd('view')}/default");
 
 		return (bool) $this->page->getPath();
 	}
@@ -47,7 +55,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	protected function before()
 	{
 		$layout = $this->input->getWord('layout');
-		KunenaUserHelper::getMyself()->setTopicLayout($layout);
+		Helper::getMyself()->setTopicLayout($layout);
 
 		parent::before();
 	}

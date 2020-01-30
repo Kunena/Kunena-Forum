@@ -20,10 +20,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\User\Helper;
 
 /**
  * About view for Kunena backend
@@ -41,7 +44,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * The model state
 	 *
-	 * @var    \Joomla\CMS\Object\CMSObject
+	 * @var    CMSObject
 	 * @since  6.0
 	 */
 	protected $state;
@@ -85,11 +88,11 @@ class HtmlView extends BaseHtmlView
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
-		    throw new GenericDataException(implode("\n", $errors), 500);
+			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
 		$this->user              = Factory::getApplication()->getIdentity();
-		$this->me                = \KunenaUserHelper::getMyself();
+		$this->me                = Helper::getMyself();
 		$this->userId            = $this->user->get('id');
 		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
 		$this->filterPublished   = $this->escape($this->state->get('filter.published'));
@@ -114,7 +117,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

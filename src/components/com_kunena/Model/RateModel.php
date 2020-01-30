@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use KunenaForumTopicRate;
-use KunenaForumTopicRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\Rate;
 
 /**
  * Rate Model for Kunena
@@ -58,7 +58,7 @@ class RateModel extends ListModel
 	}
 
 	/**
-	 * @return  KunenaForumTopicRate
+	 * @return  Rate
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -66,7 +66,7 @@ class RateModel extends ListModel
 	 */
 	public function getNewRate()
 	{
-		return new KunenaForumTopicRate;
+		return new Rate;
 	}
 
 	/**
@@ -78,7 +78,7 @@ class RateModel extends ListModel
 	 */
 	public function getRate()
 	{
-		return KunenaForumTopicRateHelper::get($this->getState('item.topicid'));
+		return Helper::get($this->getState('item.topicid'));
 	}
 
 	/**

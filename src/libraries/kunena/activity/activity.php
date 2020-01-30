@@ -9,14 +9,19 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Activity;
+
 defined('_JEXEC') or die();
+
+use function defined;
 
 /**
  * Class KunenaActivity
  *
  * @since   Kunena 2.0
  */
-class KunenaActivity
+class Activity
 {
 	/**
 	 * Triggered before posting a new topic.

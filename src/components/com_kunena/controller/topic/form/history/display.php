@@ -9,20 +9,27 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Topic\Form\History;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Attachment\Helper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Joomla\Registry\Registry;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerTopicFormHistoryDisplay
+ * Class ComponentTopicControllerFormHistoryDisplay
  *
  * TODO: merge to another controller...
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
+class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -37,24 +44,24 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
 		$id       = $this->input->getInt('id');
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = \Kunena\Forum\Libraries\User\Helper::getMyself();
 
-		$this->topic    = KunenaForumTopicHelper::get($id);
+		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
 		$this->category = $this->topic->getCategory();
-		$this->history  = KunenaForumMessageHelper::getMessagesByTopic(
+		$this->history  = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
 		$this->replycount   = $this->topic->getReplies();
 		$this->historycount = count($this->history);
-		KunenaAttachmentHelper::getByMessage($this->history);
+		Helper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -65,7 +72,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		if ($this->me->exists())
 		{
-			$pmFinder = new KunenaPrivateMessageFinder;
+			$pmFinder = new \Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
 			if (!$this->me->isModerator($this->category))
@@ -94,20 +101,20 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		$this->history = $messages;
 
-		KunenaUserHelper::loadUsers($userlist);
+		\Kunena\Forum\Libraries\User\Helper::loadUsers($userlist);
 
 		// Run events
-		$params = new Joomla\Registry\Registry;
+		$params = new Registry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');
+		PluginHelper::importPlugin('kunena');
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
+		$this->attachments        = Helper::getByMessage($this->history);
 		$this->inline_attachments = [];
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;

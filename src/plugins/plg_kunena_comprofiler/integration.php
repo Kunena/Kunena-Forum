@@ -9,7 +9,14 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
 
 /**
  * Class KunenaIntegrationComprofiler

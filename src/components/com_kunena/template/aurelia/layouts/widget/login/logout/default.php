@@ -8,17 +8,21 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use function defined;
 
-$markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
-$config         = KunenaFactory::getConfig();
+$markAllReadUrl = \Kunena\Forum\Libraries\Forum\Category\Helper::get()->getMarkReadUrl();
+$config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
 $status         = $config->user_status;
-$config         = KunenaFactory::getTemplate()->params;
+$config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
@@ -33,38 +37,38 @@ $config         = KunenaFactory::getTemplate()->params;
 
 					if ($this->me->getStatus() == 0 && $status && $showOnlineStatus)
 					:
-						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20, 'green');
+						echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20, 'green');
 					elseif ($this->me->getStatus() == 1 && $status && $showOnlineStatus)
 					:
-						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20, 'yellow');
+						echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20, 'yellow');
 					elseif ($this->me->getStatus() == 2 && $status && $showOnlineStatus)
 					:
-						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20, 'red');
+						echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20, 'red');
 					elseif ($this->me->getStatus() == 3 && $status || !$showOnlineStatus)
 					:
-						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20, 'grey');
+						echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20, 'grey');
 					else
 
 					:
-						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
+						echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
 					endif; ?>
 					<b class="caret"></b>
 				</a>
 
 				<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
-					<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
+					<?php if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
 					:
 						?>
 						<div class="center">
 							<p>
-								<strong><?php echo $this->me->getLink(null, null, '', '', KunenaTemplate::getInstance()->tooltips()); ?></strong>
+								<strong><?php echo $this->me->getLink(null, null, '', '', \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips()); ?></strong>
 							</p>
 							<a href="<?php echo $this->me->getURL(); ?>">
-								<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post'); ?>
+								<?php echo $this->me->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType'), 'post'); ?>
 							</a>
 							<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 							<p>
-								<?php echo KunenaIcons::clock(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::clock(); ?>
 								<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 							</p>
 						</div>
@@ -73,14 +77,14 @@ $config         = KunenaFactory::getTemplate()->params;
 						<?php if ($status)
 						:
 							?>
-							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
+							<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
 								  id="status-form" class="form-inline">
 								<div>
 									<input id="status-online" class="hide" type="radio" value="0" name="status"/>
 									<label for="status-online" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
-											<?php echo KunenaIcons::online(); ?>
+											<?php echo \Kunena\Forum\Libraries\Icons\Icons::online(); ?>
 											<?php echo Text::_('COM_KUNENA_ONLINE') ?>
 										</a>
 									</label>
@@ -89,9 +93,9 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-away" class="hide" type="radio" value="1" name="status"/>
 									<label for="status-away" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
-											<?php echo KunenaIcons::away(); ?>
+											<?php echo \Kunena\Forum\Libraries\Icons\Icons::away(); ?>
 											<?php echo Text::_('COM_KUNENA_AWAY') ?>
 										</a>
 									</label>
@@ -99,10 +103,10 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-busy" class="hide" type="radio" value="2" name="status"/>
 									<label for="status-busy" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1');
+										<a href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1');
 										?>"
 										   class="btn btn-link">
-											<?php echo KunenaIcons::busy(); ?>
+											<?php echo \Kunena\Forum\Libraries\Icons\Icons::busy(); ?>
 											<?php echo Text::_('COM_KUNENA_BUSY') ?>
 										</a>
 									</label>
@@ -110,9 +114,9 @@ $config         = KunenaFactory::getTemplate()->params;
 								<div>
 									<input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
 									<label for="status-invisible" class="btn btn-link">
-										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
+										<a href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
 										   class="btn btn-link">
-											<?php echo KunenaIcons::invisible(); ?>
+											<?php echo \Kunena\Forum\Libraries\Icons\Icons::invisible(); ?>
 											<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>
 										</a>
 									</label>
@@ -126,7 +130,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<div id="statustext">
 								<?php HTMLHelper::_('bootstrap.renderModal', 'statusText'); ?>
 								<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
-									<?php echo KunenaIcons::edit(); ?>
+									<?php echo \Kunena\Forum\Libraries\Icons\Icons::edit(); ?>
 									<?php echo Text::_('COM_KUNENA_STATUS') ?>
 								</a>
 							</div>
@@ -138,7 +142,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							?>
 							<div id="announcement">
 								<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-									<?php echo KunenaIcons::pencil(); ?>
+									<?php echo \Kunena\Forum\Libraries\Icons\Icons::pencil(); ?>
 									<?php echo Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 								</a>
 							</div>
@@ -149,7 +153,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							?>
 							<div id="mail">
 								<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
-									<?php echo KunenaIcons::email(); ?>
+									<?php echo \Kunena\Forum\Libraries\Icons\Icons::email(); ?>
 									<?php echo $this->inboxCount; ?>
 								</a>
 							</div>
@@ -157,7 +161,7 @@ $config         = KunenaFactory::getTemplate()->params;
 
 						<div id="settings">
 							<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
-								<?php echo KunenaIcons::cog(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::cog(); ?>
 								<?php echo Text::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 							</a>
 						</div>
@@ -168,7 +172,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							?>
 							<div id="allread">
 								<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
-									<?php echo KunenaIcons::drawer(); ?>
+									<?php echo \Kunena\Forum\Libraries\Icons\Icons::drawer(); ?>
 									<?php echo Text::_('COM_KUNENA_MARK_ALL_READ'); ?>
 								</a>
 							</div>
@@ -178,11 +182,11 @@ $config         = KunenaFactory::getTemplate()->params;
 							?>
 							<div class="dropdown-divider"></div>
 							<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
-							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
+							<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
 								  id="logout-form" class="form-inline">
 								<div>
 									<button class="btn btn-link" name="submit" type="submit">
-										<?php echo KunenaIcons::out(); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::out(); ?>
 										<?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
 									</button>
 								</div>
@@ -205,7 +209,7 @@ $config         = KunenaFactory::getTemplate()->params;
 	 */
 	?>
 </div>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-text-form"
+<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-text-form"
 	  class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')
 	->set('id', 'statusTextModal')

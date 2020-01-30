@@ -11,15 +11,20 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\View\View;
 
 /**
  * Category View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewCategory extends KunenaView
+class KunenaViewCategory extends View
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -37,7 +42,7 @@ class KunenaViewCategory extends KunenaView
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
 
-		KunenaHtmlParser::$relative = false;
+		Parser::$relative = false;
 
 		$this->category = $this->get('Category');
 
@@ -64,7 +69,7 @@ class KunenaViewCategory extends KunenaView
 		foreach ($this->topics as $topic)
 		{
 			$description = $topic->last_post_message;
-			$date        = new Joomla\CMS\Date\Date($topic->last_post_time);
+			$date        = new Date($topic->last_post_time);
 			$userid      = $topic->last_post_userid;
 			$username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 
@@ -112,16 +117,16 @@ class KunenaViewCategory extends KunenaView
 
 			if ((bool) $this->config->rss_allow_html)
 			{
-				$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
 			}
 			else
 			{
-				$description = KunenaHtmlParser::parseText($description, (int) $this->config->rss_word_count);
+				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
 			}
 		}
 
 		// Assign values to feed item
-		$item              = new Joomla\CMS\Document\Feed\FeedItem;
+		$item              = new FeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;

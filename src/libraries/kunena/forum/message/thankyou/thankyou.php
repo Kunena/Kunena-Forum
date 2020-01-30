@@ -9,15 +9,23 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum\Message\Thankyou;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use function defined;
 
 /**
- * Class KunenaForumMessageThankyou
+ * Class \Kunena\Forum\Libraries\Forum\Message\MessageThankyou
  *
  * @property int    $userid
  * @property int    $targetuserid
@@ -26,7 +34,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
  *
  * @since   Kunena 6.0
  */
-class KunenaForumMessageThankyou extends CMSObject
+class Thankyou extends CMSObject
 {
 	/**
 	 * @var     integer
@@ -56,7 +64,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 * @param   null  $identifier  identifier
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaForumMessageThankyou
+	 * @return  Helper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -64,7 +72,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
-		return KunenaForumMessageThankyouHelper::get($identifier, $reload);
+		return Helper::get($identifier, $reload);
 	}
 
 	/**
@@ -94,7 +102,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	public function save($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = KunenaForumMessageHelper::get($this->id);
+		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->id);
 
 		if (!$user->exists())
 		{
@@ -154,7 +162,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	}
 
 	/**
-	 * @param   KunenaForumMessage  $message  message
+	 * @param   Message  $message  message
 	 *
 	 * @return  boolean
 	 *
@@ -162,7 +170,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function _savethankyou(KunenaForumMessage $message)
+	protected function _savethankyou(Message $message)
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -211,7 +219,7 @@ class KunenaForumMessageThankyou extends CMSObject
 	public function delete($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = KunenaForumMessageHelper::get($this->id);
+		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($this->id);
 
 		if (!$user->exists())
 		{

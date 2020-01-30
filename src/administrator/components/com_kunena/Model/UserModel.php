@@ -18,7 +18,12 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use KunenaForumCategoryHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Model\Model;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -27,7 +32,7 @@ use function defined;
  *
  * @since  3.0
  */
-class UserModel extends \KunenaModel
+class UserModel extends Model
 {
 	/**
 	 * @inheritDoc
@@ -76,14 +81,14 @@ class UserModel extends \KunenaModel
 				$topic_list[] = $sub->thread;
 			}
 
-			$topic_list = \KunenaForumTopicHelper::getTopics($topic_list);
+			$topic_list = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics($topic_list);
 		}
 
 		return $topic_list;
 	}
 
 	/**
-	 * @return  \KunenaForumCategory[]
+	 * @return  Category[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -93,7 +98,7 @@ class UserModel extends \KunenaModel
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$subscatslist = KunenaForumCategoryHelper::getSubscriptions($userid);
+		$subscatslist = Helper::getSubscriptions($userid);
 
 		return $subscatslist;
 	}
@@ -174,7 +179,7 @@ class UserModel extends \KunenaModel
 	{
 		$user = $this->getUser();
 
-		$modCatList = array_keys(\KunenaAccess::getInstance()->getModeratorStatus($user));
+		$modCatList = array_keys(Access::getInstance()->getModeratorStatus($user));
 
 		if (empty($modCatList))
 		{
@@ -207,7 +212,7 @@ class UserModel extends \KunenaModel
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$user = \KunenaUserHelper::get($userid);
+		$user = \Kunena\Forum\Libraries\User\Helper::get($userid);
 
 		return $user;
 	}

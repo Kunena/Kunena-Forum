@@ -8,10 +8,14 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 ?>
 
@@ -19,7 +23,7 @@ use Joomla\CMS\Language\Text;
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-			     data-target="#kwho"><?php echo KunenaIcons::collapse(); ?></div>
+			     data-target="#kwho"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></div>
 		</div>
 	</div>
 	<h2 class="card-header">
@@ -45,7 +49,7 @@ use Joomla\CMS\Language\Text;
 					<div class="col-md-1">
 						<ul class="list-unstyled">
 							<li class="btn-link">
-								<?php echo KunenaIcons::members(); ?>
+								<?php echo \Kunena\Forum\Libraries\Icons\Icons::members(); ?>
 							</li>
 						</ul>
 					</div>
@@ -56,7 +60,7 @@ use Joomla\CMS\Language\Text;
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 							</span>
 							<?php
-							$template  = KunenaTemplate::getInstance();
+							$template  = \Kunena\Forum\Libraries\Template\Template::getInstance();
 							$direction = $template->params->get('whoisonlineName');
 
 							if ($direction == 'both')
@@ -83,22 +87,22 @@ use Joomla\CMS\Language\Text;
 								<div>
 									<span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
 									<span class="kwho-admin">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 									</span>
 									<span class="kwho-globalmoderator">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 									</span>
 									<span class="kwho-moderator">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 									</span>
 									<span class="kwho-banned">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
 									</span>
 									<span class="kwho-user">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
 									</span>
 									<span class="kwho-guest">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
+										<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
 									</span>
 								</div>
 							<?php endif; ?>

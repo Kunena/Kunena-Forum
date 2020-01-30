@@ -9,18 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\Statistics\General;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerStatisticsGeneralDisplay
+ * Class ComponentStatisticsControllerGeneralDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaControllerDisplay
+class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -42,29 +52,27 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	{
 		parent::before();
 
-		$this->config = KunenaConfig::getInstance();
-
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && KunenaConfig::getInstance()->sef_redirect)
+		if (!$Itemid && $this->config->sef_redirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=statistics&Itemid={$itemid}", false));
+			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=statistics&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		if (!$this->config->statslink_allowed && Factory::getApplication()->getIdentity()->guest)
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$statistics = KunenaForumStatistics::getInstance();
+		$statistics = Statistics::getInstance();
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 

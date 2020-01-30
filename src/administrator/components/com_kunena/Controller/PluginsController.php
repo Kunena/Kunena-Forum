@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Bbcode\KunenaBbcodeEditor;
 use function defined;
 
 /**
@@ -134,7 +135,7 @@ class PluginsController extends AdminController
 			}
 		}
 
-		$editor = \KunenaBbcodeEditor::getInstance();
+		$editor = KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();
 
 		$extension    = $this->input->get('extension');

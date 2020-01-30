@@ -9,17 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Announcement\Kunenalist;
+
 defined('_JEXEC') or die;
+
+use Exception;
+use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutAnnouncementListRow
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementListRow extends KunenaLayout
+class KunenaLayoutAnnouncementListRow extends Layout
 {
 	/**
-	 * @var     KunenaForumAnnouncement
+	 * @var     Announcement
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;

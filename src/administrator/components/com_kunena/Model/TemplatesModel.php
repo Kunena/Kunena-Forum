@@ -19,6 +19,9 @@ use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Template\Helper;
+use Kunena\Forum\Libraries\Template\Template;
 use stdClass;
 
 /**
@@ -39,8 +42,8 @@ class TemplatesModel extends AdminModel
 	{
 		parent::__construct($config);
 		$this->app    = Factory::getApplication();
-		$this->me     = \KunenaUserHelper::getMyself();
-		$this->config = \KunenaFactory::getConfig();
+		$this->me     = \Kunena\Forum\Libraries\User\Helper::getMyself();
+		$this->config = KunenaFactory::getConfig();
 	}
 
 	/**
@@ -59,7 +62,7 @@ class TemplatesModel extends AdminModel
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
-		$xml      = \KunenaTemplate::getInstance($template)->getConfigXml();
+		$xml      = Template::getInstance($template)->getConfigXml();
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
@@ -82,12 +85,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplates()
 	{
 		// Get template xml file info
-		$rows = \KunenaTemplateHelper::parseXmlFiles();
+		$rows = Helper::parseXmlFiles();
 
 		// Set dynamic template information
 		foreach ($rows as $row)
 		{
-			$row->published = \KunenaTemplateHelper::isDefault($row->directory);
+			$row->published = Helper::isDefault($row->directory);
 		}
 
 		$this->setState('list.total', count($rows));
@@ -108,12 +111,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplatedetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$details  = \Kunena\Forum\Libraries\Template\Helper::parseXmlFile($template);
+		$details  = Helper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = \Kunena\Forum\Libraries\Template\Helper::parseXmlFile($template);
+			$details  = Helper::parseXmlFile($template);
 		}
 
 		return $details;
@@ -337,7 +340,7 @@ class TemplatesModel extends AdminModel
 		if (empty($data))
 		{
 			$template = $this->getState('template');
-			$data     = \KunenaTemplate::getInstance($template)->params->toArray();
+			$data     = Template::getInstance($template)->params->toArray();
 		}
 
 		return $data;

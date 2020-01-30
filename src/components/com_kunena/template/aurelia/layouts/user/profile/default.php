@@ -8,21 +8,25 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use function defined;
 
 $user            = $this->user;
-$this->ktemplate = KunenaFactory::getTemplate();
+$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
 $avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$config          = KunenaConfig::getInstance();
+$config          = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 $show            = $config->showuserstats;
 
-$activityIntegration = KunenaFactory::getActivityIntegration();
+$activityIntegration = \Kunena\Forum\Libraries\Factory\KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);
 $medals              = $activityIntegration->getUserMedals($user->userid);
-$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+$optional_username   = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {
@@ -52,7 +56,7 @@ if ($show)
 		:
 			?>
 			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avataredit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
 				:
@@ -108,8 +112,8 @@ if ($user->userid > 1)
 	?>
 	<div class="profile-expand center">
 		<span class="heading btn btn-outline-primary border btn-xs heading-less"
-			  style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-outline-primary border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+			  style="display:none;"><?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+		<span class="heading btn btn-outline-primary border btn-xs"><?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1)
@@ -184,7 +188,7 @@ if ($user->userid > 1)
 					</li>
 				<?php endif; ?>
 
-				<?php if (KunenaFactory::getPrivateMessaging())
+				<?php if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getPrivateMessaging())
 				:
 					?>
 					<li>

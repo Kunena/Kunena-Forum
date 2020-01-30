@@ -8,18 +8,21 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
- **/
-defined('_JEXEC') or die;
+**/
+
+namespace Kunena\Forum\Site;
+
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-
+use function defined;
 ?>
 
 <div class="kfrontend shadow-lg rounded mt-4 border">
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-			     data-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
+			     data-target="#kstats"><?php echo \Kunena\Forum\Libraries\Icons\Icons::collapse(); ?></div>
 		</div>
 	</div>
 	<h2 class="card-header">
@@ -42,7 +45,7 @@ use Joomla\CMS\Language\Text;
 				<div class="row">
 					<div class="col-md-1">
 						<ul class="list-unstyled">
-							<li class="btn-link text-center"><?php echo KunenaIcons::stats(); ?></li>
+							<li class="btn-link text-center"><?php echo \Kunena\Forum\Libraries\Icons\Icons::stats(); ?></li>
 						</ul>
 					</div>
 

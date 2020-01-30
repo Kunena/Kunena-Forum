@@ -21,18 +21,15 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
-use KunenaAccess;
-use KunenaDate;
-use KunenaExceptionAuthorise;
-use KunenaFactory;
-use KunenaForumAnnouncementHelper;
-use KunenaForumCategoryHelper;
-use KunenaForumStatistics;
-use KunenaHtmlParser;
-use KunenaLogin;
-use KunenaMenuHelper;
-use KunenaRoute;
-use KunenaUserHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use StdClass;
 
 /**
@@ -77,7 +74,7 @@ class HtmlView extends BaseHtmlView
 		{
 			if (!$layout)
 			{
-				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
+				throw new Authorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
 			}
 		}
 
@@ -99,7 +96,7 @@ class HtmlView extends BaseHtmlView
 
 		if (empty($this->html))
 		{
-			$this->body = KunenaHtmlParser::parseBBCode($this->body);
+			$this->body = Parser::parseBBCode($this->body);
 		}
 
 		$result = $this->loadTemplateFile($tpl);
@@ -125,7 +122,7 @@ class HtmlView extends BaseHtmlView
 
 		if ($this->config->showannouncement > 0)
 		{
-			$items              = KunenaForumAnnouncementHelper::getAnnouncements();
+			$items              = Helper::getAnnouncements();
 			$this->announcement = array_pop($items);
 
 			if (!$this->announcement)
@@ -150,7 +147,7 @@ class HtmlView extends BaseHtmlView
 
 			if ($this->announcement && $this->announcement->isAuthorised('read'))
 			{
-				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
+				$this->annListUrl = Helper::getUri('list');
 				$this->showdate   = $this->announcement->showdate;
 
 				$result = $this->loadTemplateFile($tpl);
@@ -187,7 +184,7 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
 		$cache   = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -238,8 +235,8 @@ class HtmlView extends BaseHtmlView
 
 			if ($catid)
 			{
-				$parents         = KunenaForumCategoryHelper::getParents($catid);
-				$parents[$catid] = KunenaForumCategoryHelper::get($catid);
+				$parents         = \Kunena\Forum\Libraries\Forum\Category\Helper::getParents($catid);
+				$parents[$catid] = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
 
 				// Remove categories from pathway if menu item contains/excludes them
 				if (!empty($active->query['catid']) && isset($parents[$active->query['catid']]))
@@ -267,7 +264,7 @@ class HtmlView extends BaseHtmlView
 			}
 			elseif ($id)
 			{
-				$topic = KunenaForumTopicHelper::get($id);
+				$topic = \Kunena\Forum\Libraries\Forum\Topic\Helper::get($id);
 				$pathway->addItem($this->escape($topic->subject), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 
@@ -342,9 +339,9 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$users = KunenaUserHelper::getOnlineUsers();
-		KunenaUserHelper::loadUsers(array_keys($users));
-		$onlineusers = KunenaUserHelper::getOnlineCount();
+		$users = \Kunena\Forum\Libraries\User\Helper::getOnlineUsers();
+		\Kunena\Forum\Libraries\User\Helper::loadUsers(array_keys($users));
+		$onlineusers = \Kunena\Forum\Libraries\User\Helper::getOnlineCount();
 
 		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
@@ -377,7 +374,7 @@ class HtmlView extends BaseHtmlView
 
 		foreach ($users as $userid => $usertime)
 		{
-			$user = KunenaUserHelper::get($userid);
+			$user = \Kunena\Forum\Libraries\User\Helper::get($userid);
 
 			if (!$user->showOnline)
 			{
@@ -429,7 +426,7 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$kunena_stats = KunenaForumStatistics::getInstance();
+		$kunena_stats = Statistics::getInstance();
 		$kunena_stats->loadGeneral();
 
 		$this->kunena_stats     = $kunena_stats;
@@ -469,7 +466,7 @@ class HtmlView extends BaseHtmlView
 		{
 			if ($catid > 0)
 			{
-				$category = KunenaForumCategoryHelper::get($catid);
+				$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($catid);
 
 				if ($category->pub_access == 0 && $category->parent)
 				{
@@ -514,7 +511,7 @@ class HtmlView extends BaseHtmlView
 		$this->params            = $this->state->get('params');
 		$private                 = KunenaFactory::getPrivateMessaging();
 		$this->pm_link           = $private->getInboxURL();
-		$this->announcesListLink = KunenaForumAnnouncementHelper::getUrl('list');
+		$this->announcesListLink = Helper::getUrl('list');
 		$result                  = $this->loadTemplateFile($tpl);
 
 		echo $result;
@@ -542,7 +539,7 @@ class HtmlView extends BaseHtmlView
 		$this->parameters->set('startLevel', $basemenu->level + 1);
 		$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 
-		$this->list      = KunenaMenuHelper::getList($this->parameters);
+		$this->list      = \Kunena\Forum\Libraries\Menu\Helper::getList($this->parameters);
 		$this->menu      = $this->app->getMenu();
 		$this->active    = $this->menu->getActive();
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
@@ -582,7 +579,7 @@ class HtmlView extends BaseHtmlView
 		{
 			$this->moduleHtml = $this->getModulePosition('kunena_profilebox');
 
-			$login = KunenaLogin::getInstance();
+			$login = Login::getInstance();
 
 			if ($my->get('guest'))
 			{
@@ -617,7 +614,7 @@ class HtmlView extends BaseHtmlView
 				// Announcements
 				if ($this->me->isModerator())
 				{
-					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
+					$this->announcementsLink = '<a href="' . Helper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
 				}
 			}
 

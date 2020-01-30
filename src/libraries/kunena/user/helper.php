@@ -9,24 +9,37 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\User;
+
 defined('_JEXEC') or die();
 
-KunenaUserHelper::initialize();
+Helper::initialize();
 
-use Joomla\Http\Response;
-use Joomla\Utilities\ArrayHelper;
+use BadMethodCallException;
+use Exception;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
-use Joomla\Utilities\IpHelper;
-use Joomla\Http\Http;
-use Joomla\Http\Transport\Stream as StreamTransport;
+use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Http\Http;
+use Joomla\Http\Response;
+use Joomla\Http\Transport\Stream as StreamTransport;
+use Joomla\Utilities\ArrayHelper;
+use Joomla\Utilities\IpHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Log\Log;
+use function defined;
 
 /**
- * Class KunenaUserHelper
+ * Class \Kunena\Forum\Libraries\User\KunenaUserHelper
  *
  * @since   Kunena 4.0
  */
-abstract class KunenaUserHelper
+abstract class Helper
 {
 	/**
 	 * @var     array|KunenaUser[]
@@ -141,7 +154,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
+	 * Returns the global \Kunena\Forum\Libraries\User\KunenaUser object, only creating it if it doesn't already exist.
 	 *
 	 * @param   mixed  $identifier  The user to load - Can be an integer or string - If string, it is converted to ID
 	 *                              automatically.
@@ -172,7 +185,7 @@ abstract class KunenaUserHelper
 		}
 
 		// Find the user id
-		if ($identifier instanceof Joomla\CMS\User\User)
+		if ($identifier instanceof User)
 		{
 			$id = (int) $identifier->id;
 		}
@@ -184,7 +197,7 @@ abstract class KunenaUserHelper
 		else
 		{
 			// Slow, don't use usernames!
-			$id = (int) Joomla\CMS\User\UserHelper::getUserId((string) $identifier);
+			$id = (int) UserHelper::getUserId((string) $identifier);
 		}
 
 		// Always return fresh user if id is anonymous/not found
@@ -403,7 +416,7 @@ abstract class KunenaUserHelper
 
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
-				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
+				$filter = Access::getUsersByGroup(8);
 				$query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
@@ -840,12 +853,12 @@ abstract class KunenaUserHelper
 
 		if ($response->code == '200')
 		{
-			if (KunenaConfig::getInstance()->log_moderation)
+			if (KunenaFactory::getConfig()->log_moderation)
 			{
-				$log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
+				$log = Log::LOG_USER_REPORT_STOPFORUMSPAM;
 
-				KunenaLog::log(
-					KunenaLog::TYPE_ACTION,
+				Log::log(
+					Log::TYPE_ACTION,
 					$log,
 					[
 						'user_ip_reported'  => $data['ip'],

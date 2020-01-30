@@ -9,20 +9,33 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Forum;
+
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaForumStatistics
  *
  * @since   Kunena 6.0
  */
-class KunenaForumStatistics
+class Statistics
 {
 	/**
 	 * @var     null
@@ -91,7 +104,7 @@ class KunenaForumStatistics
 	public $yesterdayReplyCount = null;
 
 	/**
-	 * @var     array|KunenaForumTopic[]
+	 * @var     array|Topic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topTopics = null;
@@ -163,14 +176,12 @@ class KunenaForumStatistics
 	protected $_db = null;
 
 	/**
-	 * @var     KunenaConfig|null
+	 * @var     Config|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_config = null;
 
 	/**
-	 * @return  void
-	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -178,7 +189,7 @@ class KunenaForumStatistics
 	public function __construct()
 	{
 		$this->_db     = Factory::getDBO();
-		$this->_config = KunenaFactory::getConfig();
+		$this->_config = \Kunena\Forum\Libraries\Config\Config::getInstance();
 
 		$this->showstats            = (bool) $this->_config->showstats;
 		$this->showgenstats         = (bool) $this->_config->showgenstats;
@@ -189,7 +200,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @return  KunenaForumStatistics
+	 * @return  Statistics
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -199,7 +210,7 @@ class KunenaForumStatistics
 	{
 		if (self::$_instance === null)
 		{
-			self::$_instance = new KunenaForumStatistics;
+			self::$_instance = new Statistics;
 		}
 
 		return self::$_instance;
@@ -256,7 +267,7 @@ class KunenaForumStatistics
 	{
 		if ($this->memberCount === null)
 		{
-			$this->memberCount = KunenaUserHelper::getTotalCount();
+			$this->memberCount = Helper::getTotalCount();
 		}
 	}
 
@@ -271,7 +282,7 @@ class KunenaForumStatistics
 	{
 		if ($this->lastUserId === null)
 		{
-			$this->lastUserId = KunenaUserHelper::getLastId();
+			$this->lastUserId = Helper::getLastId();
 		}
 	}
 
@@ -287,7 +298,7 @@ class KunenaForumStatistics
 		if ($this->sectionCount === null)
 		{
 			$this->sectionCount = $this->categoryCount = 0;
-			$categories         = KunenaForumCategoryHelper::getCategories(false, false, 'none');
+			$categories         = Category\Helper::getCategories(false, false, 'none');
 
 			foreach ($categories as $category)
 			{
@@ -432,7 +443,7 @@ class KunenaForumStatistics
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return  array|KunenaForumTopic[]
+	 * @return  array|Topic[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -446,7 +457,7 @@ class KunenaForumStatistics
 		if ($this->topTopics < $limit)
 		{
 			$params = ['orderby' => 'posts DESC'];
-			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
+			list($total, $this->topTopics) = \Kunena\Forum\Libraries\Forum\Topic\Helper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 
@@ -463,7 +474,7 @@ class KunenaForumStatistics
 			{
 				$item          = clone $item;
 				$item->count   = $item->posts;
-				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}
@@ -507,7 +518,8 @@ class KunenaForumStatistics
 				KunenaError::displayDatabaseError($e);
 			}
 
-			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
+			// Codestyler fixes: use real dir
+			$this->topPolls = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
 
@@ -525,7 +537,7 @@ class KunenaForumStatistics
 			{
 				$item          = clone $item;
 				$item->count   = $polls[$item->id]->count;
-				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('kunenaforum.link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -587,7 +599,7 @@ class KunenaForumStatistics
 
 		if ($this->topPosters < $limit)
 		{
-			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
+			$this->topPosters = Helper::getTopPosters($limit);
 
 			$top = reset($this->topPosters);
 
@@ -603,7 +615,7 @@ class KunenaForumStatistics
 			foreach ($this->topPosters as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
+				$item->link    = Helper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -642,7 +654,7 @@ class KunenaForumStatistics
 			foreach ($this->topProfiles as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
+				$item->link    = Helper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -658,6 +670,7 @@ class KunenaForumStatistics
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
+	 *
 	 */
 	public function loadTopThankyous($limit = 0)
 	{
@@ -675,7 +688,7 @@ class KunenaForumStatistics
 
 			if (KunenaFactory::getConfig()->superadmin_userlist)
 			{
-				$filter = Joomla\CMS\Access\Access::getUsersByGroup(8);
+				$filter = Access::getUsersByGroup(8);
 				$query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
 			}
 
@@ -705,7 +718,7 @@ class KunenaForumStatistics
 			foreach ($this->topThanks as &$item)
 			{
 				$item          = clone $item;
-				$item->link    = KunenaUserHelper::get($item->id)->getLink(null, null, '');
+				$item->link    = Helper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

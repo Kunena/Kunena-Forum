@@ -9,16 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\Ban\Manager;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserBanManagerDisplay
+ * Class ComponentUserControllerBanManagerDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDisplay
+class ComponentUserControllerBanManagerDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -39,7 +48,7 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	public $profile;
 
 	/**
-	 * @var     KunenaUserBan
+	 * @var     Ban
 	 * @since   Kunena 6.0
 	 */
 	public $userBans;
@@ -63,15 +72,15 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	{
 		parent::before();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me = Helper::getMyself();
 
 		// TODO: add authorisation
 		// TODO: add pagination
-		$this->userBans = KunenaUserBan::getBannedUsers(0, 50);
+		$this->userBans = Ban::getBannedUsers(0, 50);
 
 		if (!empty($this->userBans))
 		{
-			KunenaUserHelper::loadUsers(array_keys($this->userBans));
+			Helper::loadUsers(array_keys($this->userBans));
 		}
 
 		$this->headerText = Text::_('COM_KUNENA_BAN_BANMANAGER');

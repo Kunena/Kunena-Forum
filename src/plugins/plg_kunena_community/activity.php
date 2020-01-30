@@ -10,17 +10,27 @@
  * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Integration\Activity;
+use Joomla\String\StringHelper;
+use stdClass;
+use function defined;
 
 /**
  * Class KunenaActivityCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityCommunity extends KunenaActivity
+class KunenaActivityCommunity extends Activity
 {
 	/**
 	 * @var     null
@@ -49,7 +59,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 */
 	public function onAfterPost($message)
 	{
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			CFactory::load('libraries', 'userpoints');
 			CUserPoints::assignPoint('com_kunena.thread.new');
@@ -106,7 +116,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$parent->forceSecure  = true;
 		$parent->forceMinimal = true;
 
-		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
+		$content = Parser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
 		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . Text::_('COM_KUNENA_READMORE') . '</a>';
@@ -165,16 +175,16 @@ class KunenaActivityCommunity extends KunenaActivity
 	 */
 	public function onAfterReply($message)
 	{
-		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			CFactory::load('libraries', 'userpoints');
 			CUserPoints::assignPoint('com_kunena.thread.reply');
 		}
 
 		// Get users who have subscribed to the topic, excluding current user.
-		$acl         = KunenaAccess::getInstance();
+		$acl         = Access::getInstance();
 		$subscribers = $acl->getSubscribers(
-			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
+			$message->catid, $message->thread, Access::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
 		);
 
 		foreach ($subscribers as $userid)

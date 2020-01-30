@@ -9,31 +9,41 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Layout;
+
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Request\Request;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
- * Implements Kunena specific functions for page layouts.
+ * implements \Kunena specific functions for page layouts.
  *
  * @see     KunenaLayout
  *
  * @since   Kunena 6.0
  */
-class KunenaLayoutPage extends KunenaLayout
+class Page extends Layout
 {
 	/**
 	 * Returns layout class.
 	 *
 	 * <code>
 	 *    // Output pagination/pages layout with current cart instance.
-	 *    echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
+	 *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination/Pages')->set('pagination', $this->pagination);
 	 * </code>
 	 *
 	 * @param   mixed   $paths  String or array of strings.
 	 * @param   string  $base   Base path.
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -48,7 +58,7 @@ class KunenaLayoutPage extends KunenaLayout
 		// Add all paths for the template overrides.
 		if ($app->isClient('administrator'))
 		{
-			return;
+			$template = KunenaFactory::getAdminTemplate();
 		}
 		else
 		{
@@ -104,7 +114,7 @@ class KunenaLayoutPage extends KunenaLayout
 		}
 
 		// Create default layout object.
-		return new KunenaLayoutPage($path, $templatePaths);
+		return new Layout($path, $templatePaths);
 	}
 
 	/**
@@ -114,13 +124,13 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   mixed  $input    input
 	 * @param   mixed  $options  options
 	 *
-	 * @return  KunenaLayout
+	 * @return  Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function execute($path, Joomla\Input\Input $input = null, $options = null)
+	public function execute($path, Input $input = null, $options = null)
 	{
 		return $this->request($path, $input, $options)->execute();
 	}
@@ -136,9 +146,9 @@ class KunenaLayoutPage extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function request($path, Joomla\Input\Input $input = null, $options = null)
+	public function request($path, Input $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
+		return Request::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
 			->setPrimary()->set('layout', $this->getLayout());
 	}
 

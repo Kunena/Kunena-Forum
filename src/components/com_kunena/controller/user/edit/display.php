@@ -9,17 +9,28 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
 
+namespace Kunena\Forum\Site\Controller\User\edit;
+
+defined('_JEXEC') or die();
+
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\User\User;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\Helper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use function defined;
 
 /**
- * Class ComponentKunenaControllerUserEditDisplay
+ * Class ComponentUserControllerEditDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
+class ComponentUserControllerEditDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -28,7 +39,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Edit';
 
 	/**
-	 * @var     Joomla\CMS\User\User
+	 * @var     User
 	 * @since   Kunena 6.0
 	 */
 	public $user;
@@ -57,13 +68,13 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new Authorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');
 
 		$this->user    = Factory::getUser($userid);
-		$this->profile = KunenaUserHelper::get($userid);
+		$this->profile = Helper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
 		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());

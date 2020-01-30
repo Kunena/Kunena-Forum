@@ -1,14 +1,11 @@
 <?php
 /**
- * Kunena Component
+ * @package     Kunena.Site
+ * @subpackage  com_kunena
  *
- * @package         Kunena.Site
- * @subpackage      Controller
- *
- * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
- **/
+ * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 namespace Kunena\Forum\Site\Controller;
 
@@ -20,7 +17,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 /**
  * Kunena Component Controller
  *
- * @since  1.5
+ * @since   Kunena 6.0
  */
 class DisplayController extends BaseController
 {
@@ -30,10 +27,10 @@ class DisplayController extends BaseController
 	 * @param   boolean  $cachable   If true, the view output will be cached
 	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link \JFilterInput::clean()}.
 	 *
-	 * @return  static  This object to support chaining.
+	 * @return BaseController
 	 *
-	 * @since   1.5
-	 * @throws Exception
+	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{

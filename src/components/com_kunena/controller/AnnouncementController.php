@@ -18,25 +18,25 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
 use Joomla\Utilities\ArrayHelper;
-use KunenaForumAnnouncementHelper;
-use KunenaLog;
+use function defined;
 
 /**
  * Kunena Announcements Controller
  *
  * @since   Kunena 2.0
  */
-class AnnouncementController extends FormController
+class AnnouncementController extends KunenaController
 {
 	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function none()
@@ -50,7 +50,7 @@ class AnnouncementController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function publish()
@@ -68,7 +68,7 @@ class AnnouncementController extends FormController
 
 		foreach ($cid as $id)
 		{
-			$announcement = KunenaForumAnnouncementHelper::get($id);
+			$announcement = Helper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
@@ -103,7 +103,7 @@ class AnnouncementController extends FormController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
+					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
@@ -118,7 +118,7 @@ class AnnouncementController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function unpublish()
@@ -136,7 +136,7 @@ class AnnouncementController extends FormController
 
 		foreach ($cid as $id)
 		{
-			$announcement = KunenaForumAnnouncementHelper::get($id);
+			$announcement = Helper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
@@ -171,7 +171,7 @@ class AnnouncementController extends FormController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
+					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
@@ -186,7 +186,7 @@ class AnnouncementController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function edit()
@@ -194,7 +194,7 @@ class AnnouncementController extends FormController
 		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid, []);
 
-		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
+		$announcement = Helper::get(array_pop($cid));
 
 		$this->setRedirect($announcement->getUrl('edit', false));
 	}
@@ -204,7 +204,7 @@ class AnnouncementController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function delete()
@@ -222,7 +222,7 @@ class AnnouncementController extends FormController
 
 		foreach ($cid as $id)
 		{
-			$announcement = KunenaForumAnnouncementHelper::get($id);
+			$announcement = Helper::get($id);
 
 			try
 			{
@@ -249,14 +249,14 @@ class AnnouncementController extends FormController
 			{
 				if ($this->config->log_moderation)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
+					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
 			}
 		}
 
-		$this->setRedirect(KunenaForumAnnouncementHelper::getUrl('list', false));
+		$this->setRedirect(Helper::getUrl('list', false));
 	}
 
 	/**
@@ -264,7 +264,7 @@ class AnnouncementController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws  \Exception
 	 * @throws  null
 	 */
 	public function save()
@@ -289,7 +289,7 @@ class AnnouncementController extends FormController
 		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
 		$id           = $this->app->input->getInt('id');
-		$announcement = KunenaForumAnnouncementHelper::get($id);
+		$announcement = Helper::get($id);
 
 		if ($fields['created'] == null)
 		{
@@ -334,7 +334,7 @@ class AnnouncementController extends FormController
 
 		if ($this->config->log_moderation)
 		{
-			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
+			\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, $id ? \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_EDIT : \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
 		}
 
 		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

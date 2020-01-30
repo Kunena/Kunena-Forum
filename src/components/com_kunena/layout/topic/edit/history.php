@@ -9,17 +9,25 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site\Layout\Topic\Edit;
+
 defined('_JEXEC') or die;
+
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Layout\Layout;
+use function defined;
 
 /**
  * KunenaLayoutTopicEditHistory
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicEditHistory extends KunenaLayout
+class KunenaLayoutTopicEditHistory extends Layout
 {
 	/**
-	 * @var     KunenaConfig
+	 * @var     Config
 	 * @since   Kunena 6.0
 	 */
 	public $config;

@@ -18,18 +18,18 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\MVC\Controller\FormController;
-use KunenaController;
-use KunenaError;
-use KunenaFactory;
-use KunenaRoute;
+use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Kunena Home Controller
  *
  * @since   Kunena 2.0
  */
-class HomeController extends FormController
+class HomeController extends KunenaController
 {
 	/**
 	 * @var     integer
@@ -66,7 +66,7 @@ class HomeController extends FormController
 			if (!$default || $default->id == $home->id)
 			{
 				// There is no default menu item, use category view instead
-				$default = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+				$default = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
 
 				if ($default)
 				{

@@ -9,19 +9,31 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Libraries\Upload;
+
 defined('_JEXEC') or die;
 
+use Exception;
+use finfo;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Path\KunenaPath;
+use Joomla\String\StringHelper;
+use RuntimeException;
+use StdClass;
 
 /**
  * Class to handle file uploads.
  *
  * @since   Kunena 4.0
  */
-class KunenaUpload
+class Upload
 {
 	/**
 	 * @var     array
@@ -40,13 +52,13 @@ class KunenaUpload
 	 *
 	 * @param   array  $extensions  List of allowed file extensions.
 	 *
-	 * @return  KunenaUpload
+	 * @return  Upload
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getInstance(array $extensions = [])
 	{
-		$instance = new KunenaUpload;
+		$instance = new Upload;
 
 		if ($extensions)
 		{
@@ -291,14 +303,14 @@ class KunenaUpload
 
 		if ($options['completed'])
 		{
-			$options['mime'] = KunenaFile::getMime($outFile);
+			$options['mime'] = \Kunena\Forum\Libraries\File\File::getMime($outFile);
 			$options['hash'] = md5_file($outFile);
 		}
 		else
 		{
 			if ($size)
 			{
-				$options['mime'] = KunenaFile::getMime($outFile);
+				$options['mime'] = \Kunena\Forum\Libraries\File\File::getMime($outFile);
 			}
 		}
 
@@ -379,13 +391,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = Joomla\String\StringHelper::substr($filename, -Joomla\String\StringHelper::strlen($ext));
+			$extension = StringHelper::substr($filename, -StringHelper::strlen($ext));
 
-			if (Joomla\String\StringHelper::strtolower($extension) == Joomla\String\StringHelper::strtolower($ext))
+			if (StringHelper::strtolower($extension) == StringHelper::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name      = Joomla\String\StringHelper::substr($filename, 0, -Joomla\String\StringHelper::strlen($ext));
-				$extension = Joomla\String\StringHelper::substr($extension, 1);
+				$name      = StringHelper::substr($filename, 0, -StringHelper::strlen($ext));
+				$extension = StringHelper::substr($extension, 1);
 
 				if (!$name)
 				{
@@ -487,7 +499,7 @@ class KunenaUpload
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
-		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
+		$file = $filesize > Config::getInstance()->filesize * 1024;
 
 		if ($file)
 		{
@@ -521,11 +533,11 @@ class KunenaUpload
 	{
 		if ($image_type == 'avatar')
 		{
-			$config_size = KunenaConfig::getInstance()->avatarsize;
+			$config_size = Config::getInstance()->avatarsize;
 		}
 		else
 		{
-			$config_size = KunenaConfig::getInstance()->imagesize;
+			$config_size = Config::getInstance()->imagesize;
 		}
 
 		$image = $filesize > intval($config_size * 1024);
@@ -611,7 +623,7 @@ class KunenaUpload
 			}
 
 			$avatartypes = [];
-			$avatartypes = strtolower(KunenaConfig::getInstance()->avatartypes);
+			$avatartypes = strtolower(Config::getInstance()->avatartypes);
 			$a           = explode(', ', $avatartypes);
 
 			if (!in_array($file->ext, $a, true))
@@ -637,13 +649,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = Joomla\String\StringHelper::substr($file->tmp_name, -Joomla\String\StringHelper::strlen($ext));
+			$extension = StringHelper::substr($file->tmp_name, -StringHelper::strlen($ext));
 
-			if (Joomla\String\StringHelper::strtolower($extension) == Joomla\String\StringHelper::strtolower($ext))
+			if (StringHelper::strtolower($extension) == StringHelper::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name      = Joomla\String\StringHelper::substr($file->tmp_name, 0, -Joomla\String\StringHelper::strlen($ext));
-				$extension = Joomla\String\StringHelper::substr($extension, 1);
+				$name      = StringHelper::substr($file->tmp_name, 0, -StringHelper::strlen($ext));
+				$extension = StringHelper::substr($extension, 1);
 
 				if (!$name)
 				{

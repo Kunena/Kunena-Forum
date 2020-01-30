@@ -26,6 +26,12 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\Helper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\Ban;
 
 /**
  * Kunena Users Controller
@@ -57,7 +63,7 @@ class UsersController extends AdminController
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -97,7 +103,7 @@ class UsersController extends AdminController
 		if (!Session::checkToken('post'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -109,7 +115,7 @@ class UsersController extends AdminController
 		if ($userid <= 0)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-			$this->setRedirect(\KunenaRoute::_($this->baseurl, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
@@ -233,7 +239,7 @@ class UsersController extends AdminController
 		{
 			foreach ($uids as $id)
 			{
-				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\Helper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $object)
 				{
@@ -245,7 +251,7 @@ class UsersController extends AdminController
 					}
 					else
 					{
-						$target = KunenaForumCategoryHelper::get($catid);
+						$target = Helper::get($catid);
 
 						if (!$topic->move($target, false, false, '', false))
 						{
@@ -345,7 +351,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$users = KunenaUserHelper::loadUsers($cid);
+		$users = \Kunena\Forum\Libraries\User\Helper::loadUsers($cid);
 
 		$my        = Factory::getApplication()->getIdentity();
 		$usernames = [];
@@ -426,7 +432,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$ban = KunenaBan::getInstanceByUserid($userid, true);
+		$ban = Ban::getInstanceByUserid($userid, true);
 
 		if (!$ban->id)
 		{
@@ -556,7 +562,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user = KunenaUserHelper::get($userid);
+		$user = \Kunena\Forum\Libraries\User\Helper::get($userid);
 
 		$this->setModerate($user, $modCatids);
 
@@ -597,17 +603,17 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user     = KunenaUserHelper::get($userid);
+		$user     = \Kunena\Forum\Libraries\User\Helper::get($userid);
 		$category = null;
 
-		if ($category instanceof KunenaForumCategory)
+		if ($category instanceof Category)
 		{
 			$category = $category->id;
 		}
 
 		$category = intval($category);
 
-		$usercategory = KunenaUserHelper::get($category, $user);
+		$usercategory = \Kunena\Forum\Libraries\User\Helper::get($category, $user);
 
 		if ($usercategory->role == 1)
 		{
@@ -621,10 +627,10 @@ class UsersController extends AdminController
 			$success = $usercategory->save();
 
 			// Clear role cache
-			KunenaAccess::getInstance()->clearCache();
+			Access::getInstance()->clearCache();
 
 			// Change user moderator status
-			$moderator = KunenaAccess::getInstance()->getModeratorStatus($user);
+			$moderator = Access::getInstance()->getModeratorStatus($user);
 
 			if ($user->moderator != !empty($moderator))
 			{
@@ -809,8 +815,8 @@ class UsersController extends AdminController
 		}
 
 		// Update moderator rights
-		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
-		$users      = KunenaUserHelper::loadUsers($cid);
+		$categories = Helper::getCategories(false, false, 'admin');
+		$users      = \Kunena\Forum\Libraries\User\Helper::loadUsers($cid);
 
 		foreach ($users as $user)
 		{
@@ -825,7 +831,7 @@ class UsersController extends AdminController
 			// Global moderator is a special case
 			if ($this->me->isAdmin() && in_array(0, $catids))
 			{
-				KunenaAccess::getInstance()->setModerator(0, $user, true);
+				Access::getInstance()->setModerator(0, $user, true);
 			}
 		}
 
@@ -987,7 +993,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories($catids);
+		$categories = Helper::getCategories($catids);
 
 		foreach ($userids as $userid)
 		{

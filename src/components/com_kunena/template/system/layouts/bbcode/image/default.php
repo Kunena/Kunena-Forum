@@ -9,7 +9,12 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Site;
+
 defined('_JEXEC') or die();
+
+use function defined;
 
 $title    = $this->title;
 $url      = $this->url;
@@ -21,7 +26,7 @@ $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');
 
-$config = KunenaConfig::getInstance();
+$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';

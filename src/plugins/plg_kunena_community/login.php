@@ -9,9 +9,13 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
+use function defined;
 
 /**
  * Class KunenaLoginCommunity

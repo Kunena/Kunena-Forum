@@ -9,7 +9,17 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-defined('_JEXEC') or die;
+
+namespace Kunena\Forum\Site\Controller\Widget\Announcement;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\Helper;
+use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetAnnouncementDisplay
@@ -43,14 +53,14 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 	{
 		parent::before();
 
-		$config = KunenaConfig::getInstance();
+		$config = Config::getInstance();
 
 		if (!$config->showannouncement)
 		{
 			return false;
 		}
 
-		$items              = KunenaForumAnnouncementHelper::getAnnouncements();
+		$items              = Helper::getAnnouncements();
 		$this->announcement = array_pop($items);
 
 		if (!$this->announcement || !$this->announcement->isAuthorised('read'))

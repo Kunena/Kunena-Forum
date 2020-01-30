@@ -23,7 +23,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
@@ -447,7 +447,7 @@ abstract class KunenaRoute
 			$language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
 			self::$search = false;
 
-			if (Config::getInstance()->get('cache_mid'))
+			if (KunenaConfig::getInstance()->get('cache_mid'))
 			{
 				// FIXME: Experimental caching.
 				$cache        = self::getCache();

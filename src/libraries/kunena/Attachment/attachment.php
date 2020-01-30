@@ -24,7 +24,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Message\Message;
@@ -546,7 +546,7 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
-		$protect = (bool) Config::getInstance()->attachment_protection;
+		$protect = (bool) KunenaConfig::getInstance()->attachment_protection;
 
 		// Use direct URLs to the attachments if protection is turned off and file wasn't protected.
 		if (!$protect)
@@ -1072,7 +1072,7 @@ class Attachment extends KunenaDatabaseObject
 
 		if (!$user->exists())
 		{
-			$config = Config::getInstance();
+			$config = KunenaConfig::getInstance();
 
 			if ($this->isImage() && !$config->showimgforguest)
 			{

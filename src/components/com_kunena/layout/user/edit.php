@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\User\Helper;
@@ -75,7 +74,7 @@ class KunenaLayoutUserEdit extends Layout
 
 		if ($myProfile)
 		{
-			if (config::getInstance()->allowavatarupload || Config::getInstance()->allowavatargallery)
+			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
 			{
 				$tab            = new stdClass;
 				$tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');

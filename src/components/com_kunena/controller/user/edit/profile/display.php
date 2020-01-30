@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use function defined;
@@ -63,7 +62,7 @@ class ComponentUserControllerEditProfileDisplay extends KunenaControllerDisplay
 		$this->genders[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
 		$this->genders[] = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
-		$config = Config::getInstance();
+		$config = KunenaConfig::getInstance();
 
 		if ($config->social)
 		{

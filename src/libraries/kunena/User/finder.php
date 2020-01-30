@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
 /**
@@ -33,7 +33,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	protected $table = '#__users';
 
 	/**
-	 * @var     Config|mixed
+	 * @var     KunenaConfig|mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $config;
@@ -49,7 +49,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	{
 		parent::__construct();
 
-		$this->config = Config::getInstance();
+		$this->config = KunenaConfig::getInstance();
 		$this->limit  = $this->config->userlist_rows;
 
 		$this->query->leftJoin($this->db->quoteName('#__kunena_users', 'ku') . ' ON ' . $this->db->quoteName('ku.userid') . ' = ' . $this->db->quoteName('a.id'));

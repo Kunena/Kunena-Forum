@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
@@ -227,7 +226,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
 		$this->me       = Helper::getMyself();
-		$this->config   = Config::getInstance();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 	}
 }

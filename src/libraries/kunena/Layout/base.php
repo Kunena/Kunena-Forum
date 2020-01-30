@@ -21,7 +21,7 @@ use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Log\Log;
 use Kunena\Forum\Libraries\Compat\Joomla\Layout\LayoutBase;
 use Joomla\Input\Input;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -111,7 +111,7 @@ class Base extends LayoutBase
 		// Setup dependencies.
 		$this->_name        = $name;
 		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
-		$this->debug        = JDEBUG || Config::getInstance()->get('debug');
+		$this->debug        = JDEBUG || KunenaConfig::getInstance()->get('debug');
 	}
 
 	/**

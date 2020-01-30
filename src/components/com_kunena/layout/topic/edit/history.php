@@ -14,7 +14,6 @@ namespace Kunena\Forum\Site\Layout\Topic\Edit;
 
 defined('_JEXEC') or die;
 
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\Layout;
 use function defined;
@@ -27,7 +26,7 @@ use function defined;
 class KunenaLayoutTopicEditHistory extends Layout
 {
 	/**
-	 * @var     Config
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;

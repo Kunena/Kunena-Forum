@@ -23,7 +23,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -54,7 +54,7 @@ class KunenaController extends BaseController
 	public $me = null;
 
 	/**
-	 * @var     Config|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;

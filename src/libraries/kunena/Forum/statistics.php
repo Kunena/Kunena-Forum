@@ -21,7 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Html\Parser;
@@ -176,7 +176,7 @@ class Statistics
 	protected $_db = null;
 
 	/**
-	 * @var     Config|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_config = null;
@@ -189,7 +189,7 @@ class Statistics
 	public function __construct()
 	{
 		$this->_db     = Factory::getDBO();
-		$this->_config = \Kunena\Forum\Libraries\Config\Config::getInstance();
+		$this->_config = KunenaConfig::getInstance();
 
 		$this->showstats            = (bool) $this->_config->showstats;
 		$this->showgenstats         = (bool) $this->_config->showgenstats;
@@ -457,7 +457,7 @@ class Statistics
 		if ($this->topTopics < $limit)
 		{
 			$params = ['orderby' => 'posts DESC'];
-			list($total, $this->topTopics) = \Kunena\Forum\Libraries\Forum\Topic\Helper::getLatestTopics(false, 0, $limit, $params);
+			list($total, $this->topTopics) = Topic\Helper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 
@@ -519,7 +519,7 @@ class Statistics
 			}
 
 			// Codestyler fixes: use real dir
-			$this->topPolls = \Kunena\Forum\Libraries\Forum\Topic\Helper::getTopics(array_keys($polls));
+			$this->topPolls = Topic\Helper::getTopics(array_keys($polls));
 
 			$top = reset($this->topPolls);
 

@@ -28,7 +28,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use function defined;
 
 /**
- * Class Config
+ * Class KunenaConfig
  *
  * @since   Kunena 6.0
  * @property int     $id
@@ -1584,7 +1584,7 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @return  Config|mixed
+	 * @return  KunenaConfig|mixed
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1734,7 +1734,7 @@ class KunenaConfig extends CMSObject
 	 */
 	public function reset()
 	{
-		$instance = new Config;
+		$instance = new KunenaConfig;
 		$this->bind($instance->getProperties());
 	}
 

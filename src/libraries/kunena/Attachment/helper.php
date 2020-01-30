@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -371,7 +371,7 @@ abstract class Helper
 	{
 		if (is_null($protected))
 		{
-			$protected = (bool) Config::getInstance()->attachment_protection;
+			$protected = (bool) KunenaConfig::getInstance()->attachment_protection;
 		}
 
 		if ($protected)

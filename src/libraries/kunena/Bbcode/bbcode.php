@@ -32,7 +32,7 @@ use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Uri\UriHelper;
 use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
@@ -1346,7 +1346,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			$internal = true;
 		}
 
-		$smart = Config::getInstance()->smartlinking;
+		$smart = KunenaConfig::getInstance()->smartlinking;
 
 		if ($smart && $bbcode->get_title($url))
 		{
@@ -2627,7 +2627,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		$layout                                              = Layout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
-		$config                                              = Config::getInstance();
+		$config                                              = KunenaConfig::getInstance();
 		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
 
 		if (!$attachment->exists() || !$attachment->getPath())

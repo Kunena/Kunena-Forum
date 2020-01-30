@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
@@ -124,7 +124,7 @@ class Access
 			}
 		}
 
-		if (Config::getInstance()->get('cache_adm'))
+		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Load administrators and moderators from cache
 			$cache = Factory::getCache('com_kunena', 'output');
@@ -195,7 +195,7 @@ class Access
 		}
 
 		// FIXME: enable caching after fixing the issues
-		if (Config::getInstance()->get('cache_adm'))
+		if (KunenaConfig::getInstance()->get('cache_adm'))
 		{
 			// Store new data into cache
 			$cache = Factory::getCache('com_kunena', 'output');
@@ -982,7 +982,7 @@ jQuery(document).ready(function ($) {
 			$query->where("u.id IN ({$userlist})");
 
 			// Only send to users whose Joomla account is enabled to Receive System Emails
-			if (Config::getInstance()->get('use_system_emails'))
+			if (KunenaConfig::getInstance()->get('use_system_emails'))
 			{
 				$query->where("u.sendEmail = 1");
 			}

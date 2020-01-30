@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Html\Parser;
@@ -134,7 +133,7 @@ class KunenaLayoutCategoryItem extends Layout
 		$url             = $category->getNewTopicUrl();
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$topicicontype   = $this->ktemplate->params->get('topicicontype');
-		$config          = Config::getInstance();
+		$config          = KunenaConfig::getInstance();
 
 		if ($config->read_only)
 		{
@@ -325,7 +324,7 @@ class KunenaLayoutCategoryItem extends Layout
 
 		if (!$content)
 		{
-			if (Config::getInstance()->disable_re)
+			if (KunenaConfig::getInstance()->disable_re)
 			{
 				$content = Parser::parseText($category->getLastTopic()->subject, $length);
 			}

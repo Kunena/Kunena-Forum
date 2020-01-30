@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -191,7 +190,7 @@ class KunenaLayoutCategoryIndex extends Layout
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
-		if (Config::getInstance()->enablerss)
+		if (KunenaConfig::getInstance()->enablerss)
 		{
 			$params = '&catid=' . (int) $catid;
 

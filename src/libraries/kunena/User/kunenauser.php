@@ -29,7 +29,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Category\Category;
@@ -338,7 +338,7 @@ class KunenaUser extends CMSObject
 		$input     = $this->_app->input;
 		$method    = $input->getInt('userid');
 		$kuser     = KunenaFactory::getUser($method);
-		$config    = Config::getInstance();
+		$config    = KunenaConfig::getInstance();
 		$exception = null;
 
 		switch ($action)

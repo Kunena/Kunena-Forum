@@ -29,7 +29,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -376,7 +376,7 @@ class Message extends KunenaDatabaseObject
 		$message->ip      = \Kunena\Forum\Libraries\User\Helper::getUserIp();
 
 		// Add IP to user.
-		if (Config::getInstance()->iptracking)
+		if (KunenaConfig::getInstance()->iptracking)
 		{
 			if (empty($user->ip))
 			{
@@ -384,7 +384,7 @@ class Message extends KunenaDatabaseObject
 			}
 		}
 
-		if (Config::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
+		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || \Kunena\Forum\Libraries\User\Helper::getMyself()->isModerator())
 		{
 			if (isset($fields['subject']))
 			{

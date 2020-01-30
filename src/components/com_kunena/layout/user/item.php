@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Forum;
 use Kunena\Forum\Libraries\Layout\Layout;
@@ -49,7 +48,7 @@ class KunenaLayoutUserItem extends Layout
 	public $me;
 
 	/**
-	 * @var     Config
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;

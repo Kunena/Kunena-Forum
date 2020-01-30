@@ -28,7 +28,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\Authorise;
@@ -1315,7 +1314,7 @@ class UserController extends KunenaController
 		}
 		else
 		{
-			$avatar->path = Uri::root() . 'media/kunena/avatars/' . Config::getInstance()->defaultavatar;
+			$avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultavatar;
 		}
 
 		header('Content-type: application/json');

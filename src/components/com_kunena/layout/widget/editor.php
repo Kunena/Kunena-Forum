@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
@@ -96,7 +95,7 @@ class KunenaLayoutWidgetEditor extends Layout
 	{
 		$this->ktemplate  = KunenaFactory::getTemplate();
 		$templatesettings = $this->ktemplate->params;
-		$config           = Config::getInstance();
+		$config           = KunenaConfig::getInstance();
 
 		$bbcodes = [
 			"spoiler",

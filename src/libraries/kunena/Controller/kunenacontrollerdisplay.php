@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Layout\Base;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
@@ -46,7 +46,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public $layout = 'default';
 
 	/**
-	 * @var     Config
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;
@@ -194,7 +194,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function before()
 	{
 		$this->layout = $this->input->getCmd('layout', 'default');
-		$this->config = Config::getInstance();
+		$this->config = KunenaConfig::getInstance();
 
 		if ($this->primary)
 		{

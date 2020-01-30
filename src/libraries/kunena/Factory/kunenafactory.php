@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Integration\Activity;
 use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
@@ -262,7 +262,7 @@ abstract class KunenaFactory
 	 */
 	public static function getConfig()
 	{
-		return Config::getInstance();
+		return KunenaConfig::getInstance();
 	}
 
 	/**

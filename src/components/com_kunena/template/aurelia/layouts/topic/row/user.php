@@ -15,7 +15,6 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -23,13 +22,13 @@ use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
 $topic           = $this->topic;
-$topicPages      = $topic->getPagination(null, Config::getInstance()->messages_per_page, 3);
+$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic       = $topic->getUserTopic();
 $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $category        = $this->topic->getCategory();
-$config          = Config::getInstance();
+$config          = KunenaConfig::getInstance();
 $txt             = '';
 
 if ($this->topic->ordering)

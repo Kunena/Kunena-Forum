@@ -28,7 +28,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
@@ -394,7 +393,7 @@ class TopicController extends KunenaController
 				if ($attachment->isImage())
 				{
 					$imageInfo = KunenaImage::getImageFileProperties($uploadFile);
-					$config    = Config::getInstance();
+					$config    = KunenaConfig::getInstance();
 
 					if ($imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
 					{
@@ -1109,7 +1108,7 @@ class TopicController extends KunenaController
 		}
 
 		// Check if we are editing first post and update topic if we are!
-		if ($topic->first_post_id == $message->id || Config::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || Helper::getMyself()->isModerator())
+		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || Helper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
 		}

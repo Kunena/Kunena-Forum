@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Message\Message;
@@ -295,7 +295,7 @@ class Layout extends Base
 						break;
 					case 'unread':
 					case 'last':
-						if (!Helper::getMyself()->userid && Config::getInstance()->teaser)
+						if (!Helper::getMyself()->userid && KunenaConfig::getInstance()->teaser)
 						{
 							$title = Parser::stripBBCode($topic->first_post_message, 200, false);
 						}
@@ -375,7 +375,7 @@ class Layout extends Base
 
 		if (!$content)
 		{
-			if (Config::getInstance()->disable_re)
+			if (KunenaConfig::getInstance()->disable_re)
 			{
 				$content = Parser::parseText($lastTopic->subject, $length);
 			}

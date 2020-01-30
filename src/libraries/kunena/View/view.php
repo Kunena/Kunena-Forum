@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Message\Message;
@@ -61,7 +61,7 @@ class View extends HtmlView
 	public $me = null;
 
 	/**
-	 * @var     Config|null
+	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;

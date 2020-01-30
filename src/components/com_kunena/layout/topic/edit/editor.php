@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
@@ -33,7 +32,7 @@ use function defined;
 class KunenaLayoutTopicEditEditor extends Layout
 {
 	/**
-	 * @var     Config
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;

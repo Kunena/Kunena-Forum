@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -499,7 +499,7 @@ class Upload
 	 */
 	protected function checkFileSizeFileAttachment($filesize)
 	{
-		$file = $filesize > Config::getInstance()->filesize * 1024;
+		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
 
 		if ($file)
 		{
@@ -533,11 +533,11 @@ class Upload
 	{
 		if ($image_type == 'avatar')
 		{
-			$config_size = Config::getInstance()->avatarsize;
+			$config_size = KunenaConfig::getInstance()->avatarsize;
 		}
 		else
 		{
-			$config_size = Config::getInstance()->imagesize;
+			$config_size = KunenaConfig::getInstance()->imagesize;
 		}
 
 		$image = $filesize > intval($config_size * 1024);
@@ -623,7 +623,7 @@ class Upload
 			}
 
 			$avatartypes = [];
-			$avatartypes = strtolower(Config::getInstance()->avatartypes);
+			$avatartypes = strtolower(KunenaConfig::getInstance()->avatartypes);
 			$a           = explode(', ', $avatartypes);
 
 			if (!in_array($file->ext, $a, true))

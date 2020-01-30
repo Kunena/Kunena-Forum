@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Pathway\Pathway;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -47,7 +47,7 @@ use function defined;
 class Display extends KunenaControllerDisplay
 {
 	/**
-	 * @var     Config
+	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config;
@@ -264,7 +264,7 @@ class Display extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me       = Helper::getMyself();
-		$this->config   = Config::getInstance();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();

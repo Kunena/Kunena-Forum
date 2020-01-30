@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Config\Config;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
@@ -128,7 +127,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me       = Helper::getMyself();
-		$this->config   = Config::getInstance();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();

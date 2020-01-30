@@ -15,7 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Kunena;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Config\Config;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Image\Helper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Integration\Avatar;
@@ -95,11 +95,11 @@ class KunenaAvatar extends Avatar
 			// If avatar does not exist use default image.
 			if ($sizex <= 90)
 			{
-				$avatar = Config::getInstance()->defaultavatarsmall;
+				$avatar = KunenaConfig::getInstance()->defaultavatarsmall;
 			}
 			else
 			{
-				$avatar = Config::getInstance()->defaultavatar;
+				$avatar = KunenaConfig::getInstance()->defaultavatar;
 			}
 
 			// Search from the template.

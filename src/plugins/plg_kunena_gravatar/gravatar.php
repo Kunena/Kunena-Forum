@@ -28,8 +28,8 @@ class plgKunenaGravatar extends CMSPlugin
 	/**
 	 * plgKunenaGravatar constructor.
 	 *
-	 * @param   object  $subject subject
-	 * @param   object  $config  config
+	 * @param   object  $subject  subject
+	 * @param   object  $config   config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -57,9 +57,6 @@ class plgKunenaGravatar extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . '/class.php';
-		require_once __DIR__ . '/avatar.php';
 
 		return new KunenaAvatarGravatar($this->params);
 	}

@@ -25,11 +25,14 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -164,7 +167,7 @@ class Access
 		$this->moderatorsByUserid = [];
 
 		// Reset read access for the current session
-		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 		Factory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
 
 		// @var KunenaAccess $access
@@ -271,7 +274,7 @@ class Access
 	}
 
 	/**
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  array
 	 *
@@ -307,7 +310,7 @@ class Access
 	}
 
 	/**
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  string
 	 *
@@ -384,7 +387,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 * Get access groups for the selected category.
 	 *
-	 * @param  Category  $category  Category
+	 * @param   Category  $category  Category
 	 *
 	 * @return  array|null
 	 *
@@ -503,7 +506,7 @@ jQuery(document).ready(function ($) {
 		// Check if user exists
 		if (!($user instanceof KunenaUser))
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+			$user = KunenaUserHelper::get($user);
 		}
 
 		if (!$user->exists())
@@ -512,7 +515,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		$success      = true;
-		$usercategory = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($category_id, $user);
+		$usercategory = CategoryUserHelper::get($category_id, $user);
 
 		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status))
 		{
@@ -591,7 +594,7 @@ jQuery(document).ready(function ($) {
 			if ($read[$id] === null)
 			{
 				$list       = [];
-				$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'none');
+				$categories = CategoryHelper::getCategories(false, false, 'none');
 
 				foreach ($categories as $category)
 				{
@@ -651,7 +654,7 @@ jQuery(document).ready(function ($) {
 	{
 		if (!($user instanceof KunenaUser))
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+			$user = KunenaUserHelper::get($user);
 		}
 
 		// Guests and banned users cannot be moderators
@@ -708,7 +711,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		// In backend every logged in user has global admin rights (for now)
-		if (Factory::getApplication()->isClient('administrator') && $user->userid == \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid)
+		if (Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
 		{
 			return true;
 		}
@@ -733,8 +736,8 @@ jQuery(document).ready(function ($) {
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param  Category  $category  category
-	 * @param   int                  $userid    user id
+	 * @param   Category  $category  category
+	 * @param   int       $userid    user id
 	 *
 	 * @return  array
 	 *
@@ -1005,7 +1008,7 @@ jQuery(document).ready(function ($) {
 
 	/**
 	 * @param   Topic  $topic  loadSubscribers
-	 * @param   bool              $type   type
+	 * @param   bool   $type   type
 	 *
 	 * @return  array
 	 *

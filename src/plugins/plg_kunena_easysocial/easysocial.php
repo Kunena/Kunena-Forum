@@ -32,15 +32,15 @@ require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 /**
  * @package     Kunena
  *
- * @since   Kunena 6.0
+ * @since       Kunena 6.0
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
 	/**
 	 * plgKunenaEasySocial constructor.
 	 *
-	 * @param   object  $subject subject
-	 * @param   object  $config  config
+	 * @param   object  $subject  subject
+	 * @param   object  $config   config
 	 *
 	 * @return  void|boolean
 	 *
@@ -73,8 +73,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return null;
 		}
 
-		require_once __DIR__ . "/login.php";
-
 		return new KunenaLoginEasySocial($this->params);
 	}
 
@@ -90,8 +88,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		{
 			return null;
 		}
-
-		require_once __DIR__ . "/avatar.php";
 
 		return new AvatarEasySocial($this->params);
 	}
@@ -110,8 +106,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return null;
 		}
 
-		require_once __DIR__ . "/profile.php";
-
 		return new KunenaProfileEasySocial($this->params);
 	}
 
@@ -129,8 +123,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return null;
 		}
 
-		require_once __DIR__ . "/private.php";
-
 		return new KunenaPrivateEasySocial($this->params);
 	}
 
@@ -147,8 +139,6 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		{
 			return null;
 		}
-
-		require_once __DIR__ . "/activity.php";
 
 		return new KunenaActivityEasySocial($this->params);
 	}

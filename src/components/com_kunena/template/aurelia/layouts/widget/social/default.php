@@ -13,6 +13,7 @@
 namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
+
 use function defined;
 
 if ($this->me->socialshare == 0 && $this->me->exists())

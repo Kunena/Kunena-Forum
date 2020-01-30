@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -29,12 +29,6 @@ use function defined;
  */
 class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Ban/Form';
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
@@ -52,6 +46,12 @@ class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Ban/Form';
 
 	/**
 	 * Prepare ban form.

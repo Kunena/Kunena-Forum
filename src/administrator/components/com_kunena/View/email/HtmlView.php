@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\View\Email;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -35,7 +36,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

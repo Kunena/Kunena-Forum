@@ -17,16 +17,22 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\UserHelper;
-use Kunena\Forum\Libraries\Controller\KunenaController;
+use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Diagnostics;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\MVC\Controller\FormController;
+use KunenaModelInstall;
 use RuntimeException;
 use StdClass;
 use function defined;
@@ -127,7 +133,7 @@ class ToolsController extends FormController
 		$ids = $this->app->input->get('prune_forum', [], 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($ids, false, 'admin');
+		$categories = CategoryHelper::getCategories($ids, false, 'admin');
 
 		if (!$categories)
 		{
@@ -456,8 +462,8 @@ class ToolsController extends FormController
 	/**
 	 * Set proper response for both AJAX and traditional calls.
 	 *
-	 * @param   array  $response response
-	 * @param   bool   $ajax     ajax
+	 * @param   array  $response  response
+	 * @param   bool   $ajax      ajax
 	 *
 	 * @return  void
 	 *
@@ -538,8 +544,8 @@ class ToolsController extends FormController
 						if ($state->topics)
 						{
 							// Update topic statistics
-							\Kunena\Forum\Libraries\Attachment\AttachmentHelper::cleanup();
-							\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::recount(false, $state->start, $state->start + $count);
+							AttachmentHelper::cleanup();
+							TopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
@@ -551,7 +557,7 @@ class ToolsController extends FormController
 						if ($state->usertopics)
 						{
 							// Update user's topic statistics
-							\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::recount(false, $state->start, $state->start + $count);
+							TopicUserHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
@@ -563,8 +569,8 @@ class ToolsController extends FormController
 						if ($state->categories)
 						{
 							// Update category statistics
-							\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::recount();
-							\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::fixAliases();
+							CategoryHelper::recount();
+							CategoryHelper::fixAliases();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
 						}
 						break;
@@ -572,7 +578,7 @@ class ToolsController extends FormController
 						if ($state->users)
 						{
 							// Update user statistics
-							\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recountThankyou();
+							MessageThankyouHelper::recountThankyou();
 							KunenaUserHelper::recount();
 							KunenaUserHelper::recountPostsNull();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
@@ -582,7 +588,7 @@ class ToolsController extends FormController
 						if ($state->polls)
 						{
 							// Update user statistics
-							\Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper::recount();
+							PollHelper::recount();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
 						break;
@@ -702,7 +708,7 @@ class ToolsController extends FormController
 	{
 		require_once KPATH_ADMIN . '/install/model.php';
 
-		$installer = new \KunenaModelInstall;
+		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
 		$installer->createMenu();
 

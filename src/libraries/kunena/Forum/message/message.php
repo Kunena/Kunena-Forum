@@ -29,27 +29,35 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Attachment\Attachment;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
+use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
-
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
  *
+ * @since   Kunena 6.0
  * @property int    $parent
  * @property int    $thread
  * @property int    $catid
@@ -71,7 +79,6 @@ use function defined;
  * @property string $params
  * @property string $message
  *
- * @since   Kunena 6.0
  */
 class Message extends KunenaDatabaseObject
 {
@@ -217,7 +224,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function isNew($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
 		{
@@ -231,14 +238,14 @@ class Message extends KunenaDatabaseObject
 			return false;
 		}
 
-		$allreadtime = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
+		$allreadtime = CategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
 
 		if ($allreadtime && $this->time < $allreadtime)
 		{
 			return false;
 		}
 
-		$read = \Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper::get($this->getTopic(), $user);
+		$read = TopicUserReadHelper::get($this->getTopic(), $user);
 
 		if ($this->id == $read->message_id || $this->time < $read->time)
 		{
@@ -257,7 +264,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->catid);
+		return CategoryHelper::get($this->catid);
 	}
 
 	/**
@@ -271,7 +278,7 @@ class Message extends KunenaDatabaseObject
 	{
 		if (!$this->_topic)
 		{
-			$this->_topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->thread);
+			$this->_topic = TopicHelper::get($this->thread);
 		}
 
 		return $this->_topic;
@@ -361,7 +368,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function newReply($fields = [], $user = null, $safefields = null)
 	{
-		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user     = KunenaUserHelper::get($user);
 		$topic    = $this->getTopic();
 		$category = $this->getCategory();
 
@@ -373,18 +380,18 @@ class Message extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp();
+		$message->ip      = KunenaUserHelper::getUserIp();
 
 		// Add IP to user.
 		if (KunenaConfig::getInstance()->iptracking)
 		{
 			if (empty($user->ip))
 			{
-				$user->ip = \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp();
+				$user->ip = KunenaUserHelper::getUserIp();
 			}
 		}
 
-		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
 			if (isset($fields['subject']))
 			{
@@ -457,19 +464,6 @@ class Message extends KunenaDatabaseObject
 
 		// Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
 		Factory::getApplication()->RegisterEvent('onAfterRespond', [$this, 'notificationPost']);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public static function notificationCloseConnection()
-	{
-		$app = Factory::getApplication();
-		$app->setHeader('Connection', 'close');
 	}
 
 	/**
@@ -716,7 +710,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getPermaUri($category = null)
 	{
-		$category = $category ? \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category) : $this->getCategory();
+		$category = $category ? CategoryHelper::get($category) : $this->getCategory();
 
 		if (!$this->exists() || !$category->exists())
 		{
@@ -729,36 +723,16 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
-	 * @param   Mail   $mail          mail
-	 * @param   int                    $subscription  subscription
-	 * @param   string                 $subject       subject
-	 * @param   string                 $url           url
-	 * @param   bool                   $once          once
-	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
+	public static function notificationCloseConnection()
 	{
-		$layout = Layout::factory('Email/Subscription')->debug(false)
-			->set('mail', $mail)
-			->set('message', $this)
-			->set('messageUrl', $url)
-			->set('once', $once);
-
-		try
-		{
-			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
-		}
-		catch (Exception $e)
-		{
-		}
-
-		$mail->setBody($msg);
+		$app = Factory::getApplication();
+		$app->setHeader('Connection', 'close');
 	}
 
 	/**
@@ -797,11 +771,11 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function save()
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$user = KunenaUserHelper::getMyself();
 
 		if ($user->userid == 0 && $this->userid)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
+			$user = KunenaUserHelper::get($this->userid);
 		}
 
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
@@ -1051,7 +1025,7 @@ class Message extends KunenaDatabaseObject
 			}
 		}
 
-		\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
+		MessageThankyouHelper::recount();
 
 		return true;
 	}
@@ -1071,11 +1045,11 @@ class Message extends KunenaDatabaseObject
 	{
 		if ($ids === false)
 		{
-			$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getByMessage($this->id, $action);
+			$attachments = AttachmentHelper::getByMessage($this->id, $action);
 		}
 		else
 		{
-			$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getById($ids, $action);
+			$attachments = AttachmentHelper::getById($ids, $action);
 
 			foreach ($attachments as $id => $attachment)
 			{
@@ -1103,7 +1077,7 @@ class Message extends KunenaDatabaseObject
 		// If post was published and then moved, we need to update old topic
 		if (!$this->_hold && $this->_thread && $this->_thread != $this->thread)
 		{
-			$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->_thread);
+			$topic = TopicHelper::get($this->_thread);
 
 			if (!$topic->update($this, -1))
 			{
@@ -1181,7 +1155,7 @@ class Message extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper
+	 * @return TopicUserHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1193,7 +1167,7 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper
+	 * @return  MessageThankyouHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1201,7 +1175,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getThankyou()
 	{
-		return \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::get($this->id);
+		return MessageThankyouHelper::get($this->id);
 	}
 
 	/**
@@ -1225,7 +1199,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::getAuthor($this->userid, $this->name);
+		return KunenaUserHelper::getAuthor($this->userid, $this->name);
 	}
 
 	/**
@@ -1247,7 +1221,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getModifier()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->modified_by);
+		return KunenaUserHelper::get($this->modified_by);
 	}
 
 	/**
@@ -1339,7 +1313,7 @@ class Message extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		if (empty($this->_authcache[$user->userid][$action]))
@@ -1402,7 +1376,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function edit($fields = [], $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		$this->bind($fields, ['name', 'email', 'subject', 'message', 'modified_reason'], true);
 
@@ -1424,7 +1398,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function makeAnonymous($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if ($user->userid == $this->userid && $this->modified_by == $this->userid)
 		{
@@ -1515,7 +1489,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function getNbAttachments()
 	{
-		$attachments = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getNumberAttachments($this->id);
+		$attachments = AttachmentHelper::getNumberAttachments($this->id);
 
 		$attachs           = new StdClass;
 		$attachs->inline   = 0;
@@ -1584,7 +1558,7 @@ class Message extends KunenaDatabaseObject
 	 */
 	public function check()
 	{
-		$author = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
+		$author = KunenaUserHelper::get($this->userid);
 
 		// Check username
 		if (!$this->userid)
@@ -1617,7 +1591,7 @@ class Message extends KunenaDatabaseObject
 				return false;
 			}
 		}
-		elseif (!\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
+		elseif (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
 		{
 			$this->setError(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
 
@@ -1764,6 +1738,39 @@ class Message extends KunenaDatabaseObject
 		}
 
 		return $title;
+	}
+
+	/**
+	 *
+	 * @param   Mail    $mail          mail
+	 * @param   int     $subscription  subscription
+	 * @param   string  $subject       subject
+	 * @param   string  $url           url
+	 * @param   bool    $once          once
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function attachEmailBody($mail, $subscription, $subject, $url, $once)
+	{
+		$layout = Layout::factory('Email/Subscription')->debug(false)
+			->set('mail', $mail)
+			->set('message', $this)
+			->set('messageUrl', $url)
+			->set('once', $once);
+
+		try
+		{
+			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+		}
+		catch (Exception $e)
+		{
+		}
+
+		$mail->setBody($msg);
 	}
 
 	/**

@@ -17,8 +17,6 @@ defined('_JEXEC') or die();
 use Joomla\Database\DatabaseDriver;
 use function defined;
 
-require_once __DIR__ . '/kunena.php';
-
 /**
  * Kunena Polls
  * Provides access to the #__kunena_polls table

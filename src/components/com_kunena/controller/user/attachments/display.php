@@ -20,11 +20,13 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\Finder;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -34,12 +36,6 @@ use function defined;
  */
 class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Attachments';
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
@@ -65,6 +61,12 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	public $headerText;
 
 	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Attachments';
+
+	/**
 	 * Prepare user attachments list.
 	 *
 	 * @return  Authorise|void
@@ -82,8 +84,8 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 		$limit  = $this->input->getInt('limit', 30);
 
 		$this->template = KunenaFactory::getTemplate();
-		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
-		$this->profile  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->profile  = KunenaUserHelper::get($userid);
 		$this->moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -124,7 +126,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$messageIds[] = (int) $attachment->mesid;
 		}
 
-		$messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($messageIds, 'none');
+		$messages = MessageHelper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
 		$topicIds = [];

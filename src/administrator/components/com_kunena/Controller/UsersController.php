@@ -30,8 +30,10 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena Users Controller
@@ -55,14 +57,16 @@ class UsersController extends AdminController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @see     BaseController
+	 *
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
 	 * @param   Input                $input    Input
 	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
 	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -126,7 +130,6 @@ class UsersController extends AdminController
 	}
 
 
-
 	/**
 	 * Trash menu
 	 *
@@ -154,7 +157,7 @@ class UsersController extends AdminController
 		{
 			foreach ($cid as $id)
 			{
-				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $mes)
 				{
@@ -239,7 +242,7 @@ class UsersController extends AdminController
 		{
 			foreach ($uids as $id)
 			{
-				list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $object)
 				{
@@ -351,7 +354,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$users = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($cid);
+		$users = KunenaUserHelper::loadUsers($cid);
 
 		$my        = Factory::getApplication()->getIdentity();
 		$usernames = [];
@@ -562,7 +565,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
+		$user = KunenaUserHelper::get($userid);
 
 		$this->setModerate($user, $modCatids);
 
@@ -603,7 +606,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
+		$user     = KunenaUserHelper::get($userid);
 		$category = null;
 
 		if ($category instanceof Category)
@@ -613,7 +616,7 @@ class UsersController extends AdminController
 
 		$category = intval($category);
 
-		$usercategory = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($category, $user);
+		$usercategory = KunenaUserHelper::get($category, $user);
 
 		if ($usercategory->role == 1)
 		{
@@ -816,7 +819,7 @@ class UsersController extends AdminController
 
 		// Update moderator rights
 		$categories = CategoryHelper::getCategories(false, false, 'admin');
-		$users      = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($cid);
+		$users      = KunenaUserHelper::loadUsers($cid);
 
 		foreach ($users as $user)
 		{

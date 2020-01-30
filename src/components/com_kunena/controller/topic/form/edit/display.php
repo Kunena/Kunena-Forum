@@ -18,13 +18,16 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
 use Kunena\Forum\Libraries\Template\Template;
-use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -58,9 +61,9 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 		$mesid       = $this->input->getInt('mesid');
 		$saved       = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
-		$this->message  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
+		$this->message  = MessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
 		$this->topic    = $this->message->getTopic();
@@ -78,7 +81,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$categories        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
+		$categories        = CategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 

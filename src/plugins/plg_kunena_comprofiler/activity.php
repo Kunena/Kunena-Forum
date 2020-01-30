@@ -37,7 +37,7 @@ class KunenaActivityComprofiler extends Activity
 	/**
 	 * KunenaActivityComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -65,7 +65,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -80,7 +80,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -110,7 +110,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -125,7 +125,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -140,7 +140,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -155,7 +155,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -171,7 +171,7 @@ class KunenaActivityComprofiler extends Activity
 	}
 
 	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *

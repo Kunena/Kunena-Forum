@@ -74,10 +74,10 @@ class KunenaTableMap
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
 	 *
-	 * @param   string           $table   Name of the table to model.
-	 * @param   string           $key     Name of the primary key field in the table.
-	 * @param   string           $mapped  Name of the mapped key field in the table.
-	 * @param   DatabaseDriver   $db      DatabaseDriver object.
+	 * @param   string          $table   Name of the table to model.
+	 * @param   string          $key     Name of the primary key field in the table.
+	 * @param   string          $mapped  Name of the mapped key field in the table.
+	 * @param   DatabaseDriver  $db      DatabaseDriver object.
 	 *
 	 * @since   Kunena 6.0
 	 */

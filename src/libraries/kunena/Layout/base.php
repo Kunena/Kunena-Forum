@@ -19,8 +19,8 @@ use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Log\Log;
-use Kunena\Forum\Libraries\Compat\Joomla\Layout\LayoutBase;
 use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Compat\Joomla\Layout\LayoutBase;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -49,7 +49,8 @@ use function defined;
  * Default layout can be overridden by ->setLayout():
  *
  * <code>
- *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination')->set('pagination', $this->pagination)->setLayout('mini');
+ *    echo \Kunena\Forum\Libraries\Layout\Layout::factory('Pagination')->set('pagination',
+ *    $this->pagination)->setLayout('mini');
  * </code>
  *
  * @see     KunenaRequest
@@ -682,8 +683,9 @@ class Base extends LayoutBase
 	/**
 	 * Display layout from current layout.
 	 *
-	 * By using $this->subLayout() instead of \Kunena\Forum\Libraries\Layout\Layout::factory() you can make your template files both
-	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
+	 * By using $this->subLayout() instead of \Kunena\Forum\Libraries\Layout\Layout::factory() you can make your
+	 * template files both easier to read and gain some context awareness -- for example possibility to use
+	 * setLayout().
 	 *
 	 * @param   string  $path  path
 	 *
@@ -788,8 +790,8 @@ class Base extends LayoutBase
 	/**
 	 * Display arbitrary MVC triad from current layout.
 	 *
-	 * By using $this->subRequest() instead of \Kunena\Forum\Libraries\Request\Request::factory() you can make your template files both
-	 * easier to read and gain some context awareness.
+	 * By using $this->subRequest() instead of \Kunena\Forum\Libraries\Request\Request::factory() you can make your
+	 * template files both easier to read and gain some context awareness.
 	 *
 	 * @param   string  $path     path
 	 * @param   Input   $input    input

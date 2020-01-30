@@ -16,10 +16,10 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Image\ImageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -34,16 +34,16 @@ class KunenaAvatar extends Avatar
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	protected $params = null;
+	public $css = true;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $css = true;
+	protected $params = null;
 
 	/**
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -66,9 +66,9 @@ class KunenaAvatar extends Avatar
 	}
 
 	/**
-	 * @param   int  $user  user
-	 * @param   int  $sizex sizex
-	 * @param   int  $sizey sizey
+	 * @param   int  $user   user
+	 * @param   int  $sizex  sizex
+	 * @param   int  $sizey  sizey
 	 *
 	 * @return  string
 	 *

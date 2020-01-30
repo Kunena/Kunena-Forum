@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Update value of type datetime in all tables to changes default value
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *

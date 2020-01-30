@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use function defined;
+
 ?>
 
 <div class="kfrontend shadow-lg rounded mt-4 border">

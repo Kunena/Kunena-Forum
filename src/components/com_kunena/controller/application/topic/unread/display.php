@@ -16,8 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use function defined;
 
 /**

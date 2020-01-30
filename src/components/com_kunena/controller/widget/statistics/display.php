@@ -17,8 +17,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Statistics;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Statistics;
 use function defined;
 
 /**

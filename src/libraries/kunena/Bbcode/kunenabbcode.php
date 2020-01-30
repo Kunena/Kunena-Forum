@@ -32,9 +32,10 @@ use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Uri\UriHelper;
 use Kunena\Forum\Libraries\Attachment\Attachment;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
@@ -2532,7 +2533,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!empty($default))
 		{
-			$attachment = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($default);
+			$attachment = AttachmentHelper::get($default);
 			unset($attachments [$attachment->id]);
 		}
 		elseif (empty($content))

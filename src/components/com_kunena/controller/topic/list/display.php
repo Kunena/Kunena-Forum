@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site\Controller\Topic\KunenaList;
 
@@ -19,14 +19,16 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -37,34 +39,30 @@ use function defined;
 abstract class ComponentTopicControllerListDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/List';
-
-	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
-
 	/**
 	 * @var     array|Topic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
-
 	/**
 	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/List';
 
 	/**
 	 * Prepare topics by pre-loading needed information.
@@ -93,13 +91,13 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		// Prefetch all users/avatars to avoid user by user queries during template iterations.
 		if (!empty($userIds))
 		{
-			\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
+			KunenaUserHelper::loadUsers($userIds);
 		}
 
 		$topicIds = array_keys($this->topics);
-		\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getUserTopics($topicIds);
+		TopicHelper::getUserTopics($topicIds);
 
-		$mesIds += \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus($this->topics);
+		$mesIds += TopicHelper::fetchNewStatus($this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...
@@ -123,8 +121,8 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 			return;
 		}*/
 
-		$options            = [];
-		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+		$options    = [];
+		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		// Todo: fix params
 		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');

@@ -13,13 +13,13 @@ namespace Kunena\Forum\Site\View\Topic;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Forum\Message;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\View;
 use stdClass;
@@ -32,13 +32,13 @@ use function defined;
 class json extends View
 {
 	/**
-	 * @param   null  $tpl tmpl
+	 * @param   null  $tpl  tmpl
 	 *
 	 * @return  mixed|void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -61,7 +61,7 @@ class json extends View
 			$response->author  = $user->username;
 			$response->avatar  = $user->getAvatarImage($template->params->get('avatarType'), 'thumb');
 			$response->rank    = $user->getRank($topic->getCategory()->id, 'title');
-			$response->time    = \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat');
+			$response->time    = KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat');
 
 			$list[] = $response;
 		}

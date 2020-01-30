@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+
 ?>
 
 <div id="kunena" class="container-fluid">

@@ -15,16 +15,16 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Input\Input;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Filesystem\File;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
@@ -43,14 +43,16 @@ class TemplateController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @see     BaseController
+	 *
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
 	 * @param   Input                $input    Input
 	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
 	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -63,8 +65,8 @@ class TemplateController extends FormController
 	/**
 	 * Save template settings
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
 	 *
 	 * @return  void
 	 *
@@ -97,72 +99,6 @@ class TemplateController extends FormController
 		$this->_saveParamFile($template);
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Apply
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function apply()
-	{
-		$template = $this->app->input->get('templatename', '', 'cmd');
-		$menus    = $this->app->input->get('selections', [], 'array');
-		$menus    = ArrayHelper::toInteger($menus);
-
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		if (!$template)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		$this->_saveParamFile($template);
-
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=edit&cid[]=' . $template, false));
-	}
-
-	/**
-	 * Method to restore the default settings of the template selected
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 5.1
-	 *
-	 * @throws  Exception
-	 */
-	public function restore()
-	{
-		$template = $this->app->input->get('templatename', '', 'cmd');
-		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
-
-		if (file_exists($file))
-		{
-			$result = File::delete($file);
-
-			if ($result)
-			{
-				File::write($file, '');
-			}
-		}
-
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_TEMPLATES_SETTINGS_RESTORED_SUCCESSFULLY'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -327,6 +263,72 @@ class TemplateController extends FormController
 				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}
+	}
+
+	/**
+	 * Apply
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function apply()
+	{
+		$template = $this->app->input->get('templatename', '', 'cmd');
+		$menus    = $this->app->input->get('selections', [], 'array');
+		$menus    = ArrayHelper::toInteger($menus);
+
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$template)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$this->_saveParamFile($template);
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=edit&cid[]=' . $template, false));
+	}
+
+	/**
+	 * Method to restore the default settings of the template selected
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @throws  Exception
+	 */
+	public function restore()
+	{
+		$template = $this->app->input->get('templatename', '', 'cmd');
+		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+		if (file_exists($file))
+		{
+			$result = File::delete($file);
+
+			if ($result)
+			{
+				File::write($file, '');
+			}
+		}
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_TEMPLATES_SETTINGS_RESTORED_SUCCESSFULLY'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 }

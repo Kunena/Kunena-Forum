@@ -21,19 +21,22 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
  *
- * @property int    $category_id
+ * @since   Kunena 6.0
  * @property int    $role
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
  *
- * @since   Kunena 6.0
+ * @property int    $category_id
  */
 class CategoryUser extends CMSObject
 {
@@ -71,7 +74,7 @@ class CategoryUser extends CMSObject
 		$this->setProperties($table->getProperties());
 		$this->_exists     = false;
 		$this->category_id = $category;
-		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
+		$this->user_id     = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -84,7 +87,7 @@ class CategoryUser extends CMSObject
 	 * @param   string  $type    The categories table name to be used
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
-	 * @return  Table|\Kunena\Forum\Libraries\User\KunenaUser The categories table object
+	 * @return  Table|KunenaUser The categories table object
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -128,7 +131,7 @@ class CategoryUser extends CMSObject
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->category_id);
+		return CategoryHelper::get($this->category_id);
 	}
 
 	/**
@@ -223,7 +226,7 @@ class CategoryUser extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();

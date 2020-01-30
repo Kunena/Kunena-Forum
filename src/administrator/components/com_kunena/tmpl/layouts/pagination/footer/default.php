@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Layout\Layout;
+
 ?>
 
 <?php echo Layout::factory('pagination/list')->set('pagination', $this->pagination); ?>

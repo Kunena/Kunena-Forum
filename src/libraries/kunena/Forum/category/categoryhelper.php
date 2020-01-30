@@ -20,10 +20,13 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Cache\CacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Tree\Tree;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 
 /**
@@ -142,6 +145,55 @@ abstract class CategoryHelper
 	}
 
 	/**
+	 * Returns the global Category object, only creating it if it doesn't already exist.
+	 *
+	 * @param   int   $identifier  The category to load - Can be only an integer.
+	 * @param   bool  $reload      Reload category from the database.
+	 *
+	 * @return  Category  The Category object.
+	 *
+	 * @since   Kunena 1.6
+	 *
+	 * @throws  Exception
+	 */
+	public static function get($identifier = null, $reload = false)
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+		if ($identifier instanceof Category)
+		{
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+			return $identifier;
+		}
+
+		if (!is_numeric($identifier))
+		{
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			$category = new Category;
+			$category->load();
+
+			return $category;
+		}
+
+		$id = intval($identifier);
+
+		if (empty(self::$_instances [$id]))
+		{
+			self::$_instances [$id] = new Category(['id' => $id]);
+			self::$_instances [$id]->load();
+		}
+		elseif ($reload)
+		{
+			self::$_instances [$id]->load();
+		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+		return self::$_instances [$id];
+	}
+
+	/**
 	 * @param   array  $instances  instances
 	 *
 	 * @return  void
@@ -206,7 +258,7 @@ abstract class CategoryHelper
 	 */
 	public static function getSubscriptions($user = null)
 	{
-		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user  = KunenaUserHelper::get($user);
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
@@ -318,7 +370,7 @@ abstract class CategoryHelper
 		$count = 0;
 
 		// Pre-load all items
-		$usercategories = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::getCategories($ids, $user);
+		$usercategories = CategoryUserHelper::getCategories($ids, $user);
 
 		foreach ($usercategories as $usercategory)
 		{
@@ -365,7 +417,7 @@ abstract class CategoryHelper
 			$limit = $config->threads_per_page;
 		}
 
-		$userids = is_array($user) ? implode(",", $user) : \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
+		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where   = isset($params['where']) ? (string) $params['where'] : '';
 		$allowed = implode(',', array_keys(Access::getInstance()->getAllowedCategories()));
@@ -454,7 +506,7 @@ abstract class CategoryHelper
 	 */
 	public static function getNewTopics($catids)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$user = KunenaUserHelper::getMyself();
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
 		{
@@ -656,55 +708,6 @@ abstract class CategoryHelper
 		}
 
 		return isset(self::$_tree[$parent]) ? self::$_tree[$parent] : [];
-	}
-
-	/**
-	 * Returns the global Category object, only creating it if it doesn't already exist.
-	 *
-	 * @param   int   $identifier  The category to load - Can be only an integer.
-	 * @param   bool  $reload      Reload category from the database.
-	 *
-	 * @return  Category  The Category object.
-	 *
-	 * @since   Kunena 1.6
-	 *
-	 * @throws  Exception
-	 */
-	public static function get($identifier = null, $reload = false)
-	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		if ($identifier instanceof Category)
-		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-			return $identifier;
-		}
-
-		if (!is_numeric($identifier))
-		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-			$category = new Category;
-			$category->load();
-
-			return $category;
-		}
-
-		$id = intval($identifier);
-
-		if (empty(self::$_instances [$id]))
-		{
-			self::$_instances [$id] = new Category(['id' => $id]);
-			self::$_instances [$id]->load();
-		}
-		elseif ($reload)
-		{
-			self::$_instances [$id]->load();
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		return self::$_instances [$id];
 	}
 
 	/**
@@ -982,7 +985,7 @@ abstract class CategoryHelper
 		if ($rows)
 		{
 			// If something changed, clean our cache
-			\Kunena\Forum\Libraries\Cache\CacheHelper::clearCategories();
+			CacheHelper::clearCategories();
 		}
 
 		return $rows;

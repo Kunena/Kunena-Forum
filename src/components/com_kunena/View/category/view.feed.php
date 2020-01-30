@@ -20,8 +20,8 @@ use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\View\View;
 use function defined;
 
@@ -39,7 +39,7 @@ class feed extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -88,19 +88,19 @@ class feed extends View
 	}
 
 	/**
-	 * @param   string  $title       title
-	 * @param   string  $url         url
-	 * @param   string  $description description
-	 * @param   string  $category    category
-	 * @param   integer $date        date
-	 * @param   integer $userid      userid
-	 * @param   string  $username    username
+	 * @param   string   $title        title
+	 * @param   string   $url          url
+	 * @param   string   $description  description
+	 * @param   string   $category     category
+	 * @param   integer  $date         date
+	 * @param   integer  $userid       userid
+	 * @param   string   $username     username
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{

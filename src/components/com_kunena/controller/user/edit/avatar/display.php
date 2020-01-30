@@ -19,11 +19,11 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use function defined;
 
 /**
@@ -37,43 +37,37 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'User/Edit/Avatar';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
 	public $gallery;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $galleries;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $galleryOptions;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $galleryImages;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Edit/Avatar';
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
 	/**
 	 * Prepare avatar form.
@@ -105,20 +99,6 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 		$this->galleryUri     = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
-	}
-
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle($this->headerText);
 	}
 
 	/**
@@ -191,5 +171,19 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 		}
 
 		return count($options) > 1 ? $options : [];
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function prepareDocument()
+	{
+		$this->setTitle($this->headerText);
 	}
 }

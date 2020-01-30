@@ -178,7 +178,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	}
 
 	/**
-	 * @param   string  $list list
+	 * @param   string  $list  list
 	 *
 	 * @return  array
 	 *

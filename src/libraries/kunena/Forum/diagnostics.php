@@ -14,9 +14,12 @@ namespace Kunena\Forum\Libraries\Forum;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use stdClass;
 use function defined;
 
 /**
@@ -74,7 +77,7 @@ abstract class Diagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function count($function)
 	{
@@ -94,7 +97,7 @@ abstract class Diagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -108,7 +111,7 @@ abstract class Diagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getItems($function)
 	{
@@ -134,7 +137,7 @@ abstract class Diagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -148,7 +151,7 @@ abstract class Diagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function fix($function)
 	{
@@ -166,7 +169,7 @@ abstract class Diagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -220,7 +223,7 @@ abstract class Diagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function delete($function)
 	{
@@ -238,7 +241,7 @@ abstract class Diagnostics
 			}
 			catch (ExecutionFailureException $e)
 			{
-				\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -394,7 +397,7 @@ abstract class Diagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected static function notice_categoryWrongAlias()
 	{
@@ -409,7 +412,7 @@ abstract class Diagnostics
 
 		$list = (array) $db->loadObjectList();
 
-		$ids = new \stdClass;
+		$ids = new stdClass;
 
 		foreach ($list as $item)
 		{
@@ -1664,10 +1667,10 @@ abstract class Diagnostics
 	//      $db    = Factory::getDbo();
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	//
+	// 
 	//      return $query;
 	//  }
-	//
+	// 
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *
@@ -1680,10 +1683,10 @@ abstract class Diagnostics
 	//      {
 	//          $query->select('*');
 	//      }
-	//
+	// 
 	//      return array('channels' => 'invalid');
 	//  }
-	//
+	// 
 	//  /**
 	//   * @return QueryInterface
 	//   * @since   Kunena
@@ -1691,7 +1694,7 @@ abstract class Diagnostics
 	//  protected static function fix_topicsownersOrphaned()
 	//  {
 	//      $query = self::query_topicsownersOrphaned()->insert('#__kunena_user_topics');
-	//
+	// 
 	//      return $query;
 	//  }
 }

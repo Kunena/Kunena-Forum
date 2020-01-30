@@ -75,6 +75,45 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function getSortFields()
+	{
+		$sortFields   = [];
+		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
+		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'rank', Text::_('COM_KUNENA_A_RANKS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'signature', Text::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'enabled', Text::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'banned', Text::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'moderator', Text::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
+		$sortFields[] = HTMLHelper::_('select.option', 'ip', Text::_('COM_KUNENA_GEN_IP'));
+
+		return $sortFields;
+	}
+
+	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function getSortDirectionFields()
+	{
+		$sortDirection   = [];
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	/**
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void
@@ -121,45 +160,6 @@ class HtmlView extends BaseHtmlView
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * Returns an array of type filter options.
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getSortFields()
-	{
-		$sortFields   = [];
-		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
-		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USRL_EMAIL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'rank', Text::_('COM_KUNENA_A_RANKS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'signature', Text::_('COM_KUNENA_GEN_SIGNATURE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'enabled', Text::_('COM_KUNENA_USRL_ENABLED'));
-		$sortFields[] = HTMLHelper::_('select.option', 'banned', Text::_('COM_KUNENA_USRL_BANNED'));
-		$sortFields[] = HTMLHelper::_('select.option', 'moderator', Text::_('COM_KUNENA_VIEW_MODERATOR'));
-		$sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
-		$sortFields[] = HTMLHelper::_('select.option', 'ip', Text::_('COM_KUNENA_GEN_IP'));
-
-		return $sortFields;
-	}
-
-	/**
-	 * Returns an array of type filter options.
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getSortDirectionFields()
-	{
-		$sortDirection   = [];
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
-
-		return $sortDirection;
 	}
 
 	/**

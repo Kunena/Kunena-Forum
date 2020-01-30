@@ -20,9 +20,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Tree\Tree;
 use RuntimeException;
 use function defined;
@@ -61,7 +60,7 @@ class KunenaAccessCommunity
 	/**
 	 * KunenaAccessCommunity constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -269,8 +268,8 @@ class KunenaAccessCommunity
 	/**
 	 * Authorise list of categories.
 	 *
-	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes unauthorised
-	 * categories from the list.
+	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes
+	 * unauthorised categories from the list.
 	 *
 	 * Results for the current user are saved into session.
 	 *

@@ -56,8 +56,6 @@ class Joomla extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/access.php";
-
 		return new AccessJoomla($this->params);
 	}
 
@@ -68,8 +66,6 @@ class Joomla extends CMSPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-		require_once __DIR__ . "/login.php";
-
 		return new Login($this->params);
 	}
 }

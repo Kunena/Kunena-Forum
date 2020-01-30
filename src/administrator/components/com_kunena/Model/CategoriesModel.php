@@ -9,19 +9,20 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 namespace Kunena\Forum\Administrator\Model;
 
 defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
@@ -338,7 +339,7 @@ class CategoriesModel extends Model
 	}
 
 	/**
-	 * @param   array  $table table
+	 * @param   array  $table  table
 	 *
 	 * @return  array
 	 *

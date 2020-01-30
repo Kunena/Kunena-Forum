@@ -14,11 +14,11 @@ namespace Kunena\Forum\Administrator\Model;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Exception;
-use Kunena\Forum\Libraries\Template\TemplateHelper;
 use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\TemplateHelper;
 use stdClass;
 
 /**
@@ -29,7 +29,7 @@ use stdClass;
 class TemplateModel extends AdminModel
 {
 	/**
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array  $data      data
 	 * @param   bool   $loadData  loadData
@@ -83,8 +83,8 @@ class TemplateModel extends AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering  ordering
-	 * @param   null  $direction direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *

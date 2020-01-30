@@ -14,20 +14,18 @@ namespace Kunena\Forum\Site\View\Topic;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Administrator\Helper\UserHelper;
-use Kunena\Forum\Libraries;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\View\View;
-use Joomla\Database\Exception\ExecutionFailureException;
 use stdClass;
 use function defined;
 
@@ -45,7 +43,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayEdit($tpl = null)
 	{
@@ -77,7 +75,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayListEmoji($tpl = null)
 	{
@@ -128,7 +126,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayTopicIcons()
 	{
@@ -210,7 +208,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayGetrate()
 	{
@@ -246,7 +244,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayRate($tpl = null)
 	{
@@ -288,7 +286,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayCategorytemplatetext($tpl = null)
 	{

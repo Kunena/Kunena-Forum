@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -35,23 +35,21 @@ use function defined;
 class KunenaLayoutCategoryIndex extends Layout
 {
 	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	private $total;
-
-	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $state;
-
 	/**
 	 * @var     Template|void
 	 * @since   Kunena 6.0
 	 *
 	 */
 	public $ktemplate;
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	private $total;
 
 	/**
 	 * Method to return a KunenaPagination object

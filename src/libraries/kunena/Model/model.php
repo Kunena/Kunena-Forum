@@ -24,8 +24,8 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -84,9 +84,9 @@ class Model extends BaseDatabaseModel
 	protected $embedded = false;
 
 	/**
-	 * @param   array                     $config  config
-	 * @param   MVCFactoryInterface|null  $factory factory
-	 * @param   Input                     $input   input
+	 * @param   array                     $config   config
+	 * @param   MVCFactoryInterface|null  $factory  factory
+	 * @param   Input                     $input    input
 	 *
 	 * @since   Kunena 6.0
 	 *

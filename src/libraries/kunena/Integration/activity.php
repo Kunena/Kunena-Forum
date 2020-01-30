@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Integration;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use function defined;
@@ -40,7 +41,7 @@ class Activity
 	/**
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -64,7 +65,7 @@ class Activity
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getInstance()
 	{

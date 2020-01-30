@@ -55,8 +55,8 @@ class KunenaIntegrationComprofiler
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
 	 *
-	 * @param   string  $event  event
-	 * @param   object  $params params
+	 * @param   string  $event   event
+	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *

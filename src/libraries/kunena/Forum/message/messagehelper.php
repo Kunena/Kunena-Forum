@@ -14,8 +14,15 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 use function defined;
 
@@ -27,7 +34,7 @@ use function defined;
 abstract class MessageHelper
 {
 	/**
-	 * @var     \Kunena\Forum\Libraries\Forum\Message\Message[]
+	 * @var     Message[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
@@ -42,12 +49,12 @@ abstract class MessageHelper
 	 * @param   bool|array|int  $ids        ids
 	 * @param   string          $authorise  authorise
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Message\Message[]
+	 * @return  Message[]
 	 *
 	 * @since   Kunena
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getMessages($ids = false, $authorise = 'read')
 	{
@@ -87,7 +94,7 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected static function loadMessages(array $ids)
 	{
@@ -121,14 +128,14 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		foreach ($ids as $id)
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new \Kunena\Forum\Libraries\Forum\Message\Message($results[$id]);
+				$instance = new Message($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			}
@@ -149,15 +156,15 @@ abstract class MessageHelper
 	 * @param   int     $hold       hold
 	 * @param   bool    $orderbyid  orderbyid
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Message\Message[]
+	 * @return  Message[]
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getMessagesByTopic($topic, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
+		$topic = TopicHelper::get($topic);
 
 		if (!$topic->exists())
 		{
@@ -173,7 +180,7 @@ abstract class MessageHelper
 
 		if ($limit < 1)
 		{
-			$limit = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->messages_per_page;
+			$limit = KunenaFactory::getConfig()->messages_per_page;
 		}
 
 		// If out of range, use last page
@@ -204,7 +211,7 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected static function loadMessagesByTopic($topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false)
 	{
@@ -225,10 +232,10 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : TopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order    = ($ordering == 'ASC') ? 1 : -1;
 		$list     = [];
 
@@ -236,7 +243,7 @@ abstract class MessageHelper
 		{
 			foreach ($results as $id => $result)
 			{
-				$instance = new \Kunena\Forum\Libraries\Forum\Message\Message($result);
+				$instance = new Message($result);
 				$instance->exists(true);
 				self::$_instances [$id]             = $instance;
 				$list[$orderbyid ? $id : $location] = $instance;
@@ -260,7 +267,7 @@ abstract class MessageHelper
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = [])
 	{
@@ -278,15 +285,15 @@ abstract class MessageHelper
 
 			if ($view == 'search')
 			{
-				$limit = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->messages_per_page_search;
+				$limit = KunenaFactory::getConfig()->messages_per_page_search;
 			}
 			elseif ($view == 'topics')
 			{
-				$limit = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->threads_per_page;
+				$limit = KunenaFactory::getConfig()->threads_per_page;
 			}
 			else
 			{
-				$limit = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->messages_per_page;
+				$limit = KunenaFactory::getConfig()->messages_per_page;
 			}
 		}
 
@@ -328,11 +335,11 @@ abstract class MessageHelper
 			$categories = false;
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($categories, $reverse, 'topic.' . $authorise);
+		$categories = CategoryHelper::getCategories($categories, $reverse, 'topic.' . $authorise);
 
 		if ($childforums)
 		{
-			$categories += \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
+			$categories += CategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
 		}
 
 		$catlist = [];
@@ -360,7 +367,7 @@ abstract class MessageHelper
 		// Negative time means no time
 		if ($starttime == 0)
 		{
-			$starttime = \Kunena\Forum\Libraries\Factory\KunenaFactory::getSession()->lasttime;
+			$starttime = KunenaFactory::getSession()->lasttime;
 		}
 		elseif ($starttime > 0)
 		{
@@ -389,7 +396,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 
 			return [0, []];
 		}
@@ -414,7 +421,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 
 			return [0, []];
 		}
@@ -425,7 +432,7 @@ abstract class MessageHelper
 		{
 			foreach ($results as $result)
 			{
-				$instance = new \Kunena\Forum\Libraries\Forum\Message\Message($result);
+				$instance = new Message($result);
 				$instance->exists(true);
 				self::$_instances [$instance->id] = $instance;
 				$messages[$instance->id]          = $instance;
@@ -446,20 +453,20 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getLocation($mesid, $direction = null, $hold = null)
 	{
 		if (is_null($direction))
 		{
-			$direction = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getMessageOrdering();
+			$direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		}
 
 		if (!$hold)
 		{
-			$me           = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$me           = KunenaUserHelper::getMyself();
 			$mes_instance = self::get($mesid);
-			$hold         = \Kunena\Forum\Libraries\Access\Access::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
+			$hold         = Access::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
 		}
 
 		if (!isset(self::$_location [$mesid]))
@@ -492,15 +499,15 @@ abstract class MessageHelper
 	 * @param   null  $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Message\Message  The message object.
+	 * @return  Message  The message object.
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
-		if ($identifier instanceof \Kunena\Forum\Libraries\Forum\Message\Message)
+		if ($identifier instanceof Message)
 		{
 			return $identifier;
 		}
@@ -509,12 +516,12 @@ abstract class MessageHelper
 
 		if ($id < 1)
 		{
-			return new \Kunena\Forum\Libraries\Forum\Message\Message;
+			return new Message;
 		}
 
 		if (empty(self::$_instances[$id]))
 		{
-			$instance = new \Kunena\Forum\Libraries\Forum\Message\Message;
+			$instance = new Message;
 
 			// Only load messages which haven't been preloaded before (including missing ones).
 			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
@@ -536,7 +543,7 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -550,7 +557,7 @@ abstract class MessageHelper
 
 		foreach ($mesids as $id)
 		{
-			if ($id instanceof \Kunena\Forum\Libraries\Forum\Message\Message)
+			if ($id instanceof Message)
 			{
 				$id = $id->id;
 			}
@@ -591,7 +598,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		if (!empty($results))
@@ -633,7 +640,7 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function recount($topicids = false)
 	{
@@ -665,7 +672,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
@@ -680,7 +687,7 @@ abstract class MessageHelper
 	 *
 	 * @since   Kunena 5.0.3
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getMessagesByTopics(array $ids)
 	{
@@ -706,7 +713,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $results;
@@ -715,13 +722,13 @@ abstract class MessageHelper
 	/**
 	 * Get last IP address used by the user
 	 *
-	 * @param   int  $userid userid
+	 * @param   int  $userid  userid
 	 *
 	 * @return  boolean|mixed
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getLastUserIP(int $userid)
 	{
@@ -747,7 +754,7 @@ abstract class MessageHelper
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $ip;

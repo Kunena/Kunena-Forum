@@ -19,9 +19,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Installer;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\Template;
 
 /**
@@ -84,7 +84,7 @@ EOF;
 				}
 			}
 
-			if (!method_exists( KunenaControllerDisplay::class, 'poweredBy'))
+			if (!method_exists(KunenaControllerDisplay::class, 'poweredBy'))
 			{
 				Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
 					'notice');
@@ -244,8 +244,8 @@ EOF;
 	/**
 	 * Runs all Joomla content plugins on a single \Kunena\Forum\Libraries\Forum\Message\Message
 	 *
-	 * @access protected
-	 * @see    self::onKunenaPrepare()
+	 * @access  protected
+	 * @see     self::onKunenaPrepare()
 	 *
 	 * @param   string  $text    String to run events on
 	 * @param   object  $params  Joomla\Registry\Registry object holding eventual parameters

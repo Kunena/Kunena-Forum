@@ -19,9 +19,9 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
-use Joomla\Utilities\ArrayHelper;
 use function defined;
 
 /**

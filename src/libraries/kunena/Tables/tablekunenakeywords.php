@@ -18,8 +18,6 @@ use Joomla\Database\DatabaseDriver;
 use UnexpectedValueException;
 use function defined;
 
-require_once __DIR__ . '/kunena.php';
-
 /**
  * Kunena Keywords Table
  * Provides access to the #__kunena_keywords table

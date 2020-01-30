@@ -14,12 +14,17 @@ namespace Kunena\Forum\Site\Layout\Search;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\Layout;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -30,13 +35,13 @@ use function defined;
 class KunenaLayoutSearchResults extends Layout
 {
 	/**
-	 * @var     \Kunena\Forum\Libraries\Forum\Message\Message
+	 * @var     Message
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var     \Kunena\Forum\Libraries\Forum\Category\Category
+	 * @var     Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -54,7 +59,7 @@ class KunenaLayoutSearchResults extends Layout
 	public $results;
 
 	/**
-	 * @var     \Kunena\Forum\Libraries\Forum\Topic\Topic
+	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -72,13 +77,13 @@ class KunenaLayoutSearchResults extends Layout
 	public $searchwords;
 
 	/**
-	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $author;
 
 	/**
-	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $topicAuthor;
@@ -108,7 +113,7 @@ class KunenaLayoutSearchResults extends Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function displayRows()

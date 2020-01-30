@@ -19,10 +19,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Model\Model;
 
 /**
@@ -33,36 +33,33 @@ use Kunena\Forum\Libraries\Model\Model;
 class TrashModel extends Model
 {
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $__state_set = false;
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_items = false;
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_items_order = false;
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_object = false;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
 		// TODO: Implement getForm() method.
 	}
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $__state_set = false;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_items = false;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_items_order = false;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_object = false;
 
 	/**
 	 * Method to get all deleted messages or topics in function of user selection.
@@ -333,7 +330,7 @@ class TrashModel extends Model
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
-		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($ids, 'none');
+		return MessageHelper::getMessages($ids, 'none');
 	}
 
 	/**
@@ -373,7 +370,7 @@ class TrashModel extends Model
 
 		if ($type == 'topics')
 		{
-			$items = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($ids, 'none');
+			$items = TopicHelper::getTopics($ids, 'none');
 		}
 		elseif ($type == 'messages')
 		{

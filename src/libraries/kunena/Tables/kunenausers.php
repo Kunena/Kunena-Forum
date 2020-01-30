@@ -14,14 +14,14 @@ namespace Kunena\Forum\Libraries\Tables;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use UnexpectedValueException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Users Table
@@ -529,7 +529,7 @@ class KunenaUsers extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function load($userid = null, $reset = true)
 	{
@@ -571,7 +571,7 @@ class KunenaUsers extends KunenaTable
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}

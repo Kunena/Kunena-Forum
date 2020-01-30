@@ -16,7 +16,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *

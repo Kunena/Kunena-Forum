@@ -12,8 +12,6 @@ namespace Kunena\Forum\Site\Model;
 defined('_JEXEC') or die;
 
 use Exception;
-use JDatabaseQuery;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 
 /**

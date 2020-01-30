@@ -14,10 +14,8 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
-use function defined;
 use Joomla\CMS\MVC\Controller\FormController;
-
-require_once __DIR__ . '/ranks.php';
+use function defined;
 
 /**
  * Kunena Rank Controller

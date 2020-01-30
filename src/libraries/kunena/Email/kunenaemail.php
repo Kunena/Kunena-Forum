@@ -33,7 +33,7 @@ abstract class KunenaEmail
 
 	/**
 	 * @param   MailTemplate  $mail       mail
-	 * @param   array                         $receivers  receivers
+	 * @param   array         $receivers  receivers
 	 *
 	 * @return  boolean
 	 *
@@ -134,10 +134,10 @@ abstract class KunenaEmail
 	}
 
 	/**
-	 * @param   integer  $errno   error number
-	 * @param   string   $errstr  error string
-	 * @param   string   $errfile error file
-	 * @param   string   $errline error line
+	 * @param   integer  $errno    error number
+	 * @param   string   $errstr   error string
+	 * @param   string   $errfile  error file
+	 * @param   string   $errline  error line
 	 *
 	 * @return  boolean
 	 *

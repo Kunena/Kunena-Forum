@@ -79,30 +79,6 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar()
-	{
-		$this->filterActive = $this->escape($this->state->get('filter.active'));
-		$this->pagination   = $this->get('Pagination');
-
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
-
-		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
-		ToolbarHelper::editList();
-		ToolbarHelper::divider();
-		ToolbarHelper::deleteList();
-		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
@@ -130,5 +106,29 @@ class HtmlView extends BaseHtmlView
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function addToolbar()
+	{
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->pagination   = $this->get('Pagination');
+
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
+
+		ToolbarHelper::spacer();
+		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
+		ToolbarHelper::editList();
+		ToolbarHelper::divider();
+		ToolbarHelper::deleteList();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
 /**
@@ -158,7 +158,7 @@ class KunenaPrivate
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
+	 * @since    Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */

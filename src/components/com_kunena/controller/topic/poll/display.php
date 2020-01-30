@@ -17,13 +17,14 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
-use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -77,7 +78,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->input->getInt('id'));
+		$this->topic    = TopicHelper::get($this->input->getInt('id'));
 		$this->category = $this->topic->getCategory();
 		$this->config   = KunenaFactory::getConfig();
 		$this->me       = KunenaUserHelper::getMyself();

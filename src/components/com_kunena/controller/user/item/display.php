@@ -21,14 +21,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
+use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use function defined;
 
@@ -141,7 +141,7 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
 				$itemidfix = $getid->id;
 			}
 
@@ -152,11 +152,11 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 
 			if (!$userid)
 			{
-				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();

@@ -20,11 +20,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Image\KunenaImage;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Path\KunenaPath;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Image\KunenaImage;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 use RuntimeException;
 use StdClass;
 
@@ -470,6 +470,47 @@ class Upload
 	}
 
 	/**
+	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+	 * configuration and PHP configuration
+	 *
+	 * @param   int     $filesize    The size of file in bytes
+	 * @param   string  $image_type  The type of image : avatar or attachment image
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function checkFileSizeImage($filesize, $image_type)
+	{
+		if ($image_type == 'avatar')
+		{
+			$config_size = KunenaConfig::getInstance()->avatarsize;
+		}
+		else
+		{
+			$config_size = KunenaConfig::getInstance()->imagesize;
+		}
+
+		$image = $filesize > intval($config_size * 1024);
+
+		if ($image)
+		{
+			return false;
+		}
+
+		return (int) max(
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('post_max_size')),
+				$this->toBytes(ini_get('memory_limit'))
+			)
+		);
+	}
+
+	/**
 	 * Convert value into bytes.
 	 *
 	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
@@ -502,47 +543,6 @@ class Upload
 		$file = $filesize > KunenaConfig::getInstance()->filesize * 1024;
 
 		if ($file)
-		{
-			return false;
-		}
-
-		return (int) max(
-			0,
-			min(
-				$this->toBytes(ini_get('upload_max_filesize')),
-				$this->toBytes(ini_get('post_max_size')),
-				$this->toBytes(ini_get('memory_limit'))
-			)
-		);
-	}
-
-	/**
-	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
-	 * configuration and PHP configuration
-	 *
-	 * @param   int     $filesize    The size of file in bytes
-	 * @param   string  $image_type  The type of image : avatar or attachment image
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function checkFileSizeImage($filesize, $image_type)
-	{
-		if ($image_type == 'avatar')
-		{
-			$config_size = KunenaConfig::getInstance()->avatarsize;
-		}
-		else
-		{
-			$config_size = KunenaConfig::getInstance()->imagesize;
-		}
-
-		$image = $filesize > intval($config_size * 1024);
-
-		if ($image)
 		{
 			return false;
 		}

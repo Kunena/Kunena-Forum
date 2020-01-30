@@ -19,13 +19,14 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -35,12 +36,6 @@ use function defined;
  */
 class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Item/Message';
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
@@ -84,6 +79,12 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 	public $ipLink;
 
 	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/Item/Message';
+
+	/**
 	 * Prepare displaying message.
 	 *
 	 * @return  void
@@ -102,7 +103,7 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
 		$this->detail   = $this->input->get('detail', false);
-		$this->message  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
+		$this->message  = MessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
 		$this->topic     = $this->message->getTopic();

@@ -20,6 +20,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Attachment\Attachment;
 use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -29,14 +31,6 @@ use function defined;
  */
 class AttachmentsModel extends ListModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * @param   array  $config  config
 	 *
@@ -60,6 +54,14 @@ class AttachmentsModel extends ListModel
 		}
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 
 	/**
@@ -164,8 +166,8 @@ class AttachmentsModel extends ListModel
 			$mesids[$result->mesid]   = $result->mesid;
 		}
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userids);
-		\Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($mesids);
+		KunenaUserHelper::loadUsers($userids);
+		MessageHelper::getMessages($mesids);
 
 		return $results;
 	}

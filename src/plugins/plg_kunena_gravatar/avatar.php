@@ -15,8 +15,8 @@ namespace Kunena\Forum\Plugin\Kunena\Gravatar;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -36,7 +36,7 @@ class KunenaAvatarGravatar extends Avatar
 	/**
 	 * KunenaAvatarGravatar constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -60,9 +60,9 @@ class KunenaAvatarGravatar extends Avatar
 	}
 
 	/**
-	 * @param   int  $user  user
-	 * @param   int  $sizex sizex
-	 * @param   int  $sizey sizey
+	 * @param   int  $user   user
+	 * @param   int  $sizex  sizex
+	 * @param   int  $sizey  sizey
 	 *
 	 * @return  string
 	 *

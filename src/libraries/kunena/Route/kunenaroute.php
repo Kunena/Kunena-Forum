@@ -24,13 +24,14 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 KunenaRoute::initialize();
@@ -661,8 +662,8 @@ abstract class KunenaRoute
 
 			if (!empty($item->query['catid']))
 			{
-				$cache[$item->id]                        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($item->query['catid']);
-				$cache[$item->id][$item->query['catid']] = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($item->query['catid']);
+				$cache[$item->id]                        = CategoryHelper::getChildren($item->query['catid']);
+				$cache[$item->id][$item->query['catid']] = CategoryHelper::get($item->query['catid']);
 			}
 		}
 
@@ -1108,8 +1109,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param  Category  $category  category
-	 * @param   bool                 $xhtml     xhtml
+	 * @param   Category  $category  category
+	 * @param   bool      $xhtml     xhtml
 	 *
 	 * @return  boolean
 	 *
@@ -1124,7 +1125,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  integer
 	 *
@@ -1201,9 +1202,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @param   Topic     $topic     topic
-	 * @param   bool                 $xhtml     xhtml
-	 * @param   null                 $action    actions
-	 * @param  Category  $category  category
+	 * @param   bool      $xhtml     xhtml
+	 * @param   null      $action    actions
+	 * @param   Category  $category  category
 	 *
 	 * @return  boolean
 	 *
@@ -1224,9 +1225,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @param   Message   $message   message
-	 * @param   bool                 $xhtml     xhtml
+	 * @param   bool      $xhtml     xhtml
 	 * @param   Topic     $topic     topic
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  boolean
 	 *

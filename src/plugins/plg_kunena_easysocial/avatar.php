@@ -15,8 +15,8 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial;
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Exception;
-use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
@@ -36,7 +36,7 @@ class AvatarEasySocial extends Avatar
 	/**
 	 * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since  Kunena 6.0
 	 */
@@ -46,7 +46,7 @@ class AvatarEasySocial extends Avatar
 	}
 
 	/**
-	 * @param   array  $userlist userlist
+	 * @param   array  $userlist  userlist
 	 *
 	 * @return  void
 	 *
@@ -75,9 +75,9 @@ class AvatarEasySocial extends Avatar
 	}
 
 	/**
-	 * @param   int  $user  user
-	 * @param   int  $sizex sizex
-	 * @param   int  $sizey sizey
+	 * @param   int  $user   user
+	 * @param   int  $sizex  sizex
+	 * @param   int  $sizey  sizey
 	 *
 	 * @return  mixed
 	 *

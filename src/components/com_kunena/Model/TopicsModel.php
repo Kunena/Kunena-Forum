@@ -22,7 +22,10 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Topics Model for Kunena
@@ -60,6 +63,520 @@ class TopicsModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function getMessages()
+	{
+		if ($this->topics === false)
+		{
+			$this->getPosts();
+		}
+
+		return $this->messages;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	protected function getPosts()
+	{
+		$this->topics = [];
+
+		$start = $this->getState('list.start');
+		$limit = $this->getState('list.limit');
+
+		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
+		$time = $this->getState('list.time');
+
+		$params              = [];
+		$params['mode']      = $this->getState('list.mode');
+		$params['reverse']   = !$this->getState('list.categories.in');
+		$params['starttime'] = $time;
+		$params['user']      = $this->getState('user');
+		list($this->total, $this->messages) = MessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
+
+		$topicids = [];
+
+		foreach ($this->messages as $message)
+		{
+			$topicids[$message->thread] = $message->thread;
+		}
+
+		$authorise = 'read';
+
+		switch ($params['mode'])
+		{
+			case 'unapproved':
+				$authorise = 'approve';
+				break;
+			case 'deleted':
+				$authorise = 'undelete';
+				break;
+		}
+
+		$this->topics = TopicHelper::getTopics($topicids, $authorise);
+
+		$userlist = $postlist = [];
+
+		foreach ($this->messages as $message)
+		{
+			$userlist[intval($message->userid)] = intval($message->userid);
+			$postlist[intval($message->id)]     = intval($message->id);
+		}
+
+		$this->_common($userlist, $postlist);
+	}
+
+	/**
+	 * @param   array  $userlist  userlist
+	 * @param   array  $postlist  postlist
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function _common(array $userlist = [], array $postlist = [])
+	{
+		if ($this->total > 0)
+		{
+			// Collect user ids for avatar prefetch when integrated
+			$lastpostlist = [];
+
+			foreach ($this->topics as $topic)
+			{
+				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
+				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
+				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
+			}
+
+			// Prefetch all users/avatars to avoid user by user queries during template iterations
+			if (!empty($userlist))
+			{
+				KunenaUserHelper::loadUsers($userlist);
+			}
+
+			TopicHelper::getUserTopics(array_keys($this->topics));
+			$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
+
+			// Fetch last / new post positions when user can see unapproved or deleted posts
+			if ($postlist || $lastreadlist || ($this->me->userid && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus())))
+			{
+				MessageHelper::loadLocation($postlist + $lastpostlist + $lastreadlist);
+			}
+		}
+	}
+
+	/**
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function getTotal()
+	{
+		if ($this->topics === false)
+		{
+			$this->getTopics();
+		}
+
+		return $this->total;
+	}
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function getTopics()
+	{
+		if ($this->topics === false)
+		{
+			$layout = $this->getState('layout');
+			$mode   = $this->getState('list.mode');
+
+			if ($mode == 'plugin')
+			{
+				$pluginmode = $this->getState('list.modetype');
+
+				if (!empty($pluginmode))
+				{
+					$total  = 0;
+					$topics = false;
+
+					PluginHelper::importPlugin('kunena');
+					Factory::getApplication()->triggerEvent('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]);
+
+					if (!empty($topics))
+					{
+						$this->topics = $topics;
+						$this->total  = $total;
+						$this->_common();
+					}
+				}
+			}
+
+			if ($this->topics === false)
+			{
+				switch ($layout)
+				{
+					case 'user':
+						$this->getUserTopics();
+						break;
+					default:
+						$this->getRecentTopics();
+				}
+			}
+		}
+
+		return $this->topics;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	protected function getUserTopics()
+	{
+		$catid      = $this->getState('item.id');
+		$limitstart = $this->getState('list.start');
+		$limit      = $this->getState('list.limit');
+
+		$latestcategory    = $this->getState('list.categories');
+		$latestcategory_in = $this->getState('list.categories.in');
+
+		$started       = false;
+		$posts         = false;
+		$favorites     = false;
+		$subscriptions = false;
+
+		// Set order by
+		$orderby = "tt.last_post_time DESC";
+
+		switch ($this->getState('list.mode'))
+		{
+			case 'posted' :
+				$posts   = true;
+				$orderby = "ut.last_post_id DESC";
+				break;
+			case 'started' :
+				$started = true;
+				break;
+			case 'favorites' :
+				$favorites = true;
+				break;
+			case 'subscriptions' :
+				$subscriptions = true;
+				break;
+			default :
+				$posts         = true;
+				$favorites     = true;
+				$subscriptions = true;
+				$orderby       = "ut.favorite DESC, tt.last_post_time DESC";
+				break;
+		}
+
+		$params = [
+			'reverse'    => !$latestcategory_in,
+			'orderby'    => $orderby,
+			'hold'       => 0,
+			'user'       => $this->getState('user'),
+			'started'    => $started,
+			'posted'     => $posts,
+			'favorited'  => $favorites,
+			'subscribed' => $subscriptions];
+
+		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+
+		$this->_common();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	protected function getRecentTopics()
+	{
+		$catid      = $this->getState('item.id');
+		$limitstart = $this->getState('list.start');
+		$limit      = $this->getState('list.limit');
+		$time       = $this->getState('list.time');
+
+		if ($time < 0)
+		{
+			$time = 0;
+		}
+		elseif ($time == 0)
+		{
+			$time = KunenaFactory::getSession()->lasttime;
+		}
+		else
+		{
+			$time = Factory::getDate()->toUnix() - ($time * 3600);
+		}
+
+		$latestcategory    = $this->getState('list.categories');
+		$latestcategory_in = $this->getState('list.categories.in');
+
+		$hold     = 0;
+		$where    = '';
+		$lastpost = true;
+
+		// Reset topics.
+		$this->total  = 0;
+		$this->topics = [];
+
+		switch ($this->getState('list.mode'))
+		{
+			case 'topics' :
+				$lastpost = false;
+				break;
+			case 'sticky' :
+				$where = 'AND tt.ordering>0';
+				break;
+			case 'locked' :
+				$where = 'AND tt.locked>0';
+				break;
+			case 'noreplies' :
+				$where = 'AND tt.posts=1';
+				break;
+			case 'unapproved' :
+				$allowed = CategoryHelper::getCategories(false, false, 'topic.approve');
+
+				if (empty($allowed))
+				{
+					return;
+				}
+
+				$allowed = implode(',', array_keys($allowed));
+				$hold    = '1';
+				$where   = "AND tt.category_id IN ({$allowed})";
+				break;
+			case 'deleted' :
+				$allowed = CategoryHelper::getCategories(false, false, 'topic.undelete');
+
+				if (empty($allowed))
+				{
+					return;
+				}
+
+				$allowed = implode(',', array_keys($allowed));
+				$hold    = '2';
+				$where   = "AND tt.category_id IN ({$allowed})";
+				break;
+			case 'replies' :
+			default :
+				break;
+		}
+
+		$params = [
+			'reverse'   => !$latestcategory_in,
+			'exclude'   => $this->setState('list.categories.exclude', 0),
+			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
+			'starttime' => $time,
+			'hold'      => $hold,
+			'where'     => $where];
+
+		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+
+		$this->_common();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function getTopicActions()
+	{
+		if ($this->topics === false)
+		{
+			$this->getTopics();
+		}
+
+		$delete = $approve = $undelete = $move = $permdelete = false;
+
+		foreach ($this->topics as $topic)
+		{
+			if (!$delete && $topic->isAuthorised('delete'))
+			{
+				$delete = true;
+			}
+
+			if (!$approve && $topic->isAuthorised('approve'))
+			{
+				$approve = true;
+			}
+
+			if (!$undelete && $topic->isAuthorised('undelete'))
+			{
+				$undelete = true;
+			}
+
+			if (!$move && $topic->isAuthorised('move'))
+			{
+				$move = $this->actionMove = true;
+			}
+
+			if (!$permdelete && $topic->isAuthorised('permdelete'))
+			{
+				$permdelete = true;
+			}
+		}
+
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+
+		if ($this->getState('list.mode') == 'subscriptions')
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		}
+
+		if ($this->getState('list.mode') == 'favorites')
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'unfavorite', Text::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		}
+
+		if ($move)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
+		}
+
+		if ($approve)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'approve', Text::_('COM_KUNENA_APPROVE_SELECTED'));
+		}
+
+		if ($delete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE_SELECTED'));
+		}
+
+		if ($permdelete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		}
+
+		if ($undelete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		}
+
+		if (count($actionDropdown) == 1)
+		{
+			return;
+		}
+
+		return $actionDropdown;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function getPostActions()
+	{
+		if ($this->messages === false)
+		{
+			$this->getPosts();
+		}
+
+		$delete = $approve = $undelete = $move = $permdelete = false;
+
+		foreach ($this->messages as $message)
+		{
+			if (!$delete && $message->isAuthorised('delete'))
+			{
+				$delete = true;
+			}
+
+			if (!$approve && $message->isAuthorised('approve'))
+			{
+				$approve = true;
+			}
+
+			if (!$undelete && $message->isAuthorised('undelete'))
+			{
+				$undelete = true;
+			}
+
+			if (!$permdelete && $message->isAuthorised('permdelete'))
+			{
+				$permdelete = true;
+			}
+		}
+
+		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+
+		if ($approve)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'approve_posts', Text::_('COM_KUNENA_APPROVE_SELECTED'));
+		}
+
+		if ($delete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'delete_posts', Text::_('COM_KUNENA_DELETE_SELECTED'));
+		}
+
+		if ($permdelete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel_posts', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		}
+
+		if ($undelete)
+		{
+			$actionDropdown[] = HTMLHelper::_('select.option', 'restore_posts', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		}
+
+		if (count($actionDropdown) == 1)
+		{
+			return;
+		}
+
+		return $actionDropdown;
+	}
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getActionMove()
+	{
+		return $this->actionMove;
+	}
 
 	/**
 	 * @return  void
@@ -232,519 +749,5 @@ class TopicsModel extends ListModel
 		}
 
 		$this->setState('list.direction', $value);
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function getTopics()
-	{
-		if ($this->topics === false)
-		{
-			$layout = $this->getState('layout');
-			$mode   = $this->getState('list.mode');
-
-			if ($mode == 'plugin')
-			{
-				$pluginmode = $this->getState('list.modetype');
-
-				if (!empty($pluginmode))
-				{
-					$total  = 0;
-					$topics = false;
-
-					PluginHelper::importPlugin('kunena');
-					Factory::getApplication()->triggerEvent('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]);
-
-					if (!empty($topics))
-					{
-						$this->topics = $topics;
-						$this->total  = $total;
-						$this->_common();
-					}
-				}
-			}
-
-			if ($this->topics === false)
-			{
-				switch ($layout)
-				{
-					case 'user':
-						$this->getUserTopics();
-						break;
-					default:
-						$this->getRecentTopics();
-				}
-			}
-		}
-
-		return $this->topics;
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	protected function getRecentTopics()
-	{
-		$catid      = $this->getState('item.id');
-		$limitstart = $this->getState('list.start');
-		$limit      = $this->getState('list.limit');
-		$time       = $this->getState('list.time');
-
-		if ($time < 0)
-		{
-			$time = 0;
-		}
-		elseif ($time == 0)
-		{
-			$time = KunenaFactory::getSession()->lasttime;
-		}
-		else
-		{
-			$time = Factory::getDate()->toUnix() - ($time * 3600);
-		}
-
-		$latestcategory    = $this->getState('list.categories');
-		$latestcategory_in = $this->getState('list.categories.in');
-
-		$hold     = 0;
-		$where    = '';
-		$lastpost = true;
-
-		// Reset topics.
-		$this->total  = 0;
-		$this->topics = [];
-
-		switch ($this->getState('list.mode'))
-		{
-			case 'topics' :
-				$lastpost = false;
-				break;
-			case 'sticky' :
-				$where = 'AND tt.ordering>0';
-				break;
-			case 'locked' :
-				$where = 'AND tt.locked>0';
-				break;
-			case 'noreplies' :
-				$where = 'AND tt.posts=1';
-				break;
-			case 'unapproved' :
-				$allowed = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'topic.approve');
-
-				if (empty($allowed))
-				{
-					return;
-				}
-
-				$allowed = implode(',', array_keys($allowed));
-				$hold    = '1';
-				$where   = "AND tt.category_id IN ({$allowed})";
-				break;
-			case 'deleted' :
-				$allowed = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'topic.undelete');
-
-				if (empty($allowed))
-				{
-					return;
-				}
-
-				$allowed = implode(',', array_keys($allowed));
-				$hold    = '2';
-				$where   = "AND tt.category_id IN ({$allowed})";
-				break;
-			case 'replies' :
-			default :
-				break;
-		}
-
-		$params = [
-			'reverse'   => !$latestcategory_in,
-			'exclude'   => $this->setState('list.categories.exclude', 0),
-			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
-			'starttime' => $time,
-			'hold'      => $hold,
-			'where'     => $where];
-
-		list($this->total, $this->topics) = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
-
-		$this->_common();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	protected function getUserTopics()
-	{
-		$catid      = $this->getState('item.id');
-		$limitstart = $this->getState('list.start');
-		$limit      = $this->getState('list.limit');
-
-		$latestcategory    = $this->getState('list.categories');
-		$latestcategory_in = $this->getState('list.categories.in');
-
-		$started       = false;
-		$posts         = false;
-		$favorites     = false;
-		$subscriptions = false;
-
-		// Set order by
-		$orderby = "tt.last_post_time DESC";
-
-		switch ($this->getState('list.mode'))
-		{
-			case 'posted' :
-				$posts   = true;
-				$orderby = "ut.last_post_id DESC";
-				break;
-			case 'started' :
-				$started = true;
-				break;
-			case 'favorites' :
-				$favorites = true;
-				break;
-			case 'subscriptions' :
-				$subscriptions = true;
-				break;
-			default :
-				$posts         = true;
-				$favorites     = true;
-				$subscriptions = true;
-				$orderby       = "ut.favorite DESC, tt.last_post_time DESC";
-				break;
-		}
-
-		$params = [
-			'reverse'    => !$latestcategory_in,
-			'orderby'    => $orderby,
-			'hold'       => 0,
-			'user'       => $this->getState('user'),
-			'started'    => $started,
-			'posted'     => $posts,
-			'favorited'  => $favorites,
-			'subscribed' => $subscriptions];
-
-		list($this->total, $this->topics) = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
-
-		$this->_common();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	protected function getPosts()
-	{
-		$this->topics = [];
-
-		$start = $this->getState('list.start');
-		$limit = $this->getState('list.limit');
-
-		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
-		$time = $this->getState('list.time');
-
-		$params              = [];
-		$params['mode']      = $this->getState('list.mode');
-		$params['reverse']   = !$this->getState('list.categories.in');
-		$params['starttime'] = $time;
-		$params['user']      = $this->getState('user');
-		list($this->total, $this->messages) = MessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
-
-		$topicids = [];
-
-		foreach ($this->messages as $message)
-		{
-			$topicids[$message->thread] = $message->thread;
-		}
-
-		$authorise = 'read';
-
-		switch ($params['mode'])
-		{
-			case 'unapproved':
-				$authorise = 'approve';
-				break;
-			case 'deleted':
-				$authorise = 'undelete';
-				break;
-		}
-
-		$this->topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicids, $authorise);
-
-		$userlist = $postlist = [];
-
-		foreach ($this->messages as $message)
-		{
-			$userlist[intval($message->userid)] = intval($message->userid);
-			$postlist[intval($message->id)]     = intval($message->id);
-		}
-
-		$this->_common($userlist, $postlist);
-	}
-
-	/**
-	 * @param   array  $userlist  userlist
-	 * @param   array  $postlist  postlist
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function _common(array $userlist = [], array $postlist = [])
-	{
-		if ($this->total > 0)
-		{
-			// Collect user ids for avatar prefetch when integrated
-			$lastpostlist = [];
-
-			foreach ($this->topics as $topic)
-			{
-				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
-			}
-
-			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			if (!empty($userlist))
-			{
-				\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
-			}
-
-			\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getUserTopics(array_keys($this->topics));
-			$lastreadlist = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus($this->topics);
-
-			// Fetch last / new post positions when user can see unapproved or deleted posts
-			if ($postlist || $lastreadlist || ($this->me->userid && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus())))
-			{
-				MessageHelper::loadLocation($postlist + $lastpostlist + $lastreadlist);
-			}
-		}
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function getMessages()
-	{
-		if ($this->topics === false)
-		{
-			$this->getPosts();
-		}
-
-		return $this->messages;
-	}
-
-	/**
-	 * @return  integer
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function getTotal()
-	{
-		if ($this->topics === false)
-		{
-			$this->getTopics();
-		}
-
-		return $this->total;
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function getTopicActions()
-	{
-		if ($this->topics === false)
-		{
-			$this->getTopics();
-		}
-
-		$delete = $approve = $undelete = $move = $permdelete = false;
-
-		foreach ($this->topics as $topic)
-		{
-			if (!$delete && $topic->isAuthorised('delete'))
-			{
-				$delete = true;
-			}
-
-			if (!$approve && $topic->isAuthorised('approve'))
-			{
-				$approve = true;
-			}
-
-			if (!$undelete && $topic->isAuthorised('undelete'))
-			{
-				$undelete = true;
-			}
-
-			if (!$move && $topic->isAuthorised('move'))
-			{
-				$move = $this->actionMove = true;
-			}
-
-			if (!$permdelete && $topic->isAuthorised('permdelete'))
-			{
-				$permdelete = true;
-			}
-		}
-
-		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-
-		if ($this->getState('list.mode') == 'subscriptions')
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
-		}
-
-		if ($this->getState('list.mode') == 'favorites')
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'unfavorite', Text::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		}
-
-		if ($move)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
-		}
-
-		if ($approve)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'approve', Text::_('COM_KUNENA_APPROVE_SELECTED'));
-		}
-
-		if ($delete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE_SELECTED'));
-		}
-
-		if ($permdelete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		}
-
-		if ($undelete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-		}
-
-		if (count($actionDropdown) == 1)
-		{
-			return;
-		}
-
-		return $actionDropdown;
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function getPostActions()
-	{
-		if ($this->messages === false)
-		{
-			$this->getPosts();
-		}
-
-		$delete = $approve = $undelete = $move = $permdelete = false;
-
-		foreach ($this->messages as $message)
-		{
-			if (!$delete && $message->isAuthorised('delete'))
-			{
-				$delete = true;
-			}
-
-			if (!$approve && $message->isAuthorised('approve'))
-			{
-				$approve = true;
-			}
-
-			if (!$undelete && $message->isAuthorised('undelete'))
-			{
-				$undelete = true;
-			}
-
-			if (!$permdelete && $message->isAuthorised('permdelete'))
-			{
-				$permdelete = true;
-			}
-		}
-
-		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-
-		if ($approve)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'approve_posts', Text::_('COM_KUNENA_APPROVE_SELECTED'));
-		}
-
-		if ($delete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'delete_posts', Text::_('COM_KUNENA_DELETE_SELECTED'));
-		}
-
-		if ($permdelete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'permdel_posts', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		}
-
-		if ($undelete)
-		{
-			$actionDropdown[] = HTMLHelper::_('select.option', 'restore_posts', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-		}
-
-		if (count($actionDropdown) == 1)
-		{
-			return;
-		}
-
-		return $actionDropdown;
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getActionMove()
-	{
-		return $this->actionMove;
 	}
 }

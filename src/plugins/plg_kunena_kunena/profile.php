@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -40,7 +40,7 @@ class KunenaProfile extends Profile
 	protected $params = null;
 
 	/**
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -114,8 +114,8 @@ class KunenaProfile extends Profile
 	}
 
 	/**
-	 * @param   string  $view   view
-	 * @param   object  $params params
+	 * @param   string  $view    view
+	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
@@ -126,8 +126,8 @@ class KunenaProfile extends Profile
 	}
 
 	/**
-	 * @param   int   $userid userid
-	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
 	 * @return  boolean
 	 *

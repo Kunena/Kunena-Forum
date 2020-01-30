@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\View\Smiley;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -33,12 +34,12 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
-		
+
 		$this->state           = $this->get('state');
 		$this->smiley_selected = $this->get('smiley');
 		$this->smileypath      = $this->ktemplate->getSmileyPath();
@@ -51,7 +52,7 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Add the page title and toolbar.
-	 * 
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

@@ -17,9 +17,9 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\MVC\View\GenericDataException;
 
 /**
  * Attachments view for Kunena backend
@@ -69,24 +69,6 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * Add the page title and toolbar.
-	 * 
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar()
-	{
-		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('attachments.delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
-
-		ToolbarHelper::spacer();
-	}
-
-	/**
 	 * Returns an array of review filter options.
 	 *
 	 * @return  array
@@ -120,5 +102,23 @@ class HtmlView extends BaseHtmlView
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function addToolbar()
+	{
+		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('attachments.delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');
+
+		ToolbarHelper::spacer();
 	}
 }

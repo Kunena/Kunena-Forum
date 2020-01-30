@@ -37,7 +37,7 @@ class KunenaLoginComprofiler
 	/**
 	 * KunenaLoginComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -47,9 +47,9 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @param   string  $username   username
-	 * @param   string  $password   password
-	 * @param   string  $rememberme remember me
+	 * @param   string  $username    username
+	 * @param   string  $password    password
+	 * @param   string  $rememberme  remember me
 	 *
 	 * @return  null|string
 	 *

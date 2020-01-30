@@ -188,12 +188,12 @@ class Layout extends Base
 	}
 
 	/**
-	 * @param  Category  $category   category
-	 * @param   null                 $content    content
-	 * @param   null                 $title      title
-	 * @param   null                 $class      class
-	 * @param   bool                 $follow     follow
-	 * @param   null                 $canonical  canonical
+	 * @param   Category  $category   category
+	 * @param   null      $content    content
+	 * @param   null      $title      title
+	 * @param   null      $class      class
+	 * @param   bool      $follow     follow
+	 * @param   null      $canonical  canonical
 	 *
 	 * @return  mixed
 	 *
@@ -254,13 +254,13 @@ class Layout extends Base
 
 	/**
 	 * @param   Topic     $topic      topic
-	 * @param   null                 $action     action
-	 * @param   null                 $content    content
-	 * @param   null                 $title      title
-	 * @param   null                 $class      class
-	 * @param  Category  $category   category
-	 * @param   bool                 $follow     follow
-	 * @param   bool                 $canonical  canonical
+	 * @param   null      $action     action
+	 * @param   null      $content    content
+	 * @param   null      $title      title
+	 * @param   null      $class      class
+	 * @param   Category  $category   category
+	 * @param   bool      $follow     follow
+	 * @param   bool      $canonical  canonical
 	 *
 	 * @return  mixed
 	 *

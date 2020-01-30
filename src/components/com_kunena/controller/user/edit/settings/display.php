@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -28,16 +29,16 @@ use function defined;
 class ComponentUserControllerEditSettingsDisplay extends ComponentUserControllerEditDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit/Settings';
-
-	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $settings;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Edit/Settings';
 
 	/**
 	 * Prepare Kunena user settings.
@@ -140,13 +141,27 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 	}
 
 	/**
+	 * Escape text for HTML.
+	 *
+	 * @param   string  $string  String to be escaped.
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function escape($string)
+	{
+		return htmlentities($string, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
 	 * Prepare document.
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
@@ -189,19 +204,5 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 				$this->setDescription($this->headerText);
 			}
 		}
-	}
-
-	/**
-	 * Escape text for HTML.
-	 *
-	 * @param   string  $string  String to be escaped.
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function escape($string)
-	{
-		return htmlentities($string, ENT_COMPAT, 'UTF-8');
 	}
 }

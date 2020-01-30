@@ -21,8 +21,8 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 

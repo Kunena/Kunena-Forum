@@ -33,7 +33,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	protected $table = '#__kunena_private';
 
 	/**
-	 * @param   KunenaUser  $user user object
+	 * @param   KunenaUser  $user  user object
 	 *
 	 * @return  $this
 	 *
@@ -55,7 +55,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	}
 
 	/**
-	 * @param   Message  $message message object
+	 * @param   Message  $message  message object
 	 *
 	 * @return  $this
 	 *
@@ -77,7 +77,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	}
 
 	/**
-	 * @param   array  $ids ids
+	 * @param   array  $ids  ids
 	 *
 	 * @return  $this
 	 *
@@ -99,20 +99,6 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	}
 
 	/**
-	 * Get private messages.
-	 *
-	 * @return  array|\Kunena\Forum\Libraries\KunenaPrivate\Message[]
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function find()
-	{
-		return $this->load(parent::find());
-	}
-
-	/**
 	 * @return  \Kunena\Forum\Libraries\KunenaPrivate\Message|mixed
 	 *
 	 * @since   Kunena 6.0
@@ -128,7 +114,21 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	}
 
 	/**
-	 * @param   array  $ids ids
+	 * Get private messages.
+	 *
+	 * @return  array|\Kunena\Forum\Libraries\KunenaPrivate\Message[]
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function find()
+	{
+		return $this->load(parent::find());
+	}
+
+	/**
+	 * @param   array  $ids  ids
 	 *
 	 * @return  array
 	 *

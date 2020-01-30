@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -30,34 +30,30 @@ use function defined;
 class ComponentUserControllerBanHistoryDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Ban/History';
-
-	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
-
 	/**
 	 * @var     array|Ban[]
 	 * @since   Kunena 6.0
 	 */
 	public $banHistory;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Ban/History';
 
 	/**
 	 * Prepare ban history.

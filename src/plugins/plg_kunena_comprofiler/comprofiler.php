@@ -20,12 +20,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\Activity;
 use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Integration\Profile;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Login\Login;
 use function defined;
 
@@ -45,8 +45,8 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * plgKunenaComprofiler constructor.
 	 *
-	 * @param   object  $subject subject
-	 * @param   object  $config  config
+	 * @param   object  $subject  subject
+	 * @param   object  $config   config
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -92,8 +92,6 @@ class plgKunenaComprofiler extends CMSPlugin
 
 		$this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', KPATH_ADMIN);
 
-		require_once __DIR__ . "/integration.php";
-
 		if ($app->isClient('administrator') && (!isset($ueConfig ['version']) || version_compare($ueConfig ['version'], $this->minCBVersion) < 0))
 		{
 			$app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
@@ -131,10 +129,10 @@ class plgKunenaComprofiler extends CMSPlugin
 	}
 
 	/**
-	 * @param   string  $context context
-	 * @param   int     $item    items
-	 * @param   object  $params  params
-	 * @param   int     $page    page
+	 * @param   string  $context  context
+	 * @param   int     $item     items
+	 * @param   object  $params   params
+	 * @param   int     $page     page
 	 *
 	 * @return  void
 	 *
@@ -170,8 +168,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/access.php";
-
 		return new KunenaAccessComprofiler($this->params);
 	}
 
@@ -188,8 +184,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/login.php";
 
 		return new KunenaLoginComprofiler($this->params);
 	}
@@ -208,8 +202,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
-
 		return new AvatarComprofiler($this->params);
 	}
 
@@ -226,8 +218,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileComprofiler($this->params);
 	}
@@ -246,8 +236,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/private.php";
-
 		return new KunenaPrivateComprofiler($this->params);
 	}
 
@@ -264,8 +252,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/activity.php";
 
 		return new KunenaActivityComprofiler($this->params);
 	}

@@ -67,7 +67,7 @@ class KunenaViewInstall extends HtmlView
 	/**
 	 * Private method to set the toolbar for this view
 	 *
-	 * @access private
+	 * @access  private
 	 *
 	 * @return  void
 	 *
@@ -96,7 +96,7 @@ class KunenaViewInstall extends HtmlView
 		echo $this->escape($schema->getSchema()->saveXML());
 		echo '</textarea>';
 
-		if  (KunenaForum::isDev())
+		if (KunenaForum::isDev())
 		{
 			echo '<textarea cols="80" rows="20">';
 
@@ -127,7 +127,7 @@ class KunenaViewInstall extends HtmlView
 		echo $this->escape($diff->saveXML());
 		echo '</textarea>';
 
-		if  (KunenaForum::isDev())
+		if (KunenaForum::isDev())
 		{
 			echo '<textarea cols="80" rows="20">';
 

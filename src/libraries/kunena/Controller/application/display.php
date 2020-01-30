@@ -25,17 +25,17 @@ use Joomla\CMS\Pathway\Pathway;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
 use Kunena\Forum\Libraries\User\Ban;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -315,7 +315,7 @@ class Display extends KunenaControllerDisplay
 
 		if (!$limitstart)
 		{
-			$uri = trim(strtok(\Kunena\Forum\Libraries\Route\KunenaRoute::_(), '?'));
+			$uri = trim(strtok(KunenaRoute::_(), '?'));
 			$this->document->addHeadLink($uri, 'canonical', 'rel');
 		}
 

@@ -33,7 +33,7 @@ class HtmlView extends BaseHtmlView
 	public $config;
 
 	/**
-	 * @param   null  $tpl tmpl
+	 * @param   null  $tpl  tmpl
 	 *
 	 * @return  void
 	 *
@@ -43,7 +43,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->lists = $this->get('Configlists');
+		$this->lists  = $this->get('Configlists');
 		$this->config = KunenaConfig::getInstance();
 
 		// Only set the toolbar if not modal

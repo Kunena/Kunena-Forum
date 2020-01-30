@@ -15,8 +15,8 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Integration\Avatar;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use function defined;
 
 /**
@@ -35,7 +35,7 @@ class AvatarComprofiler extends Avatar
 	/**
 	 * \Kunena\Forum\Libraries\Integration\AvatarComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -45,7 +45,7 @@ class AvatarComprofiler extends Avatar
 	}
 
 	/**
-	 * @param   object  $userlist userlist
+	 * @param   object  $userlist  userlist
 	 *
 	 * @return  void
 	 *
@@ -69,9 +69,9 @@ class AvatarComprofiler extends Avatar
 	}
 
 	/**
-	 * @param   int  $user  user
-	 * @param   int  $sizex sizex
-	 * @param   int  $sizey sizey
+	 * @param   int  $user   user
+	 * @param   int  $sizex  sizex
+	 * @param   int  $sizey  sizey
 	 *
 	 * @return  string
 	 *

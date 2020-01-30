@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use function defined;
@@ -31,6 +32,20 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	protected $systemreport;
+
+	protected $systemreport_anonymous;
+
+	protected $listtrashdelete;
+
+	protected $forumList;
+
+	protected $controloptions;
+
+	protected $keepSticky;
+
+	protected $legacy;
+
 	/**
 	 * @return  void
 	 *
@@ -105,7 +120,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$id = $this->app->input->get('id', 0, 'int');
 
-		$topic           = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+		$topic           = TopicHelper::get($id);
 		$acl             = Access::getInstance();
 		$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
 

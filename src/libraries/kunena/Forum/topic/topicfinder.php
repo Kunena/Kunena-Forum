@@ -19,8 +19,9 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\User\User;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Database\Object\Finder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -29,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class TopicFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
+class TopicFinder extends Finder
 {
 	/**
 	 * @var     string
@@ -134,7 +135,7 @@ class TopicFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	 *
 	 * @param   Date  $starting  Starting date or null if older than ending date.
 	 * @param   Date  $ending    Ending date or null if newer than starting date.
-	 * @param   bool                  $lastPost  True = last post, False = first post.
+	 * @param   bool  $lastPost  True = last post, False = first post.
 	 *
 	 * @return  $this
 	 *
@@ -372,7 +373,7 @@ class TopicFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	/**
 	 * Get unread topics
 	 *
-	 * @param   KunenaUser  $user user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  $this
 	 *

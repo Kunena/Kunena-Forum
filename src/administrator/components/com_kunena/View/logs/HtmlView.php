@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use ReflectionClass;
 use ReflectionException;
@@ -32,6 +31,34 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayClean()
+	{
+		$this->setToolBarClean();
+		$this->display();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolbarClean()
+	{
+		// Set the titlebar text
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+	}
+
 	/**
 	 * @param   null  $tpl  tpl
 	 *
@@ -160,7 +187,7 @@ class HtmlView extends BaseHtmlView
 
 		$reflection = new ReflectionClass('Kunena\Forum\Libraries\Log\Log');
 
-		$constants  = $reflection->getConstants();
+		$constants = $reflection->getConstants();
 		ksort($constants);
 
 		foreach ($constants as $key => $value)
@@ -191,35 +218,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayClean()
-	{
-		$this->setToolBarClean();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolbarClean()
-	{
-		// Set the titlebar text
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-	}
-
-	/**
-	 * @param   integer  $id id
+	 * @param   integer  $id  id
 	 *
 	 * @return  mixed|string
 	 *
@@ -233,7 +232,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   string  $name name
+	 * @param   string  $name  name
 	 *
 	 * @return  string
 	 *

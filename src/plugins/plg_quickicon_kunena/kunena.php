@@ -20,8 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Forum\Forum;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Forum;
 use stdClass;
 use function defined;
 

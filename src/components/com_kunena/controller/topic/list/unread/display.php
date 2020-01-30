@@ -21,12 +21,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 
@@ -54,7 +55,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 		$this->model = new TopicsModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
-		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
 		$access         = Access::getInstance();
 		$start          = $this->state->get('list.start');
@@ -88,7 +89,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=unread"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=unread"));
 				$itemidfix = $getid->id;
 			}
 
@@ -98,7 +99,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=unread&Itemid={$itemidfix}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=unread&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

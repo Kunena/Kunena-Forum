@@ -17,8 +17,8 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Profile;
 use RuntimeException;
 use function defined;
 
@@ -40,7 +40,7 @@ class KunenaProfileComprofiler extends Profile
 	/**
 	 * KunenaProfileComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -50,8 +50,8 @@ class KunenaProfileComprofiler extends Profile
 	}
 
 	/**
-	 * @param   string  $event  event
-	 * @param   object  $params params
+	 * @param   string  $event   event
+	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
@@ -147,8 +147,8 @@ class KunenaProfileComprofiler extends Profile
 	}
 
 	/**
-	 * @param   string  $view   view
-	 * @param   object  $params params
+	 * @param   string  $view    view
+	 * @param   object  $params  params
 	 *
 	 * @return  string
 	 *
@@ -202,8 +202,8 @@ class KunenaProfileComprofiler extends Profile
 	}
 
 	/**
-	 * @param   int   $userid userid
-	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
 	 * @return  string
 	 *

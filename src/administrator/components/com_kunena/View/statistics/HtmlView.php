@@ -186,7 +186,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   integer  $id id
+	 * @param   integer  $id  id
 	 *
 	 * @return  mixed|string
 	 *
@@ -200,7 +200,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   string  $name name
+	 * @param   string  $name  name
 	 *
 	 * @return  string
 	 *

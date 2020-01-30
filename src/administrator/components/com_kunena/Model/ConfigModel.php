@@ -15,13 +15,11 @@ namespace Kunena\Forum\Administrator\Model;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 
@@ -1363,7 +1361,7 @@ class ConfigModel extends AdminModel
 	 */
 	public function getConfiglists()
 	{
-		$lists = [];
+		$lists        = [];
 		$this->config = KunenaConfig::getInstance();
 
 		// RSS
@@ -1578,7 +1576,7 @@ class ConfigModel extends AdminModel
 		$latestCategoryIn[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_SHOW'));
 		$lists['latestcategory_in'] = HTMLHelper::_('select.genericlist', $latestCategoryIn, 'cfg_latestcategory_in', 'class="inputbox form-control"size="1"', 'value', 'text', $this->config->latestcategory_in);
 
-		$optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
+		$optionsShowHide = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
 		// Todo: fix params
 		$params                  = ['sections' => false, 'action' => 'read'];
 		$lists['latestcategory'] = HTMLHelper::_('select.genericlist', $optionsShowHide, 'cfg_latestcategory', 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $this->config->latestcategory), 'latestcategory');

@@ -17,8 +17,8 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -38,7 +38,7 @@ class KunenaProfileEasyprofile extends Profile
 	/**
 	 * KunenaProfileEasyprofile constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -78,8 +78,8 @@ class KunenaProfileEasyprofile extends Profile
 	}
 
 	/**
-	 * @param   object  $view   view
-	 * @param   object  $params params
+	 * @param   object  $view    view
+	 * @param   object  $params  params
 	 *
 	 * @return   void
 	 *
@@ -90,8 +90,8 @@ class KunenaProfileEasyprofile extends Profile
 	}
 
 	/**
-	 * @param   int   $userid userid
-	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
 	 * @return  boolean
 	 *
@@ -103,9 +103,9 @@ class KunenaProfileEasyprofile extends Profile
 	}
 
 	/**
-	 * @param   int     $userid userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   int     $userid  userid
+	 * @param   string  $task    task
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean
 	 *

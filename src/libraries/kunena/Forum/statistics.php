@@ -23,11 +23,11 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
@@ -219,6 +219,36 @@ class Statistics
 	}
 
 	/**
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public static function getTotalEmoticons()
+	{
+		$smilies = null;
+
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query
+			->select('COUNT(*)')
+			->from($db->quoteName('#__kunena_smileys'));
+		$db->setQuery($query);
+
+		try
+		{
+			$smilies = $db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $smilies;
+	}
+
+	/**
 	 * @param   bool  $force  force
 	 *
 	 * @return  void
@@ -330,36 +360,6 @@ class Statistics
 		];
 
 		return $count;
-	}
-
-	/**
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public static function getTotalEmoticons()
-	{
-		$smilies = null;
-
-		$db    = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query
-			->select('COUNT(*)')
-			->from($db->quoteName('#__kunena_smileys'));
-		$db->setQuery($query);
-
-		try
-		{
-			$smilies = $db->loadResult();
-		}
-		catch (RuntimeException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		return $smilies;
 	}
 
 	/**

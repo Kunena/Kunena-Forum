@@ -19,7 +19,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-
 use Kunena\Forum\Libraries\Tree\Tree;
 use function defined;
 
@@ -59,7 +58,7 @@ class KunenaAccessComprofiler
 	/**
 	 * KunenaAccessComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -274,8 +273,8 @@ class KunenaAccessComprofiler
 	/**
 	 * Authorise list of categories.
 	 *
-	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes unauthorised
-	 * categories from the list.
+	 * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes
+	 * unauthorised categories from the list.
 	 *
 	 * Results for the current user are saved into session.
 	 *

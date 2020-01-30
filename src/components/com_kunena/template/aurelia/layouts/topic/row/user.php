@@ -16,8 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 

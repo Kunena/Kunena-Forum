@@ -19,8 +19,9 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Statistics;
 use Kunena\Forum\Libraries\Integration\Plugins;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
+
 ?>
 
 <div id="kunena" class="container-fluid">

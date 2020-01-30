@@ -26,16 +26,16 @@ use function defined;
 /**
  * Private message.
  *
- * @property int       $id
- * @property int       $parent_id
- * @property int       $author_id
- * @property int       $created_at
- * @property int       $attachments
- * @property string    $subject
- * @property string    $body
- * @property Registry  $params
- *
  * @since   Kunena 6.0
+ * @property int      $parent_id
+ * @property int      $author_id
+ * @property int      $created_at
+ * @property int      $attachments
+ * @property string   $subject
+ * @property string   $body
+ * @property Registry $params
+ *
+ * @property int      $id
  */
 class Message extends KunenaDatabaseObject
 {
@@ -66,7 +66,7 @@ class Message extends KunenaDatabaseObject
 	/**
 	 * KunenaPrivateMessage constructor.
 	 *
-	 * @param   null  $properties properties
+	 * @param   null  $properties  properties
 	 *
 	 *
 	 * @since   Kunena 6.0
@@ -86,7 +86,7 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string  $field field
+	 * @param   string  $field  field
 	 *
 	 * @return integer|string
 	 *
@@ -107,6 +107,55 @@ class Message extends KunenaDatabaseObject
 		}
 
 		return '';
+	}
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function check()
+	{
+		$this->params = new Registry($this->params);
+
+		if (!is_null($this->_attachments))
+		{
+			$attachments       = array_values($this->_attachments->getMapped());
+			$this->attachments = count($attachments);
+			$this->params->set('attachments', $attachments);
+		}
+
+		if (!is_null($this->_posts))
+		{
+			$this->params->set('receivers.posts', array_values($this->_posts->getMapped()));
+		}
+
+		if (!is_null($this->_users))
+		{
+			$this->params->set('receivers.users', array_values($this->_users->getMapped()));
+		}
+
+		return parent::check();
+	}
+
+	/**
+	 * Delete attachments
+	 *
+	 * @see     KunenaDatabaseObject::delete()
+	 *
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function delete()
+	{
+		$attachments = $this->attachments()->delete();
+		$posts       = $this->posts()->delete();
+		$users       = $this->users()->delete();
+
+		return parent::delete();
 	}
 
 	/**
@@ -158,35 +207,6 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function check()
-	{
-		$this->params = new Registry($this->params);
-
-		if (!is_null($this->_attachments))
-		{
-			$attachments       = array_values($this->_attachments->getMapped());
-			$this->attachments = count($attachments);
-			$this->params->set('attachments', $attachments);
-		}
-
-		if (!is_null($this->_posts))
-		{
-			$this->params->set('receivers.posts', array_values($this->_posts->getMapped()));
-		}
-
-		if (!is_null($this->_users))
-		{
-			$this->params->set('receivers.users', array_values($this->_users->getMapped()));
-		}
-
-		return parent::check();
-	}
-
-	/**
 	 * Save changes in the relations.
 	 *
 	 * @return  void
@@ -219,25 +239,5 @@ class Message extends KunenaDatabaseObject
 		{
 			$this->_users->setKey($this->id)->save();
 		}
-	}
-
-	/**
-	 * Delete attachments
-	 *
-	 * @see     KunenaDatabaseObject::delete()
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function delete()
-	{
-		$attachments = $this->attachments()->delete();
-		$posts       = $this->posts()->delete();
-		$users       = $this->users()->delete();
-
-		return parent::delete();
 	}
 }

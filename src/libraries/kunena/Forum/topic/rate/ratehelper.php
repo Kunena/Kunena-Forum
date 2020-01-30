@@ -34,7 +34,7 @@ abstract class RateHelper
 	/**
 	 * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicRate object
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
 	 *
@@ -43,7 +43,7 @@ abstract class RateHelper
 	 *
 	 * @return  Rate The rate object.
 	 *
-	 * @since   Kunena 5.0
+	 * @since     Kunena 5.0
 	 *
 	 * @throws  Exception
 	 */
@@ -114,8 +114,8 @@ abstract class RateHelper
 	/**
 	 * Return rate by id and userid
 	 *
-	 * @param   integer  $id     id
-	 * @param   integer  $userid userid
+	 * @param   integer  $id      id
+	 * @param   integer  $userid  userid
 	 *
 	 * @return  float
 	 *

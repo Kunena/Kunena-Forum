@@ -12,6 +12,7 @@
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\View;
 
 defined('_JEXEC') or die;
@@ -24,7 +25,7 @@ defined('_JEXEC') or die;
 class KunenaViewTopics extends View
 {
 	/**
-	 * @param   null  $tpl tmpl
+	 * @param   null  $tpl  tmpl
 	 *
 	 * @return  mixed|void
 	 *
@@ -42,7 +43,7 @@ class KunenaViewTopics extends View
 		foreach ($topics as $topic)
 		{
 			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users    = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($lastuser);
+			$users    = KunenaUserHelper::get($lastuser);
 
 			$response           = new stdClass;
 			$response->id       = $topic->id;

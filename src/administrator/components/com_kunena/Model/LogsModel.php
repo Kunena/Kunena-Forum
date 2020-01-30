@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Log\Finder;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -31,14 +32,6 @@ use function defined;
  */
 class LogsModel extends ListModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * Constructor.
 	 *
@@ -69,10 +62,18 @@ class LogsModel extends ListModel
 			];
 		}
 
-		$app = Factory::getApplication();
+		$app      = Factory::getApplication();
 		$this->me = $app->getIdentity();
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 
 	/**
@@ -359,7 +360,7 @@ class LogsModel extends ListModel
 
 		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
+		KunenaUserHelper::loadUsers($userIds);
 
 		TopicHelper::getTopics($items->map(function ($item, $key) {
 			return $item->topic_id;
@@ -374,8 +375,8 @@ class LogsModel extends ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering  ordering
-	 * @param   null  $direction direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *

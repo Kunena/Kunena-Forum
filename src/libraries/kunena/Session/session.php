@@ -36,24 +36,6 @@ class Session extends CMSObject
 	private static $_instance;
 
 	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_exists = false;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_sessiontimeout = false;
-
-	/**
-	 * @var     integer|string
-	 * @since   Kunena 6.0
-	 */
-	protected $allreadtime;
-
-	/**
 	 * @var     integer|string
 	 * @since   Kunena 6.0
 	 */
@@ -70,6 +52,24 @@ class Session extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	public $readtopics;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_exists = false;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_sessiontimeout = false;
+
+	/**
+	 * @var     integer|string
+	 * @since   Kunena 6.0
+	 */
+	protected $allreadtime;
 
 	/**
 	 * @param   mixed|null  $identifier  identifier
@@ -104,7 +104,7 @@ class Session extends CMSObject
 	/**
 	 * Method to load a KunenaSession object by userid
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @param   int  $userid  The user id of the user to load
 	 *
@@ -136,7 +136,7 @@ class Session extends CMSObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @param   string  $type    The session table name to be used
 	 * @param   string  $prefix  The session table prefix to be used
@@ -298,7 +298,7 @@ class Session extends CMSObject
 	/**
 	 * Method to delete the KunenaSession object from the database
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @return    boolean            True on success
 	 *

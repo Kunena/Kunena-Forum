@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since    Kunena 6.0
 	 *
 	 * @throws  Exception
 	 * @throws  null

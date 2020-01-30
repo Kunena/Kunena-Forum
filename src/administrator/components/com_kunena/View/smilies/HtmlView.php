@@ -61,29 +61,6 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar()
-	{
-		$this->filterActive = $this->escape($this->state->get('filter.active'));
-		$this->pagination   = $this->get('Pagination');
-
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-		ToolbarHelper::editList();
-		ToolbarHelper::divider();
-		ToolbarHelper::deleteList();
-		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
@@ -110,5 +87,28 @@ class HtmlView extends BaseHtmlView
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function addToolbar()
+	{
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->pagination   = $this->get('Pagination');
+
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
+		ToolbarHelper::spacer();
+		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
+		ToolbarHelper::editList();
+		ToolbarHelper::divider();
+		ToolbarHelper::deleteList();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

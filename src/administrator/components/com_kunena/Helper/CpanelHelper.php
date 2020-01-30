@@ -11,8 +11,6 @@ namespace Kunena\Forum\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-
 /**
  * Forum component helper.
  *

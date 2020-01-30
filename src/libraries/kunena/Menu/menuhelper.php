@@ -44,7 +44,7 @@ abstract class MenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @see     modules/mod_menu/helper.php
+	 * @see      modules/mod_menu/helper.php
 	 *
 	 * @param   Registry  $params  The module options.
 	 *
@@ -188,7 +188,7 @@ abstract class MenuHelper
 	/**
 	 * Get base menu item.
 	 *
-	 * @param   Registry $params  The module options.
+	 * @param   Registry  $params  The module options.
 	 *
 	 * @return  object
 	 *
@@ -220,7 +220,7 @@ abstract class MenuHelper
 	/**
 	 * Get active menu item.
 	 *
-	 * @param   Registry $params  The module options.
+	 * @param   Registry  $params  The module options.
 	 *
 	 * @return  object
 	 *
@@ -242,7 +242,7 @@ abstract class MenuHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getDefault()
 	{

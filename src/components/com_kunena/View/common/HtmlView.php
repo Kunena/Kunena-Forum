@@ -26,10 +26,14 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 
 /**
@@ -192,8 +196,9 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$options            = [];
-		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+		$options    = [];
+		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+
 		// Todo: fix params
 		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
@@ -236,8 +241,8 @@ class HtmlView extends BaseHtmlView
 
 			if ($catid)
 			{
-				$parents         = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getParents($catid);
-				$parents[$catid] = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
+				$parents         = CategoryHelper::getParents($catid);
+				$parents[$catid] = CategoryHelper::get($catid);
 
 				// Remove categories from pathway if menu item contains/excludes them
 				if (!empty($active->query['catid']) && isset($parents[$active->query['catid']]))
@@ -265,7 +270,7 @@ class HtmlView extends BaseHtmlView
 			}
 			elseif ($id)
 			{
-				$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+				$topic = TopicHelper::get($id);
 				$pathway->addItem($this->escape($topic->subject), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 
@@ -340,9 +345,9 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$users = \Kunena\Forum\Libraries\User\KunenaUserHelper::getOnlineUsers();
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers(array_keys($users));
-		$onlineusers = \Kunena\Forum\Libraries\User\KunenaUserHelper::getOnlineCount();
+		$users = KunenaUserHelper::getOnlineUsers();
+		KunenaUserHelper::loadUsers(array_keys($users));
+		$onlineusers = KunenaUserHelper::getOnlineCount();
 
 		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
@@ -375,7 +380,7 @@ class HtmlView extends BaseHtmlView
 
 		foreach ($users as $userid => $usertime)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
+			$user = KunenaUserHelper::get($userid);
 
 			if (!$user->showOnline)
 			{
@@ -401,6 +406,23 @@ class HtmlView extends BaseHtmlView
 		echo $result;
 
 		$cache->end();
+	}
+
+	/**
+	 * @param   string  $action  action
+	 * @param   bool    $xhtml   xhtml
+	 *
+	 * @return  void|string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getUserlistURL($action = '', $xhtml = true)
+	{
+		$profile = KunenaFactory::getProfile();
+
+		return $profile->getUserListURL($action, $xhtml);
 	}
 
 	/**
@@ -445,6 +467,71 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @param   string  $name   name
+	 * @param   string  $class  class
+	 * @param   string  $rel    rel
+	 *
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function getStatsLink($name, $class = '', $rel = 'follow')
+	{
+		$my = KunenaFactory::getUser();
+
+		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
+		{
+			return false;
+		}
+
+		return '<a href="' . KunenaRoute::_('index.php?option=com_kunena&view=statistics') . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+	}
+
+	/**
+	 * @param   string  $action  action
+	 * @param   string  $name    name
+	 * @param   string  $rel     rel
+	 * @param   string  $class   class
+	 *
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
+	{
+		$my = KunenaFactory::getUser();
+
+		if ($name == $this->memberCount)
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
+
+			if ($link)
+			{
+				return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+			}
+			else
+			{
+				return $name;
+			}
+		}
+		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlist_allowed)
+		{
+			return false;
+		}
+		else
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
+
+			return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+		}
+	}
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void
@@ -467,7 +554,7 @@ class HtmlView extends BaseHtmlView
 		{
 			if ($catid > 0)
 			{
-				$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
+				$category = CategoryHelper::get($catid);
 
 				if ($category->pub_access == 0 && $category->parent)
 				{
@@ -490,6 +577,63 @@ class HtmlView extends BaseHtmlView
 		$result = $this->loadTemplateFile($tpl);
 
 		echo $result;
+	}
+
+	/**
+	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
+	 *
+	 * @param   string       $params  Add extras params to the URL
+	 * @param   bool|string  $xhtml   Replace & by & for XML compilance.
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	private function getRSSURL($params = '', $xhtml = true)
+	{
+		$mode = KunenaFactory::getConfig()->rss_type;
+
+		if (!empty(KunenaFactory::getConfig()->rss_feedburner_url))
+		{
+			return KunenaFactory::getConfig()->rss_feedburner_url;
+		}
+		else
+		{
+			switch ($mode)
+			{
+				case 'topic' :
+					$rss_type = 'mode=topics';
+					break;
+				case 'recent' :
+					$rss_type = 'mode=replies';
+					break;
+				case 'post' :
+					$rss_type = 'layout=posts';
+					break;
+			}
+
+			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}{$params}?format=feed&type=rss", $xhtml);
+		}
+	}
+
+	/**
+	 * @param   string  $name    name
+	 * @param   string  $rel     rel
+	 * @param   string  $params  params
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function getRSSLink($name, $rel = 'follow', $params = '')
+	{
+		return '<a href="' . $this->getRSSURL($params) . '">' . $name . '</a>';
 	}
 
 	/**
@@ -540,7 +684,7 @@ class HtmlView extends BaseHtmlView
 		$this->parameters->set('startLevel', $basemenu->level + 1);
 		$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 
-		$this->list      = \Kunena\Forum\Libraries\Menu\MenuHelper::getList($this->parameters);
+		$this->list      = MenuHelper::getList($this->parameters);
 		$this->menu      = $this->app->getMenu();
 		$this->active    = $this->menu->getActive();
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
@@ -631,28 +775,6 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   array  $matches matches
-	 *
-	 * @return  mixed|string|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function fillLoginBoxInfo($matches)
-	{
-		switch ($matches[1])
-		{
-			case 'RETURN_URL':
-				return base64_encode(Uri::getInstance()->toString(['path', 'query', 'fragment']));
-			case 'TOKEN':
-				return HTMLHelper::_('form.token');
-			case 'MODULE':
-				return $this->getModulePosition('kunena_profilebox');
-		}
-	}
-
-	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -672,141 +794,24 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   string  $action  action
-	 * @param   bool    $xhtml   xhtml
+	 * @param   array  $matches  matches
 	 *
-	 * @return  void|string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getUserlistURL($action = '', $xhtml = true)
-	{
-		$profile = KunenaFactory::getProfile();
-
-		return $profile->getUserListURL($action, $xhtml);
-	}
-
-	/**
-	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
-	 *
-	 * @param   string       $params  Add extras params to the URL
-	 * @param   bool|string  $xhtml   Replace & by & for XML compilance.
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	private function getRSSURL($params = '', $xhtml = true)
-	{
-		$mode = KunenaFactory::getConfig()->rss_type;
-
-		if (!empty(KunenaFactory::getConfig()->rss_feedburner_url))
-		{
-			return KunenaFactory::getConfig()->rss_feedburner_url;
-		}
-		else
-		{
-			switch ($mode)
-			{
-				case 'topic' :
-					$rss_type = 'mode=topics';
-					break;
-				case 'recent' :
-					$rss_type = 'mode=replies';
-					break;
-				case 'post' :
-					$rss_type = 'layout=posts';
-					break;
-			}
-
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}{$params}?format=feed&type=rss", $xhtml);
-		}
-	}
-
-	/**
-	 * @param   string  $name    name
-	 * @param   string  $rel     rel
-	 * @param   string  $params  params
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function getRSSLink($name, $rel = 'follow', $params = '')
-	{
-		return '<a href="' . $this->getRSSURL($params) . '">' . $name . '</a>';
-	}
-
-	/**
-	 * @param   string  $name   name
-	 * @param   string  $class  class
-	 * @param   string  $rel    rel
-	 *
-	 * @return  boolean|string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function getStatsLink($name, $class = '', $rel = 'follow')
-	{
-		$my = KunenaFactory::getUser();
-
-		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
-		{
-			return false;
-		}
-
-		return '<a href="' . KunenaRoute::_('index.php?option=com_kunena&view=statistics') . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
-	}
-
-	/**
-	 * @param   string  $action action
-	 * @param   string  $name   name
-	 * @param   string  $rel    rel
-	 * @param   string  $class  class
-	 *
-	 * @return  boolean|string
+	 * @return  mixed|string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
+	public function fillLoginBoxInfo($matches)
 	{
-		$my = KunenaFactory::getUser();
-
-		if ($name == $this->memberCount)
+		switch ($matches[1])
 		{
-			$link = KunenaFactory::getProfile()->getUserListURL($action);
-
-			if ($link)
-			{
-				return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
-			}
-			else
-			{
-				return $name;
-			}
-		}
-		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlist_allowed)
-		{
-			return false;
-		}
-		else
-		{
-			$link = KunenaFactory::getProfile()->getUserListURL($action);
-
-			return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+			case 'RETURN_URL':
+				return base64_encode(Uri::getInstance()->toString(['path', 'query', 'fragment']));
+			case 'TOKEN':
+				return HTMLHelper::_('form.token');
+			case 'MODULE':
+				return $this->getModulePosition('kunena_profilebox');
 		}
 	}
 }

@@ -14,14 +14,14 @@ namespace Kunena\Forum\Libraries\Tables;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use UnexpectedValueException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Announcements
@@ -112,13 +112,13 @@ class TableKunenaAnnouncements extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function check()
 	{
 		if ($this->created_by)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->created_by);
+			$user = KunenaUserHelper::get($this->created_by);
 
 			if (!$user->exists())
 			{
@@ -127,7 +127,7 @@ class TableKunenaAnnouncements extends KunenaTable
 		}
 		else
 		{
-			$this->created_by = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid;
+			$this->created_by = KunenaUserHelper::getMyself()->userid;
 		}
 
 		if (!$this->created)

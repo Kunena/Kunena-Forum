@@ -33,16 +33,15 @@ use function defined;
 class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Search/Form';
-
-	/**
 	 * @var     SearchModel
 	 * @since   Kunena 6.0
 	 */
 	public $model;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Search/Form';
 
 	/**
 	 * Prepare search form display.
@@ -73,7 +72,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=search"));
 				$itemidfix = $getid->id;
 			}
 
@@ -83,7 +82,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

@@ -15,10 +15,11 @@ namespace Kunena\Forum\Site\Controller\Application\Topic\Flat;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Layout\Page;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
+
 /**
  * Class ComponentKunenaControllerApplicationTopicFlatDisplay
  *

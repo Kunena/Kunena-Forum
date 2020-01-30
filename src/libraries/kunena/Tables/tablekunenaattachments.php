@@ -17,11 +17,12 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\File\File;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use UnexpectedValueException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena Attachments Table
@@ -122,8 +123,8 @@ class TableKunenaAttachments extends KunenaTable
 	 */
 	public function check()
 	{
-		$user    = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
-		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->mesid);
+		$user    = KunenaUserHelper::get($this->userid);
+		$message = MessageHelper::get($this->mesid);
 
 		if ($user->userid != 0 && !$user->exists())
 		{
@@ -172,7 +173,7 @@ class TableKunenaAttachments extends KunenaTable
 
 			if (!$this->filetype)
 			{
-				$this->filetype = \Kunena\Forum\Libraries\File\File::getMime($file);
+				$this->filetype = File::getMime($file);
 			}
 		}
 

@@ -23,8 +23,8 @@ use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Session\Session;
 use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaAdminTemplate;
 use function defined;
 
@@ -79,7 +79,8 @@ abstract class KunenaFactory
 	/**
 	 * Get Kunena user object
 	 *
-	 * Returns the global {@link \Kunena\Forum\Libraries\User\KunenaUser} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link \Kunena\Forum\Libraries\User\KunenaUser} object, only creating it if it doesn't
+	 * already exist.
 	 *
 	 * @param   int   $id      The user to load - Can be an integer or string - If string, it is converted to Id
 	 *                         automatically.
@@ -134,7 +135,8 @@ abstract class KunenaFactory
 	/**
 	 * Get Kunena avatar integration object
 	 *
-	 * Returns the global {@link \Kunena\Forum\Libraries\Integration\Avatar} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link \Kunena\Forum\Libraries\Integration\Avatar} object, only creating it if it doesn't
+	 * already exist.
 	 *
 	 * @return  Avatar
 	 *

@@ -14,17 +14,18 @@ namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use function defined;
 
 /**
  * Private message mapping to forum message.
  *
- * @property int $private_id
+ * @since   Kunena 6.0
  * @property int $message_id
  *
- * @since   Kunena 6.0
+ * @property int $private_id
  */
-class Post extends \Kunena\Forum\Libraries\Database\KunenaDatabaseObject
+class Post extends KunenaDatabaseObject
 {
 	/**
 	 * @var     string

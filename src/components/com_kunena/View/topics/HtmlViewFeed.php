@@ -42,8 +42,8 @@ class KunenaViewTopics extends View
 		}
 
 		Parser::$relative = false;
-		$config                     = KunenaFactory::getConfig();
-		$cache                      = Factory::getCache('com_kunena_rss', 'output');
+		$config           = KunenaFactory::getConfig();
+		$cache            = Factory::getCache('com_kunena_rss', 'output');
 
 		if (!$config->get('cache'))
 		{
@@ -98,6 +98,119 @@ class KunenaViewTopics extends View
 		$this->setTitle($title);
 
 		$this->displayTopicRows();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayTopicRows()
+	{
+		$firstpost = $this->state->get('list.mode') == 'topics';
+
+		foreach ($this->topics as $topic)
+		{
+			if ($firstpost)
+			{
+				$id          = $topic->first_post_id;
+				$page        = 'first';
+				$description = $topic->first_post_message;
+				$date        = new Joomla\CMS\Date\Date($topic->first_post_time);
+				$userid      = $topic->first_post_userid;
+				$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
+			}
+			else
+			{
+				$id   = $topic->last_post_id;
+				$page = 'last';
+
+				if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id)
+				{
+					$description = Text::_('COM_KUNENA_TEASER_TEXT');
+				}
+				else
+				{
+					$description = $topic->last_post_message;
+				}
+
+				$date     = new Joomla\CMS\Date\Date($topic->last_post_time);
+				$userid   = $topic->last_post_userid;
+				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+			}
+
+			$title    = $topic->subject;
+			$category = $topic->getCategory();
+			$url      = $topic->getUrl($category, true, $page);
+
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
+		}
+	}
+
+	/**
+	 * @param   string   $title        title
+	 * @param   string   $url          url
+	 * @param   string   $description  description
+	 * @param   string   $category     category
+	 * @param   integer  $date         date
+	 * @param   int      $userid       userid
+	 * @param   string   $username     username
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function createItem($title, $url, $description, $category, $date, $userid, $username)
+	{
+		if ($this->config->rss_author_in_title)
+		{
+			// We want author in item titles
+			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
+		}
+
+		if ((int) $this->config->rss_word_count === -1)
+		{
+			$description = '';
+		}
+		else
+		{
+			$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
+			$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
+			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
+			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
+
+			if ((bool) $this->config->rss_allow_html)
+			{
+				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+			}
+			else
+			{
+				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
+			}
+		}
+
+		// Assign values to feed item
+		$item              = new FeedItem;
+		$item->title       = $title;
+		$item->link        = $url;
+		$item->description = $description;
+		$item->date        = $date->toSql();
+		$item->author      = $username;
+
+		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
+		if ($this->config->rss_author_format != 'name')
+		{
+			$item->authorEmail = Factory::getUser($userid)->email;
+		}
+
+		$item->category = $category;
+
+		// Finally add item to feed
+		$this->document->addItem($item);
 	}
 
 	/**
@@ -203,55 +316,6 @@ class KunenaViewTopics extends View
 	 *
 	 * @throws  Exception
 	 */
-	public function displayTopicRows()
-	{
-		$firstpost = $this->state->get('list.mode') == 'topics';
-
-		foreach ($this->topics as $topic)
-		{
-			if ($firstpost)
-			{
-				$id          = $topic->first_post_id;
-				$page        = 'first';
-				$description = $topic->first_post_message;
-				$date        = new Joomla\CMS\Date\Date($topic->first_post_time);
-				$userid      = $topic->first_post_userid;
-				$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
-			}
-			else
-			{
-				$id   = $topic->last_post_id;
-				$page = 'last';
-
-				if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id)
-				{
-					$description = Text::_('COM_KUNENA_TEASER_TEXT');
-				}
-				else
-				{
-					$description = $topic->last_post_message;
-				}
-
-				$date     = new Joomla\CMS\Date\Date($topic->last_post_time);
-				$userid   = $topic->last_post_userid;
-				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
-			}
-
-			$title    = $topic->subject;
-			$category = $topic->getCategory();
-			$url      = $topic->getUrl($category, true, $page);
-
-			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
-		}
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
 	public function displayPostRows()
 	{
 		foreach ($this->messages as $message)
@@ -282,69 +346,5 @@ class KunenaViewTopics extends View
 
 			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}
-	}
-
-	/**
-	 * @param   string  $title       title
-	 * @param   string  $url         url
-	 * @param   string  $description description
-	 * @param   string  $category    category
-	 * @param   integer $date        date
-	 * @param   int     $userid      userid
-	 * @param   string  $username    username
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function createItem($title, $url, $description, $category, $date, $userid, $username)
-	{
-		if ($this->config->rss_author_in_title)
-		{
-			// We want author in item titles
-			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
-		}
-
-		if ((int) $this->config->rss_word_count === -1)
-		{
-			$description = '';
-		}
-		else
-		{
-			$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
-			$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
-			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
-			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
-
-			if ((bool) $this->config->rss_allow_html)
-			{
-				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
-			}
-			else
-			{
-				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
-			}
-		}
-
-		// Assign values to feed item
-		$item              = new FeedItem;
-		$item->title       = $title;
-		$item->link        = $url;
-		$item->description = $description;
-		$item->date        = $date->toSql();
-		$item->author      = $username;
-
-		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
-		if ($this->config->rss_author_format != 'name')
-		{
-			$item->authorEmail = Factory::getUser($userid)->email;
-		}
-
-		$item->category = $category;
-
-		// Finally add item to feed
-		$this->document->addItem($item);
 	}
 }

@@ -19,8 +19,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -59,7 +61,7 @@ class Read extends CMSObject
 	 */
 	public function __construct($topic = null, $user = null)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
+		$topic = TopicHelper::get($topic);
 
 		// Always fill empty data
 		$this->_db = Factory::getDBO();
@@ -72,7 +74,7 @@ class Read extends CMSObject
 		$this->_exists     = false;
 		$this->topic_id    = $topic->exists() ? $topic->id : null;
 		$this->category_id = $topic->exists() ? $topic->category_id : null;
-		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
+		$this->user_id     = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -179,7 +181,7 @@ class Read extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();

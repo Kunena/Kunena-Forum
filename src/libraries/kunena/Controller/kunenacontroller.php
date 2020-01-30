@@ -29,8 +29,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Response\ResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -41,22 +41,20 @@ use function defined;
 class KunenaController extends BaseController
 {
 	/**
-	 * @var     CMSApplicationInterface
-	 * @since   Kunena 6.0
-	 */
-	protected $app;
-
-	/**
 	 * @var     KunenaUser|null
 	 * @since   Kunena 6.0
 	 */
 	public $me = null;
-
 	/**
 	 * @var     KunenaConfig|null
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;
+	/**
+	 * @var     CMSApplicationInterface
+	 * @since   Kunena 6.0
+	 */
+	protected $app;
 
 	/**
 	 * @param   array  $config  config

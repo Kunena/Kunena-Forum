@@ -39,6 +39,34 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
+	public function displayAdd()
+	{
+		$this->setToolBarAdd();
+		$this->display();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarAdd()
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::spacer();
+		ToolbarHelper::back();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function display($tpl = null)
 	{
 		$this->templates  = $this->get('templates');
@@ -72,34 +100,6 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::custom('template.chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		ToolbarHelper::divider();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayAdd()
-	{
-		$this->setToolBarAdd();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarAdd()
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::spacer();
-		ToolbarHelper::back();
-		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 

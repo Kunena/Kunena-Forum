@@ -20,48 +20,20 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Announcement Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class AnnouncementModel  extends ListModel
+class AnnouncementModel extends ListModel
 {
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState()
-	{
-		$id = $this->getInt('id', 0);
-		$this->setState('item.id', $id);
-
-		$value = $this->getInt('limit', 0);
-
-		if ($value < 1 || $value > 100)
-		{
-			$value = 20;
-		}
-
-		$this->setState('list.limit', $value);
-
-		$value = $this->getInt('limitstart', 0);
-
-		if ($value < 0)
-		{
-			$value = 0;
-		}
-
-		$this->setState('list.start', $value);
-	}
 
 	/**
 	 * @return  Announcement
@@ -140,7 +112,7 @@ class AnnouncementModel  extends ListModel
 	public function getannouncementActions()
 	{
 		$actions = [];
-		$user    = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$user    = KunenaUserHelper::getMyself();
 
 		if ($user->isModerator())
 		{
@@ -152,5 +124,34 @@ class AnnouncementModel  extends ListModel
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function populateState()
+	{
+		$id = $this->getInt('id', 0);
+		$this->setState('item.id', $id);
+
+		$value = $this->getInt('limit', 0);
+
+		if ($value < 1 || $value > 100)
+		{
+			$value = 20;
+		}
+
+		$this->setState('list.limit', $value);
+
+		$value = $this->getInt('limitstart', 0);
+
+		if ($value < 0)
+		{
+			$value = 0;
+		}
+
+		$this->setState('list.start', $value);
 	}
 }

@@ -21,8 +21,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 
 /**
@@ -32,14 +32,6 @@ use RuntimeException;
  */
 class UsersModel extends ListModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * Constructor.
 	 *
@@ -72,6 +64,14 @@ class UsersModel extends ListModel
 		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 
 	/**

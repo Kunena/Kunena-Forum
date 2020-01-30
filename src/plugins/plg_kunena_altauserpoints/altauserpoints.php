@@ -84,8 +84,6 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
-
 		return new Avatar($this->params);
 	}
 
@@ -102,8 +100,6 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/profile.php";
-
 		return new KunenaProfileAltaUserPoints($this->params);
 	}
 
@@ -119,8 +115,6 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/activity.php";
 
 		return new KunenaActivityAltaUserPoints($this->params);
 	}

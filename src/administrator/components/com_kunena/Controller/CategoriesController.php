@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
-use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
@@ -60,22 +59,6 @@ class CategoriesController extends FormController
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=categories';
-	}
-
-	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  object  The model.
-	 *
-	 * @since   1.6
-	 */
-	public function getModel($name = 'Categories', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
 	}
 
 	/**
@@ -173,6 +156,20 @@ class CategoriesController extends FormController
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count));
 		}
+	}
+
+	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * @param   string  $var  The output to escape.
+	 *
+	 * @return  string The escaped value.
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**
@@ -646,6 +643,22 @@ class CategoriesController extends FormController
 	}
 
 	/**
+	 * Proxy for getModel.
+	 *
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  object  The model.
+	 *
+	 * @since   1.6
+	 */
+	public function getModel($name = 'Categories', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	{
+		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
 	 * Order Up
 	 *
 	 * @return  void
@@ -843,19 +856,5 @@ class CategoriesController extends FormController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 		return true;
-	}
-
-	/**
-	 * Escapes a value for output in a view script.
-	 *
-	 * @param   string  $var  The output to escape.
-	 *
-	 * @return  string The escaped value.
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }

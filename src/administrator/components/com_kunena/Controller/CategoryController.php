@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena Category Controller
@@ -104,117 +105,6 @@ class CategoryController extends FormController
 	}
 
 	/**
-	 * Apply
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function apply()
-	{
-		$category = $this->_save();
-
-		if ($category->exists())
-		{
-			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$category->id}", false));
-		}
-		else
-		{
-			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
-		}
-	}
-
-	/**
-	 * Cancel
-	 *
-	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws Exception
-	 */
-	public function cancel($key = null, $urlVar = null)
-	{
-		$post_catid = $this->app->input->post->get('catid', '', 'raw');
-		$category   = CategoryHelper::get($post_catid);
-		$category->checkin();
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Method to save a category like a copy of existing one.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function save2copy()
-	{
-		$post_catid = $this->app->input->post->get('catid', '', 'raw');
-		$post_alias = $this->app->input->post->get('alias', '', 'raw');
-		$post_name  = $this->app->input->post->get('name', '', 'raw');
-
-		list($title, $alias) = $this->_generateNewTitle($post_catid, $post_alias, $post_name);
-
-		$this->app->setUserState('com_kunena.category_title', $title);
-		$this->app->setUserState('com_kunena.category_alias', $alias);
-		$this->app->setUserState('com_kunena.category_catid', 0);
-
-		$this->_save();
-		$this->setRedirect(KunenaRoute::_($this->basecategoryurl, false));
-	}
-
-	/**
-	 * Save2new
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function save2new()
-	{
-		$this->_save();
-		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
-	}
-
-	/**
-	 * Method to change the title & alias.
-	 *
-	 * @param   integer  $category_id  The id of the category.
-	 * @param   string   $alias        The alias.
-	 * @param   string   $name         The name.
-	 *
-	 * @return  array  Contains the modified title and alias.
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  Exception
-	 */
-	protected function _generateNewTitle($category_id, $alias, $name)
-	{
-		while (CategoryHelper::getAlias($category_id, $alias))
-		{
-			$name  = StringHelper::increment($name);
-			$alias = StringHelper::increment($alias, 'dash');
-		}
-
-		return [$name, $alias];
-	}
-
-	/**
 	 * Internal method to save category
 	 *
 	 * @return Category|void
@@ -227,7 +117,7 @@ class CategoryController extends FormController
 	protected function _save()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
-		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if ($this->app->isClient('site'))
 		{
@@ -370,5 +260,116 @@ class CategoryController extends FormController
 	protected function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	 * Apply
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function apply()
+	{
+		$category = $this->_save();
+
+		if ($category->exists())
+		{
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$category->id}", false));
+		}
+		else
+		{
+			$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
+		}
+	}
+
+	/**
+	 * Cancel
+	 *
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws Exception
+	 */
+	public function cancel($key = null, $urlVar = null)
+	{
+		$post_catid = $this->app->input->post->get('catid', '', 'raw');
+		$category   = CategoryHelper::get($post_catid);
+		$category->checkin();
+
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Method to save a category like a copy of existing one.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function save2copy()
+	{
+		$post_catid = $this->app->input->post->get('catid', '', 'raw');
+		$post_alias = $this->app->input->post->get('alias', '', 'raw');
+		$post_name  = $this->app->input->post->get('name', '', 'raw');
+
+		list($title, $alias) = $this->_generateNewTitle($post_catid, $post_alias, $post_name);
+
+		$this->app->setUserState('com_kunena.category_title', $title);
+		$this->app->setUserState('com_kunena.category_alias', $alias);
+		$this->app->setUserState('com_kunena.category_catid', 0);
+
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->basecategoryurl, false));
+	}
+
+	/**
+	 * Method to change the title & alias.
+	 *
+	 * @param   integer  $category_id  The id of the category.
+	 * @param   string   $alias        The alias.
+	 * @param   string   $name         The name.
+	 *
+	 * @return  array  Contains the modified title and alias.
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  Exception
+	 */
+	protected function _generateNewTitle($category_id, $alias, $name)
+	{
+		while (CategoryHelper::getAlias($category_id, $alias))
+		{
+			$name  = StringHelper::increment($name);
+			$alias = StringHelper::increment($alias, 'dash');
+		}
+
+		return [$name, $alias];
+	}
+
+	/**
+	 * Save2new
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	public function save2new()
+	{
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
 	}
 }

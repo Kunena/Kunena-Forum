@@ -14,8 +14,11 @@ namespace Kunena\Forum\Libraries\Template;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use stdClass;
 use function defined;
 
@@ -41,11 +44,11 @@ abstract class TemplateHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function isDefault($template)
 	{
-		$config         = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
+		$config         = KunenaFactory::getConfig();
 		$defaultemplate = $config->template;
 
 		return $defaultemplate == $template ? 1 : 0;
@@ -170,12 +173,12 @@ abstract class TemplateHelper
 
 		if ($data->version == '@kunenaversion@')
 		{
-			$data->version = \Kunena\Forum\Libraries\Forum\KunenaForum::version();
+			$data->version = KunenaForum::version();
 		}
 
 		if ($data->creationdate == '@kunenaversiondate@')
 		{
-			$data->creationdate = \Kunena\Forum\Libraries\Forum\KunenaForum::versionDate();
+			$data->creationdate = KunenaForum::versionDate();
 		}
 
 		if (!$data->version)

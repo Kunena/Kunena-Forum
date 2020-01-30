@@ -21,8 +21,8 @@ use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -33,22 +33,20 @@ use function defined;
 class ComponentUserControllerEditDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit';
-
-	/**
 	 * @var     User
 	 * @since   Kunena 6.0
 	 */
 	public $user;
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Edit';
 
 	/**
 	 * Prepare user for editing.

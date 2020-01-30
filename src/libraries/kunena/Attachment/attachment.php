@@ -21,28 +21,30 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\Upload;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\CMS\Image\Image;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
 /**
  * Class KunenaAttachment
  *
+ * @since   Kunena 4.0
  * @property int    $id
  * @property int    $userid
  * @property int    $mesid
@@ -60,7 +62,6 @@ use function defined;
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
  *
- * @since   Kunena 4.0
  */
 class Attachment extends KunenaDatabaseObject
 {
@@ -136,18 +137,6 @@ class Attachment extends KunenaDatabaseObject
 	public $disabled = false;
 
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_table = 'KunenaAttachments';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $path;
-
-	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
@@ -158,12 +147,6 @@ class Attachment extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $height;
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $shortname;
 
 	/**
 	 * @var     string
@@ -242,6 +225,24 @@ class Attachment extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $caption;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $_table = 'KunenaAttachments';
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $path;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $shortname;
 
 	/**
 	 * @param   mixed  $identifier  identifier
@@ -444,18 +445,6 @@ class Attachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Check if attachment is pdf.
-	 *
-	 * @return  boolean  True if attachment is pdf.
-	 *
-	 * @since  K5.1
-	 */
-	public function isPdf()
-	{
-		return stripos($this->filetype, 'application/pdf') !== false;
-	}
-
-	/**
 	 * Check if attachment is inline.
 	 *
 	 * @return  boolean  True if attachment is inline.
@@ -472,6 +461,26 @@ class Attachment extends KunenaDatabaseObject
 		{
 			return false;
 		}
+	}
+
+	/**
+	 * Set inline to the attachment object
+	 *
+	 * @param   int  $inline  inline
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setInline($inline)
+	{
+		$this->inline = $inline;
+
+		$success = $this->save();
+
+		return $success;
 	}
 
 	/**
@@ -590,6 +599,18 @@ class Attachment extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Check if attachment is pdf.
+	 *
+	 * @return  boolean  True if attachment is pdf.
+	 *
+	 * @since  K5.1
+	 */
+	public function isPdf()
+	{
+		return stripos($this->filetype, 'application/pdf') !== false;
+	}
+
+	/**
 	 * Get attachment layout.
 	 *
 	 * @return  Layout
@@ -651,7 +672,7 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->userid);
+		return KunenaUserHelper::get($this->userid);
 	}
 
 	/**
@@ -695,7 +716,7 @@ class Attachment extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		// Unknown action - throw invalid argument exception.
@@ -774,7 +795,64 @@ class Attachment extends KunenaDatabaseObject
 	 */
 	public function getMessage()
 	{
-		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->mesid);
+		return MessageHelper::get($this->mesid);
+	}
+
+	/**
+	 * Check is an attachment is private
+	 *
+	 * @param   string      $action  action
+	 * @param   KunenaUser  $user    user
+	 *
+	 * @return  Authorise|NULL
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function authorisePrivate($action, KunenaUser $user)
+	{
+		if (!$user->exists())
+		{
+			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
+		}
+
+		if ($action == 'create')
+		{
+			return null;
+		}
+
+		// Need to load private message (for now allow only one private message per attachment).
+		$map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
+		$map->load(['attachment_id' => $this->id]);
+		$finder  = new \Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
+		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
+
+		if (!$private->exists())
+		{
+			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+		}
+
+		if (in_array($user->userid, $private->users()->getMapped()))
+		{
+			// Yes, I have access..
+			return null;
+		}
+		else
+		{
+			$messages = MessageHelper::getMessages($private->posts()->getMapped());
+
+			foreach ($messages as $message)
+			{
+				if ($user->isModerator($message->getCategory()))
+				{
+					// Yes, I have access..
+					return null;
+				}
+			}
+		}
+
+		return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 	}
 
 	/**
@@ -918,7 +996,7 @@ class Attachment extends KunenaDatabaseObject
 		}
 
 		// Hash, size and MIME are set during saving, so let's deal with all other variables.
-		$this->userid = is_null($this->userid) ? \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself() : $this->userid;
+		$this->userid = is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
 		$this->folder = is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
 
 		if (!$this->filename_real)
@@ -980,60 +1058,31 @@ class Attachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Check is an attachment is private
+	 * Remove the BBCode [attachment=attachmentID][/attachment] from text message
 	 *
-	 * @param   string      $action action
-	 * @param   KunenaUser  $user   user
+	 * @param   string  $editor_text  editor text
 	 *
-	 * @return  Authorise|NULL
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
 	 */
-	protected function authorisePrivate($action, KunenaUser $user)
+	public function removeBBCodeInMessage($editor_text = null)
 	{
-		if (!$user->exists())
+		if (!$this->inline)
 		{
-			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
+			return false;
 		}
 
-		if ($action == 'create')
+		if (empty($editor_text))
 		{
-			return null;
+			return false;
 		}
 
-		// Need to load private message (for now allow only one private message per attachment).
-		$map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
-		$map->load(['attachment_id' => $this->id]);
-		$finder  = new \Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
-		$private = $finder->where('id', '=', $map->private_id)->firstOrNew();
+		$find    = ['/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su'];
+		$replace = '';
+		$text    = preg_replace($find, $replace, $editor_text);
 
-		if (!$private->exists())
-		{
-			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
-		}
-
-		if (in_array($user->userid, $private->users()->getMapped()))
-		{
-			// Yes, I have access..
-			return null;
-		}
-		else
-		{
-			$messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($private->posts()->getMapped());
-
-			foreach ($messages as $message)
-			{
-				if ($user->isModerator($message->getCategory()))
-				{
-					// Yes, I have access..
-					return null;
-				}
-			}
-		}
-
-		return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+		return $text;
 	}
 
 	/**
@@ -1107,53 +1156,5 @@ class Attachment extends KunenaDatabaseObject
 		}
 
 		return;
-	}
-
-	/**
-	 * Set inline to the attachment object
-	 *
-	 * @param   int  $inline  inline
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setInline($inline)
-	{
-		$this->inline = $inline;
-
-		$success = $this->save();
-
-		return $success;
-	}
-
-	/**
-	 * Remove the BBCode [attachment=attachmentID][/attachment] from text message
-	 *
-	 * @param   string  $editor_text editor text
-	 *
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function removeBBCodeInMessage($editor_text = null)
-	{
-		if (!$this->inline)
-		{
-			return false;
-		}
-
-		if (empty($editor_text))
-		{
-			return false;
-		}
-
-		$find             = ['/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su'];
-		$replace          = '';
-		$text             = preg_replace($find, $replace, $editor_text);
-
-		return $text;
 	}
 }

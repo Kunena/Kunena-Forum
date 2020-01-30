@@ -19,9 +19,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Template\Template;
@@ -296,12 +296,12 @@ class KunenaLayoutCategoryItem extends Layout
 	 * @see     \Kunena\Forum\Libraries\Layout\Layout::getLastPostLink()
 	 *
 	 * @param   Category  $category   The KunenaCategory object
-	 * @param   string               $content    The content of last topic subject
-	 * @param   string               $title      The title of the link
-	 * @param   string               $class      The class attribute of the link
-	 * @param   int                  $length     length
-	 * @param   bool                 $follow     follow
-	 * @param   bool                 $canonical  canonical
+	 * @param   string    $content    The content of last topic subject
+	 * @param   string    $title      The title of the link
+	 * @param   string    $class      The class attribute of the link
+	 * @param   int       $length     length
+	 * @param   bool      $follow     follow
+	 * @param   bool      $canonical  canonical
 	 *
 	 * @return  string
 	 *

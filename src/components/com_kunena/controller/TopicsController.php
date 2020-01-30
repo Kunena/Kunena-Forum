@@ -18,14 +18,14 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\Finder;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Log\Log;
 use function defined;
 

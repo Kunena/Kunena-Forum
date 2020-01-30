@@ -82,13 +82,13 @@ class KunenaViewCategory extends View
 	}
 
 	/**
-	 * @param   string  $title       title
-	 * @param   string  $url         url
-	 * @param   string  $description description
-	 * @param   string  $category    category
-	 * @param   integer $date        date
-	 * @param   integer $userid      userid
-	 * @param   string  $username    username
+	 * @param   string   $title        title
+	 * @param   string   $url          url
+	 * @param   string   $description  description
+	 * @param   string   $category     category
+	 * @param   integer  $date         date
+	 * @param   integer  $userid       userid
+	 * @param   string   $username     username
 	 *
 	 * @return  void
 	 *

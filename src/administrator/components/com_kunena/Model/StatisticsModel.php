@@ -21,8 +21,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Log\Finder;
 use Kunena\Forum\Libraries\Log\Log;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 
 /**
@@ -32,14 +32,6 @@ use stdClass;
  */
 class StatisticsModel extends ListModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * Constructor.
 	 *
@@ -65,6 +57,14 @@ class StatisticsModel extends ListModel
 		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 
 	/**

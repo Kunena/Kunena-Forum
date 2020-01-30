@@ -23,9 +23,11 @@ use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -36,16 +38,15 @@ use function defined;
 class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Edit';
-
-	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/Edit';
 
 	/**
 	 * Prepare topic creation form.
@@ -76,7 +77,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
 				$itemidfix = $getid->id;
 			}
 
@@ -89,20 +90,20 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 
 			if ($catid)
 			{
-				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();
 		}
 
-		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$categories        = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
+		$categories        = CategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -131,7 +132,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		Template::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$this->category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
+		$this->category = CategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -209,6 +210,25 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * Can user subscribe to the topic?
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function canSubscribe()
+	{
+		if (!$this->me->userid || !$this->config->allowsubscriptions
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
+		{
+			return false;
+		}
+
+		return !$this->topic->getUserTopic()->subscribed;
+	}
+
+	/**
 	 * Prepare document.
 	 *
 	 * @return  void
@@ -267,24 +287,5 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 				$this->setMetaData('robots', $robots);
 			}
 		}
-	}
-
-	/**
-	 * Can user subscribe to the topic?
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function canSubscribe()
-	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
-		)
-		{
-			return false;
-		}
-
-		return !$this->topic->getUserTopic()->subscribed;
 	}
 }

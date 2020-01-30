@@ -20,15 +20,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Registry\Registry;
 use function defined;
 
 /**

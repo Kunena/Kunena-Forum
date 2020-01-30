@@ -19,15 +19,15 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Template\Template;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 

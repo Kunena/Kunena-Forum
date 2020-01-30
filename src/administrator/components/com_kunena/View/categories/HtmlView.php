@@ -18,13 +18,11 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -116,6 +114,45 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * Returns an array of review filter options.
+	 *
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function getSortFields()
+	{
+		$sortFields   = [];
+		$sortFields[] = HTMLHelper::_('select.option', 'ordering', Text::_('COM_KUNENA_REORDER'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.published', Text::_('JSTATUS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.title', Text::_('JGLOBAL_TITLE'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.access', Text::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.locked', Text::_('COM_KUNENA_LOCKED'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.review', Text::_('COM_KUNENA_REVIEW'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.allow_polls', Text::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.anonymous', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.id', Text::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	/**
+	 * Returns an array of review filter options.
+	 *
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function getSortDirectionFields()
+	{
+		$sortDirection   = [];
+		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	/**
 	 * Add the page title and toolbar.
 	 *
 	 * @return  void
@@ -157,45 +194,6 @@ class HtmlView extends BaseHtmlView
 		<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 		$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
-	}
-
-	/**
-	 * Returns an array of review filter options.
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getSortFields()
-	{
-		$sortFields   = [];
-		$sortFields[] = HTMLHelper::_('select.option', 'ordering', Text::_('COM_KUNENA_REORDER'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.published', Text::_('JSTATUS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.title', Text::_('JGLOBAL_TITLE'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.access', Text::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.locked', Text::_('COM_KUNENA_LOCKED'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.review', Text::_('COM_KUNENA_REVIEW'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.allow_polls', Text::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.anonymous', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.id', Text::_('JGRID_HEADING_ID'));
-
-		return $sortFields;
-	}
-
-	/**
-	 * Returns an array of review filter options.
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getSortDirectionFields()
-	{
-		$sortDirection   = [];
-		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
-
-		return $sortDirection;
 	}
 
 	/**

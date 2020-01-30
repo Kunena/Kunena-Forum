@@ -19,7 +19,9 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -56,7 +58,7 @@ abstract class CategoryUserHelper
 		}
 
 		$category = intval($category);
-		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user     = KunenaUserHelper::get($user);
 
 		if ($category === null)
 		{
@@ -86,12 +88,12 @@ abstract class CategoryUserHelper
 	 */
 	public static function getCategories($ids = false, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if ($ids === false)
 		{
 			// Get categories which are seen by current user
-			$ids = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
+			$ids = CategoryHelper::getCategories();
 		}
 		elseif (!is_array($ids))
 		{
@@ -200,7 +202,7 @@ abstract class CategoryUserHelper
 	 */
 	public static function markRead(array $ids, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		$items      = self::getCategories($ids, $user);
 		$updateList = [];

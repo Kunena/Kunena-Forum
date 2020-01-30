@@ -20,17 +20,16 @@ use Joomla\CMS\Extension\Service\Provider\MVCFactory;
 use Joomla\CMS\Extension\Service\Provider\RouterFactory;
 use Joomla\CMS\HTML\Registry;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Kunena\Forum\Administrator\Extension\ForumComponent;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Kunena\Forum\Administrator\Extension\ForumComponent;
 
 /**
  * The forum service provider.
  *
  * @since   Kunena 6.0
  */
-return new class implements ServiceProviderInterface
-{
+return new class implements ServiceProviderInterface {
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -47,15 +46,14 @@ return new class implements ServiceProviderInterface
 		$container->registerServiceProvider(new RouterFactory('\\Kunena\\Forum'));
 		$container->set(
 			ComponentInterface::class,
-			function (Container $container)
-				{
-					$component = new ForumComponent($container->get(ComponentDispatcherFactoryInterface::class));
+			function (Container $container) {
+				$component = new ForumComponent($container->get(ComponentDispatcherFactoryInterface::class));
 
-					$component->setRegistry($container->get(Registry::class));
-					$component->setMVCFactory($container->get(MVCFactoryInterface::class));
-					$component->setRouterFactory($container->get(RouterFactoryInterface::class));
+				$component->setRegistry($container->get(Registry::class));
+				$component->setMVCFactory($container->get(MVCFactoryInterface::class));
+				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
-					return $component;
+				return $component;
 			}
 		);
 	}

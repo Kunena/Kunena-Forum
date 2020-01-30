@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -84,7 +85,7 @@ class KunenaUserCategories extends KunenaTable
 	 */
 	public function check()
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->user_id);
+		$user = KunenaUserHelper::get($this->user_id);
 
 		if (!$user->exists())
 		{

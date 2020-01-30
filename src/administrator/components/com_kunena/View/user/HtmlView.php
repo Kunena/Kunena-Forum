@@ -66,6 +66,37 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
+	public function displayMove()
+	{
+		$this->setToolBarMove();
+		$this->catslist = $this->get('movecatslist');
+		$this->users    = $this->get('moveuser');
+		$this->display();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarMove()
+	{
+		// Set the titlebar text
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function display($tpl = null)
 	{
 		$this->user         = $this->get('user');
@@ -194,36 +225,5 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayMove()
-	{
-		$this->setToolBarMove();
-		$this->catslist = $this->get('movecatslist');
-		$this->users    = $this->get('moveuser');
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarMove()
-	{
-		// Set the titlebar text
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
 	}
 }

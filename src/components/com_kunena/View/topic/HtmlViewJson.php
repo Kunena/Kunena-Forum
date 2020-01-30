@@ -14,7 +14,9 @@ use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\View;
 
 /**
@@ -24,7 +26,7 @@ use Kunena\Forum\Libraries\View\View;
 class KunenaViewTopic extends View
 {
 	/**
-	 * @param   null  $tpl tmpl
+	 * @param   null  $tpl  tmpl
 	 *
 	 * @return  mixed|void
 	 *
@@ -35,7 +37,7 @@ class KunenaViewTopic extends View
 	public function display($tpl = null)
 	{
 		$id                        = Factory::getApplication()->input->getInt('id');
-		$topic                     = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+		$topic                     = TopicHelper::get($id);
 		$topic->subject            = Parser::parseText($topic->subject);
 		$topic->first_post_message = Parser::stripBBCode($topic->first_post_message);
 		$topic->last_post_message  = Parser::stripBBCode($topic->last_post_message);
@@ -46,7 +48,7 @@ class KunenaViewTopic extends View
 
 		foreach ($messages as $message)
 		{
-			$user              = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($message->userid);
+			$user              = KunenaUserHelper::get($message->userid);
 			$response          = new stdClass;
 			$response->id      = $message->id;
 			$response->message = Parser::stripBBCode(MessageHelper::get($message->id)->message);

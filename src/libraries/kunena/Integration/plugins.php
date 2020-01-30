@@ -14,8 +14,10 @@ namespace Kunena\Forum\Libraries\Integration;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use function defined;
 
 /**
@@ -32,7 +34,7 @@ class Plugins
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function getTotalPlugins()
 	{
@@ -50,7 +52,7 @@ class Plugins
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return (int) $total;

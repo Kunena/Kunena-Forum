@@ -28,8 +28,8 @@ use function defined;
 class PlgKunenaKunena extends CMSPlugin
 {
 	/**
-	 * @param   object $subject  subject
-	 * @param   array  $config   config
+	 * @param   object  $subject  subject
+	 * @param   array   $config   config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -58,8 +58,6 @@ class PlgKunenaKunena extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
-
 		return new Avatar($this->params);
 	}
 
@@ -74,8 +72,6 @@ class PlgKunenaKunena extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/profile.php";
 
 		return new Profile($this->params);
 	}

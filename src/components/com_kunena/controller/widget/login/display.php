@@ -16,12 +16,12 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Login\Login;
-use Joomla\Registry\Registry;
 use function defined;
 
 /**

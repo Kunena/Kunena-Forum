@@ -59,6 +59,23 @@ class PluginsModel extends ListModel
 	}
 
 	/**
+	 * Get the filter form
+	 *
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load current data
+	 *
+	 * @return  Form|boolean  The Form object or false on error
+	 *
+	 * @since   6.0
+	 */
+	public function getFilterForm($data = array(), $loadData = true)
+	{
+		$form = parent::getFilterForm($data, $loadData);
+
+		return $form;
+	}
+
+	/**
 	 * Method to auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.
@@ -304,22 +321,5 @@ class PluginsModel extends ListModel
 		$db->setQuery($query);
 
 		return $query;
-	}
-
-	/**
-	 * Get the filter form
-	 *
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load current data
-	 *
-	 * @return  Form|boolean  The Form object or false on error
-	 *
-	 * @since   6.0
-	 */
-	public function getFilterForm($data = array(), $loadData = true)
-	{
-		$form      = parent::getFilterForm($data, $loadData);
-
-		return $form;
 	}
 }

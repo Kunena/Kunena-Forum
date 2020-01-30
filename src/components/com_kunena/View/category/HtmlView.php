@@ -35,7 +35,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   string  $type type
+	 * @param   string  $type  type
 	 *
 	 * @return  void
 	 *

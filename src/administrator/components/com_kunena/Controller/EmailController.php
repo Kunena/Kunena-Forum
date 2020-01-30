@@ -15,7 +15,6 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use Joomla\CMS\MVC\Controller\FormController;
 use function defined;
 

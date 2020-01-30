@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\View\Blockips;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -35,7 +36,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -48,6 +49,7 @@ class HtmlView extends BaseHtmlView
 		$document->setTitle(Text::_('COM_KUNENA_A_BLOCKIP_MANAGER'));
 
 		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 

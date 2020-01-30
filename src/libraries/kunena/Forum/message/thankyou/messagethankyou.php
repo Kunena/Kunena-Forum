@@ -20,20 +20,20 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\MessageThankyou
  *
- * @property int    $userid
+ * @since   Kunena 6.0
  * @property int    $targetuserid
  * @property string $time
  * @property int    $postid
  *
- * @since   Kunena 6.0
+ * @property int    $userid
  */
 class MesssageThankyou extends CMSObject
 {
@@ -103,7 +103,7 @@ class MesssageThankyou extends CMSObject
 	public function save($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->id);
+		$message = MessageHelper::get($this->id);
 
 		if (!$user->exists())
 		{
@@ -220,7 +220,7 @@ class MesssageThankyou extends CMSObject
 	public function delete($user)
 	{
 		$user    = KunenaFactory::getUser($user);
-		$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->id);
+		$message = MessageHelper::get($this->id);
 
 		if (!$user->exists())
 		{

@@ -1030,7 +1030,7 @@ class Icons
 	/**
 	 * Return the picture icon
 	 *
-	 * @param   bool  $big big
+	 * @param   bool  $big  big
 	 *
 	 * @return  string
 	 *
@@ -1069,7 +1069,7 @@ class Icons
 	/**
 	 * Return the file icon
 	 *
-	 * @param   bool  $big big
+	 * @param   bool  $big  big
 	 *
 	 * @return  string
 	 *

@@ -10,14 +10,14 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Component\ComponentHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
@@ -54,14 +54,13 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 		error_reporting(0);
 
 		parent::__construct();
-		require_once __DIR__ . '/model.php';
 		$this->model = $this->getModel('Install');
 		$this->step  = $this->model->getStep();
 		$this->steps = $this->model->getSteps();
 	}
 
 	/**
-	 * @param   object  $exception exception
+	 * @param   object  $exception  exception
 	 *
 	 * @return  boolean
 	 *
@@ -75,8 +74,8 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	}
 
 	/**
-	 * @param   string  $type   type
-	 * @param   string  $errstr error string
+	 * @param   string  $type    type
+	 * @param   string  $errstr  error string
 	 *
 	 * @return  void
 	 *
@@ -127,7 +126,6 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		require_once __DIR__ . '/view.php';
 		$view = $this->getView('install', 'html');
 
 		if ($view)
@@ -204,8 +202,7 @@ class KunenaControllerInstall extends Joomla\CMS\MVC\Controller\BaseController
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		}
-		while (!$stop && !$error);
+		} while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));

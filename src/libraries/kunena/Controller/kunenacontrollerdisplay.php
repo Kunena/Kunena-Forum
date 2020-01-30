@@ -19,10 +19,10 @@ use InvalidArgumentException;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Layout\Base;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Layout\Base;
+use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
@@ -442,9 +442,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * @param   string  $name      name
-	 * @param   string  $content   content
-	 * @param   string  $attribute attribute
+	 * @param   string  $name       name
+	 * @param   string  $content    content
+	 * @param   string  $attribute  attribute
 	 *
 	 * @return  void
 	 *

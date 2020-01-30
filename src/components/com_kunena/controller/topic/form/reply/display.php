@@ -18,13 +18,16 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message;
 use Kunena\Forum\Libraries\Template\Template;
-use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -35,16 +38,15 @@ use function defined;
 class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Edit';
-
-	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/Edit';
 
 	/**
 	 * Prepare topic reply form.
@@ -66,17 +68,17 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->topic->first_post_id);
+			$this->topic = TopicHelper::get($id);
+			$parent      = MessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
+			$parent      = MessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -158,6 +160,25 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * Can user subscribe to the topic?
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function canSubscribe()
+	{
+		if (!$this->me->userid || !$this->config->allowsubscriptions
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
+		{
+			return false;
+		}
+
+		return !$this->topic->getUserTopic()->subscribed;
+	}
+
+	/**
 	 * Prepare document.
 	 *
 	 * @return  void
@@ -216,24 +237,5 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 				$this->setMetaData('robots', $robots);
 			}
 		}
-	}
-
-	/**
-	 * Can user subscribe to the topic?
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function canSubscribe()
-	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
-		)
-		{
-			return false;
-		}
-
-		return !$this->topic->getUserTopic()->subscribed;
 	}
 }

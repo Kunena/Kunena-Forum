@@ -14,12 +14,17 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\History;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -44,18 +49,18 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
 		$id       = $this->input->getInt('id');
-		$this->me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
-		$this->topic    = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+		$this->topic    = TopicHelper::get($id);
 		$this->category = $this->topic->getCategory();
-		$this->history  = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessagesByTopic(
+		$this->history  = MessageHelper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
@@ -72,7 +77,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 
 		if ($this->me->exists())
 		{
-			$pmFinder = new \Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
+			$pmFinder = new Finder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
 			if (!$this->me->isModerator($this->category))
@@ -101,7 +106,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 
 		$this->history = $messages;
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
+		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
 		$params = new Registry;

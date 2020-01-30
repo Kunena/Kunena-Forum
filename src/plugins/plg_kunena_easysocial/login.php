@@ -20,7 +20,7 @@ use function defined;
 /**
  * @package     Kunena
  *
- * @since   Kunena 6.0
+ * @since       Kunena 6.0
  */
 class KunenaLoginEasySocial
 {
@@ -33,7 +33,7 @@ class KunenaLoginEasySocial
 	/**
 	 * KunenaLoginEasySocial constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */

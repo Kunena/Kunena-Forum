@@ -17,8 +17,6 @@ defined('_JEXEC') or die();
 use Joomla\Database\DatabaseDriver;
 use function defined;
 
-require_once __DIR__ . '/kunena.php';
-
 /**
  * Kunena Private Message map to users.
  * Provides access to the #__kunena_private_user_map table
@@ -27,12 +25,6 @@ require_once __DIR__ . '/kunena.php';
  */
 class TableKunenaPrivateUserMap extends KunenaTable
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_autoincrement = false;
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
@@ -64,9 +56,15 @@ class TableKunenaPrivateUserMap extends KunenaTable
 	public $deleted_at = null;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_autoincrement = false;
+
+	/**
 	 * TableKunenaPrivateUserMap constructor.
 	 *
-	 * @param   DatabaseDriver  $db database driver
+	 * @param   DatabaseDriver  $db  database driver
 	 *
 	 * @since   Kunena 6.0
 	 */

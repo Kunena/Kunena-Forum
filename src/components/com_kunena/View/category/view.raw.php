@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\View\Category;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\View\View;
 use StdClass;
@@ -33,7 +34,7 @@ class raw extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

@@ -17,17 +17,16 @@ defined('_JEXEC') or die('Unauthorized Access');
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Integration\Activity;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Activity;
 use function defined;
 
 /**
  * @package  Easysocial
  *
- * @since  Kunena 6.0
+ * @since    Kunena 6.0
  */
 class KunenaActivityEasySocial extends Activity
 {
@@ -40,7 +39,7 @@ class KunenaActivityEasySocial extends Activity
 	/**
 	 * KunenaActivityEasySocial constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -50,41 +49,7 @@ class KunenaActivityEasySocial extends Activity
 	}
 
 	/**
-	 * @param   string  $command command
-	 * @param   string  $message message
-	 * @param   null    $target  target
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function assignBadge($command, $message, $target = null)
-	{
-		$user  = FD::user($target);
-		$badge = FD::badges();
-
-		return $badge->log('com_kunena', $command, $user->id, $user->id);
-	}
-
-	/**
-	 * @param   string  $command command
-	 * @param   null    $target  target
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function assignPoints($command, $target = null)
-	{
-		$user = FD::user($target);
-
-		$points = FD::points();
-
-		return $points->assign($command, 'com_kunena', $user->id);
-	}
-
-	/**
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
@@ -115,17 +80,51 @@ class KunenaActivityEasySocial extends Activity
 	}
 
 	/**
+	 * @param   string  $command  command
+	 * @param   null    $target   target
+	 *
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function assignPoints($command, $target = null)
+	{
+		$user = FD::user($target);
+
+		$points = FD::points();
+
+		return $points->assign($command, 'com_kunena', $user->id);
+	}
+
+	/**
+	 * @param   string  $command  command
+	 * @param   string  $message  message
+	 * @param   null    $target   target
+	 *
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function assignBadge($command, $message, $target = null)
+	{
+		$user  = FD::user($target);
+		$badge = FD::badges();
+
+		return $badge->log('com_kunena', $command, $user->id, $user->id);
+	}
+
+	/**
 	 * After a person replies a topic
 	 *
 	 * @internal  param $string
 	 *
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return  void
 	 *
-	 * @since   1.3
+	 * @since     1.3
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @throws  Exception
 	 */
@@ -183,13 +182,13 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @internal  param $string
 	 *
-	 * @param   string  $message message
+	 * @param   string  $message  message
 	 *
 	 * @return   array|boolean
 	 *
-	 * @since    5.0
+	 * @since     5.0
 	 *
-	 * @access   public
+	 * @access    public
 	 *
 	 * @throws  Exception
 	 */
@@ -293,7 +292,7 @@ class KunenaActivityEasySocial extends Activity
 	}
 
 	/**
-	 * @param   object  $target target
+	 * @param   object  $target  target
 	 *
 	 * @return  void
 	 *
@@ -305,7 +304,7 @@ class KunenaActivityEasySocial extends Activity
 	}
 
 	/**
-	 * @param   object  $topic topic
+	 * @param   object  $topic  topic
 	 *
 	 * @return  void
 	 *

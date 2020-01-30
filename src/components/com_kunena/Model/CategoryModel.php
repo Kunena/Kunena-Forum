@@ -21,10 +21,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Category Model for Kunena
@@ -68,81 +72,6 @@ class CategoryModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $total;
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function populateState()
-	{
-		$layout = $this->getCmd('layout', 'default');
-		$this->setState('layout', $layout);
-
-		$params = $this->getParameters();
-		$this->setState('params', $params);
-
-		$userid = $this->getInt('userid', -1);
-
-		if ($userid < 0)
-		{
-			$userid = $this->me->userid;
-		}
-		elseif ($userid > 0)
-		{
-			$userid = KunenaFactory::getUser($userid)->userid;
-		}
-		else
-		{
-			$userid = 0;
-		}
-
-		$this->setState('user', $userid);
-
-		// Administrator state
-		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit')
-		{
-			parent::populateState();
-
-			return;
-		}
-
-		$active = $this->app->getMenu()->getActive();
-		$active = $active ? (int) $active->id : 0;
-		$catid  = $this->getInt('catid', 0);
-		$this->setState('item.id', $catid);
-
-		$format = $this->getWord('format', 'html');
-		$this->setState('format', $format);
-
-		// List state information
-		$value        = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int');
-		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
-
-		if ($value < 1 || $value > 100)
-		{
-			$value = $defaultlimit;
-		}
-
-		$this->setState('list.limit', $value);
-
-		// $value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
-		// $this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_start", 'limitstart', 0, 'int');
-		$this->setState('list.start', $value);
-
-		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word');
-
-		if ($value != 'asc')
-		{
-			$value = 'desc';
-		}
-
-		$this->setState('list.direction', $value);
-	}
 
 	/**
 	 * @return  boolean
@@ -214,7 +143,7 @@ class CategoryModel extends ListModel
 				return [];
 			}
 
-			\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getNewTopics(array_keys($allsubcats));
+			CategoryHelper::getNewTopics(array_keys($allsubcats));
 
 			$modcats      = [];
 			$lastpostlist = [];
@@ -250,7 +179,7 @@ class CategoryModel extends ListModel
 			}
 
 			// Prefetch topics
-			$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topiclist);
+			$topics = TopicHelper::getTopics($topiclist);
 
 			foreach ($topics as $topic)
 			{
@@ -286,7 +215,7 @@ class CategoryModel extends ListModel
 				}
 				catch (ExecutionFailureException $e)
 				{
-					\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+					KunenaError::displayDatabaseError($e);
 				}
 
 				foreach ($pending as $item)
@@ -301,12 +230,12 @@ class CategoryModel extends ListModel
 			// Fix last post position when user can see unapproved or deleted posts
 			if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus()))
 			{
-				\Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($lastpostlist);
-				\Kunena\Forum\Libraries\Forum\Message\MessageHelper::loadLocation($lastpostlist);
+				MessageHelper::getMessages($lastpostlist);
+				MessageHelper::loadLocation($lastpostlist);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
+			KunenaUserHelper::loadUsers($userlist);
 
 			if ($flat)
 			{
@@ -332,15 +261,21 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  Category
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
+	 * @throws  null
 	 */
-	public function getCategory()
+	public function getTotal()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->getState('item.id'));
+		if ($this->total === false)
+		{
+			$this->getTopics();
+		}
+
+		return $this->total;
 	}
 
 	/**
@@ -390,10 +325,10 @@ class CategoryModel extends ListModel
 
 			if ($format == 'feed')
 			{
-				$catid = array_keys(\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($catid, 100) + [$catid => 1]);
+				$catid = array_keys(CategoryHelper::getChildren($catid, 100) + [$catid => 1]);
 			}
 
-			list($this->total, $this->topics) = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+			list($this->total, $this->topics) = TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
 			if ($this->total > 0)
 			{
@@ -411,16 +346,16 @@ class CategoryModel extends ListModel
 				// Prefetch all users/avatars to avoid user by user queries during template iterations
 				if (!empty($userlist))
 				{
-					\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
+					KunenaUserHelper::loadUsers($userlist);
 				}
 
-				\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getUserTopics(array_keys($this->topics));
-				$lastreadlist = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus($this->topics);
+				TopicHelper::getUserTopics(array_keys($this->topics));
+				$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
 				if ($lastreadlist || $this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
 				{
-					\Kunena\Forum\Libraries\Forum\Message\MessageHelper::loadLocation($lastpostlist + $lastreadlist);
+					MessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 			}
 		}
@@ -429,21 +364,15 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  boolean
+	 * @return  Category
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 * @throws  null
 	 */
-	public function getTotal()
+	public function getCategory()
 	{
-		if ($this->total === false)
-		{
-			$this->getTopics();
-		}
-
-		return $this->total;
+		return CategoryHelper::get($this->getState('item.id'));
 	}
 
 	/**
@@ -564,5 +493,80 @@ class CategoryModel extends ListModel
 		}
 
 		return $actionDropdown;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function populateState()
+	{
+		$layout = $this->getCmd('layout', 'default');
+		$this->setState('layout', $layout);
+
+		$params = $this->getParameters();
+		$this->setState('params', $params);
+
+		$userid = $this->getInt('userid', -1);
+
+		if ($userid < 0)
+		{
+			$userid = $this->me->userid;
+		}
+		elseif ($userid > 0)
+		{
+			$userid = KunenaFactory::getUser($userid)->userid;
+		}
+		else
+		{
+			$userid = 0;
+		}
+
+		$this->setState('user', $userid);
+
+		// Administrator state
+		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit')
+		{
+			parent::populateState();
+
+			return;
+		}
+
+		$active = $this->app->getMenu()->getActive();
+		$active = $active ? (int) $active->id : 0;
+		$catid  = $this->getInt('catid', 0);
+		$this->setState('item.id', $catid);
+
+		$format = $this->getWord('format', 'html');
+		$this->setState('format', $format);
+
+		// List state information
+		$value        = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int');
+		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
+
+		if ($value < 1 || $value > 100)
+		{
+			$value = $defaultlimit;
+		}
+
+		$this->setState('list.limit', $value);
+
+		// $value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
+
+		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_start", 'limitstart', 0, 'int');
+		$this->setState('list.start', $value);
+
+		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word');
+
+		if ($value != 'asc')
+		{
+			$value = 'desc';
+		}
+
+		$this->setState('list.direction', $value);
 	}
 }

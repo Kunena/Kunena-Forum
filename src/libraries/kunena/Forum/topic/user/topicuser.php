@@ -23,8 +23,10 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Table\KunenaTableObject;
 use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -68,7 +70,7 @@ class TopicUser extends CMSObject
 	 */
 	public function __construct($topic = null, $user = null)
 	{
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic);
+		$topic = TopicHelper::get($topic);
 
 		// Always fill empty data
 		$this->_db = Factory::getDBO();
@@ -81,7 +83,7 @@ class TopicUser extends CMSObject
 		$this->_exists     = false;
 		$this->topic_id    = $topic->id;
 		$this->category_id = $topic->category_id;
-		$this->user_id     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user)->userid;
+		$this->user_id     = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -162,7 +164,7 @@ class TopicUser extends CMSObject
 			$user = $this->user_id;
 		}
 
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable();
@@ -302,7 +304,7 @@ class TopicUser extends CMSObject
 	 */
 	public function getTopic()
 	{
-		return \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
+		return TopicHelper::get($this->topic_id);
 	}
 
 	/**

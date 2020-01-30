@@ -18,10 +18,9 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use stdClass;
 use function defined;
 

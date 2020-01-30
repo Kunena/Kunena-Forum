@@ -18,9 +18,14 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 defined('_JEXEC') or die();
 
@@ -56,140 +61,6 @@ class TopicModel extends ListModel
 	protected $topic = false;
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function populateState()
-	{
-		$active = $this->app->getMenu()->getActive();
-		$active = $active ? (int) $active->id : 0;
-
-		$layout = $this->me->getTopicLayout();
-		$this->setState('layout', $layout);
-
-		$template          = KunenaFactory::getTemplate();
-		$profile_location  = $template->params->get('avatarPosition', 'left');
-		$profile_direction = $profile_location == 'left' || $profile_location == 'right' ? 'vertical' : 'horizontal';
-		$this->setState('profile.location', $profile_location);
-		$this->setState('profile.direction', $profile_direction);
-
-		$catid = $this->getInt('catid', 0);
-		$this->setState('item.catid', $catid);
-
-		$id = $this->getInt('id', 0);
-		$this->setState('item.id', $id);
-
-		$id = $this->getInt('mesid', 0);
-		$this->setState('item.mesid', $id);
-
-		$access = Access::getInstance();
-		$value  = $access->getAllowedHold($this->me, $catid);
-		$this->setState('hold', $value);
-
-		$value = $this->getInt('limit', 0);
-
-		if ($value < 1 || $value > 100)
-		{
-			$value = $this->config->messages_per_page;
-		}
-
-		$this->setState('list.limit', $value);
-
-		// $value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
-		// $this->setState ( 'list.ordering', $value );
-
-		$value = $this->getInt('limitstart', 0);
-
-		if ($value < 0)
-		{
-			$value = 0;
-		}
-
-		$this->setState('list.start', $value);
-
-		$value = $this->getUserStateFromRequest("com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', '', 'word');
-
-		if (!$value)
-		{
-			if ($this->me->ordering != '0' && $this->me->exists())
-			{
-				$value = $this->me->ordering == '1' ? 'desc' : 'asc';
-			}
-			else
-			{
-				$value = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
-			}
-		}
-
-		if ($value != 'asc')
-		{
-			$value = 'desc';
-		}
-
-		$this->setState('list.direction', $value);
-	}
-
-	/**
-	 * @return  Category
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getCategory()
-	{
-		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->getState('item.catid'));
-	}
-
-	/**
-	 * @return  boolean|Topic
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getTopic()
-	{
-		if ($this->topic === false)
-		{
-			$mesid = $this->getState('item.mesid');
-
-			if ($mesid)
-			{
-				// Find actual topic by fetching current message
-				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($mesid);
-				$topic   = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($message->thread);
-				$this->setState('list.start', intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
-			}
-			else
-			{
-				$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->getState('item.id'));
-				$ids   = [];
-
-				// If topic has been moved, find the new topic
-				while ($topic->moved_id)
-				{
-					if (isset($ids[$topic->moved_id]))
-					{
-						// Break on loops
-						return false;
-					}
-
-					$ids[$topic->moved_id] = 1;
-					$topic                 = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($topic->moved_id);
-				}
-			}
-
-			$this->topic = $topic;
-		}
-
-		return $this->topic;
-	}
-
-	/**
 	 * @return  array|boolean|Message[]
 	 *
 	 * @since   Kunena 6.0
@@ -202,12 +73,12 @@ class TopicModel extends ListModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessagesByTopic($this->getState('item.id'),
+			$this->messages = MessageHelper::getMessagesByTopic($this->getState('item.id'),
 				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded
 			);
 
 			// Get thankyous for all messages in the page
-			$thankyous = \Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::getByMessage($this->messages);
+			$thankyous = MessageThankyouHelper::getByMessage($this->messages);
 
 			// First collect ids and users
 			$userlist       = [];
@@ -261,7 +132,7 @@ class TopicModel extends ListModel
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
+			KunenaUserHelper::loadUsers($userlist);
 
 			// Get attachments
 			AttachmentHelper::getByMessage($this->messages);
@@ -363,6 +234,51 @@ class TopicModel extends ListModel
 	}
 
 	/**
+	 * @return  boolean|Topic
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getTopic()
+	{
+		if ($this->topic === false)
+		{
+			$mesid = $this->getState('item.mesid');
+
+			if ($mesid)
+			{
+				// Find actual topic by fetching current message
+				$message = MessageHelper::get($mesid);
+				$topic   = TopicHelper::get($message->thread);
+				$this->setState('list.start', intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
+			}
+			else
+			{
+				$topic = TopicHelper::get($this->getState('item.id'));
+				$ids   = [];
+
+				// If topic has been moved, find the new topic
+				while ($topic->moved_id)
+				{
+					if (isset($ids[$topic->moved_id]))
+					{
+						// Break on loops
+						return false;
+					}
+
+					$ids[$topic->moved_id] = 1;
+					$topic                 = TopicHelper::get($topic->moved_id);
+				}
+			}
+
+			$this->topic = $topic;
+		}
+
+		return $this->topic;
+	}
+
+	/**
 	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
@@ -387,6 +303,18 @@ class TopicModel extends ListModel
 	}
 
 	/**
+	 * @return  Poll
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getPoll()
+	{
+		return $this->getTopic()->getPoll();
+	}
+
+	/**
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
@@ -401,15 +329,15 @@ class TopicModel extends ListModel
 	}
 
 	/**
-	 * @return  Poll
+	 * @return  Category
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getPoll()
+	public function getCategory()
 	{
-		return $this->getTopic()->getPoll();
+		return CategoryHelper::get($this->getState('item.catid'));
 	}
 
 	/**
@@ -434,5 +362,82 @@ class TopicModel extends ListModel
 	public function getPollUsers()
 	{
 		return $this->getPoll()->getUsers();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function populateState()
+	{
+		$active = $this->app->getMenu()->getActive();
+		$active = $active ? (int) $active->id : 0;
+
+		$layout = $this->me->getTopicLayout();
+		$this->setState('layout', $layout);
+
+		$template          = KunenaFactory::getTemplate();
+		$profile_location  = $template->params->get('avatarPosition', 'left');
+		$profile_direction = $profile_location == 'left' || $profile_location == 'right' ? 'vertical' : 'horizontal';
+		$this->setState('profile.location', $profile_location);
+		$this->setState('profile.direction', $profile_direction);
+
+		$catid = $this->getInt('catid', 0);
+		$this->setState('item.catid', $catid);
+
+		$id = $this->getInt('id', 0);
+		$this->setState('item.id', $id);
+
+		$id = $this->getInt('mesid', 0);
+		$this->setState('item.mesid', $id);
+
+		$access = Access::getInstance();
+		$value  = $access->getAllowedHold($this->me, $catid);
+		$this->setState('hold', $value);
+
+		$value = $this->getInt('limit', 0);
+
+		if ($value < 1 || $value > 100)
+		{
+			$value = $this->config->messages_per_page;
+		}
+
+		$this->setState('list.limit', $value);
+
+		// $value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
+
+		$value = $this->getInt('limitstart', 0);
+
+		if ($value < 0)
+		{
+			$value = 0;
+		}
+
+		$this->setState('list.start', $value);
+
+		$value = $this->getUserStateFromRequest("com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', '', 'word');
+
+		if (!$value)
+		{
+			if ($this->me->ordering != '0' && $this->me->exists())
+			{
+				$value = $this->me->ordering == '1' ? 'desc' : 'asc';
+			}
+			else
+			{
+				$value = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
+			}
+		}
+
+		if ($value != 'asc')
+		{
+			$value = 'desc';
+		}
+
+		$this->setState('list.direction', $value);
 	}
 }

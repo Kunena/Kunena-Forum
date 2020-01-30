@@ -16,8 +16,8 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -26,9 +26,9 @@ use function defined;
 /**
  * Kunena Backend Config Controller
  *
+ * @since   Kunena 2.0
  * @property  KunenaConfig
  *
- * @since   Kunena 2.0
  */
 class ConfigController extends FormController
 {
@@ -78,8 +78,8 @@ class ConfigController extends FormController
 	/**
 	 * Save
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
 	 *
 	 * @return  void
 	 *

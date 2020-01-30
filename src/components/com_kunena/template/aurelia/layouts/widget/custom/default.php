@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use function defined;
+
 ?>
 <div class="card">
 	<h3 class="card-header"><?php echo $this->header; ?></h3>

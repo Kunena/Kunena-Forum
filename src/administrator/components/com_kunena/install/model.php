@@ -10,9 +10,13 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Cache\Cache;
-use Joomla\CMS\Factory;
 use Joomla\Archive\Archive;
+use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
@@ -20,18 +24,19 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Bbcode\KunenaBbcodeEditor;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  *
@@ -58,60 +63,52 @@ define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE . '/media/kunena');
 class KunenaModelInstall extends BaseDatabaseModel
 {
 	/**
+	 * @var     array|null
+	 * @since   Kunena 6.0
+	 */
+	public $steps = null;
+	/**
 	 * Flag to indicate model state initialization.
 	 *
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $__state_set = false;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_versionprefix = false;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_installed = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_versions = [];
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_action = false;
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_errormsg = null;
-
 	/**
 	 * @var     array|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_versiontablearray = null;
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_versionarray = null;
-
-	/**
-	 * @var     array|null
-	 * @since   Kunena 6.0
-	 */
-	public $steps = null;
 
 	/**
 	 * @since   Kunena 6.0
@@ -193,370 +190,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * Uninstall Kunena, run from Joomla installer.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function uninstall()
-	{
-		// Put back file that was removed during installation.
-		$contents = '';
-		File::write(KPATH_ADMIN . '/install.php', $contents);
-
-		// Uninstall all plugins.
-		$this->uninstallPlugin('kunena', 'altauserpoints');
-		$this->uninstallPlugin('kunena', 'community');
-		$this->uninstallPlugin('kunena', 'comprofiler');
-		$this->uninstallPlugin('kunena', 'easyprofile');
-		$this->uninstallPlugin('kunena', 'easysocial');
-		$this->uninstallPlugin('kunena', 'gravatar');
-		$this->uninstallPlugin('kunena', 'joomla');
-		$this->uninstallPlugin('kunena', 'kunena');
-		$this->uninstallPlugin('finder', 'kunena');
-		$this->uninstallPlugin('quickicon', 'kunena');
-		$this->uninstallPlugin('content', 'kunena');
-
-		// Uninstall menu module.
-		$this->uninstallModule('mod_kunenamenu');
-
-		// Remove all Kunena related menu items, including aliases
-		if (class_exists('KunenaMenuFix'))
-		{
-			$items = MenuFix::getAll();
-
-			foreach ($items as $item)
-			{
-				MenuFix::delete($item->id);
-			}
-		}
-
-		$this->deleteMenu();
-
-		// Uninstall Kunena library
-		$this->uninstallLibrary();
-
-		// Uninstall Kunena media
-		$this->uninstallMedia();
-
-		// Uninstall Kunena system plugin
-		$this->uninstallPlugin('system', 'kunena');
-
-		return true;
-	}
-
-	/**
-	 * Get model
-	 *
-	 * @return  $this
-	 * @since   Kunena 6.0
-	 */
-	public function getModel()
-	{
-		return $this;
-	}
-
-	/**
-	 * Overridden method to get model state variables.
-	 *
-	 * @param   string  $property  Optional parameter name.
-	 * @param   mixed   $default   The default value to use if no state property exists by name.
-	 *
-	 * @return    object    The property where specified, the state object where omitted.
-	 *
-	 * @since    1.6
-	 * @throws  Exception
-	 */
-	public function getState($property = null, $default = null)
-	{
-		// If the model state is uninitialized lets set some values we will need from the request.
-		if ($this->__state_set === false)
-		{
-			$app = Factory::getApplication();
-			$this->setState('action', $step = $app->getUserState('com_kunena.install.action', null));
-			$this->setState('step', $step = $app->getUserState('com_kunena.install.step', 0));
-			$this->setState('task', $task = $app->getUserState('com_kunena.install.task', 0));
-			$this->setState('version', $task = $app->getUserState('com_kunena.install.version', null));
-
-			if ($step == 0)
-			{
-				$app->setUserState('com_kunena.install.status', []);
-			}
-
-			$this->setState('status', $app->getUserState('com_kunena.install.status'));
-
-			$this->__state_set = true;
-		}
-
-		$value = parent::getState($property);
-
-		return is_null($value) ? $default : $value;
-	}
-
-	/**
-	 * Get Status
-	 *
-	 * @return  object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getStatus()
-	{
-		return $this->getState('status', []);
-	}
-
-	/**
-	 * Get Action
-	 *
-	 * @return  object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getAction()
-	{
-		return $this->getState('action', null);
-	}
-
-	/**
-	 * @return  object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getStep()
-	{
-		return $this->getState('step', 0);
-	}
-
-	/**
-	 * @return  object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getTask()
-	{
-		return $this->getState('task', 0);
-	}
-
-	/**
-	 * Get version
-	 *
-	 * @return  object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getVersion()
-	{
-		return $this->getState('version', null);
-	}
-
-	/**
-	 * Set Action
-	 *
-	 * @param   string  $action  action
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setAction($action)
-	{
-		$this->setState('action', $action);
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.action', $action);
-	}
-
-	/**
-	 * @param   string  $step  step
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setStep($step)
-	{
-		$this->setState('step', (int) $step);
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.step', (int) $step);
-		$this->setTask(0);
-	}
-
-	/**
-	 * @param   string  $task  task
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setTask($task)
-	{
-		$this->setState('task', (int) $task);
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.task', (int) $task);
-	}
-
-	/**
-	 * @param   integer  $version  version
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setVersion($version)
-	{
-		$this->setState('version', $version);
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.version', $version);
-	}
-
-	/**
-	 * @param   string  $task    task
-	 * @param   bool    $result  result
-	 * @param   string  $msg     message
-	 * @param   null    $id      id
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function addStatus($task, $result = false, $msg = '', $id = null)
-	{
-		$status = $this->getState('status');
-		$step   = $this->getStep();
-
-		if ($id === null)
-		{
-			$status [] = ['step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg];
-		}
-		else
-		{
-			unset($status [$id]);
-			$status [$id] = ['step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg];
-		}
-
-		$this->setState('status', $status);
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.status', $status);
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getInstallError()
-	{
-		$status = $this->getState('status', []);
-
-		foreach ($status as $cur)
-		{
-			$error = !$cur['success'];
-
-			if ($error)
-			{
-				return $cur['task'] . ' ... ' . ($cur['success'] > 0 ? 'SUCCESS' : 'FAILED');
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return  array|null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getSteps()
-	{
-		return $this->steps;
-	}
-
-	/**
-	 * @param   string  $path      path
-	 * @param   string  $filename  filename
-	 * @param   null    $dest      dest
-	 * @param   bool    $silent    silent
-	 *
-	 * @return  boolean|null|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function extract($path, $filename, $dest = null, $silent = false)
-	{
-		$success = null;
-
-		if (!$dest)
-		{
-			$dest = $path;
-		}
-
-		$file = "{$path}/{$filename}";
-
-		$text = '';
-
-		if (is_file($file))
-		{
-			$success = true;
-
-			if (!Folder::exists($dest))
-			{
-				$success = Folder::create($dest);
-			}
-
-			if ($success)
-			{
-				$archive = new Archive;
-				$success = $archive->extract($file, $dest);
-			}
-
-			if (!$success)
-			{
-				$text .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
-			}
-		}
-		else
-		{
-			$success = true;
-			$text    .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
-		}
-
-		if ($success !== null && !$silent)
-		{
-			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text);
-		}
-
-		return $success;
-	}
-
-	// TODO: move to migration (exists in 2.0)
-
-	/**
 	 * @param   string  $tag   tag
 	 * @param   string  $name  name
 	 *
@@ -618,20 +251,348 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @param   array   $group    group
-	 * @param   string  $element  element
+	 * @param   string  $task    task
+	 * @param   bool    $result  result
+	 * @param   string  $msg     message
+	 * @param   null    $id      id
 	 *
-	 * @return  mixed
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function addStatus($task, $result = false, $msg = '', $id = null)
+	{
+		$status = $this->getState('status');
+		$step   = $this->getStep();
+
+		if ($id === null)
+		{
+			$status [] = ['step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg];
+		}
+		else
+		{
+			unset($status [$id]);
+			$status [$id] = ['step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg];
+		}
+
+		$this->setState('status', $status);
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.status', $status);
+	}
+
+	/**
+	 * Overridden method to get model state variables.
+	 *
+	 * @param   string  $property  Optional parameter name.
+	 * @param   mixed   $default   The default value to use if no state property exists by name.
+	 *
+	 * @return    object    The property where specified, the state object where omitted.
+	 *
+	 * @since    1.6
+	 * @throws  Exception
+	 */
+	public function getState($property = null, $default = null)
+	{
+		// If the model state is uninitialized lets set some values we will need from the request.
+		if ($this->__state_set === false)
+		{
+			$app = Factory::getApplication();
+			$this->setState('action', $step = $app->getUserState('com_kunena.install.action', null));
+			$this->setState('step', $step = $app->getUserState('com_kunena.install.step', 0));
+			$this->setState('task', $task = $app->getUserState('com_kunena.install.task', 0));
+			$this->setState('version', $task = $app->getUserState('com_kunena.install.version', null));
+
+			if ($step == 0)
+			{
+				$app->setUserState('com_kunena.install.status', []);
+			}
+
+			$this->setState('status', $app->getUserState('com_kunena.install.status'));
+
+			$this->__state_set = true;
+		}
+
+		$value = parent::getState($property);
+
+		return is_null($value) ? $default : $value;
+	}
+
+	/**
+	 * @return  object
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getStep()
+	{
+		return $this->getState('step', 0);
+	}
+
+	/**
+	 * @param   string  $step  step
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setStep($step)
+	{
+		$this->setState('step', (int) $step);
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.step', (int) $step);
+		$this->setTask(0);
+	}
+
+	/**
+	 * @param   string  $task  task
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setTask($task)
+	{
+		$this->setState('task', (int) $task);
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.task', (int) $task);
+	}
+
+	/**
+	 * Uninstall Kunena, run from Joomla installer.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function uninstall()
+	{
+		// Put back file that was removed during installation.
+		$contents = '';
+		File::write(KPATH_ADMIN . '/install.php', $contents);
+
+		// Uninstall all plugins.
+		$this->uninstallPlugin('kunena', 'altauserpoints');
+		$this->uninstallPlugin('kunena', 'community');
+		$this->uninstallPlugin('kunena', 'comprofiler');
+		$this->uninstallPlugin('kunena', 'easyprofile');
+		$this->uninstallPlugin('kunena', 'easysocial');
+		$this->uninstallPlugin('kunena', 'gravatar');
+		$this->uninstallPlugin('kunena', 'joomla');
+		$this->uninstallPlugin('kunena', 'kunena');
+		$this->uninstallPlugin('finder', 'kunena');
+		$this->uninstallPlugin('quickicon', 'kunena');
+		$this->uninstallPlugin('content', 'kunena');
+
+		// Uninstall menu module.
+		$this->uninstallModule('mod_kunenamenu');
+
+		// Remove all Kunena related menu items, including aliases
+		if (class_exists('KunenaMenuFix'))
+		{
+			$items = MenuFix::getAll();
+
+			foreach ($items as $item)
+			{
+				MenuFix::delete($item->id);
+			}
+		}
+
+		$this->deleteMenu();
+
+		// Uninstall Kunena library
+		$this->uninstallLibrary();
+
+		// Uninstall Kunena media
+		$this->uninstallMedia();
+
+		// Uninstall Kunena system plugin
+		$this->uninstallPlugin('system', 'kunena');
+
+		return true;
+	}
+
+	/**
+	 * @param   string  $folder  folder
+	 * @param   string  $name    name
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function loadPlugin($group, $element)
+	public function uninstallPlugin($folder, $name)
 	{
-		$plugin = Table::getInstance('extension');
-		$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]);
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from($db->quoteName('#__extensions'))
+			->where('type=\'plugin\'  AND folder=\'' . $folder . '\' AND element=\'' . $name);
+		$db->setQuery($query);
 
-		return $plugin;
+		$pluginid = $db->loadResult();
+
+		if ($pluginid)
+		{
+			$installer = new Installer;
+			$installer->uninstall('plugin', $pluginid);
+		}
 	}
+
+	/**
+	 * @param   string  $name  name
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function uninstallModule($name)
+	{
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from($db->quoteName('#__extensions'))
+			->where('type=\'module\' AND element=\' ' . $name);
+		$db->setQuery($query);
+
+		$moduleid = $db->loadResult();
+
+		if ($moduleid)
+		{
+			$installer = new Installer;
+			$installer->uninstall('module', $moduleid);
+		}
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function deleteMenu()
+	{
+		$table = Table::getInstance('MenuType');
+		$table->load(['menutype' => 'kunenamenu']);
+
+		if ($table->id)
+		{
+			$success = $table->delete();
+
+			if (!$success)
+			{
+				Factory::getApplication()->enqueueMessage($table->getError(), 'error');
+			}
+		}
+
+		/** @var Joomla\CMS\Cache\Cache|Joomla\CMS\Cache\CacheController $cache */
+		$cache = Factory::getCache();
+		$cache->clean('mod_menu');
+	}
+
+	/**
+	 * Method to uninstall the Kunena library during uninstall process
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function uninstallLibrary()
+	{
+		$libraryid = $this->uninstallMediaLibraryQuery('library', 'kunena');
+
+		if ($libraryid)
+		{
+			$installer = new Installer;
+			$installer->uninstall('library', $libraryid);
+		}
+	}
+
+	/**
+	 * Method to uninstall the Kunena media during uninstall process
+	 *
+	 * @param   string  $type     type
+	 * @param   string  $element  Name of the package or of the component
+	 *
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 */
+	private function uninstallMediaLibraryQuery($type, $element)
+	{
+		$query = $this->db->getQuery(true);
+		$query->select($this->db->quoteName('extension_id'));
+		$query->from($this->db->quoteName('#__extensions'));
+		$query->where($this->db->quoteName('type') . ' = ' . $type);
+		$query->where($this->db->quoteName('element') . ' = ' . $element);
+		$this->db->setQuery($query);
+		$id = $this->db->loadResult();
+
+		return $id;
+	}
+
+	/**
+	 * Method to uninstall the Kunena media during uninstall process
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function uninstallMedia()
+	{
+		$mediaid = $this->uninstallMediaLibraryQuery('file', 'kunena_media');
+
+		if ($mediaid)
+		{
+			$installer = new Installer;
+			$installer->uninstall('file', $mediaid);
+		}
+	}
+
+	/**
+	 * Get model
+	 *
+	 * @return  $this
+	 * @since   Kunena 6.0
+	 */
+	public function getModel()
+	{
+		return $this;
+	}
+
+	/**
+	 * Get Status
+	 *
+	 * @return  object
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getStatus()
+	{
+		return $this->getState('status', []);
+	}
+
+	/**
+	 * @return  array|null
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getSteps()
+	{
+		return $this->steps;
+	}
+
+	// TODO: move to migration (exists in 2.0)
 
 	/**
 	 * @param   string  $path  path
@@ -693,6 +654,65 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 
 		Folder::delete($dest);
+
+		return $success;
+	}
+
+	/**
+	 * @param   string  $path      path
+	 * @param   string  $filename  filename
+	 * @param   null    $dest      dest
+	 * @param   bool    $silent    silent
+	 *
+	 * @return  boolean|null|void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function extract($path, $filename, $dest = null, $silent = false)
+	{
+		$success = null;
+
+		if (!$dest)
+		{
+			$dest = $path;
+		}
+
+		$file = "{$path}/{$filename}";
+
+		$text = '';
+
+		if (is_file($file))
+		{
+			$success = true;
+
+			if (!Folder::exists($dest))
+			{
+				$success = Folder::create($dest);
+			}
+
+			if ($success)
+			{
+				$archive = new Archive;
+				$success = $archive->extract($file, $dest);
+			}
+
+			if (!$success)
+			{
+				$text .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
+			}
+		}
+		else
+		{
+			$success = true;
+			$text    .= Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
+		}
+
+		if ($success !== null && !$silent)
+		{
+			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text);
+		}
 
 		return $success;
 	}
@@ -784,175 +804,19 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string  $name  name
+	 * @param   array   $group    group
+	 * @param   string  $element  element
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function uninstallModule($name)
-	{
-		$db    = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('extension_id')
-			->from($db->quoteName('#__extensions'))
-			->where('type=\'module\' AND element=\' ' . $name);
-		$db->setQuery($query);
-
-		$moduleid = $db->loadResult();
-
-		if ($moduleid)
-		{
-			$installer = new Installer;
-			$installer->uninstall('module', $moduleid);
-		}
-	}
-
-	/**
-	 * @param   string  $folder  folder
-	 * @param   string  $name    name
-	 *
-	 * @return  void
+	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function uninstallPlugin($folder, $name)
+	public function loadPlugin($group, $element)
 	{
-		$db    = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('extension_id')
-			->from($db->quoteName('#__extensions'))
-			->where('type=\'plugin\'  AND folder=\'' . $folder . '\' AND element=\'' . $name);
-		$db->setQuery($query);
+		$plugin = Table::getInstance('extension');
+		$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]);
 
-		$pluginid = $db->loadResult();
-
-		if ($pluginid)
-		{
-			$installer = new Installer;
-			$installer->uninstall('plugin', $pluginid);
-		}
-	}
-
-	/**
-	 * Method to uninstall the Kunena library during uninstall process
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function uninstallLibrary()
-	{
-		$libraryid = $this->uninstallMediaLibraryQuery('library', 'kunena');
-
-		if ($libraryid)
-		{
-			$installer = new Installer;
-			$installer->uninstall('library', $libraryid);
-		}
-	}
-
-	/**
-	 * Method to uninstall the Kunena media during uninstall process
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function uninstallMedia()
-	{
-		$mediaid = $this->uninstallMediaLibraryQuery('file', 'kunena_media');
-
-		if ($mediaid)
-		{
-			$installer = new Installer;
-			$installer->uninstall('file', $mediaid);
-		}
-	}
-
-	/**
-	 * Method to uninstall the Kunena media during uninstall process
-	 *
-	 * @param   string  $type     type
-	 * @param   string  $element  Name of the package or of the component
-	 *
-	 * @return  integer
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private function uninstallMediaLibraryQuery($type, $element)
-	{
-		$query = $this->db->getQuery(true);
-		$query->select($this->db->quoteName('extension_id'));
-		$query->from($this->db->quoteName('#__extensions'));
-		$query->where($this->db->quoteName('type') . ' = ' . $type);
-		$query->where($this->db->quoteName('element') . ' = ' . $element);
-		$this->db->setQuery($query);
-		$id = $this->db->loadResult();
-
-		return $id;
-	}
-
-	/**
-	 * @param   string  $path    path
-	 * @param   array   $ignore  ignore
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function deleteFiles($path, $ignore = [])
-	{
-		$ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
-
-		if (Folder::exists($path))
-		{
-			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
-			{
-				if (File::exists($file))
-				{
-					File::delete($file);
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param   string  $path    path
-	 * @param   array   $ignore  ignore
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function deleteFolders($path, $ignore = [])
-	{
-		$ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
-
-		if (Folder::exists($path))
-		{
-			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
-			{
-				if (Folder::exists($folder))
-				{
-					Folder::delete($folder);
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param   string  $path    path
-	 * @param   array   $ignore  ignore
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function deleteFolder($path, $ignore = [])
-	{
-		$this->deleteFiles($path, $ignore);
-		$this->deleteFolders($path, $ignore);
+		return $plugin;
 	}
 
 	/**
@@ -1033,6 +897,846 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		$this->checkTimeout(true);
 	}
+
+	/**
+	 * @param   integer  $version  version
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setVersion($version)
+	{
+		$this->setState('version', $version);
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.version', $version);
+	}
+
+	/**
+	 * @param   null  $stats  stats
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function setAvatarStatus($stats = null)
+	{
+		if (!$stats)
+		{
+			$stats          = new stdClass;
+			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		}
+
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.avatars', $stats);
+	}
+
+	/**
+	 * @param   null  $stats  stats
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function setAttachmentStatus($stats = null)
+	{
+		if (!$stats)
+		{
+			$stats          = new stdClass;
+			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		}
+
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.attachments', $stats);
+	}
+
+	/**
+	 * Get Action
+	 *
+	 * @return  object
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getAction()
+	{
+		return $this->getState('action', null);
+	}
+
+	/**
+	 * Set Action
+	 *
+	 * @param   string  $action  action
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setAction($action)
+	{
+		$this->setState('action', $action);
+		$app = Factory::getApplication();
+		$app->setUserState('com_kunena.install.action', $action);
+	}
+
+	/**
+	 * @param   string  $prefix  prefix
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	public function deleteTables($prefix)
+	{
+		$tables = $this->listTables($prefix);
+
+		foreach ($tables as $table)
+		{
+			$this->db->setQuery("DROP TABLE IF EXISTS " . $this->db->quoteName($this->db->getPrefix() . $table));
+
+			try
+			{
+				$this->db->execute();
+			}
+			catch (Exception $e)
+			{
+				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+			}
+		}
+
+		unset($this->tables [$prefix]);
+	}
+
+	/**
+	 * @param   string  $prefix  prefix
+	 * @param   bool    $reload  reload
+	 *
+	 * @return  mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function listTables($prefix, $reload = false)
+	{
+		if (isset($this->tables [$prefix]) && !$reload)
+		{
+			return $this->tables [$prefix];
+		}
+
+		$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
+
+		try
+		{
+			$list = (array) $this->db->loadColumn();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+
+		$this->tables [$prefix] = [];
+
+		foreach ($list as $table)
+		{
+			$table                           = preg_replace('/^' . $this->db->getPrefix() . '/', '', $table);
+			$this->tables [$prefix] [$table] = $table;
+		}
+
+		return $this->tables [$prefix];
+	}
+
+	/**
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	public function getDetectVersions()
+	{
+		if (!empty($this->_versions))
+		{
+			return $this->_versions;
+		}
+
+		$kunena    = $this->getInstalledVersion('kunena_', $this->_kVersions);
+		$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
+
+		if (!empty($kunena->state))
+		{
+			$this->_versions['failed'] = $kunena;
+			$kunena                    = $this->getInstalledVersion('kunena_', $this->_kVersions, true);
+
+			if (version_compare($kunena->version, '1.6.0-ALPHA', "<"))
+			{
+				$kunena->ignore = true;
+			}
+		}
+
+		if ($kunena->component && empty($kunena->ignore))
+		{
+			$this->_versions['kunena'] = $kunena;
+			$migrate                   = false;
+		}
+		else
+		{
+			$migrate = $this->isMigration($kunena, $fireboard);
+		}
+
+		if (!empty($fireboard->component) && $migrate)
+		{
+			$this->_versions['fb'] = $fireboard;
+		}
+
+		if (empty($kunena->component))
+		{
+			$this->_versions['kunena'] = $kunena;
+		}
+		else
+		{
+			if (!empty($fireboard->component))
+			{
+				$uninstall                    = clone $fireboard;
+				$uninstall->action            = 'RESTORE';
+				$this->_versions['uninstall'] = $uninstall;
+			}
+			else
+			{
+				$uninstall                    = clone $kunena;
+				$uninstall->action            = 'UNINSTALL';
+				$this->_versions['uninstall'] = $uninstall;
+			}
+		}
+
+		foreach ($this->_versions as $version)
+		{
+			$version->label       = $this->getActionText($version);
+			$version->description = $this->getActionText($version, 'desc');
+			$version->hint        = $this->getActionText($version, 'hint');
+			$version->warning     = $this->getActionText($version, 'warn');
+			$version->link        = Uri::base(true) . '/index.php?option=com_kunena&view=install&task=' . strtolower($version->action) . '&' . Session::getFormToken() . '=1';
+		}
+
+		if ($migrate)
+		{
+			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');
+		}
+		else
+		{
+			$kunena->warning = '';
+		}
+
+		return $this->_versions;
+	}
+
+	/**
+	 * @param   string   $prefix       prefix
+	 * @param   array    $versionlist  versionlist
+	 * @param   boolean  $state        state
+	 *
+	 * @return  mixed|null|StdClass
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	public function getInstalledVersion($prefix, $versionlist, $state = false)
+	{
+		if (!$state && isset($this->_installed[$prefix]))
+		{
+			return $this->_installed[$prefix];
+		}
+
+		if ($prefix === null)
+		{
+			$versionprefix = $this->getVersionPrefix();
+		}
+		else
+		{
+			if ($this->detectTable($prefix . 'version'))
+			{
+				$versionprefix = $prefix;
+			}
+			else
+			{
+				$versionprefix = null;
+			}
+		}
+
+		if ($versionprefix)
+		{
+			// Version table exists, try to get installed version
+			$state = $state ? " WHERE state=''" : "";
+			$this->db->setQuery("SELECT * FROM " . $this->db->quoteName($this->db->getPrefix() . $versionprefix . 'version') . $state . " ORDER BY `id` DESC", 0, 1);
+
+			try
+			{
+				$version = $this->db->loadObject();
+			}
+			catch (Exception $e)
+			{
+				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+			}
+
+			if ($version)
+			{
+				$version->version = strtolower($version->version);
+				$version->prefix  = $versionprefix;
+
+				if (version_compare($version->version, '1.0.5', ">"))
+				{
+					$version->component = 'Kunena';
+				}
+				else
+				{
+					$version->component = 'FireBoard';
+				}
+
+				$version->version = strtoupper($version->version);
+
+				// Version table may contain dummy version.. Ignore it
+				if (!$version || version_compare($version->version, '0.1.0', "<"))
+				{
+					unset($version);
+				}
+			}
+		}
+
+		if (!isset($version))
+		{
+			// No version found -- try to detect version by searching some missing fields
+			$match = $this->detectTable($versionlist);
+
+			// Clean install
+			if (empty($match))
+			{
+				return $this->_installed = null;
+			}
+
+			// Create version object
+			$version              = new StdClass;
+			$version->id          = 0;
+			$version->component   = $match ['component'];
+			$version->version     = strtoupper($match ['version']);
+			$version->versiondate = $match ['date'];
+			$version->installdate = '';
+			$version->versionname = '';
+			$version->prefix      = $match ['prefix'];
+		}
+
+		$version->action = $this->getInstallAction($version);
+
+		return $this->_installed[$prefix] = $version;
+	}
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	public function getVersionPrefix()
+	{
+		if ($this->_versionprefix !== false)
+		{
+			return $this->_versionprefix;
+		}
+
+		$match = $this->detectTable($this->_versiontablearray);
+
+		if (isset($match ['prefix']))
+		{
+			$this->_versionprefix = $match ['prefix'];
+		}
+		else
+		{
+			$this->_versionprefix = null;
+		}
+
+		return $this->_versionprefix;
+	}
+
+	/**
+	 * @param   string  $detectlist  detect list
+	 *
+	 * @return  array
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function detectTable($detectlist)
+	{
+		// Cache
+		static $tables = [];
+		static $fields = [];
+
+		$found = 0;
+
+		if (is_string($detectlist))
+		{
+			$detectlist = [['table' => $detectlist]];
+		}
+
+		foreach ($detectlist as $detect)
+		{
+			// If no detection is needed, return current item
+			if (!isset($detect ['table']))
+			{
+				return $detect;
+			}
+
+			$table = $this->db->getPrefix() . $detect ['table'];
+
+			// Match if table exists
+			if (!isset($tables [$table])) // Not cached
+			{
+				$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($table));
+
+				try
+				{
+					$result = $this->db->loadResult();
+				}
+				catch (Exception $e)
+				{
+					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+				}
+
+				$tables [$table] = $result;
+			}
+
+			if (!empty($tables [$table]))
+			{
+				$found = 1;
+			}
+
+			// Match if column in a table exists
+			if ($found && isset($detect ['column']))
+			{
+				if (!isset($fields [$table])) // Not cached
+				{
+					$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($table));
+
+					try
+					{
+						$result = $this->db->loadObjectList('Field');
+					}
+					catch (Exception $e)
+					{
+						throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+					}
+
+					$fields [$table] = $result;
+				}
+
+				if (!isset($fields [$table] [$detect ['column']]))
+				{
+					$found = 0;
+				}
+			}
+
+			if ($found)
+			{
+				return $detect;
+			}
+		}
+
+		return [];
+	}
+
+	/**
+	 * @param   object  $version  version
+	 *
+	 * @return  boolean|string
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getInstallAction($version = null)
+	{
+		if ($version->component === null)
+		{
+			$this->_action = 'INSTALL';
+		}
+		else
+		{
+			if ($version->prefix != 'kunena_')
+			{
+				$this->_action = 'MIGRATE';
+			}
+			else
+			{
+				if (version_compare(strtolower(KunenaForum::version()), strtolower($version->version), '>'))
+				{
+					$this->_action = 'UPGRADE';
+				}
+				else
+				{
+					if (version_compare(strtolower(KunenaForum::version()), strtolower($version->version), '<'))
+					{
+						$this->_action = 'DOWNGRADE';
+					}
+					else
+					{
+						$this->_action = 'REINSTALL';
+					}
+				}
+			}
+		}
+
+		return $this->_action;
+	}
+
+	/**
+	 * @param   object  $new  new
+	 * @param   object  $old  new
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	public function isMigration($new, $old)
+	{
+		// If K1.6 not installed: migrate
+		if (!$new->component || !$this->detectTable($new->prefix . 'messages'))
+		{
+			return true;
+		}
+
+		// If old not installed: upgrade
+		if (!$old->component || !$this->detectTable($old->prefix . 'messages'))
+		{
+			return false;
+		}
+
+		// If K1.6 is installed and old is not Kunena: upgrade
+		if ($old->component != 'Kunena')
+		{
+			return false;
+		}
+
+		// User is currently using K1.6: upgrade
+		if (strtotime($new->installdate) > strtotime($old->installdate))
+		{
+			return false;
+		}
+
+		// User is currently using K1.0/K1.5: migrate
+		if (strtotime($new->installdate) < strtotime($old->installdate))
+		{
+			return true;
+		}
+
+		// Both K1.5 and K1.6 were installed during the same day.. Not going to be easy choice..
+
+		// Let's assume that this could be migration
+		return true;
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $version  version
+	 * @param   string  $type     type
+	 * @param   null    $action   action
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getActionText($version, $type = '', $action = null)
+	{
+		/*
+		 Translations generated:
+
+		Installation types: COM_KUNENA_INSTALL_UPGRADE, COM_KUNENA_INSTALL_DOWNGRADE, COM_KUNENA_INSTALL_REINSTALL,
+		COM_KUNENA_INSTALL_MIGRATE, COM_KUNENA_INSTALL_INSTALL, COM_KUNENA_INSTALL_UNINSTALL, COM_KUNENA_INSTALL_RESTORE
+
+		Installation descriptions: COM_KUNENA_INSTALL_UPGRADE_DESC, COM_KUNENA_INSTALL_DOWNGRADE_DESC, COM_KUNENA_INSTALL_REINSTALL_DESC,
+		COM_KUNENA_INSTALL_MIGRATE_DESC, COM_KUNENA_INSTALL_INSTALL_DESC, COM_KUNENA_INSTALL_UNINSTALL_DESC, COM_KUNENA_INSTALL_RESTORE_DESC
+
+		Installation hints: COM_KUNENA_INSTALL_UPGRADE_HINT, COM_KUNENA_INSTALL_DOWNGRADE_HINT, COM_KUNENA_INSTALL_REINSTALL_HINT,
+		COM_KUNENA_INSTALL_MIGRATE_HINT, COM_KUNENA_INSTALL_INSTALL_HINT, COM_KUNENA_INSTALL_UNINSTALL_HINT, COM_KUNENA_INSTALL_RESTORE_HINT
+
+		Installation warnings: COM_KUNENA_INSTALL_UPGRADE_WARN, COM_KUNENA_INSTALL_DOWNGRADE_WARN,
+		COM_KUNENA_INSTALL_MIGRATE_WARN, COM_KUNENA_INSTALL_UNINSTALL_WARN, COM_KUNENA_INSTALL_RESTORE_WARN
+
+		 */
+
+		static $search = ['#COMPONENT_OLD#', '#VERSION_OLD#', '#VERSION#'];
+		$replace = [$version->component, $version->version, KunenaForum::version()];
+
+		if (!$action)
+		{
+			$action = $version->action;
+		}
+
+		if ($type == 'warn' && ($action == 'INSTALL' || $action == 'REINSTALL'))
+		{
+			return '';
+		}
+
+		$str = '';
+
+		if ($type == 'hint' || $type == 'warn')
+		{
+			$str .= '<strong class="k' . $type . '">' . Text::_('COM_KUNENA_INSTALL_' . $type) . '</strong> ';
+		}
+
+		if ($action && $type)
+		{
+			$type = '_' . $type;
+		}
+
+		$str .= str_replace($search, $replace, Text::_('COM_KUNENA_INSTALL_' . $action . $type));
+
+		return $str;
+	}
+
+	/**
+	 * @param   string  $oldprefix  old prefix
+	 * @param   string  $oldtable   old table
+	 * @param   string  $newtable   newtable
+	 *
+	 * @return  array|void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function migrateTable($oldprefix, $oldtable, $newtable)
+	{
+		$tables    = $this->listTables('kunena_');
+		$oldtables = $this->listTables($oldprefix);
+
+		if ($oldtable == $newtable || !isset($oldtables [$oldtable]) || isset($tables [$newtable]))
+		{
+			return;
+		}
+
+		// Make identical copy from the table with new name
+		$create = $this->db->getTableCreate($this->db->getPrefix() . $oldtable);
+		$create = implode(' ', $create);
+
+		$collation = $this->db->getCollation();
+
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
+		{
+			$collation = 'utf8_general_ci';
+		}
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$str = 'utf8mb4';
+		}
+		else
+		{
+			$str = 'utf8';
+		}
+
+		if (!$create)
+		{
+			return;
+		}
+
+		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
+		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$create .= ' ENGINE=InnoDB';
+		}
+		else
+		{
+			$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
+		}
+
+		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
+		$query  = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
+		$this->db->setQuery($query);
+
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+
+		$this->tables ['kunena_'] [$newtable] = $newtable;
+
+		// And copy data into it
+		$sql = $this->db->getQuery(true);
+		$sql->insert($this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable));
+		$this->db->setQuery($sql);
+
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+
+		return ['name' => $oldtable, 'action' => 'migrate', 'sql' => $sql];
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $table  table
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function selectWithStripslashes($table)
+	{
+		$fields = $this->db->getTableColumns($table);
+		$select = [];
+
+		foreach ($fields as $field => $type)
+		{
+			$isString = preg_match('/text|char/', $type);
+			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->quoteName($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->quoteName($field);
+		}
+
+		$select = implode(', ', $select);
+
+		return "SELECT {$select} FROM {$table}";
+	}
+
+	/**
+	 * @param   integer  $version      version
+	 * @param   integer  $versiondate  version date
+	 * @param   integer  $versionname  version name
+	 * @param   string   $state        state
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
+	{
+		$query = $this->db->getQuery(true);
+
+		// Insert columns.
+		$columns = ['version', 'versiondate', 'installdate', 'versionname', 'build', 'state'];
+
+		// Insert values.
+		$values = [$this->db->quote($version), $this->db->quote($versiondate), $this->db->quote(Factory::getDate('now')->toSql()), $this->db->quote($versionname), $this->db->quote($version), $this->db->quote($state)];
+
+		// Prepare the insert query.
+		$query
+			->insert($this->db->quoteName($this->db->getPrefix() . 'kunena_version'))
+			->columns($this->db->quoteName($columns))
+			->values(implode(',', $values));
+
+		// Set the query using our newly populated query object and execute it.
+		$this->db->setQuery($query);
+
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+	}
+
+	/**
+	 * @param   string  $state  state
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function insertVersion($state = 'beginInstall')
+	{
+		// Insert data from the new version
+		$this->insertVersionData(KunenaForum::version(), KunenaForum::versionDate(), KunenaForum::versionName(), $state);
+	}
+
+	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getInstallError()
+	{
+		$status = $this->getState('status', []);
+
+		foreach ($status as $cur)
+		{
+			$error = !$cur['success'];
+
+			if ($error)
+			{
+				return $cur['task'] . ' ... ' . ($cur['success'] > 0 ? 'SUCCESS' : 'FAILED');
+			}
+		}
+
+		return false;
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   bool  $stop     stop
+	 * @param   int   $timeout  timeout
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function checkTimeout($stop = false, $timeout = 1)
+	{
+		static $start = null;
+
+		if ($stop)
+		{
+			$start = 0;
+		}
+
+		$time = microtime(true);
+
+		if ($start === null)
+		{
+			$start = $time;
+
+			return false;
+		}
+
+		if ($time - $start < $timeout)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	// TODO: move to migration
 
 	/**
 	 * @return  void
@@ -1116,27 +1820,89 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 	}
 
+	// TODO: move to migration
+
 	/**
-	 * @param   string  $group    group
-	 * @param   string  $element  element
+	 * @return  object
 	 *
-	 * @return  boolean
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getTask()
+	{
+		return $this->getState('task', 0);
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function enablePlugin($group, $element)
+	public function deleteFolder($path, $ignore = [])
 	{
-		$plugin = Table::getInstance('extension');
-
-		if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]))
-		{
-			return false;
-		}
-
-		$plugin->enabled = 1;
-
-		return $plugin->store();
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
 	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function deleteFiles($path, $ignore = [])
+	{
+		$ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
+
+		if (Folder::exists($path))
+		{
+			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
+			{
+				if (File::exists($file))
+				{
+					File::delete($file);
+				}
+			}
+		}
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $path    path
+	 * @param   array   $ignore  ignore
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function deleteFolders($path, $ignore = [])
+	{
+		$ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
+
+		if (Folder::exists($path))
+		{
+			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
+			{
+				if (Folder::exists($folder))
+				{
+					Folder::delete($folder);
+				}
+			}
+		}
+	}
+
+	// TODO: move to migration
 
 	/**
 	 * @return  void
@@ -1164,6 +1930,30 @@ class KunenaModelInstall extends BaseDatabaseModel
 		{
 			$this->setStep($this->getStep() + 1);
 		}
+	}
+
+	// TODO: move to migration
+
+	/**
+	 * @param   string  $group    group
+	 * @param   string  $element  element
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function enablePlugin($group, $element)
+	{
+		$plugin = Table::getInstance('extension');
+
+		if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]))
+		{
+			return false;
+		}
+
+		$plugin->enabled = 1;
+
+		return $plugin->store();
 	}
 
 	/**
@@ -1238,91 +2028,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 * @throws  Exception
-	 */
-	public function stepFinish()
-	{
-		KunenaForum::setup();
-
-		$lang = Factory::getLanguage();
-		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
-
-		$this->createMenu();
-
-		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
-		\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::fixAliases();
-
-		// Clean cache, just in case
-		MenuHelper::cleanCache();
-
-		$cache = Factory::getCache();
-		$cache->clean('com_kunena');
-
-		// Delete installer file (only if not using GIT build).
-		if (!KunenaForum::isDev())
-		{
-			File::delete(KPATH_ADMIN . '/install.php');
-		}
-
-		// Resync bbcode plugins
-		$editor = KunenaBbcodeEditor::getInstance();
-		$editor->initializeHMVC();
-
-		if (!$this->getInstallError())
-		{
-			$this->updateVersionState('');
-			$this->addStatus(Text::_('COM_KUNENA_INSTALL_SUCCESS'), true, '');
-
-			$this->setStep($this->getStep() + 1);
-		}
-
-		// Delete the tmp install directory
-		foreach (glob(Path::tmpdir() . '/install_*') as $dir)
-		{
-			if (is_dir($dir))
-			{
-				Folder::delete($dir);
-			}
-		}
-
-		$version = '';
-		$date    = '';
-		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-
-		if (file_exists($file))
-		{
-			$manifest = simplexml_load_file($file);
-			$version  = (string) $manifest->version;
-			$date     = (string) $manifest->creationDate;
-		}
-		else
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true);
-			$query->select('version')->from('#__kunena_version')->order('id');
-			$query->setLimit(1);
-			$db->setQuery($query);
-
-			$version = $db->loadResult();
-			$date    = (string) $version->versiondate;
-		}
-
-		$tmpfile = Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
-
-		if (is_file($tmpfile))
-		{
-			File::delete(Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
-		}
-	}
-
-	// TODO: move to migration
-
-	/**
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
@@ -1377,6 +2082,48 @@ class KunenaModelInstall extends BaseDatabaseModel
 		// Database migration complete
 		return true;
 	}
+
+	// TODO: move to migration
+
+	/**
+	 * Get version
+	 *
+	 * @return  object
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getVersion()
+	{
+		return $this->getState('version', null);
+	}
+
+	/**
+	 * @param   string  $state  state
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 */
+	protected function updateVersionState($state)
+	{
+		// Insert data from the new version
+		$this->db->setQuery("UPDATE " . $this->db->quoteName($this->db->getPrefix() . 'kunena_version') . " SET state = " . $this->db->Quote($state) . " ORDER BY id DESC LIMIT 1");
+
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+	}
+
+	// TODO: move to migration
 
 	/**
 	 * @return  boolean
@@ -1441,56 +2188,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		// Database install complete
 		return true;
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 * @throws  Exception
-	 */
-	public function migrateConfig()
-	{
-		$config  = KunenaFactory::getConfig();
-		$version = $this->getVersion();
-
-		// Migrate configuration from FB < 1.0.5
-		if (version_compare($version->version, '1.0.4', "<="))
-		{
-			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
-
-			if (is_file($file))
-			{
-				require_once $file;
-
-				if (isset($fbConfig))
-				{
-					$fbConfig = (array) $fbConfig;
-					$config->bind($fbConfig);
-					$config->id = 1;
-				}
-			}
-		}
-
-		// Migrate configuration from FB 1.0.5 and Kunena 1.0-1.7
-		if (!$config->id && !empty($version->prefix))
-		{
-			$tables   = $this->listTables($version->prefix);
-			$cfgtable = "{$version->prefix}config";
-
-			if (isset($tables[$cfgtable]))
-			{
-				$this->db->setQuery("SELECT * FROM #__{$cfgtable}");
-				$config->bind((array) $this->db->loadAssoc());
-				$config->id = 1;
-			}
-		}
-
-		$config->save();
 	}
 
 	/**
@@ -1586,6 +2283,54 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		// Database install complete
 		return true;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 * @throws  Exception
+	 */
+	public function migrateConfig()
+	{
+		$config  = KunenaFactory::getConfig();
+		$version = $this->getVersion();
+
+		// Migrate configuration from FB < 1.0.5
+		if (version_compare($version->version, '1.0.4', "<="))
+		{
+			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
+
+			if (is_file($file))
+			{
+				require_once $file;
+
+				if (isset($fbConfig))
+				{
+					$fbConfig = (array) $fbConfig;
+					$config->bind($fbConfig);
+					$config->id = 1;
+				}
+			}
+		}
+
+		// Migrate configuration from FB 1.0.5 and Kunena 1.0-1.7
+		if (!$config->id && !empty($version->prefix))
+		{
+			$tables   = $this->listTables($version->prefix);
+			$cfgtable = "{$version->prefix}config";
+
+			if (isset($tables[$cfgtable]))
+			{
+				$this->db->setQuery("SELECT * FROM #__{$cfgtable}");
+				$config->bind((array) $this->db->loadAssoc());
+				$config->id = 1;
+			}
+		}
+
+		$config->save();
 	}
 
 	/**
@@ -1685,48 +2430,41 @@ class KunenaModelInstall extends BaseDatabaseModel
 		return true;
 	}
 
-	// TODO: move to migration
-
 	/**
-	 * @param   null  $stats  stats
-	 *
-	 * @return  void
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function setAvatarStatus($stats = null)
+	public function migrateCategoryImages()
 	{
-		if (!$stats)
+		$action = $this->getAction();
+
+		if ($action != 'migrate')
 		{
-			$stats          = new stdClass;
-			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+			return true;
 		}
 
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.avatars', $stats);
+		$srcpath = JPATH_ROOT . '/images/fbfiles/category_images';
+		$dstpath = KUNENA_INSTALLER_MEDIAPATH . '/category_images';
+
+		if (Folder::exists($srcpath))
+		{
+			if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath))
+			{
+				$this->addStatus("Could not copy category images from $srcpath to $dstpath", true);
+			}
+			else
+			{
+				$this->addStatus(Text::_('COM_KUNENA_MIGRATE_CATEGORY_IMAGES'), true);
+			}
+		}
+
+		return true;
 	}
 
-	// TODO: move to migration
-
-	/**
-	 * @return  mixed|stdClass
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function getAvatarStatus()
-	{
-		$app            = Factory::getApplication();
-		$stats          = new stdClass;
-		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
-		$stats          = $app->getUserState('com_kunena.install.avatars', $stats);
-
-		return $stats;
-	}
-
+	// Helper function to migrate table
 	// TODO: move to migration
 
 	/**
@@ -1885,6 +2623,23 @@ class KunenaModelInstall extends BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
+	 * @return  mixed|stdClass
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function getAvatarStatus()
+	{
+		$app            = Factory::getApplication();
+		$stats          = new stdClass;
+		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		$stats          = $app->getUserState('com_kunena.install.avatars', $stats);
+
+		return $stats;
+	}
+
+	/**
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
@@ -1918,85 +2673,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		return true;
 	}
 
-	// TODO: move to migration
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function migrateCategoryImages()
-	{
-		$action = $this->getAction();
-
-		if ($action != 'migrate')
-		{
-			return true;
-		}
-
-		$srcpath = JPATH_ROOT . '/images/fbfiles/category_images';
-		$dstpath = KUNENA_INSTALLER_MEDIAPATH . '/category_images';
-
-		if (Folder::exists($srcpath))
-		{
-			if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath))
-			{
-				$this->addStatus("Could not copy category images from $srcpath to $dstpath", true);
-			}
-			else
-			{
-				$this->addStatus(Text::_('COM_KUNENA_MIGRATE_CATEGORY_IMAGES'), true);
-			}
-		}
-
-		return true;
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @param   null  $stats  stats
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function setAttachmentStatus($stats = null)
-	{
-		if (!$stats)
-		{
-			$stats          = new stdClass;
-			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
-		}
-
-		$app = Factory::getApplication();
-		$app->setUserState('com_kunena.install.attachments', $stats);
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @return  mixed|stdClass
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function getAttachmentStatus()
-	{
-		$app            = Factory::getApplication();
-		$stats          = new stdClass;
-		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
-		$stats          = $app->getUserState('com_kunena.install.attachments', $stats);
-
-		return $stats;
-	}
-
-	// TODO: move to migration
+	// Also insert old version if not in the table
 
 	/**
 	 * @return  boolean
@@ -2215,868 +2892,103 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  boolean
+	 * @return  mixed|stdClass
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function recountCategories()
+	protected function getAttachmentStatus()
 	{
-		$app   = Factory::getApplication();
-		$state = $app->getUserState('com_kunena.install.recount', null);
+		$app            = Factory::getApplication();
+		$stats          = new stdClass;
+		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		$stats          = $app->getUserState('com_kunena.install.attachments', $stats);
 
-		// Only perform this stage if database needs recounting (upgrade from older version)
-		$version = $this->getVersion();
+		return $stats;
+	}
 
-		if (version_compare($version->version, '2.0.0-DEV', ">"))
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
+	 * @throws  Exception
+	 */
+	public function stepFinish()
+	{
+		KunenaForum::setup();
+
+		$lang = Factory::getLanguage();
+		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
+
+		$this->createMenu();
+
+		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
+		CategoryHelper::fixAliases();
+
+		// Clean cache, just in case
+		MenuHelper::cleanCache();
+
+		$cache = Factory::getCache();
+		$cache->clean('com_kunena');
+
+		// Delete installer file (only if not using GIT build).
+		if (!KunenaForum::isDev())
 		{
-			return true;
+			File::delete(KPATH_ADMIN . '/install.php');
 		}
 
-		if ($state === null)
+		// Resync bbcode plugins
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
+
+		if (!$this->getInstallError())
 		{
-			// First run
+			$this->updateVersionState('');
+			$this->addStatus(Text::_('COM_KUNENA_INSTALL_SUCCESS'), true, '');
+
+			$this->setStep($this->getStep() + 1);
+		}
+
+		// Delete the tmp install directory
+		foreach (glob(Path::tmpdir() . '/install_*') as $dir)
+		{
+			if (is_dir($dir))
+			{
+				Folder::delete($dir);
+			}
+		}
+
+		$version = '';
+		$date    = '';
+		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		if (file_exists($file))
+		{
+			$manifest = simplexml_load_file($file);
+			$version  = (string) $manifest->version;
+			$date     = (string) $manifest->creationDate;
+		}
+		else
+		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('MAX(id)')->from('#__kunena_messages');
+			$query->select('version')->from('#__kunena_version')->order('id');
+			$query->setLimit(1);
 			$db->setQuery($query);
 
-			$state        = new stdClass;
-			$state->step  = 0;
-			$state->maxId = (int) $db->loadResult();
-			$state->start = 0;
+			$version = $db->loadResult();
+			$date    = (string) $version->versiondate;
 		}
 
-		while (1)
+		$tmpfile = Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+
+		if (is_file($tmpfile))
 		{
-			$count = mt_rand(4500, 5500);
-
-			switch ($state->step)
-			{
-				case 0:
-					// Update topic statistics
-					\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::recount(false, $state->start, $state->start + $count);
-					$state->start += $count;
-					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
-					break;
-				case 1:
-					// Update usertopic statistics
-					\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::recount(false, $state->start, $state->start + $count);
-					$state->start += $count;
-					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
-					break;
-				case 2:
-					// Update user statistics
-					\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
-					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USER'), true, '', 'recount');
-					break;
-				case 3:
-					// Update category statistics
-					\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::recount();
-					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
-					break;
-				default:
-					$app->setUserState('com_kunena.install.recount', null);
-					$this->addStatus(Text::_('COM_KUNENA_MIGRATE_RECOUNT_DONE'), true, '', 'recount');
-
-					return true;
-			}
-
-			if (!$state->start || $state->start > $state->maxId)
-			{
-				$state->step++;
-				$state->start = 0;
-			}
-
-			if ($this->checkTimeout(false, 14))
-			{
-				break;
-			}
+			File::delete(Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}
-
-		$app->setUserState('com_kunena.install.recount', $state);
-
-		return false;
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function getVersionPrefix()
-	{
-		if ($this->_versionprefix !== false)
-		{
-			return $this->_versionprefix;
-		}
-
-		$match = $this->detectTable($this->_versiontablearray);
-
-		if (isset($match ['prefix']))
-		{
-			$this->_versionprefix = $match ['prefix'];
-		}
-		else
-		{
-			$this->_versionprefix = null;
-		}
-
-		return $this->_versionprefix;
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function getDetectVersions()
-	{
-		if (!empty($this->_versions))
-		{
-			return $this->_versions;
-		}
-
-		$kunena    = $this->getInstalledVersion('kunena_', $this->_kVersions);
-		$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
-
-		if (!empty($kunena->state))
-		{
-			$this->_versions['failed'] = $kunena;
-			$kunena                    = $this->getInstalledVersion('kunena_', $this->_kVersions, true);
-
-			if (version_compare($kunena->version, '1.6.0-ALPHA', "<"))
-			{
-				$kunena->ignore = true;
-			}
-		}
-
-		if ($kunena->component && empty($kunena->ignore))
-		{
-			$this->_versions['kunena'] = $kunena;
-			$migrate                   = false;
-		}
-		else
-		{
-			$migrate = $this->isMigration($kunena, $fireboard);
-		}
-
-		if (!empty($fireboard->component) && $migrate)
-		{
-			$this->_versions['fb'] = $fireboard;
-		}
-
-		if (empty($kunena->component))
-		{
-			$this->_versions['kunena'] = $kunena;
-		}
-		else
-		{
-			if (!empty($fireboard->component))
-			{
-				$uninstall                    = clone $fireboard;
-				$uninstall->action            = 'RESTORE';
-				$this->_versions['uninstall'] = $uninstall;
-			}
-			else
-			{
-				$uninstall                    = clone $kunena;
-				$uninstall->action            = 'UNINSTALL';
-				$this->_versions['uninstall'] = $uninstall;
-			}
-		}
-
-		foreach ($this->_versions as $version)
-		{
-			$version->label       = $this->getActionText($version);
-			$version->description = $this->getActionText($version, 'desc');
-			$version->hint        = $this->getActionText($version, 'hint');
-			$version->warning     = $this->getActionText($version, 'warn');
-			$version->link        = Uri::base(true) . '/index.php?option=com_kunena&view=install&task=' . strtolower($version->action) . '&' . Session::getFormToken() . '=1';
-		}
-
-		if ($migrate)
-		{
-			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');
-		}
-		else
-		{
-			$kunena->warning = '';
-		}
-
-		return $this->_versions;
-	}
-
-	/**
-	 * @param   object  $new  new
-	 * @param   object  $old  new
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function isMigration($new, $old)
-	{
-		// If K1.6 not installed: migrate
-		if (!$new->component || !$this->detectTable($new->prefix . 'messages'))
-		{
-			return true;
-		}
-
-		// If old not installed: upgrade
-		if (!$old->component || !$this->detectTable($old->prefix . 'messages'))
-		{
-			return false;
-		}
-
-		// If K1.6 is installed and old is not Kunena: upgrade
-		if ($old->component != 'Kunena')
-		{
-			return false;
-		}
-
-		// User is currently using K1.6: upgrade
-		if (strtotime($new->installdate) > strtotime($old->installdate))
-		{
-			return false;
-		}
-
-		// User is currently using K1.0/K1.5: migrate
-		if (strtotime($new->installdate) < strtotime($old->installdate))
-		{
-			return true;
-		}
-
-		// Both K1.5 and K1.6 were installed during the same day.. Not going to be easy choice..
-
-		// Let's assume that this could be migration
-		return true;
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @param   string   $prefix       prefix
-	 * @param   array    $versionlist  versionlist
-	 * @param   boolean  $state        state
-	 *
-	 * @return  mixed|null|StdClass
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function getInstalledVersion($prefix, $versionlist, $state = false)
-	{
-		if (!$state && isset($this->_installed[$prefix]))
-		{
-			return $this->_installed[$prefix];
-		}
-
-		if ($prefix === null)
-		{
-			$versionprefix = $this->getVersionPrefix();
-		}
-		else
-		{
-			if ($this->detectTable($prefix . 'version'))
-			{
-				$versionprefix = $prefix;
-			}
-			else
-			{
-				$versionprefix = null;
-			}
-		}
-
-		if ($versionprefix)
-		{
-			// Version table exists, try to get installed version
-			$state = $state ? " WHERE state=''" : "";
-			$this->db->setQuery("SELECT * FROM " . $this->db->quoteName($this->db->getPrefix() . $versionprefix . 'version') . $state . " ORDER BY `id` DESC", 0, 1);
-
-			try
-			{
-				$version = $this->db->loadObject();
-			}
-			catch (Exception $e)
-			{
-				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-			}
-
-			if ($version)
-			{
-				$version->version = strtolower($version->version);
-				$version->prefix  = $versionprefix;
-
-				if (version_compare($version->version, '1.0.5', ">"))
-				{
-					$version->component = 'Kunena';
-				}
-				else
-				{
-					$version->component = 'FireBoard';
-				}
-
-				$version->version = strtoupper($version->version);
-
-				// Version table may contain dummy version.. Ignore it
-				if (!$version || version_compare($version->version, '0.1.0', "<"))
-				{
-					unset($version);
-				}
-			}
-		}
-
-		if (!isset($version))
-		{
-			// No version found -- try to detect version by searching some missing fields
-			$match = $this->detectTable($versionlist);
-
-			// Clean install
-			if (empty($match))
-			{
-				return $this->_installed = null;
-			}
-
-			// Create version object
-			$version              = new StdClass;
-			$version->id          = 0;
-			$version->component   = $match ['component'];
-			$version->version     = strtoupper($match ['version']);
-			$version->versiondate = $match ['date'];
-			$version->installdate = '';
-			$version->versionname = '';
-			$version->prefix      = $match ['prefix'];
-		}
-
-		$version->action = $this->getInstallAction($version);
-
-		return $this->_installed[$prefix] = $version;
-	}
-
-	/**
-	 * @param   string  $state  state
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function insertVersion($state = 'beginInstall')
-	{
-		// Insert data from the new version
-		$this->insertVersionData(KunenaForum::version(), KunenaForum::versionDate(), KunenaForum::versionName(), $state);
-	}
-
-	/**
-	 * @param   string  $state  state
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function updateVersionState($state)
-	{
-		// Insert data from the new version
-		$this->db->setQuery("UPDATE " . $this->db->quoteName($this->db->getPrefix() . 'kunena_version') . " SET state = " . $this->db->Quote($state) . " ORDER BY id DESC LIMIT 1");
-
-		try
-		{
-			$this->db->execute();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-	}
-
-	/**
-	 * @param   string  $version  version
-	 * @param   string  $type     type
-	 * @param   null    $action   action
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getActionText($version, $type = '', $action = null)
-	{
-		/*
-		 Translations generated:
-
-		Installation types: COM_KUNENA_INSTALL_UPGRADE, COM_KUNENA_INSTALL_DOWNGRADE, COM_KUNENA_INSTALL_REINSTALL,
-		COM_KUNENA_INSTALL_MIGRATE, COM_KUNENA_INSTALL_INSTALL, COM_KUNENA_INSTALL_UNINSTALL, COM_KUNENA_INSTALL_RESTORE
-
-		Installation descriptions: COM_KUNENA_INSTALL_UPGRADE_DESC, COM_KUNENA_INSTALL_DOWNGRADE_DESC, COM_KUNENA_INSTALL_REINSTALL_DESC,
-		COM_KUNENA_INSTALL_MIGRATE_DESC, COM_KUNENA_INSTALL_INSTALL_DESC, COM_KUNENA_INSTALL_UNINSTALL_DESC, COM_KUNENA_INSTALL_RESTORE_DESC
-
-		Installation hints: COM_KUNENA_INSTALL_UPGRADE_HINT, COM_KUNENA_INSTALL_DOWNGRADE_HINT, COM_KUNENA_INSTALL_REINSTALL_HINT,
-		COM_KUNENA_INSTALL_MIGRATE_HINT, COM_KUNENA_INSTALL_INSTALL_HINT, COM_KUNENA_INSTALL_UNINSTALL_HINT, COM_KUNENA_INSTALL_RESTORE_HINT
-
-		Installation warnings: COM_KUNENA_INSTALL_UPGRADE_WARN, COM_KUNENA_INSTALL_DOWNGRADE_WARN,
-		COM_KUNENA_INSTALL_MIGRATE_WARN, COM_KUNENA_INSTALL_UNINSTALL_WARN, COM_KUNENA_INSTALL_RESTORE_WARN
-
-		 */
-
-		static $search = ['#COMPONENT_OLD#', '#VERSION_OLD#', '#VERSION#'];
-		$replace = [$version->component, $version->version, KunenaForum::version()];
-
-		if (!$action)
-		{
-			$action = $version->action;
-		}
-
-		if ($type == 'warn' && ($action == 'INSTALL' || $action == 'REINSTALL'))
-		{
-			return '';
-		}
-
-		$str = '';
-
-		if ($type == 'hint' || $type == 'warn')
-		{
-			$str .= '<strong class="k' . $type . '">' . Text::_('COM_KUNENA_INSTALL_' . $type) . '</strong> ';
-		}
-
-		if ($action && $type)
-		{
-			$type = '_' . $type;
-		}
-
-		$str .= str_replace($search, $replace, Text::_('COM_KUNENA_INSTALL_' . $action . $type));
-
-		return $str;
-	}
-
-	/**
-	 * @param   object  $version  version
-	 *
-	 * @return  boolean|string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getInstallAction($version = null)
-	{
-		require_once __DIR__ . '/../api/api.php';
-
-		if ($version->component === null)
-		{
-			$this->_action = 'INSTALL';
-		}
-		else
-		{
-			if ($version->prefix != 'kunena_')
-			{
-				$this->_action = 'MIGRATE';
-			}
-			else
-			{
-				if (version_compare(strtolower(KunenaForum::version()), strtolower($version->version), '>'))
-				{
-					$this->_action = 'UPGRADE';
-				}
-				else
-				{
-					if (version_compare(strtolower(KunenaForum::version()), strtolower($version->version), '<'))
-					{
-						$this->_action = 'DOWNGRADE';
-					}
-					else
-					{
-						$this->_action = 'REINSTALL';
-					}
-				}
-			}
-		}
-
-		return $this->_action;
-	}
-
-	/**
-	 * @param   string  $detectlist  detect list
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function detectTable($detectlist)
-	{
-		// Cache
-		static $tables = [];
-		static $fields = [];
-
-		$found = 0;
-
-		if (is_string($detectlist))
-		{
-			$detectlist = [['table' => $detectlist]];
-		}
-
-		foreach ($detectlist as $detect)
-		{
-			// If no detection is needed, return current item
-			if (!isset($detect ['table']))
-			{
-				return $detect;
-			}
-
-			$table = $this->db->getPrefix() . $detect ['table'];
-
-			// Match if table exists
-			if (!isset($tables [$table])) // Not cached
-			{
-				$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($table));
-
-				try
-				{
-					$result = $this->db->loadResult();
-				}
-				catch (Exception $e)
-				{
-					throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-				}
-
-				$tables [$table] = $result;
-			}
-
-			if (!empty($tables [$table]))
-			{
-				$found = 1;
-			}
-
-			// Match if column in a table exists
-			if ($found && isset($detect ['column']))
-			{
-				if (!isset($fields [$table])) // Not cached
-				{
-					$this->db->setQuery("SHOW COLUMNS FROM " . $this->db->quoteName($table));
-
-					try
-					{
-						$result = $this->db->loadObjectList('Field');
-					}
-					catch (Exception $e)
-					{
-						throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-					}
-
-					$fields [$table] = $result;
-				}
-
-				if (!isset($fields [$table] [$detect ['column']]))
-				{
-					$found = 0;
-				}
-			}
-
-			if ($found)
-			{
-				return $detect;
-			}
-		}
-
-		return [];
-	}
-
-	// Helper function to migrate table
-	// TODO: move to migration
-	/**
-	 * @param   string  $oldprefix  old prefix
-	 * @param   string  $oldtable   old table
-	 * @param   string  $newtable   newtable
-	 *
-	 * @return  array|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function migrateTable($oldprefix, $oldtable, $newtable)
-	{
-		$tables    = $this->listTables('kunena_');
-		$oldtables = $this->listTables($oldprefix);
-
-		if ($oldtable == $newtable || !isset($oldtables [$oldtable]) || isset($tables [$newtable]))
-		{
-			return;
-		}
-
-		// Make identical copy from the table with new name
-		$create = $this->db->getTableCreate($this->db->getPrefix() . $oldtable);
-		$create = implode(' ', $create);
-
-		$collation = $this->db->getCollation();
-
-		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
-		{
-			$collation = 'utf8_general_ci';
-		}
-
-		if (strstr($collation, 'utf8mb4'))
-		{
-			$str = 'utf8mb4';
-		}
-		else
-		{
-			$str = 'utf8';
-		}
-
-		if (!$create)
-		{
-			return;
-		}
-
-		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
-		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
-
-		if (strstr($collation, 'utf8mb4'))
-		{
-			$create .= ' ENGINE=InnoDB';
-		}
-		else
-		{
-			$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
-		}
-
-		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
-		$query  = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
-		$this->db->setQuery($query);
-
-		try
-		{
-			$this->db->execute();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-
-		$this->tables ['kunena_'] [$newtable] = $newtable;
-
-		// And copy data into it
-		$sql = $this->db->getQuery(true);
-		$sql->insert($this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable));
-		$this->db->setQuery($sql);
-
-		try
-		{
-			$this->db->execute();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-
-		return ['name' => $oldtable, 'action' => 'migrate', 'sql' => $sql];
-	}
-
-	// TODO: move to migration
-
-	/**
-	 * @param   string  $table  table
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function selectWithStripslashes($table)
-	{
-		$fields = $this->db->getTableColumns($table);
-		$select = [];
-
-		foreach ($fields as $field => $type)
-		{
-			$isString = preg_match('/text|char/', $type);
-			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->quoteName($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->quoteName($field);
-		}
-
-		$select = implode(', ', $select);
-
-		return "SELECT {$select} FROM {$table}";
-	}
-
-	/**
-	 * @return  array|null|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function createVersionTable()
-	{
-		$tables = $this->listTables('kunena_');
-
-		if (isset($tables ['kunena_version']))
-		{
-			// Nothing to migrate
-			return;
-		}
-
-		$collation = $this->db->getCollation();
-
-		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
-		{
-			$collation = 'utf8_general_ci';
-		}
-
-		if (strstr($collation, 'utf8mb4'))
-		{
-			$str = 'utf8mb4';
-		}
-		else
-		{
-			$str = 'utf8';
-		}
-
-		$query = "CREATE TABLE IF NOT EXISTS `" . $this->db->getPrefix() . "kunena_version` (
-		`id` int(11) NOT NULL AUTO_INCREMENT,
-		`version` varchar(20) NOT NULL,
-		`versiondate` date NOT NULL,
-		`installdate` date NOT NULL,
-		`build` varchar(20) DEFAULT NULL,
-		`versionname` varchar(40) DEFAULT NULL,
-		`state` text DEFAULT NULL,
-		PRIMARY KEY (`id`)
-		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
-		$this->db->setQuery($query);
-
-		try
-		{
-			$this->db->execute();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-
-		$this->tables ['kunena_'] ['kunena_version'] = 'kunena_version';
-
-		return ['action' => Text::_('COM_KUNENA_INSTALL_CREATE'), 'name' => 'kunena_version', 'sql' => $query];
-	}
-
-	// Also insert old version if not in the table
-
-	/**
-	 * @param   integer  $version      version
-	 * @param   integer  $versiondate  version date
-	 * @param   integer  $versionname  version name
-	 * @param   string   $state        state
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function insertVersionData($version, $versiondate, $versionname, $state = '')
-	{
-		$query = $this->db->getQuery(true);
-
-		// Insert columns.
-		$columns = ['version', 'versiondate', 'installdate', 'versionname', 'build', 'state'];
-
-		// Insert values.
-		$values = [$this->db->quote($version), $this->db->quote($versiondate), $this->db->quote(Factory::getDate('now')->toSql()), $this->db->quote($versionname), $this->db->quote($version), $this->db->quote($state)];
-
-		// Prepare the insert query.
-		$query
-			->insert($this->db->quoteName($this->db->getPrefix() . 'kunena_version'))
-			->columns($this->db->quoteName($columns))
-			->values(implode(',', $values));
-
-		// Set the query using our newly populated query object and execute it.
-		$this->db->setQuery($query);
-
-		try
-		{
-			$this->db->execute();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-	}
-
-	/**
-	 * @param   string  $prefix  prefix
-	 * @param   bool    $reload  reload
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	protected function listTables($prefix, $reload = false)
-	{
-		if (isset($this->tables [$prefix]) && !$reload)
-		{
-			return $this->tables [$prefix];
-		}
-
-		$this->db->setQuery("SHOW TABLES LIKE " . $this->db->quote($this->db->getPrefix() . $prefix . '%'));
-
-		try
-		{
-			$list = (array) $this->db->loadColumn();
-		}
-		catch (Exception $e)
-		{
-			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-		}
-
-		$this->tables [$prefix] = [];
-
-		foreach ($list as $table)
-		{
-			$table                           = preg_replace('/^' . $this->db->getPrefix() . '/', '', $table);
-			$this->tables [$prefix] [$table] = $table;
-		}
-
-		return $this->tables [$prefix];
-	}
-
-	/**
-	 * @param   string  $prefix  prefix
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  KunenaInstallerException
-	 */
-	public function deleteTables($prefix)
-	{
-		$tables = $this->listTables($prefix);
-
-		foreach ($tables as $table)
-		{
-			$this->db->setQuery("DROP TABLE IF EXISTS " . $this->db->quoteName($this->db->getPrefix() . $table));
-
-			try
-			{
-				$this->db->execute();
-			}
-			catch (Exception $e)
-			{
-				throw new KunenaInstallerException($e->getMessage(), $e->getCode());
-			}
-		}
-
-		unset($this->tables [$prefix]);
 	}
 
 	/**
@@ -3095,26 +3007,26 @@ class KunenaModelInstall extends BaseDatabaseModel
 	public function createMenu()
 	{
 		$menu    = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
-					'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0]];
+		            'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0]];
 		$submenu = [
 			'index'     => ['name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
-							'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
+			                'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
 			'recent'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_RECENT'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
-							'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+			                'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
 			'unread'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
-							'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
+			                'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
 			'newtopic'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
-							'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
+			                'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
 			'noreplies' => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
-							'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+			                'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
 			'mylatest'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
-							'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
+			                'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
 			'profile'   => ['name' => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
-							'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
+			                'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
 			'help'      => ['name' => Text::_('COM_KUNENA_MENU_ITEM_HELP'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
-							'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
+			                'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
 			'search'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
-							'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
+			                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
 		];
 
 		// Disable language debugging while creating menu items.
@@ -3179,17 +3091,17 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$table = Table::getInstance('menu');
 		$table->load(['menutype' => 'kunenamenu', 'link' => $menu ['link']]);
 		$paramdata = ['menu-anchor_title'     => '',
-					  'menu-anchor_css'       => '',
-					  'menu_image'            => '',
-					  'menu_text'             => 1,
-					  'page_title'            => '',
-					  'show_page_heading'     => 0,
-					  'page_heading'          => '',
-					  'pageclass_sfx'         => '',
-					  'menu-meta_description' => '',
-					  'menu-meta_keywords'    => '',
-					  'robots'                => '',
-					  'secure'                => 0];
+		              'menu-anchor_css'       => '',
+		              'menu_image'            => '',
+		              'menu_text'             => 1,
+		              'page_title'            => '',
+		              'show_page_heading'     => 0,
+		              'page_heading'          => '',
+		              'pageclass_sfx'         => '',
+		              'menu-meta_description' => '',
+		              'menu-meta_keywords'    => '',
+		              'robots'                => '',
+		              'secure'                => 0];
 
 		$gparams = new Registry($paramdata);
 
@@ -3315,64 +3227,148 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  void
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function deleteMenu()
+	public function recountCategories()
 	{
-		$table = Table::getInstance('MenuType');
-		$table->load(['menutype' => 'kunenamenu']);
+		$app   = Factory::getApplication();
+		$state = $app->getUserState('com_kunena.install.recount', null);
 
-		if ($table->id)
+		// Only perform this stage if database needs recounting (upgrade from older version)
+		$version = $this->getVersion();
+
+		if (version_compare($version->version, '2.0.0-DEV', ">"))
 		{
-			$success = $table->delete();
+			return true;
+		}
 
-			if (!$success)
+		if ($state === null)
+		{
+			// First run
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('MAX(id)')->from('#__kunena_messages');
+			$db->setQuery($query);
+
+			$state        = new stdClass;
+			$state->step  = 0;
+			$state->maxId = (int) $db->loadResult();
+			$state->start = 0;
+		}
+
+		while (1)
+		{
+			$count = mt_rand(4500, 5500);
+
+			switch ($state->step)
 			{
-				Factory::getApplication()->enqueueMessage($table->getError(), 'error');
+				case 0:
+					// Update topic statistics
+					TopicHelper::recount(false, $state->start, $state->start + $count);
+					$state->start += $count;
+					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
+					break;
+				case 1:
+					// Update usertopic statistics
+					TopicUserHelper::recount(false, $state->start, $state->start + $count);
+					$state->start += $count;
+					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount');
+					break;
+				case 2:
+					// Update user statistics
+					KunenaUserHelper::recount();
+					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USER'), true, '', 'recount');
+					break;
+				case 3:
+					// Update category statistics
+					CategoryHelper::recount();
+					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
+					break;
+				default:
+					$app->setUserState('com_kunena.install.recount', null);
+					$this->addStatus(Text::_('COM_KUNENA_MIGRATE_RECOUNT_DONE'), true, '', 'recount');
+
+					return true;
+			}
+
+			if (!$state->start || $state->start > $state->maxId)
+			{
+				$state->step++;
+				$state->start = 0;
+			}
+
+			if ($this->checkTimeout(false, 14))
+			{
+				break;
 			}
 		}
 
-		/** @var Joomla\CMS\Cache\Cache|Joomla\CMS\Cache\CacheController $cache */
-		$cache = Factory::getCache();
-		$cache->clean('mod_menu');
+		$app->setUserState('com_kunena.install.recount', $state);
+
+		return false;
 	}
 
 	/**
-	 * @param   bool  $stop     stop
-	 * @param   int   $timeout  timeout
-	 *
-	 * @return  boolean
+	 * @return  array|null|void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  KunenaInstallerException
 	 */
-	public function checkTimeout($stop = false, $timeout = 1)
+	public function createVersionTable()
 	{
-		static $start = null;
+		$tables = $this->listTables('kunena_');
 
-		if ($stop)
+		if (isset($tables ['kunena_version']))
 		{
-			$start = 0;
+			// Nothing to migrate
+			return;
 		}
 
-		$time = microtime(true);
+		$collation = $this->db->getCollation();
 
-		if ($start === null)
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 		{
-			$start = $time;
-
-			return false;
+			$collation = 'utf8_general_ci';
 		}
 
-		if ($time - $start < $timeout)
+		if (strstr($collation, 'utf8mb4'))
 		{
-			return false;
+			$str = 'utf8mb4';
+		}
+		else
+		{
+			$str = 'utf8';
 		}
 
-		return true;
+		$query = "CREATE TABLE IF NOT EXISTS `" . $this->db->getPrefix() . "kunena_version` (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`version` varchar(20) NOT NULL,
+		`versiondate` date NOT NULL,
+		`installdate` date NOT NULL,
+		`build` varchar(20) DEFAULT NULL,
+		`versionname` varchar(40) DEFAULT NULL,
+		`state` text DEFAULT NULL,
+		PRIMARY KEY (`id`)
+		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
+		$this->db->setQuery($query);
+
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
+
+		$this->tables ['kunena_'] ['kunena_version'] = 'kunena_version';
+
+		return ['action' => Text::_('COM_KUNENA_INSTALL_CREATE'), 'name' => 'kunena_version', 'sql' => $query];
 	}
 
 	/**
@@ -3398,7 +3394,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			return true;
 		}
 
-		\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
+		MessageThankyouHelper::recount();
 
 		return true;
 	}

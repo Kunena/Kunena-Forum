@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit\User;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -32,22 +33,20 @@ use function defined;
 class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit/User';
-
-	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $changeUsername;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $frontendForm;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Edit/User';
 
 	/**
 	 * Load user form.
@@ -96,7 +95,7 @@ class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

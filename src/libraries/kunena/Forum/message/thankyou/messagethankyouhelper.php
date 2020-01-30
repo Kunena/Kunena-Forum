@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use function defined;
 
@@ -252,7 +253,7 @@ abstract class MessageThankyouHelper
 	public static function getTopMessages($limitstart = 0, $limit = 10)
 	{
 		$db         = Factory::getDBO();
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
+		$categories = CategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
@@ -303,7 +304,7 @@ abstract class MessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories();
+		$categories = CategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
 		$query->select('m.catid, m.thread, m.id')

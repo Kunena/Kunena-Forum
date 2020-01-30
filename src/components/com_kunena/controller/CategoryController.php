@@ -17,11 +17,10 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Administrator\Controller\CategoriesController;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Administrator\Controller\CategoriesController;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use function defined;
 
 /**

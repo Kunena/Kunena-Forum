@@ -21,8 +21,8 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -35,22 +35,20 @@ use function defined;
 class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Item/Actions';
-
-	/**
 	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $topicButtons;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/Item/Actions';
 
 	/**
 	 * Prepare topic actions display.
@@ -80,8 +78,8 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 		$this->template     = KunenaFactory::getTemplate();
 		$this->topicButtons = new CMSObject;
 
-		$fullactions     = $this->template->params->get('fullactions');
-		$topicicontype   = $this->template->params->get('topicicontype');
+		$fullactions   = $this->template->params->get('fullactions');
+		$topicicontype = $this->template->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 
@@ -366,7 +364,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return Layout::factory('Widget/Button')
 			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
-							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
+			                 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

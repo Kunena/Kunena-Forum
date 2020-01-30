@@ -20,13 +20,13 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
-use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 

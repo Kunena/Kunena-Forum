@@ -16,6 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use function defined;
 
 /**
@@ -118,15 +120,15 @@ define('KUNENA_PATH_UPLOADED_LEGACY', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED
 /**
  *
  */
-define('KUNENA_VERSION', \Kunena\Forum\Libraries\Forum\KunenaForum::version());
+define('KUNENA_VERSION', KunenaForum::version());
 /**
  *
  */
-define('KUNENA_VERSION_DATE', \Kunena\Forum\Libraries\Forum\KunenaForum::versionDate());
+define('KUNENA_VERSION_DATE', KunenaForum::versionDate());
 /**
  *
  */
-define('KUNENA_VERSION_NAME', \Kunena\Forum\Libraries\Forum\KunenaForum::versionName());
+define('KUNENA_VERSION_NAME', KunenaForum::versionName());
 /**
  *
  */
@@ -168,7 +170,7 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
 /**
  *
  */
-define('KUNENA_RELTMPLTPATH', \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->name);
+define('KUNENA_RELTMPLTPATH', KunenaFactory::getTemplate()->name);
 /**
  *
  */

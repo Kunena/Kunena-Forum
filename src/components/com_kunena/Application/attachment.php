@@ -188,34 +188,6 @@ class KunenaApplication extends WebApplication
 	}
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 */
-	protected function doExecute()
-	{
-		// Handle SEF.
-		$query    = $this->input->getString('query', 'foo');
-		$segments = explode('/', $query);
-
-		$segment = array_shift($segments);
-		$this->input->set('id', (int) $segment);
-		$segment = array_shift($segments);
-
-		if ($segment == 'thumb')
-		{
-			$this->input->set('thumb', 1);
-		}
-
-		$this->input->set('format', 'raw');
-
-		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay;
-		echo $controller->execute();
-	}
-
-	/**
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
@@ -248,6 +220,19 @@ class KunenaApplication extends WebApplication
 	}
 
 	/**
+	 * @param   string  $name     name
+	 * @param   null    $default  default
+	 *
+	 * @return  null
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getUserState($name, $default = null)
+	{
+		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;
+	}
+
+	/**
 	 * @param   string   $name   name
 	 * @param   boolean  $value  value
 	 *
@@ -261,16 +246,31 @@ class KunenaApplication extends WebApplication
 	}
 
 	/**
-	 * @param   string  $name     name
-	 * @param   null    $default  default
-	 *
-	 * @return  null
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 *
+	 * @throws  null
 	 */
-	public function getUserState($name, $default = null)
+	protected function doExecute()
 	{
-		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;
+		// Handle SEF.
+		$query    = $this->input->getString('query', 'foo');
+		$segments = explode('/', $query);
+
+		$segment = array_shift($segments);
+		$this->input->set('id', (int) $segment);
+		$segment = array_shift($segments);
+
+		if ($segment == 'thumb')
+		{
+			$this->input->set('thumb', 1);
+		}
+
+		$this->input->set('format', 'raw');
+
+		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay;
+		echo $controller->execute();
 	}
 }
 

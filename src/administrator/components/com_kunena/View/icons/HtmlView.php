@@ -49,6 +49,7 @@ class HtmlView extends BaseHtmlView
 		$document->setTitle(Text::_('COM_KUNENA_A_ICONS_MANAGER'));
 
 		$this->addToolbar();
+
 		return parent::display($tpl);
 	}
 

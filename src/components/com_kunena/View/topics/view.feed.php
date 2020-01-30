@@ -19,8 +19,8 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\View\View;
 use function defined;
 
@@ -38,7 +38,7 @@ class feed extends View
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -48,7 +48,7 @@ class feed extends View
 		}
 
 		Parser::$relative = false;
-		$cache                      = Factory::getCache('com_kunena_rss', 'output');
+		$cache            = Factory::getCache('com_kunena_rss', 'output');
 
 		if (!$this->config->cache)
 		{
@@ -106,107 +106,11 @@ class feed extends View
 	}
 
 	/**
-	 * @param   null  $tpl  tpl
-	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
-	 */
-	public function displayUser($tpl = null)
-	{
-		if (!$this->config->enablerss)
-		{
-			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
-		}
-
-		$this->layout = 'user';
-		$this->topics = $this->get('Topics');
-		$this->total  = $this->get('Total');
-
-		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($this->config->board_title);
-
-		switch ($this->state->get('list.mode'))
-		{
-			case 'posted' :
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-				break;
-			case 'started' :
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-				break;
-			case 'favorites' :
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				break;
-			case 'subscriptions' :
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				break;
-			default :
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
-		}
-
-		$this->setTitle($title);
-
-		$this->displayTopicRows();
-	}
-
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  \Exception
-	 */
-	public function displayPosts($tpl = null)
-	{
-		if (!$this->config->enablerss)
-		{
-			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
-		}
-
-		$this->layout   = 'posts';
-		$this->messages = $this->get('Messages');
-		$this->topics   = $this->get('Topics');
-		$this->total    = $this->get('Total');
-
-		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($this->config->board_title);
-
-		switch ($this->state->get('list.mode'))
-		{
-			case 'unapproved':
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				break;
-			case 'deleted':
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				break;
-			case 'mythanks':
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				break;
-			case 'thankyou':
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				break;
-			case 'recent':
-			default:
-				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-		}
-
-		$this->setTitle($title);
-
-		$this->displayPostRows();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function displayTopicRows()
 	{
@@ -250,59 +154,20 @@ class feed extends View
 		}
 	}
 
-	/**ss
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  \Exception
-	 */
-	public function displayPostRows()
-	{
-		foreach ($this->messages as $message)
-		{
-			if (!isset($this->topics[$message->thread]))
-			{
-				// TODO: INTERNAL ERROR
-				return;
-			}
-
-			$topic    = $this->topics[$message->thread];
-			$title    = $message->subject;
-			$category = $topic->getCategory();
-			$url      = $message->getUrl($category);
-
-			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id)
-			{
-				$description = Text::_('COM_KUNENA_TEASER_TEXT');
-			}
-			else
-			{
-				$description = $message->message;
-			}
-
-			$date     = new Date($message->time);
-			$userid   = $message->userid;
-			$username = KunenaFactory::getUser($userid)->getName($message->name);
-
-			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
-		}
-	}
-
 	/**
-	 * @param   string  $title       title
-	 * @param   string  $url         url
-	 * @param   string  $description description
-	 * @param   string  $category    category
-	 * @param   integer $date        date
-	 * @param   int     $userid      userid
-	 * @param   string  $username    username
+	 * @param   string   $title        title
+	 * @param   string   $url          url
+	 * @param   string   $description  description
+	 * @param   string   $category     category
+	 * @param   integer  $date         date
+	 * @param   int      $userid       userid
+	 * @param   string   $username     username
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
@@ -351,5 +216,141 @@ class feed extends View
 
 		// Finally add item to feed
 		$this->document->addItem($item);
+	}
+
+	/**
+	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayUser($tpl = null)
+	{
+		if (!$this->config->enablerss)
+		{
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
+		}
+
+		$this->layout = 'user';
+		$this->topics = $this->get('Topics');
+		$this->total  = $this->get('Total');
+
+		// TODO: if start != 0, add information from it into description
+		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$this->document->setGenerator($this->config->board_title);
+
+		switch ($this->state->get('list.mode'))
+		{
+			case 'posted' :
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+				break;
+			case 'started' :
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+				break;
+			case 'favorites' :
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				break;
+			case 'subscriptions' :
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				break;
+			default :
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+		}
+
+		$this->setTitle($title);
+
+		$this->displayTopicRows();
+	}
+
+	/**
+	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayPosts($tpl = null)
+	{
+		if (!$this->config->enablerss)
+		{
+			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
+		}
+
+		$this->layout   = 'posts';
+		$this->messages = $this->get('Messages');
+		$this->topics   = $this->get('Topics');
+		$this->total    = $this->get('Total');
+
+		// TODO: if start != 0, add information from it into description
+		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$this->document->setGenerator($this->config->board_title);
+
+		switch ($this->state->get('list.mode'))
+		{
+			case 'unapproved':
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				break;
+			case 'deleted':
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				break;
+			case 'mythanks':
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				break;
+			case 'thankyou':
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				break;
+			case 'recent':
+			default:
+				$title = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+		}
+
+		$this->setTitle($title);
+
+		$this->displayPostRows();
+	}
+
+	/**ss
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayPostRows()
+	{
+		foreach ($this->messages as $message)
+		{
+			if (!isset($this->topics[$message->thread]))
+			{
+				// TODO: INTERNAL ERROR
+				return;
+			}
+
+			$topic    = $this->topics[$message->thread];
+			$title    = $message->subject;
+			$category = $topic->getCategory();
+			$url      = $message->getUrl($category);
+
+			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id)
+			{
+				$description = Text::_('COM_KUNENA_TEASER_TEXT');
+			}
+			else
+			{
+				$description = $message->message;
+			}
+
+			$date     = new Date($message->time);
+			$userid   = $message->userid;
+			$username = KunenaFactory::getUser($userid)->getName($message->name);
+
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
+		}
 	}
 }

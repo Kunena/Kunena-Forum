@@ -14,8 +14,11 @@ namespace Kunena\Forum\Libraries\Cache;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Menu\MenuHelper;
 use function defined;
 
 /**
@@ -33,7 +36,7 @@ abstract class CacheHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function clearAll()
 	{
@@ -82,7 +85,7 @@ abstract class CacheHelper
 	 */
 	public static function clearMenu()
 	{
-		\Kunena\Forum\Libraries\Menu\MenuHelper::cleanCache();
+		MenuHelper::cleanCache();
 	}
 
 	/**
@@ -92,11 +95,11 @@ abstract class CacheHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function clearAccess()
 	{
-		\Kunena\Forum\Libraries\Access\Access::getInstance()->clearCache();
+		Access::getInstance()->clearCache();
 	}
 
 	/**

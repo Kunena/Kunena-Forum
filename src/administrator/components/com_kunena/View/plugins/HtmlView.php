@@ -33,6 +33,22 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * Form object for search filters
+	 *
+	 * @var    Form
+	 * @since  4.0.0
+	 */
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var    array
+	 * @since  4.0.0
+	 */
+	public $activeFilters;
+
+	/**
 	 * An array of items
 	 *
 	 * @var  array
@@ -53,22 +69,6 @@ class HtmlView extends BaseHtmlView
 	 * @since  6.0
 	 */
 	protected $state;
-
-	/**
-	 * Form object for search filters
-	 *
-	 * @var    Form
-	 * @since  4.0.0
-	 */
-	public $filterForm;
-
-	/**
-	 * The active search filters
-	 *
-	 * @var    array
-	 * @since  4.0.0
-	 */
-	public $activeFilters;
 
 	protected $listOrdering;
 
@@ -101,7 +101,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$model               = $this->getModel();
+		$model            = $this->getModel();
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
@@ -111,7 +111,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->user = Factory::getApplication()->getIdentity();
 
-		$this->filterForm    = $model->getFilterForm();
+		$this->filterForm = $model->getFilterForm();
 
 		$this->filterSearch  = $this->escape($this->state->get('filter.search'));
 		$this->filterEnabled = $this->escape($this->state->get('filter.enabled'));
@@ -131,28 +131,6 @@ class HtmlView extends BaseHtmlView
 		$this->addToolbar();
 
 		return parent::display($tpl);
-	}
-
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void The HTML code for the select tag
-	 *
-	 * @since   K1.6
-	 */
-	protected function addToolbar()
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
-		ToolbarHelper::spacer();
-		ToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
-		ToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
-		ToolbarHelper::divider();
-		ToolbarHelper::checkin('checkin');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -188,6 +166,28 @@ class HtmlView extends BaseHtmlView
 		$sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void The HTML code for the select tag
+	 *
+	 * @since   K1.6
+	 */
+	protected function addToolbar()
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
+		ToolbarHelper::spacer();
+		ToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
+		ToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
+		ToolbarHelper::divider();
+		ToolbarHelper::checkin('checkin');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

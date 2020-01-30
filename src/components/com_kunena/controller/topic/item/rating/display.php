@@ -14,7 +14,9 @@ namespace Kunena\Forum\Site\Controller\Topic\Item\Rating;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use function defined;
 
 /**
@@ -25,16 +27,15 @@ use function defined;
 class ComponentTopicControllerItemRatingDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var     Topic
+	 * @since   Kunena 6.0
+	 */
+	public $topic;
+	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Rating';
-
-	/**
-	 * @var     \Kunena\Forum\Libraries\Forum\Topic\Topic
-	 * @since   Kunena 6.0
-	 */
-	public $topic;
 
 	/**
 	 * Prepare topic actions display.
@@ -43,7 +44,7 @@ class ComponentTopicControllerItemRatingDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function before()
 	{

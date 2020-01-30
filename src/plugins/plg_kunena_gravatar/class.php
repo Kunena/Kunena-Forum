@@ -13,7 +13,7 @@
  * @copyright 2015-2020 gravatar
  * @license   MIT License
  * @link      https://github.com/emberlabs/gravatarlib
- * @since   Kunena
+ * @since     Kunena
  */
 
 namespace Kunena\Forum\Plugin\Kunena\Gravatar;
@@ -69,8 +69,8 @@ class KunenaGravatar
 	protected $email = null;
 
 	/**
-	 * @var     mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
-	 *           a URL, or false if using the...default gravatar default image (hah)
+	 * @var     mixed - The default image to use - either a string of the gravatar-recognized default image "type" to
+	 *          use, a URL, or false if using the...default gravatar default image (hah)
 	 * @since   Kunena 6.0
 	 */
 	protected $default_image = false;
@@ -153,7 +153,7 @@ class KunenaGravatar
 	/**
 	 * Provide HTML with gravatar URL, and extras HTML attibutes if provided
 	 *
-	 * @param   string  $hash_email email
+	 * @param   string  $hash_email  email
 	 *
 	 * @return  string
 	 *

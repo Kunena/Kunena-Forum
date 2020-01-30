@@ -14,11 +14,13 @@ namespace Kunena\Forum\Site\Layout\Widget;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Icons\Icons;
 use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -36,7 +38,7 @@ class KunenaLayoutWidgetFooter extends Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function getTime()
 	{
@@ -60,7 +62,7 @@ class KunenaLayoutWidgetFooter extends Layout
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	protected function getRSS()
@@ -98,7 +100,7 @@ class KunenaLayoutWidgetFooter extends Layout
 			$doc = Factory::getApplication()->getDocument();
 			$doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
-			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . \Kunena\Forum\Libraries\Icons\Icons::rss($text = true) . '</a>';
+			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . Icons::rss($text = true) . '</a>';
 		}
 		else
 		{

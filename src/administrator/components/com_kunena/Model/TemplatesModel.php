@@ -20,8 +20,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Template\TemplateHelper;
 use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\TemplateHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 
 /**
@@ -42,12 +43,12 @@ class TemplatesModel extends AdminModel
 	{
 		parent::__construct($config);
 		$this->app    = Factory::getApplication();
-		$this->me     = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 	}
 
 	/**
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array  $data      data
 	 * @param   bool   $loadData  loadData

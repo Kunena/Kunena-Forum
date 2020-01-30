@@ -24,28 +24,37 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
-use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\Topic
  *
+ * @since   Kunena 6.0
  * @property int    $id
  * @property int    $category_id
  * @property string $subject
@@ -72,7 +81,6 @@ use function defined;
  * @property int    $rating
  * @property int    $count
  *
- * @since   Kunena 6.0
  */
 class Topic extends KunenaDatabaseObject
 {
@@ -256,7 +264,7 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper
+	 * @return  TopicUserHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -264,7 +272,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getUserTopic($user = null)
 	{
-		$usertopic = \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::get($this, $user);
+		$usertopic = TopicUserHelper::get($this, $user);
 
 		return $usertopic;
 	}
@@ -402,7 +410,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getCategory()
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($this->category_id);
+		return CategoryHelper::get($this->category_id);
 	}
 
 	/**
@@ -585,7 +593,7 @@ class Topic extends KunenaDatabaseObject
 
 	/**
 	 * @param   Message  $message    message
-	 * @param   int                 $postdelta  postdelta
+	 * @param   int      $postdelta  postdelta
 	 *
 	 * @return  boolean
 	 *
@@ -719,7 +727,7 @@ class Topic extends KunenaDatabaseObject
 			}
 
 			// Update post count from user
-			$user        = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($message->userid);
+			$user        = KunenaUserHelper::get($message->userid);
 			$user->posts += $postdelta;
 
 			if (!$user->save())
@@ -729,10 +737,10 @@ class Topic extends KunenaDatabaseObject
 		}
 		else
 		{
-			\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::recount($this->id);
+			TopicUserHelper::recount($this->id);
 
 			// FIXME: optimize
-			\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
+			KunenaUserHelper::recount();
 		}
 
 		return true;
@@ -863,8 +871,8 @@ class Topic extends KunenaDatabaseObject
 			// FIXME: add recount statistics
 			if ($recount)
 			{
-				\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
-				\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
+				KunenaUserHelper::recount();
+				MessageThankyouHelper::recount();
 			}
 		}
 
@@ -886,7 +894,7 @@ class Topic extends KunenaDatabaseObject
 	public function sendNotification($url = null)
 	{
 		// Reload message just in case if it was published by bulk update.
-		\Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($this->first_post_id, true)->sendNotification($url);
+		MessageHelper::get($this->first_post_id, true)->sendNotification($url);
 	}
 
 	/**
@@ -898,7 +906,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
+		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
 	}
 
 	/**
@@ -985,7 +993,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getUri($category = null, $action = null)
 	{
-		$category = $category ? \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category) : $this->getCategory();
+		$category = $category ? CategoryHelper::get($category) : $this->getCategory();
 		$Itemid   = KunenaRoute::getCategoryItemid($category);
 
 		if ($action instanceof Message)
@@ -1034,7 +1042,7 @@ class Topic extends KunenaDatabaseObject
 
 			if ($mesid)
 			{
-				if (\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded' && $mesid > 0)
+				if (KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded' && $mesid > 0)
 				{
 					$uri->setFragment($mesid);
 					$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
@@ -1069,7 +1077,7 @@ class Topic extends KunenaDatabaseObject
 	{
 		if (is_null($direction))
 		{
-			$direction = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getMessageOrdering();
+			$direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		}
 
 		if (!isset($this->lastread))
@@ -1083,7 +1091,7 @@ class Topic extends KunenaDatabaseObject
 			$mesid = $this->lastread;
 		}
 
-		if ($this->moved_id || !\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator($this->getCategory()))
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory()))
 		{
 			if ($mesid == 'first' || $mesid == $this->first_post_id)
 			{
@@ -1111,13 +1119,13 @@ class Topic extends KunenaDatabaseObject
 			$direction = ($direction == 'asc' ? 'both' : 0);
 		}
 
-		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLocation($mesid, $direction, $hold);
+		return MessageHelper::getLocation($mesid, $direction, $hold);
 	}
 
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper
+	 * @return  TopicUserHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1125,7 +1133,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getUserInfo($user = null)
 	{
-		return \Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::get($this->id, $user);
+		return TopicUserHelper::get($this->id, $user);
 	}
 
 	/**
@@ -1137,7 +1145,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getFirstPostAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
+		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
 	}
 
 	/**
@@ -1149,7 +1157,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getLastPostAuthor()
 	{
-		return \Kunena\Forum\Libraries\User\KunenaUserHelper::getAuthor($this->last_post_userid, $this->last_post_guest_name);
+		return KunenaUserHelper::getAuthor($this->last_post_userid, $this->last_post_guest_name);
 	}
 
 	/**
@@ -1262,12 +1270,12 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getTotal($hold = null)
 	{
-		if ($this->moved_id || !\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator($this->getCategory()))
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory()))
 		{
 			return (int) max($this->posts, 0);
 		}
 
-		return \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
+		return MessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
 	}
 
 	/**
@@ -1276,9 +1284,9 @@ class Topic extends KunenaDatabaseObject
 	 * If you want to add domain (for email etc), you can prepend the output with this:
 	 * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
-	 * @param  Category  $category  category
-	 * @param   bool                 $xhtml     xhtml
-	 * @param   string               $action    action
+	 * @param   Category  $category  category
+	 * @param   bool      $xhtml     xhtml
+	 * @param   string    $action    action
 	 *
 	 * @return  boolean
 	 *
@@ -1308,7 +1316,7 @@ class Topic extends KunenaDatabaseObject
 	{
 		return KunenaRoute::getTopicUrl(
 			$this, $xhtml, $action,
-			$category ? \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category) : $this->getCategory()
+			$category ? CategoryHelper::get($category) : $this->getCategory()
 		);
 	}
 
@@ -1348,7 +1356,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function newReply($fields = [], $user = null, $safefields = null)
 	{
-		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user     = KunenaUserHelper::get($user);
 		$category = $this->getCategory();
 
 		$message = new Message;
@@ -1359,7 +1367,7 @@ class Topic extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = !empty(\Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp()) ? \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp() : '';
+		$message->ip      = !empty(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '';
 
 		if ($this->hold)
 		{
@@ -1374,7 +1382,7 @@ class Topic extends KunenaDatabaseObject
 
 		if ($fields === true)
 		{
-			$user             = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->first_post_userid);
+			$user             = KunenaUserHelper::get($this->first_post_userid);
 			$text             = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->first_post_message);
 			$message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" . $text . "[/quote]";
 		}
@@ -1405,7 +1413,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function hasNew($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
 		{
@@ -1419,14 +1427,14 @@ class Topic extends KunenaDatabaseObject
 			return false;
 		}
 
-		$userinfo = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->getCategory(), $user);
+		$userinfo = CategoryUserHelper::get($this->getCategory(), $user);
 
 		if ($userinfo->allreadtime && $this->last_post_time <= $userinfo->allreadtime)
 		{
 			return false;
 		}
 
-		$read = \Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper::get($this, $user);
+		$read = TopicUserReadHelper::get($this, $user);
 
 		if ($this->last_post_time <= $read->time)
 		{
@@ -1447,14 +1455,14 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function markRead($user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if (!KunenaFactory::getConfig()->shownew || !$user->exists() || Factory::getApplication()->getIdentity()->guest)
 		{
 			return false;
 		}
 
-		$read             = \Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper::get($this, $user);
+		$read             = TopicUserReadHelper::get($this, $user);
 		$read->time       = Factory::getDate()->toUnix();
 		$read->message_id = $this->last_post_id;
 		$read->save();
@@ -1513,7 +1521,7 @@ class Topic extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		if (empty($this->_authcache[$user->userid][$action]))
@@ -1587,7 +1595,8 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * Move topic or parts of it into another category or topic.
 	 *
-	 * @param   object  $target        Target \Kunena\Forum\Libraries\Forum\Category\Category or \Kunena\Forum\Libraries\Forum\Topic\Topic
+	 * @param   object  $target        Target \Kunena\Forum\Libraries\Forum\Category\Category or
+	 *                                 \Kunena\Forum\Libraries\Forum\Topic\Topic
 	 * @param   mixed   $ids           false, array of message Ids or Joomla\CMS\Date\Date
 	 * @param   bool    $shadow        Leave visible shadow topic.
 	 * @param   string  $subject       New subject
@@ -1595,8 +1604,8 @@ class Topic extends KunenaDatabaseObject
 	 * @param   int     $topic_iconid  Define a new topic icon
 	 * @param   int     $keep_poll     Define if you want keep the poll to the original topic or to the splitted topic
 	 *
-	 * @return  boolean|Category|Topic    Target \Kunena\Forum\Libraries\Forum\Category\Category or \Kunena\Forum\Libraries\Forum\Topic\Topic or
-	 *                                                            false on failure
+	 * @return  boolean|Category|Topic    Target \Kunena\Forum\Libraries\Forum\Category\Category or
+	 *                                    \Kunena\Forum\Libraries\Forum\Topic\Topic or false on failure
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -1917,7 +1926,7 @@ class Topic extends KunenaDatabaseObject
 			// Move topic into another category
 
 			// Update user topic information (topic, category)
-			\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::move($this, $target);
+			TopicUserHelper::move($this, $target);
 
 			// TODO: do we need this?
 			// \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::move($this, $target);
@@ -1955,7 +1964,7 @@ class Topic extends KunenaDatabaseObject
 			}
 
 			// Update user topic information (topic, category)
-			\Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper::merge($this, $target);
+			TopicUserHelper::merge($this, $target);
 
 			// TODO: do we need this?
 			// \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::merge($this, $target);
@@ -2077,7 +2086,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getReviewCount()
 	{
-		return \Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper::getCount($this->id);
+		return RateHelper::getCount($this->id);
 	}
 
 	/**

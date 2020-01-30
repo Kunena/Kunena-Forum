@@ -18,10 +18,10 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Integration\Activity;
-use Joomla\String\StringHelper;
 use stdClass;
 use function defined;
 
@@ -41,7 +41,7 @@ class KunenaActivityCommunity extends Activity
 	/**
 	 * KunenaActivityCommunity constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */

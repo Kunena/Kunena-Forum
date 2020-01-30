@@ -24,20 +24,22 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
  *
- * @property string $title
+ * @since   Kunena 6.0
  * @property int    $threadid
  * @property string $polltimetolive
  * @property int    $id
  *
- * @since   Kunena 6.0
+ * @property string $title
  */
 class Poll extends CMSObject
 {
@@ -439,7 +441,7 @@ class Poll extends CMSObject
 			}
 		}
 
-		$votes->lasttime = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->getTime();
+		$votes->lasttime = KunenaUserHelper::getMyself()->getTime();
 		$votes->lastvote = $option;
 		$votes->userid   = (int) $user->userid;
 
@@ -720,7 +722,7 @@ class Poll extends CMSObject
 		}
 
 		// Remove poll from the topic
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->threadid);
+		$topic = TopicHelper::get($this->threadid);
 
 		if ($success && $topic->exists() && $topic->poll_id)
 		{

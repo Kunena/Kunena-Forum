@@ -21,23 +21,29 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Cache\CacheHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Registry\Registry;
-use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -142,6 +148,36 @@ class Category extends KunenaDatabaseObject
 	public $level = 0;
 
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $parent_id;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $published;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $numTopics;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $numPosts;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $last_post_time;
+
+	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
@@ -218,36 +254,6 @@ class Category extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	protected $hold;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $parent_id;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $published;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $numTopics;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $numPosts;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $last_post_time;
 
 	/**
 	 * @param   mixed|array  $properties  properties
@@ -329,7 +335,7 @@ class Category extends KunenaDatabaseObject
 	 *
 	 * @param   mixed  $user  user
 	 *
-	 * @return  \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper
+	 * @return  CategoryUserHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -337,7 +343,7 @@ class Category extends KunenaDatabaseObject
 	 */
 	public function getUserInfo($user = null)
 	{
-		return \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->id, $user);
+		return CategoryUserHelper::get($this->id, $user);
 	}
 
 	/**
@@ -354,7 +360,7 @@ class Category extends KunenaDatabaseObject
 	 */
 	public function subscribe($value = true, $user = null)
 	{
-		$usercategory             = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->id, $user);
+		$usercategory             = CategoryUserHelper::get($this->id, $user);
 		$usercategory->subscribed = (int) $value;
 
 		if (!$usercategory->params)
@@ -597,7 +603,7 @@ class Category extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		// Optimise read access check.
@@ -723,7 +729,7 @@ class Category extends KunenaDatabaseObject
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true)
 	{
-		if (!\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists())
+		if (!KunenaUserHelper::getMyself()->exists())
 		{
 			return false;
 		}
@@ -1022,7 +1028,7 @@ class Category extends KunenaDatabaseObject
 	 */
 	public function getLastTopic()
 	{
-		return \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->getLastCategory()->last_topic_id);
+		return TopicHelper::get($this->getLastCategory()->last_topic_id);
 	}
 
 	/**
@@ -1039,12 +1045,12 @@ class Category extends KunenaDatabaseObject
 	public function newTopic(array $fields = null, $user = null, array $safefields = null)
 	{
 		$catid           = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory($user)->id;
-		$user            = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user            = KunenaUserHelper::get($user);
 		$message         = new Message;
 		$message->catid  = $catid;
 		$message->name   = $user->getName('');
 		$message->userid = $user->userid;
-		$message->ip     = !empty(\Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp()) ? \Kunena\Forum\Libraries\User\KunenaUserHelper::getUserIp() : '';
+		$message->ip     = !empty(KunenaUserHelper::getUserIp()) ? KunenaUserHelper::getUserIp() : '';
 		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user) : 0;
 
 		if ($safefields)
@@ -1153,7 +1159,7 @@ class Category extends KunenaDatabaseObject
 
 		$userlist = array_keys($userlist);
 
-		return $objects ? \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist) : array_combine($userlist, $userlist);
+		return $objects ? KunenaUserHelper::loadUsers($userlist) : array_combine($userlist, $userlist);
 	}
 
 	/**
@@ -1212,7 +1218,7 @@ class Category extends KunenaDatabaseObject
 
 		foreach ($users as $user)
 		{
-			$user_inst = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+			$user_inst = KunenaUserHelper::get($user);
 			$this->setModerator($user_inst, true);
 		}
 	}
@@ -1364,7 +1370,7 @@ class Category extends KunenaDatabaseObject
 		}
 
 		// Check if alias is valid in current configuration.
-		if (\Kunena\Forum\Libraries\Route\KunenaRoute::stringURLSafe($alias) != $alias)
+		if (KunenaRoute::stringURLSafe($alias) != $alias)
 		{
 			return false;
 		}
@@ -1432,11 +1438,11 @@ class Category extends KunenaDatabaseObject
 			return 0;
 		}
 
-		$count = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::delete($ids);
+		$count = TopicHelper::delete($ids);
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
+		KunenaUserHelper::recount();
 		CategoryHelper::recount($this->id);
-		\Kunena\Forum\Libraries\Attachment\AttachmentHelper::cleanup();
+		AttachmentHelper::cleanup();
 
 		return $count;
 	}
@@ -1487,9 +1493,9 @@ class Category extends KunenaDatabaseObject
 			return 0;
 		}
 
-		$count = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::trash($ids);
+		$count = TopicHelper::trash($ids);
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
+		KunenaUserHelper::recount();
 		CategoryHelper::recount($this->id);
 
 		return $count;
@@ -1564,8 +1570,8 @@ class Category extends KunenaDatabaseObject
 			}
 		}
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::recount();
-		\Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper::recount();
+		KunenaUserHelper::recount();
+		MessageThankyouHelper::recount();
 
 		$this->id = null;
 		CategoryHelper::register($this);
@@ -1772,7 +1778,7 @@ class Category extends KunenaDatabaseObject
 			return false;
 		}
 
-		$usercategory = \Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::get($this->id, $userid);
+		$usercategory = CategoryUserHelper::get($this->id, $userid);
 
 		return (bool) $usercategory->subscribed;
 	}
@@ -1876,7 +1882,7 @@ class Category extends KunenaDatabaseObject
 		$access = Access::getInstance();
 		$access->clearCache();
 
-		\Kunena\Forum\Libraries\Cache\CacheHelper::clear();
+		CacheHelper::clear();
 
 		return true;
 	}
@@ -2271,7 +2277,7 @@ class Category extends KunenaDatabaseObject
 	protected function authoriseUpload(KunenaUser $user)
 	{
 		// Check if attachments are allowed
-		if (\Kunena\Forum\Libraries\Attachment\AttachmentHelper::getExtensions($this, $user) === false)
+		if (AttachmentHelper::getExtensions($this, $user) === false)
 		{
 			return new Authorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}

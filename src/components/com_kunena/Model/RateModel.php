@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\Rate;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
 
 /**
  * Rate Model for Kunena
@@ -28,35 +28,6 @@ use Kunena\Forum\Libraries\Forum\Topic\Rate\Rate;
  */
 class RateModel extends ListModel
 {
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState()
-	{
-		$id = $this->getInt('topicid', 0);
-		$this->setState('item.topicid', $id);
-
-		$value = $this->getInt('limit', 0);
-
-		if ($value < 1)
-		{
-			$value = 20;
-		}
-
-		$this->setState('list.limit', $value);
-
-		$value = $this->getInt('limitstart', 0);
-
-		if ($value < 0)
-		{
-			$value = 0;
-		}
-
-		$this->setState('list.start', $value);
-	}
-
 	/**
 	 * @return  Rate
 	 *
@@ -95,5 +66,34 @@ class RateModel extends ListModel
 		$actions[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_BULK_RATE_DELETE'));
 
 		return $actions;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function populateState()
+	{
+		$id = $this->getInt('topicid', 0);
+		$this->setState('item.topicid', $id);
+
+		$value = $this->getInt('limit', 0);
+
+		if ($value < 1)
+		{
+			$value = 20;
+		}
+
+		$this->setState('list.limit', $value);
+
+		$value = $this->getInt('limitstart', 0);
+
+		if ($value < 0)
+		{
+			$value = 0;
+		}
+
+		$this->setState('list.start', $value);
 	}
 }

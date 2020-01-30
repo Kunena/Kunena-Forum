@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Kunena\Forum\Libraries\View\View;
 use Joomla\Database\Exception\ExecutionFailureException;
 use function defined;
 

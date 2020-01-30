@@ -18,9 +18,11 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -31,28 +33,25 @@ use function defined;
 class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Report';
-
-	/**
 	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
-
 	/**
 	 * @var     Message|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Topic/Report';
 
 	/**
 	 * Prepare report message form.
@@ -70,7 +69,7 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
-		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if (!$this->config->reportmsg)
 		{
@@ -86,7 +85,7 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 
 		if (!$mesid)
 		{
-			$this->topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+			$this->topic = TopicHelper::get($id);
 			$this->topic->tryAuthorise();
 		}
 		else

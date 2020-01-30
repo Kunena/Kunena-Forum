@@ -16,10 +16,11 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -62,7 +63,7 @@ abstract class TopicUserReadHelper
 		}
 
 		$topic = intval($topic);
-		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user  = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
 		{
@@ -95,7 +96,7 @@ abstract class TopicUserReadHelper
 	 */
 	public static function getTopics($ids = false, $user = null)
 	{
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user = KunenaUserHelper::get($user);
 
 		if ($ids === false)
 		{

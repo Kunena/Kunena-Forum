@@ -27,14 +27,6 @@ use Joomla\Database\QueryInterface;
 class SmiliesModel extends ListModel
 {
 	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
-	/**
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 6.0
@@ -55,6 +47,14 @@ class SmiliesModel extends ListModel
 		}
 
 		parent::__construct($config);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 
 	/**

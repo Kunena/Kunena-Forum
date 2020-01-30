@@ -1010,7 +1010,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean True on success.
 	 *
-	 * @since   Kunena 4.0
+	 * @since    Kunena 4.0
 	 */
 	public function hit()
 	{

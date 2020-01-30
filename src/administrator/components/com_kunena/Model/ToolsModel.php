@@ -24,15 +24,13 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use RuntimeException;
 use stdClass;
 use function defined;
-
-require_once __DIR__ . '/CpanelModel.php';
 
 /**
  * Tools Model for Kunena
@@ -41,14 +39,6 @@ require_once __DIR__ . '/CpanelModel.php';
  */
 class ToolsModel extends AdminModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
@@ -210,6 +200,14 @@ class ToolsModel extends AdminModel
 	 * @since   Kunena 6.0
 	 */
 	protected $integration_settings = null;
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
+	}
 
 	/**
 	 * @return  mixed
@@ -539,7 +537,7 @@ class ToolsModel extends AdminModel
 	/**
 	 * Method to put readable correctly the kunena template params
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @return  string
 	 *

@@ -126,6 +126,60 @@ abstract class KunenaDatabaseObject extends CMSObject
 	}
 
 	/**
+	 * Method to load object from the database.
+	 *
+	 * @param   mixed  $id  Id to be loaded.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function load($id = null)
+	{
+		if ($id !== null)
+		{
+			$this->id = intval($id);
+		}
+
+		// Create the table object
+		$table = $this->getTable();
+
+		if ($table)
+		{
+			// Load the object based on id
+			if ($this->id)
+			{
+				$this->_exists = $table->load($this->id);
+			}
+
+			// Always set id
+			$table->id = $this->id;
+
+			// Assuming all is well at this point lets bind the data
+			$this->setProperties($table->getProperties());
+
+			return $this->_exists;
+
+		}
+
+
+	}
+
+	/**
+	 * Method to get the table object.
+	 *
+	 * @return  Table|KunenaTable  The table object.
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function getTable()
+	{
+		return Table::getInstance($this->_table, 'Table');
+	}
+
+	/**
 	 * Returns the global object.
 	 *
 	 * @param   int      $identifier  Object identifier to load.
@@ -238,59 +292,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 	public function check()
 	{
 		return true;
-	}
-
-	/**
-	 * Method to get the table object.
-	 *
-	 * @return  Table|KunenaTable  The table object.
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getTable()
-	{
-		return Table::getInstance($this->_table, 'Table');
-	}
-
-	/**
-	 * Method to load object from the database.
-	 *
-	 * @param   mixed  $id  Id to be loaded.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function load($id = null)
-	{
-		if ($id !== null)
-		{
-			$this->id = intval($id);
-		}
-
-		// Create the table object
-		$table = $this->getTable();
-
-		if ($table)
-		{
-			// Load the object based on id
-			if ($this->id)
-			{
-				$this->_exists = $table->load($this->id);
-			}
-
-			// Always set id
-			$table->id = $this->id;
-
-			// Assuming all is well at this point lets bind the data
-			$this->setProperties($table->getProperties());
-			return $this->_exists;
-
-		}
-
-
 	}
 
 	// Internal functions

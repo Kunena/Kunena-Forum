@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Route\Legacy;
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *

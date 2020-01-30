@@ -18,19 +18,19 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
+use Joomla\CMS\Component\Router\Rules\StandardRules;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Menu\AbstractMenu;
+use Joomla\CMS\Profiler\Profiler;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Site\Service\KunenaNomenuRules as NomenuRules;
-use Joomla\CMS\Component\Router\Rules\StandardRules;
-use Joomla\CMS\Menu\AbstractMenu;
-use Joomla\Database\DatabaseInterface;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Profiler\Profiler;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Service\KunenaNomenuRules as NomenuRules;
 use function defined;
 
 /**
@@ -65,14 +65,14 @@ class Router extends RouterView
 	/**
 	 * Kunena Component router constructor
 	 *
-	 * @param   SiteApplication           $app              The application object
-	 * @param   AbstractMenu              $menu             The menu object to work with
+	 * @param   SiteApplication  $app   The application object
+	 * @param   AbstractMenu     $menu  The menu object to work with
 	 *
 	 * @since   6.0
 	 */
 	public function __construct(SiteApplication $app, AbstractMenu $menu)
 	{
-		$params = ComponentHelper::getParams('com_kunena');
+		$params      = ComponentHelper::getParams('com_kunena');
 		$this->noIDs = (bool) $params->get('sef_ids');
 
 		$kunena = new RouterViewConfiguration('kunena');
@@ -108,6 +108,7 @@ class Router extends RouterView
 
 		return $instance;
 	}
+
 	/**
 	 * Build SEF URL
 	 *
@@ -122,7 +123,7 @@ class Router extends RouterView
 	 *
 	 * NOTE! Only major variables are using SEF segments
 	 *
-	 * @param   array  $query query
+	 * @param   array  $query  query
 	 *
 	 * @return  array Segments
 	 *
@@ -176,7 +177,7 @@ class Router extends RouterView
 		$view = isset($query['view']) ? (string) preg_replace('/[^a-z]/', '', $query['view']) : $menuitem->query['view'];
 
 		// Get default values for URI variables
-		if (isset(\Kunena\Forum\Libraries\Route\KunenaRoute::$views[$view]))
+		if (isset(KunenaRoute::$views[$view]))
 		{
 			$defaults = KunenaRoute::$views[$view];
 		}
@@ -351,7 +352,7 @@ class Router extends RouterView
 		unset($query['view'], $query['layout']);
 
 		// Rest of the known parameters are in var-value form
-		foreach (\Kunena\Forum\Libraries\Route\KunenaRoute::$parsevars as $var => $dummy)
+		foreach (KunenaRoute::$parsevars as $var => $dummy)
 		{
 			if (isset($query[$var]))
 			{
@@ -371,7 +372,7 @@ class Router extends RouterView
 	}
 
 	/**
-	 * @param   array $segments segments
+	 * @param   array  $segments  segments
 	 *
 	 * @return  array
 	 *
@@ -408,7 +409,7 @@ class Router extends RouterView
 		}
 
 		// Use category SEF feature?
-		$sefcats = isset(\Kunena\Forum\Libraries\Route\KunenaRoute::$sefviews[$vars['view']]) && empty($vars['id']);
+		$sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars['id']);
 
 		// Handle all segments
 		while (($segment = array_shift($segments)) !== null)

@@ -14,11 +14,11 @@ namespace Kunena\Forum\Site\Controller\Widget\Menu;
 
 defined('_JEXEC') or die();
 
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\Registry\Registry;
 use function defined;
 
 /**

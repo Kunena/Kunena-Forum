@@ -14,8 +14,8 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use function defined;

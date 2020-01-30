@@ -10,9 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 class KText
 {
 	/**
-	 * @param   string  $string string
+	 * @param   string  $string  string
 	 *
 	 * @return  mixed
 	 *

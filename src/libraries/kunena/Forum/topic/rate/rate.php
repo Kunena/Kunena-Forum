@@ -22,8 +22,9 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\Tables\TableKunenaRate;
 use RuntimeException;
@@ -176,14 +177,14 @@ class Rate extends CMSObject
 	 *
 	 * @return  boolean|JsonResponse
 	 *
-	 * @since   Kunena 2.0
+	 * @since    Kunena 2.0
 	 *
 	 * @throws  Exception
 	 */
 	public function save($user)
 	{
 		$user  = KunenaFactory::getUser($user);
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
+		$topic = TopicHelper::get($this->topic_id);
 
 		$this->getUsers();
 
@@ -229,7 +230,7 @@ class Rate extends CMSObject
 			$this->_db->execute();
 			$activityIntegration = KunenaFactory::getActivityIntegration();
 
-			$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
+			$topic = TopicHelper::get($this->topic_id);
 			$activityIntegration->onAfterRate($user->userid, $topic);
 
 			$response = new JsonResponse(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
@@ -298,7 +299,7 @@ class Rate extends CMSObject
 	 *
 	 * @return  boolean userid if hes in table else empty
 	 *
-	 * @since   Kunena 2.0
+	 * @since    Kunena 2.0
 	 */
 	public function exists($userid)
 	{

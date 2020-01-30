@@ -20,8 +20,10 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\Message;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -43,49 +45,6 @@ abstract class AttachmentHelper
 	 * @since   Kunena 6.0
 	 */
 	protected static $_messages = [];
-
-	/**
-	 * Returns Attachment object.
-	 *
-	 * @param   int   $identifier  The attachment to load - Can be only an integer.
-	 * @param   bool  $reload      reloaded
-	 *
-	 * @return  Attachment
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public static function get($identifier = null, $reload = false)
-	{
-		if ($identifier instanceof Attachment)
-		{
-			return $identifier;
-		}
-
-		$id = (int) $identifier;
-
-		if ($id < 1)
-		{
-			return new Attachment;
-		}
-
-		if (empty(self::$_instances[$id]))
-		{
-			$instance = new Attachment;
-
-			// Only load messages which haven't been preloaded before (including missing ones).
-			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
-			$instance->id          = $id;
-			self::$_instances[$id] = $instance;
-		}
-		elseif ($reload)
-		{
-			self::$_instances[$id]->load();
-		}
-
-		return self::$_instances[$id];
-	}
 
 	/**
 	 * @param   bool|array|int  $ids        ids
@@ -189,6 +148,49 @@ abstract class AttachmentHelper
 		}
 
 		unset($results);
+	}
+
+	/**
+	 * Returns Attachment object.
+	 *
+	 * @param   int   $identifier  The attachment to load - Can be only an integer.
+	 * @param   bool  $reload      reloaded
+	 *
+	 * @return  Attachment
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public static function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof Attachment)
+		{
+			return $identifier;
+		}
+
+		$id = (int) $identifier;
+
+		if ($id < 1)
+		{
+			return new Attachment;
+		}
+
+		if (empty(self::$_instances[$id]))
+		{
+			$instance = new Attachment;
+
+			// Only load messages which haven't been preloaded before (including missing ones).
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id          = $id;
+			self::$_instances[$id] = $instance;
+		}
+		elseif ($reload)
+		{
+			self::$_instances[$id]->load();
+		}
+
+		return self::$_instances[$id];
 	}
 
 	/**
@@ -380,8 +382,7 @@ abstract class AttachmentHelper
 			do
 			{
 				$name = md5(rand());
-			}
-			while (file_exists(JPATH_ROOT . "/$folder/$name"));
+			} while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
 			return $name;
 		}
@@ -449,10 +450,10 @@ abstract class AttachmentHelper
 	{
 		if ($category !== null)
 		{
-			$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category);
+			$category = CategoryHelper::get($category);
 		}
 
-		$user   = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$user   = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
 		$types  = explode(',', $config->imagetypes);
 
@@ -525,8 +526,8 @@ abstract class AttachmentHelper
 	 */
 	public static function getFileExtensions($category = null, $user = null)
 	{
-		$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($category);
-		$user     = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($user);
+		$category = CategoryHelper::get($category);
+		$user     = KunenaUserHelper::get($user);
 		$config   = KunenaFactory::getConfig();
 		$types    = explode(',', $config->filetypes);
 

@@ -9,6 +9,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 namespace Kunena\Forum\Libraries\Html;
 
 defined('_JEXEC') or die();
@@ -21,8 +22,8 @@ use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Bbcode\KunenaBbcode;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use stdClass;
 

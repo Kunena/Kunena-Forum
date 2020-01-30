@@ -21,17 +21,18 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
-use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use stdClass;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\Ban
  *
+ * @since   Kunena 6.0
  * @property    integer $created_time
  * @property    integer $created_by
  * @property    integer $modified_by
@@ -46,7 +47,6 @@ use function defined;
  * @property    string  $comment
  * @property    integer $expiration
  *
- * @since   Kunena 6.0
  */
 class Ban extends CMSObject
 {
@@ -143,7 +143,7 @@ class Ban extends CMSObject
 	/**
 	 * Method to load a \Kunena\Forum\Libraries\User\Ban object by ban id
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @param   int  $id  The ban id of the item to load
 	 *
@@ -172,7 +172,7 @@ class Ban extends CMSObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @access  public
+	 * @access    public
 	 *
 	 * @param   string  $type    The user table name to be used
 	 * @param   string  $prefix  The user table prefix to be used

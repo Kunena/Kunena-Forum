@@ -21,17 +21,19 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\Ban;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
  * Class KunenaForumAnnouncement
  *
+ * @since   Kunena 6.0
  * @property int    $id
  * @property string $title
  * @property int    $created_by
@@ -44,7 +46,6 @@ use function defined;
  * @property int    $ordering
  * @property int    $showdate
  *
- * @since   Kunena 6.0
  */
 class Announcement extends KunenaDatabaseObject
 {
@@ -334,7 +335,7 @@ class Announcement extends KunenaDatabaseObject
 		// Load user if not given.
 		if ($user === null)
 		{
-			$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+			$user = KunenaUserHelper::getMyself();
 		}
 
 		// Use local authentication cache to speed up the authentication calls.

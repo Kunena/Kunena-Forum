@@ -14,13 +14,14 @@ namespace Kunena\Forum\Libraries\Forum;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\View\Common\HtmlView;
-use Joomla\Registry\Registry;
 use stdClass;
 use function defined;
 
@@ -124,7 +125,8 @@ abstract class KunenaForum
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *    if (class_exists('KunenaForum') && \Kunena\Forum\Libraries\Forum\KunenaForum::enabled() && \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('2.0.0')) {
+	 *    if (class_exists('KunenaForum') && \Kunena\Forum\Libraries\Forum\KunenaForum::enabled() &&
+	 *    \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('2.0.0')) {
 	 *        // Initialize the framework (new in 2.0.0)
 	 *        \Kunena\Forum\Libraries\Forum\KunenaForum::setup();
 	 *        // It's now safe to display something or to save Kunena objects
@@ -141,7 +143,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function enabled($checkAdmin = true)
 	{
@@ -238,7 +240,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function setup()
 	{
@@ -451,7 +453,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = [])
 	{

@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Integration\Activity;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Activity;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use RuntimeException;
 use function defined;
 
@@ -42,7 +42,7 @@ class KunenaActivityAltaUserPoints extends Activity
 	/**
 	 * KunenaActivityAltaUserPoints constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -74,71 +74,71 @@ $document->addScriptDeclaration(
 	</div>
 </div>
 <script>
-	window.kunenaAddItems = function (log) {
-		jQuery('#kunena-details')
-			.html(log);
-	};
-	window.kunenainstall = function () {
-		var kunenaInstall = jQuery('#kunena-install');
-		var kunenaProgress = jQuery('#kunena-progress');
-		var kunenaDescription = jQuery('#kunena-description');
+  window.kunenaAddItems = function (log) {
+	jQuery('#kunena-details')
+	  .html(log);
+  };
+  window.kunenainstall = function () {
+	var kunenaInstall = jQuery('#kunena-install');
+	var kunenaProgress = jQuery('#kunena-progress');
+	var kunenaDescription = jQuery('#kunena-description');
 
-		jQuery.ajax({
-			type: 'POST',
-			dataType: 'json',
-			timeout: '180000', // 3 minutes
-			url: '<?php echo Route::_('index.php?option=com_kunena&view=install&task=run', false)?>',
-			data: '<?php echo Session::getFormToken(); ?>=1',
-			cache: false,
-			error: function (xhr, ajaxOptions, thrownError) {
-				kunenaInstall.html('<h2><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
-				kunenaProgress.addClass('bar-danger');
-				jQuery('#kunena-installer')
-					.show();
-			},
-			beforeSend: function () {
-				kunenaProgress.css('width', '1%');
-			},
-			complete: function () {
+	jQuery.ajax({
+	  type: 'POST',
+	  dataType: 'json',
+	  timeout: '180000', // 3 minutes
+	  url: '<?php echo Route::_('index.php?option=com_kunena&view=install&task=run', false)?>',
+	  data: '<?php echo Session::getFormToken(); ?>=1',
+	  cache: false,
+	  error: function (xhr, ajaxOptions, thrownError) {
+		kunenaInstall.html('<h2><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo Text::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
+		kunenaProgress.addClass('bar-danger');
+		jQuery('#kunena-installer')
+		  .show();
+	  },
+	  beforeSend: function () {
+		kunenaProgress.css('width', '1%');
+	  },
+	  complete: function () {
 
-			},
-			success: function (json) {
-				if (json.status) {
-					kunenaProgress.css('width', json.status);
-				}
-				if (json.log) {
-					window.kunenaAddItems(json.log);
-				}
-				if (json.success) {
-					kunenaDescription.html(json.current);
-					if (json.status != '100%') {
-						window.kunenainstall();
-						return;
-					} else {
-						kunenaInstall.find('h2')
-							.text('<?php echo Text::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
-						kunenaProgress.parent()
-							.removeClass('active');
-						kunenaProgress.addClass('bar-success');
-						jQuery('#kunena-component')
-							.addClass('btn-outline-success');
-						window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
-					}
-					jQuery('.kunena-close')
-						.removeAttr('disabled');
-				} else {
-					kunenaProgress.parent()
-						.removeClass('active');
-					kunenaInstall.find('h2')
-						.text('<?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
-					kunenaDescription.html(json.error);
-					kunenaProgress.addClass('bar-danger');
-					jQuery('#kunena-installer')
-						.removeAttr('disabled');
-					jQuery('#kunena-container')
-						.removeClass('hidden');
-				}
-			}
-		});
-	};
+	  },
+	  success: function (json) {
+		if (json.status) {
+		  kunenaProgress.css('width', json.status);
+		}
+		if (json.log) {
+		  window.kunenaAddItems(json.log);
+		}
+		if (json.success) {
+		  kunenaDescription.html(json.current);
+		  if (json.status != '100%') {
+			window.kunenainstall();
+			return;
+		  } else {
+			kunenaInstall.find('h2')
+			  .text('<?php echo Text::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
+			kunenaProgress.parent()
+			  .removeClass('active');
+			kunenaProgress.addClass('bar-success');
+			jQuery('#kunena-component')
+			  .addClass('btn-outline-success');
+			window.location.href = '<?php echo Route::_('index.php?option=com_kunena', false)?>';
+		  }
+		  jQuery('.kunena-close')
+			.removeAttr('disabled');
+		} else {
+		  kunenaProgress.parent()
+			.removeClass('active');
+		  kunenaInstall.find('h2')
+			.text('<?php echo Text::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
+		  kunenaDescription.html(json.error);
+		  kunenaProgress.addClass('bar-danger');
+		  jQuery('#kunena-installer')
+			.removeAttr('disabled');
+		  jQuery('#kunena-container')
+			.removeClass('hidden');
+		}
+	  }
+	});
+  };
 </script>

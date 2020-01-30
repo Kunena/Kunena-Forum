@@ -36,7 +36,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * KunenaPrivateComprofiler constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -46,7 +46,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param   int  $userid userid
+	 * @param   int  $userid  userid
 	 *
 	 * @return  string
 	 *
@@ -87,9 +87,9 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param   int     $userid userid
-	 * @param   string  $class  class
-	 * @param   string  $icon   icon
+	 * @param   int     $userid  userid
+	 * @param   string  $class   class
+	 * @param   string  $icon    icon
 	 *
 	 * @return  string
 	 *
@@ -175,7 +175,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param   string  $text text
+	 * @param   string  $text  text
 	 *
 	 * @return  void|string
 	 *
@@ -201,7 +201,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	}
 
 	/**
-	 * @param   int  $userid userid
+	 * @param   int  $userid  userid
 	 *
 	 * @return  string|void
 	 *

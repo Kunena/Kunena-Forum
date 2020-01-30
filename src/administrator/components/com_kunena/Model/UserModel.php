@@ -22,8 +22,10 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Model\Model;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
 
@@ -81,7 +83,7 @@ class UserModel extends Model
 				$topic_list[] = $sub->thread;
 			}
 
-			$topic_list = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topic_list);
+			$topic_list = TopicHelper::getTopics($topic_list);
 		}
 
 		return $topic_list;
@@ -213,7 +215,7 @@ class UserModel extends Model
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($userid);
+		$user = KunenaUserHelper::get($userid);
 
 		return $user;
 	}

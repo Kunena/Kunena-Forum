@@ -31,62 +31,34 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class UserModel extends ListModel
 {
 	/**
-	 * @return  void
+	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function populateState()
+	public function getTotal()
 	{
-		$active = $this->app->getMenu()->getActive();
-		$active = $active ? (int) $active->id : 0;
+		static $total = false;
 
-		$layout = $this->getCmd('layout', 'default');
-		$this->setState('layout', $layout);
-
-		$display = $this->getUserStateFromRequest('com_kunena.users_display', 'display', 'topics');
-		$this->setState('display', $display);
-
-		$config = KunenaFactory::getConfig();
-
-		// List state information
-		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int');
-
-		if ($limit < 1 || $limit > 100)
+		if ($total === false)
 		{
-			$limit = $config->get('userlist_rows');
+			$db    = Factory::getDBO();
+			$where = $this->getQueryWhere();
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
+
+			try
+			{
+				$total = $db->loadResult();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 
-		if ($limit < 1)
-		{
-			$limit = 30;
-		}
-
-		$this->setState('list.limit', $limit);
-
-		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int');
-		$value -= $value % $limit;
-		$this->setState('list.start', $value);
-
-		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd');
-		$this->setState('list.ordering', $value);
-
-		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word');
-
-		if ($value != 'asc')
-		{
-			$value = 'desc';
-		}
-
-		$this->setState('list.direction', $value);
-
-		$value = $this->app->input->get('search', null, 'string');
-
-		if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH'))
-		{
-			$this->setState('list.search', rtrim($value));
-		}
+		return $total;
 	}
 
 	/**
@@ -137,108 +109,6 @@ class UserModel extends ListModel
 		}
 
 		return $where;
-	}
-
-	/**
-	 * @return  array|string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getQuerySearch()
-	{
-		// TODO: add strict search from the beginning of the name
-		$search = $this->getState('list.search');
-		$where  = [];
-
-		if ($search)
-		{
-			$db = Factory::getDBO();
-
-			if ($this->config->username)
-			{
-				$where[] = "u.username LIKE '%{$db->escape($search)}%'";
-			}
-			else
-			{
-				$where[] = "u.name LIKE '%{$db->escape($search)}%'";
-			}
-
-			$where = 'AND (' . implode(' OR ', $where) . ')';
-		}
-		else
-		{
-			$where = '';
-		}
-
-		return $where;
-	}
-
-	/**
-	 * @return  integer
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getTotal()
-	{
-		static $total = false;
-
-		if ($total === false)
-		{
-			$db    = Factory::getDBO();
-			$where = $this->getQueryWhere();
-			$query = $db->getQuery(true);
-			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
-
-			try
-			{
-				$total = $db->loadResult();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		return $total;
-	}
-
-	/**
-	 * @return  integer
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getCount()
-	{
-		static $total = false;
-
-		if ($total === false)
-		{
-			$db     = Factory::getDBO();
-			$where  = $this->getQueryWhere();
-			$search = $this->getQuerySearch();
-
-			$query = $db->getQuery(true);
-			$query->select('COUNT(*)')
-				->from($db->quoteName('#__users', 'u'))
-				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
-				->where("{$where} {$search}");
-			$db->setQuery($query);
-
-			try
-			{
-				$total = $db->loadResult();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		return $total;
 	}
 
 	/**
@@ -317,5 +187,135 @@ class UserModel extends ListModel
 		}
 
 		return $items;
+	}
+
+	/**
+	 * @return  integer
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getCount()
+	{
+		static $total = false;
+
+		if ($total === false)
+		{
+			$db     = Factory::getDBO();
+			$where  = $this->getQueryWhere();
+			$search = $this->getQuerySearch();
+
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')
+				->from($db->quoteName('#__users', 'u'))
+				->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')
+				->where("{$where} {$search}");
+			$db->setQuery($query);
+
+			try
+			{
+				$total = $db->loadResult();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+		}
+
+		return $total;
+	}
+
+	/**
+	 * @return  array|string
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getQuerySearch()
+	{
+		// TODO: add strict search from the beginning of the name
+		$search = $this->getState('list.search');
+		$where  = [];
+
+		if ($search)
+		{
+			$db = Factory::getDBO();
+
+			if ($this->config->username)
+			{
+				$where[] = "u.username LIKE '%{$db->escape($search)}%'";
+			}
+			else
+			{
+				$where[] = "u.name LIKE '%{$db->escape($search)}%'";
+			}
+
+			$where = 'AND (' . implode(' OR ', $where) . ')';
+		}
+		else
+		{
+			$where = '';
+		}
+
+		return $where;
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function populateState()
+	{
+		$active = $this->app->getMenu()->getActive();
+		$active = $active ? (int) $active->id : 0;
+
+		$layout = $this->getCmd('layout', 'default');
+		$this->setState('layout', $layout);
+
+		$display = $this->getUserStateFromRequest('com_kunena.users_display', 'display', 'topics');
+		$this->setState('display', $display);
+
+		$config = KunenaFactory::getConfig();
+
+		// List state information
+		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int');
+
+		if ($limit < 1 || $limit > 100)
+		{
+			$limit = $config->get('userlist_rows');
+		}
+
+		if ($limit < 1)
+		{
+			$limit = 30;
+		}
+
+		$this->setState('list.limit', $limit);
+
+		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int');
+		$value -= $value % $limit;
+		$this->setState('list.start', $value);
+
+		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd');
+		$this->setState('list.ordering', $value);
+
+		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word');
+
+		if ($value != 'asc')
+		{
+			$value = 'desc';
+		}
+
+		$this->setState('list.direction', $value);
+
+		$value = $this->app->input->get('search', null, 'string');
+
+		if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH'))
+		{
+			$this->setState('list.search', rtrim($value));
+		}
 	}
 }

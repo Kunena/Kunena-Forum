@@ -14,11 +14,15 @@ namespace Kunena\Forum\Libraries\Route;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
 require_once KPATH_SITE . '/router.php';
@@ -105,7 +109,7 @@ abstract class Legacy
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function convertMenuItem($item)
 	{
@@ -133,12 +137,12 @@ abstract class Legacy
 					$params->set('do', null);
 					break;
 				case 'rules' :
-					$params->set('body', '[article=full]' . \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->get('rules_cid', 1) . '[/article]');
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('rules_cid', 1) . '[/article]');
 					$params->set('body_format', 'bbcode');
 					$params->set('do', null);
 					break;
 				case 'help' :
-					$params->set('body', '[article=full]' . \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig()->get('help_cid', 1) . '[/article]');
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('help_cid', 1) . '[/article]');
 					$params->set('body_format', 'bbcode');
 					$params->set('do', null);
 					break;
@@ -158,7 +162,7 @@ abstract class Legacy
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public static function convert($uri, $showstart = 1)
 	{
@@ -173,7 +177,7 @@ abstract class Legacy
 			return;
 		}
 
-		KUNENA_PROFILER ? \Kunena\Forum\Libraries\Profiler\KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($uri->getVar('func'))
 		{
@@ -183,7 +187,7 @@ abstract class Legacy
 
 		if (!isset(self::$functions[$uri->getVar('view')]))
 		{
-			KUNENA_PROFILER ? \Kunena\Forum\Libraries\Profiler\KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return;
 		}
@@ -198,7 +202,7 @@ abstract class Legacy
 		}
 
 		$app     = Factory::getApplication();
-		$config  = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
+		$config  = KunenaFactory::getConfig();
 		$changed = false;
 
 		switch ($uri->getVar('view'))
@@ -319,7 +323,7 @@ abstract class Legacy
 
 				// Convert URI to have both id and mesid
 				$id      = $uri->getVar('id');
-				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
+				$message = MessageHelper::get($id);
 				$mesid   = $uri->getVar('mesid');
 
 				if ($message->exists())
@@ -384,7 +388,7 @@ abstract class Legacy
 
 				// Convert URI to have both id and mesid
 				$id      = $uri->getVar('id');
-				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
+				$message = MessageHelper::get($id);
 				$mesid   = null;
 
 				if ($message->exists())
@@ -472,7 +476,7 @@ abstract class Legacy
 				}
 
 				// Convert URI to have both id and mesid
-				$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
+				$message = MessageHelper::get($id);
 				$mesid   = null;
 
 				if ($message->exists())
@@ -718,7 +722,7 @@ abstract class Legacy
 					$uri->setVar('task', 'thankyou');
 					$uri->delVar('pid');
 
-					$message = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::get($id);
+					$message = MessageHelper::get($id);
 
 					if ($message->exists())
 					{
@@ -764,7 +768,7 @@ abstract class Legacy
 			Log::add("Legacy URI {$legacy->toString(['path', 'query'])} was converted to {$uri->toString(['path', 'query'])}", Log::DEBUG, 'kunena');
 		}
 
-		KUNENA_PROFILER ? \Kunena\Forum\Libraries\Profiler\KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $changed;
 	}

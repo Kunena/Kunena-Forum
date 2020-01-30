@@ -29,11 +29,10 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Icons\SvgIcons;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use lessc;
@@ -236,7 +235,7 @@ class Template extends CMSObject
 	 *
 	 * @param   null  $name  name
 	 *
-	 * @since   Kunena 6.0
+	 * @since     Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
@@ -953,7 +952,7 @@ HTML;
 	}
 
 	/**
-	 * @param   string  $style style
+	 * @param   string  $style  style
 	 *
 	 * @return  string|void
 	 *
@@ -1390,7 +1389,7 @@ HTML;
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
+	 * @since    Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
@@ -1648,7 +1647,7 @@ HTML;
 	}
 
 	/**
-	 * @param  Category  $category  category
+	 * @param   Category  $category  category
 	 *
 	 * @return  string
 	 *
@@ -2097,7 +2096,7 @@ HTML;
 	}
 
 	/**
-	 * @param   bool  $topic_ids topics id's
+	 * @param   bool  $topic_ids  topics id's
 	 *
 	 * @return  string|void
 	 *

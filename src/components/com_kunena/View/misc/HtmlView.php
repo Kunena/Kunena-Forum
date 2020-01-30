@@ -71,6 +71,15 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function _prepareDocument()
+	{
+	}
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void
@@ -173,6 +182,81 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
+	public function displayPostRows()
+	{
+		$lasttopic      = null;
+		$this->position = 0;
+
+		// Run events
+		$params = new Registry;
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'user');
+		$params->set('kunena_layout', 'posts');
+
+		PluginHelper::importPlugin('kunena');
+
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
+
+		foreach ($this->messages as $this->message)
+		{
+			$this->position++;
+			$this->topic    = $this->message->getTopic();
+			$this->category = $this->topic->getCategory();
+			$usertype       = $this->me->getType($this->category->id, true);
+
+			// TODO: add context (options, template) to caching
+			$this->cache = true;
+			$cache       = Factory::getCache('com_kunena', 'output');
+			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
+			$cachegroup  = 'com_kunena.posts';
+
+			// FIXME: enable caching after fixing the issues
+			$contents = false; // $cache->get($cachekey, $cachegroup);
+
+			if (!$contents)
+			{
+				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+				$this->postAuthor       = KunenaFactory::getUser($this->message->userid);
+				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
+				$this->firstPostTime    = $this->topic->first_post_time;
+				$this->firstUserName    = $this->topic->first_post_guest_name;
+				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
+				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
+				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
+
+				if ($this->config->avataroncat)
+				{
+					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
+				}
+
+				$contents = $this->loadTemplateFile('row');
+
+				if ($usertype == 'guest')
+				{
+					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+				}
+
+				// FIXME: enable caching after fixing the issues
+				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+			}
+
+			if ($usertype != 'guest')
+			{
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+			}
+
+			echo $contents;
+			$lasttopic = $this->topic;
+		}
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function displayTopicRows()
 	{
 		$lasttopic      = null;
@@ -252,7 +336,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   array  $matches matches
+	 * @param   array  $matches  matches
 	 *
 	 * @return  mixed|string|void
 	 *
@@ -276,89 +360,5 @@ class HtmlView extends BaseHtmlView
 
 				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
 		}
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayPostRows()
-	{
-		$lasttopic      = null;
-		$this->position = 0;
-
-		// Run events
-		$params = new Registry;
-		$params->set('ksource', 'kunena');
-		$params->set('kunena_view', 'user');
-		$params->set('kunena_layout', 'posts');
-
-		PluginHelper::importPlugin('kunena');
-
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
-
-		foreach ($this->messages as $this->message)
-		{
-			$this->position++;
-			$this->topic    = $this->message->getTopic();
-			$this->category = $this->topic->getCategory();
-			$usertype       = $this->me->getType($this->category->id, true);
-
-			// TODO: add context (options, template) to caching
-			$this->cache = true;
-			$cache       = Factory::getCache('com_kunena', 'output');
-			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
-			$cachegroup  = 'com_kunena.posts';
-
-			// FIXME: enable caching after fixing the issues
-			$contents = false; // $cache->get($cachekey, $cachegroup);
-
-			if (!$contents)
-			{
-				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-				$this->postAuthor       = KunenaFactory::getUser($this->message->userid);
-				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
-				$this->firstPostTime    = $this->topic->first_post_time;
-				$this->firstUserName    = $this->topic->first_post_guest_name;
-				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
-				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
-
-				if ($this->config->avataroncat)
-				{
-					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
-				}
-
-				$contents = $this->loadTemplateFile('row');
-
-				if ($usertype == 'guest')
-				{
-					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
-				}
-
-				// FIXME: enable caching after fixing the issues
-				// if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
-			}
-
-			if ($usertype != 'guest')
-			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
-			}
-
-			echo $contents;
-			$lasttopic = $this->topic;
-		}
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _prepareDocument()
-	{
 	}
 }

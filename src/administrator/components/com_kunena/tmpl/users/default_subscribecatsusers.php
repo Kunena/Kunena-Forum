@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Administrator\Install\KunenaVersion;
+
 ?>
 <div class="modal hide fade" id="subscribecatsusersModal">
 	<div class="modal-dialog">

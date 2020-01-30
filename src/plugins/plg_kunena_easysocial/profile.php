@@ -17,14 +17,14 @@ defined('_JEXEC') or die('Unauthorized Access');
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Profile;
 use function defined;
 
 /**
  * @package     Kunena
  *
- * @since   Kunena 6.0
+ * @since       Kunena 6.0
  */
 class KunenaProfileEasySocial extends Profile
 {
@@ -37,7 +37,7 @@ class KunenaProfileEasySocial extends Profile
 	/**
 	 * KunenaProfileEasySocial constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -70,9 +70,9 @@ class KunenaProfileEasySocial extends Profile
 	}
 
 	/**
-	 * @param   int     $userid userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   int     $userid  userid
+	 * @param   string  $task    task
+	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  string
 	 *
@@ -127,8 +127,8 @@ class KunenaProfileEasySocial extends Profile
 	}
 
 	/**
-	 * @param   object  $view   view
-	 * @param   object  $params params
+	 * @param   object  $view    view
+	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
@@ -176,7 +176,7 @@ class KunenaProfileEasySocial extends Profile
 	}
 
 	/**
-	 * @param   integer  $birthday birthday
+	 * @param   integer  $birthday  birthday
 	 *
 	 * @return  mixed
 	 *
@@ -191,8 +191,8 @@ class KunenaProfileEasySocial extends Profile
 	}
 
 	/**
-	 * @param   int   $userid userid
-	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
 	 * @return  mixed
 	 *

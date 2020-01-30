@@ -20,13 +20,13 @@ use function defined;
 /**
  * Private message mapping for user.
  *
- * @property int    $private_id
+ * @since   Kunena 6.0
  * @property int    $user_id
  * @property string $read_at
  * @property string $replied_at
  * @property string $deleted_at
  *
- * @since   Kunena 6.0
+ * @property int    $private_id
  */
 class User extends KunenaDatabaseObject
 {

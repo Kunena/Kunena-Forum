@@ -15,11 +15,13 @@ namespace Kunena\Forum\Libraries\Database\Object;
 defined('_JEXEC') or die;
 
 use DomainException;
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseQuery;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
+use Kunena\Forum\Libraries\Error\KunenaError;
 
 /**
  * Class KunenaDatabaseObjectFinder
@@ -218,7 +220,7 @@ abstract class Finder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function find()
 	{
@@ -239,7 +241,7 @@ abstract class Finder
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $results;
@@ -265,7 +267,7 @@ abstract class Finder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function count()
 	{
@@ -289,7 +291,7 @@ abstract class Finder
 		}
 		catch (ExecutionFailureException $e)
 		{
-			\Kunena\Forum\Libraries\Error\KunenaError::displayDatabaseError($e);
+			KunenaError::displayDatabaseError($e);
 		}
 
 		return $count;

@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**

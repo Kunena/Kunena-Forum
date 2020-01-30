@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Integration\Avatar;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\Avatar;
 use function defined;
 
 /**
@@ -39,7 +39,7 @@ class AvatarEasyprofile extends Avatar
 	/**
 	 * \Kunena\Forum\Libraries\Integration\AvatarEasyprofile constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -59,9 +59,9 @@ class AvatarEasyprofile extends Avatar
 	}
 
 	/**
-	 * @param   object  $user  user
-	 * @param   int     $sizex sizex
-	 * @param   int     $sizey sizey
+	 * @param   object  $user   user
+	 * @param   int     $sizex  sizex
+	 * @param   int     $sizey  sizey
 	 *
 	 * @return  string
 	 *

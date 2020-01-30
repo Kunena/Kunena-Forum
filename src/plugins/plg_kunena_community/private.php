@@ -42,7 +42,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	/**
 	 * KunenaPrivateCommunity constructor.
 	 *
-	 * @param   object  $params params
+	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */

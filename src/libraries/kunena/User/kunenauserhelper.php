@@ -30,8 +30,8 @@ use Joomla\Utilities\ArrayHelper;
 use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Log\Log;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
 /**
@@ -801,7 +801,7 @@ abstract class KunenaUserHelper
 	/**
 	 * Return is the user IP is ipv6 or not
 	 *
-	 * @param   int  $ip ip
+	 * @param   int  $ip  ip
 	 *
 	 * @return  boolean
 	 *

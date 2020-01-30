@@ -18,8 +18,9 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Database\Object\Finder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\Category;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -28,7 +29,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class MessageFinder extends \Kunena\Forum\Libraries\Database\Object\Finder
+class MessageFinder extends Finder
 {
 	/**
 	 * @var     string

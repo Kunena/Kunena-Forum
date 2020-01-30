@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\MVC\Model\ListModel;
 use function defined;
 
 /**
@@ -26,14 +25,6 @@ use function defined;
  */
 class IconsModel extends AdminModel
 {
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
 	/**
 	 * Constructor.
 	 *
@@ -48,5 +39,13 @@ class IconsModel extends AdminModel
 	public function __construct($config = [])
 	{
 		parent::__construct();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		// TODO: Implement getForm() method.
 	}
 }

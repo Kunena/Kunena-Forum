@@ -30,8 +30,8 @@ class plgKunenaEasyprofile extends CMSPlugin
 	/**
 	 * plgKunenaEasyprofile constructor.
 	 *
-	 * @param   object  $subject subject
-	 * @param   object  $config  config
+	 * @param   object  $subject  subject
+	 * @param   object  $config   config
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -85,8 +85,6 @@ class plgKunenaEasyprofile extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
-
 		return new AvatarEasyprofile($this->params);
 	}
 
@@ -103,8 +101,6 @@ class plgKunenaEasyprofile extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileEasyprofile($this->params);
 	}

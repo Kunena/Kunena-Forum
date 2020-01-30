@@ -79,7 +79,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  Access|KunenaAccessCommunity|void
 	 *
 	 * @since   Kunena
-	 * @todo  Should we remove category ACL integration?
+	 * @todo    Should we remove category ACL integration?
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -87,8 +87,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/access.php";
 
 		return new KunenaAccessCommunity($this->params);
 	}
@@ -106,8 +104,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/login.php";
-
 		return new KunenaLoginCommunity($this->params);
 	}
 
@@ -123,8 +119,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/avatar.php";
 
 		return new AvatarCommunity($this->params);
 	}
@@ -142,8 +136,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/profile.php";
-
 		return new KunenaProfileCommunity($this->params);
 	}
 
@@ -160,8 +152,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/private.php";
-
 		return new KunenaPrivateCommunity($this->params);
 	}
 
@@ -177,8 +167,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/activity.php";
 
 		return new KunenaActivityCommunity($this->params);
 	}

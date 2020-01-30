@@ -17,14 +17,13 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Controller\KunenaController;
+use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Upload\UploadHelper;
-use Joomla\CMS\MVC\Controller\FormController;
 use RuntimeException;
 use function defined;
 

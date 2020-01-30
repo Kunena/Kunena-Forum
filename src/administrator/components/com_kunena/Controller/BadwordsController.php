@@ -14,7 +14,7 @@ namespace Kunena\Forum\Administrator\Controller;
 
 defined('_JEXEC') or die();
 
-use Kunena\Forum\Libraries\Controller\KunenaController;
+use Exception;
 use Joomla\CMS\MVC\Controller\FormController;
 use function defined;
 
@@ -38,7 +38,7 @@ class BadwordsController extends FormController
 	 *
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

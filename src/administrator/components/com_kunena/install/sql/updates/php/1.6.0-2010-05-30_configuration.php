@@ -15,7 +15,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 1.6.0: Convert deprecated configuration options
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *

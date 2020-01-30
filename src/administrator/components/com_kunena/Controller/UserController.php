@@ -16,18 +16,19 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Input\Input;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena User Controller
@@ -45,14 +46,16 @@ class UserController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @see     BaseController
+	 *
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
 	 * @param   Input                $input    Input
 	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
 	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -65,8 +68,8 @@ class UserController extends FormController
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
 	 *
 	 * @return  void
 	 *
@@ -90,30 +93,9 @@ class UserController extends FormController
 	}
 
 	/**
-	 * Apply
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0
-	 *
-	 * @throws  Exception
-	 */
-	public function apply()
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-
-			return;
-		}
-
-		$this->saveInternal('apply');
-	}
-
-	/**
 	 * Internal method to save an user
 	 *
-	 * @param   string  $type type
+	 * @param   string  $type  type
 	 *
 	 * @return  void
 	 *
@@ -194,7 +176,7 @@ class UserController extends FormController
 			else
 			{
 				// Update moderator rights
-				$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'admin');
+				$categories = CategoryHelper::getCategories(false, false, 'admin');
 
 				foreach ($categories as $category)
 				{
@@ -213,10 +195,28 @@ class UserController extends FormController
 	}
 
 	/**
+	 * Clean social items
+	 *
+	 * @param   KunenaUser  $user  user
+	 * @param   Factory     $app   app
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function cleanSocial(&$user, $app)
+	{
+		foreach ($user->socialButtons() as $key => $social)
+		{
+			$user->$key = str_replace(' ', '', trim($app->input->getString($key, '')));
+		}
+	}
+
+	/**
 	 * Set moderator rights on the user given
 	 *
-	 * @param   KunenaUser  $user      user
-	 * @param   array       $modCatids modCatids
+	 * @param   KunenaUser  $user       user
+	 * @param   array       $modCatids  modCatids
 	 *
 	 * @return  boolean
 	 *
@@ -227,7 +227,7 @@ class UserController extends FormController
 	protected function setModerate(KunenaUser $user, $modCatids)
 	{
 		// Update moderator rights
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories(false, false, 'admin');
+		$categories = CategoryHelper::getCategories(false, false, 'admin');
 
 		foreach ($categories as $category)
 		{
@@ -244,20 +244,23 @@ class UserController extends FormController
 	}
 
 	/**
-	 * Clean social items
-	 *
-	 * @param   KunenaUser  $user user
-	 * @param   Factory     $app  app
+	 * Apply
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 2.0
+	 *
+	 * @throws  Exception
 	 */
-	protected function cleanSocial(&$user, $app)
+	public function apply()
 	{
-		foreach ($user->socialButtons() as $key => $social)
+		if (!Session::checkToken('post'))
 		{
-			$user->$key = str_replace(' ', '', trim($app->input->getString($key, '')));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+			return;
 		}
+
+		$this->saveInternal('apply');
 	}
 }

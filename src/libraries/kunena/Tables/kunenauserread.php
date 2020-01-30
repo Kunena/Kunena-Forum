@@ -14,12 +14,13 @@ namespace Kunena\Forum\Libraries\Tables;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use function defined;
-
-require_once __DIR__ . '/kunena.php';
 
 /**
  * Kunena User Read Table
@@ -74,12 +75,12 @@ class KunenaUserRead extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function check()
 	{
-		$user  = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->user_id);
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($this->topic_id);
+		$user  = KunenaUserHelper::get($this->user_id);
+		$topic = TopicHelper::get($this->topic_id);
 
 		if (!$user->exists())
 		{

@@ -395,12 +395,12 @@ class Log
 	/**
 	 * Log new entry.
 	 *
-	 * @param   int                  $type       Log entry type.
-	 * @param   string               $operation  Performed operation.
-	 * @param   string|array         $data       JSON encoded string.
-	 * @param  Category  $category   Target category.
-	 * @param   Topic     $topic      Target topic.
-	 * @param   KunenaUser           $user       Target user.
+	 * @param   int           $type       Log entry type.
+	 * @param   string        $operation  Performed operation.
+	 * @param   string|array  $data       JSON encoded string.
+	 * @param   Category      $category   Target category.
+	 * @param   Topic         $topic      Target topic.
+	 * @param   KunenaUser    $user       Target user.
 	 *
 	 * @return  void
 	 *

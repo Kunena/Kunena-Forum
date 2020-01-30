@@ -43,6 +43,41 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
+	public function displayPurge()
+	{
+		$this->purgeitems    = $this->get('PurgeItems');
+		$this->md5Calculated = $this->get('Md5');
+
+		$this->setToolBarPurge();
+		$this->display();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarPurge()
+	{
+		// Set the titlebar text
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+
+		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function display($tpl = null)
 	{
 		$this->state       = $this->get('State');
@@ -130,41 +165,6 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		ToolbarHelper::divider();
 		ToolbarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-		ToolbarHelper::spacer();
-
-		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayPurge()
-	{
-		$this->purgeitems    = $this->get('PurgeItems');
-		$this->md5Calculated = $this->get('Md5');
-
-		$this->setToolBarPurge();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarPurge()
-	{
-		// Set the titlebar text
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';

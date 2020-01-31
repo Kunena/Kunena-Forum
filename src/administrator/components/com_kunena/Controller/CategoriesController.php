@@ -75,14 +75,14 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'locked', 1);
+		$this->setVariable((int) $cid, 'locked', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
 	 * Set variable
 	 *
-	 * @param   integer  $cid       id
+	 * @param   int      $cid       id
 	 * @param   string   $variable  variable
 	 * @param   string   $value     value
 	 *
@@ -187,7 +187,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'locked', 0);
+		$this->setVariable((int) $cid, 'locked', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -206,7 +206,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'review', 1);
+		$this->setVariable((int) $cid, 'review', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -225,7 +225,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'review', 0);
+		$this->setVariable((int) $cid, 'review', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -244,7 +244,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'allow_anonymous', 1);
+		$this->setVariable((int) $cid, 'allow_anonymous', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -263,7 +263,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'allow_anonymous', 0);
+		$this->setVariable((int) $cid, 'allow_anonymous', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -282,7 +282,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'allow_polls', 1);
+		$this->setVariable((int) $cid, 'allow_polls', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -301,7 +301,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'allow_polls', 0);
+		$this->setVariable((int) $cid, 'allow_polls', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -320,7 +320,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'published', 1);
+		$this->setVariable((int) $cid, 'published', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -339,7 +339,7 @@ class CategoriesController extends FormController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable($cid, 'published', 0);
+		$this->setVariable((int) $cid, 'published', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -375,12 +375,14 @@ class CategoriesController extends FormController
 	/**
 	 * Edit
 	 *
+	 * @param   null  $key    key
+	 * @param   null  $urlVar urlvar
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -490,12 +492,13 @@ class CategoriesController extends FormController
 	/**
 	 * Cancel
 	 *
+	 * @param   null  $key key
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function cancel($key = null)
 	{
@@ -766,7 +769,7 @@ class CategoriesController extends FormController
 
 		if (!empty($cid))
 		{
-			$this->setVariable($cid, 'published', 2);
+			$this->setVariable((int) $cid, 'published', 2);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}
@@ -787,7 +790,7 @@ class CategoriesController extends FormController
 
 		if (!empty($cid))
 		{
-			$this->setVariable($cid, 'published', -2);
+			$this->setVariable((int) $cid, 'published', -2);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}

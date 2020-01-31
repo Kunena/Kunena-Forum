@@ -270,14 +270,15 @@ class TrashController extends FormController
 	/**
 	 * Method to redirect user on cancel on purge page
 	 *
+	 * @param   null  $key key
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function cancel()
+	public function cancel($key = null)
 	{
 		$type = $this->app->getUserState('com_kunena.type');
 

@@ -17,7 +17,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 // KUNENA FORUM INSTALLER
 
-
 $app  = Factory::getApplication();
 $view = $app->input->getCmd('view');
 $task = $app->input->getCmd('task');

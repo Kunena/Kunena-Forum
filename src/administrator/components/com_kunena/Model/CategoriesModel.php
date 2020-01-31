@@ -509,7 +509,6 @@ class CategoriesModel extends Model
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = 'a.lft', $direction = 'asc')
 	{

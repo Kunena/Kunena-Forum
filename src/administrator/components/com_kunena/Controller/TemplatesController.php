@@ -124,14 +124,16 @@ class TemplatesController extends FormController
 	/**
 	 * Edit
 	 *
+	 * @param   null  $key    key
+	 * @param   null  $urlVar urlvar
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function edit()
+	public function edit($key = null, $urlVar = null)
 	{
 		$cid      = $this->app->input->get('cid', [], 'array');
 		$template = array_shift($cid);
@@ -659,14 +661,15 @@ class TemplatesController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
+	 * @param   null  $key key
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 3.0.5
 	 *
 	 * @throws  Exception
-	 * @throws  null
 	 */
-	public function cancel()
+	public function cancel($key = null)
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}

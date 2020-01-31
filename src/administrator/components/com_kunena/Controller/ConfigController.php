@@ -28,7 +28,6 @@ use function defined;
  *
  * @since   Kunena 2.0
  * @property  KunenaConfig
- *
  */
 class ConfigController extends FormController
 {

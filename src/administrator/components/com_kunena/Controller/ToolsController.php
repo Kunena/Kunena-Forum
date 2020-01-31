@@ -911,14 +911,15 @@ class ToolsController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
+	 * @param   null  $key key
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 4.0
 	 *
 	 * @throws  Exception
-	 * @throws  null
 	 */
-	public function cancel()
+	public function cancel($key = null)
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}

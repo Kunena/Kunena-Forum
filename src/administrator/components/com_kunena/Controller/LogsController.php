@@ -123,14 +123,16 @@ class LogsController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
+	 * @param   null  $key    key
+	 * @param   null  $urlVar urlvar
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function cancel()
+	public function cancel($key = null, $urlVar = null)
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}

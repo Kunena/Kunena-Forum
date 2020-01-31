@@ -129,7 +129,6 @@ class UsersController extends AdminController
 		$this->setRedirect(Route::_("index.php?option=com_kunena&view=user&layout=edit&userid={$userid}", false));
 	}
 
-
 	/**
 	 * Trash menu
 	 *

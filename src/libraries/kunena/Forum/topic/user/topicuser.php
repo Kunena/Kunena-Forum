@@ -84,6 +84,8 @@ class TopicUser extends CMSObject
 		$this->topic_id    = $topic->id;
 		$this->category_id = $topic->category_id;
 		$this->user_id     = KunenaUserHelper::get($user)->userid;
+
+		parent::__construct($topic);
 	}
 
 	/**

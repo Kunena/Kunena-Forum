@@ -276,8 +276,6 @@ class KunenaApplication extends WebApplication
 
 $app = new KunenaApplication;
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-
 try
 {
 	$app->execute();

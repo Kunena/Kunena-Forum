@@ -84,7 +84,7 @@ class ConfigController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{

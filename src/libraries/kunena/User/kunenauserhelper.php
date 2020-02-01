@@ -824,7 +824,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function storeCheckStopforumspam($data = [], $type)
+	public static function storeCheckStopforumspam($data, $type)
 	{
 		$options = [];
 

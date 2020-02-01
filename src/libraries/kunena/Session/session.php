@@ -99,6 +99,8 @@ class Session extends CMSObject
 			$userCategory      = CategoryUserHelper::get(0, (int) $identifier);
 			$this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
 		}
+
+		parent::__construct($identifier);
 	}
 
 	/**

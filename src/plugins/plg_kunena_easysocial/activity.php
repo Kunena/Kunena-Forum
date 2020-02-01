@@ -42,10 +42,13 @@ class KunenaActivityEasySocial extends Activity
 	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
+
+		parent::__construct();
 	}
 
 	/**

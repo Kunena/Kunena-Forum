@@ -12,6 +12,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -60,7 +61,7 @@ class KunenaViewCategory extends View
 		$this->document->setDescription($metaDesc);
 
 		// Create image for feed
-		$image                 = new Joomla\CMS\Document\Feed\FeedImage;
+		$image                 = new FeedImage;
 		$image->title          = $this->document->getTitle();
 		$image->url            = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description    = $this->document->getDescription();

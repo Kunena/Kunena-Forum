@@ -119,7 +119,7 @@ class TableKunenaAttachments extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function check()
 	{

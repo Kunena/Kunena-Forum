@@ -38,7 +38,7 @@ class CategoryModel extends CategoriesModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -110,7 +110,7 @@ class CategoryModel extends CategoriesModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

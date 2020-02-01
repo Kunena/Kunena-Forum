@@ -35,7 +35,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class TopicsModel extends ListModel
 {
 	/**
-	 * @var     boolean
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $topics = false;

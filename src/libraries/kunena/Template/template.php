@@ -1,6 +1,4 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedClassInspection */
-
+<?php
 /**
  * Kunena Component
  *
@@ -16,7 +14,6 @@ namespace Kunena\Forum\Libraries\Template;
 
 defined('_JEXEC') or die();
 
-use Compiler;
 use Exception;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
@@ -35,6 +32,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Topic;
 use Kunena\Forum\Libraries\Icons\SvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Leafo\ScssPhp\Compiler;
 use lessc;
 use SimpleXMLElement;
 use StdClass;
@@ -340,6 +338,8 @@ class Template extends CMSObject
 				}
 			}
 		}
+
+		parent::__construct($name);
 	}
 
 	/**

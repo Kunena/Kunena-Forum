@@ -75,6 +75,8 @@ class Read extends CMSObject
 		$this->topic_id    = $topic->exists() ? $topic->id : null;
 		$this->category_id = $topic->exists() ? $topic->category_id : null;
 		$this->user_id     = KunenaUserHelper::get($user)->userid;
+
+		parent::__construct($topic);
 	}
 
 	/**

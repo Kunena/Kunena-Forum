@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Object\CMSObject as parentAlias;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
 use Joomla\Database\DatabaseDriver;
@@ -48,7 +48,7 @@ use function defined;
  * @property    integer $expiration
  *
  */
-class Ban extends CMSObject
+class Ban extends parentAlias
 {
 	/**
 	 * @return  void
@@ -111,6 +111,11 @@ class Ban extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $identifier;
 
 	/**
 	 * Constructor
@@ -138,6 +143,8 @@ class Ban extends CMSObject
 		// Always load the data -- if item does not exist: fill empty data
 		$this->load($identifier);
 		$this->_db = Factory::getDBO();
+
+		parent::__construct($identifier);
 	}
 
 	/**

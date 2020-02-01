@@ -130,7 +130,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{

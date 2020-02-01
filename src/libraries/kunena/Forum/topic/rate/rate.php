@@ -97,6 +97,8 @@ class Rate extends CMSObject
 		// Always load the topic -- if rate does not exist: fill empty data
 		$this->_db = Factory::getDBO();
 		$this->load($identifier);
+
+		parent::__construct($identifier);
 	}
 
 	/**

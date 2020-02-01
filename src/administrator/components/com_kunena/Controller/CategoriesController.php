@@ -382,7 +382,7 @@ class CategoriesController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -498,7 +498,7 @@ class CategoriesController extends FormController
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{

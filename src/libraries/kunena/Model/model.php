@@ -90,7 +90,7 @@ class Model extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

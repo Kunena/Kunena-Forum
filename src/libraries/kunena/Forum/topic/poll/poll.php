@@ -109,6 +109,8 @@ class Poll extends CMSObject
 		// Always load the topic -- if poll does not exist: fill empty data
 		$this->_db = Factory::getDBO();
 		$this->load($identifier);
+
+		parent::__construct($identifier);
 	}
 
 	/**

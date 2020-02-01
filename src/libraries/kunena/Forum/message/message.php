@@ -471,7 +471,7 @@ class Message extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function notificationPost()
 	{
@@ -1159,7 +1159,7 @@ class Message extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function getUserTopic($user = null)
 	{

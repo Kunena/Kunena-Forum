@@ -69,7 +69,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function open()
 	{
@@ -81,7 +81,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function close()
 	{

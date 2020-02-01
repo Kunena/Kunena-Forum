@@ -59,6 +59,8 @@ class MesssageThankyou extends CMSObject
 	public function __construct($id)
 	{
 		$this->id = (int) $id;
+
+		parent::__construct($id);
 	}
 
 	/**

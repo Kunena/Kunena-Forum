@@ -185,6 +185,7 @@ class ToolsController extends FormController
 		elseif ($controloptions == 'all')
 		{
 			// No filtering
+			$where[] = '';
 		}
 		else
 		{

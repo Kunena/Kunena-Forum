@@ -435,7 +435,7 @@ class View extends HtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function parse($text, $len = 0, $parent)
+	public function parse($text, $len, $parent)
 	{
 		if ($this instanceof SearchController)
 		{

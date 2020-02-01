@@ -146,7 +146,10 @@ class TrashController extends FormController
 			}
 			else
 			{
-				// Error...
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+				return;
 			}
 
 			$this->app->setUserState('com_kunena.purge', null);
@@ -252,7 +255,10 @@ class TrashController extends FormController
 		}
 		else
 		{
-			// Error...
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
 		}
 
 		if ($nb_items > 0)
@@ -276,7 +282,7 @@ class TrashController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{

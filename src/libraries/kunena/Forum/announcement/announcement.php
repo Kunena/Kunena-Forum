@@ -95,6 +95,7 @@ class Announcement extends KunenaDatabaseObject
 	 * @param   mixed  $properties  properties
 	 *
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -109,6 +110,8 @@ class Announcement extends KunenaDatabaseObject
 			$table->showdate  = 1;
 			$this->setProperties($table->getProperties());
 		}
+
+		parent::__construct($properties);
 	}
 
 	/**

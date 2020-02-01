@@ -53,7 +53,7 @@ class TemplateController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -72,7 +72,7 @@ class TemplateController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{

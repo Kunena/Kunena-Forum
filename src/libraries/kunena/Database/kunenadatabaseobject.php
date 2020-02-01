@@ -93,6 +93,8 @@ abstract class KunenaDatabaseObject extends CMSObject
 		{
 			$this->load();
 		}
+
+		parent::__construct($properties);
 	}
 
 	/**

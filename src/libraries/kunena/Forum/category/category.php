@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUser;
 use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Message;
@@ -259,6 +260,7 @@ class Category extends KunenaDatabaseObject
 	 * @param   mixed|array  $properties  properties
 	 *
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function __construct($properties = null)
 	{
@@ -295,6 +297,8 @@ class Category extends KunenaDatabaseObject
 		{
 			$this->sectionheaderdesc = '';
 		}
+
+		parent::__construct($properties);
 	}
 
 	/**
@@ -335,7 +339,7 @@ class Category extends KunenaDatabaseObject
 	 *
 	 * @param   mixed  $user  user
 	 *
-	 * @return  CategoryUserHelper
+	 * @return  CategoryUser
 	 *
 	 * @since   Kunena 6.0
 	 *

@@ -105,7 +105,7 @@ abstract class KunenaRoute
 	public static $menus = false;
 
 	/**
-	 * @var     boolean
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public static $menu = false;

@@ -248,6 +248,7 @@ class KunenaUser extends CMSObject
 			return $this->_exists;
 		}
 
+		return false;
 	}
 
 	/**

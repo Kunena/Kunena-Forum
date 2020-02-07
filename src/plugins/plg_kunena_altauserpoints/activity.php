@@ -234,9 +234,10 @@ class KunenaActivityAltaUserPoints extends Activity
 	}
 
 	/**
-	 * @param $ruleName
+	 * @param   string  $ruleName  Rulename
 	 *
-	 * @return  null
+	 * @return  void|integer
+	 *
 	 * @since   Kunena 6.0
 	 */
 	private function _getPointsOnThankyou($ruleName)

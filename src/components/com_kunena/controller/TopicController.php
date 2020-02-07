@@ -167,7 +167,7 @@ class TopicController extends KunenaController
 		}
 
 		$attach_id  = $this->input->getInt('file_id', 0);
-		$attachs_id = $this->input->get('files_id', [], 'post', 'array');
+		$attachs_id = $this->input->get('files_id', null, 'array');
 
 		if ($attach_id > 0)
 		{

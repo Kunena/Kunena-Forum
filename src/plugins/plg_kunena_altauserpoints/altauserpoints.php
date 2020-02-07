@@ -84,7 +84,7 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 			return;
 		}
 
-		return new Avatar($this->params);
+		return new Avatar;
 	}
 
 	/**

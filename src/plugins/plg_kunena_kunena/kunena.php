@@ -58,7 +58,7 @@ class PlgKunenaKunena extends CMSPlugin
 			return;
 		}
 
-		return new Avatar($this->params);
+		return new Avatar;
 	}
 
 	/**
@@ -73,6 +73,6 @@ class PlgKunenaKunena extends CMSPlugin
 			return;
 		}
 
-		return new Profile($this->params);
+		return new Profile;
 	}
 }

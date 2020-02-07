@@ -139,7 +139,7 @@ class KunenaBbcode extends BBCode
 	/**
 	 * @param   mixed  $params  params
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2214,7 +2214,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string
+	 * @return  boolean|string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2610,7 +2610,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   string      $bbcode        bbcode
 	 * @param   bool        $displayImage  display image
 	 *
-	 * @return  string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 *

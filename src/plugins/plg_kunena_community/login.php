@@ -63,7 +63,7 @@ class KunenaLoginCommunity
 	}
 
 	/**
-	 * @return  null|string
+	 * @return  void|string
 	 * @since   Kunena 6.0
 	 */
 	public function getRegistrationURL()

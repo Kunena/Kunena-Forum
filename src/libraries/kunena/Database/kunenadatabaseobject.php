@@ -163,10 +163,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 			$this->setProperties($table->getProperties());
 
 			return $this->_exists;
-
 		}
 
-
+		return false;
 	}
 
 	/**

@@ -708,7 +708,7 @@ class Attachment extends KunenaDatabaseObject
 	 * @param   KunenaUser  $user    user
 	 * @param   bool        $throw   throw
 	 *
-	 * @return  mixed
+	 * @return  mixed|void
 	 *
 	 * @since   Kunena 4.0
 	 *

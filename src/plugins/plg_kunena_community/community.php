@@ -160,6 +160,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 *
 	 * @return  KunenaActivityCommunity|null|void
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function onKunenaGetActivity()
 	{

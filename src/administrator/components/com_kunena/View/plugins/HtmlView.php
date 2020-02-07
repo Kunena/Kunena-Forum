@@ -52,6 +52,7 @@ class HtmlView extends BaseHtmlView
 	 * An array of items
 	 *
 	 * @var  array
+	 * @since  4.0.0
 	 */
 	protected $items;
 
@@ -59,6 +60,7 @@ class HtmlView extends BaseHtmlView
 	 * The pagination object
 	 *
 	 * @var    Pagination
+	 * @since  4.0.0
 	 */
 	protected $pagination;
 

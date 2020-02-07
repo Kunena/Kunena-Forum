@@ -108,6 +108,7 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 	 *
 	 * @return  KunenaActivityAltaUserPoints|void
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function onKunenaGetActivity()
 	{

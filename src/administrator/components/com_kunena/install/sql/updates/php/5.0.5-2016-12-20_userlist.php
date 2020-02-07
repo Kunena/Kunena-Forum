@@ -21,9 +21,9 @@ defined('_JEXEC') or die();
  *
  * @since   Kunena 6.0
  *
- * @throws  Exception
+ * @throws Exception
  */
-function kunena_505_2016_12_20_userlist()
+function kunena_505_2016_12_20_userlist(string $parent): array
 {
 	$config = KunenaFactory::getConfig();
 

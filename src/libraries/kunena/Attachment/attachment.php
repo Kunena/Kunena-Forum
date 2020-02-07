@@ -70,40 +70,49 @@ class Attachment extends KunenaDatabaseObject
 	// To filter out attachments when doing a database query, you can use:
 	// Visible for author = value < PROTECTION_AUTHOR * 2
 	// TODO: Implement these
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_NONE = 0;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_PUBLIC = 1;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_ACL = 2;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_FRIENDS = 4;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_MODERATORS = 8;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_ADMINS = 16;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_PRIVATE = 32;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_AUTHOR = 64;
+
 	/**
-	 *
+	 * @since   Kunena 6.0
 	 */
 	const PROTECTION_UNPUBLISHED = 128;
 

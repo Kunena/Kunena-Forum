@@ -69,7 +69,14 @@ class LogsModel extends ListModel
 	}
 
 	/**
-	 * @inheritDoc
+	 *
+	 *
+	 * @param   array    $data     data
+	 * @param   boolean  $loadData load data
+	 *
+	 * @return void
+	 *
+	 * @since  Kunena 6.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{

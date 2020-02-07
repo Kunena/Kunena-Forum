@@ -1125,13 +1125,13 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  TopicUserHelper
+	 * @return  User\TopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserInfo($user = null)
+	public function getUserInfo($user = null): User\TopicUser
 	{
 		return TopicUserHelper::get($this->id, $user);
 	}

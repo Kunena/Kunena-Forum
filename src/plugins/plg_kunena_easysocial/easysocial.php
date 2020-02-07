@@ -132,6 +132,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @return  KunenaActivityEasySocial
 	 *
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function onKunenaGetActivity()
 	{

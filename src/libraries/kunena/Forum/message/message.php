@@ -1167,13 +1167,13 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  MessageThankyouHelper
+	 * @return  integer|MessageThankyouHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getThankyou()
+	public function getThankyou(): MessageThankyouHelper
 	{
 		return MessageThankyouHelper::get($this->id);
 	}

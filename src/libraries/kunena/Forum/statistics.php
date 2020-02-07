@@ -377,13 +377,22 @@ class Statistics
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
 			$query = $this->_db->getQuery(true);
-			$query->select('SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' = 0) AS ' . $this->_db->quote('todayTopicCount') . ',
-				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('todayReplyCount') . ',
-				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' . $this->_db->quoteName('time') . ' < ' . $this->_db->quote($todaystart) . '  AND ' . $this->_db->quoteName('parent') . ' = 0 ) AS ' . $this->_db->quote('yesterdayTopicCount') . ',
-				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . '  AND ' . $this->_db->quoteName('time') . '< ' . $this->_db->quote($todaystart) . '  AND ' . $this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('yesterdayReplyCount')
+			$query->select('SUM(' . $this->_db->quoteName('time') . ' >= ' .
+				$this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' = 0) AS ' .
+				$this->_db->quote('todayTopicCount') . ',
+				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' .
+				$this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('todayReplyCount') . ',
+				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' .
+				$this->_db->quoteName('time') . ' < ' . $this->_db->quote($todaystart) . '  AND ' .
+				$this->_db->quoteName('parent') . ' = 0 ) AS ' . $this->_db->quote('yesterdayTopicCount') . ',
+				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . '  AND ' .
+				$this->_db->quoteName('time') . '< ' . $this->_db->quote($todaystart) . '  AND ' .
+				$this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('yesterdayReplyCount')
 			)
 				->from($this->_db->quoteName('#__kunena_messages'))
-				->where($this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' . $this->_db->quoteName('hold') . ' = 0');
+				->where($this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' .
+					$this->_db->quoteName('hold') . ' = 0'
+				);
 			$this->_db->setQuery($query);
 
 			try
@@ -502,9 +511,15 @@ class Statistics
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($this->_db->quoteName('poll.threadid', 'id') . ', SUM(' . $this->_db->quoteName('opt.votes') . ') AS ' . $this->_db->quoteName('count'))
+			$query
+				->select(
+					$this->_db->quoteName('poll.threadid', 'id') . ', SUM(' .
+					$this->_db->quoteName('opt.votes') . ') AS ' . $this->_db->quoteName('count')
+				)
 				->from($db->quoteName('#__kunena_polls_options', 'opt'))
-				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . ' ON ' . $this->_db->quoteName('poll.id') . ' = ' . $this->_db->quoteName('opt.pollid'))
+				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . ' ON ' .
+					$this->_db->quoteName('poll.id') . ' = ' . $this->_db->quoteName('opt.pollid')
+				)
 				->group($this->_db->quoteName('pollid'))
 				->having($this->_db->quoteName('count') . ' > 0')
 				->order($this->_db->quoteName('count') . ' DESC');
@@ -681,10 +696,18 @@ class Statistics
 		if ($this->topThanks < $limit)
 		{
 			$query = $this->_db->getQuery(true);
-			$query->select(['t.targetuserid'], ['id'])
+			$query
+				->select(
+					[
+						$this->_db->quoteName('t.targetuserid'),
+						$this->_db->quoteName('id')
+					]
+				)
 				->select('COUNT(' . $this->_db->quoteName('t.targetuserid') . ') AS ' . $this->_db->quoteName('count'))
-				->from($this->_db->quoteName(['#__kunena_thankyou'], ['t']))
-				->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' . $this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid'))
+				->from($this->_db->quoteName('#__kunena_thankyou', 't'))
+				->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' .
+					$this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid')
+				)
 				->group($this->_db->quoteName('t.targetuserid'));
 			$query->order($this->_db->quoteName('count') . ' DESC');
 

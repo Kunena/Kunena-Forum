@@ -216,7 +216,7 @@ abstract class AnnouncementHelper
 			$query = $db->getQuery(true)
 				->select('COUNT(*)')
 				->from($db->quoteName('#__kunena_announcement'))
-				->order('id DESC');
+				->order($db->quoteName('id') . ' DESC');
 		}
 
 		$db->setQuery($query);

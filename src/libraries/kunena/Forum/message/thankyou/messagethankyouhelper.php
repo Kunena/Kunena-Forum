@@ -362,9 +362,7 @@ abstract class MessageThankyouHelper
 			return false;
 		}
 
-		$rows = $db->getAffectedRows();
-
-		return $rows;
+		return $db->getAffectedRows();
 	}
 
 	/**
@@ -402,9 +400,7 @@ abstract class MessageThankyouHelper
 			return false;
 		}
 
-		$rows = $db->getAffectedRows();
-
-		return $rows;
+		return $db->getAffectedRows();
 	}
 
 	/**

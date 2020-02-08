@@ -171,6 +171,12 @@ class Message extends KunenaDatabaseObject
 	protected $_authfcache = [];
 
 	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $urlNotification;
+
+	/**
 	 * @internal
 	 *
 	 * @param   mixed  $properties  properties
@@ -754,9 +760,8 @@ class Message extends KunenaDatabaseObject
 		}
 
 		$this->hold = (int) $value;
-		$result     = $this->save();
 
-		return $result;
+		return $this->save();
 	}
 
 	/**

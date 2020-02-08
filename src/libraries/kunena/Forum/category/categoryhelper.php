@@ -94,7 +94,7 @@ abstract class CategoryHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function &loadCategories()
+	public static function loadCategories()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -325,7 +325,7 @@ abstract class CategoryHelper
 			{
 				foreach ($list as $category)
 				{
-					if (!$category->isAuthorised($authorise, null, true))
+					if (!$category->isAuthorised($authorise))
 					{
 						unset($list [$category->id]);
 					}
@@ -341,7 +341,7 @@ abstract class CategoryHelper
 			{
 				foreach ($list as $category)
 				{
-					if (!$category->isAuthorised($authorise, null, true))
+					if (!$category->isAuthorised($authorise))
 					{
 						unset($list [$category->id]);
 					}
@@ -1133,4 +1133,10 @@ abstract class CategoryHelper
 	}
 }
 
-CategoryHelper::initialize();
+try
+{
+	CategoryHelper::initialize();
+}
+catch (Exception $e)
+{
+}

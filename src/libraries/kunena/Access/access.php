@@ -481,7 +481,7 @@ jQuery(document).ready(function ($) {
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @param   int    $category  category
+	 * @param   object $category  category
 	 * @param   mixed  $user      user
 	 * @param   bool   $status    status
 	 *

@@ -35,10 +35,10 @@ use function defined;
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
  *
  * @since   Kunena 6.0
+ *
  * @property int    $threadid
  * @property string $polltimetolive
  * @property int    $id
- *
  * @property string $title
  */
 class Poll extends CMSObject
@@ -96,6 +96,12 @@ class Poll extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $mytime = [];
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	protected $mylastvoteId;
 
 	/**
 	 * @param   int  $identifier  identifier
@@ -694,9 +700,9 @@ class Poll extends CMSObject
 
 		// Delete options
 		$db    = Factory::getDBO();
-		$query = $this->_db->getQuery(true);
-		$query->delete($this->_db->quoteName('#__kunena_polls_options'))
-			->where($this->_db->quoteName('pollid') . ' = ' . $db->quote($this->id));
+		$query = $db->getQuery(true);
+		$query->delete($db->quoteName('#__kunena_polls_options'))
+			->where($db->quoteName('pollid') . ' = ' . $db->quote($this->id));
 		$db->setQuery($query);
 
 		try
@@ -709,9 +715,9 @@ class Poll extends CMSObject
 		}
 
 		// Delete votes
-		$query = $this->_db->getQuery();
-		$query->delete($this->_db->quoteName('#__kunena_polls_users'))
-			->where($this->_db->quoteName('pollid') . ' = ' . $db->quote($this->id));
+		$query = $db->getQuery();
+		$query->delete($db->quoteName('#__kunena_polls_users'))
+			->where($db->quoteName('pollid') . ' = ' . $db->quote($this->id));
 		$db->setQuery($query);
 
 		try

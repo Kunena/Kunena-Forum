@@ -257,6 +257,12 @@ class Category extends KunenaDatabaseObject
 	protected $hold;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_noreorder;
+
+	/**
 	 * @param   mixed|array  $properties  properties
 	 *
 	 * @since   Kunena 6.0
@@ -1423,8 +1429,8 @@ class Category extends KunenaDatabaseObject
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $this->id . ' ' . $where)
-			->order('tt.last_post_time ASC');
+			->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' ' . $where)
+			->order($db->quoteName('tt.last_post_time') . ' ASC');
 		$query->setLimit($limit);
 		$db->setQuery($query);
 
@@ -1478,8 +1484,8 @@ class Category extends KunenaDatabaseObject
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
-			->where('tt.category_id = ' . $this->id . ' AND tt.hold!=2 ' . $where)
-			->order('tt.last_post_time ASC');
+			->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' AND ' . $db->quoteName('tt.hold') . ' !=2 ' . $where)
+			->order($db->quoteName('tt.last_post_time') . ' ASC');
 		$query->setLimit($limit);
 		$db->setQuery($query);
 
@@ -1664,9 +1670,8 @@ class Category extends KunenaDatabaseObject
 		$table = $this->getTable();
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
-		$result = $table->isCheckedOut($with);
 
-		return $result;
+		return $table->isCheckedOut($with);
 	}
 
 	/**

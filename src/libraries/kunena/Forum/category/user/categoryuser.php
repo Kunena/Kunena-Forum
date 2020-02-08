@@ -30,12 +30,12 @@ use function defined;
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
  *
  * @since   Kunena 6.0
+ *
  * @property int    $role
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
- *
  * @property int    $category_id
  */
 class CategoryUser extends CMSObject

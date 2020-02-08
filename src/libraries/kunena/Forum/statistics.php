@@ -184,6 +184,12 @@ class Statistics
 	protected $_config = null;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $showstats = true;
+
+	/**
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -352,14 +358,12 @@ class Statistics
 			}
 		}
 
-		$count = [
+		return [
 			'sections'   => $this->sectionCount,
 			'categories' => $this->categoryCount,
 			'topics'     => $this->topicCount,
 			'messages'   => $this->messageCount,
 		];
-
-		return $count;
 	}
 
 	/**
@@ -468,7 +472,7 @@ class Statistics
 		if ($this->topTopics < $limit)
 		{
 			$params = ['orderby' => 'posts DESC'];
-			list($total, $this->topTopics) = TopicHelper::getLatestTopics(false, 0, $limit, $params);
+			list($this->topTopics) = TopicHelper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 

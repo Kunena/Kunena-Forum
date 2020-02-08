@@ -22,7 +22,6 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -45,6 +44,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\TopicUserReadHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -249,7 +249,7 @@ class Topic extends KunenaDatabaseObject
 	public function subscribe($value = true, $user = null)
 	{
 		$usertopic             = $this->getUserTopic($user);
-		$usertopic->subscribed = (int) $value;
+		$usertopic->subscribed = (boolean) $value;
 
 		if (!$usertopic->save())
 		{
@@ -264,7 +264,7 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  TopicUserHelper
+	 * @return  User\TopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -272,9 +272,7 @@ class Topic extends KunenaDatabaseObject
 	 */
 	public function getUserTopic($user = null)
 	{
-		$usertopic = TopicUserHelper::get($this, $user);
-
-		return $usertopic;
+		return TopicUserHelper::get($this, $user);
 	}
 
 	/**
@@ -955,7 +953,7 @@ class Topic extends KunenaDatabaseObject
 	 * @param   int       $display     display
 	 * @param   string    $prefix      prefix
 	 *
-	 * @return  Pagination|\Kunena\Forum\Libraries\Pagination\Pagination
+	 * @return  Pagination
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -966,7 +964,7 @@ class Topic extends KunenaDatabaseObject
 	{
 		if (!$this->_pagination)
 		{
-			$this->_pagination = new \Kunena\Forum\Libraries\Pagination\Pagination($this->posts, $limitstart, $limit, $prefix);
+			$this->_pagination = new Pagination($this->posts, $limitstart, $limit, $prefix);
 			$this->_pagination
 				->setUri($this->getUri())
 				->setDisplayedPages($display);

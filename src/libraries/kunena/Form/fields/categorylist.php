@@ -19,6 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Form\FormField;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use function defined;
 
 /**
@@ -39,18 +41,18 @@ class CategoryList extends FormField
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function getInput()
 	{
-		if (!class_exists('KunenaForum') || !\Kunena\Forum\Libraries\Forum\KunenaForum::installed())
+		if (!class_exists('KunenaForum') || !KunenaForum::installed())
 		{
 			echo '<a href="' . Route::_('index.php?option=com_kunena') . '">PLEASE COMPLETE KUNENA INSTALLATION</a>';
 
 			return '';
 		}
 
-		\Kunena\Forum\Libraries\Factory\KunenaFactory::loadLanguage('com_kunena');
+		KunenaFactory::loadLanguage('com_kunena');
 
 		$size  = $this->element['size'];
 		$class = $this->element['class'];

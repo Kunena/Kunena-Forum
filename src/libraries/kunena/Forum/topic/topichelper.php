@@ -257,7 +257,7 @@ abstract class TopicHelper
 	 * @param   mixed  $ids   ids
 	 * @param   mixed  $user  user
 	 *
-	 * @return  TopicUserHelper[]
+	 * @return User\TopicUser|User\TopicUser[]
 	 *
 	 * @since   Kunena 6.0
 	 *

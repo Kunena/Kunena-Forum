@@ -29,6 +29,10 @@ use function defined;
  */
 abstract class KunenaEmail
 {
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
 	public static $mailer_error_status = null;
 
 	/**

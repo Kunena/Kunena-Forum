@@ -43,6 +43,12 @@ abstract class TopicUserHelper
 	protected static $_topics = [];
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $subscribed;
+
+	/**
 	 * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicUser object.
 	 *
 	 * @param   Topic|int|null  $topic   topic

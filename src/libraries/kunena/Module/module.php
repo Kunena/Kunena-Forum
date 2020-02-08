@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Module;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -48,6 +49,12 @@ abstract class Module
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
+
+	/**
+	 * @var     Document
+	 * @since   Kunena 6.0
+	 */
+	protected $document;
 
 	/**
 	 * @param   stdClass  $module  module

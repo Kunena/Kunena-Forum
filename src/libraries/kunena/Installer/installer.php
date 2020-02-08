@@ -91,9 +91,8 @@ class Installer
 			->order($db->quoteName('id') . ' DESC');
 		$query->setLimit(1);
 		$db->setQuery($query);
-		$version = $db->loadResult();
 
-		return $version;
+		return $db->loadResult();
 	}
 
 	/**

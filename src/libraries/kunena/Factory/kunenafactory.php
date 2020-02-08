@@ -135,7 +135,7 @@ abstract class KunenaFactory
 	/**
 	 * Get Kunena avatar integration object
 	 *
-	 * Returns the global {@link \Kunena\Forum\Libraries\Integration\Avatar} object, only creating it if it doesn't
+	 * Returns the global {@link Avatar} object, only creating it if it doesn't
 	 * already exist.
 	 *
 	 * @return  Avatar
@@ -168,7 +168,7 @@ abstract class KunenaFactory
 	/**
 	 * Get Kunena activity integration object
 	 *
-	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link Activity} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  Activity
 	 *
@@ -254,7 +254,7 @@ abstract class KunenaFactory
 	/**
 	 * Get a Kunena configuration object
 	 *
-	 * Returns the global {@link Config} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
 	 * @return  KunenaConfig
 	 *

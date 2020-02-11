@@ -62,7 +62,7 @@ foreach ($this->sections as $section) :
 
 		<h1>
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, KunenaTemplate::getInstance()->tooltips(), true, false); ?>
-			<small class="hidden-phone nowrap" id="ksection-count<?php echo $category->id; ?>">
+			<small class="hidden-phone nowrap" id="ksection-count<?php echo $section->id; ?>">
 				<?php echo KunenaForumCategory::getInstance()->totalCount($section->getTopics()); ?>
 			</small>
 		</h1>

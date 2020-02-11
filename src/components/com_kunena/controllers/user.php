@@ -982,7 +982,7 @@ class KunenaControllerUser extends KunenaController
 		$method = $input->getMethod();
 		$user   = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
-		if ($input->$method->get('personaltext', '', 'raw') && $this->config->signature)
+		if ($this->config->signature)
 		{
 			$user->signature = $input->$method->get('signature', '', 'raw');
 		}

@@ -478,6 +478,7 @@
 			label: "Share",
 			logo: "fa fa-linkedin",
 			shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}&text={text}",
+			countUrl: "",
 			getCount: function (data) {
 				return data.count;
 			}

@@ -49,11 +49,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		$componentParams = $config->getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
-		if ($robots == '')
-		{
-			$doc->setMetaData('robots', 'index, follow');
-		}
-		elseif ($robots == 'noindex, follow')
+		if ($robots == 'noindex, follow')
 		{
 			$doc->setMetaData('robots', 'noindex, follow');
 		}
@@ -61,9 +57,13 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		{
 			$doc->setMetaData('robots', 'index, nofollow');
 		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$doc->setMetaData('robots', 'index, follow');
 		}
 
 		if ($menu_item)

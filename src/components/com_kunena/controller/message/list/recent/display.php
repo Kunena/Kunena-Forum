@@ -363,11 +363,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			}
 			else
 			{
-				if ($robots == '')
-				{
-					$this->setMetaData('robots', 'index, follow');
-				}
-				elseif ($robots == 'noindex, follow')
+				if ($robots == 'noindex, follow')
 				{
 					$this->setMetaData('robots', 'noindex, follow');
 				}
@@ -375,9 +371,13 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				{
 					$this->setMetaData('robots', 'index, nofollow');
 				}
+				elseif ($robots == 'noindex, nofollow')
+				{
+					$this->setMetaData('robots', 'noindex, nofollow');
+				}
 				else
 				{
-					$this->setMetaData('robots', 'nofollow, noindex');
+					$this->setMetaData('robots', 'index, follow');
 				}
 			}
 		}

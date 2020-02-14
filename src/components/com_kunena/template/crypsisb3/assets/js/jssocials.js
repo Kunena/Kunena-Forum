@@ -83,6 +83,8 @@
 
 		_initShares: function () {
 			this.shares = $.map(this.shares, $.proxy(function (shareConfig) {
+				if(!shareConfig) return; // this will fix the undefined shareConfig issue
+
 				if (typeof shareConfig === "string") {
 					shareConfig = {share: shareConfig};
 				}
@@ -448,7 +450,7 @@
 		facebook: {
 			label: "Like",
 			logo: "fa fa-facebook",
-			shareUrl: "https://facebook.com/sharer/sharer.php?u={url}",
+			shareUrl: "https://facebook.com/sharer/sharer.php?u={url}&quote={text}",
 			countUrl: "https://graph.facebook.com/?id={url}",
 			getCount: function (data) {
 				return data.share && data.share.share_count || 0;
@@ -475,8 +477,7 @@
 		linkedin: {
 			label: "Share",
 			logo: "fa fa-linkedin",
-			shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}",
-			countUrl: "https://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",
+			shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}&text={text}",
 			getCount: function (data) {
 				return data.count;
 			}
@@ -558,4 +559,3 @@
 	});
 
 }(window, jQuery, window.jsSocials));
-

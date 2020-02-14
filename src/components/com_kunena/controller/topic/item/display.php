@@ -554,8 +554,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$this->setMetaData('robots', 'nofollow, noindex');
 		}
 
-		$page       = $this->pagination->pagesCurrent;
-		$total      = $this->pagination->pagesTotal;
+		$page       = (int) $this->pagination->pagesCurrent;
+		$total      = (int) $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$pagdata = $this->pagination->getData();
@@ -598,7 +598,6 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$params          = $menu_item->params;
 			$params_keywords = $params->get('menu-meta_keywords');
-                        $headerText = KunenaHtmlParser::stripBBCode($this->topic->subject, 0, true);
 			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))

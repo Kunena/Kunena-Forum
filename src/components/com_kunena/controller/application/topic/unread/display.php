@@ -14,10 +14,13 @@ namespace Kunena\Forum\Site\Controller\Application\Topic\Unread;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use function defined;
 
 /**
@@ -34,7 +37,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function exists()
 	{
@@ -55,13 +58,13 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$catid = $this->input->getInt('catid', 0);
 		$id    = $this->input->getInt('id', 0);
 
-		$category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
+		$category = CategoryHelper::get($catid);
 		$category->tryAuthorise();
 
-		$topic = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::get($id);
+		$topic = TopicHelper::get($id);
 		$topic->tryAuthorise();
 
-		\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus([$topic->id => $topic]);
+		TopicHelper::fetchNewStatus([$topic->id => $topic]);
 		$message = MessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
@@ -79,11 +82,10 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{
-		$doc = Factory::getApplication()->getDocument();
-		$doc->setMetaData('robots', 'follow, noindex');
+		$this->setMetaData('robots', 'follow, noindex');
 	}
 }

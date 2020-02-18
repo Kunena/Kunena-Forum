@@ -631,9 +631,9 @@ class UserController extends KunenaController
 		$method = $input->getMethod();
 		$user   = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
-		if ($this->app->input->get('signature', null) === null)
+		if ($this->config->signature)
 		{
-			return;
+			$user->signature = $input->$method->get('signature', '', 'raw');
 		}
 
 		$user->personalText = $input->$method->get('personaltext', '', 'string');
@@ -668,7 +668,6 @@ class UserController extends KunenaController
 
 		$user->websitename = $input->$method->get('websitename', '', 'string');
 		$user->websiteurl  = $input->$method->get('websiteurl', '', 'string');
-		$user->signature   = $input->$method->get('signature', '', 'raw');
 
 		// Save avatar from gallery
 		$avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');

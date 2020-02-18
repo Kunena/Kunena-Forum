@@ -219,12 +219,6 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 			{
 				$this->setDescription($this->headerText);
 			}
-
-			if (!empty($params_robots))
-			{
-				$robots = $params->get('robots');
-				$this->setMetaData('robots', $robots);
-			}
 		}
 	}
 }

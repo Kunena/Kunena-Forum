@@ -67,7 +67,7 @@ else
 				<?php
 				$title   = \Kunena\Forum\Libraries\Forum\Message\Message::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips() . ' topictitle')); ?>
 			</div>
 			<div class="horizontal-message-text">
 				<div class="kmsg">

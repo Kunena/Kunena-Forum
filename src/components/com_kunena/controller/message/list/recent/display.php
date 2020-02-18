@@ -311,6 +311,23 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
+		if ($robots == 'noindex, follow')
+		{
+			$this->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$this->setMetaData('robots', 'index, nofollow');
+		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
+		else
+		{
+			$this->setMetaData('robots', 'index, follow');
+		}
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->getParams();
@@ -347,37 +364,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 				$description = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
-		}
 
-		if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
-		{
-			$this->setMetaData('robots', 'follow, noindex');
-		}
-		else
-		{
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
 				$this->setMetaData('robots', $robots);
-			}
-			else
-			{
-				if ($robots == '')
-				{
-					$this->setMetaData('robots', 'index, follow');
-				}
-				elseif ($robots == 'noindex, follow')
-				{
-					$this->setMetaData('robots', 'noindex, follow');
-				}
-				elseif ($robots == 'index, nofollow')
-				{
-					$this->setMetaData('robots', 'index, nofollow');
-				}
-				else
-				{
-					$this->setMetaData('robots', 'nofollow, noindex');
-				}
 			}
 		}
 	}

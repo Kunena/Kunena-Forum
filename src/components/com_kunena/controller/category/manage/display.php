@@ -240,7 +240,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		Factory::getApplication()->getDocument()->setMetaData('robots', 'nofollow, noindex');
+		$this->setMetaData('robots', 'nofollow, noindex');
 
 		if ($menu_item)
 		{
@@ -250,12 +250,12 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
-				Factory::getApplication()->getDocument()->setTitle($title);
+				$this->setTitle($title);
 			}
 			else
 			{
 				$title = Text::_('COM_KUNENA_ADMIN');
-				Factory::getApplication()->getDocument()->setTitle($title);
+				$this->setTitle($title);
 			}
 		}
 	}

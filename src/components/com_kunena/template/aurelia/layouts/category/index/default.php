@@ -65,7 +65,7 @@ foreach ($this->sections as $section) :
 
 		<h1 class="card-header">
 			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, \Kunena\Forum\Libraries\Template\Template::getInstance()->tooltips(), true, false); ?>
-			<small class="hidden-xs-down nowrap">
+			<small class="hidden-xs-down nowrap" id="ksection-count<?php echo $section->id; ?>">
 				<?php echo \Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->totalCount($section->getTopics()); ?>
 			</small>
 		</h1>

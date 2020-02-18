@@ -171,11 +171,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
-		if ($robots == '')
-		{
-			$this->setMetaData('robots', 'index, follow');
-		}
-		elseif ($robots == 'noindex, follow')
+		if ($robots == 'noindex, follow')
 		{
 			$this->setMetaData('robots', 'noindex, follow');
 		}
@@ -183,9 +179,13 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		{
 			$this->setMetaData('robots', 'index, nofollow');
 		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
 		else
 		{
-			$this->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'index, follow');
 		}
 
 		if ($menu_item)

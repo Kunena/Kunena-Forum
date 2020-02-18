@@ -56,25 +56,24 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$doc             = Factory::getApplication()->getDocument();
 		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 
-		if ($robots == '')
+		if ($robots == 'noindex, follow')
 		{
-			$doc->setMetaData('robots', 'index, follow');
-		}
-		elseif ($robots == 'noindex, follow')
-		{
-			$doc->setMetaData('robots', 'noindex, follow');
+			$this->setMetaData('robots', 'noindex, follow');
 		}
 		elseif ($robots == 'index, nofollow')
 		{
-			$doc->setMetaData('robots', 'index, nofollow');
+			$this->setMetaData('robots', 'index, nofollow');
+		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
 		}
 		else
 		{
-			$doc->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'index, follow');
 		}
 
 		if ($menu_item)
@@ -87,29 +86,29 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
-				$doc->setTitle($title);
+				$this->setTitle($title);
 			}
 			else
 			{
 				$title = $this->config->board_title;
-				$doc->setTitle($title);
+				$this->setTitle($title);
 			}
 
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
-				$doc->setDescription($description);
+				$this->setDescription($description);
 			}
 			else
 			{
 				$description = $this->config->board_title;
-				$doc->setDescription($description);
+				$this->setDescription($description);
 			}
 
 			if (!empty($params_robots))
 			{
 				$robots = $params->get('robots');
-				$doc->setMetaData('robots', $robots);
+				$this->setMetaData('robots', $robots);
 			}
 		}
 

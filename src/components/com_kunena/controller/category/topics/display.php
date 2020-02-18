@@ -255,21 +255,21 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
-		if ($robots == '' && $this->topics)
-		{
-			$this->setMetaData('robots', 'index, follow');
-		}
-		elseif ($robots == 'noindex, follow' && $this->topics)
+		if ($robots == 'noindex, follow')
 		{
 			$this->setMetaData('robots', 'noindex, follow');
 		}
-		elseif ($robots == 'index, nofollow' && $this->topics)
+		elseif ($robots == 'index, nofollow')
 		{
 			$this->setMetaData('robots', 'index, nofollow');
 		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
 		else
 		{
-			$this->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'index, follow');
 		}
 
 		$pagdata = $this->pagination->getData();

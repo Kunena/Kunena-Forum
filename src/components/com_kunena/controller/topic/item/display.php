@@ -265,7 +265,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$this->userTopic  = $this->topic->getUserTopic();
 		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickreply;
 
-		$this->headerText = Parser::parseBBCode($this->topic->displayField('subject'));
+		$this->headerText = Parser::parseText($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";
@@ -635,11 +635,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
 
-		if ($robots == '')
-		{
-			$this->setMetaData('robots', 'index, follow');
-		}
-		elseif ($robots == 'noindex, follow')
+		if ($robots == 'noindex, follow')
 		{
 			$this->setMetaData('robots', 'noindex, follow');
 		}
@@ -647,13 +643,17 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		{
 			$this->setMetaData('robots', 'index, nofollow');
 		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
 		else
 		{
-			$this->setMetaData('robots', 'nofollow, noindex');
+			$this->setMetaData('robots', 'index, follow');
 		}
 
-		$page       = $this->pagination->pagesCurrent;
-		$total      = $this->pagination->pagesTotal;
+		$page       = (int) $this->pagination->pagesCurrent;
+		$total      = (int) $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$pagdata = $this->pagination->getData();
@@ -694,7 +694,6 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params          = $menu_item->getParams();
-			$headerText      = Parser::stripBBCode($this->topic->subject, 0, true);
 			$this->setTitle($headerText);
 
 			if ($total > 1 && $page > 1)

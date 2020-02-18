@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Controller\Statistics\General;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -92,6 +93,25 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
+		$componentParams = ComponentHelper::getParams('com_config');
+		$robots          = $componentParams->get('robots');
+
+		if ($robots == 'noindex, follow')
+		{
+			$this->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$this->setMetaData('robots', 'index, nofollow');
+		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
+		else
+		{
+			$this->setMetaData('robots', 'index, follow');
+		}
 
 		if ($menu_item)
 		{
@@ -118,6 +138,12 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 			{
 				$description = Text::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$this->setMetaData('robots', $robots);
 			}
 		}
 	}

@@ -141,7 +141,6 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
@@ -153,17 +152,6 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 			{
 				$title = Text::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
 				$this->setTitle($title);
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

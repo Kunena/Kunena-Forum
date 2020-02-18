@@ -308,7 +308,6 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params             = $menu_item->getParams();
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
@@ -321,27 +320,6 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			{
 				$title = Text::sprintf("{$categoryText}{$pagesText}");
 				$this->setTitle($title);
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				if (!empty($parentText))
-				{
-					$parentText = ',' . $parentText;
-				}
-
-				if (!empty($categoryText))
-				{
-					$categoryText = ',' . $categoryText;
-				}
-
-				$keywords = Text::_('COM_KUNENA_CATEGORIES') . $parentText . $categoryText . ',' . $this->config->board_title;
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

@@ -192,7 +192,6 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
@@ -205,17 +204,6 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			{
 				$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_USER');
 				$this->setTitle($title);
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = Text::_('COM_KUNENA_CATEGORIES');
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

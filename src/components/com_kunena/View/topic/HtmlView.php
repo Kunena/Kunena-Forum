@@ -1073,29 +1073,6 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   string  $keywords  keywords
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function setKeywords($keywords)
-	{
-		if ($this->inLayout)
-		{
-			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-		}
-
-		if (!$this->state->get('embedded'))
-		{
-			if (!empty($keywords))
-			{
-				$this->document->setMetadata('keywords', $keywords);
-			}
-		}
-	}
-
-	/**
 	 * @param   string  $description  description
 	 *
 	 * @return  void
@@ -1474,7 +1451,6 @@ class HtmlView extends BaseHtmlView
 		{
 			$params             = $menu_item->getParams(); // Get the params
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
 			if ($type == 'default')
@@ -1494,17 +1470,6 @@ class HtmlView extends BaseHtmlView
 				{
 					$title = Text::sprintf($this->topic->subject) . " ({$page}/{$pages})";
 					$this->setTitle($title);
-				}
-
-				if (!empty($params_keywords))
-				{
-					$keywords = $params->get('menu-meta_keywords');
-					$this->setKeywords($keywords);
-				}
-				else
-				{
-					$keywords = $this->escape("{$this->topic->subject}, {$this->category->name}, {$this->category->getParent()->name}, {$this->config->board_title}");
-					$this->setKeywords($keywords);
 				}
 
 				if (!empty($params_description))
@@ -1541,17 +1506,6 @@ class HtmlView extends BaseHtmlView
 					$this->setTitle($this->title);
 				}
 
-				if (!empty($params_keywords))
-				{
-					$keywords = $params->get('menu-meta_keywords');
-					$this->setKeywords($keywords);
-				}
-				else
-				{
-					$keywords = Text::_('COM_KUNENA_POST_NEW_TOPIC');
-					$this->setKeywords($keywords);
-				}
-
 				if (!empty($params_description))
 				{
 					$description = $params->get('menu-meta_description');
@@ -1575,17 +1529,6 @@ class HtmlView extends BaseHtmlView
 					$this->setTitle($this->title);
 				}
 
-				if (!empty($params_keywords))
-				{
-					$keywords = $params->get('menu-meta_keywords');
-					$this->setKeywords($keywords);
-				}
-				else
-				{
-					$keywords = Text::_('COM_KUNENA_POST_REPLY_TOPIC');
-					$this->setKeywords($keywords);
-				}
-
 				if (!empty($params_description))
 				{
 					$description = $params->get('menu-meta_description');
@@ -1607,17 +1550,6 @@ class HtmlView extends BaseHtmlView
 				{
 					$this->title = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 					$this->setTitle($this->title);
-				}
-
-				if (!empty($params_keywords))
-				{
-					$keywords = $params->get('menu-meta_keywords');
-					$this->setKeywords($keywords);
-				}
-				else
-				{
-					$keywords = Text::_('COM_KUNENA_POST_EDIT');
-					$this->setKeywords($keywords);
 				}
 
 				if (!empty($params_description))

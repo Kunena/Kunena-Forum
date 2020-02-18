@@ -262,7 +262,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
-	 * Prepare title, description, keywords, breadcrumb etc.
+	 * Prepare title, description, breadcrumb etc.
 	 *
 	 * @return  boolean|void
 	 *
@@ -403,18 +403,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		$title = strip_tags($title);
 		$this->document->setTitle($title);
-	}
-
-	/**
-	 * @param   string  $keywords  keywords
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setKeywords($keywords)
-	{
-		$this->document->setMetadata('keywords', $keywords);
 	}
 
 	/**

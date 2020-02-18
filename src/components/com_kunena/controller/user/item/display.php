@@ -237,7 +237,6 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
@@ -254,17 +253,6 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 
 			$this->setMetaData('og:description', $title, 'property');
 			$this->setMetaData('og:title', $this->profile->getName(), 'property');
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->config->board_title . ', ' . $this->profile->getName();
-				$this->setKeywords($keywords);
-			}
 
 			if (!empty($params_description))
 			{

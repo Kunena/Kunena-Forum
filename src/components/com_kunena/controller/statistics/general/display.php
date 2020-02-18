@@ -97,7 +97,6 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
@@ -108,17 +107,6 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 			else
 			{
 				$this->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS'));
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_STAT_FORUMSTATS');
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

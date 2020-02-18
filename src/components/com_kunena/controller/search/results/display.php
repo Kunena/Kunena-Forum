@@ -127,7 +127,6 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
@@ -138,17 +137,6 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 			else
 			{
 				$this->setTitle(Text::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->config->board_title . ', ' . Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', ' . $this->searchwords;
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

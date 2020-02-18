@@ -470,7 +470,6 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 			$params             = $registry->loadString($menu_item->getParams());
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
@@ -488,17 +487,6 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			$this->setMetaData('og:type', 'article', 'property');
 			$this->setMetaData('og:description', $title, 'property');
 			$this->setMetaData('og:title', $title, 'property');
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
-				$this->setKeywords($keywords);
-			}
 
 			if (!empty($params_description))
 			{

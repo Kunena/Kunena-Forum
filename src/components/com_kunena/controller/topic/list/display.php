@@ -178,7 +178,6 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
@@ -191,17 +190,6 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 			{
 				$this->title = $this->headerText;
 				$this->setTitle($headerText);
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->config->board_title;
-				$this->setKeywords($keywords);
 			}
 
 			if (!empty($params_description))

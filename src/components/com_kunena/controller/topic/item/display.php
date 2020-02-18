@@ -694,20 +694,8 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params          = $menu_item->getParams();
-			$params_keywords = $params->get('menu-meta_keywords');
 			$headerText      = Parser::stripBBCode($this->topic->subject, 0, true);
 			$this->setTitle($headerText);
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-				$this->setMetaData('article:tag', $keywords, 'property');
-			}
-			else
-			{
-				$this->setKeywords($headerText);
-			}
 
 			if ($total > 1 && $page > 1)
 			{

@@ -3099,7 +3099,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 		              'page_heading'          => '',
 		              'pageclass_sfx'         => '',
 		              'menu-meta_description' => '',
-		              'menu-meta_keywords'    => '',
 		              'robots'                => '',
 		              'secure'                => 0];
 

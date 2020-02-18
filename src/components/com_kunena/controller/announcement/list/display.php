@@ -112,7 +112,6 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 		{
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
-			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
@@ -123,16 +122,6 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 			else
 			{
 				$this->setTitle(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
-			}
-
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$this->setKeywords(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 			}
 
 			if (!empty($params_description))

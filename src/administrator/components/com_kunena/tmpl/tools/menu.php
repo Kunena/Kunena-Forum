@@ -15,7 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -35,48 +34,54 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td colspan="4"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_ISSUES') ?></td>
 							</tr>
-							<tr>
-								<th width="20%"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
-								<th colspan="3"><?php echo count($this->legacy) ?></th>
-							</tr>
-							<?php foreach ($this->legacy as $item)
-								:
-								?>
+							<?php if ($this->legacy) :?>
 								<tr>
-									<td></td>
-									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
-									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<th width="20%"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
+									<th colspan="3"><?php echo count($this->legacy) ?></th>
 								</tr>
-							<?php endforeach ?>
-							<tr>
-								<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
-								<th colspan="2"><?php echo count($this->conflicts) ?></th>
-							</tr>
-							<?php foreach ($this->conflicts as $item)
-								:
-								?>
+								<?php foreach ($this->legacy as $item)
+									:
+									?>
+									<tr>
+										<td></td>
+										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
+										<td><?php echo $item->link ?></td>
+										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									</tr>
+								<?php endforeach ?>
+							<?php endif;?>
+							<?php if ($this->conflicts) :?>
 								<tr>
-									<td></td>
-									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
-									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
+									<th colspan="2"><?php echo count($this->conflicts) ?></th>
 								</tr>
-							<?php endforeach ?>
-							<tr>
-								<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
-								<th colspan="2"><?php echo count($this->invalid) ?></th>
-							</tr>
-							<?php foreach ($this->invalid as $item)
-								:
-								?>
+								<?php foreach ($this->conflicts as $item)
+									:
+									?>
+									<tr>
+										<td></td>
+										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
+										<td><?php echo $item->link ?></td>
+										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									</tr>
+								<?php endforeach ?>
+							<?php endif;?>
+							<?php if ($this->invalid) :?>
 								<tr>
-									<td></td>
-									<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
-									<td><?php echo $item->link ?></td>
-									<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
+									<th colspan="2"><?php echo count($this->invalid) ?></th>
 								</tr>
-							<?php endforeach ?>
+								<?php foreach ($this->invalid as $item)
+									:
+									?>
+									<tr>
+										<td></td>
+										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
+										<td><?php echo $item->link ?></td>
+										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+									</tr>
+								<?php endforeach ?>
+							<?php endif;?>
 						</table>
 					</fieldset>
 				</form>

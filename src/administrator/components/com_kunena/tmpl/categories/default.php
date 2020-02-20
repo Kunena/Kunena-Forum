@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -254,11 +255,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						$img_yes            = '<i class="icon-checkmark"></i>';
 						$i                  = 0;
 
-						if ($this->pagination->total > 0)
+						if ($this->pagination->total >= 0)
 							:
-							foreach ($this->categories as $item)
-								:
-								$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
+							foreach ($this->cats as $item) :
+
+								$cat = Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->get($item);
 								$canEdit    = $this->me->isAdmin($item);
 								$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
 								$canEditOwn = $canEdit;
@@ -355,7 +356,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										}
 										?>
 										<a href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=edit&catid=' . (int) $item->id); ?>">
-											<?php echo $this->escape($item->name); ?>
+											<?php echo $this->escape($cat->name); ?>
 										</a>
 										<small>
 											<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>

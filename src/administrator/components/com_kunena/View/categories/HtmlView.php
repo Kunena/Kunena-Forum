@@ -24,6 +24,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -66,7 +67,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->categories = $this->get('AdminCategories');
+		$this->cats       = CategoryHelper::getCategories(false, false, 'none');
 		$this->pagination = $this->get('AdminNavigation');
 		$this->state      = $this->get('State');
 

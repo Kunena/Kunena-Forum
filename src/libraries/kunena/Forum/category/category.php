@@ -263,6 +263,42 @@ class Category extends KunenaDatabaseObject
 	protected $_noreorder;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $checked_out;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $name;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $alias;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $accessname;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $accesstype;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $locked;
+
+	/**
 	 * @param   mixed|array  $properties  properties
 	 *
 	 * @since   Kunena 6.0

@@ -32,19 +32,59 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $systemreport;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $systemreport_anonymous;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $listtrashdelete;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $forumList;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $controloptions;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $keepSticky;
 
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
 	protected $legacy;
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $conflicts;
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $invalid;
 
 	/**
 	 * @return  void

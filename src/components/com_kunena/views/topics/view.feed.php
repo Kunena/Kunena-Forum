@@ -35,19 +35,18 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		KunenaHtmlParser::$relative = false;
-		$config                     = KunenaFactory::getConfig();
 		$cache                      = Factory::getCache('com_kunena_rss', 'output');
 
-		if (!$config->get('cache'))
+		if (!$this->config->get('cache'))
 		{
 			$cache->setCaching(0);
 		}
 		else
 		{
-			if ($config->rss_cache >= 1)
+			if ($this->config->rss_cache >= 1)
 			{
 				$cache->setCaching(1);
-				$cache->setLifeTime($config->rss_cache);
+				$cache->setLifeTime($this->config->rss_cache);
 			}
 			else
 			{
@@ -61,7 +60,7 @@ class KunenaViewTopics extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$this->document->setGenerator($config->board_title);
+		$this->document->setGenerator($this->config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -113,7 +112,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($config->board_title);
+		$this->document->setGenerator($this->config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -159,7 +158,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($config->board_title);
+		$this->document->setGenerator($this->config->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{

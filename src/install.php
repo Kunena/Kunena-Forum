@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Installer;
 
 /**
  * Kunena package installer script.
@@ -350,9 +351,9 @@ class Pkg_KunenaInstallerScript
 		}
 
 		// Check if we can downgrade to the current version.
-		if (class_exists('KunenaInstaller'))
+		if (class_exists('Installer'))
 		{
-			if (KunenaInstaller::canDowngrade($version))
+			if (Installer::canDowngrade($version))
 			{
 				return true;
 			}

@@ -346,7 +346,10 @@ abstract class MessageHelper
 
 		foreach ($categories as $category)
 		{
-			$catlist += $category->getChannels();
+			if ($category->isAuthorised($authorise))
+			{
+				$catlist += $category->getChannels();
+			}
 		}
 
 		if (empty($catlist))

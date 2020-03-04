@@ -15,14 +15,15 @@ namespace Kunena\Forum\Administrator\View\Tools;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -93,9 +94,81 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault($tpl = null)
+	public function display($tpl = null)
 	{
-		$this->setToolBarDefault();
+		$layout = $this->getLayout();
+
+		if ($layout == 'default')
+		{
+			$this->setToolBar();
+		}
+		elseif ($layout == 'cleanup')
+		{
+			$this->setToolBarCleanupIP();
+		}
+		elseif ($layout == 'diagnotics')
+		{
+			$this->setToolBarDiagnostics();
+		}
+		elseif ($layout == 'menu')
+		{
+			$this->legacy    = MenuFix::getLegacy();
+			$this->invalid   = MenuFix::getInvalid();
+			$this->conflicts = MenuFix::getConflicts();
+
+			$this->setToolBarMenu();
+		}
+		elseif ($layout == 'prune')
+		{
+			$this->forumList       = $this->get('PruneCategories');
+			$this->listtrashdelete = $this->get('PruneListtrashdelete');
+			$this->controloptions  = $this->get('PruneControlOptions');
+			$this->keepSticky      = $this->get('PruneKeepSticky');
+
+			$this->setToolBarMenu();
+		}
+		elseif ($layout == 'purgerestatements')
+		{
+			$this->setToolBarPurgeReStatements();
+		}
+		elseif ($layout == 'recount')
+		{
+			$this->setToolBarRecount();
+		}
+		elseif ($layout == 'report')
+		{
+			$this->systemreport           = $this->get('SystemReport');
+			$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
+
+			$this->setToolBarReport();
+		}
+		elseif ($layout == 'subscriptions')
+		{
+			$app   = Factory::getApplication();
+			$id    = $app->input->get('id', 0, 'int');
+
+			$topic           = TopicHelper::get($id);
+			$acl             = Access::getInstance();
+			$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
+
+			$this->cat_subscribers_users   = KunenaUserHelper::loadUsers($cat_subscribers);
+			$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
+			$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
+			$this->cat_topic_subscribers   = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
+
+			$this->setToolBarSubscriptions();
+		}
+		elseif ($layout == 'syncusers')
+		{
+			$this->setToolBarSyncUsers();
+		}
+		elseif ($layout == 'uninstall')
+		{
+			$login              = Login::getInstance();
+			$this->isTFAEnabled = $login->isTFAEnabled();
+
+			$this->setToolBarUninstall();
+		}
 
 		return parent::display($tpl);
 	}
@@ -107,29 +180,11 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDefault()
+	protected function setToolBar()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
 		$help_url = 'https://docs.kunena.org/en/manual/backend/tools';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayPrune()
-	{
-		$this->forumList       = $this->get('PruneCategories');
-		$this->listtrashdelete = $this->get('PruneListtrashdelete');
-		$this->controloptions  = $this->get('PruneControlOptions');
-		$this->keepSticky      = $this->get('PruneKeepSticky');
-
-		$this->setToolBarPrune();
-		$this->display();
 	}
 
 	/**
@@ -153,44 +208,6 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displaySubscriptions()
-	{
-		$id = $this->app->input->get('id', 0, 'int');
-
-		$topic           = TopicHelper::get($id);
-		$acl             = Access::getInstance();
-		$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
-
-		$this->cat_subscribers_users = CategoryHelper::loadUsers($cat_subscribers);
-
-		$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
-		$this->topic_subscribers_users = CategoryHelper::loadUsers($topic_subscribers);
-
-		$this->cat_topic_subscribers = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
-
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displaySyncUsers()
-	{
-		$this->setToolBarSyncUsers();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarSyncUsers()
 	{
@@ -208,19 +225,6 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayRecount()
-	{
-		$this->setToolBarRecount();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarRecount()
 	{
@@ -232,23 +236,6 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/tools/recount-statistics';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayMenu()
-	{
-		$this->legacy    = MenuFix::getLegacy();
-		$this->invalid   = MenuFix::getInvalid();
-		$this->conflicts = MenuFix::getConflicts();
-
-		$this->setToolBarMenu();
-		$this->display();
 	}
 
 	/**
@@ -278,19 +265,6 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayPurgeReStatements()
-	{
-		$this->setToolBarPurgeReStatements();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarPurgeReStatements()
 	{
@@ -308,21 +282,8 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
 	 */
-	public function displayCleanupIP()
-	{
-		$this->setToolCleanupIP();
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolCleanupIP()
+	protected function setToolBarCleanupIP()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -332,19 +293,6 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		$help_url = 'https://docs.kunena.org/en/manual/backend/tools/remove-stored-ip-addresses';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayDiagnostics()
-	{
-		$this->setToolBarDiagnostics();
-		$this->display();
 	}
 
 	/**
@@ -366,23 +314,6 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayUninstall()
-	{
-		$this->setToolBarUninstall();
-
-		$login              = Login::getInstance();
-		$this->isTFAEnabled = $login->isTFAEnabled();
-
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
 	 */
 	protected function setToolBarUninstall()
 	{
@@ -398,15 +329,15 @@ class HtmlView extends BaseHtmlView
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
 	 */
-	public function displayReport()
+	protected function setToolBarReport()
 	{
-		$this->systemreport           = $this->get('SystemReport');
-		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
-		$this->setToolBarReport();
-		$this->display();
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/faq/configuration-report';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -414,7 +345,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarReport()
+	protected function setToolBarSubscriptions()
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
 		ToolbarHelper::spacer();

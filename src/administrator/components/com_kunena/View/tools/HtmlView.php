@@ -37,55 +37,73 @@ class HtmlView extends BaseHtmlView
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $systemreport;
+	protected $systemreport = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $systemreport_anonymous;
+	protected $systemreport_anonymous = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $listtrashdelete;
+	protected $listtrashdelete = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $forumList;
+	protected $forumList = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $controloptions;
+	protected $controloptions = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $keepSticky;
+	protected $keepSticky = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $legacy;
+	protected $legacy = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $conflicts;
+	protected $conflicts = [];
 
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $invalid;
+	protected $invalid = [];
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $cat_subscribers_users = [];
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $topic_subscribers_users = [];
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $cat_topic_subscribers = [];
 
 	/**
 	 * @return  void
@@ -102,11 +120,11 @@ class HtmlView extends BaseHtmlView
 		{
 			$this->setToolBar();
 		}
-		elseif ($layout == 'cleanup')
+		elseif ($layout == 'cleanupip')
 		{
 			$this->setToolBarCleanupIP();
 		}
-		elseif ($layout == 'diagnotics')
+		elseif ($layout == 'diagnostics')
 		{
 			$this->setToolBarDiagnostics();
 		}
@@ -125,7 +143,7 @@ class HtmlView extends BaseHtmlView
 			$this->controloptions  = $this->get('PruneControlOptions');
 			$this->keepSticky      = $this->get('PruneKeepSticky');
 
-			$this->setToolBarMenu();
+			$this->setToolBarPrune();
 		}
 		elseif ($layout == 'purgerestatements')
 		{
@@ -144,17 +162,20 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($layout == 'subscriptions')
 		{
-			$app   = Factory::getApplication();
-			$id    = $app->input->get('id', 0, 'int');
+			$this->app = Factory::getApplication();
+			$id = $this->app->input->get('id', 0, 'int');
 
-			$topic           = TopicHelper::get($id);
-			$acl             = Access::getInstance();
-			$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
+			if ($id)
+			{
+				$topic           = TopicHelper::get($id);
+				$acl             = Access::getInstance();
+				$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
 
-			$this->cat_subscribers_users   = KunenaUserHelper::loadUsers($cat_subscribers);
-			$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
-			$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
-			$this->cat_topic_subscribers   = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
+				$this->cat_subscribers_users   = KunenaUserHelper::loadUsers($cat_subscribers);
+				$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
+				$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
+				$this->cat_topic_subscribers   = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
+			}
 
 			$this->setToolBarSubscriptions();
 		}

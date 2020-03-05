@@ -26,6 +26,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use RuntimeException;
@@ -202,6 +203,12 @@ class ToolsModel extends AdminModel
 	protected $integration_settings = null;
 
 	/**
+	 * @var     KunenaConfig|mixed
+	 * @since   Kunena 6.0
+	 */
+	private $config;
+
+	/**
 	 * @inheritDoc
 	 *
 	 * @param   array    $data     data
@@ -293,6 +300,7 @@ class ToolsModel extends AdminModel
 	 */
 	public function getSystemReportAnonymous()
 	{
+		$this->app = Factory::getApplication();
 		$kunena_db = Factory::getDBO();
 
 		$this->getPhpExtensions();
@@ -377,6 +385,7 @@ class ToolsModel extends AdminModel
 	 */
 	protected function getReportData()
 	{
+		$this->app = Factory::getApplication();
 
 		if (!$this->app->get('smtpuser'))
 		{
@@ -751,9 +760,13 @@ class ToolsModel extends AdminModel
 	 * @return  string
 	 *
 	 * @since   Kunena 1.6
+	 *
+	 * @throws  Exception
 	 */
 	protected function _getKunenaConfiguration()
 	{
+		$this->config = KunenaConfig::getInstance();
+
 		if ($this->config)
 		{
 			$params = $this->config->getProperties();
@@ -937,11 +950,12 @@ class ToolsModel extends AdminModel
 	public function getSystemReport()
 	{
 		$kunena_db = Factory::getDBO();
+		$this->app = Factory::getApplication();
 
 		$this->getReportData();
 		$this->getPhpExtensions();
 
-		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
+		return '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
 			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
 			. ' | ' . $this->gd_support . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' (Server type: ' . $kunena_db->getServerType() . ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
@@ -950,7 +964,5 @@ class ToolsModel extends AdminModel
 			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
 			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote] [quote][b]Kunena template params[/b]:[spoiler] ' . $this->ktemplateparams . '[/spoiler][/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
-
-		return $report;
 	}
 }

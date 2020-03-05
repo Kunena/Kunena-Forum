@@ -191,7 +191,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function setToolBarChooseless()
 	{
-
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');

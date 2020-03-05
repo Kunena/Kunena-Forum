@@ -217,7 +217,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
+		ToolbarHelper::custom('tools.prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -234,7 +234,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('syncusers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
+		ToolbarHelper::custom('tools.syncusers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -251,7 +251,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
+		ToolbarHelper::custom('tools.recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -271,10 +271,10 @@ class HtmlView extends BaseHtmlView
 
 		if (!empty($this->legacy))
 		{
-			ToolbarHelper::custom('fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
+			ToolbarHelper::custom('tools.fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		}
 
-		ToolbarHelper::custom('trashmenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
+		ToolbarHelper::custom('tools.trashmenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -291,7 +291,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
-		ToolbarHelper::trash('purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
+		ToolbarHelper::trash('tools.purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -308,7 +308,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('cleanupip', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEANUP_IP', false);
+		ToolbarHelper::custom('tools.cleanupip', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEANUP_IP', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();

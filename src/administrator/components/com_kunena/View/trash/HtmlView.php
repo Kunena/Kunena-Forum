@@ -62,7 +62,7 @@ class HtmlView extends BaseHtmlView
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
+		ToolbarHelper::custom('trash.purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
@@ -162,9 +162,9 @@ class HtmlView extends BaseHtmlView
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+		ToolbarHelper::custom('trash.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
+		ToolbarHelper::custom('trash.purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		ToolbarHelper::spacer();
 
 		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';

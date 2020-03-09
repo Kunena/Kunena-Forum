@@ -945,19 +945,12 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			if ($mesid)
 			{
-				if (KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded' && $mesid > 0)
-				{
-					$uri->setFragment($mesid);
-					$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
+				$uri->setFragment($mesid);
+				$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
 
-					if ($limitstart)
-					{
-						$uri->setVar('limitstart', $limitstart);
-					}
-				}
-				else
+				if ($limitstart)
 				{
-					$uri->setVar('mesid', $mesid);
+					$uri->setVar('limitstart', $limitstart);
 				}
 			}
 		}

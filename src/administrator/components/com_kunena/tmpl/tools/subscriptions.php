@@ -21,12 +21,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-bookmark"></i>
-					<?php echo Text::_('Subscriptions'); ?>
-				</div>
-				<hr class="hr-condensed">
-
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
 				      method="post"
 				      id="adminForm" name="adminForm">

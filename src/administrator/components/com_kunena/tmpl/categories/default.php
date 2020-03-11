@@ -49,11 +49,6 @@ $filterItem = $this->escape($this->state->get('item.id'));
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-list-view"></i>
-					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
-				</div>
-				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>"
 				      method="post" name="adminForm"
 				      id="adminForm">
@@ -356,7 +351,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										}
 										?>
 										<a href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=edit&catid=' . (int) $item->id); ?>">
-											<?php echo $this->escape($cat->name); ?>
+											<?php echo $this->escape($item->name); ?>
 										</a>
 										<small>
 											<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>

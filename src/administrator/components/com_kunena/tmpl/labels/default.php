@@ -24,11 +24,6 @@ HTMLHelper::_('bootstrap.popover');
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-tags-2"></i>
-					<?php echo Text::_('Labels') ?>
-				</div>
-				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
 
 				</div>

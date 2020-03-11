@@ -33,11 +33,6 @@ if ($saveOrder)
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-puzzle"></i>
-					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
-				</div>
-				<hr class="hr-condensed">
 				<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
 					<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 					<input type="hidden" name="task" value=""/>

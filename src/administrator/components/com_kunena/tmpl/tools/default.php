@@ -22,11 +22,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-tools"></i>
-					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
-				</div>
-				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
 					<a class="btn btn-outline-primary"
 					   href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=report') ?>">

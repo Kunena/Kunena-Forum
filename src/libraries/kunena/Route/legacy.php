@@ -25,8 +25,6 @@ use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
-require_once KPATH_SITE . '/router.php';
-
 /**
  * Class KunenaRouteLegacy
  *

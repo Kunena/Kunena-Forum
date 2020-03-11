@@ -20,11 +20,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-color-palette"></i>
-					<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER') ?>
-				</div>
-				<hr class="hr-condensed">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
 				      method="post" id="adminForm"
 				      name="adminForm">

@@ -40,11 +40,6 @@ HTMLHelper::_('dropdown.init');
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header">
-					<i class="icon-thumbs-up"></i>
-					<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
-				</div>
-				<hr class="hr-condensed">
 				<div class="tabbable-panel">
 					<div class="tabbable-line">
 						<ul class="nav nav-tabs">

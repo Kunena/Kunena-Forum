@@ -24,10 +24,6 @@ HTMLHelper::_('bootstrap.popover');
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<div class="module-title nav-header"><i
-							class="icon-mail"></i> <?php echo Text::_('Select Email Form') ?>
-				</div>
-				<hr class="hr-condensed">
 				<div id="dashboard-icons" class="btn-group">
 					<a class="btn btn-outline-primary" href="#">
 						<i class="icon-big icon-user"></i><br/>

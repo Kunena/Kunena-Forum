@@ -278,11 +278,10 @@ abstract class MessageHelper
 		$user        = isset($params['user']) ? $params['user'] : false;
 		$where       = isset($params['where']) ? (string) $params['where'] : '';
 		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
+		$view = Factory::getApplication()->input->getCmd('view');
 
 		if ($limit < 1 && empty($params['nolimit']))
 		{
-			$view = Factory::getApplication()->input->getCmd('view');
-
 			if ($view == 'search')
 			{
 				$limit = KunenaFactory::getConfig()->messages_per_page_search;
@@ -346,7 +345,14 @@ abstract class MessageHelper
 
 		foreach ($categories as $category)
 		{
-			if ($category->isAuthorised($authorise))
+			if ($view == 'search')
+			{
+				if ($category->isAuthorised('read'))
+				{
+					$catlist += $category->getChannels();
+				}
+			}
+			else
 			{
 				$catlist += $category->getChannels();
 			}

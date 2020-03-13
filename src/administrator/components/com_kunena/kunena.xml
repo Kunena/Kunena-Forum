@@ -12,17 +12,17 @@
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <scriptfile>install/install.script.php</scriptfile>
     <files folder="site">
-        <filename>attachment.php</filename>
         <filename>jomsocial_rule.xml</filename>
         <filename>kunena.php</filename>
-        <filename>router.php</filename>
+        <folder>Application</folder>
         <folder>controller</folder>
-        <folder>controllers</folder>
+        <folder>Helper</folder>
         <folder>language</folder>
         <folder>layout</folder>
-        <folder>models</folder>
+        <folder>Model</folder>
+        <folder>Service</folder>
         <folder>template</folder>
-        <folder>views</folder>
+        <folder>View</folder>
     </files>
     <administration>
         <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA
@@ -43,18 +43,22 @@
             <menu view="trash">COM_KUNENA_TRASH_MANAGER</menu>
         </submenu>
         <files>
-            <filename>api.php</filename>
             <filename>install.php</filename>
-            <filename>kunena.php</filename>
+            <filename>kunena.xml</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <folder>controllers</folder>
+            <folder>api</folder>
+            <folder>Controller</folder>
+            <folder>Dispatcher</folder>
+            <folder>forms</folder>
+            <folder>Helper</folder>
             <folder>install</folder>
             <folder>language</folder>
             <folder>media</folder>
-            <folder>models</folder>
-            <folder>template</folder>
-            <folder>views</folder>
+            <folder>Model</folder>
+            <folder>services</folder>
+            <folder>tmpl</folder>
+            <folder>View</folder>
         </files>
     </administration>
 </extension>

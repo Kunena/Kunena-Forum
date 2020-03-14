@@ -137,7 +137,7 @@ class Category extends KunenaDatabaseObject
 	];
 
 	/**
-	 * @var     null
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
@@ -297,6 +297,12 @@ class Category extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $locked;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $indent;
 
 	/**
 	 * @param   mixed|array  $properties  properties

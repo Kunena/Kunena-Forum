@@ -44,9 +44,15 @@ class HtmlView extends BaseHtmlView
 	 * The model state
 	 *
 	 * @var    CMSObject
-	 * @since  6.0
+	 * @since  Kunena 6.0
 	 */
 	protected $state;
+
+	/**
+	 * @var     array|Category[]
+	 * @since   Kunena 6.0
+	 */
+	public $batch_categories;
 
 	/**
 	 * @return  void
@@ -67,7 +73,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->cats       = CategoryHelper::getCategories(false, false, 'none');
+		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
 		$this->state      = $this->get('State');
 

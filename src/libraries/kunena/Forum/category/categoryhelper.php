@@ -80,7 +80,7 @@ abstract class CategoryHelper
 
 		if (is_null(self::$_tree))
 		{
-			self::buildTree(self::$_instances);
+			//self::buildTree(self::$_instances);
 		}
 
 		self::$allowed = Access::getInstance()->getAllowedCategories();
@@ -123,7 +123,7 @@ abstract class CategoryHelper
 		}
 
 		// TODO: remove this by adding level into table
-		self::buildTree($cat_instances);
+		//self::buildTree($cat_instances);
 		$heap = [null];
 
 		while (($parent = array_shift($heap)) !== null)

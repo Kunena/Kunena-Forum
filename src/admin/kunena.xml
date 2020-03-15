@@ -10,12 +10,10 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>COM_KUNENA_XML_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Api\</namespace>
-    <namespace>Kunena\Forum\Administrator\</namespace>
-    <namespace>Kunena\Forum\Site\</namespace>
+    <namespace>Kunena\Forum</namespace>
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+            <file driver="mysql" charset="utf8">Install/sql/install/mysql/create_tables.utf8.sql</file>
         </sql>
     </install>
     <files folder="site">

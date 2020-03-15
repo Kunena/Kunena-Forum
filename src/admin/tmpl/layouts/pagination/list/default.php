@@ -9,16 +9,18 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+
 defined('_JEXEC') or die();
 
-$data = $this->pagination->getData();
+$data     = $this->pagination->getData();
+$template = KunenaFactory::getAdminTemplate();
 
 if ($data->pages && count($data->pages) <= 1)
 {
 	return;
 }
-
-$template = new KunenaAdminTemplate;
 ?>
 <ul class="pagination pagination-sm justify-content-center">
 	<?php echo $template->paginationItem($data->start); ?>

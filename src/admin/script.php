@@ -60,21 +60,21 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	/**
 	 * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	private $app;
 
 	/**
 	 * @var  string  During an update, it will be populated with the old release version
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	private $oldRelease;
 
 	/**
 	 *  Constructor
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -89,7 +89,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @return  boolean  false will terminate the installation
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	public function preflight($type, $parent)
 	{
@@ -118,7 +118,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	public function install($parent)
 	{
@@ -133,7 +133,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	public function uninstall($parent)
 	{
@@ -146,7 +146,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
 	 */
 	public function update($parent)
 	{
@@ -175,12 +175,13 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	/**
 	 * method to run after an install/update/uninstall method
 	 *
-	 * @param   string                                        $type   'install', 'update' or 'discover_install'
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   string                                         $type    'install', 'update' or 'discover_install'
+	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter  $parent  Installerobject
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function postflight($type, $parent)
 	{

@@ -102,7 +102,7 @@ IF exist %GitTarget%\plugins\content\kunenadiscuss ( rmdir /S/q %GitTarget%\plug
 
 echo Make symbolic links for Kunena
 mklink /d %GitTarget%\administrator\components\com_kunena %GitSource%\src\admin
-mklink /d %GitTarget%\components\com_kunena %GitSource%\src\components
+mklink /d %GitTarget%\components\com_kunena %GitSource%\src\site
 mklink /d %GitTarget%\libraries\kunena %GitSource%\src\libraries\kunena
 mklink /d %GitTarget%\plugins\system\kunena %GitSource%\src\plugins\plg_system_kunena
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\src\plugins\plg_quickicon_kunena

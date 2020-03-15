@@ -63,7 +63,6 @@
             <folder>Model</folder>
             <folder>services</folder>
             <folder>tmpl</folder>
-            <folder>sql</folder>
             <folder>View</folder>
         </files>
     </administration>

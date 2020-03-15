@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Layout\Layout;
 
 HTMLHelper::_('behavior.multiselect');

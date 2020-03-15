@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Statistics;

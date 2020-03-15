@@ -14,7 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Administrator\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Install\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 $document = Factory::getApplication()->getDocument();

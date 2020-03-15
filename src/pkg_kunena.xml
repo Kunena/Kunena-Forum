@@ -16,11 +16,11 @@
     <namespace>Kunena\Forum\Administrator</namespace>
     <namespace>Kunena\Forum\Site</namespace>
 
-    <scriptfile>install.php</scriptfile>
+    <scriptfile>script.php</scriptfile>
 
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/install/create_tables.utf8.sql</file>
+            <file driver="mysql" charset="utf8">sql/create_tables.utf8.sql</file>
         </sql>
     </install>
 

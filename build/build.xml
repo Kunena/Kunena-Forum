@@ -35,8 +35,8 @@
 		<not><isset property="build_dir" /></not>
 	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.site" value="src/components/com_kunena" />
-	<property name="kunena.admin" value="src/administrator/components/com_kunena" />
+	<property name="kunena.site" value="src/site" />
+	<property name="kunena.admin" value="src/admin" />
 	<property name="kunena.media" value="src/media/kunena" />
 
 	<target name="dist" depends="mkdir,archive_old,init,build,minify,copy,info,cleanup" />

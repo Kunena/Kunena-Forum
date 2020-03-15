@@ -12,6 +12,12 @@
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <namespace>Kunena\Forum\Api</namespace>
     <namespace>Kunena\Forum\Administrator</namespace>
+    <namespace>Kunena\Forum\Site</namespace>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/create_tables.utf8.sql</file>
+        </sql>
+    </install>
     <files folder="site">
         <filename>jomsocial_rule.xml</filename>
         <filename>kunena.php</filename>
@@ -58,6 +64,7 @@
             <folder>Model</folder>
             <folder>services</folder>
             <folder>tmpl</folder>
+            <folder>sql</folder>
             <folder>View</folder>
         </files>
     </administration>

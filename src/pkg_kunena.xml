@@ -12,17 +12,8 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>Kunena Forum Package.</description>
-    <namespace>Kunena\Forum\Api</namespace>
-    <namespace>Kunena\Forum\Administrator</namespace>
-    <namespace>Kunena\Forum\Site</namespace>
 
     <scriptfile>script.php</scriptfile>
-
-    <install>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/create_tables.utf8.sql</file>
-        </sql>
-    </install>
 
     <files folder="packages">
         <filename type="library" id="kunena">lib_kunena_v@kunenaversion@.zip</filename>

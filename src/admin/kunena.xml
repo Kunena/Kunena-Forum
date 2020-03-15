@@ -14,7 +14,7 @@
     <scriptfile>script.php</scriptfile>
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">Install/sql/install/mysql/create_tables.utf8.sql</file>
+            <file driver="mysql" charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>
         </sql>
     </install>
     <files folder="site">
@@ -54,7 +54,6 @@
             <filename>config.xml</filename>
             <filename>script.php</filename>
             <folder>api</folder>
-            <folder>Extension</folder>
             <folder>forms</folder>
             <folder>language</folder>
             <folder>media</folder>

@@ -54,18 +54,14 @@
             <filename>config.xml</filename>
             <filename>script.php</filename>
             <folder>api</folder>
-            <folder>Controller</folder>
-            <folder>Dispatcher</folder>
             <folder>Extension</folder>
             <folder>forms</folder>
-            <folder>Helper</folder>
             <folder>language</folder>
             <folder>Install</folder>
             <folder>media</folder>
-            <folder>Model</folder>
+            <folder>src</folder>
             <folder>services</folder>
             <folder>tmpl</folder>
-            <folder>View</folder>
         </files>
     </administration>
 </extension>

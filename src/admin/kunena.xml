@@ -58,6 +58,7 @@
             <folder>forms</folder>
             <folder>Helper</folder>
             <folder>language</folder>
+            <folder>Install</folder>
             <folder>media</folder>
             <folder>Model</folder>
             <folder>services</folder>

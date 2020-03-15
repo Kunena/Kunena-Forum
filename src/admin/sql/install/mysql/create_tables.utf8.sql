@@ -414,6 +414,27 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned`
 )
     DEFAULT CHARACTER SET utf8;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_logs`
+(
+    `id`          int(11)     NOT NULL auto_increment,
+    `type`        tinyint(4)  NULL,
+    `user_id`     int(11)     NULL,
+    `category_id` int(11)     NULL,
+    `topic_id`    int(11)     NULL,
+    `target_user` int(11)     NULL,
+    `ip`          varchar(40) NULL,
+    `time`        int(11)     NULL,
+    `operation`   varchar(40) NULL,
+    `data`        mediumtext  NULL,
+    PRIMARY KEY (id),
+    KEY `type` (type),
+    KEY `category_id` (category_id),
+    KEY `topic_id` (topic_id),
+    KEY `target_user` (target_user),
+    KEY `user_id` (user_id)
+)
+    DEFAULT CHARACTER SET utf8;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_version`
 (
     `id`          int(11)     NOT NULL auto_increment,

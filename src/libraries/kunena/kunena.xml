@@ -11,7 +11,7 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>Kunena Framework.</description>
-    <namespace>Kunena\Forum\Libraries</namespace>
+    <namespace >Kunena\Forum\Libraries</namespace>
     <files>
         <folder>Access</folder>
         <folder>Activity</folder>
@@ -36,6 +36,7 @@
         <folder>Html</folder>
         <folder>Icons</folder>
         <folder>Image</folder>
+        <folder>Install</folder>
         <folder>Installer</folder>
         <folder>Integration</folder>
         <folder>KunenaPrivate</folder>

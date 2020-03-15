@@ -16,7 +16,7 @@
     <namespace>Kunena\Forum\Administrator</namespace>
     <namespace>Kunena\Forum\Site</namespace>
 
-    <scriptfile>script.php</scriptfile>
+    <scriptfile>install.php</scriptfile>
 
     <install>
         <sql>

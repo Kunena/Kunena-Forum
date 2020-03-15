@@ -184,7 +184,7 @@ class KunenaDate extends Date
 	 */
 	public function toTimeAgo()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$chunks = [
 			'y' => [Text::_('COM_KUNENA_DATE_YEAR'), Text::_('COM_KUNENA_DATE_YEARS')],
 			'm' => [Text::_('COM_KUNENA_DATE_MONTH'), Text::_('COM_KUNENA_DATE_MONTHS')],
@@ -239,7 +239,7 @@ class KunenaDate extends Date
 			$output = Text::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $output;
 	}

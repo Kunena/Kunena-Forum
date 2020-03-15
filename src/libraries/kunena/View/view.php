@@ -190,7 +190,7 @@ class View extends HtmlView
 		$layoutName     = ucfirst($layout);
 		$layoutFunction = 'display' . $layoutName;
 
-		KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+		KunenaProfiler::getInstance() ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
 		if (!$this->embedded && isset($this->common))
 		{
@@ -203,7 +203,7 @@ class View extends HtmlView
 				$this->common->body   = $this->config->offline_message;
 				$this->common->html   = true;
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+				KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
 			}
@@ -215,7 +215,7 @@ class View extends HtmlView
 				$this->common->header = Text::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body   = Text::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+				KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
 			}
@@ -223,7 +223,7 @@ class View extends HtmlView
 			{
 				// Layout was not found (don't allow Joomla to raise an error)
 				$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
-				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+				KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
 			}
@@ -246,7 +246,7 @@ class View extends HtmlView
 			$contents = $this->display($tpl ? $tpl : null);
 		}
 
-		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+		KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 		return $contents;
 	}
@@ -530,7 +530,7 @@ class View extends HtmlView
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
 	{
-		KUNENA_PROFILER ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$layout = $this->getLayout();
 
@@ -586,7 +586,7 @@ class View extends HtmlView
 		}
 		else
 		{
-			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			if ($this->app->scope == 'com_kunena')
 			{

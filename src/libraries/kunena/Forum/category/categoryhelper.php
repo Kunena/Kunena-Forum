@@ -65,7 +65,7 @@ abstract class CategoryHelper
 	 */
 	public static function initialize()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (KunenaFactory::getConfig()->get('cache_cat'))
 		{
@@ -80,11 +80,11 @@ abstract class CategoryHelper
 
 		if (is_null(self::$_tree))
 		{
-			//self::buildTree(self::$_instances);
+			self::buildTree(self::$_instances);
 		}
 
 		self::$allowed = Access::getInstance()->getAllowedCategories();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -96,7 +96,7 @@ abstract class CategoryHelper
 	 */
 	public static function loadCategories()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -123,7 +123,7 @@ abstract class CategoryHelper
 		}
 
 		// TODO: remove this by adding level into table
-		//self::buildTree($cat_instances);
+		self::buildTree($cat_instances);
 		$heap = [null];
 
 		while (($parent = array_shift($heap)) !== null)
@@ -139,7 +139,7 @@ abstract class CategoryHelper
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $cat_instances;
 	}
@@ -158,18 +158,18 @@ abstract class CategoryHelper
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($identifier instanceof Category)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return $identifier;
 		}
 
 		if (!is_numeric($identifier))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 			$category = new Category;
 			$category->load();
 
@@ -188,7 +188,7 @@ abstract class CategoryHelper
 			self::$_instances [$id]->load();
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return self::$_instances [$id];
 	}
@@ -202,7 +202,7 @@ abstract class CategoryHelper
 	 */
 	protected static function buildTree(array &$instances)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		self::$_tree = [];
 
 		foreach ($instances as $instance)
@@ -215,7 +215,7 @@ abstract class CategoryHelper
 			self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [(int) $instance->id];
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -294,13 +294,13 @@ abstract class CategoryHelper
 	 */
 	public static function getCategories($ids = false, $reverse = false, $authorise = 'read')
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($ids === false)
 		{
 			if ($authorise == 'none')
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 				return self::$_instances;
 			}
@@ -349,7 +349,7 @@ abstract class CategoryHelper
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $list;
 	}
@@ -408,7 +408,7 @@ abstract class CategoryHelper
 	 */
 	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = [])
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db     = Factory::getDBO();
 		$config = KunenaFactory::getConfig();
 
@@ -450,7 +450,7 @@ abstract class CategoryHelper
 
 		if (!$total)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [0, []];
 		}
@@ -619,14 +619,14 @@ abstract class CategoryHelper
 	 */
 	public static function getParents($id = 0, $levels = 100, $params = [])
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$action      = isset($params['action']) ? (string) $params['action'] : 'read';
 
 		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->isAuthorised($action, null))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [];
 		}
@@ -638,14 +638,14 @@ abstract class CategoryHelper
 		{
 			if (!isset(self::$_instances [$parent]))
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 				return [];
 			}
 
 			if (!$unpublished && self::$_instances[$parent]->published != 1)
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 				return [];
 			}
@@ -655,7 +655,7 @@ abstract class CategoryHelper
 			$parent = self::$_instances [$parent]->parent_id;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return array_reverse($list, true);
 	}
@@ -723,11 +723,11 @@ abstract class CategoryHelper
 	 */
 	public static function getChildren($parents = 0, $levels = 0, $params = [])
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!is_array($parents) && !isset(self::$_tree[$parents]))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [];
 		}
@@ -749,7 +749,7 @@ abstract class CategoryHelper
 
 		$list = self::_getChildren($parents, $levels, $params, $optimize);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $list;
 	}

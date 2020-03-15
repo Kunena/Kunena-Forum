@@ -373,8 +373,8 @@ class KunenaController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? $this->profiler->mark('beforeDisplay') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Get the document object.
 		$document = Factory::getApplication()->getDocument();
@@ -474,7 +474,7 @@ class KunenaController extends BaseController
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $this;
 	}

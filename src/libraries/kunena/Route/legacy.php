@@ -175,7 +175,7 @@ abstract class Legacy
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($uri->getVar('func'))
 		{
@@ -185,7 +185,7 @@ abstract class Legacy
 
 		if (!isset(self::$functions[$uri->getVar('view')]))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return;
 		}
@@ -766,7 +766,7 @@ abstract class Legacy
 			Log::add("Legacy URI {$legacy->toString(['path', 'query'])} was converted to {$uri->toString(['path', 'query'])}", Log::DEBUG, 'kunena');
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $changed;
 	}

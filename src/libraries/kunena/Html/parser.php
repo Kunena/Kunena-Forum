@@ -222,7 +222,7 @@ abstract class Parser
 			return false;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$bbcode         = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
@@ -232,7 +232,7 @@ abstract class Parser
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt, $target);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $txt;
 	}

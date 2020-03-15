@@ -207,7 +207,7 @@ class Avatar
 	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$size = $this->getSize($sizex, $sizey);
 
 		if (!$size->x || !$size->y)
@@ -216,7 +216,7 @@ class Avatar
 		}
 
 		$result = $this->_getURL($user, $size->x, $size->y);
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $result;
 	}

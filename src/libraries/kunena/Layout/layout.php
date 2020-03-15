@@ -92,7 +92,7 @@ class Layout extends Base
 	 */
 	public function render($layout = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 
 		try
 		{
@@ -105,11 +105,11 @@ class Layout extends Base
 		}
 		catch (Exception $e)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 
 		return $output;
 	}
@@ -204,7 +204,7 @@ class Layout extends Base
 	 */
 	public function getCategoryLink(Category $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$content)
 		{
@@ -247,7 +247,7 @@ class Layout extends Base
 
 		$link = HTMLHelper::_('link', $category->getUrl(), $content, $title, $class, $con);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}
@@ -271,7 +271,7 @@ class Layout extends Base
 	 */
 	public function getTopicLink(Topic $topic, $action = null, $content = null, $title = null, $class = null, Category $category = null, $follow = true, $canonical = false)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 
@@ -341,7 +341,7 @@ class Layout extends Base
 
 		$link = HTMLHelper::_('link', $url, $content, $title, $class, $con);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}

@@ -161,7 +161,7 @@ abstract class TopicHelper
 	 */
 	public static function getTopics($ids = false, $authorise = 'read')
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($ids === false)
 		{
@@ -188,7 +188,7 @@ abstract class TopicHelper
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $list;
 	}
@@ -288,7 +288,7 @@ abstract class TopicHelper
 	 */
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = [])
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db     = Factory::getDBO();
 		$config = KunenaFactory::getConfig();
 
@@ -337,7 +337,7 @@ abstract class TopicHelper
 
 		if (empty($catlist))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [0, []];
 		}
@@ -413,7 +413,7 @@ abstract class TopicHelper
 
 		if (!$total)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [0, []];
 		}
@@ -455,7 +455,7 @@ abstract class TopicHelper
 		{
 			KunenaError::displayDatabaseError($e);
 
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return [0, []];
 		}
@@ -471,7 +471,7 @@ abstract class TopicHelper
 		}
 
 		unset($results);
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return [$total, $topics];
 	}

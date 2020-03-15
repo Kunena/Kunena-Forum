@@ -98,14 +98,14 @@ class Display extends KunenaControllerDisplay
 	 */
 	public function execute()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Run before executing action.
 		$result = $this->before();
 
 		if ($result === false)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
@@ -234,7 +234,7 @@ class Display extends KunenaControllerDisplay
 		// Run after executing action.
 		$this->after();
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}
@@ -249,11 +249,11 @@ class Display extends KunenaControllerDisplay
 	 */
 	protected function before()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$this->exists())
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
 		}
 
@@ -322,7 +322,7 @@ class Display extends KunenaControllerDisplay
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -409,7 +409,7 @@ class Display extends KunenaControllerDisplay
 	 */
 	protected function after()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Use our own browser side cache settings.
 		Factory::getApplication()->allowCache(false);
@@ -423,7 +423,7 @@ class Display extends KunenaControllerDisplay
 			$this->output->appendAfter($this->poweredBy());
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**

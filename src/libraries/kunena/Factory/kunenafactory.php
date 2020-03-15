@@ -214,18 +214,19 @@ abstract class KunenaFactory
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = [];
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
+		// Fixme: add Kunena Path back
 		if ($client == 'site')
 		{
 			$lookup1 = JPATH_SITE;
-			$lookup2 = KPATH_SITE;
+			$lookup2 = JPATH_SITE;
 		}
 		else
 		{
 			$client  = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
-			$lookup2 = KPATH_ADMIN;
+			$lookup2 = JPATH_ADMINISTRATOR;
 		}
 
 		if (empty($loaded["{$client}/{$file}"]))
@@ -246,7 +247,7 @@ abstract class KunenaFactory
 				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $loaded[$file];
 	}

@@ -144,7 +144,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function execute()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		try
 		{
@@ -153,7 +153,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			if ($result === false)
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 				return Layout::factory('Empty')->setOptions($this->getOptions());
 			}
@@ -168,7 +168,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			if ($this->primary)
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 				throw $e;
 			}
 			else
@@ -177,7 +177,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}

@@ -24,7 +24,7 @@ use Joomla\CMS\Table\Table;
  *
  * @since Kunena
  */
-class Pkg_KunenaInstallerScript extends InstallerScript
+class Pkg_KunenaInstaller extends InstallerScript
 {
 	/**
 	 * The extension name. This should be set in the installer script.

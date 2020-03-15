@@ -15,7 +15,7 @@
     <namespace>Kunena\Forum\Site\</namespace>
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/create_tables.utf8.sql</file>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
         </sql>
     </install>
     <files folder="site">

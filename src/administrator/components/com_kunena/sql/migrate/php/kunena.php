@@ -11,7 +11,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Installer;
 
 /**
  * Class KunenaMigratorKunena
@@ -47,7 +46,7 @@ class KunenaMigratorKunena
 	public function detect()
 	{
 		// Check if Kunena 1.x can be found from the Joomla installation.
-		if (Installer::detectTable('fb_version'))
+		if (KunenaInstaller::detectTable('fb_version'))
 		{
 			// Get installed version.
 			$db = Factory::getDBO();

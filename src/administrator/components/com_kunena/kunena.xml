@@ -10,7 +10,8 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>COM_KUNENA_XML_DESCRIPTION</description>
-    <scriptfile>install/install.script.php</scriptfile>
+    <namespace>Kunena\Forum\Api</namespace>
+    <namespace>Kunena\Forum\Administrator</namespace>
     <files folder="site">
         <filename>jomsocial_rule.xml</filename>
         <filename>kunena.php</filename>
@@ -43,16 +44,15 @@
             <menu view="trash">COM_KUNENA_TRASH_MANAGER</menu>
         </submenu>
         <files>
-            <filename>install.php</filename>
             <filename>kunena.xml</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <folder>api</folder>
             <folder>Controller</folder>
             <folder>Dispatcher</folder>
+            <folder>Extension</folder>
             <folder>forms</folder>
             <folder>Helper</folder>
-            <folder>install</folder>
             <folder>language</folder>
             <folder>media</folder>
             <folder>Model</folder>

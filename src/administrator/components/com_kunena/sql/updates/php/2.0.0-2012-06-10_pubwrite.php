@@ -12,11 +12,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 2.0.0: Update menu items
 /**
- * @param   string  $parent  parent
+ * @param   string  $parent parent
  *
  * @return  array
  *

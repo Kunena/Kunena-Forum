@@ -11,11 +11,10 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 6.0.0: Set Aurelia as default template in config when update
 /**
- * @param   string  $parent  parent
+ * @param   string  $parent parent
  *
  * @return  array
  *

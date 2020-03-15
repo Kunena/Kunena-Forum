@@ -12,11 +12,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Menu\MenuFix;
 
 // Kunena 2.0.0: Update menu items
 /**
- * @param   string  $parent  parent
+ * @param   string  $parent parent
  *
  * @return  array
  *
@@ -27,8 +26,8 @@ use Kunena\Forum\Libraries\Menu\MenuFix;
 function kunena_200_2012_04_13_menu($parent)
 {
 	$app    = Factory::getApplication();
-	$legacy = MenuFix::getLegacy();
-	$errors = MenuFix::fixLegacy();
+	$legacy = KunenaMenuFix::getLegacy();
+	$errors = KunenaMenuFix::fixLegacy();
 
 	if ($errors)
 	{

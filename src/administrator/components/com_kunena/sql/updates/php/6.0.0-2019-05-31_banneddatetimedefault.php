@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Update default value for banned users
 /**
- * @param   string  $parent  parent
+ * @param   string  $parent parent
  *
  * @return  array
  *

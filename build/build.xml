@@ -261,7 +261,7 @@
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/src/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/src/install.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/src/script.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.md" tofile="${build_dir}/README.txt" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/LICENSE.txt" tofile="${build_dir}/LICENSE.txt" overwrite="true" filtering="true" />

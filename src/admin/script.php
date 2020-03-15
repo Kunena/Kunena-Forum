@@ -11,10 +11,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Installer;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
@@ -190,14 +186,38 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	{
 		$type = strtolower($type);
 
+		$this->enablePlugin('system', 'kunena');
+		$this->enablePlugin('quickicon', 'kunena');
+
 		if ($type == 'install' || $type == 'discover_install')
 		{
 			$this->installSampleData();
 			$this->addDashboardMenu('kunena', 'kunena');
 		}
 
-		$this->removeFiles();
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_POSTFLIGHT'), 'warning');
+	}
+
+	/**
+	 * @param   string $group   group
+	 * @param   string $element element
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
+	public function enablePlugin($group, $element)
+	{
+		$plugin = Table::getInstance('extension');
+
+		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
+		{
+			return false;
+		}
+
+		$plugin->enabled = 1;
+
+		return $plugin->store();
 	}
 
 	/**

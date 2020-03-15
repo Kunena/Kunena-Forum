@@ -192,30 +192,5 @@ class Pkg_KunenaInstaller extends InstallerScript
 		if ($type == 'install' || $type == 'discover_install')
 		{
 		}
-
-		$this->enablePlugin('system', 'kunena');
-		$this->enablePlugin('quickicon', 'kunena');
-	}
-
-	/**
-	 * @param   string $group   group
-	 * @param   string $element element
-	 *
-	 * @return boolean
-	 *
-	 * @since version
-	 */
-	public function enablePlugin($group, $element)
-	{
-		$plugin = Table::getInstance('extension');
-
-		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
-		{
-			return false;
-		}
-
-		$plugin->enabled = 1;
-
-		return $plugin->store();
 	}
 }

@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <namespace>Kunena\Forum</namespace>
+    <scriptfile>script.php</scriptfile>
     <install>
         <sql>
             <file driver="mysql" charset="utf8">Install/sql/install/mysql/create_tables.utf8.sql</file>
@@ -51,6 +52,7 @@
             <filename>kunena.xml</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
+            <filename>script.php</filename>
             <folder>api</folder>
             <folder>Controller</folder>
             <folder>Dispatcher</folder>

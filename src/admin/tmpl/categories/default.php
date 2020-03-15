@@ -252,9 +252,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 
 						if ($this->pagination->total >= 0)
 							:
-							foreach ($this->cats as $item) :
-
-								$cat = Kunena\Forum\Libraries\Forum\Category\Category::getInstance()->get($item);
+							foreach ($this->categories as $item) :
 								$canEdit    = $this->me->isAdmin($item);
 								$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
 								$canEditOwn = $canEdit;

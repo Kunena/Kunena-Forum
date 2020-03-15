@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Integration\Activity;
 use Kunena\Forum\Libraries\Integration\Avatar;
@@ -27,6 +28,22 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaAdminTemplate;
 use function defined;
+
+// Component name amd database prefix
+define('KUNENA_COMPONENT_NAME', 'com_kunena');
+define('KUNENA_COMPONENT_LOCATION', 'components');
+define('KUNENA_NAME', substr(KUNENA_COMPONENT_NAME, 4));
+
+// Component paths
+define('KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_COMPONENT_NAME);
+define('KPATH_SITE', JPATH_ROOT . '/' . KPATH_COMPONENT_RELATIVE);
+define('KPATH_ADMIN', JPATH_ADMINISTRATOR . '/' . KPATH_COMPONENT_RELATIVE);
+define('KPATH_MEDIA', JPATH_ROOT . '/media/' . KUNENA_NAME);
+
+// URLs
+define('KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME);
+define('KURL_SITE', Uri::Root() . KPATH_COMPONENT_RELATIVE . '/');
+define('KURL_MEDIA', Uri::Root() . 'media/' . KUNENA_NAME . '/');
 
 /**
  * Class KunenaFactory
@@ -216,17 +233,16 @@ abstract class KunenaFactory
 		static $loaded = [];
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		// Fixme: add Kunena Path back
 		if ($client == 'site')
 		{
 			$lookup1 = JPATH_SITE;
-			$lookup2 = JPATH_SITE;
+			$lookup2 = KPATH_SITE;
 		}
 		else
 		{
 			$client  = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
-			$lookup2 = JPATH_ADMINISTRATOR;
+			$lookup2 = KPATH_ADMIN;
 		}
 
 		if (empty($loaded["{$client}/{$file}"]))

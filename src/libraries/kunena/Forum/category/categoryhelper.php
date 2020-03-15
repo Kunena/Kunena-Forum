@@ -116,6 +116,11 @@ abstract class CategoryHelper
 			return false;
 		}
 
+		if (!$instances)
+		{
+			return [];
+		}
+
 		foreach ($instances as $id => $instance)
 		{
 			$kunenacategory      = self::get($id);

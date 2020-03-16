@@ -2170,6 +2170,11 @@ class KunenaUser extends CMSObject
 			case 'id':
 
 				return $this->userid;
+
+			case 'timestamp':
+			    // TODO: kunena forum avatar use this field.
+			    // need to implement this, of remove access in forum avatar
+			    return NULL;
 		}
 
 		if (version_compare(JVERSION, '4.0', '<'))

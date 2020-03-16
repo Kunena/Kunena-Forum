@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
+    <name>plg_kunena_finder</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>

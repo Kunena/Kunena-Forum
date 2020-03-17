@@ -113,6 +113,7 @@ use function defined;
  * @property    int    $socialshare
  * @property    string $pinterest
  * @property    string $reddit
+ * @property    int    $timestamp
  *
  */
 class KunenaUser extends CMSObject
@@ -2194,11 +2195,133 @@ class KunenaUser extends CMSObject
 		switch ($name)
 		{
 			case 'id':
-
+			case 'userid':
 				return $this->userid;
+			case 'status':
+				return $this->status;
+			case 'status_text':
+				return $this->status_text;
+			case 'name':
+				return $this->name;
+			case 'username':
+				return $this->username;
+			case 'email':
+				return $this->email;
+			case 'blocked':
+				return $this->blocked;
+			case 'registerDate':
+				return $this->registerDate;
+			case 'lastvisitDate':
+				return $this->lastvisitDate;
+			case 'signature':
+				return $this->signature;
+			case 'moderator':
+				return $this->moderator;
+			case 'banned':
+				return $this->banned;
+			case 'ordering':
+				return $this->ordering;
+			case 'posts':
+				return $this->posts;
+			case 'avatar':
+				return $this->avatar;
+			case 'karma':
+				return $this->karma;
+			case 'karma_time':
+				return $this->karma_time;
+			case 'uhits':
+				return $this->uhits;
+			case 'personalText':
+				return $this->personalText;
+			case 'gender':
+				return $this->gender;
+			case 'birthdate':
+				return $this->birthdate;
+			case 'location':
+				return $this->location;
+			case 'websitename':
+				return $this->websitename;
+			case 'websiteurl':
+				return $this->websiteurl;
+			case 'rank':
+				return $this->rank;
+			case 'view':
+				return $this->view;
+			case 'hideEmail':
+				return $this->hideEmail;
+			case 'showOnline':
+				return $this->showOnline;
+			case 'canSubscribe':
+				return $this->canSubscribe;
+			case 'userListtime':
+				return $this->userListtime;
+			case 'icq':
+				return $this->icq;
+			case 'yim':
+				return $this->yim;
+			case 'microsoft':
+				return $this->microsoft;
+			case 'skype':
+				return $this->skype;
+			case 'twitter':
+				return $this->twitter;
+			case 'facebook':
+				return $this->facebook;
+			case 'google':
+				return $this->google;
+			case 'github':
+				return $this->github;
+			case 'myspace':
+				return $this->myspace;
+			case 'linkedin':
+				return $this->linkedin;
+			case 'linkedin_company':
+				return $this->linkedin_company;
+			case 'friendfeed':
+				return $this->friendfeed;
+			case 'digg':
+				return $this->digg;
+			case 'blogspot':
+				return $this->blogspot;
+			case 'flickr':
+				return $this->flickr;
+			case 'bebo':
+				return $this->bebo;
+			case 'thankyou':
+				return $this->thankyou;
+			case 'instagram':
+				return $this->instagram;
+			case 'qqsocial':
+				return $this->qqsocial;
+			case 'qzone':
+				return $this->qzone;
+			case 'weibo':
+				return $this->weibo;
+			case 'wechat':
+				return $this->wechat;
+			case 'apple':
+				return $this->apple;
+			case 'vk':
+				return $this->vk;
+			case 'telegram':
+				return $this->telegram;
+			case 'vimeo':
+				return $this->vimeo;
+			case 'whatsapp':
+				return $this->whatsapp;
+			case 'youtube':
+				return $this->youtube;
+			case 'ok':
+				return $this->ok;
+			case 'pinterest':
+				return $this->pinterest;
+			case 'reddit':
+				return $this->reddit;
+			case 'timestamp':
+				return $this->timestamp;
+			default:
+				return;
 		}
-
-		return;
 	}
 
 	/**

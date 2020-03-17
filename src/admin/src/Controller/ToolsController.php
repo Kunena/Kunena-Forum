@@ -31,9 +31,9 @@ use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\Model\KunenaModelInstall;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use KunenaModelInstall;
 use RuntimeException;
 use StdClass;
 use function defined;
@@ -710,8 +710,6 @@ class ToolsController extends FormController
 	 */
 	public function trashmenu()
 	{
-		require_once KPATH_ADMIN . '/install/model.php';
-
 		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
 		$installer->createMenu();

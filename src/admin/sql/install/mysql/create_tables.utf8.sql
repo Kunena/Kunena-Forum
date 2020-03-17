@@ -364,6 +364,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `instagram`        varchar(75)  NULL,
     `qqsocial`         varchar(75)  NULL,
     `blogspot`         varchar(75)  NULL,
+    `youtube`          varchar(75)  NULL,
+    `reddit`           varchar(75)  NULL,
     `flickr`           varchar(75)  NULL,
     `apple`            varchar(75)  NULL,
     `qzone`            varchar(75)  NULL,

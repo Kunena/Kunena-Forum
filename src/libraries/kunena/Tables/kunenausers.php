@@ -512,6 +512,14 @@ class KunenaUsers extends KunenaTable
 	public $reddit = null;
 
 	/**
+	 * Indicates that columns fully support the NULL value in the database
+	 *
+	 * @var    boolean
+	 * @since  4.0.0
+	 */
+	protected $_supportNullValue = true;
+
+	/**
 	 * @param   DatabaseDriver  $db  Database driver
 	 *
 	 * @since   Kunena 6.0

@@ -188,7 +188,7 @@ class Ban extends parentAlias
 	 *
 	 * @since     Kunena 1.6
 	 */
-	public function getTable($type = '\Kunena\Forum\Libraries\User\KunenaUserBans', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserBans')
 	{
 		static $tabletype = null;
 
@@ -200,7 +200,7 @@ class Ban extends parentAlias
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype['name'], $tabletype['prefix']);
+		return Table::getInstance($tabletype['prefix'], $tabletype['name']);
 	}
 
 	/**

@@ -93,7 +93,7 @@ class CategoryUser extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = '\Kunena\Forum\Libraries\User\KunenaUserCategories', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserCategories')
 	{
 		static $tabletype = null;
 
@@ -105,7 +105,7 @@ class CategoryUser extends CMSObject
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
 	}
 
 	/**

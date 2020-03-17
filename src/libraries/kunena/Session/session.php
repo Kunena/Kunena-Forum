@@ -146,7 +146,7 @@ class Session extends CMSObject
 	 * @return    object    The session table object
 	 * @since     1.5
 	 */
-	public function getTable($type = 'KunenaSessions', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaSessions')
 	{
 		static $tabletype = null;
 
@@ -158,7 +158,7 @@ class Session extends CMSObject
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype['name'], $tabletype['prefix']);
+		return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
 	}
 
 	/**

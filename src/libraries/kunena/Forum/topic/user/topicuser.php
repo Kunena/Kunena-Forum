@@ -98,7 +98,7 @@ class TopicUser extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserTopics')
 	{
 		static $tabletype = null;
 
@@ -110,7 +110,7 @@ class TopicUser extends CMSObject
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
 	}
 
 	/**

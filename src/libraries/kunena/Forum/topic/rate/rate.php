@@ -136,7 +136,7 @@ class Rate extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'KunenaRate', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaRate')
 	{
 		static $tabletype = null;
 
@@ -148,7 +148,7 @@ class Rate extends CMSObject
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
 	}
 
 	/**

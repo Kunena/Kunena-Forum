@@ -89,7 +89,7 @@ class Read extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = '\Kunena\Forum\Libraries\User\KunenaUserRead', $prefix = 'Table')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaUserRead')
 	{
 		static $tabletype = null;
 
@@ -101,7 +101,7 @@ class Read extends CMSObject
 		}
 
 		// Create the user table object
-		return Table::getInstance($tabletype ['name'], $tabletype ['prefix']);
+		return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
 	}
 
 	/**

@@ -14,34 +14,22 @@ use Joomla\CMS\Language\Text;
 // [spoiler="Do not look here!"]I said so![/spoiler]
 
 // Display spoiler text (hidden until you click it open).
-
-$hide   = ' style="display:none"';
-$hidden = !empty($this->hidden);
+$this->addScriptOptions('com_kunena.expand', Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'));
+$this->addScriptOptions('com_kunena.hide', Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'));
 ?>
+
 <div class="kspoiler">
 	<div class="kspoiler-header">
-		<span class="kspoiler-title">
+		<div class="kspoiler-title" style="display:inline-block;">
 			<?php echo $this->title; ?>
-		</span>
-		<span class="kspoiler-expand"<?php if (!$hidden)
-		{
-			echo $hide;
-		} ?>>
-			<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>
-		</span>
-		<span class="kspoiler-hide"<?php if ($hidden)
-		{
-			echo $hide;
-		} ?>>
-			<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'); ?>
-		</span>
-	</div>
-	<div class="kspoiler-wrapper">
-		<div class="kspoiler-content"<?php if ($hidden)
-		{
-			echo $hide;
-		} ?>>
-			<?php echo $this->content; ?>
+		</div>
+		<div class="kspoiler-expand" style="display:inline-block;">
+			<input class="btn-link" type="button" id="kspoiler-show" value="<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>"/>
+		</div>
+		<div class="kspoiler-wrapper" style="display:none;">
+			<div class="kspoiler-content">
+				<?php echo $this->content; ?>
+			</div>
 		</div>
 	</div>
 </div>

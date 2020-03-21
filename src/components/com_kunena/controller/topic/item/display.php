@@ -210,14 +210,14 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->userTopic  = $this->topic->getUserTopic();
 		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && KunenaConfig::getInstance()->quickreply;
 
-		$this->headerText = KunenaHtmlParser::parseText($this->topic->displayField('subject'));
+		$subject = KunenaHtmlParser::parseText($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
 		$data->{'@context'}             = "http://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
 		$data->{'discussionUrl'}        = $this->topic->getPermaUrl();
-		$data->{'headline'}             = $this->headerText;
+		$data->{'headline'}             = $subject;
 		$data->{'image'}                = $this->docImage();
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
@@ -598,7 +598,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$params          = $menu_item->params;
 			$params_keywords = $params->get('menu-meta_keywords');
-			$this->setTitle($headerText);
+			$this->setTitle($this->topic->getTopic()->subject);
 
 			if (!empty($params_keywords))
 			{

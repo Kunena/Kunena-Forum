@@ -276,11 +276,11 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$data->{'image'}                = $this->docImage();
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
-		$data->author                   = [];
+		$data->{'author'}               = [];
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
-		$data->author                   = $tmp;
+		$data->{'author'}               = $tmp;
 		$data->interactionStatistic     = [];
 		$tmp2                           = new CMSObject;
 		$tmp2->{'@type'}                = "InteractionCounter";
@@ -571,7 +571,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$image = $this->docImage();
 
 		$message = Parser::parseText($this->topic->first_post_message);
-		$matches = preg_match("/\[img]http(s?):\/\/.*\/\img]/iu", $message, $title);
+		$matches = preg_match("/\[img]http(s?):\/\/.*\/img]/iu", $message, $title);
 
 		if ($matches)
 		{
@@ -693,8 +693,8 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 
 		if ($menu_item)
 		{
-			$params          = $menu_item->getParams();
-			$this->setTitle($headerText);
+			$params = $menu_item->getParams();
+			$this->setTitle($this->topic->getTopic()->subject);
 
 			if ($total > 1 && $page > 1)
 			{

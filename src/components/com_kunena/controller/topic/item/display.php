@@ -221,11 +221,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$data->{'image'}                = $this->docImage();
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
-		$data->author                   = array();
+		$data->{'author'}               = array();
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
-		$data->author                   = $tmp;
+		$data->{'author'}                   = $tmp;
 		$data->interactionStatistic     = array();
 		$tmp2                           = new CMSObject;
 		$tmp2->{'@type'}                = "InteractionCounter";
@@ -473,7 +473,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$image = $this->docImage();
 
 		$message = KunenaHtmlParser::parseText($this->topic->first_post_message);
-		$matches = preg_match("/\[img]http(s?):\/\/.*\/\img]/iu", $message, $title);
+		$matches = preg_match("/\[img]http(s?):\/\/.*\/img]/iu", $message, $title);
 
 		if ($matches)
 		{

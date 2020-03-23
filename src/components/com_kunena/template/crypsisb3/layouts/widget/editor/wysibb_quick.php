@@ -97,5 +97,4 @@ $settings         = $templatesettings->get('wysibb');
 	});
 </script>
 
-<textarea class="col-md-12" name="message" id="editor-<?php echo $this->message->id; ?>" rows="12" tabindex="7"
-          required="required"></textarea>
+<textarea class="col-md-12" name="message" id="editor-<?php echo $this->message->id; ?>" rows="12" tabindex="7"></textarea>

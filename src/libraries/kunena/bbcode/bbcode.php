@@ -2730,13 +2730,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 		}
 
+		preg_match('/[img(\s*(?!alt)([\w\-]+\s*\/?]/', $params['_tag'], $matches);
+		$matches = rtrim($matches[0], "]");
+
 		$config = KunenaFactory::getConfig();
 		$layout = KunenaLayout::factory('BBCode/Image')
 			->set('title', Text::_('COM_KUNENA_FILEATTACH'))
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
-			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
+			->set('alt', isset($params['alt']) ? $matches : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)

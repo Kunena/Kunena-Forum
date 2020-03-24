@@ -997,7 +997,7 @@ window.addEvent('domready', function(){
 		$db       = Factory::getDBO();
 		$query    = array();
 
-		if ($type & self::TOPIC_SUBSCRIPTION)
+		if ($type && self::TOPIC_SUBSCRIPTION)
 		{
 			// Get topic subscriptions
 			$querytopic = $db->getQuery(true);
@@ -1015,7 +1015,7 @@ window.addEvent('domready', function(){
 			$query[] = $querytopic;
 		}
 
-		if ($type & self::CATEGORY_SUBSCRIPTION)
+		if ($type && self::CATEGORY_SUBSCRIPTION)
 		{
 			// Get category subscriptions
 			$querycat = $db->getQuery(true);

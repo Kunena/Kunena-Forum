@@ -53,7 +53,7 @@ $this->addScript('assets/js/search.js');
 				</a>
 			</th>
 
-			<?php if ($config->userlist_online & $config->user_status) : $cols++; ?>
+			<?php if ($config->userlist_online && $config->user_status) : $cols++; ?>
 				<th class="span1 center hidden-phone">
 					<?php echo Text::_('COM_KUNENA_USRL_ONLINE'); ?>
 				</th>
@@ -148,7 +148,7 @@ $this->addScript('assets/js/search.js');
 					<?php echo ++$i; ?>
 				</td>
 
-				<?php if ($config->userlist_online & $config->user_status) : ?>
+				<?php if ($config->userlist_online && $config->user_status) : ?>
 					<td class="span1 center hidden-phone">
 						<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 					</td>

@@ -974,7 +974,7 @@ class KunenaViewTopic extends KunenaView
 		switch ($matches[1])
 		{
 			case 'ROW':
-				return $this->mmm & 1 ? 'odd' : 'even';
+				return $this->mmm && 1 ? 'odd' : 'even';
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 

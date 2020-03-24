@@ -230,7 +230,7 @@ class KunenaViewTopics extends KunenaView
 		switch ($matches[1])
 		{
 			case 'ROW':
-				return $matches[2] . ($this->position & 1 ? 'odd' : 'even') . ($this->topic->ordering ? " {$matches[2]}sticky" : '');
+				return $matches[2] . ($this->position && 1 ? 'odd' : 'even') . ($this->topic->ordering ? " {$matches[2]}sticky" : '');
 			case 'TOPIC_ICON':
 				return $this->topic->getIcon();
 			case 'TOPIC_NEW_COUNT':

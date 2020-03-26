@@ -213,7 +213,7 @@ class Ban extends parentAlias
 	protected function bind($data)
 	{
 		$this->setProperties($data);
-		$this->comments = !empty($this->comments) ? json_decode($this->comments) : [];
+		$this->comments = !empty($this->comments) ? json_decode((string) $this->comments) : [];
 		$this->params   = !empty($this->params) ? json_decode($this->params) : [];
 	}
 

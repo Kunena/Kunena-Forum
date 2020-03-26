@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_aliases`
     KEY `item` (item),
     KEY `type` (type)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_announcement`
 (
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement`
     `showdate`     tinyint(1) NOT NULL default '1',
     PRIMARY KEY (id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
 (
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
     KEY `filename` (filename),
     KEY `filename_real` (filename_real)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_categories`
 (
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     KEY `category_access` (accesstype, access),
     KEY `published_pubaccess_id` (published, pub_access, id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_configuration`
 (
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_configuration`
     `params` text    NULL,
     PRIMARY KEY (id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_topics`
 (
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     KEY `last_post_time` (last_post_time),
     KEY `last_post_id` (last_post_id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages`
 (
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages`
     KEY `time_hold` (time, hold),
     KEY `hold` (hold)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages_text`
 (
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages_text`
     `message` mediumtext NOT NULL,
     PRIMARY KEY (mesid)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls`
 (
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls`
     PRIMARY KEY (id),
     KEY `threadid` (threadid)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls_options`
 (
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_options`
     PRIMARY KEY (id),
     KEY `pollid` (pollid)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
 (
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
     `lastvote` int(11)   NULL,
     UNIQUE KEY `pollid` (pollid, userid)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
     `rank_image`   varchar(255)          NOT NULL default '',
     PRIMARY KEY (rank_id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_rate`
 (
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_rate`
     `time`     DATETIME              NULL     DEFAULT NULL,
     PRIMARY KEY (id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_sessions`
 (
@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_sessions`
     PRIMARY KEY (userid),
     KEY `currvisit` (currvisit)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_smileys`
 (
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_smileys`
     `emoticonbar`  tinyint(4)  NOT NULL default '0',
     PRIMARY KEY (id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
 (
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
     KEY `userid` (userid),
     KEY `targetuserid` (targetuserid)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_user_categories`
 (
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories`
     KEY `category_subscribed` (category_id, subscribed),
     KEY `role` (role)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
 (
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
     KEY `category_user_id` (category_id, user_id),
     KEY `time` (time)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_user_topics`
 (
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics`
     KEY `favorite` (favorite),
     KEY `subscribed` (subscribed)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_users`
 (
@@ -391,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     KEY `banned` (banned),
     KEY `moderator` (moderator)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_users_banned`
 (
@@ -414,7 +414,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned`
     KEY `expiration` (expiration),
     KEY `created_time` (created_time)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_logs`
 (
@@ -435,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_logs`
     KEY `target_user` (target_user),
     KEY `user_id` (user_id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_version`
 (
@@ -448,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     `state`       text        NOT NULL,
     PRIMARY KEY (id)
 )
-    DEFAULT CHARACTER SET utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',

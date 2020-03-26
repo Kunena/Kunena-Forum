@@ -3011,6 +3011,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 */
 	public function createMenu()
 	{
+		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 		$menu    = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
 		            'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0]];
 		$submenu = [
@@ -3034,19 +3035,12 @@ class KunenaModelInstall extends BaseDatabaseModel
 			                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
 		];
 
-		// Disable language debugging while creating menu items.
-		$lang = Factory::getLanguage();
-
-		// $debug = $lang->setDebug(false);
-
 		$this->createMenuJ25($menu, $submenu);
 		MenuHelper::cleanCache();
-
-		// $lang->setDebug($debug);
 	}
 
 	/**
-	 * @param   object  $menu     menu
+	 * @param   array   $menu     menu
 	 * @param   object  $submenu  submenu
 	 *
 	 * @return  boolean
@@ -3061,6 +3055,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$config = KunenaFactory::getConfig();
 
 		$component_id = ComponentHelper::getComponent('com_kunena')->id;
+
+		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
@@ -3134,7 +3130,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 			if (!$table->check() || !$table->store())
 			{
-				throw new KunenaInstallerException($table->getError());
+				// Menu already exists, do nothing
+				return true;
 			}
 		}
 
@@ -3222,12 +3219,17 @@ class KunenaModelInstall extends BaseDatabaseModel
 			];
 		}
 
-		if (!$table->bind($data) || !$table->check() || !$table->store())
+
+		if (!$table->bind($data))
 		{
 			throw new KunenaInstallerException($table->getError());
 		}
 
-		return true;
+		if (!$table->check() || !$table->store())
+		{
+			// Menu already exists, do nothing
+			return true;
+		}
 	}
 
 	/**

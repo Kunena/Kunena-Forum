@@ -148,8 +148,8 @@ class KunenaTemplateAurelia extends Template
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/all.js', [], ['defer' => true]);
-			$this->addScript('https://use.fontawesome.com/releases/v5.12.0/js/v4-shims.js', [], ['defer' => true]);
+			$this->addScript('https://use.fontawesome.com/releases/v5.13.0/js/all.js', [], ['defer' => true]);
+			$this->addScript('https://use.fontawesome.com/releases/v5.13.0/js/v4-shims.js', [], ['defer' => true]);
 		}
 
 		$icons = $this->ktemplate->params->get('icons');

@@ -740,7 +740,7 @@ class Attachment extends KunenaDatabaseObject
 
 		// TODO: Add support for PROTECTION_PUBLIC
 		// Currently we only support ACL checks, not public attachments.
-		if ($exception && $this->mesid && $this->protected & (self::PROTECTION_PUBLIC + self::PROTECTION_ACL))
+		if ($exception && $this->mesid && $this->protected && (self::PROTECTION_PUBLIC + self::PROTECTION_ACL))
 		{
 			// Load message authorisation.
 			$exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
@@ -750,13 +750,13 @@ class Attachment extends KunenaDatabaseObject
 		// TODO: Add support for PROTECTION_MODERATORS
 		// TODO: Add support for PROTECTION_ADMINS
 		// Check if attachment is private.
-		if ($exception && $this->protected & self::PROTECTION_PRIVATE)
+		if ($exception && $this->protected && self::PROTECTION_PRIVATE)
 		{
 			$exception = $this->authorisePrivate($action, $user);
 		}
 
 		// Check author access.
-		if ($exception && $this->protected & self::PROTECTION_AUTHOR)
+		if ($exception && $this->protected && self::PROTECTION_AUTHOR)
 		{
 			$exception = $user->exists() && $user->id == $this->userid
 				? null : new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401);

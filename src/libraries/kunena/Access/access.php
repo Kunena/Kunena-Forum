@@ -1022,7 +1022,7 @@ jQuery(document).ready(function ($) {
 		$db       = Factory::getDBO();
 		$query    = [];
 
-		if ($type & self::TOPIC_SUBSCRIPTION)
+		if ($type && self::TOPIC_SUBSCRIPTION)
 		{
 			// Get topic subscriptions
 			$querytopic = $db->getQuery(true)
@@ -1040,7 +1040,7 @@ jQuery(document).ready(function ($) {
 			$query[] = $querytopic;
 		}
 
-		if ($type & self::CATEGORY_SUBSCRIPTION)
+		if ($type && self::CATEGORY_SUBSCRIPTION)
 		{
 			// Get category subscriptions
 			$querycat = $db->getQuery(true)

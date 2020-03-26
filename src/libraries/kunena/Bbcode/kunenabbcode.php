@@ -441,7 +441,7 @@ class KunenaBbcode extends BBCode
 		{
 			foreach ($search as $index => $token)
 			{
-				if ($index & 1)
+				if ($index && 1)
 				{
 					if (preg_match("/^(https?|ftp|mailto):/ui", $token))
 					{
@@ -2448,17 +2448,17 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			list($vid_key, $vid_name, $vid_value) = $vid_data;
 
-			if ($vid_key & 1)
+			if ($vid_key && 1)
 			{
 				$vid_object [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
 			}
 
-			if ($vid_key & 2)
+			if ($vid_key && 2)
 			{
 				$vid_param [$vid_name] = '<param name="' . $vid_name . '" value="' . preg_replace('/%vcode%/', $content, $vid_value) . '" />';
 			}
 
-			if ($vid_key & 4)
+			if ($vid_key && 4)
 			{
 				$vid_embed [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
 			}

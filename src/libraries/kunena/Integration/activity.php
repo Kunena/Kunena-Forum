@@ -97,7 +97,7 @@ class Activity
 			{
 				$r = call_user_func_array([$instance, $method], $arguments);
 
-				if ($r !== null & $ret === null)
+				if ($r !== null && $ret === null)
 				{
 					$ret = $r;
 				}

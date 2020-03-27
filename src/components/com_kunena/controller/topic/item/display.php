@@ -213,7 +213,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$subject = KunenaHtmlParser::parseText($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
-		$data->{'@context'}             = "http://schema.org";
+		$data->{'@context'}             = "https://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Joomla\CMS\Uri\Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->topic->getPermaUrl();
 		$data->{'discussionUrl'}        = $this->topic->getPermaUrl();

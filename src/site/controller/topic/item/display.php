@@ -268,7 +268,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$this->headerText = Parser::parseText($this->topic->displayField('subject'));
 
 		$data                           = new CMSObject;
-		$data->{'@context'}             = "http://schema.org";
+		$data->{'@context'}             = "https://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
 		$data->{'discussionUrl'}        = $this->topic->getPermaUrl();

@@ -5,7 +5,7 @@ CREATE TABLE `#__kunena_attachments`
 SELECT *
 FROM `#__sb_attachments`;
 ALTER TABLE `#__kunena_attachments`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_attachments`
     ADD KEY `mesid` (`mesid`);
 
@@ -13,7 +13,7 @@ CREATE TABLE `#__kunena_categories`
 SELECT *
 FROM `#__sb_categories`;
 ALTER TABLE `#__kunena_categories`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_categories`
     CHANGE `moderated` `moderated` TINYINT(4) NOT NULL DEFAULT '1';
 ALTER TABLE `#__kunena_categories`
@@ -46,7 +46,7 @@ CREATE TABLE `#__kunena_messages`
 SELECT *
 FROM `#__sb_messages`;
 ALTER TABLE `#__kunena_messages`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_messages`
     ADD `modified_by` int(7) NULL;
 ALTER TABLE `#__kunena_messages`
@@ -78,7 +78,7 @@ CREATE TABLE `#__kunena_messages_text`
 SELECT *
 FROM `#__sb_messages_text`;
 ALTER TABLE `#__kunena_messages_text`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_messages_text`
     ADD PRIMARY KEY (`mesid`);
 
@@ -86,7 +86,7 @@ CREATE TABLE `#__kunena_moderation`
 SELECT *
 FROM `#__sb_moderation`;
 ALTER TABLE `#__kunena_moderation`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_moderation`
     ADD PRIMARY KEY (`catid`, `userid`);
 
@@ -94,7 +94,7 @@ CREATE TABLE `#__kunena_sessions`
 SELECT *
 FROM `#__sb_sessions`;
 ALTER TABLE `#__kunena_sessions`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_sessions`
     ADD PRIMARY KEY (`userid`);
 
@@ -102,7 +102,7 @@ CREATE TABLE `#__kunena_smileys`
 SELECT *
 FROM `#__sb_smileys`;
 ALTER TABLE `#__kunena_smileys`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_smileys`
     ADD PRIMARY KEY (`id`);
 ALTER TABLE `#__kunena_smileys`
@@ -112,7 +112,7 @@ CREATE TABLE `#__kunena_subscriptions`
 SELECT *
 FROM `#__sb_subscriptions`;
 ALTER TABLE `#__kunena_subscriptions`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_subscriptions`
     ADD KEY `thread` (`thread`);
 ALTER TABLE `#__kunena_subscriptions`
@@ -122,7 +122,7 @@ CREATE TABLE `#__kunena_users`
 SELECT *
 FROM `#__sb_users`;
 ALTER TABLE `#__kunena_users`
-    ENGINE =InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
+     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `#__kunena_users`
     ADD PRIMARY KEY (`userid`);
 ALTER TABLE `#__kunena_users`

@@ -578,7 +578,8 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "videodropdownbutton")
 					{
-						$js = "{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'), className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'), className: '" . $action['class'] . "', beforeInsert:function() {
 							jQuery('#videosettings-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -594,7 +595,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 									});
 								}});
 							} },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videoURLbutton', beforeInsert:function() {
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videoURLbutton', beforeInsert:function() {
 							jQuery('#videourlprovider-modal-submit').click(function(event) {
 								event.preventDefault();
 

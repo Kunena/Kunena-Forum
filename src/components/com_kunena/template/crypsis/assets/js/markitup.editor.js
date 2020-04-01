@@ -66,7 +66,7 @@ bbcodeSettings = {
 								});
 							}});
 						}
-					},{separator:'|' },{className: 'ebaybutton',name: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),key: 'E',openWith: '[ebay]',closeWith: '[/ebay]'},{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'), className: 'videourlprovider', beforeInsert:function() {
+					},{separator:'|' },{className: 'ebaybutton',name: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),key: 'E',openWith: '[ebay]',closeWith: '[/ebay]'},{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'), className: 'videourlprovider', beforeInsert:function() {
 							jQuery('#videosettings-modal-submit').click(function(event) {
 								event.preventDefault();
 

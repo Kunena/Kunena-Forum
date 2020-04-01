@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 /**
  * Templates view for Kunena backend
+ *
  * @since Kunena
  */
 class KunenaAdminViewTemplates extends KunenaView
@@ -25,8 +26,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	public function displayDefault()
 	{
 		$this->setToolBarDefault();
-		$this->templates  = $this->get('templates');
-		$this->pagination = $this->get('Pagination');
+		$this->templates    = $this->get('templates');
+		$this->pagination   = $this->get('Pagination');
+		$this->templatesxml = $this->get('templatesxml');
 		$this->display();
 	}
 

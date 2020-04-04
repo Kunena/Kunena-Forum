@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -29,27 +30,36 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @param   null  $tpl  tmpl
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function displayDefault($tpl = null)
+	public function display($tpl = null)
 	{
-		$help_url = 'https://docs.kunena.org/en/';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
-		ToolbarHelper::link('https://www.kunena.org/bugs/changelog', Text::_('COM_KUNENA_DASHBOARD_CHANGELOG'));
-		ToolbarHelper::link('https://www.kunena.org/forum', Text::_('COM_KUNENA_DASHBOARD_GET_SUPPORT'));
-
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_kunena'))
-		{
-			ToolbarHelper::spacer();
-			ToolbarHelper::preferences('com_kunena');
-			ToolbarHelper::spacer();
-		}
+		$this->addToolbar();
 
 		return parent::display($tpl);
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function addToolbar()
+	{
+		ToolbarHelper::spacer();
+		ToolbarHelper::divider();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

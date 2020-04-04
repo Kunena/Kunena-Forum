@@ -3035,11 +3035,13 @@ class KunenaModelInstall extends BaseDatabaseModel
 			                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
 		];
 
-		$this->createMenuJ25($menu, $submenu);
+		$this->buildMenu($menu, $submenu);
 		MenuHelper::cleanCache();
 	}
 
 	/**
+	 * Build the Kunena menu
+	 * 
 	 * @param   array   $menu     menu
 	 * @param   object  $submenu  submenu
 	 *
@@ -3050,7 +3052,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @throws  KunenaInstallerException
 	 * @throws  Exception
 	 */
-	public function createMenuJ25($menu, $submenu)
+	public function buildMenu($menu, $submenu)
 	{
 		$config = KunenaFactory::getConfig();
 

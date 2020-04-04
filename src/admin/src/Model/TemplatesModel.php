@@ -346,4 +346,63 @@ class TemplatesModel extends AdminModel
 
 		return $data;
 	}
+
+	/**
+	 * parseKunenaInstallFile
+	 *
+	 * @return boolean|stdClass|array
+	 *
+	 * @since Kunena 6.0
+	 */
+	public function loadTemplatesXml()
+	{
+		$this->template = array();
+		$context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+		$url = 'https://update.kunena.org/templates.xml';
+
+		$xml = file_get_contents($url, false, $context);
+		$xml = simplexml_load_string($xml);
+
+		if ($xml)
+		{
+			foreach ($xml->templates as $template)
+			{
+				foreach ($template as $temp)
+				{
+					$attributes                  = $temp->attributes();
+					$temp                        = new stdClass;
+					$temp->name                  = (string) $attributes->name;
+					$temp->type                  = (string) $attributes->element;
+					$temp->created               = (string) $attributes->created;
+					$temp->author                = (string) $attributes->author;
+					$temp->version               = (string) $attributes->version;
+					$temp->description           = (string) $attributes->description;
+					$temp->detailsurl            = (string) $attributes->detailsurl;
+					$temp->price                 = (string) $attributes->price;
+					$temp->thumbnail             = (string) $attributes->thumbnail;
+					$temp->authorurl             = (string) $attributes->authorurl;
+					$temp->authoremail           = (string) $attributes->authoremail;
+					$this->template[$temp->name] = $temp;
+				}
+			}
+
+			return $this->template;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return array
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function getTemplatesxml()
+	{
+		// Get template xml file info
+		$rows = self::loadTemplatesXml();
+
+		return $rows;
+	}
 }

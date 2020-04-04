@@ -71,6 +71,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->templates  = $this->get('templates');
 		$this->pagination = $this->get('Pagination');
+		$this->templatesxml = $this->get('templatesxml');
 
 		$this->addToolbar();
 

@@ -439,7 +439,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
-			->where('type=\'plugin\'  AND folder=\'' . $folder . '\' AND element=\'' . $name);
+			->where($db->quoteName('type').' ='. $db->quote('plugin') .' AND ' . $db->quoteName('folder') .'='.  $db->quote($folder) . ' AND ' . $db->quoteName('element') .'=' . $db->quote($name));
 		$db->setQuery($query);
 
 		$pluginid = $db->loadResult();
@@ -464,7 +464,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
-			->where('type=\'module\' AND element=\' ' . $name);
+			->where($db->quoteName('type') .'='. $db->quote('module') . ' AND' . $db->quoteName('element') .'=' . $db->quote($name));
 		$db->setQuery($query);
 
 		$moduleid = $db->loadResult();
@@ -536,8 +536,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $this->db->getQuery(true);
 		$query->select($this->db->quoteName('extension_id'));
 		$query->from($this->db->quoteName('#__extensions'));
-		$query->where($this->db->quoteName('type') . ' = ' . $type);
-		$query->where($this->db->quoteName('element') . ' = ' . $element);
+		$query->where($this->db->quoteName('type') . ' = ' . $this->db->quote($type));
+		$query->where($this->db->quoteName('element') . ' = ' . $this->db->quote($element));
 		$this->db->setQuery($query);
 		$id = $this->db->loadResult();
 

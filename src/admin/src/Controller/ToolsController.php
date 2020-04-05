@@ -972,7 +972,7 @@ class ToolsController extends FormController
 		{
 			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 
-			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=uninstall&' . Session::getFormToken() . '=1', false));
+			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&task=install.uninstall&' . Session::getFormToken() . '=1', false));
 
 			return;
 		}

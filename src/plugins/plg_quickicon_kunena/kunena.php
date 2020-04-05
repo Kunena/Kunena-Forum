@@ -176,7 +176,7 @@ class plgQuickiconKunena extends CMSPlugin
 				'icon'  => $icon,
 				'text'  => $text,
 				'id'    => 'plg_quickicon_kunena',
-				'group' => 'MOD_QUICKICON_MAINTENANCE'
+				'group' => 'update_quickicon'
 			]
 		];
 	}

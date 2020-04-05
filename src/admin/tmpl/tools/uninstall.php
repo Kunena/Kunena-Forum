@@ -31,7 +31,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
 				      method="post" id="adminForm"
 				      name="adminForm">
-					<input type="hidden" name="task" value="uninstall"/>
+					<input type="hidden" name="task" value="tools.uninstall"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<fieldset>

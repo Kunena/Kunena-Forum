@@ -209,7 +209,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function enablePlugin($group, $element)
 	{
-		$plugin = Table::getInstance('extension');
+		$plugin = Table::getInstance('extensions');
 
 		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
 		{

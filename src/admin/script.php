@@ -209,10 +209,14 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function enablePlugin($group, $element)
 	{
-		$plugin = Table::getInstance('extensions');
+		$plugin = Table::getInstance('extension', 'Joomla\\CMS\\Table\\');
+		$id    = $plugin->find(array('type' => 'plugin', 'folder' => $group, 'element' => $element));
 
-		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
+		// Load.
+		if (!$plugin->load($id))
 		{
+			$this->setError($plugin->getError());
+
 			return false;
 		}
 

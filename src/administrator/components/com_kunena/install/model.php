@@ -1073,136 +1073,73 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$task = $this->getTask();
 
-		// Fixme J4
-		if (version_compare(JVERSION, '4.0', '<'))
+		switch ($task)
 		{
-			switch ($task)
-			{
-				case 0:
-					if ($this->migrateDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 1:
-					if ($this->installDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 2:
-					if ($this->upgradeDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 3:
-					if ($this->installSampleData())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 4:
-					if ($this->migrateCategoryImages())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 5:
-					if ($this->migrateAvatars())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 6:
-					if ($this->migrateAvatarGalleries())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 7:
-					if ($this->migrateAttachments())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 8:
-					if ($this->recountCategories())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 9:
-					if ($this->recountThankyou())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				default:
-					if (!$this->getInstallError())
-					{
-						$this->setStep($this->getStep() + 1);
-					}
-			}
-		}
-		else
-		{
-			switch ($task)
-			{
-				case 0:
-					if ($this->migrateDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 1:
-					if ($this->installDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 2:
-					if ($this->upgradeDatabase())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 3:
-					if ($this->installSampleData())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 4:
-					if ($this->migrateCategoryImages())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 5:
-					if ($this->migrateAvatars())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 6:
-					if ($this->migrateAvatarGalleries())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				case 7:
-					if ($this->migrateAttachments())
-					{
-						$this->setTask($task + 1);
-					}
-					break;
-				default:
-					if (!$this->getInstallError())
-					{
-						$this->setStep($this->getStep() + 1);
-					}
-			}
+			case 0:
+				if ($this->migrateDatabase())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 1:
+				if ($this->installDatabase())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 2:
+				if ($this->upgradeDatabase())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 3:
+				if ($this->installSampleData())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 4:
+				if ($this->migrateCategoryImages())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 5:
+				if ($this->migrateAvatars())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 6:
+				if ($this->migrateAvatarGalleries())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 7:
+				if ($this->migrateAttachments())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 8:
+				if ($this->recountCategories())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			case 9:
+				if ($this->recountThankyou())
+				{
+					$this->setTask($task + 1);
+				}
+				break;
+			default:
+				if (!$this->getInstallError())
+				{
+					$this->setStep($this->getStep() + 1);
+				}
 		}
 	}
 
@@ -2196,11 +2133,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 					break;
 				case 3:
 					// Update category statistics
-					// Fixme J4
-					if (version_compare(JVERSION, '4.0', '<'))
-					{
-						KunenaForumCategoryHelper::recount();
-					}
+					KunenaForumCategoryHelper::recount();
 					$this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
 					break;
 				default:

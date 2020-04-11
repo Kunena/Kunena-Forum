@@ -113,17 +113,31 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function __toString()
 	{
-		try
+		if (version_compare(PHP_VERSION, '7.0.0', '>='))
 		{
-			return (string) $this->render();
+			try
+			{
+				return (string) $this->render();
+			}
+			catch (Exception $e)
+			{
+				return $this->renderException($e);
+			}
+			catch (Throwable $t)
+			{
+				return $this->renderException($t);
+			}
 		}
-		catch (Exception $e)
+		else
 		{
-			return $this->renderException($e);
-		}
-		catch (Throwable $t)
-		{
-			return $this->renderException($t);
+			try
+			{
+				return (string) $this->render();
+			}
+			catch (Exception $e)
+			{
+				return $this->renderException($e);
+			}
 		}
 	}
 

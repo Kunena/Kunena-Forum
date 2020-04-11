@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    BBCode
  *
@@ -24,13 +25,13 @@ use Joomla\CMS\Language\Text;
 class KunenaBbcodeEditor
 {
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	public $editor_elements = array();
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @since Kunena
 	 * @throws Exception
@@ -42,7 +43,7 @@ class KunenaBbcodeEditor
 	}
 
 	/**
-	 * @param   array $config config
+	 * @param   array  $config  config
 	 *
 	 * @return KunenaBbcodeEditor
 	 * @since Kunena
@@ -63,9 +64,9 @@ class KunenaBbcodeEditor
 	/**
 	 * Inserts a button or another element at the specified location. See insertElements for details.
 	 *
-	 * @param   mixed $element element
-	 * @param   null  $pos     pos
-	 * @param   mixed $where   where
+	 * @param   mixed  $element  element
+	 * @param   null   $pos      pos
+	 * @param   mixed  $where    where
 	 *
 	 * @return void
 	 * @since Kunena
@@ -84,9 +85,9 @@ class KunenaBbcodeEditor
 	 * inserted after/before the element named $where. If NULL is specified then it is inserted after
 	 * all other elements.
 	 *
-	 * @param   mixed $elements elements
-	 * @param   null  $pos      pos
-	 * @param   mixed $where    where
+	 * @param   mixed  $elements  elements
+	 * @param   null   $pos       pos
+	 * @param   mixed  $where     where
 	 *
 	 * @return boolean
 	 * @since Kunena
@@ -194,8 +195,8 @@ class KunenaBbcodeEditor
 	/**
 	 * Parses an XML description of the buttons into the internal object representation.
 	 *
-	 * @param   SimpleXMLElement $xml         The XML object to parse
-	 * @param   string           $parseMethod The parse method name to call
+	 * @param   SimpleXMLElement  $xml          The XML object to parse
+	 * @param   string            $parseMethod  The parse method name to call
 	 *
 	 * @return array
 	 * @since Kunena
@@ -236,20 +237,21 @@ class KunenaBbcodeEditor
 
 /**
  * Class KunenaBbcodeEditorElement
+ *
  * @since Kunena
  */
 abstract class KunenaBbcodeEditorElement
 {
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	public $name;
 
 	/**
 	 * Constructor for the base class for editor elements.
 	 *
-	 * @param   string $name name
+	 * @param   string  $name  name
 	 *
 	 * @since Kunena
 	 */
@@ -264,7 +266,7 @@ abstract class KunenaBbcodeEditorElement
 	 * @static
 	 * @abstract
 	 *
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return void
 	 * @since Kunena
@@ -277,54 +279,55 @@ abstract class KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorButton
+ *
  * @since Kunena
  */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 {
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $tag;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $config;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $title;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $alt;
 
 	/**
-	 * @since Kunena
 	 * @var string
+	 * @since Kunena
 	 */
 	protected $class;
 
 	/**
-	 * @since Kunena
 	 * @var array
+	 * @since Kunena
 	 */
 	protected $actions = array();
 
 	/**
 	 * Create a button that can be added to the BBCode Editor.
 	 *
-	 * @param   string $name  name
-	 * @param   string $class class
-	 * @param   string $tag   tag
-	 * @param   string $title title
-	 * @param   string $alt   alt
+	 * @param   string  $name   name
+	 * @param   string  $class  class
+	 * @param   string  $tag    tag
+	 * @param   string  $title  title
+	 * @param   string  $alt    alt
 	 *
 	 * @since Kunena
 	 */
@@ -339,7 +342,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	}
 
 	/**
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return KunenaBbcodeEditorButton
 	 * @since Kunena
@@ -443,95 +446,96 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 				case 'wrap-selection':
 					$selection = array();
 
-					$classname = '';
-
 					if (!empty($action['class']))
 					{
 						$selection[] = "className: '" . $action['class'] . "'";
 					}
 
-					$name = '';
+					if ($action['name'] == Text::_('COM_KUNENA_EDITOR_BOLD'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_BOLD')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_ITALIC'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_ITALIC')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_UNDERL'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_UNDERL')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_SUB'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_SUB')";
+						$action['key']  = '';
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_ULIST'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_ULIST')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_OLIST'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_OLIST')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_HR'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_HR')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_CENTER'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_CENTER')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_QUOTE'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_QUOTE')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_CODE'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_CODE')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_TABLE'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_TABLE')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_SPOILER'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_SPOILER')";
+					}
+					elseif ($action['name'] == Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT'))
+					{
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT')";
+					}
+					else
+					{
+						$action['name'] = str_replace('button', '', $action['class']);
 
-					if (!empty($action['name']))
-					{
-						$selection[] = "name: '" . $action['name'] . "'";
-					}
+						if ($action['name'] == 'stroke')
+						{
+							$action['name'] = 'strike';
+							$action['key']  = '';
+						}
+						elseif ($action['name'] == 'supscript')
+						{
+							$action['name'] = 'sup';
+							$action['key']  = '';
+						}
+						elseif ($action['name'] == 'listitem')
+						{
+							$action['name'] = 'list';
+						}
+						elseif ($action['name'] == 'alignleft')
+						{
+							$action['name'] = 'left';
+						}
+						elseif ($action['name'] == 'alignright')
+						{
+							$action['name'] = 'right';
+						}
+						elseif ($action['name'] == 'hiddentext')
+						{
+							$action['name'] = 'hide';
+						}
 
-					if ($action['name'] == 'Bold')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_BOLD') . "'";
-					}
-					elseif ($action['name'] == 'Italic')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_ITALIC') . "'";
-					}
-					elseif ($action['name'] == 'Underline')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_UNDERL') . "'";
-					}
-					elseif ($action['name'] == 'Stroke')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_STRIKE') . "'";
-					}
-					elseif ($action['name'] == 'Subscript')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_SUB') . "'";
-					}
-					elseif ($action['name'] == 'Supscript')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_SUP') . "'";
-					}
-					elseif ($action['name'] == 'Unordered List')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_ULIST') . "'";
-					}
-					elseif ($action['name'] == 'Ordered List')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_OLIST') . "'";
-					}
-					elseif ($action['name'] == 'Li')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_LIST') . "'";
-					}
-					elseif ($action['name'] == 'HR')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_HR') . "'";
-					}
-					elseif ($action['name'] == 'Left')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_LEFT') . "'";
-					}
-					elseif ($action['name'] == 'Center')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_CENTER') . "'";
-					}
-					elseif ($action['name'] == 'Right')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_RIGHT') . "'";
-					}
-					elseif ($action['name'] == 'Quote')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_QUOTE') . "'";
-					}
-					elseif ($action['name'] == 'Code')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_CODE') . "'";
-					}
-					elseif ($action['name'] == 'Table')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_TABLE') . "'";
-					}
-					elseif ($action['name'] == 'Spoiler')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_SPOILER') . "'";
-					}
-					elseif ($action['name'] == 'Hide')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_EDITOR_HIDE') . "'";
-					}
-					elseif ($action['name'] == 'confidential')
-					{
-						$selection[] = "name: '" . Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . "'";
+						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_" . strtoupper($action['name']) . "')";
 					}
 
 					$key = '';
@@ -562,18 +566,20 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 				case 'dropdown':
 					if ($action['name'] == "Size")
 					{
-						$js = "{className: '" . $action['class'] . "', name:'" . Text::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE') . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL') . "', openWith:'[size=1]', closeWith:'[/size]' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_VERY_SMALL') . "', openWith:'[size=2]', closeWith:'[/size]' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_SMALL') . "', openWith:'[size=3]', closeWith:'[/size]' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_NORMAL') . "', openWith:'[size=4]', closeWith:'[/size]' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_BIG') . "', openWith:'[size=5]', closeWith:'[/size]' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER') . "', openWith:'[size=6]', closeWith:'[/size]' }
+						$js = "{ className: '" . $action['class'] . "', name: Joomla.JText._('COM_KUNENA_EDITOR_FONTSIZE_SELECTION'),
+						 key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL') , openWith:'[size=1]', closeWith:'[/size]' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_SMALL') , openWith:'[size=2]', closeWith:'[/size]' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SMALL') , openWith:'[size=3]', closeWith:'[/size]' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_NORMAL') , openWith:'[size=4]', closeWith:'[/size]' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_BIG') , openWith:'[size=5]', closeWith:'[/size]' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER'), openWith:'[size=6]', closeWith:'[/size]' }
 						]}";
 					}
 					elseif ($action['name'] == "videodropdownbutton")
 					{
-						$js = "{name: '" . Text::_('COM_KUNENA_EDITOR_VIDEO') . "', className: 'videodropdownbutton', dropMenu: [{name:  '" . Text::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'), className: '" . $action['class'] . "', beforeInsert:function() {
 							jQuery('#videosettings-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -589,7 +595,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 									});
 								}});
 							} },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_VIDEO') . "', className: 'videoURLbutton', beforeInsert:function() {
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videoURLbutton', beforeInsert:function() {
 							jQuery('#videourlprovider-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -609,24 +615,24 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "Colors")
 					{
-						$js = "{className: '" . $action['class'] . "', name:'" . Text::_('COM_KUNENA_EDITOR_COLOR') . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_BLACK') . "',	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_ORANGE') . "',	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_RED') . "', 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
+						$js = "{className: '" . $action['class'] . "', name: Joomla.JText._('COM_KUNENA_EDITOR_COLORS'), key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLACK'),	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_ORANGE'),	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_RED'), 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
 
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_BLUE') . "', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_PURPLE') . "', openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_GREEN') . "', 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLUE'), 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_PURPLE'), openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GREEN'), 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
 
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_WHITE') . "', 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
-						{name: '" . Text::_('COM_KUNENA_EDITOR_COLOR_GRAY') . "', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_WHITE'), 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
+						{ name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GRAY'), 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
 						]}";
 					}
 					break;
 				case 'modal':
 					if ($action['name'] == "picture")
 					{
-						$js = "{name:'" . Text::_('COM_KUNENA_EDITOR_IMAGELINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_EDITOR_IMAGELINK'), className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -646,7 +652,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "link")
 					{
-						$js = "{name:'" . Text::_('COM_KUNENA_EDITOR_LINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_EDITOR_LINK'), className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -666,7 +672,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "map")
 					{
-						$js = "{name:'" . Text::_('COM_KUNENA_EDITOR_MAP') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_EDITOR_MAP'), className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -686,7 +692,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "Tweet")
 					{
-						$js = "{name:'" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK'), className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -706,7 +712,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					elseif ($action['name'] == "emoticons")
 					{
-						$js = "{name:'" . Text::_('COM_KUNENA_EDITOR_EMOTICONS') . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name: Joomla.JText._('COM_KUNENA_EDITOR_EMOTICONS'), className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -726,7 +732,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					}
 					else
 					{
-						$js = "{name:'" . $action['name'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
+						$js = "{ name:'" . $action['name'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
 						jQuery('#" . $action['name'] . "-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -754,9 +760,9 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Add a new display action. This can be used to show a button specific action area.
 	 *
-	 * @param   mixed  $selection selection
-	 * @param   string $class     class
-	 * @param   null   $tag       tag
+	 * @param   mixed   $selection  selection
+	 * @param   string  $class      class
+	 * @param   null    $tag        tag
 	 *
 	 * @return void
 	 * @since Kunena
@@ -774,14 +780,14 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Specify what code should be inserted when the user presses the button.
 	 *
-	 * @param   null $repeat       repeat
-	 * @param   null $empty_before empty
-	 * @param   null $empty_after  empty
-	 * @param   null $start        start
-	 * @param   null $end          end
-	 * @param   null $before       before
-	 * @param   null $after        after
-	 * @param   null $tag          tag
+	 * @param   null  $repeat        repeat
+	 * @param   null  $empty_before  empty
+	 * @param   null  $empty_after   empty
+	 * @param   null  $start         start
+	 * @param   null  $end           end
+	 * @param   null  $before        before
+	 * @param   null  $after         after
+	 * @param   null  $tag           tag
 	 *
 	 * @since Kunena
 	 */
@@ -812,7 +818,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	/**
 	 * Open the specified URL when the button is pressed.
 	 *
-	 * @param   string $url url
+	 * @param   string  $url  url
 	 *
 	 * @return void
 	 * @since Kunena
@@ -827,6 +833,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 
 /**
  * Class KunenaBbcodeEditorSeparator
+ *
  * @since Kunena
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
@@ -834,7 +841,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	/**
 	 * Parse XML for separator editor part
 	 *
-	 * @param   SimpleXMLElement $xml xml
+	 * @param   SimpleXMLElement  $xml  xml
 	 *
 	 * @return KunenaBbcodeEditorSeparator
 	 * @since Kunena

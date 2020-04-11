@@ -247,7 +247,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$params->set('actorName', $actor->getDisplayName());
 		$params->set('recipientName', $target->getDisplayName());
 		$params->set('recipientUrl', 'index.php?option=com_community&view=profile&userid=' . $target->id); // Actor Link
-		$params->set('url', Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
+		$params->set('url', Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null) . '#' . $message->id); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
 		$params->set('title', $message->displayField('subject')); // (title) tag in language file
 		$params->set('title_url', $message->getPermaUrl()); // Make the title in notification - linkable
 		$params->set('message', $message->message); // (message) tag in language file

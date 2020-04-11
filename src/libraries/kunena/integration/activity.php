@@ -84,7 +84,7 @@ class KunenaIntegrationActivity
 			{
 				$r = call_user_func_array(array($instance, $method), $arguments);
 
-				if ($r !== null & $ret === null)
+				if ($r !== null && $ret === null)
 				{
 					$ret = $r;
 				}

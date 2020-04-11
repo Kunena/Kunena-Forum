@@ -54,6 +54,7 @@ Text::script('COM_KUNENA_EDITOR_EBAY');
 Text::script('COM_KUNENA_EDITOR_MAP');
 Text::script('COM_KUNENA_EDITOR_POLL_SETTINGS');
 Text::script('COM_KUNENA_EDITOR_VIDEO');
+Text::script('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 Text::script('COM_KUNENA_EDITOR_IMAGELINK');
 Text::script('COM_KUNENA_EDITOR_EMOTICONS');
 Text::script('COM_KUNENA_EDITOR_TWEET');
@@ -437,7 +438,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
 									       id="subscribeMe"
-									       value="1" <?php if ($this->config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $me->canSubscribe == 1)
+									       value="1" <?php if ($this->config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $me->canSubscribe == 1 || $this->category->getSubscribed($me->userid))
 									{
 										echo 'checked="checked"';
 									} ?> />

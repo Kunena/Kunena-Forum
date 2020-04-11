@@ -124,69 +124,52 @@ HTMLHelper::_('dropdown.init');
 					</thead>
 					<tbody>
 					<tr>
-						<th width="10%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_PRICE'); ?></th>
-						<th width="10%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
-						<th width="5%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
+						<th width="5%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_PRICE'); ?></th>
 						<th width="5%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
+						<th width="10%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
+						<th width="7%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?></th>
+						<th width="5%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
 						<th width="5%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></th>
 						<th width="25%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
 						<th width="30%"></th>
 					</tr>
-
-					<tr>
-						<td style="width: 5%;">€10,00
-						</td>
-						<td style="width: 7%;">
-							<?php $img_path = Uri::root(true) . '/media/kunena/images/template_thumbnail.png'; ?>
-							<span class="editlinktip hasTip"
-							      title="<?php echo $this->escape('Blue Eagle 5' . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-								<a href="https://www.kunena.org/download/templates/product/blue-eagle-5" target="_blank"
-								   rel="noopener noreferrer">Blue Eagle 5</a>
-							</span>
-						</td>
-						<td style="width: 7%;">
-							<a href="mailto:team@kunena.org">Kunena Team</a>
-						</td>
-						<td style="width: 5%;">
-							K5.0.X
-						</td>
-						<td style="width: 5%;">
-							<a href="https://www.kunena.org/download/templates" target="_blank"
-							   rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
-						</td>
-						<td style="width: 25%;">
-							<a href="https://www.kunena.org" target="_blank" rel="noopener noreferrer">https://www.kunena.org</a>
-						</td>
-						<td style="width: 30%;">
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 5%;">$8.99 - $20.00
-						</td>
-						<td style="width: 7%;">
-							<span class="editlinktip hasTip"
-							      title="<?php echo $this->escape('9themestore.com' . '::<img border="1" src="https://www.9themestore.com/images/dms/documents/nts_kmax.jpg" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-								<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates"
-								   target="_blank" rel="noopener noreferrer">9themestore.com</a>
-							</span>
-						</td>
-						<td style="width: 7%;">
-							<a href="mailto:info@9themestore.com">9themestore.com</a>
-						</td>
-						<td style="width: 5%;">
-							K5.0.X
-						</td>
-						<td style="width: 5%;">
-							<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
-							   rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
-						</td>
-						<td style="width: 25%;">
-							<a href="https://www.9themestore.com/index.php/our-themes/kunena-templates" target="_blank"
-							   rel="noopener noreferrer">https://www.9themestore.com</a>
-						</td>
-						<td style="width: 30%;">
-						</td>
-					</tr>
+					<?php if ($this->templatesxml) : ?>
+						<?php foreach ($this->templatesxml as $row) : ?>
+							<tr>
+								<td style="width: 5%;"><?php echo $row->price;?>
+								</td>
+								<td style="width: 5%;"><?php echo $row->version;?>
+								</td>
+								<td style="width: 10%;">
+									<span class="editlinktip hasTip"
+									      title="<?php echo $row->name. $this->escape('::<img border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+										<a href="<?php echo $row->detailsurl;?>" target="_blank"
+										   rel="noopener noreferrer"><?php echo $row->name;?></a>
+									</span>
+								</td>
+								<td style="width: 7%;">
+									<?php echo $row->created;?>
+								</td>
+								<td style="width: 7%;">
+									<a href="mailto:<?php echo $row->authoremail;?>"><?php echo $row->author;?></a>
+								</td>
+								<td style="width: 5%;">
+									<a href="<?php echo $row->detailsurl;?>" target="_blank"
+									   rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+								</td>
+								<td style="width: 25%;">
+									<a href="<?php echo $row->authorurl;?>" target="_blank" rel="noopener noreferrer"><?php echo $row->authorurl;?></a>
+								</td>
+								<td style="width: 30%;">
+								</td>
+							</tr>
+							<?php endforeach; ?>
+						<?php else : ?>
+							<tr>
+								<td style="width: 30%;"> Could not connect to Kunena server. Please try again later.
+								</td>
+							</tr>
+						<?php endif; ?>
 					</tbody>
 				</table>
 			</form>

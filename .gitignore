@@ -65,3 +65,5 @@ selenium.log
 tests/cache
 
 src/media/kunena/avatars/users/
+
+src/administrator/components/com_kunena/templates.xml

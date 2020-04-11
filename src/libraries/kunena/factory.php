@@ -49,18 +49,9 @@ abstract class KunenaFactory
 	 */
 	public static function getAdminTemplate()
 	{
-		if (version_compare(JVERSION, '4.0', '>'))
-		{
-			// Joomla 4.0+ template:
-			require_once KPATH_ADMIN . '/template/j4/template.php';
-			$template = new KunenaAdminTemplate4;
-		}
-		else
-		{
-			// Joomla 3 template:
-			require_once KPATH_ADMIN . '/template/j3/template.php';
-			$template = new KunenaAdminTemplate3;
-		}
+		// Joomla 3 template:
+		require_once KPATH_ADMIN . '/template/j3/template.php';
+		$template = new KunenaAdminTemplate3;
 
 		return $template;
 	}

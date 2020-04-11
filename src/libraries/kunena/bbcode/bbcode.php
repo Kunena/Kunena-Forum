@@ -410,7 +410,7 @@ class KunenaBbcode extends NBBC_BBCode
 		{
 			foreach ($search as $index => $token)
 			{
-				if ($index & 1)
+				if ($index && 1)
 				{
 					if (preg_match("/^(https?|ftp|mailto):/ui", $token))
 					{
@@ -2382,17 +2382,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			list($vid_key, $vid_name, $vid_value) = $vid_data;
 
-			if ($vid_key & 1)
+			if ($vid_key && 1)
 			{
 				$vid_object [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
 			}
 
-			if ($vid_key & 2)
+			if ($vid_key && 2)
 			{
 				$vid_param [$vid_name] = '<param name="' . $vid_name . '" value="' . preg_replace('/%vcode%/', $content, $vid_value) . '" />';
 			}
 
-			if ($vid_key & 4)
+			if ($vid_key && 4)
 			{
 				$vid_embed [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
 			}
@@ -2730,13 +2730,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			}
 		}
 
+		preg_match('/[img(\s*(?!alt)([\w\-]+\s*\/?]/', $params['_tag'], $matches);
+		$matches = rtrim($matches[0], "]");
+
 		$config = KunenaFactory::getConfig();
 		$layout = KunenaLayout::factory('BBCode/Image')
 			->set('title', Text::_('COM_KUNENA_FILEATTACH'))
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
-			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
+			->set('alt', isset($params['alt']) ? $matches : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)

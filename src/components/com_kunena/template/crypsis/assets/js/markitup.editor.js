@@ -21,47 +21,89 @@ bbcodeSettings = {
 	}, {
 		className: 'strokebutton',
 		name: Joomla.JText._('COM_KUNENA_EDITOR_STRIKE'),
-		key: 'T',
 		openWith: '[strike]',
 		closeWith: '[/strike]'
 	}, {
 		className: 'subscriptbutton',
 		name: Joomla.JText._('COM_KUNENA_EDITOR_SUB'),
-		key: 'T',
 		openWith: '[sub]',
 		closeWith: '[/sub]'
 	}, {
 		className: 'supscriptbutton',
 		name: Joomla.JText._('COM_KUNENA_EDITOR_SUP'),
-		key: 'T',
 		openWith: '[sup]',
 		closeWith: '[/sup]'
 	}, {
-		className: 'sizebutton',
-		name: Joomla.JText._('COM_KUNENA_EDITOR_FONTSIZE_SELECTION'),
-		key: 'S',
-		openWith: '[size=[![Text size]!]]',
-		closeWith: '[/size]',
-		dropMenu: [
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL"), openWith:'[size=1]', closeWith:'[/size]' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_VERY_SMALL"), openWith:'[size=2]', closeWith:'[/size]' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_SMALL"), openWith:'[size=3]', closeWith:'[/size]' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_NORMAL"), openWith:'[size=4]', closeWith:'[/size]' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_BIG"), openWith:'[size=5]', closeWith:'[/size]' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER"), openWith:'[size=6]', closeWith:'[/size]' }
+		className: 'sizebutton', name: Joomla.JText._('COM_KUNENA_EDITOR_FONTSIZE_SELECTION'),
+		key: 'S', openWith: '[size=[![Text size]!]]', closeWith: '[/size]', dropMenu: [
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL'),
+				openWith: '[size=1]',
+				closeWith: '[/size]'
+			},
+			{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_SMALL'), openWith: '[size=2]', closeWith: '[/size]'},
+			{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SMALL'), openWith: '[size=3]', closeWith: '[/size]'},
+			{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_NORMAL'), openWith: '[size=4]', closeWith: '[/size]'},
+			{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_BIG'), openWith: '[size=5]', closeWith: '[/size]'},
+			{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER'), openWith: '[size=6]', closeWith: '[/size]'}
 		]
 	}, {
-		className: 'colors', name:Joomla.JText._("COM_KUNENA_EDITOR_COLORS"), key:'', openWith:'[color=[![Color]!]]', closeWith:'[/color]',dropMenu: [
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_BLACK"),	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_ORANGE"),	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_RED"), 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
+		className: 'colors',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_COLORS'),
+		key: '',
+		openWith: '[color=[![Color]!]]',
+		closeWith: '[/color]',
+		dropMenu: [
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLACK'),
+				openWith: '[color=black]',
+				closeWith: '[/color]',
+				className: 'col1-1'
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_ORANGE'),
+				openWith: '[color=orange]',
+				closeWith: '[/color]',
+				className: 'col1-2'
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_RED'),
+				openWith: '[color=red]',
+				closeWith: '[/color]',
+				className: 'col1-3'
+			},
 
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_BLUE"), 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_PURPLE"), openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_GREEN"), 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLUE'),
+				openWith: '[color=blue]',
+				closeWith: '[/color]',
+				className: 'col2-1'
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_PURPLE'),
+				openWith: '[color=purple]',
+				closeWith: '[/color]',
+				className: 'col2-2'
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GREEN'),
+				openWith: '[color=green]',
+				closeWith: '[/color]',
+				className: 'col2-3'
+			},
 
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_WHITE"), 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
-			{name:Joomla.JText._("COM_KUNENA_EDITOR_COLOR_GRAY"), 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_WHITE'),
+				openWith: '[color=white]',
+				closeWith: '[/color]',
+				className: 'col3-1'
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GRAY'),
+				openWith: '[color=gray]',
+				closeWith: '[/color]',
+				className: 'col3-2'
+			}
 		]
 	}, {separator: '|'}, {
 		className: 'bulletedlistbutton',
@@ -75,10 +117,14 @@ bbcodeSettings = {
 		closeWith: '[/li]\n  [li][/li]\n[/ol]'
 	}, {
 		className: 'listitembutton',
-		name: 'Li',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_LIST'),
 		openWith: '\n  [li]',
 		closeWith: '[/li]'
-	}, {className: 'hrbutton', name: Joomla.JText._('COM_KUNENA_EDITOR_HR'), openWith: '[hr]'}, {
+	}, {
+		className: 'hrbutton',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_HR'),
+		openWith: '[hr]'
+	}, {
 		className: 'alignleftbutton',
 		name: Joomla.JText._('COM_KUNENA_EDITOR_LEFT'),
 		openWith: '[left]',
@@ -98,8 +144,13 @@ bbcodeSettings = {
 		name: Joomla.JText._('COM_KUNENA_EDITOR_QUOTE'),
 		openWith: '[quote]',
 		closeWith: '[/quote]'
-	}, {className: 'codesimplebutton', name: 'Code', openWith: '[code]', closeWith: '[/code]'}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_CODE'), className: 'codemodalboxbutton', beforeInsert: function () {
+	}, {
+		className: 'codesimplebutton',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_CODE'),
+		openWith: '[code]',
+		closeWith: '[/code]'
+	}, {
+		name: 'code', className: 'codemodalboxbutton', beforeInsert: function () {
 			jQuery('#code-modal-submit').click(function (event) {
 				event.preventDefault();
 
@@ -175,29 +226,44 @@ bbcodeSettings = {
 					}
 				});
 		}
-	}, {separator: '|'}, {className: 'ebaybutton', name: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'), key: 'E', openWith: '[ebay]', closeWith: '[/ebay]'}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [{
-			name: 'Provider', className: 'videourlprovider', beforeInsert: function () {
-				jQuery('#videosettings-modal-submit').click(function (event) {
-					event.preventDefault();
-
-					jQuery('#modal-video-settings').modal('hide');
-				});
-
-				jQuery('#modal-video-settings').modal(
-					{
-						overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-							dialog.overlay.fadeIn('slow', function () {
-								dialog.container.slideDown('slow', function () {
-									dialog.data.fadeIn('slow');
-								});
-							});
-						}
-					});
-			}
-		},
+	}, {separator: '|'}, {
+		className: 'ebaybutton',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),
+		key: 'E',
+		openWith: '[ebay]',
+		closeWith: '[/ebay]'
+	}, {
+		name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'), className: 'videodropdownbutton', dropMenu: [
 			{
-				name: 'Video', className: 'videoURLbutton', beforeInsert: function () {
+				name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER'),
+				className: 'videourlprovider',
+				beforeInsert: function () {
+					jQuery('#videosettings-modal-submit').click(function (event) {
+						event.preventDefault();
+
+						jQuery('#modal-video-settings').modal('hide');
+					});
+
+					jQuery('#modal-video-settings').modal(
+						{
+							overlayClose: true,
+							autoResize: true,
+							minHeight: 500,
+							minWidth: 800,
+							onOpen: function (dialog) {
+								dialog.overlay.fadeIn('slow', function () {
+									dialog.container.slideDown('slow', function () {
+										dialog.data.fadeIn('slow');
+									});
+								});
+							}
+						});
+				}
+			},
+			{
+				name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'),
+				className: 'videoURLbutton',
+				beforeInsert: function () {
 					jQuery('#videourlprovider-modal-submit').click(function (event) {
 						event.preventDefault();
 
@@ -241,40 +307,23 @@ bbcodeSettings = {
 				});
 		}
 	}, {
-		name: Joomla.JText._('COM_KUNENA_EDITOR_POLL_SETTINGS'), className: 'pollbutton', beforeInsert: function () {
-			var allow_edit_poll = Joomla.getOptions('com_kunena.allow_edit_poll');
-
+		name: 'poll-settings', className: 'pollbutton', beforeInsert: function () {
 			jQuery('#poll-settings-modal-submit').click(function (event) {
 				event.preventDefault();
 
 				jQuery('#modal-poll-settings').modal('hide');
 			});
 
-			if (allow_edit_poll){
-				jQuery('#modal-poll-settings').modal(
-						{
-							overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-									dialog.overlay.fadeIn('slow', function () {
-										dialog.container.slideDown('slow', function () {
-											dialog.data.fadeIn('slow');
-										});
-									});
-								}
-
+			jQuery('#modal-poll-settings').modal(
+				{
+					overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
+						dialog.overlay.fadeIn('slow', function () {
+							dialog.container.slideDown('slow', function () {
+								dialog.data.fadeIn('slow');
+							});
 						});
-			}else {
-				jQuery('#modal-poll-not-allowed-to-edit').modal(
-						{
-							overlayClose: true, autoResize: true, minHeight: 500, minWidth: 800, onOpen: function (dialog) {
-								dialog.overlay.fadeIn('slow', function () {
-									dialog.container.slideDown('slow', function () {
-										dialog.data.fadeIn('slow');
-									});
-								});
-							}
-						});
-
-			}
+					}
+				});
 		}
 	}, {
 		className: 'tweetbutton',
@@ -286,7 +335,12 @@ bbcodeSettings = {
 		name: Joomla.JText._('COM_KUNENA_EDITOR_SOUNDCLOUD'),
 		openWith: '[soundcloud]',
 		closeWith: '[/soundcloud]'
-	}, {className: 'instagrambutton', name: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'), openWith: '[instagram]', closeWith: '[/instagram]'}, {
+	}, {
+		className: 'instagrambutton',
+		name: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'),
+		openWith: '[instagram]',
+		closeWith: '[/instagram]'
+	}, {
 		name: Joomla.JText._('COM_KUNENA_EDITOR_EMOTICONS'), className: 'emoticonsbutton', beforeInsert: function () {
 			jQuery('#emoticons-modal-submit').click(function (event) {
 				event.preventDefault();

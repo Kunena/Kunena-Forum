@@ -117,7 +117,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$attach_id = $this->input->getInt('file_id', 0);
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
-		
+
 
 		if($attach_id > 0)
 		{
@@ -1006,6 +1006,8 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
+
+		$isMine = $this->me->userid == $message->userid;
 
 		if ($this->config->log_moderation)
 		{

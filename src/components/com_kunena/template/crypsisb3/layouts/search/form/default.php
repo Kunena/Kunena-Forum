@@ -132,7 +132,7 @@ $this->addScript('assets/js/search.js');
 						</div>
 					</fieldset>
 
-					<fieldset class="ool-md-4">
+					<fieldset class="col-md-4">
 						<legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
 						</legend>

@@ -10,19 +10,11 @@
 jQuery(document).ready(function ($) {
 
 	/* To hide or open spoiler on click */
-	$('.kspoiler').each(function (index) {
-		$(this).click(function () {
-			if (!$(this).find('.kspoiler-content').is(':visible')) {
-				$(this).find('.kspoiler-content').show();
-				$(this).find('.kspoiler-expand').hide();
-				$(this).find('.kspoiler-hide').show();
-			}
-			else {
-				$(this).find('.kspoiler-content').hide();
-				$(this).find('.kspoiler-expand').show();
-				$(this).find('.kspoiler-hide').hide();
-			}
-		});
+	$(document).on('click', '.kspoiler-expand', function (e) {
+		e.preventDefault()
+		var show = $(this.children[0]).val() === Joomla.getOptions('com_kunena.expand');
+		$(this.children[0]).val(show ? Joomla.getOptions('com_kunena.hide') : Joomla.getOptions('com_kunena.expand'));
+		$(this).parent().children('.kspoiler-wrapper').toggle()
 	});
 
 	/* To allow to close or open the quick-reply modal box */

@@ -138,7 +138,6 @@ $settings      = $templatesettings->get('wysibb');
 	<label class="control-label"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7"
-		          required="required"
 		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
 			{
 				echo $this->message->getCategory()->topictemplate;

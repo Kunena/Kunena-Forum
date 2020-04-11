@@ -259,7 +259,11 @@ jQuery(function ($) {
 			.done(function (data) {
 				data.inline = 0;
 				$this.hide();
-				$('#editor').val(data.text_prepared);
+
+				if (data.text_prepared!=false)
+				{
+					$('#editor').val(data.text_prepared);
+				}
 			})
 			.fail(function () {
 				//TODO: handle the error of ajax request
@@ -310,7 +314,11 @@ jQuery(function ($) {
 			})
 				.done(function (data) {
 					$this.parent().remove();
-					$('#editor').val(data.text_prepared);
+
+					if (data.text_prepared!=false)
+					{
+						$('#editor').val(data.text_prepared);
+					}
 				})
 				.fail(function () {
 					//TODO: handle the error of ajax request

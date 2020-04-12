@@ -62,7 +62,7 @@ jQuery(function ($) {
 
 		$('#insert-all').removeClass('btn-success');
 		$('#insert-all').addClass('btn-primary');
-		$('#insert-all').html(Joomla.getOptions('com_kunena.icons.delete') + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
+		$('#insert-all').html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON'));
 
 		$('#remove-all').hide();
 		$('#insert-all').hide();
@@ -178,12 +178,11 @@ jQuery(function ($) {
 		});
 
 		$.ajax({
-			url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&files_id=' + files_id,
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + files_id,
 			type: 'POST'
 		})
 		.done(function (data) {
-			/*data.inline = 1;
-			$('#removeInline').show();*/
+
 		})
 		.fail(function () {
 			//TODO: handle the error of ajax request
@@ -215,59 +214,15 @@ jQuery(function ($) {
 			insertInMessage(file_id, filename, $this);
 
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + file_id,
 				type: 'POST'
 			})
 				.done(function (data) {
-					data.inline = 1;
 
-					$('#removeInline').show();
 				})
 				.fail(function () {
 					//TODO: handle the error of ajax request
 				});
-		});
-
-	var removeInline = $('<button>')
-		.addClass("btn btn-primary")
-		.attr("id","removeInline")
-		.html(Joomla.getOptions('com_kunena.icons.trash') + ' ' + Joomla.JText._('COM_KUNENA_EDITOR_REMOVE_INLINE'))
-		.on('click', function (e) {
-			// Make sure the button click doesn't submit the form:
-			e.preventDefault();
-			e.stopPropagation();
-
-			var $this = $(this),
-				data = $this.data();
-
-			var file_id = 0;
-			if (data.uploaded === true) {
-				if (data.result !== false) {
-					file_id = data.result.data.id;
-				}
-				else {
-					file_id = data.file_id;
-				}
-			}
-
-			var editor_text = $('#editor').val();
-
-			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem_inline') + '&file_id=' + file_id + '&editor_text=' + editor_text,
-				type: 'POST'
-			})
-			.done(function (data) {
-				data.inline = 0;
-				$this.hide();
-
-				if (data.text_prepared!=false)
-				{
-					$('#editor').val(data.text_prepared);
-				}
-			})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
 		});
 
 	var removeButton = $('<button/>')
@@ -304,6 +259,12 @@ jQuery(function ($) {
 
 			fileCount = fileCount - 1;
 
+			if (fileCount==0)
+			{
+				$('#insert-all').hide();
+				$('#remove-all').hide();
+			}
+
 			$('#alert_max_file').remove();
 			var editor_text = $('#editor').val();
 
@@ -315,7 +276,7 @@ jQuery(function ($) {
 				.done(function (data) {
 					$this.parent().remove();
 
-					if (data.text_prepared!=false)
+					if (data.text_prepared!==false)
 					{
 						$('#editor').val(data.text_prepared);
 					}
@@ -469,11 +430,6 @@ jQuery(function ($) {
 			}
 
 			data.context.append(removeButton.clone(true).data(data));
-
-			if (data.inline)
-			{
-				data.context.append(removeInline.clone(true).data(data));
-			}
 		}
 		else if (data.result.message) {
 			$('#form_submit_button').prop('disabled', false);
@@ -530,11 +486,6 @@ jQuery(function ($) {
 
 						object.append(insertButton.clone(true).data(file));
 						object.append(removeButton.clone(true).data(data));
-
-						if (file.inline === true)
-						{
-							object.append(removeInline.clone(true).data(data));
-						}
 
 						object.appendTo("#files");
 					});

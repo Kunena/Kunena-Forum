@@ -222,27 +222,29 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$attach_id = $this->input->getInt('file_id', 0);
+		$attachs_id = $this->input->get('files_id_delete', array(), 'post', 'array');
+		$attachs_id = explode(',',$attachs_id);
+		$instances  = KunenaAttachmentHelper::getById($attachs_id, 'none');
 		$success   = array();
-		$instance  = KunenaAttachmentHelper::get($attach_id);
-
-		$this->checkpermissions($instance->userid);
 
 		$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+		$success['text_prepared'] = false;
+		$find = array();
 
-		if (!empty($editor_text) && $instance->inline)
+		foreach($instances as $instance)
 		{
-			$find             = array('/\[attachment='.$attach_id.'\](.*?)\[\/attachment\]/su');
-			$replace          = '';
-			$text             = preg_replace($find, $replace, $editor_text);
-			$success['text_prepared'] = $text;
-		}
-		else
-		{
-			$success['text_prepared'] = false;
+			if (!empty($editor_text) && $instance->inline)
+			{
+				$find[]             = '/\[attachment=' . $instance->id . '\](.*?)\[\/attachment\]/su';
+			}
+
+			$instance->delete();
 		}
 
-		$success['result'] = $instance->delete();
+		$replace          = '';
+		$text             = preg_replace($find, $replace, $editor_text);
+		$success['text_prepared'] = $text;
+
 		unset($instance);
 
 		header('Content-type: application/json');

@@ -54,6 +54,7 @@ jQuery(function ($) {
 
 	var fileCount = null;
 	var filesedit = null;
+	var fileeditinline = 0;
 
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
@@ -101,12 +102,13 @@ jQuery(function ($) {
 		}
 
 		var child = $('#kattach-list').find('input');
+		var filesidtodelete = [];
 
 		child.each(function (i, el) {
 			var elem = $(el);
 
 			if (!elem.attr('id').match("[a-z]{8}")) {
-				var fileid = elem.attr('id').match("[0-9]{2}");
+				var fileid = elem.attr('id').match("[0-9]{1,8}");
 
 				if ($('#kattachs-' + fileid).length === 0) {
 					$('#kattach-list').append('<input id="kattachs-' + fileid + '" type="hidden" name="attachments[' + fileid + ']" value="1" />');
@@ -116,22 +118,24 @@ jQuery(function ($) {
 					$('#kattach-' + fileid).remove();
 				}
 
-				$.ajax({
-					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + fileid + '&editor_text=' + editor_text,
-					type: 'POST'
-				})
-					.done(function (data) {
-						$('#files').empty();
-
-						if (data.text_prepared!==false)
-						{
-							$('#editor').val(data.text_prepared);
-						}
-					})
-					.fail(function () {
-						//TODO: handle the error of ajax request
-					});
+				filesidtodelete.push(fileid);
 			}
+		});
+
+		$.ajax({
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + filesidtodelete + '&editor_text=' + editor_text,
+			type: 'POST'
+		})
+		.done(function (data) {
+			$('#files').empty();
+
+			if (data.text_prepared!==false)
+			{
+				$('#editor').val(data.text_prepared);
+			}
+		})
+		.fail(function () {
+			//TODO: handle the error of ajax request
 		});
 
 		$('#alert_max_file').remove();
@@ -485,7 +489,6 @@ jQuery(function ($) {
 					fileCount = Object.keys(data.files).length;
 
 					filesedit = data.files;
-					var fileinline = 0;
 
 					$(data.files).each(function (index, file) {
 						var image = '';
@@ -498,7 +501,7 @@ jQuery(function ($) {
 
 						if (file.inline===true)
 						{
-							fileinline = fileinline +1;
+							fileeditinline = fileeditinline +1;
 						}
 
 						var object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
@@ -512,7 +515,7 @@ jQuery(function ($) {
 						object.appendTo("#files");
 					});
 
-					if (fileinline==0)
+					if (fileeditinline==0)
 					{
 						$('#insert-all').show();
 					}

@@ -72,6 +72,8 @@ jQuery(function ($) {
 
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) === false) {
+			var filesidinedittodelete = [];
+
 			$(filesedit).each(function (index, file) {
 				if ($('#kattachs-' + file.id).length === 0) {
 					$('#kattach-list').append('<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />');
@@ -81,22 +83,24 @@ jQuery(function ($) {
 					$('#kattach-' + file.id).remove();
 				}
 
-				$.ajax({
-					url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + file.id + '&editor_text=' + editor_text,
-					type: 'POST'
-				})
-					.done(function (data) {
-						$('#files').empty();
-
-						if (data.text_prepared!==false)
-						{
-							$('#editor').val(data.text_prepared);
-						}
-					})
-					.fail(function () {
-						//TODO: handle the error of ajax request
-					});
+				filesidinedittodelete.push(file.id);
 			});
+
+			$.ajax({
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + filesidinedittodelete + '&editor_text=' + editor_text,
+				type: 'POST'
+			})
+				.done(function (data) {
+					$('#files').empty();
+
+					if (data.text_prepared!==false)
+					{
+						$('#editor').val(data.text_prepared);
+					}
+				})
+				.fail(function () {
+					//TODO: handle the error of ajax request
+				});
 
 			filesedit = null;
 		}

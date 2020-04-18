@@ -150,65 +150,55 @@ jQuery(function ($) {
 	$('#insert-all').on('click', function (e) {
 		e.preventDefault();
 
-		// Inserting items from edit if they are present
+		var child = $('#kattach-list').find('input');
+		var files_id = [];
+
+		child.each(function (i, el) {
+			var elem = $(el);
+
+			if (!elem.attr('id').match("[a-z]{8}")) {
+				var attachid = elem.attr('id').match("[0-9]{1,8}");
+				var filename = elem.attr('placeholder');
+
+				insertInMessage(attachid, filename);
+
+				$('#insert-all').removeClass('btn-primary');
+				$('#insert-all').addClass('btn-success');
+				$('#insert-all').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+
+				files_id.push(attachid);
+			}
+		});
+
+		// Inserting items in message from edit if they aren't already present
 		if ($.isEmptyObject(filesedit) === false) {
 			var filesid_list = [];
-			
+
 			$(filesedit).each(function (index, file) {
-				insertInMessage(file.id, file.name);
-				filesid_list.push(file.id);
-			});
-
-			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + filesid_list,
-				type: 'POST'
-			})
-			.done(function (data) {
-
-			})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
-		}
-		else
-		{
-			var child = $('#kattach-list').find('input');
-			var files_id = [];
-
-			child.each(function (i, el) {
-				var elem = $(el);
-
-				if (!elem.attr('id').match("[a-z]{8}")) {
-					var attachid = elem.attr('id').match("[0-9]{1,8}");
-					var filename = elem.attr('placeholder');
-
-					insertInMessage(attachid, filename);
-
-					$('#insert-all').removeClass('btn-primary');
-					$('#insert-all').addClass('btn-success');
-					$('#insert-all').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-
-					files_id.push(attachid);
+				if (file.inline!==true)
+				{
+					insertInMessage(file.id, file.name);
+					files_id.push(file.id);
 				}
 			});
-
-			$('#files .btn.btn-primary').each(function () {
-				$('#files .btn.btn-primary').addClass('btn-success');
-				$('#files .btn.btn-success').removeClass('btn-primary');
-				$('#files .btn.btn-success').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
-			});
-
-			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + files_id,
-				type: 'POST'
-			})
-			.done(function (data) {
-
-			})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
 		}
+
+		$('#files .btn.btn-primary').each(function () {
+			$('#files .btn.btn-primary').addClass('btn-success');
+			$('#files .btn.btn-success').removeClass('btn-primary');
+			$('#files .btn.btn-success').html(Joomla.getOptions('com_kunena.icons.upload') + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+		});
+
+		$.ajax({
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + files_id,
+			type: 'POST'
+		})
+		.done(function (data) {
+
+		})
+		.fail(function () {
+			//TODO: handle the error of ajax request
+		});
 
 		filesedit = null;
 	});

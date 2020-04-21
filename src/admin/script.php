@@ -203,26 +203,19 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @param   string $group   group
 	 * @param   string $element element
 	 *
-	 * @return boolean
-	 *
 	 * @since version
 	 */
 	public function enablePlugin($group, $element)
 	{
-		$plugin = Table::getInstance('extension', 'Joomla\\CMS\\Table\\');
-		$id    = $plugin->find(array('type' => 'plugin', 'folder' => $group, 'element' => $element));
-
-		// Load.
-		if (!$plugin->load($id))
-		{
-			$this->setError($plugin->getError());
-
-			return false;
-		}
-
-		$plugin->enabled = 1;
-
-		return $plugin->store();
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->update('#__extensions')
+			->set($db->quoteName('enabled') . ' = ' . $db->quote(1))
+			->where('type = ' . $db->quote('plugin'))
+			->where('element = ' . $db->quote($element))
+			->where('folder = ' . $db->quote($group));
+		$db->setQuery($query);
+		$db->execute();
 	}
 
 	/**

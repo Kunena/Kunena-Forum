@@ -279,19 +279,8 @@ class KunenaUpload
 		}
 
 		$options['chunkStart'] = (int) $size;
-
-		if ($options['completed'])
-		{
-			$options['mime'] = KunenaFile::getMime($outFile);
-			$options['hash'] = md5_file($outFile);
-		}
-		else
-		{
-			if ($size)
-			{
-				$options['mime'] = KunenaFile::getMime($outFile);
-			}
-		}
+		$options['mime'] = KunenaFile::getMime($outFile);
+		$options['hash'] = md5_file($outFile);
 
 		return $options;
 	}

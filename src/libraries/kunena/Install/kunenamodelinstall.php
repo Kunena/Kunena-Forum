@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Install\KunenaModelSchema;
 use \Exception;
 use \stdClass;
 
@@ -878,7 +879,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$this->db->setQuery($query);
 		$this->db->execute();
 
-		require_once KUNENA_INSTALLER_PATH . '/schema.php';
 		$schema    = new KunenaModelSchema;
 		$results[] = $schema->updateSchemaTable('kunena_version');
 
@@ -2148,7 +2148,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 		if ($schema === null)
 		{
 			// Run only once: get table creation SQL and existing tables
-			require_once KUNENA_INSTALLER_PATH . '/schema.php';
 			$schema = new KunenaModelSchema;
 			$create = $schema->getCreateSQL();
 			$tables = $this->listTables('kunena_', true);

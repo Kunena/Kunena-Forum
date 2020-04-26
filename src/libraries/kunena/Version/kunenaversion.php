@@ -8,7 +8,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
-namespace Kunena\Forum\Libraries\Install;
+namespace Kunena\Forum\Libraries\Version;
 
 defined('_JEXEC') or die();
 

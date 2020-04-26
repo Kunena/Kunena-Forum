@@ -9,7 +9,7 @@
  * @link           https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Libraries\Model;
+namespace Kunena\Forum\Libraries\Install;
 
 defined('_JEXEC') or die();
 

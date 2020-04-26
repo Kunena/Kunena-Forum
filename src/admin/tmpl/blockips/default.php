@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Install\KunenaVersion;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');

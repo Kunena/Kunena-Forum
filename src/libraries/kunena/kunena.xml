@@ -60,6 +60,7 @@
         <folder>Session</folder>
         <folder>Tree</folder>
         <folder>View</folder>
+        <folder>Version</folder>
         <filename>kunena.xml</filename>
     </files>
 </extension>

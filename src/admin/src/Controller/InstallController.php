@@ -24,7 +24,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use function defined;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Model\KunenaModelInstall;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 
 /**
  * Kunena Backend Logs Controller

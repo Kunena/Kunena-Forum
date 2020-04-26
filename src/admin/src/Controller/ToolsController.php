@@ -31,7 +31,7 @@ use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Menu\MenuFix;
-use Kunena\Forum\Libraries\Model\KunenaModelInstall;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;

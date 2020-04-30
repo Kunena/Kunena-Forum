@@ -2895,6 +2895,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
+
 		$config = KunenaFactory::getTemplate()->params;
 
 		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('twitter'))

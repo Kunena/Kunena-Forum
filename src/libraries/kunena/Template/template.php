@@ -658,7 +658,7 @@ HTML;
 	 */
 	public function getImage($image, $alt = '')
 	{
-		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
+		return '<img loading="lazy" src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
 
 	/**
@@ -1466,13 +1466,13 @@ HTML;
 			}
 			elseif ($topicicontype == 'image')
 			{
-				return '<img src="' . Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
+				return '<img loading="lazy" src="' . Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->src . '" alt="' . $icon->fa . '" />';
 			}
 			else
 			{
 				$iconurl = $this->getTopicIconPath("{$category_iconset}/{$icon->src}", true);
 
-				return '<img src="' . $iconurl . '" alt="Topic-icon" />';
+				return '<img loading="lazy" src="' . $iconurl . '" alt="Topic-icon" />';
 			}
 		}
 		else
@@ -1566,7 +1566,7 @@ HTML;
 
 				$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon->src}", true);
 
-				return '<img src="' . $iconurl . '" alt="' . $icon->name . '" />';
+				return '<img loading="lazy" src="' . $iconurl . '" alt="' . $icon->name . '" />';
 			}
 		}
 	}
@@ -1670,7 +1670,7 @@ HTML;
 			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
 
-		$html = '<img src="' . $iconurl . '" alt="emo" />';
+		$html = '<img loading="lazy" src="' . $iconurl . '" alt="emo" />';
 
 		return $html;
 	}

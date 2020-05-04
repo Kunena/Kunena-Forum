@@ -156,12 +156,12 @@ class Avatar
 			}
 			else
 			{
-				$link = '<span' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '"><img src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
+				$link = '<span' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '"><img loading="lazy" src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
 			}
 		}
 		else
 		{
-			$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+			$link = '<img loading="lazy"' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 		}
 
 		return $link;

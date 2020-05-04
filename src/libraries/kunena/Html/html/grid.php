@@ -381,22 +381,22 @@ abstract class Grid
 		{
 			if ($task == 'publish')
 			{
-				$img = '<img src="media/kunena/images/unpublish.png"/>';
+				$img = '<img loading="lazy" src="media/kunena/images/unpublish.png"/>';
 			}
 
 			if ($task == 'unpublish')
 			{
-				$img = '<img src="media/kunena/images/tick.png"/>';
+				$img = '<img loading="lazy" src="media/kunena/images/tick.png"/>';
 			}
 
 			if ($task == 'edit')
 			{
-				$img = '<img src="media/kunena/images/edit.png"/>';
+				$img = '<img loading="lazy" src="media/kunena/images/edit.png"/>';
 			}
 
 			if ($task == 'delete')
 			{
-				$img = '<img src="media/kunena/images/delete.png"/>';
+				$img = '<img loading="lazy" src="media/kunena/images/delete.png"/>';
 			}
 
 			$html[] = '<a class="grid_' . $task . ' hasTip" alt="' . $alt . '"';
@@ -425,7 +425,7 @@ abstract class Grid
 	 */
 	public static function task($i, $img, $alt, $task, $prefix = '', $bootstrap = false)
 	{
-		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
+		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading="lazy" src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
 	}
 
 	/**

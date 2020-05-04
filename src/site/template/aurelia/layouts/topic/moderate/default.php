@@ -112,7 +112,7 @@ $labels          = $this->ktemplate->params->get('labels');
 			:
 											$this->category->iconset = 'default';
 										endif; ?>
-										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+										<img loading="lazy" src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
 											 alt="<?php echo $icon->name; ?>" width="32" height="32"/>
 									<?php elseif ($this->config->topicicons && $topicicontype == 'fa')
 		:
@@ -122,6 +122,7 @@ $labels          = $this->ktemplate->params->get('labels');
 									<?php else:
 										?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                    loading="lazy"
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>
@@ -166,6 +167,7 @@ $labels          = $this->ktemplate->params->get('labels');
 		:
 										?>
 											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                        loading="lazy"
 														src="<?php echo $icon->relpath; ?>"
 														alt="<?php echo $icon->name; ?>"
 														border="0"/>

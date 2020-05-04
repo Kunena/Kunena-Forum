@@ -163,7 +163,7 @@ class KunenaGravatar
 	{
 		$gravatarURL = $this->buildGravatarURL($hash_email);
 
-		return '<img src="' . $gravatarURL . '"' . (!isset($this->size) ? "" : ' width="' . $this->size . '" height="' . $this->size . '"') . $this->extra . ' />';
+		return '<img loading="lazy" src="' . $gravatarURL . '"' . (!isset($this->size) ? "" : ' width="' . $this->size . '" height="' . $this->size . '"') . $this->extra . ' />';
 	}
 
 	/**

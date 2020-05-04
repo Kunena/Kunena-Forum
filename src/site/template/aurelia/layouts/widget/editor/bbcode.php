@@ -399,11 +399,11 @@ if (!empty($codeTypes))
 {
 					if ($emo_properties->type == 'svg')
 	{
-						echo '<img src="' . $emo_properties->path . '" width="32" height="32"/>';
+						echo '<img loading="lazy" src="' . $emo_properties->path . '" width="32" height="32"/>';
 					}
 					else
 	{
-						echo '<img class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						echo '<img loading="lazy" class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 					}
 				}
 				?>

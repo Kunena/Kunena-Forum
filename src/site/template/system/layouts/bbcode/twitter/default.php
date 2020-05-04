@@ -36,7 +36,7 @@ use function defined;
 				<a class="u-url profile" data-scribe="element:user_link"
 				   aria-label="<?php echo $this->user_name ?> (screen name: <?php echo $this->user_screen_name ?>)"
 				   href="https://twitter.com/<?php echo $this->user_screen_name ?>">
-					<img class="u-photo avatar" data-scribe="element:avatar"
+					<img loading="lazy" class="u-photo avatar" data-scribe="element:avatar"
 					     data-src-2x="<?php echo $this->user_profile_url_big ?>"
 					     src="<?php echo $this->user_profile_url_normal ?>" alt="<?php echo $this->user_name ?>">
 					<span class="full-name">

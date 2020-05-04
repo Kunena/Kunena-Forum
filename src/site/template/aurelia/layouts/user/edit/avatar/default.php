@@ -110,7 +110,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', \Kunena\Forum\Libraries\Icon
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
 								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
-									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
+									<img loading="lazy" src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
 								</label>
 							</li>
 						<?php endforeach; ?>

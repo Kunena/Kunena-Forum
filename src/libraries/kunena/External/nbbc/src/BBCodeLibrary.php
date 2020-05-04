@@ -708,14 +708,14 @@ class BBCodeLibrary
 
 				$localImgURL = $bbcode->getLocalImgURL();
 
-				return "<img src=\""
+				return "<img loading="lazy" src=\""
 					. htmlspecialchars((empty($localImgURL) ? '' : $localImgURL . '/') . ltrim($urlParts['path'], '/')) . '" alt="'
 					. htmlspecialchars(basename($content)) . '" class="bbcode_img" />';
 			}
 			elseif ($bbcode->isValidURL($content, false))
 			{
 				// Remote URL, or at least we don't know where it is.
-				return '<img src="' . htmlspecialchars($content) . '" alt="'
+				return '<img loading="lazy" src="' . htmlspecialchars($content) . '" alt="'
 					. htmlspecialchars(basename($content)) . '" class="bbcode_img" />';
 			}
 		}

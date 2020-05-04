@@ -1172,7 +1172,7 @@ class BBCode
 						$alt = htmlspecialchars($token);
 						if ($smiley_count < $this->max_smileys || $this->max_smileys < 0)
 						{
-							$output .= "<img src=\"" . htmlspecialchars($this->smiley_url . '/' . $this->smileys[$token]) . '"'
+							$output .= "<img loading="lazy" src=\"" . htmlspecialchars($this->smiley_url . '/' . $this->smileys[$token]) . '"'
 //								. "\" width=\"{$info[ 0 ]}\" height=\"{$info[ 1 ]}\""
 								. " alt=\"$alt\" title=\"$alt\" class=\"bbcode_smiley\" />";
 						}

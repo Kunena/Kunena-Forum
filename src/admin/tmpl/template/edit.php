@@ -86,7 +86,7 @@ HTMLHelper::_('dropdown.init');
 															:
 															?>
 															<div>
-																<img
+																<img loading="lazy"
 																		src="<?php echo Uri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png"
 																		alt="<?php echo $this->escape($this->templatename); ?>"/>
 															</div>

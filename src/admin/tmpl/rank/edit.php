@@ -64,12 +64,12 @@ HTMLHelper::_('behavior.multiselect');
 								if (!$this->state->get('item.id'))
 									:
 									?>
-									<img name="rank_image" src="" border="0"
+									<img loading="lazy" name="rank_image" src="" border="0"
 									     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
 								<?php else
 									:
 									?>
-									<img name="rank_image"
+									<img loading="lazy" name="rank_image"
 									     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
 									     border="0"
 									     alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : 'rank' ?>"/>

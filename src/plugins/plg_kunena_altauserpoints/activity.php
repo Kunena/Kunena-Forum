@@ -275,7 +275,7 @@ class KunenaActivityAltaUserPoints extends Activity
 
 		foreach ($aupmedals as $medal)
 		{
-			$medals [] = '<img src="' . _AUP_MEDALS_LIVE_PATH . $this->escape($medal->icon) . '" alt="' . $this->escape($medal->rank) . '" title="' . $this->escape($medal->rank) . '" />';
+			$medals [] = '<img loading="lazy" src="' . _AUP_MEDALS_LIVE_PATH . $this->escape($medal->icon) . '" alt="' . $this->escape($medal->rank) . '" title="' . $this->escape($medal->rank) . '" />';
 		}
 
 		return $medals;

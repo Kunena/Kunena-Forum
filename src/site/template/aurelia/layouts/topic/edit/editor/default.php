@@ -326,7 +326,7 @@ if (!empty($codeTypes)) : ?>
 					$emoticons = \Kunena\Forum\Libraries\Html\Parser::getEmoticons(0, 1);
 					foreach ($emoticons as $emo_code => $emo_properties)
 					{
-						echo '<img class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						echo '<img loading="lazy" class="smileyimage" src="' . $emo_properties->path . '" border="0" width="' . $emo_properties->width . '" height="' . $emo_properties->height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 					}
 					?>
 				</div>

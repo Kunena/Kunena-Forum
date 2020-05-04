@@ -131,7 +131,7 @@ class CpanelController extends FormController
 			$link = '#';
 		}
 
-		return '<a href="' . $link . '"><img src="' . Uri::root() . $icon . '"/></a>';
+		return '<a href="' . $link . '"><img loading="lazy" src="' . Uri::root() . $icon . '"/></a>';
 	}
 
 	/**

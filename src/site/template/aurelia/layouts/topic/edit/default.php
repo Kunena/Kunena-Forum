@@ -325,6 +325,7 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 										<?php else : ?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                    loading="lazy"
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>

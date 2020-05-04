@@ -35,7 +35,7 @@ if ($config->access_component)
 		<?php
 		if ($attachment->isImage())
 	{
-			echo '<img src="' . $src . ' " height="40" width="40" />';
+			echo '<img loading="lazy" src="' . $src . ' " height="40" width="40" />';
 		}
 		else
 	{

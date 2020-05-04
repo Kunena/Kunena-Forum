@@ -65,7 +65,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 							</div>
 							<div class="row align-items-center">
 								<div class="col pl-5">
-									<img src="components/com_kunena/media/icons/kunena_logo.png" style="width: 70%"/>
+									<img loading="lazy" src="components/com_kunena/media/icons/kunena_logo.png" style="width: 70%"/>
 								</div>
 								<div class="col">
 									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>

@@ -92,7 +92,7 @@ class AvatarAltaUserPoints extends Avatar
 
 			$avatar = ($profile->avatar != '') ? _AUP_AVATAR_LIVE_PATH . $profile->avatar : JPATH_ROOT . '/components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png';
 			$width  = 100 * (float) $size->x / (float) $size->y;
-			$avatar = '<img src="' . $avatar . '" border="0" alt="" width="' . $width . '" height="100" />';
+			$avatar = '<img loading="lazy" src="' . $avatar . '" border="0" alt="" width="' . $width . '" height="100" />';
 		}
 		else
 		{
@@ -100,7 +100,7 @@ class AvatarAltaUserPoints extends Avatar
 
 			$avatar = ($profile->avatar != '') ? Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar : Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
 
-			$avatar = '<img src="' . $avatar . '" border="0" alt="" width="' . $size->x . '" height="' . $size->y . '" />';
+			$avatar = '<img loading="lazy" src="' . $avatar . '" border="0" alt="" width="' . $size->x . '" height="' . $size->y . '" />';
 		}
 
 		if (!$avatar)

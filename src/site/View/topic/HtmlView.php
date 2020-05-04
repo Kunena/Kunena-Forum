@@ -690,14 +690,15 @@ class HtmlView extends BaseHtmlView
 				foreach ($loaded_users as $userid => $user)
 				{
 					$thankyou_delete  = $canUnthankyou === true ? ' <a title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>' : '';
+						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img loading="lazy" src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>' : '';
 					$this->thankyou[] = $loaded_users[$userid]->getLink() . $thankyou_delete;
 				}
 			}
 		}
 
 		// TODO: add context (options, template) to caching
-		$cache      = Factory::getCache('com_kunena', 'output');
+		$cache      = Factory::getCache(
+			'com_kunena', 'output');
 		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 

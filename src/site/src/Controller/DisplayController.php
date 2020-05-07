@@ -12,7 +12,10 @@ namespace Kunena\Forum\Site\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
 /**
  * Kunena Component Controller
@@ -24,16 +27,15 @@ class DisplayController extends BaseController
 	/**
 	 * Method to display a view.
 	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached
-	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link \JFilterInput::clean()}.
+	 * @param   boolean  $cachable   If true, the view output will be cached.
+	 * @param   boolean  $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
-	 * @return BaseController
+	 * @return  \Joomla\CMS\MVC\Controller\BaseController  This object to support chaining.
 	 *
-	 * @since   Kunena 6.0
-	 * @throws  Exception
+	 * @since   1.5
 	 */
-	public function display($cachable = false, $urlparams = array())
+	public function display($cachable = false, $urlparams = false)
 	{
-		return parent::display();
+
 	}
 }

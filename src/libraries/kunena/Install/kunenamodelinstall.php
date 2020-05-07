@@ -40,7 +40,6 @@ use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Menu\MenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Install\KunenaModelSchema;
 use \Exception;
 use \stdClass;
 
@@ -3040,7 +3039,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 	/**
 	 * Build the Kunena menu
-	 * 
+	 *
 	 * @param   array   $menu     menu
 	 * @param   object  $submenu  submenu
 	 *

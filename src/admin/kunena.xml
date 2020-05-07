@@ -20,15 +20,11 @@
     <files folder="site">
         <filename>jomsocial_rule.xml</filename>
         <filename>kunena.php</filename>
-        <folder>Application</folder>
         <folder>controller</folder>
-        <folder>Helper</folder>
         <folder>language</folder>
         <folder>layout</folder>
-        <folder>Model</folder>
-        <folder>Service</folder>
+        <folder>src</folder>
         <folder>template</folder>
-        <folder>View</folder>
     </files>
     <administration>
         <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA

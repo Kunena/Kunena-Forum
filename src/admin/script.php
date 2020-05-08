@@ -219,7 +219,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * @return  integer
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -227,40 +227,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	function installSampleData()
 	{
-		$lang = Factory::getLanguage();
-
-		// $debug = $lang->setDebug(false);
-
 		$db       = Factory::getDBO();
 		$posttime = new Date;
 		$my       = Factory::getApplication()->getIdentity();
 		$queries  = [];
-
-		$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
-		('announcement', 'view', 'announcement', 1),
-		('category', 'view', 'category', 1),
-		('common', 'view', 'common', 1),
-		('credits', 'view', 'credits', 1),
-		('home', 'view', 'home', 1),
-		('misc', 'view', 'misc', 1),
-		('search', 'view', 'search', 1),
-		('statistics', 'view', 'statistics', 1),
-		('topic', 'view', 'topic', 1),
-		('topics', 'view', 'topics', 1),
-		('user', 'view', 'user', 1),
-		('category/create', 'layout', 'category.create', 1),
-		('create', 'layout', 'category.create', 0),
-		('category/default', 'layout', 'category.default', 1),
-		('default', 'layout', 'category.default', 0),
-		('category/edit', 'layout', 'category.edit', 1),
-		('edit', 'layout', 'category.edit', 0),
-		('category/manage', 'layout', 'category.manage', 1),
-		('manage', 'layout', 'category.manage', 0),
-		('category/moderate', 'layout', 'category.moderate', 1),
-		('moderate', 'layout', 'category.moderate', 0),
-		('category/user', 'layout', 'category.user', 1);";
-
-		$queries[] = ['kunena_aliases', $query];
 
 		$query = "INSERT INTO `#__kunena_ranks`
 		(`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
@@ -355,10 +325,34 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$cat1_alias    = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'), 'welcome-mat');
 		$cat2_alias    = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'), 'suggestion-box');
 
-		$aliasquery = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
-			({$db->quote($section_alias)}, 'catid', '1', 1),
-			({$db->quote($cat1_alias)}, 'catid', '2', 1),
-			({$db->quote($cat2_alias)}, 'catid', '3', 1);";
+		$query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
+		('announcement', 'view', 'announcement', 1),
+		('category', 'view', 'category', 1),
+		('common', 'view', 'common', 1),
+		('credits', 'view', 'credits', 1),
+		('home', 'view', 'home', 1),
+		('misc', 'view', 'misc', 1),
+		('search', 'view', 'search', 1),
+		('statistics', 'view', 'statistics', 1),
+		('topic', 'view', 'topic', 1),
+		('topics', 'view', 'topics', 1),
+		('user', 'view', 'user', 1),
+		('category/create', 'layout', 'category.create', 1),
+		('create', 'layout', 'category.create', 0),
+		('category/default', 'layout', 'category.default', 1),
+		('default', 'layout', 'category.default', 0),
+		('category/edit', 'layout', 'category.edit', 1),
+		('edit', 'layout', 'category.edit', 0),
+		('category/manage', 'layout', 'category.manage', 1),
+		('manage', 'layout', 'category.manage', 0),
+		('category/moderate', 'layout', 'category.moderate', 1),
+		('moderate', 'layout', 'category.moderate', 0),
+		('category/user', 'layout', 'category.user', 1),
+		({$db->quote($section_alias)}, 'catid', '1', 1),
+		({$db->quote($cat1_alias)}, 'catid', '2', 1),
+		({$db->quote($cat2_alias)}, 'catid', '3', 1);";
+
+		$queries[] = ['kunena_aliases', $query];
 
 		$query = "INSERT INTO `#__kunena_categories`
 			(`id`, `parent_id`, `name`, `alias`, `icon`, `pub_access`, `ordering`, `published`,`channels`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_post_id`, `last_post_time`, `accesstype`, `topictemplate`, `class_sfx`, `params`) VALUES
@@ -386,8 +380,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$queries[] = ['kunena_topics', $query];
 
-		$counter = 0;
-
 		foreach ($queries as $query)
 		{
 			// Only insert sample/default data if table is empty
@@ -406,50 +398,13 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				{
 					throw new Exception($e->getMessage(), $e->getCode());
 				}
-
-				if ($query[0] == 'kunena_categories')
-				{
-					$db->setQuery("CREATE TABLE IF NOT EXISTS `#__kunena_aliases` (
-					`alias` varchar(255) NOT NULL,
-					`type` varchar(10) NOT NULL,
-					`item` varchar(32) NOT NULL,
-					`state` tinyint(4) NOT NULL default '0',
-					UNIQUE KEY `alias` (alias),
-					KEY `state` (state),
-					KEY `item` (item),
-					KEY `type` (type) ) DEFAULT CHARACTER SET utf8;"
-					);
-
-					try
-					{
-						$db->execute();
-					}
-					catch (ExecutionFailureException $e)
-					{
-						throw new Exception($e->getMessage(), $e->getCode());
-					}
-
-					$db->setQuery($aliasquery);
-
-					try
-					{
-						$db->execute();
-					}
-					catch (ExecutionFailureException $e)
-					{
-						throw new Exception($e->getMessage(), $e->getCode());
-					}
-				}
-
-				$counter++;
 			}
 		}
 
-		// $lang->setDebug($debug);
-
 		// Insert missing users
-		$query = "INSERT INTO #__kunena_users (userid, showOnline)
- SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
+		$query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline
+		FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
+
 		$db->setQuery($query);
 
 		try
@@ -460,8 +415,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		{
 			throw new Exception($e->getMessage(), $e->getCode());
 		}
-
-		return $counter;
 	}
 }
 

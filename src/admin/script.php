@@ -84,11 +84,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$this->enablePlugin('system', 'kunena');
 		$this->enablePlugin('quickicon', 'kunena');
 
-		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
-		{
-			$this->installSampleData();
-			$this->addDashboardMenu('kunena', 'kunena');
-		}
+		$this->installSampleData();
+		$this->addDashboardMenu('kunena', 'kunena');
 	}
 
 	/**

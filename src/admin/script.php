@@ -73,12 +73,22 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 	/**
 	 *  Constructor
+	 * @param   string                                        $type   'install', 'update' or 'discover_install'
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct()
+	public function __construct($type)
 	{
 		$this->app = Factory::getApplication();
+
+		$this->enablePlugin('system', 'kunena');
+		$this->enablePlugin('quickicon', 'kunena');
+
+		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
+		{
+			$this->installSampleData();
+			$this->addDashboardMenu('kunena', 'kunena');
+		}
 	}
 
 	/**
@@ -185,18 +195,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$type = strtolower($type);
-
-		$this->enablePlugin('system', 'kunena');
-		$this->enablePlugin('quickicon', 'kunena');
-
-		if ($type == 'install' || $type == 'discover_install')
-		{
-			$this->installSampleData();
-			$this->addDashboardMenu('kunena', 'kunena');
-		}
-
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_POSTFLIGHT'), 'warning');
 	}
 
 	/**

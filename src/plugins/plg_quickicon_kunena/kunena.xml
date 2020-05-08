@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_QUICKICON_KUNENA_DESC</description>
     <namespace>Kunena\Forum\Plugin\Quickicon\Kunena</namespace>
+    <scriptfile>script.php</scriptfile>
     <files>
         <filename plugin="kunena">kunena.php</filename>
         <folder>language</folder>

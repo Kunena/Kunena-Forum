@@ -12,12 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerScript;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Date\Date;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Install\KunenaSampleData;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
  * Kunena package installer script.
@@ -32,7 +26,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @var    string
 	 * @since  5.4.0
 	 */
-	protected $extension = 'com_kunena';
+	protected $extension = 'plg_quickicon_kunena';
 
 	/**
 	 * Minimum PHP version required to install the extension
@@ -81,11 +75,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	public function __construct($type)
 	{
 		$this->app = Factory::getApplication();
-
-		$this->enablePlugin('system', 'kunena');
-		$this->enablePlugin('quickicon', 'kunena');
-
-		$this->addDashboardMenu('kunena', 'kunena');
 	}
 
 	/**
@@ -100,22 +89,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		// Storing old release number for process in postflight
-		if (strtolower($type) == 'update')
-		{
-			$manifest         = $this->getItemArray('manifest_cache', '#__extensions', 'element', $this->extension);
-			$this->oldRelease = $manifest['version'];
-
-			// Check if update is allowed (only update from 5.1.0 and higher)
-			if (version_compare($this->oldRelease, '5.1.0', '<'))
-			{
-				$this->app->enqueueMessage(Text::sprintf('COM_kunena_UPDATE_UNSUPPORTED', $this->oldRelease, '5.1.0'), 'error');
-
-				return false;
-			}
-		}
-
-		return parent::preflight($type, $parent);
 	}
 
 	/**
@@ -130,7 +103,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	public function install($parent)
 	{
 		// Notice $parent->getParent() returns JInstaller object
-		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
 	}
 
 	/**
@@ -157,26 +129,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function update($parent)
 	{
-		if (version_compare($this->oldRelease, '6.0.0', '<'))
-		{
-			// Remove integrated player classes
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/models/fields/player.php';
-			$this->deleteFolders[] = '/components/com_kunena/helpers/player';
-
-			// Remove old SQL files
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/4.5.0.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/4.5.1.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/4.5.2.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/4.5.3.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/4.5.4.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.0.0.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.0.1.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.0.2.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.0.3.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.0.4.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
-		}
 	}
 
 	/**
@@ -192,10 +144,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
-		{
-			KunenaSampleData::installSampleData();
-		}
+		$this->enablePlugin('quickicon', 'kunena');
 	}
 
 	/**
@@ -209,7 +158,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->update('#__extensions')
-			->set($db->quoteName('enabled') . ' = ' . $db->quote(1))
+			->set($db->quoteName('enabled') . ' = 1')
 			->where('type = ' . $db->quote('plugin'))
 			->where('element = ' . $db->quote($element))
 			->where('folder = ' . $db->quote($group));

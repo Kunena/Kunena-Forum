@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="sampledata" method="upgrade">
+	<name>plg_sampledata_kunena</name>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>https://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_SAMPLEDATA_KUNENA_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="kunena">kunena.php</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_sampledata_kunena.ini</language>
+		<language tag="en-GB">en-GB.plg_sampledata_kunena.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+		</fields>
+	</config>
+</extension>

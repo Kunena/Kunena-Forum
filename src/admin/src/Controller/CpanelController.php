@@ -20,7 +20,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaSampleData;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use stdClass;
 use function defined;
 
@@ -168,5 +171,20 @@ class CpanelController extends FormController
 		}
 
 		parent::display($cachable, $urlparams);
+	}
+
+	/**
+	 * Perform recount on statistics in smaller chunks.
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
+	 */
+	public function InstallSampleData()
+	{
+		KunenaSampleData::installSampleData();
 	}
 }

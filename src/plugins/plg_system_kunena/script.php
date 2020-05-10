@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
  * Kunena package installer script.
@@ -57,7 +58,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @since   Kunena 6.0
 	 */
-	private $app;
+	protected $app;
 
 	/**
 	 * @var  string  During an update, it will be populated with the old release version
@@ -65,6 +66,15 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @since   Kunena 6.0
 	 */
 	private $oldRelease;
+
+	/**
+	 * Database object
+	 *
+	 * @var    JDatabaseDriver
+	 *
+	 * @since   4.0.0
+	 */
+	protected $db;
 
 	/**
 	 *  Constructor
@@ -144,7 +154,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$this->enablePlugin('system', 'kunena');
+		$this->enablePlugin('plg_system_kunena');
 	}
 
 	/**
@@ -153,16 +163,28 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @since version
 	 */
-	public function enablePlugin($group, $element)
+	public function enablePlugin($pluginName)
 	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true)
-			->update('#__extensions')
+		// Create a new db object.
+		$db    = $this->db;
+		$query = $db->getQuery(true);
+
+		$query
+			->update($db->quoteName('#__extensions'))
 			->set($db->quoteName('enabled') . ' = 1')
-			->where('type = ' . $db->quote('plugin'))
-			->where('element = ' . $db->quote($element))
-			->where('folder = ' . $db->quote($group));
+			->where($db->quoteName('name') . ' = :pluginname')
+			->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+			->bind(':pluginname', $pluginName);
+
 		$db->setQuery($query);
-		$db->execute();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			return false;
+		}
 	}
 }

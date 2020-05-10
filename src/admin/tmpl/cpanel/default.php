@@ -13,9 +13,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Install\KunenaSampleData;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Statistics;
@@ -23,49 +20,59 @@ use Kunena\Forum\Libraries\Integration\Plugins;
 use Kunena\Forum\Libraries\Template\Template;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-
-$count = Statistics::getInstance()->loadCategoryCount();
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 ?>
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
-            <?php if (Statistics::getTotalEmoticons() == 0 && $count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0) : ?>
-            <div class="row clearfix">
-                    <div class="col-xl-3 col-md-3">
-                        <div class="card proj-t-card bg-warning">
-                            <div class="card-body">
-                                <a href="#install" role="button" class="btn btn-default" data-toggle="modal">
-                                <div class="row align-items-center mb-30">
-                                    <div class="col-auto">
-                                        <i class="fas fa-database text-white f-30"></i>
-                                    </div>
-                                    <div class="col pl-0">
-                                        <h6 class="mb-0 text-white">Install</h6>
-                                        <h6 class="mb-0 text-white">Sample Data</h6>
-                                    </div>
-                                </div>
-                                <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-                <div id="install" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-                     style="display: none;">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?></h3>
-                    </div>
-                    <div class="modal-body">
-                        <p><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn"><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?></a>
-                        <a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=cpanel&task=InstallSampleData&".JSession::getFormToken() .'=1') ?>" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?></a>
-                    </div>
-                </div>
-            <?php endif;?>
+			<?php if ($this->sampledata) : ?>
+				<div class="row clearfix">
+					<div class="col-xl-3 col-md-3">
+						<div class="card proj-t-card bg-warning">
+							<div class="card-body">
+								<div class="row align-items-center mb-30">
+									<div class="col-auto">
+										<i class="fas fa-database text-white f-30"></i>
+									</div>
+									<div class="col pl-0">
+										<h6 class="mb-0 text-white">Install</h6>
+										<h6 class="mb-0 text-white">Sample Data</h6>
+									</div>
+								</div>
+								<div>
+									<ul id="sample-data-wrapper" class="list-group list-group-flush">
+										<li class="list-group-item sampledata-kunena">
+											<div class="d-flex justify-content-between align-items-center">
+												<div class="mr-2">
+													<span class="fas fa-comments" aria-hidden="true"></span>
+													Kunena Forum Sample Data
+												</div>
+												<button type="button" class="btn btn-secondary btn-sm apply-sample-data"
+												        data-type="kunena" data-steps="1">
+													<span class="fas fa-upload" aria-hidden="true"></span> Install
+													<span class="sr-only">Kunena Forum Sample Data</span>
+												</button>
+											</div>
+											<p class="small mt-1">Install Sample Data - Kunena Forum</p>
+										</li>
+										<li class="list-group-item sampledata-progress-kunena d-none">
+											<div class="progress">
+												<div class="progress-bar progress-bar-striped progress-bar-animated"
+												     role="progressbar"></div>
+											</div>
+										</li>
+										<li class="list-group-item sampledata-progress-kunena d-none">
+											<ul class="list-unstyled"></ul>
+										</li>
+									</ul>
+								</div>
+								<h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
 			<div class="row clearfix">
 				<div class="col-xl-4 col-md-12">
 					<div class="card proj-t-card">
@@ -104,7 +111,8 @@ $count = Statistics::getInstance()->loadCategoryCount();
 							</div>
 							<div class="row align-items-center">
 								<div class="col pl-5">
-									<img loading="lazy" src="components/com_kunena/media/icons/kunena_logo.png" style="width: 70%"/>
+									<img loading="lazy" src="components/com_kunena/media/icons/kunena_logo.png"
+									     style="width: 70%"/>
 								</div>
 								<div class="col">
 									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>
@@ -150,7 +158,7 @@ $count = Statistics::getInstance()->loadCategoryCount();
 										</a>
 									</h6>
 									<h3 class="fw-700 text-cyan">
-										<?php echo $count['sections'] . ' / ' . $count['categories']; ?>
+										<?php echo $this->count['sections'] . ' / ' . $this->count['categories']; ?>
 									</h3>
 									<p class="mb-0">Last Edit: Welcome</p>
 								</div>

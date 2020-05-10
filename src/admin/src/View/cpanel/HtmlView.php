@@ -17,9 +17,13 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Language;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -41,6 +45,29 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$this->addToolbar();
+
+		$this->count = Statistics::getInstance()->loadCategoryCount();
+
+		$this->sampledata = Statistics::getTotalEmoticons() == 0 && $this->count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
+
+		if ($this->sampledata) {
+			Factory::getApplication()->getDocument()->getWebAssetManager()
+				->registerAndUseScript('mod_sampledata', 'mod_sampledata/sampledata-process.js', [], ['defer' => true], ['core']);
+
+			$lang = Factory::getLanguage();
+			$lang->load('mod_sampledata', JPATH_ADMINISTRATOR);
+
+			Text::script('MOD_SAMPLEDATA_CONFIRM_START');
+			Text::script('MOD_SAMPLEDATA_ITEM_ALREADY_PROCESSED');
+			Text::script('MOD_SAMPLEDATA_INVALID_RESPONSE');
+
+			Factory::getApplication()->getDocument()->addScriptOptions(
+				'sample-data',
+				[
+					'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif'
+				]
+			);
+		}
 
 		return parent::display($tpl);
 	}

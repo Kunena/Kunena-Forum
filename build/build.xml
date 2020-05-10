@@ -161,6 +161,9 @@
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<fileset dir="${project_dir}/src/plugins/plg_system_kunena"/>
 		</copy>
+		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
+			<fileset dir="${project_dir}/src/plugins/plg_sampledata_kunena"/>
+		</copy>
 	</target>
 
 	<target name="build" depends="init">
@@ -255,6 +258,11 @@
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/src/plugins/plg_system_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/src/plugins/plg_sampledata_kunena">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -438,6 +446,7 @@
 		<archive destfile="${build_dir}/packages/plg_kunena_kunena${str.version}" basedir="${tmp_dir}/packages/plg_kunena_kunena" />
 		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
 		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
+		<archive destfile="${build_dir}/packages/plg_sampledata_kunena${str.version}" basedir="${tmp_dir}/packages/plg_sampledata_kunena" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>

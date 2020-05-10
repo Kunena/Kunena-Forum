@@ -281,6 +281,9 @@
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_quickicon_kunena"/>
 		</copy>
+		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_sampledata_kunena"/>
+		</copy>
 
 
 		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
@@ -358,6 +361,12 @@
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
+			<filterchain refid="filter"/>
+			<fileset dir="${project_dir}/plugins/plg_sampledata_kunena">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -487,6 +496,10 @@
 		<phingcall target="archive">
 			<property name="destination.file" value="dist/package/distribution/packages/plg_system_kunena_v${xml.version}" />
 			<property name="base.directory" value="${tmp_dir}/packages/plg_system_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property name="destination.file" value="dist/package/distribution/packages/plg_sampledata_kunena_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/packages/plg_sampledata_kunena" />
 		</phingcall>
 		<!-- Process all packages to zip -->
 

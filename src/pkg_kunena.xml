@@ -29,6 +29,7 @@
         <filename type="plugin" group="kunena" id="kunena">plg_kunena_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
+        <filename type="plugin" group="sampledata" id="kunena">plg_sampledata_kunena_v@kunenaversion@.zip</filename>
     </files>
 
     <changelogurl>https://update.kunena.org/changelog/6.0.0.xml</changelogurl>
@@ -47,6 +48,7 @@
             <dir>plugins/kunena</dir>
             <dir>plugins/system/kunena</dir>
             <dir>plugins/quickicon/kunena</dir>
+            <dir>plugins/sampledata/kunena</dir>
             <dir>media/kunena</dir>
         </customdirs>
         <customfiles>
@@ -67,6 +69,7 @@
             <lang>plg_kunena_kunena</lang>
             <lang>plg_system_kunena</lang>
             <lang>plg_quickicon_kunena</lang>
+            <lang>plg_sampledata_kunena</lang>
         </langfiles>
         <extraprefixes>
             <prefix>kunena</prefix>

@@ -12,6 +12,7 @@
 	<description>PLG_SAMPLEDATA_KUNENA_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
+		<folder>language</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">en-GB.plg_sampledata_kunena.ini</language>

@@ -19,7 +19,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
  *
  * @since Kunena
  */
-class Pkg_KunenaInstallerScript extends InstallerScript
+class plgSystemKunenaInstallerScript extends InstallerScript
 {
 	/**
 	 * The extension name. This should be set in the installer script.

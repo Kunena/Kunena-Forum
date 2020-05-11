@@ -561,6 +561,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -2115,12 +2116,12 @@
             "version": "1.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/facebook/php-webdriver.git",
+                "url": "https://github.com/php-webdriver/php-webdriver-archive.git",
                 "reference": "e43de70f3c7166169d0f14a374505392734160e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/e43de70f3c7166169d0f14a374505392734160e5",
+                "url": "https://api.github.com/repos/php-webdriver/php-webdriver-archive/zipball/e43de70f3c7166169d0f14a374505392734160e5",
                 "reference": "e43de70f3c7166169d0f14a374505392734160e5",
                 "shasum": ""
             },
@@ -2168,6 +2169,7 @@
                 "selenium",
                 "webdriver"
             ],
+            "abandoned": "php-webdriver/webdriver",
             "time": "2019-06-13T08:02:18+00:00"
         },
         {
@@ -3001,12 +3003,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "cba1beaf31316bc39fe826df202d5dcc5f59868c"
+                "reference": "0323d0d0741b0c9096bec5a015fc39444dd28cf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/cba1beaf31316bc39fe826df202d5dcc5f59868c",
-                "reference": "cba1beaf31316bc39fe826df202d5dcc5f59868c",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/0323d0d0741b0c9096bec5a015fc39444dd28cf5",
+                "reference": "0323d0d0741b0c9096bec5a015fc39444dd28cf5",
                 "shasum": ""
             },
             "require": {
@@ -3044,7 +3046,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2019-10-13T08:59:39+00:00"
+            "time": "2020-05-01T19:53:33+00:00"
         },
         {
             "name": "joomla/cms-coding-standards",
@@ -3107,12 +3109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla/coding-standards.git",
-                "reference": "fc041ba4352689d0834fc3f6bce14edc6e40aebe"
+                "reference": "57a14333518d49907d16e216d0494c2fb4f8276d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/fc041ba4352689d0834fc3f6bce14edc6e40aebe",
-                "reference": "fc041ba4352689d0834fc3f6bce14edc6e40aebe",
+                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/57a14333518d49907d16e216d0494c2fb4f8276d",
+                "reference": "57a14333518d49907d16e216d0494c2fb4f8276d",
                 "shasum": ""
             },
             "require": {
@@ -3146,7 +3148,7 @@
                 "php codesniffer",
                 "phpcs"
             ],
-            "time": "2019-07-12T10:04:53+00:00"
+            "time": "2020-01-21T18:27:08+00:00"
         },
         {
             "name": "kunena/codestyle",
@@ -3371,21 +3373,20 @@
         },
         {
             "name": "phing/phing",
-            "version": "2.16.1",
+            "version": "2.16.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "cbe0f969e434e269af91b4160b86fe899c6e07c7"
+                "reference": "b34c2bf9cd6abd39b4287dee31e68673784c8567"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/cbe0f969e434e269af91b4160b86fe899c6e07c7",
-                "reference": "cbe0f969e434e269af91b4160b86fe899c6e07c7",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/b34c2bf9cd6abd39b4287dee31e68673784c8567",
+                "reference": "b34c2bf9cd6abd39b4287dee31e68673784c8567",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0",
-                "symfony/yaml": "^3.1 || ^4.0"
+                "php": ">=5.2.0"
             },
             "require-dev": {
                 "ext-pdo_sqlite": "*",
@@ -3405,7 +3406,8 @@
                 "sebastian/phpcpd": "2.x",
                 "siad007/versioncontrol_hg": "^1.0",
                 "simpletest/simpletest": "^1.1",
-                "squizlabs/php_codesniffer": "~2.2"
+                "squizlabs/php_codesniffer": "~2.2",
+                "symfony/yaml": "^2.8 || ^3.1 || ^4.0"
             },
             "suggest": {
                 "pdepend/pdepend": "PHP version of JDepend",
@@ -3440,7 +3442,7 @@
                 "classes"
             ],
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-only"
             ],
             "authors": [
                 {
@@ -3460,7 +3462,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2018-01-25T13:18:09+00:00"
+            "time": "2020-02-03T18:50:54+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

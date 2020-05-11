@@ -4,7 +4,7 @@
   "license": "GPL-3.0-or-later",
   "require": {
     "php": ">=7.2.5",
-    "consolidation/robo": "^1",
+    "consolidation/robo": "^2",
     "symfony/console": "~3|~4",
     "symfony/filesystem": "~3|~4",
     "symfony/finder": "~3|~4",

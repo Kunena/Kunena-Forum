@@ -11,13 +11,9 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Installer;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
 
 /**
  * Kunena package installer script.
@@ -191,6 +187,39 @@ class Pkg_KunenaInstaller extends InstallerScript
 
 		if ($type == 'install' || $type == 'discover_install')
 		{
+			$this->enablePlugin('plg_kunena_kunena');
+			$this->enablePlugin('plg_kunena_joomla');
+		}
+	}
+
+	/**
+	 * @param   string $group   group
+	 * @param   string $element element
+	 *
+	 * @since version
+	 */
+	public function enablePlugin($pluginName)
+	{
+		// Create a new db object.
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->update($db->quoteName('#__extensions'))
+			->set($db->quoteName('enabled') . ' = 1')
+			->where($db->quoteName('name') . ' = :pluginname')
+			->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+			->bind(':pluginname', $pluginName);
+
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			return false;
 		}
 	}
 }

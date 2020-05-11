@@ -238,6 +238,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;
+		$image = null;
 
 		$pagesText    = ($pages > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$parentText   = $this->category->getParent()->name;
@@ -254,6 +255,16 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			$image = Uri::base() . $this->config->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
+
+		$this->setMetaData('og:url', Uri::current(), 'property');
+		$this->setMetaData('og:type', 'article', 'property');
+		$this->setMetaData('og:title', $this->category->name, 'property');
+		$this->setMetaData('og:description', $this->category->description, 'property');
+		$this->setMetaData('og:image', $image, 'property');
+		$this->setMetaData('twitter:card', 'summary', 'name');
+		$this->setMetaData('twitter:title', $this->category->name, 'name');
+		$this->setMetaData('twitter:image', $image, 'property');
+		$this->setMetaData('twitter:description', $this->category->description);
 
 		if ($robots == 'noindex, follow')
 		{

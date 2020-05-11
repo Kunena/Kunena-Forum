@@ -435,6 +435,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 		$config = Factory::getConfig();
 		$robots = $config->get('robots');
+		$image  = null;
 
 		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
 		{
@@ -484,10 +485,6 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				$this->setTitle($title);
 			}
 
-			$this->setMetaData('og:type', 'article', 'property');
-			$this->setMetaData('og:description', $title, 'property');
-			$this->setMetaData('og:title', $title, 'property');
-
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
@@ -504,6 +501,14 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				$robots = $params->get('robots');
 				$this->setMetaData('robots', $robots);
 			}
+
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $description, 'property');
+			$this->setMetaData('og:title', $title, 'property');
+			$this->setMetaData('twitter:card', 'summary', 'name');
+			$this->setMetaData('twitter:title', $title, 'name');
+			$this->setMetaData('twitter:image', $image, 'property');
+			$this->setMetaData('twitter:description', $description);
 		}
 	}
 }

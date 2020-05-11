@@ -327,6 +327,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
+		$image      = null;
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
@@ -378,10 +379,6 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 				$this->setTitle($headerText);
 			}
 
-			$this->setMetaData('og:type', 'article', 'property');
-			$this->setMetaData('og:description', $headerText, 'property');
-			$this->setMetaData('og:title', $headerText, 'property');
-
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
@@ -398,6 +395,14 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 				$robots = $params->get('robots');
 				$this->setMetaData('robots', $robots);
 			}
+
+			$this->setMetaData('og:type', 'article', 'property');
+			$this->setMetaData('og:description', $description, 'property');
+			$this->setMetaData('og:title', $title, 'property');
+			$this->setMetaData('twitter:card', 'summary', 'name');
+			$this->setMetaData('twitter:title', $title, 'name');
+			$this->setMetaData('twitter:image', $image, 'property');
+			$this->setMetaData('twitter:description', $description);
 		}
 	}
 }

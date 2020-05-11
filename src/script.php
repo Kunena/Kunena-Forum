@@ -183,43 +183,5 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
-		$type = strtolower($type);
-
-		if ($type == 'install' || $type == 'discover_install')
-		{
-			$this->enablePlugin('plg_kunena_kunena');
-			$this->enablePlugin('plg_kunena_joomla');
-		}
-	}
-
-	/**
-	 * @param   string $group   group
-	 * @param   string $element element
-	 *
-	 * @since version
-	 */
-	public function enablePlugin($pluginName)
-	{
-		// Create a new db object.
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-
-		$query
-			->update($db->quoteName('#__extensions'))
-			->set($db->quoteName('enabled') . ' = 1')
-			->where($db->quoteName('name') . ' = :pluginname')
-			->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
-			->bind(':pluginname', $pluginName);
-
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			return false;
-		}
 	}
 }

@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_JOOMLA_25_30_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Joomla</namespace>
+    <scriptfile>script.php</scriptfile>
     <files>
         <filename plugin="joomla">joomla.php</filename>
         <filename>access.php</filename>

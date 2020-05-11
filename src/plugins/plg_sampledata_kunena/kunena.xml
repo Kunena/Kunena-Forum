@@ -11,6 +11,7 @@
 	<license>GNU/GPLv3 or later</license>
 	<description>PLG_SAMPLEDATA_KUNENA_XML_DESCRIPTION</description>
 	<namespace>Kunena\Forum\Plugin\Sampledata\Kunena</namespace>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 		<folder>language</folder>

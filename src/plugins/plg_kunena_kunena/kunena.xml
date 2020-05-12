@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_KUNENA_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Kunena</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
         <filename plugin="kunena">kunena.php</filename>

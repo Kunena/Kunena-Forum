@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_EASYSOCIAL_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Easysocial</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <folder>alerts</folder>
         <folder>badges</folder>

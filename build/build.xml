@@ -169,6 +169,7 @@
 	<target name="build" depends="init">
 		<!-- Move files that contain version tags again and perform token replacement -->
 		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenachangelog" value="https://update.kunena.org/changelog/${xml.version}.xml" />
 		<filter token="kunenaversiondate" value="${version.date}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 

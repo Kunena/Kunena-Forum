@@ -11,6 +11,7 @@
     <copyright>Copyright of Ruud van Lent (2015)</copyright>
     <description>PLG_KUNENA_EASYBLOG_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Easyblog</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="easyblog">easyblog.php</filename>
         <filename>avatar.php</filename>

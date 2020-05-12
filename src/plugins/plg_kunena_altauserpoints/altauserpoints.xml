@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_ALTAUSERPOINTS_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Altauserpoints</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="altauserpoints">altauserpoints.php</filename>
         <filename>avatar.php</filename>

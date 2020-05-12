@@ -32,7 +32,7 @@
         <filename type="plugin" group="sampledata" id="kunena">plg_sampledata_kunena_v@kunenaversion@.zip</filename>
     </files>
 
-    <changelogurl>https://update.kunena.org/changelog/6.0.0.xml</changelogurl>
+    <changelogurl>@kunenachangelog@</changelogurl>
 
     <updateservers>
         <server type="collection" priority="1" name="Kunena 6.0 Update Site">https://update.kunena.org/6.0/list.xml

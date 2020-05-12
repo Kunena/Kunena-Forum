@@ -11,6 +11,7 @@
     <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>Kunena media files.</description>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <fileset>
         <files target="media/kunena">
             <folder>attachments</folder>

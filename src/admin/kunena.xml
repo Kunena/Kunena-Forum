@@ -12,6 +12,7 @@
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <namespace path="src">Kunena\Forum</namespace>
     <scriptfile>script.php</scriptfile>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <install>
         <sql>
             <file driver="mysql" charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>

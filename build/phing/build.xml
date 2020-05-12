@@ -81,6 +81,7 @@
 			<token key="kunenaversiondate" value="${version.date}" />
 			<token key="kunenaversionname" value="${xml.versionname}" />
 			<token key="kunenaversionbuild" value="${xml.version}"/>
+			<token key="kunenachangelog" value="https://update.kunena.org/changelog/${xml.version}.xml"/>
 		</replacetokens>
 	</filterchain>
 

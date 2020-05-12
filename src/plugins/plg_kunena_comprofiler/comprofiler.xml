@@ -11,6 +11,7 @@
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
     <namespace>Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="comprofiler">comprofiler.php</filename>
         <filename>access.php</filename>

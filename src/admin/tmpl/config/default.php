@@ -830,7 +830,7 @@ HTMLHelper::_('dropdown.init');
 																   class="inputbox form-control"
 																   value="">
 														</td>
-														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX_DESC') ?></td>
+														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEY_DESC') ?></td>
 													</tr>
 													<tr <?php if ($this->config->emailheadersizex != 560)
 :

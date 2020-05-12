@@ -821,6 +821,28 @@ HTMLHelper::_('dropdown.init');
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_DESC') ?></td>
 													</tr>
+													<tr <?php if ($this->config->emailheadersizey != 560)
+:
+														echo 'class="changed"';
+														endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEY') ?></td>
+														<td><input name="cfg_emailheader" type="text"
+																   class="inputbox form-control"
+																   value="">
+														</td>
+														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX_DESC') ?></td>
+													</tr>
+													<tr <?php if ($this->config->emailheadersizex != 560)
+:
+														echo 'class="changed"';
+														endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX') ?></td>
+														<td><input name="cfg_emailheader" type="text"
+																   class="inputbox form-control"
+																   value="">
+														</td>
+														<td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX_DESC') ?></td>
+													</tr>
 													<tr <?php if ($this->config->allowsubscriptions != 1)
 :
 														echo 'class="changed"';

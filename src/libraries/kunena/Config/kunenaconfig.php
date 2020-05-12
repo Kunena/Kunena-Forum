@@ -221,6 +221,8 @@ use function defined;
  * @property boolean $attachment_utf8
  * @property boolean $autoembedsoundcloud
  * @property string  $emailheader
+ * @property integer $emailheadersizex
+ * @property integer $emailheadersizey
  * @property boolean $user_status
  * @property boolean $signature
  * @property boolean $personal
@@ -1580,6 +1582,18 @@ class KunenaConfig extends CMSObject
 	 * @since  Kunena 6.0
 	 */
 	public $plugins;
+
+	/**
+	 * @var    string to define the header image size
+	 * @since  Kunena 6.0
+	 */
+	public $emailheadersizey = 560;
+
+	/**
+	 * @var    string to define the header image size
+	 * @since  Kunena 6.0
+	 */
+	public $emailheadersizex = 560;
 
 	/**
 	 * @since   Kunena 6.0

@@ -80,40 +80,34 @@ class InstallController extends FormController
 		if ($allowed)
 		{
 			$installer = new KunenaModelInstall;
-			$installer->setAction('uninstall');
+			$installer->uninstall();
 			$installer->deleteTables('kunena_');
 
 			$app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_REMOVED'));
 
 			$app->setUserState('com_kunena.uninstall.allowed', null);
 
-			if (class_exists('KunenaForum') && !KunenaForum::isDev())
+
+			$installer = new \Joomla\CMS\Installer\Installer;
+			$component = ComponentHelper::getComponent('com_kunena');
+			$installer->uninstall('component', $component->id);
+
+			if (Folder::exists(KPATH_MEDIA))
 			{
-				$installer = new \Joomla\CMS\Installer\Installer;
-				$component = ComponentHelper::getComponent('com_kunena');
-				$installer->uninstall('component', $component->id);
-
-				if (Folder::exists(KPATH_MEDIA))
-				{
-					Folder::delete(KPATH_MEDIA);
-				}
-
-				if (Folder::exists(JPATH_ROOT . '/plugins/kunena'))
-				{
-					Folder::delete(JPATH_ROOT . '/plugins/kunena');
-				}
-
-				if (File::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
-				{
-					File::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
-				}
-
-				$this->setRedirect('index.php?option=com_installer');
+				Folder::delete(KPATH_MEDIA);
 			}
-			else
+
+			if (Folder::exists(JPATH_ROOT . '/plugins/kunena'))
 			{
-				$this->setRedirect('index.php?option=com_kunena&view=install');
+				Folder::delete(JPATH_ROOT . '/plugins/kunena');
 			}
+
+			if (File::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
+			{
+				File::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
+			}
+
+			$this->setRedirect('index.php?option=com_installer');
 
 			return;
 		}

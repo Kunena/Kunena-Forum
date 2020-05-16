@@ -393,6 +393,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$this->uninstallPlugin('kunena', 'gravatar');
 		$this->uninstallPlugin('kunena', 'joomla');
 		$this->uninstallPlugin('kunena', 'kunena');
+		$this->uninstallPlugin('kunena', 'finder');
+		$this->uninstallPlugin('sampledata', 'kunena');
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('quickicon', 'kunena');
 		$this->uninstallPlugin('content', 'kunena');

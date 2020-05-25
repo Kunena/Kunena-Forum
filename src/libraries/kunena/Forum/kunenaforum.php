@@ -111,6 +111,12 @@ abstract class KunenaForum
 	protected static $version_name = false;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected static $version_sampledata = false;
+
+	/**
 	 * Checks if Kunena Forum is safe to be used and online.
 	 *
 	 * It is a good practice to check if Kunena Forum is online before displaying
@@ -133,17 +139,17 @@ abstract class KunenaForum
 	 * }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
-	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
 	 * @return  boolean True if online.
 	 *
+	 * @throws  Exception
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
+	 *
 	 */
 	public static function enabled($checkAdmin = true)
 	{
@@ -177,12 +183,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::enabled()
+	 * @return  boolean True if Kunena has been fully installed.
+	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
 	 *
-	 * @return  boolean True if Kunena has been fully installed.
-	 *
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::enabled()
 	 * @since   Kunena 6.0
 	 */
 	public static function installed()
@@ -232,15 +238,15 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  Exception
 	 */
 	public static function setup()
 	{
@@ -283,11 +289,11 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
-	 *
 	 * @param   string  $version  Minimum required version.
 	 *
 	 * @return  boolean Yes, if it is safe to use Kunena Framework.
+	 *
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -366,22 +372,31 @@ abstract class KunenaForum
 		self::$version_major = substr(self::$version, 0, 3);
 		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('sampledata')->from('#__kunena_version')->order('id');
+		$query->setLimit(1);
+		$db->setQuery($query);
+
+		self::$version_sampledata = $db->loadResult();
 	}
 
 	/**
 	 * Returns all version information together.
 	 *
-	 * @return  object stdClass containing (version, major, date, name).
+	 * @return  object stdClass containing (version, major, date, name, sampledata).
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function getVersionInfo()
 	{
-		$version          = new stdClass;
-		$version->version = self::version();
-		$version->major   = self::versionMajor();
-		$version->date    = self::versionDate();
-		$version->name    = self::versionName();
+		$version             = new stdClass;
+		$version->version    = self::version();
+		$version->major      = self::versionMajor();
+		$version->date       = self::versionDate();
+		$version->name       = self::versionName();
+		$version->sampledata = self::versionSampleData();
 
 		return $version;
 	}
@@ -438,6 +453,23 @@ abstract class KunenaForum
 	}
 
 	/**
+	 * Returns boolean if the sample data is installed.
+	 *
+	 * @return  boolean SampleData.
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function versionSampleData()
+	{
+		if (self::$version_sampledata === false)
+		{
+			self::buildVersion();
+		}
+
+		return self::$version_sampledata;
+	}
+
+	/**
 	 * Displays Kunena Forum view/layout inside your extension.
 	 *
 	 * <code>
@@ -451,9 +483,9 @@ abstract class KunenaForum
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = [])
 	{

@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
-			<?php if ($this->sampledata) : ?>
+			<?php if (!KunenaForum::versionSampleData()): ?>
 				<div class="row clearfix">
 					<div class="col-xl-3 col-md-3">
 						<div class="card proj-t-card bg-warning">

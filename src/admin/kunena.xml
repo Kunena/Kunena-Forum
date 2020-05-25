@@ -11,7 +11,6 @@
     <license>GNU/GPLv3 or later</license>
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <namespace path="src">Kunena\Forum</namespace>
-    <scriptfile>script.php</scriptfile>
     <changelogurl>@kunenachangelog@</changelogurl>
     <install>
         <sql>
@@ -49,7 +48,6 @@
             <filename>kunena.xml</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <filename>script.php</filename>
             <folder>api</folder>
             <folder>forms</folder>
             <folder>language</folder>

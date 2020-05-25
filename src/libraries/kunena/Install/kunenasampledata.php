@@ -224,6 +224,19 @@ class KunenaSampleData
 		{
 			throw new Exception($e->getMessage(), $e->getCode());
 		}
+
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__kunena_version'))->set('sampledata = 1')->setLimit(1);
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
 	}
 }
 

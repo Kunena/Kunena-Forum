@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaSampleData;
 
 /**
@@ -84,6 +85,11 @@ class PlgSampledataKunena extends CMSPlugin
 	public function onSampledataGetOverview()
 	{
 		if (!$this->app->getIdentity()->authorise('core.manage', 'com_kunena'))
+		{
+			return;
+		}
+
+		if (KunenaForum::versionSampleData())
 		{
 			return;
 		}

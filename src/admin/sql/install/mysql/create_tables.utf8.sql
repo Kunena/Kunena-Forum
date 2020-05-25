@@ -445,6 +445,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     `installdate` date        NOT NULL,
     `build`       varchar(20) NOT NULL,
     `versionname` varchar(40) NULL,
+    `sampledata`  tinyint(4)  NOT NULL default '0',
     `state`       text        NOT NULL,
     PRIMARY KEY (id)
 )

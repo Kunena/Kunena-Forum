@@ -89,6 +89,7 @@ $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/jquery.fileupload-audio.js');
 $this->addScript('assets/js/jquery.fileupload-video.js');
+$this->addScript('assets/js/jquery.fileupload-validate.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 

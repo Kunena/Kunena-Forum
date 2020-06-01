@@ -24,6 +24,7 @@ $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
 $this->addScript('assets/js/jquery.fileupload-process.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
+$this->addScript('assets/js/jquery.fileupload-validate.js');
 $this->addScript('assets/js/upload.avatar.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 

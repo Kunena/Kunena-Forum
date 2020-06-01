@@ -99,6 +99,7 @@ $this->addScript('jquery.iframe-transport.js');
 $this->addScript('jquery.fileupload-image.js');
 $this->addScript('jquery.fileupload-audio.js');
 $this->addScript('jquery.fileupload-video.js');
+$this->addScript('jquery.fileupload-validate.js');
 $this->addScript('upload.main.js');
 $this->addStyleSheet('fileupload.css');
 

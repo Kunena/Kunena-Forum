@@ -287,7 +287,7 @@ jQuery(function ($) {
 
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&file_id=' + file_id + '&editor_text=' + editor_text,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + file_id + '&editor_text=' + editor_text,
 				type: 'POST'
 			})
 				.done(function (data) {

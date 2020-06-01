@@ -7,7 +7,7 @@
     "consolidation/robo": "^2",
     "symfony/console": "~3|~4",
     "symfony/filesystem": "^5.1.0",
-    "symfony/finder": "~3|~4",
+    "symfony/finder": "^5.1.0",
     "symfony/process": "~3|~4",
     "symfony/yaml": "~3|~4",
     "ext-simplexml": "*",

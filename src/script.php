@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
  *
  * @since Kunena
  */
-class Pkg_KunenaInstaller extends InstallerScript
+class Pkg_KunenaInstallerScript extends InstallerScript
 {
 	/**
 	 * The extension name. This should be set in the installer script.
@@ -71,7 +71,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	/**
 	 *  Constructor
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -86,7 +86,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 *
 	 * @return  boolean  false will terminate the installation
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function preflight($type, $parent)
 	{
@@ -115,7 +115,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function install($parent)
 	{
@@ -132,7 +132,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function uninstall($parent)
 	{
@@ -145,7 +145,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function update($parent)
 	{
@@ -179,7 +179,7 @@ class Pkg_KunenaInstaller extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since ?
+	 * @since Kunena 6.0
 	 */
 	public function postflight($type, $parent)
 	{

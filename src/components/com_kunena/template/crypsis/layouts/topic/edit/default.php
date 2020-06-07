@@ -82,6 +82,7 @@ $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 HTMLHelper::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
+$this->addScript('assets/js/load-image-meta.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');

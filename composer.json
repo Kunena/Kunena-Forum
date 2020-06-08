@@ -8,7 +8,7 @@
     "symfony/console": "~3|~4",
     "symfony/filesystem": "^5.1.0",
     "symfony/finder": "^5.1.0",
-    "symfony/process": "~3|~4",
+    "symfony/process": "^5.1.0",
     "symfony/yaml": "~3|~4",
     "ext-simplexml": "*",
     "ext-dom": "*",

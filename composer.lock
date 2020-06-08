@@ -1528,16 +1528,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "4.1.5",
+            "version": "4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "24f2345329b1059f1208f65581fc632a4a6e5a55"
+                "reference": "5515b6a6c6f1e1c909aaff2e5f3a15c177dfd1a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/24f2345329b1059f1208f65581fc632a4a6e5a55",
-                "reference": "24f2345329b1059f1208f65581fc632a4a6e5a55",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/5515b6a6c6f1e1c909aaff2e5f3a15c177dfd1a9",
+                "reference": "5515b6a6c6f1e1c909aaff2e5f3a15c177dfd1a9",
                 "shasum": ""
             },
             "require": {
@@ -1609,7 +1609,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2020-05-24T13:58:47+00:00"
+            "time": "2020-06-07T16:31:51+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -4072,7 +4072,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.4.8",
+            "version": "v4.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",

@@ -395,7 +395,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$db  = Factory::getDbo();
 
 		// Always load Kunena API if it exists.
-		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
 		if (is_file($api))
 		{

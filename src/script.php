@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Installer;
 
 /**
@@ -126,8 +127,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	{
 		// Notice $parent->getParent() returns JInstaller object
 		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
-
-		$this->addDashboardMenu('kunena', 'kunena');
 	}
 
 	/**
@@ -200,7 +199,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			@apc_clear_cache();
 		}
 
-		return true;
+		$this->addDashboardMenu('kunena', 'kunena');
+
+		$installer = new KunenaModelInstall;
+		$installer->deleteMenu();
+		$installer->createMenu();
 	}
 
 	/**

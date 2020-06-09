@@ -598,7 +598,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$params          = $menu_item->params;
 			$params_keywords = $params->get('menu-meta_keywords');
-			$this->setTitle($this->topic->getTopic()->subject);
+			$subject = KunenaHtmlParser::parseText($this->topic->displayField('subject'));
+
+			$this->setTitle($subject);
 
 			if (!empty($params_keywords))
 			{

@@ -225,7 +225,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$tmp                            = new CMSObject;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
-		$data->{'author'}                   = $tmp;
+		$data->{'author'}               = $tmp;
 		$data->interactionStatistic     = array();
 		$tmp2                           = new CMSObject;
 		$tmp2->{'@type'}                = "InteractionCounter";
@@ -264,7 +264,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare messages for display.
 	 *
-	 * @param   int $mesid Selected message Id.
+	 * @param   int  $mesid  Selected message Id.
 	 *
 	 * @return  void
 	 * @throws Exception
@@ -337,8 +337,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Change ordering of the displayed messages and apply threading.
 	 *
-	 * @param   int   $parent Parent Id.
-	 * @param   array $indent Indent for the current object.
+	 * @param   int    $parent  Parent Id.
+	 * @param   array  $indent  Indent for the current object.
 	 *
 	 * @return  array
 	 * @throws Exception
@@ -458,8 +458,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 * @throws Exception
-	 * @since Kunena
 	 * @throws null
+	 * @since Kunena
 	 */
 	protected function prepareDocument()
 	{
@@ -598,7 +598,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		{
 			$params          = $menu_item->params;
 			$params_keywords = $params->get('menu-meta_keywords');
-			$subject = KunenaHtmlParser::parseText($this->topic->displayField('subject'));
+			$subject         = $this->topic->subject . $headerText;
 
 			$this->setTitle($subject);
 
@@ -642,8 +642,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * Prepare document.
 	 *
 	 * @throws Exception
-	 * @since Kunena
 	 * @throws null
+	 * @since Kunena
 	 */
 	protected function docImage()
 	{

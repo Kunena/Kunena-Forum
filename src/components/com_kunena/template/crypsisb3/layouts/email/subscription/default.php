@@ -167,7 +167,7 @@ if (!$config->plain_email) :
 								<p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL :
+								<p><?php echo Text::_('COM_KUNENA_EDITOR_LINK_URLURL');?> :
 									<a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
 								</p>
 							</div>
@@ -254,7 +254,7 @@ if (!$config->plain_email) :
 
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL: {$this->messageLink}
+{$this->text('COM_KUNENA_EDITOR_LINK_URLURL')} : {$this->messageLink}
 {$full}
 
 {$msg2}{$more}

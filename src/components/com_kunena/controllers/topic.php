@@ -111,7 +111,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$this->changeinline($instances,  '1');
 	}
-	
+
 	/**
 	 * Set inline to 0 on one attachment object.
 	 *
@@ -129,7 +129,7 @@ class KunenaControllerTopic extends KunenaController
 
 		$this->changeinline($instance, '0');
 	}
-	
+
 	/**
 	 * Set inline to 0 or 1 on the attachment object.
 	 *
@@ -2218,7 +2218,7 @@ class KunenaControllerTopic extends KunenaController
 				jimport('joomla.environment.uri');
 				$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
-				$mail = \Joomla\CMS\Mail\Mail::getInstance();
+				$mail = JFactory::getMailer();
 				$mail->setSender(array($this->config->getEmail(), $mailsender));
 				$mail->setSubject($mailsubject);
 				$mail->addReplyTo($this->me->email, $this->me->username);

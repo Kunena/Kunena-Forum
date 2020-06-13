@@ -25,7 +25,7 @@ use Joomla\Database\DatabaseDriver;
 /**
  *
  */
-DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN . '/install/install.xml');
+DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN . '/sql/install/schema/install.xml');
 /**
  *
  */

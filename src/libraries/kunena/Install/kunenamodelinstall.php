@@ -2939,23 +2939,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 
-		// Delete installer file (only if not using GIT build).
-		if (!KunenaForum::isDev())
-		{
-			File::delete(KPATH_ADMIN . '/install.php');
-		}
-
 		// Resync bbcode plugins
 		$editor = KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();
-
-		if (!$this->getInstallError())
-		{
-			$this->updateVersionState('');
-			$this->addStatus(Text::_('COM_KUNENA_INSTALL_SUCCESS'), true, '');
-
-			$this->setStep($this->getStep() + 1);
-		}
 
 		// Delete the tmp install directory
 		foreach (glob(Path::tmpdir() . '/install_*') as $dir)

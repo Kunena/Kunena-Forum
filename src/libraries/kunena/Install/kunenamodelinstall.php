@@ -3042,12 +3042,12 @@ class KunenaModelInstall extends BaseDatabaseModel
 	{
 		$config = KunenaFactory::getConfig();
 
-		$component_id = ComponentHelper::getComponent('com_kunena')->id;
+		$component_id = (int) ComponentHelper::getComponent('com_kunena')->id;
 
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 		// First fix all broken menu items
-		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
+		$query = "UPDATE #__menu SET component_id = {$component_id} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
 		$this->db->setQuery($query);
 
 		try

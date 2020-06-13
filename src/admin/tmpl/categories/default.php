@@ -18,13 +18,12 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')->useScript('dropdown.init');
+$wa->useScript('multiselect');
 $wa->addInlineScript('Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");

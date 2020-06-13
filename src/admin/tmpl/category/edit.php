@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect')
-		->useScript('dropdown.init');
+		;
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 

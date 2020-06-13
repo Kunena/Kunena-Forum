@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect')
-		->useScript('dropdown.init')
 		->useScript('bootstrap.popover');
 
 $filterItem = $this->escape($this->state->get('item.id'));

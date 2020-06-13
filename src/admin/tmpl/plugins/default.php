@@ -9,15 +9,19 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Layout\Layout;
 
-HTMLHelper::_('behavior.multiselect');
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect');
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));

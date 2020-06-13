@@ -11,16 +11,20 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
-HTMLHelper::_('bootstrap.popover');
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect')
+		->useScript('dropdown.init')
+		->useScript('bootstrap.popover');
 
 $filterItem = $this->escape($this->state->get('item.id'));
 ?>

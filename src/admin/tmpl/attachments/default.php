@@ -11,38 +11,38 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
-?>
-
-<script type="text/javascript">
-	Joomla.orderTable = function () {
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect')->useScript('dropdown.init');
+$wa->addInlineScript('Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
+		if (order != ' . $this->listOrdering . ') {
+dirn = "asc";
+} else {
+dirn = direction.options[direction.selectedIndex].value;
+}
+Joomla.tableOrdering(order, dirn, "");
+}'
+);
+?>
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
 					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
@@ -52,40 +52,40 @@ HTMLHelper::_('dropdown.init');
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
 							<label for="filter_search"
-							       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+								   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
-							       placeholder="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
-							       value="<?php echo $this->filterSearch; ?>"
-							       title="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"/>
+								   placeholder="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
+								   value="<?php echo $this->filterSearch; ?>"
+								   title="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
 							<button class="btn btn-outline-primary tip" type="submit"
-							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
+									title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
 										class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 							</button>
 							<button class="btn btn-outline-primary tip" type="button"
-							        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
-							        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
+									title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+									onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 							</button>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
-							       class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
-							       class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
+								   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 							<select name="directionTable" id="directionTable" class="input-medium"
-							        onchange="Joomla.orderTable()">
+									onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
 							<label for="sortTable"
-							       class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
+								   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
 								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
@@ -98,7 +98,7 @@ HTMLHelper::_('dropdown.init');
 						<thead>
 						<tr>
 							<th width="1%"><input type="checkbox" name="toggle" value=""
-							                      onclick="Joomla.checkAll(this)"/>
+												  onclick="Joomla.checkAll(this)"/>
 							</th>
 							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
 							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>
@@ -113,33 +113,33 @@ HTMLHelper::_('dropdown.init');
 							</td>
 							<td class="nowrap">
 								<label for="filter_title"
-								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-								       name="filter_title"
-								       id="filter_title"
-								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-								       value="<?php echo $this->filterTitle; ?>"
-								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+									   name="filter_title"
+									   id="filter_title"
+									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+									   value="<?php echo $this->filterTitle; ?>"
+									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
 								<label for="filter_type"
-								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-								       name="filter_type"
-								       id="filter_type"
-								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-								       value="<?php echo $this->filterType; ?>"
-								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+									   name="filter_type"
+									   id="filter_type"
+									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+									   value="<?php echo $this->filterType; ?>"
+									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
 								<label for="filter_size"
-								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-								       name="filter_size"
-								       id="filter_size"
-								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-								       value="<?php echo $this->filterSize; ?>"
-								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+									   name="filter_size"
+									   id="filter_size"
+									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+									   value="<?php echo $this->filterSize; ?>"
+									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
 								<?php /*
@@ -149,23 +149,23 @@ HTMLHelper::_('dropdown.init');
 							</td>
 							<td class="nowrap">
 								<label for="filter_username"
-								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-								       name="filter_username"
-								       id="filter_username"
-								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-								       value="<?php echo $this->filterUsername; ?>"
-								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+									   name="filter_username"
+									   id="filter_username"
+									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+									   value="<?php echo $this->filterUsername; ?>"
+									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
 								<label for="filter_post"
-								       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-								       name="filter_post"
-								       id="filter_post"
-								       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-								       value="<?php echo $this->filterPost; ?>"
-								       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+									   name="filter_post"
+									   id="filter_post"
+									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+									   value="<?php echo $this->filterPost; ?>"
+									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap center hidden-phone">
 							</td>
@@ -216,7 +216,7 @@ HTMLHelper::_('dropdown.init');
 													:
 													?>
 													<button class="btn btn-outline-primary" type="button"
-													        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+															onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 												<?php endif; ?>
 											</span>
 									</div>

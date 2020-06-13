@@ -14,6 +14,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -50,7 +51,9 @@ jQuery(document).ready(function ($) {
 "
 );
 
-HTMLHelper::_('behavior.multiselect');
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect');
 ?>
 
 <div id="kunena" class="container-fluid">

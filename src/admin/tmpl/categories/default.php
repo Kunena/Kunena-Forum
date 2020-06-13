@@ -11,17 +11,32 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect')->useScript('dropdown.init');
+$wa->addInlineScript('Joomla.orderTable = function () {
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
+		if (order != ' . $this->listOrdering . ') {
+dirn = "asc";
+} else {
+dirn = direction.options[direction.selectedIndex].value;
+}
+Joomla.tableOrdering(order, dirn, "");
+}'
+);
 
 if ($this->saveOrder)
 {
@@ -30,20 +45,6 @@ if ($this->saveOrder)
 
 $filterItem = $this->escape($this->state->get('item.id'));
 ?>
-
-<script type="text/javascript">
-	Joomla.orderTable = function () {
-		var table = document.getElementById("sortTable");
-		var direction = document.getElementById("directionTable");
-		var order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
 
 <div id="kunena" class="container-fluid">
 	<div class="row">

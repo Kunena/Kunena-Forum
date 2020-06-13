@@ -11,15 +11,19 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
+/** @var WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('multiselect')
+		->useScript('dropdown.init');
 ?>
 
 <div id="kunena" class="container-fluid">

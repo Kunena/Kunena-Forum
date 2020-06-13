@@ -38,6 +38,7 @@ use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
 use Kunena\Forum\Libraries\Menu\MenuFix;
 use Kunena\Forum\Libraries\Menu\MenuHelper;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use \Exception;
@@ -615,7 +616,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	{
 		$success = false;
 
-		$dest = Path::tmpdir() . "/kinstall_mod_{$name}";
+		$dest = KunenaPath::tmpdir() . "/kinstall_mod_{$name}";
 
 		if (is_dir($dest))
 		{
@@ -741,7 +742,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	{
 		$success = false;
 
-		$dest = Path::tmpdir() . "/kinstall_plg_{$group}_{$name}";
+		$dest = KunenaPath::tmpdir() . "/kinstall_plg_{$group}_{$name}";
 
 		if (is_dir($dest))
 		{
@@ -2939,12 +2940,12 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$cache = Factory::getCache();
 		$cache->clean('com_kunena');
 
-		// Resync bbcode plugins
+		/*// Resync bbcode plugins
 		$editor = KunenaBbcodeEditor::getInstance();
-		$editor->initializeHMVC();
+		$editor->initializeHMVC();*/
 
 		// Delete the tmp install directory
-		foreach (glob(Path::tmpdir() . '/install_*') as $dir)
+		foreach (glob(KunenaPath::tmpdir() . '/install_*') as $dir)
 		{
 			if (is_dir($dir))
 			{
@@ -2974,11 +2975,11 @@ class KunenaModelInstall extends BaseDatabaseModel
 			$date    = (string) $version->versiondate;
 		}
 
-		$tmpfile = Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+		$tmpfile = KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
 
 		if (is_file($tmpfile))
 		{
-			File::delete(Path::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
+			File::delete(KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}
 	}
 

@@ -221,11 +221,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 				$db    = Factory::getDbo();
 				$query = $db->getQuery(true);
-				$query->insert($this->_db->quoteName('#__kunena_version'))
-					->set($this->_db->quoteName('version') . ' = ' . $this->_db->quote($version))
-					->set($this->_db->quoteName('build') . ' = ' . $this->_db->quote($build))
-					->set($this->_db->quoteName('date') . ' = ' . $this->_db->quote($date))
-					->set($this->_db->quoteName('versionname') . ' = ' . $this->_db->quote($versionname));
+				$query->insert($db->quoteName('#__kunena_version'))
+					->set($db->quoteName('version') . ' = ' . $db->quote($version))
+					->set($db->quoteName('build') . ' = ' . $db->quote($build))
+					->set($db->quoteName('date') . ' = ' . $db->quote($date))
+					->set($db->quoteName('versionname') . ' = ' . $db->quote($versionname));
 				$db->setQuery($query);
 			}
 		}

@@ -206,6 +206,29 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$installer = new KunenaModelInstall;
 		$installer->stepFinish();
+
+		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
+		{
+			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+			if (file_exists($file))
+			{
+				$manifest    = simplexml_load_file($file);
+				$version     = (string) $manifest->version;
+				$build       = (string) $manifest->build;
+				$date        = (string) $manifest->creationDate;
+				$versionname = (string) $manifest->versionName;
+
+				$db    = Factory::getDbo();
+				$query = $db->getQuery(true);
+				$query->insert($this->_db->quoteName('#__kunena_version'))
+					->set($this->_db->quoteName('version') . ' = ' . $this->_db->quote($version))
+					->set($this->_db->quoteName('build') . ' = ' . $this->_db->quote($build))
+					->set($this->_db->quoteName('date') . ' = ' . $this->_db->quote($date))
+					->set($this->_db->quoteName('versionname') . ' = ' . $this->_db->quote($versionname));
+				$db->setQuery($query);
+			}
+		}
 	}
 
 	/**

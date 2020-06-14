@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Installer;
+use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
  * Kunena package installer script.
@@ -256,7 +257,45 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
 
 		$installer = new KunenaModelInstall;
-		$installer->stepFinish();
+		$installer->createMenu();
+
+		// Delete the tmp install directory
+		foreach (glob(KunenaPath::tmpdir() . '/install_*') as $dir)
+		{
+			if (is_dir($dir))
+			{
+				Folder::delete($dir);
+			}
+		}
+
+		$version = '';
+		$date    = '';
+		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		if (file_exists($file))
+		{
+			$manifest = simplexml_load_file($file);
+			$version  = (string) $manifest->version;
+			$date     = (string) $manifest->creationDate;
+		}
+		else
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('version')->from('#__kunena_version')->order('id');
+			$query->setLimit(1);
+			$db->setQuery($query);
+
+			$version = $db->loadResult();
+			$date    = (string) $version->versiondate;
+		}
+
+		$tmpfile = KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+
+		if (is_file($tmpfile))
+		{
+			File::delete(KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
+		}
 
 		return true;
 	}

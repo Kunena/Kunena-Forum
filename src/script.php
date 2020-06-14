@@ -17,6 +17,8 @@ use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Installer;
@@ -222,11 +224,25 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db    = Factory::getDbo();
 				$query = $db->getQuery(true);
 				$query->insert($db->quoteName('#__kunena_version'))
-					->set($db->quoteName('version') . ' = ' . $db->quote($version))
-					->set($db->quoteName('build') . ' = ' . $db->quote($build))
-					->set($db->quoteName('date') . ' = ' . $db->quote($date))
-					->set($db->quoteName('versionname') . ' = ' . $db->quote($versionname));
+					->columns(
+						[
+							$db->quoteName('version'),
+							$db->quoteName('build'),
+							$db->quoteName('date'),
+							$db->quoteName('versionname'),
+						]
+					)
+					->values($db->quote($version) . ',' . $db->quote($build) . ',' . $db->quote($date) . ',' . $db->quote($versionname));
 				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (ExecutionFailureException $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 		}
 	}

@@ -213,49 +213,46 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
 
-			if (file_exists($file))
+			$manifest    = simplexml_load_file($file);
+			$version     = (string) $manifest->version;
+			$build       = (string) $manifest->version;
+			$date        = (string) $manifest->creationDate;
+			$versionname = (string) $manifest->versionname;
+			$installdate = Factory::getDate('now');
+
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+
+			$values = [
+				$db->quote($version),
+				$db->quote($build),
+				$db->quote($date),
+				$db->quote($versionname),
+				$db->quote($installdate),
+				$db->quote('')
+			];
+
+			$query->insert($db->quoteName('#__kunena_version'))
+				->columns(
+					[
+						$db->quoteName('version'),
+						$db->quoteName('build'),
+						$db->quoteName('versiondate'),
+						$db->quoteName('versionname'),
+						$db->quoteName('installdate'),
+						$db->quoteName('state')
+					]
+				)
+				->values(implode(', ', $values));
+			$db->setQuery($query);
+
+			try
 			{
-				$manifest    = simplexml_load_file($file);
-				$version     = (string) $manifest->version;
-				$build       = (string) $manifest->version;
-				$date        = (string) $manifest->creationDate;
-				$versionname = (string) $manifest->versionname;
-				$installdate = Factory::getDate('now');
-
-				$db    = Factory::getDbo();
-				$query = $db->getQuery(true);
-
-				$values = [
-					$db->quote($version),
-					$db->quote($build),
-					$db->quote($date),
-					$db->quote($versionname),
-					$db->quote($installdate),
-					$db->quote('')
-				];
-
-				$query->insert($db->quoteName('#__kunena_version'))
-					->columns(
-						[
-							$db->quoteName('version'),
-							$db->quoteName('build'),
-							$db->quoteName('versiondate'),
-							$db->quoteName('versionname'),
-							$db->quoteName('installdate'),
-							$db->quoteName('state')
-						]
-					)
-					->values(implode(', ', $values));
-				$db->setQuery($query);
-
-				try
-				{
-					$db->execute();
-				}
-				catch (ExecutionFailureException $e)
-				{
-					KunenaError::displayDatabaseError($e);
-				}
+				$db->execute();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 	}

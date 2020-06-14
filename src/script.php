@@ -20,6 +20,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Installer;
 
@@ -181,10 +182,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * method to run after an install/update/uninstall method
 	 *
 	 * @param   string            $type    'install', 'update' or 'discover_install'
-	 * @param   ComponentAdapter  $parent  Installerobject
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
-	 * @return void
+	 * @return  boolean  false will terminate the installation
 	 *
+	 * @throws KunenaInstallerException
 	 * @since Kunena 6.0
 	 */
 	public function postflight($type, $parent)
@@ -200,14 +202,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		{
 			@apc_clear_cache();
 		}
-
-		$this->addDashboardMenu('kunena', 'kunena');
-
-		// Hard add namespace for now, until Joomla 4.0 has been fixed.
-		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
-
-		$installer = new KunenaModelInstall;
-		$installer->stepFinish();
 
 		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
 		{
@@ -255,6 +249,16 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				KunenaError::displayDatabaseError($e);
 			}
 		}
+
+		$this->addDashboardMenu('kunena', 'kunena');
+
+		// Hard add namespace for now, until Joomla 4.0 has been fixed.
+		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
+
+		$installer = new KunenaModelInstall;
+		$installer->stepFinish();
+
+		return true;
 	}
 
 	/**

@@ -217,22 +217,35 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			{
 				$manifest    = simplexml_load_file($file);
 				$version     = (string) $manifest->version;
-				$build       = (string) $manifest->build;
+				$build       = (string) $manifest->version;
 				$date        = (string) $manifest->creationDate;
-				$versionname = (string) $manifest->versionName;
+				$versionname = (string) $manifest->versionname;
+				$installdate = Factory::getDate('now');
 
 				$db    = Factory::getDbo();
 				$query = $db->getQuery(true);
+
+				$values = [
+					$db->quote($version),
+					$db->quote($build),
+					$db->quote($date),
+					$db->quote($versionname),
+					$db->quote($installdate),
+					$db->quote('')
+				];
+
 				$query->insert($db->quoteName('#__kunena_version'))
 					->columns(
 						[
 							$db->quoteName('version'),
 							$db->quoteName('build'),
-							$db->quoteName('date'),
+							$db->quoteName('versiondate'),
 							$db->quoteName('versionname'),
+							$db->quoteName('installdate'),
+							$db->quoteName('state')
 						]
 					)
-					->values($db->quote($version) . ',' . $db->quote($build) . ',' . $db->quote($date) . ',' . $db->quote($versionname));
+					->values(implode(', ', $values));
 				$db->setQuery($query);
 
 				try

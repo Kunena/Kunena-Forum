@@ -3048,12 +3048,17 @@ class KunenaModelInstall extends BaseDatabaseModel
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 		// First fix all broken menu items
-		$query = "UPDATE #__menu SET component_id = {$component_id} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
-		$this->db->setQuery($query);
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->update($db->quoteName('#__menu'))
+			->set($db->quoteName('component_id') . ' = ' . $component_id)
+			->where("link LIKE '%option=com_kunena%'")
+			->andWhere('type = "component"');
+		$db->setQuery($query);
 
 		try
 		{
-			$this->db->execute();
+			$db->execute();
 		}
 		catch (Exception $e)
 		{

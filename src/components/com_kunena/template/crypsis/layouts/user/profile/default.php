@@ -152,10 +152,12 @@ if ($show)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->email && !$user->hideEmail && $config->showemail) : ?>
-					<li>
-						<?php echo $user->profileIcon('email'); ?>
-					</li>
+				<?php if ($config->showemail && $user->email) : ?>
+					<?php if ($user->hideEmail == 0 || $user->hideEmail == 2 && KunenaUserHelper::getMyself()->exists()) : ?>
+						<li>
+							<?php echo $user->profileIcon('email'); ?>
+						</li>
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>

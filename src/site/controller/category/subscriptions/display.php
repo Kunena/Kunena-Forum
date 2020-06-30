@@ -168,7 +168,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication();
 		$robots = $config->get('robots');
 
 		if ($robots == 'noindex, follow')

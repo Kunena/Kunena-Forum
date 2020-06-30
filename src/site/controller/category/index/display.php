@@ -433,7 +433,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication();
 		$robots = $config->get('robots');
 		$image  = null;
 

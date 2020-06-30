@@ -247,7 +247,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		$menu_item = $this->app->getMenu()->getActive();
 		$doc       = Factory::getApplication()->getDocument();
-		$config    = Factory::getConfig();
+		$config    = Factory::getApplication();
 		$robots    = $config->get('robots');
 
 		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))

@@ -216,7 +216,7 @@ class Session extends CMSObject
 	public function isNewSession()
 	{
 		// Perform session timeout check
-		$lifetime              = max(intval(Factory::getConfig()->get('config.lifetime')) * 60,
+		$lifetime              = max(intval(Factory::getApplication()->get('config.lifetime')) * 60,
 			intval(KunenaFactory::getConfig()->sessiontimeout)
 		);
 		$this->_sessiontimeout = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());

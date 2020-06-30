@@ -29,7 +29,7 @@ function kunena_200_2012_06_10_newindication($parent)
 	$now = Factory::getDate()->toUnix();
 
 	// First remove old session information (not used anyway, speeds up conversion)
-	$lasttime = $now - max(intval(Factory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
+	$lasttime = $now - max(intval(Factory::getApplication()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
 	$query    = "UPDATE `#__kunena_sessions` SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
 

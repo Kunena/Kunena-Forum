@@ -359,7 +359,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$image     = null;
-		$config    = Factory::getConfig();
+		$config    = Factory::getApplication();
 		$robots    = $config->get('robots');
 		$menu_item = $this->app->getMenu()->getActive();
 

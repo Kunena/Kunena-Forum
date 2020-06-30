@@ -632,7 +632,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$this->setMetaData('twitter:image', $image, 'property');
 		$this->setMetaData('twitter:description', $first);
 
-		$config = Factory::getConfig();
+		$config = Factory::getApplication();
 		$robots = $config->get('robots');
 
 		if ($robots == 'noindex, follow')

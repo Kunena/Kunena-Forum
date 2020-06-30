@@ -1416,12 +1416,12 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<td><?php echo $this->lists ['userlist_userhits'] ?></td>
 													<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
 												</tr>
-												<tr <?php if ($this->config->userlist_userhits != 0) : echo 'class="changed"'; endif; ?>>
+												<tr <?php if ($this->config->superadmin_userlist != 0) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
 													<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
 													<td><?php echo Text::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 												</tr>
-												<tr <?php if ($this->config->userlist_userhits != 2) : echo 'class="changed"'; endif; ?>>
+												<tr <?php if ($this->config->show_session_type != 2) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>
 													<td><?php echo $this->lists ['show_session_type'] ?></td>
 													<td><?php echo Text::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?></td>

@@ -1352,6 +1352,12 @@ class KunenaConfig extends CMSObject
 	public $disable_re = 0;
 
 	/**
+	 * @var string
+	 * @since  K5.1.18
+	 */
+	public $email_sender_name = '';
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

@@ -121,6 +121,14 @@ HTMLHelper::_('behavior.tabstate');
 													</td>
 													<td><?php echo Text::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
 												</tr>
+												<tr <?php if ($this->config->email_sender_name != '') : echo 'class="changed"'; endif; ?>>
+													<td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME') ?></td>
+													<td>
+														<input type="text" name="cfg_email_sender_name"
+														       value="<?php echo $this->escape($this->config->email_sender_name) ?>"/>
+													</td>
+													<td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME_DESC') ?></td>
+												</tr>
 												<tr <?php if ($this->config->send_emails != 1) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_A_SEND_EMAILS') ?></td>
 													<td><?php echo $this->lists ['send_emails'] ?></td>

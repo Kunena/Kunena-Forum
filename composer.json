@@ -22,7 +22,7 @@
     "squizlabs/php_codesniffer": "~3.5.3",
     "joomla-projects/joomla-browser": "~4.0@dev",
     "codeception/codeception": "~4.1.4",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "phing/phing": "3.*",
     "kunena/codestyle": "dev-master"
   },

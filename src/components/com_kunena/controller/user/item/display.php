@@ -90,6 +90,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->user    = Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
+		$this->candisplaymail = $this->me->canDisplayEmail($this->profile);
 
 		// Update profile hits.
 		if (!$this->profile->exists() || !$this->profile->isMyself())

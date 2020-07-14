@@ -20,7 +20,7 @@ if ($direction === "left")
 	?>
 	<div class="row-fluid message">
 		<div class="span2 hidden-phone">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail); ?>
 		</div>
 		<div class="span10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>

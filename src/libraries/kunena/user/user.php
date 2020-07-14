@@ -2220,4 +2220,31 @@ class KunenaUser extends CMSObject
 			return false;
 		}
 	}
+
+	/**
+	 * Method to check if the email symbol can be displayed depending on configuration and on user type
+	 *
+	 * @return boolean
+	 */
+	public function canDisplayEmail($profile)
+	{
+		$config = KunenaConfig::getInstance();
+
+		if ($this->isModerator() || $profile->id == $this->userid)
+		{
+			return true;
+		}
+		else
+		{
+			if ($config->showemail && $profile->email)
+			{
+				if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists())
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

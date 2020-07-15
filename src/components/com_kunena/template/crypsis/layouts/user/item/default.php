@@ -33,7 +33,8 @@ $tabs = $this->getTabs();
 <?php
 echo $this->subLayout('User/Item/Summary')
 	->set('profile', $this->profile)
-	->set('config', $this->config);
+	->set('config', $this->config)
+	->set('candisplaymail', $this->candisplaymail);
 ?>
 
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>

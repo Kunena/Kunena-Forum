@@ -210,11 +210,9 @@ if ($this->config->showuserstats)
 								?>
 								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-sm', 'glyphicon glyphicon-comment'); ?>
 							<?php endif; ?>
-							<?php if ($config->showemail && $profile->email) : ?>
-								<?php if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists()) : ?>
+							<?php if ($this->candisplaymail) : ?>
                                     <a class="btn btn-default btn-sm" href="mailto:<?php echo $profile->email; ?>"
                                        rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
-								<?php endif; ?>
 							<?php endif; ?>
 							<?php
 							if (!empty($websiteName) && !empty($websiteURL))

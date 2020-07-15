@@ -479,14 +479,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				$sentusers[]                         = $emailTo->id;
 			}
 
-			$mailsender  = \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
+			$mailnamesender  = !empty($config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
 			$mailsubject = \Joomla\CMS\Mail\MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 			$subject     = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.
 			$mail = \Joomla\CMS\Factory::getMailer();
 			$mail->setSubject($mailsubject);
-			$mail->setSender(array($config->getEmail(), $mailsender));
+			$mail->setSender(array($config->getEmail(), $mailnamesender));
 
 			// Send email to all subscribers.
 			if (!empty($receivers[1]))

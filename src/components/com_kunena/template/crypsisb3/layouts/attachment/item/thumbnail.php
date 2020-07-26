@@ -36,7 +36,7 @@ if ($attachment->isImage())
 	?>
 	<a href="<?php echo $name; ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
+		<?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attach_start, $config->attach_end) : ''; ?> <img src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
 		     height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
 	<?php
@@ -49,7 +49,7 @@ else
 	?>
 	<a href="<?php echo $attachment->getUrl(false, false, true); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo KunenaIcons::file(); ?>
+		<?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attach_start, $config->attach_end) : ''; ?> <?php echo KunenaIcons::file(); ?>
 	</a>
 	<?php
 }

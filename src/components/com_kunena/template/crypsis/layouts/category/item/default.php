@@ -33,11 +33,11 @@ $this->addStyleSheet('assets/css/rating.css');
 	<?php if (!empty($this->topics)) : ?>
 		<div class="row-fluid">
 			<div class="span12">
-				<h2 class="pull-right">
+				<div class="pull-right">
 					<?php echo $this->subLayout('Widget/Search')
 						->set('catid', $this->category->id)
 						->setLayout('topic'); ?>
-				</h2>
+				</div>
 				<div class="pull-left">
 					<?php echo $this->subLayout('Widget/Pagination/List')
 						->set('pagination', $this->pagination)

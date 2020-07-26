@@ -449,6 +449,11 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													<td><?php echo $this->lists ['disable_re'] ?></td>
 													<td><?php echo Text::_('COM_KUNENA_DISABLE_RE_DESC') ?></td>
 												</tr>
+												<tr <?php if ($this->config->display_filename_attachment != 0) : echo 'class="changed"'; endif; ?>>
+													<td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT') ?></td>
+													<td><?php echo $this->lists ['display_filename_attachment'] ?></td>
+													<td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>

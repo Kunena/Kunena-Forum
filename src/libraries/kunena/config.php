@@ -1358,6 +1358,12 @@ class KunenaConfig extends CMSObject
 	public $email_sender_name = '';
 
 	/**
+	 * @var integer
+	 * @since  K5.1.19
+	 */
+	public $display_filename_attachment = 0;
+
+	/**
 	 * @since Kunena
 	 */
 	public function __construct()

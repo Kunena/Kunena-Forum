@@ -530,6 +530,9 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists ['disable_re'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disable_re', 'class="inputbox" size="1"', 'value', 'text', $this->config->disable_re);
 
+		// K 5.1.19
+		$lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox" size="1"', 'value', 'text', $this->config->display_filename_attachment);
+		
 		return $lists;
 	}
 }

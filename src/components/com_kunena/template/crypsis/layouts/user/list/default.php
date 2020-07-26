@@ -25,11 +25,11 @@ $this->addScript('assets/js/search.js');
 	<?php echo Text::_('COM_KUNENA_MEMBERS'); ?>
 </h1>
 
-<h2 class="pull-right">
+<div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('state', $this->state->get('list.search'))
 		->setLayout('user'); ?>
-</h2>
+</div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')

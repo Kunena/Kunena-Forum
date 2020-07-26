@@ -28,7 +28,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-phone">
-					(<?php echo Text::sprintf('COM_KUNENA_X_MESSAGES_MORE', $this->formatLargeNumber($this->pagination->total)); ?>
+					(<?php echo Text::sprintf($this->messagemore, $this->formatLargeNumber($this->pagination->total)); ?>
 					)
 				</small>
 

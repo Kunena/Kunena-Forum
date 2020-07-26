@@ -230,6 +230,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		{
 			case 'unapproved':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 				$actions          = array('approve', 'delete', 'move', 'permdelete');
 				break;
 			case 'deleted':
@@ -238,15 +239,18 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				break;
 			case 'mythanks':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 				$actions          = array('approve', 'delete', 'permdelete');
 				break;
 			case 'thankyou':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$this->messagemore = 'COM_KUNENA_PROFILE_THANKYOU_GIVEN_TIMES';
 				$actions          = array('approve', 'delete', 'permdelete');
 				break;
 			case 'recent':
 			default:
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 
 				$app  = \Joomla\CMS\Factory::getApplication();
 				$view = $app->input->get('view');

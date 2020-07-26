@@ -132,7 +132,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 			$this->addLessSheet('assets/css/custom.css');
 		}
 
-		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$fontawesome = $this->ktemplate->params->get('topicicontype');
 
 		if ($fontawesome)
 		{

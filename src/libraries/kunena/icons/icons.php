@@ -1011,7 +1011,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-file fa-3x' . $big . '" aria-hidden="true"></i>';
+			return '<i class="fa fa-file fa-2x' . $big . '" aria-hidden="true"></i>';
 		}
 
 		if ($topicicontype == 'B2')

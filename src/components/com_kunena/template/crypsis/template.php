@@ -94,7 +94,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			}
 		}
 
-		$fontawesome = $ktemplate->params->get('fontawesome');
+		$fontawesome = $ktemplate->params->get('topicicontype');
 
 		if ($fontawesome)
 		{

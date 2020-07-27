@@ -22,7 +22,8 @@
             <field name="modetype"
                    type="text"
                    default=""
-                   label="COM_KUNENA_TOPICS_MODETYPE_DESC"/>
+                   label="COM_KUNENA_TOPICS_MODETYPE"
+                   description="COM_KUNENA_TOPICS_MODETYPE_DESC"/>
         </fieldset>
     </fields>
     <fields name="params">
@@ -31,7 +32,8 @@
             <field name="header"
                    type="text"
                    default=""
-                   label="COM_KUNENA_MENU_HEADER"/>
+                   label="COM_KUNENA_MENU_HEADER"
+                   description="COM_KUNENA_MENU_HEADER_DESC"/>
             <field name="topics_catselection"
                    type="radio"
                    default="1"

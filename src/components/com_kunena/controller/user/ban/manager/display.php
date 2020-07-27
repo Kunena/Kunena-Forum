@@ -62,10 +62,15 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 		parent::before();
 
 		$this->me = KunenaUserHelper::getMyself();
+		$start  = $this->input->getInt('limitstart', 0);
+		$limit  = $this->input->getInt('limit', 30);
 
 		// TODO: add authorisation
-		// TODO: add pagination
-		$this->userBans = KunenaUserBan::getBannedUsers(0, 50);
+		$userBanspre = KunenaUserBan::getBannedUsers(0, 100);
+		$count = count($userBanspre);
+
+		$this->pagination = new KunenaPagination($count, $start, $limit);
+		$this->userBans = KunenaUserBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
 
 		if (!empty($this->userBans))
 		{

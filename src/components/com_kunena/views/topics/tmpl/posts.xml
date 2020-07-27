@@ -32,7 +32,8 @@
             <field name="header"
                    type="text"
                    default=""
-                   label="COM_KUNENA_MENU_HEADER"/>
+                   label="COM_KUNENA_MENU_HEADER"
+                   description="COM_KUNENA_MENU_HEADER_DESC"/>
             <field name="topics_catselection"
                    type="radio"
                    default=""

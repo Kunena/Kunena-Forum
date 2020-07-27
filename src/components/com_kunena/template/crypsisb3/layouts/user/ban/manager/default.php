@@ -40,7 +40,6 @@ use Joomla\CMS\Language\Text;
 	<?php
 	if ($this->userBans)
 		:
-		$i = 0;
 
 		foreach ($this->userBans as $banInfo)
 			:
@@ -50,7 +49,7 @@ use Joomla\CMS\Language\Text;
 			?>
 			<tr>
 				<td class="center">
-					<?php echo ++$i; ?>
+					<?php echo $banInfo->userid; ?>
 				</td>
 				<td>
 					<?php echo $banInfo->getUser()->getLink(); ?>
@@ -84,3 +83,8 @@ use Joomla\CMS\Language\Text;
 
 	</tbody>
 </table>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
+</div>

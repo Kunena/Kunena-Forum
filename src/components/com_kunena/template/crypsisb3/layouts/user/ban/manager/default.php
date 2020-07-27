@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 	<thead>
 	<tr>
 		<th class="col-md-1 center">
-			#
+			<?php echo Text::_('COM_KUNENA_BAN_BANNEDUSERID'); ?>
 		</th>
 		<th class="col-md-4">
 			<?php echo Text::_('COM_KUNENA_BAN_BANNEDUSER'); ?>

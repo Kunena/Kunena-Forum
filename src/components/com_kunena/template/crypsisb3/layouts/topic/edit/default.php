@@ -104,9 +104,6 @@ $this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 $this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
-$suffix = Joomla\CMS\Application\CMSApplication::getInstance('site')->get('sef_suffix');
-$this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
-
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
@@ -175,7 +172,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
 		<input id="kpreview_url" type="hidden" name="kpreview_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+		       value="<?php echo JUri::root(true) . '/index.php?option=com_kunena&view=topic&layout=edit&format=raw' ?>"/>
 		<?php if (!$this->config->allow_change_subject)
 			:
 			?>

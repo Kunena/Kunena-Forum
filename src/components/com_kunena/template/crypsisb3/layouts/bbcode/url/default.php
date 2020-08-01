@@ -13,15 +13,16 @@ defined('_JEXEC') or die;
 // [url="www.kunena.org" target="_blank"]Kunena.org[/url]
 
 // Display URL.
-$target = ' target="' . $this->escape($this->target) . '"';
 
 if (!$this->internal)
 {
 	$rel = 'rel="nofollow noopener noreferrer"';
+	$target = ' target="' . $this->escape($this->target) . '"';
 }
 else
 {
 	$rel = '';
+	$target = '';
 }
 ?>
 <a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url<?php if (!empty($this->class)) echo ' ' . $this->class; ?>" <?php echo $rel . $target; ?>>

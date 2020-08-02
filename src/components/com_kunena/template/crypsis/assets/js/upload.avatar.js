@@ -37,7 +37,7 @@ jQuery(function ($) {
 		});
 
 	$('#fileupload').fileupload({
-		url: 'index.php?option=com_kunena&view=user&task=upload&format=json',
+		url: Joomla.getOptions('com_kunena.avatar_upload_url'),
 		dataType: 'json',
 		autoUpload: true,
 		// Enable image resizing, except for Android and Opera,

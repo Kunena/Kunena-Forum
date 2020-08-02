@@ -100,6 +100,7 @@ jQuery(document).ready(function ($) {
 	$('#link-modal-submit').click(function () {
 		var modallinkurl = $('#modal-link-url').val();
 		var modallinktext = $('#modal-link-text').val();
+		var modallinkclass = $('#modal-link-class').val();
 
 		var text = '';
 		if (modallinktext.length > 0) {
@@ -109,10 +110,15 @@ jQuery(document).ready(function ($) {
 			text = modallinkurl;
 		}
 
+		var classitem = '';
+		if (modallinkclass.length > 0) {
+			classitem = modallinkclass;
+		}
+
 		if (modallinkurl.length > 0) {
 			$.markItUp(
 				{
-					openWith: '[url=' + modallinkurl + ']' + text,
+					openWith: '[url=' + modallinkurl + ' class="' + classitem + '"]' + text,
 					closeWith: '[/url]'
 				}
 			);
@@ -120,6 +126,7 @@ jQuery(document).ready(function ($) {
 
 		$('#modal-link-url').val('');
 		$('#modal-link-text').val('');
+		$('#modal-link-class').val('');
 
 		return false;
 	});

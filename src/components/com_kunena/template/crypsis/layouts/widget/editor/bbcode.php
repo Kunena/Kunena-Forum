@@ -167,6 +167,9 @@ if (!empty($codeTypes))
 			<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>:
 			<input name="modal-link-text" id="modal-link-text" type="text" value=""
 			       placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT_PLACEHOLDER') ?>"/>
+			<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_CLASS') ?>:
+			<input name="modal-link-class" id="modal-link-class" type="text" value=""
+			       placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_CLASS_PLACEHOLDER') ?>"/>
 		</p>
 	</div>
 	<div class="modal-footer">

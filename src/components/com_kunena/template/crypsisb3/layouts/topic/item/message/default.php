@@ -21,7 +21,7 @@ if ($direction === "left")
 	?>
 	<div class="row message">
 		<div class="col-md-2 hidden-xs">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail); ?>
 		</div>
 		<div class="col-md-10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>

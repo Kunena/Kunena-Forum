@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 $tabs = $this->getTabs();
-$candisplaymail = $this->canDisplayEmail();
 ?>
 
 <h1 class="pull-left">

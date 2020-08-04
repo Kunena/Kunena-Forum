@@ -351,6 +351,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		{
 			$image = Uri::base() . KunenaConfig::getInstance()->emailheader;
 			$this->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('twitter:image', $image, 'property');
 		}
 
 		if ($robots == 'noindex, follow')

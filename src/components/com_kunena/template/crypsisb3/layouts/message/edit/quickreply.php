@@ -190,6 +190,7 @@ $editor   = $template->params->get('editor');
 								<?php endif; ?>
 								<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
 								   role="button" class="btn btn-default btn-small btn-link pull-right"
+								   id="gotoeditor<?php echo $message->displayField('id'); ?>"
 								   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 								<br/>
 							</div>

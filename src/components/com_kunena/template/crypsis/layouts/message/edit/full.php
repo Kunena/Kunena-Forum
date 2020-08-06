@@ -34,6 +34,7 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
+$this->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/edit.js');
 
@@ -148,7 +149,7 @@ $editor   = $template->params->get('editor');
 				}
 				else
 				{
-					echo '<textarea class="span12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="span12 qreply test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
 			</div>
 
@@ -186,6 +187,7 @@ $editor   = $template->params->get('editor');
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid; ?>&id=<?php echo $message->thread; ?>&mesid=<?php echo $message->id; ?>&Itemid=<?php echo KunenaRoute::getItemID(); ?>"
 			   role="button" class="btn btn-small btn-link pull-right"
+			   id="gotoeditor<?php echo $message->displayField('id'); ?>"
 			   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
 		<?php if (!empty($this->quickcaptchaEnabled))

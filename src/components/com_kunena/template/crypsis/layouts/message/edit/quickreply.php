@@ -145,7 +145,7 @@ $editor   = $template->params->get('editor');
 					}
 					else
 					{
-						echo '<textarea class="span12 qreply test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+						echo '<textarea class="span12 qreply qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 					} ?>
 				</div>
 

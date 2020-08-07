@@ -297,8 +297,8 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var test  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
-	$('#gotoeditor'+test).click(function () {
-		localStorage.setItem("copyKunenaeditor", $(".test" + test).val());
+	var quickreplyid  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
+	$('#gotoeditor'+quickreplyid).click(function () {
+		localStorage.setItem("copyKunenaeditor", $(".qrlocalstorage" + quickreplyid).val());
 	});
 });

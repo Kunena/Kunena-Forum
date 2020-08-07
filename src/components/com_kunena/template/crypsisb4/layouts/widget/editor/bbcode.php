@@ -31,7 +31,7 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 <div class="row">
 	<div class="col-md-12">
 		<div class="md-form form-group">
-			<div class="controls tabs shadow-textarea">
+			<div class="controls">
 				<ul id="tabs_kunena_editor" class="nav nav-tabs">
 					<li class="nav-link active"><a href="#write"
 												   data-toggle="tab"><i

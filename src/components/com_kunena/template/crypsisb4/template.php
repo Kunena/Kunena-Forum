@@ -156,7 +156,7 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 
 		if ($icons)
 		{
-			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+			$doc->addStyleSheet("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
 		// Load template colors settings

@@ -42,7 +42,8 @@ echo $this->subLayout('User/Item/Summary')
 	->set('medals', $this->medals)
 	->set('socials', $this->socials)
 	->set('avatar', $this->avatar)
-	->set('banInfo', $this->banInfo);
+	->set('banInfo', $this->banInfo)
+	->set('candisplaymail', $this->candisplaymail);
 ?>
 
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>

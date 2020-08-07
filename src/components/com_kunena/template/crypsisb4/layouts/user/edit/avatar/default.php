@@ -19,7 +19,7 @@ Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
 HTMLHelper::_('jquery.ui');
-$this->addScript('load-image.min.js');
+$this->addScript('assets/js/load-image.all.min.js');
 $this->addScript('canvas-to-blob.min.js');
 $this->addScript('jquery.iframe-transport.js');
 $this->addScript('jquery.fileupload.js');

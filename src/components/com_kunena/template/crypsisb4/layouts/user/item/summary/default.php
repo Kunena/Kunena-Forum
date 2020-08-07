@@ -195,13 +195,8 @@ if ($this->config->showuserstats)
 		</ul>
 		<br>
 		<div class="float-right">
-			<?php if ($this->private)
-			:
-				?>
-				<?php echo $this->private->shownewIcon($this->profile->userid, 'btn btn-outline-primary border btn-sm', 'glyphicon glyphicon-comment'); ?>
-			<?php endif; ?>
 			<?php
-			if (KunenaUser::getInstance()->getEmail($this->profile))
+			if ($this->candisplaymail)
 			:
 				?>
 				<a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->profile->email; ?>"

@@ -1177,6 +1177,31 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
+	 * Check if user can see karma.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 5.2
+	 *
+	 * @throws  Exception
+	 */
+	public function canSeeKarma()
+	{
+		if ($this->userid)
+		{
+			$config = KunenaFactory::getConfig();
+			$me     = KunenaUserHelper::getMyself();
+
+			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Render user karma.
 	 *
 	 * @return string

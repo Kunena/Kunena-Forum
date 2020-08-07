@@ -36,3 +36,4 @@ jobs:
           # pushing to protected branches.
           GITHUB_LOGIN: transifex-integration[bot]
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: SQUASH

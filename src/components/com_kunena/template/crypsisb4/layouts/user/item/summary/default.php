@@ -12,6 +12,23 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+
+$socials             = $this->profile->socialButtons();
+$socials             = ArrayHelper::toObject($socials);
+$me                  = KunenaUserHelper::getMyself();
+$avatar              = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$banInfo             = $this->config->showbannedreason
+? KunenaUserBan::getInstanceByUserid($this->profile->userid)
+: null;
+$private             = KunenaFactory::getPrivateMessaging();
+$websiteURL          = $this->profile->getWebsiteURL();
+$websiteName         = $this->profile->getWebsiteName();
+$personalText        = $this->profile->getPersonalText();
+$signature           = $this->profile->getSignature();
+$activityIntegration = KunenaFactory::getActivityIntegration();
+$points              = $activityIntegration->getUserPoints($this->profile->userid);
+$medals              = $activityIntegration->getUserMedals($this->profile->userid);
 
 if ($this->config->showuserstats)
 {
@@ -23,7 +40,7 @@ if ($this->config->showuserstats)
 <div class="row">
 	<div class="col-md-3">
 		<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
-			<?php echo $this->profile->getLink($this->avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, $this->config->avataredit); ?>
+			<?php echo $this->profile->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), null, $this->config->avataredit); ?>
 		</div>
 
 		<?php if ($this->config->user_status)
@@ -40,7 +57,7 @@ if ($this->config->showuserstats)
 				<span class="<?php echo $this->profile->getType(0, true); ?>"><?php echo Text::_($this->profile->getType()); ?></span>
 			</li>
 
-			<?php if ($this->banInfo && $this->banInfo->reason_public)
+			<?php if ($banInfo && $banInfo->reason_public)
 			:
 				?>
 				<li class="list-group-item">
@@ -222,7 +239,7 @@ if ($this->config->showuserstats)
 	</div>
 
 	<div class="col-md-9">
-		<?php echo $this->subLayout('User/Item/Social')->set('profile', $this->profile)->set('socials', $this->socials); ?>
+		<?php echo $this->subLayout('User/Item/Social')->set('profile', $this->profile)->set('socials', $socials); ?>
 	</div>
 </div>
 

@@ -12,23 +12,21 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
-$profile             = $this->profile;
 $socials             = $this->profile->socialButtons();
 $socials             = ArrayHelper::toObject($socials);
 $me                  = KunenaUserHelper::getMyself();
-$avatar              = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
+$avatar              = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 $banInfo             = $this->config->showbannedreason
-	? KunenaUserBan::getInstanceByUserid($profile->userid)
+? KunenaUserBan::getInstanceByUserid($this->profile->userid)
 	: null;
 $private             = KunenaFactory::getPrivateMessaging();
-$websiteURL          = $profile->getWebsiteURL();
-$websiteName         = $profile->getWebsiteName();
-$personalText        = $profile->getPersonalText();
-$signature           = $profile->getSignature();
+$websiteURL          = $this->profile->getWebsiteURL();
+$websiteName         = $this->profile->getWebsiteName();
+$personalText        = $this->profile->getPersonalText();
+$signature           = $this->profile->getSignature();
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points              = $activityIntegration->getUserPoints($profile->userid);
-$medals              = $activityIntegration->getUserMedals($profile->userid);
-$config              = KunenaConfig::getInstance();
+$points              = $activityIntegration->getUserPoints($this->profile->userid);
+$medals              = $activityIntegration->getUserMedals($this->profile->userid);
 
 if ($this->config->showuserstats)
 {

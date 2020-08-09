@@ -116,7 +116,7 @@ if ($show)
 	<?php if ($canseekarma && $config->showkarma) : ?>
 		<li>
 			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
-			<span> <?php $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid).$this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?> </span>
+			<span> <?php $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown').$this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> </span>
 		</li>
 	<?php endif; ?>
 

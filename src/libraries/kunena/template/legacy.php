@@ -16,6 +16,8 @@ use Joomla\CMS\Uri\Uri;
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
  * @since Kunena
+ * 
+ * @deprecated  5.2  Class will be removed into Kunena 6.0
  */
 class KunenaTemplateLegacy
 {
@@ -94,6 +96,8 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 /**
  * Class CKunenaTools is legacy class from Kunena 1.6/1.7
  * @since Kunena
+ * 
+ * @deprecated  5.2  Class will be removed into Kunena 6.0
  */
 class CKunenaTools
 {

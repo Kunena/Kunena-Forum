@@ -1208,6 +1208,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since  K5.0
+	 * 
+	 * @deprecated 5.2 Moved in template and replaced by canSeeKarma method
 	 */
 	public function getKarma()
 	{

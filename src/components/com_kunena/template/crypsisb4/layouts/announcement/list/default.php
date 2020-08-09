@@ -72,11 +72,11 @@ HTMLHelper::_('behavior.core');
 				<th class="col-md-1 center">
 					<?php echo Text::_('COM_KUNENA_ANN_DELETE'); ?>
 				</th>
-				<th class="col-md-1">
-					<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
-				</th>
 			<?php endif; ?>
 
+			<th class="col-md-1">
+				<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
+			</th>
 			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_ANN_ID'); ?>
 			</th>

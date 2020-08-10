@@ -9,7 +9,7 @@
 
 *Kunena* 5.2 requires
 
-    Joomla: version 3.9.0 or greater (>= 3.9.3 recommended)
+    Joomla: version 3.9.0 or greater (>= 3.9.20 recommended)
     PHP: version 5.6.8 or greater (>= 7.1.9 recommended)
     MySQL: version 5.1 or greater (>= 5.5.3 recommended)
 
@@ -19,14 +19,13 @@ In addition we recommend the following PHP settings:
 
     max_execution_time     >= 30
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
-    safe_mode               = off
     allow_url_fopen		   = on
-    upload_max_filesize    >= 3M
-    GD, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
+    upload_max_filesize    >= 4M
+    GD Library (>=2.0), fileinfo, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
 
 *Kunena* requires the following Joomla settings:
 
-    * Bootstrap 2 compatible template (Crypsis Template)
+    * Bootstrap 2 compatible template (Crypsis Template) or Bootstrap 3 compatible template (CrypsisB3 Template) or  Bootstrap 4 compatible template (CrypsisB4 Template)
     * Upgraded to latest versions all extensions that claim to integrate with Kunena 5.2
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 

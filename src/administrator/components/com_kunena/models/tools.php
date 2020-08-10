@@ -76,6 +76,24 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 	/**
 	 * @var null
+	 * @since Kunena 5.2
+	 */
+	protected $openssl = null;
+
+	/**
+	 * @var null
+	 * @since Kunena 5.2
+	 */
+	protected $json = null;
+
+	/**
+	 * @var null
+	 * @since Kunena 5.2
+	 */
+	protected $fileinfo = null;
+
+	/**
+	 * @var null
 	 * @since Kunena
 	 */
 	protected $maxExecTime = null;
@@ -251,10 +269,11 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	{
 		$kunena_db = Factory::getDBO();
 
+		$this->getPhpExtensions();
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . '(Server type: ' . $kunena_db->getServerType().  ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
@@ -263,6 +282,61 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
+	}
+
+	/**
+	 * Check if php extensions needed by kunena are right loaded
+	 *
+	 * @return string
+	 * @since Kunena 5.2
+	 */
+	protected function getPhpExtensions()
+	{
+		if (extension_loaded('mbstring'))
+		{
+			$this->mbstring = '[u]mbstring:[/u] Enabled';
+		}
+		else
+		{
+			$this->mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('gd'))
+		{
+			$gd_info          = gd_info();
+			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
+		}
+		else
+		{
+			$this->gd_support = '[u]GD:[/u] ❌ [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('openssl'))
+		{
+			$this->openssl = '[u]openssl:[/u] Enabled';
+		}
+		else
+		{
+			$this->openssl = '[u]openssl:[/u] ❌ [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('fileinfo'))
+		{
+			$this->fileinfo = '[u]fileinfo:[/u] Enabled';
+		}
+		else
+		{
+			$this->fileinfo = '[u]fileinfo:[/u] [color=#FF0000]Not installed[/color]';
+		}
+
+		if (extension_loaded('json'))
+		{
+			$this->json = '[u]json:[/u] Enabled';
+		}
+		else
+		{
+			$this->json = '[u]json:[/u] [color=#FF0000]Not installed[/color]';
+		}
 	}
 
 	/**
@@ -319,25 +393,6 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		else
 		{
 			$this->htaccess = 'Missing';
-		}
-
-		if (extension_loaded('mbstring'))
-		{
-			$this->mbstring = '[u]mbstring:[/u] Enabled';
-		}
-		else
-		{
-			$this->mbstring = '[u]mbstring:[/u] ❌ [color=#FF0000]Not installed[/color]';
-		}
-
-		if (extension_loaded('gd'))
-		{
-			$gd_info          = gd_info();
-			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
-		}
-		else
-		{
-			$this->gd_support = '[u]GD:[/u] ❌ [color=#FF0000]Not installed[/color]';
 		}
 
 		$this->maxExecTime       = ini_get('max_execution_time');
@@ -827,7 +882,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
 			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->mbstring
-			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+			. ' | ' . $this->gd_support . ' | ' . $this->openssl . ' | ' . $this->json . ' | ' . $this->fileinfo . ' |  [b]MySQL version:[/b] ' . $kunena_db->getVersion() . '(Server type: ' . $kunena_db->getServerType().  ') | [b]Base URL:[/b]' . Uri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
 	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess

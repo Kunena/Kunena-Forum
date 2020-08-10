@@ -1920,4 +1920,21 @@ HTML;
 			}
 		}
 	}
+
+	/**
+	 * Load fontawesome libraries
+	 * 
+	 * @since Kunena 5.2
+	 */
+	public function loadFontawesome()
+	{
+		$ktemplate = KunenaFactory::getTemplate();
+		$fontawesome = $ktemplate->params->get('topicicontype');
+
+		if ($fontawesome)
+		{
+			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/v4-shims.js', array(), array('defer' => true));
+		}
+	}
 }

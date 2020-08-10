@@ -94,13 +94,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			}
 		}
 
-		$fontawesome = $ktemplate->params->get('topicicontype');
-
-		if ($fontawesome)
-		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/all.js', array(), array('defer' => true));
-			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/v4-shims.js', array(), array('defer' => true));
-		}
+		$this->loadFontawesome();
 
 		// Load template colors settings
 		$styles    = <<<EOF

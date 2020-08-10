@@ -25,41 +25,18 @@ use Joomla\CMS\Router\Route;
 		</a>
 
 		<div class="dropdown-menu dropdown-menu-right" id="userdropdown">
-			<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post">
+			<form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="px-4 py-3">
 				<input type="hidden" name="view" value="user"/>
 				<input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
-				<div class="form-group" id="kform-desktop-login-username">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<?php echo KunenaIcons::user(); ?>
-								<label for="kdesktop-username" class="element-invisible">
-									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
-								</label>
-							</span>
-							<input class="form-control" id="kdesktop-username" name="username" tabindex="1"
-							       autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"
-							       type="text">
-						</div>
-					</div>
+				<div class="form-group">
+					<label for="kform-desktop-login-username"><?php echo KunenaIcons::user(); ?> <?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
+					<input type="text" name="username" tabindex="1" autocomplete="username" class="form-control" id="kform-desktop-login-username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>">
 				</div>
-
-				<div class="form-group" id="kform-desktop-login-password">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<?php echo KunenaIcons::lock(); ?>
-								<label for="klogin-desktop-passwd" class="element-invisible">
-									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
-								</label>
-							</span>
-							<input class="form-control" id="klogin-desktop-passwd" name="password" tabindex="2"
-							       autocomplete="current-password"
-							       placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
-						</div>
-					</div>
+				<div class="form-group">
+					<label for="kform-desktop-login-password"><?php echo KunenaIcons::lock(); ?> <?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
+					<input type="password" name="password" tabindex="2" autocomplete="current-password" class="form-control" id="kform-desktop-login-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>">
 				</div>
 
 				<?php $login = KunenaLogin::getInstance(); ?>
@@ -85,31 +62,28 @@ use Joomla\CMS\Router\Route;
 				<?php endif; ?>
 
 				<?php if ($this->rememberMe) : ?>
-					<div class="form-group row center" id="kform-login-remember">
-						<div class="controls">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" name="klogin-desktop-remember"
-								       id="klogin-desktop-remember"
-								       value="1"/>
-								<label class="custom-control-label"
-								       for="klogin-desktop-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
-							</div>
-						</div>
-					</div>
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="dropdownCheck" name="klogin-desktop-remember" value="1">
+						<label class="form-check-label" for="dropdownCheck">
+						<?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?>
+					</label>
+				</div>
 				<?php endif; ?>
 
 				<div id="kform-login-desktop-submit" class="control-group center">
 					<p>
-						<button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary">
+						<button type="submit" tabindex="3" name="submit" class="btn btn-primary mb-2">
 							<?php echo Text::_('JLOGIN'); ?>
 						</button>
 					</p>
+
+					<div class="dropdown-divider"></div>
 
 					<p>
 						<?php if ($this->resetPasswordUrl)
 							:
 							?>
-							<a href="<?php echo $this->resetPasswordUrl; ?>">
+							<a class="dropdown-item" href="<?php echo $this->resetPasswordUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 							</a>
 							<br/>
@@ -118,7 +92,7 @@ use Joomla\CMS\Router\Route;
 						<?php if ($this->remindUsernameUrl)
 							:
 							?>
-							<a href="<?php echo $this->remindUsernameUrl; ?>">
+							<a class="dropdown-item" href="<?php echo $this->remindUsernameUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 							</a>
 							<br/>
@@ -127,7 +101,7 @@ use Joomla\CMS\Router\Route;
 						<?php if ($this->registrationUrl)
 							:
 							?>
-							<a href="<?php echo $this->registrationUrl; ?>">
+							<a class="dropdown-item" href="<?php echo $this->registrationUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
 							</a>
 						<?php endif ?>

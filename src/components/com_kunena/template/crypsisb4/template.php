@@ -143,14 +143,9 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$fontawesome = $this->ktemplate->params->get('topicicontype');
 		$doc         = Factory::getApplication()->getDocument();
 
-		if ($fontawesome)
-		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/all.js', [], ['defer' => true]);
-			$this->addScript('https://use.fontawesome.com/releases/v5.14.0/js/v4-shims.js', [], ['defer' => true]);
-		}
+		$this->loadFontawesome();
 
 		$icons = $this->ktemplate->params->get('icons');
 

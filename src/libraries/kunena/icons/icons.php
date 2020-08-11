@@ -1356,7 +1356,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'image')
 		{
-			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
+			return '<div class="' . $categoryicon . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </div>';
 		}
 
 		return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';

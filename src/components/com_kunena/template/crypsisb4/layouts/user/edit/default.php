@@ -20,7 +20,7 @@ $tabs          = $this->getTabsEdit();
 $avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
-	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?><?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
@@ -71,10 +71,10 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 		<br/>
 
 		<div class="center">
-			<button class="btn btn-outline-primary validate" type="submit">
+			<button class="btn btn-primary validate" type="submit">
 				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
 			</button>
-			<button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();"
+			<button class="btn btn-danger border" type="button" name="cancel" onclick="window.history.back();"
 			        title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
 			</button>

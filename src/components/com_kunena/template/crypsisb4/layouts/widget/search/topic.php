@@ -36,8 +36,8 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group">
 			<label for="mod-search-searchword"></label>
-			<input name="query" class="form-control" id="mod-search-searchword" type="search" maxlength="64"
-				   placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
+			<input name="query" class="form-control hasTooltip" id="mod-search-searchword" type="search" maxlength="64"
+				   placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>" data-original-title="<?php echo Text::_('COM_KUNENA_WIDGET_SEARCH_INPUT_TOOLTIP'); ?>" />
 			<span class="input-group-append">
 				<button class="btn btn-light border" type="submit">
 				<?php echo KunenaIcons::search(); ?>

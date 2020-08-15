@@ -361,7 +361,7 @@ class KunenaAdminModelCategories extends KunenaModel
 			$params = array(
 				'ordering'           => $this->getState('list.ordering'),
 				'direction'          => $this->getState('list.direction') == 'asc' ? 1 : -1,
-				'search'             => $this->getState('filter.search'),
+			    'search'             => $this->getState('filter.search'),
 				'unpublished'        => 1,
 				'published'          => $this->getState('filter.published'),
 				'filter_title'       => $this->getState('filter.title'),

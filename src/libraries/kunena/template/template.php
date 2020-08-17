@@ -1929,7 +1929,7 @@ HTML;
 	public function loadFontawesome()
 	{
 		$ktemplate = KunenaFactory::getTemplate();
-		$fontawesome = $ktemplate->params->get('topicicontype');
+		$fontawesome = $ktemplate->params->get('fontawesome');
 
 		if ($fontawesome)
 		{

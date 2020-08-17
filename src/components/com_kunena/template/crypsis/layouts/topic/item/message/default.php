@@ -9,18 +9,18 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template     = KunenaTemplate::getInstance();
-$direction    = $template->params->get('avatarPosition');
+$direction    = $this->ktemplate->params->get('avatarPosition');
 $sideProfile  = $this->profile->getSideProfile($this);
-$quick        = $template->params->get('quick');
+$quick        = $this->ktemplate->params->get('quick');
 
 if ($direction === "left")
 	:
 	?>
 	<div class="row-fluid message">
 		<div class="span2 hidden-phone">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate); ?>
 		</div>
 		<div class="span10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
@@ -48,7 +48,7 @@ if ($direction === "left")
 			<?php endif; ?>
 		</div>
 		<div class="span2 hidden-phone">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top")

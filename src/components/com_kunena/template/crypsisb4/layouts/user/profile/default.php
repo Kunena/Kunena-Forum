@@ -13,12 +13,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
-$user            = $this->user;
-$this->ktemplate = KunenaFactory::getTemplate();
-$avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$config          = KunenaConfig::getInstance();
-$show            = $config->showuserstats;
-
+$user                = $this->user;
+$config              = $this->config;
+$template            = $this->ktemplate;
+$avatar              = $user->getAvatarImage($template->params->get('avatarType'), 'post');
+$show                = $config->showuserstats;
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);
 $medals              = $activityIntegration->getUserMedals($user->userid);
@@ -52,7 +51,7 @@ if ($show)
 		:
 			?>
 			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avataredit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
 				:
@@ -124,7 +123,7 @@ if ($user->userid > 1)
 				:
 					?>
 					<li>
-						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown').$this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?>
+						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown').$this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?>
 					</li>
 				<?php endif; ?>
 

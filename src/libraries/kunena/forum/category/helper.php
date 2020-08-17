@@ -793,7 +793,7 @@ abstract class KunenaForumCategoryHelper
 					continue;
 				}
 
-				if (!empty($clist) || !$params['search'] || intval($params['search']) == $id || Joomla\String\StringHelper::stristr($instance->name, (string) $params['search']))
+				if (!empty($clist) || !$params['search'] || intval($params['search']) == $id || Joomla\String\StringHelper::stristr(Joomla\CMS\Language\Transliterate::utf8_latin_to_ascii($instance->name), (string) Joomla\CMS\Language\Transliterate::utf8_latin_to_ascii($params['search'])) ||  Joomla\String\StringHelper::stristr($instance->name, (string) $params['search']))
 				{
 					if (!$filtered && (empty($clist) || $params['parents']))
 					{

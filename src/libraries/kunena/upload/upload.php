@@ -221,6 +221,8 @@ class KunenaUpload
 					{
 						throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
+
+					$this->imagemimetypes($outFile);
 				}
 				else
 				{
@@ -238,6 +240,8 @@ class KunenaUpload
 						{
 							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
+
+						$this->imagemimetypes($outFile);
 					}
 				}
 			}
@@ -764,5 +768,23 @@ class KunenaUpload
 		}
 
 		return sprintf($format, $bytes / pow($mod, $power), $units[$power]);
+	}
+
+	/**
+	 * Check mime type
+	 *
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena 5.2
+	 */
+	public function imagemimetypes($outFile)
+	{
+		// check against whitelist of MIME types
+		$validFileTypes = explode(",", KunenaConfig::getInstance()->imagemimetypes);
+		$mime = KunenaFile::getMime($outFile);
+
+		if (!in_array($mime, $validFileTypes)) {
+			throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_MIME'), 500);
+		}
 	}
 }

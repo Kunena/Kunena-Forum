@@ -43,7 +43,7 @@ $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('assets/js/sisyphus.js');
+	$this->addScript('sisyphus.js');
 }
 
 // Fixme: can't get the controller working on this

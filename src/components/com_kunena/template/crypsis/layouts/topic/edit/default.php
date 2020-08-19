@@ -81,15 +81,15 @@ $this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 HTMLHelper::_('jquery.ui');
-$this->addScript('assets/js/load-image.all.min.js');
-$this->addScript('assets/js/canvas-to-blob.min.js');
-$this->addScript('assets/js/jquery.iframe-transport.js');
-$this->addScript('assets/js/jquery.fileupload.js');
-$this->addScript('assets/js/jquery.fileupload-process.js');
-$this->addScript('assets/js/jquery.fileupload-image.js');
-$this->addScript('assets/js/jquery.fileupload-audio.js');
-$this->addScript('assets/js/jquery.fileupload-video.js');
-$this->addScript('assets/js/jquery.fileupload-validate.js');
+$this->addScript('load-image.all.min.js');
+$this->addScript('canvas-to-blob.min.js');
+$this->addScript('jquery.iframe-transport.js');
+$this->addScript('jquery.fileupload.js');
+$this->addScript('jquery.fileupload-process.js');
+$this->addScript('jquery.fileupload-image.js');
+$this->addScript('jquery.fileupload-audio.js');
+$this->addScript('jquery.fileupload-video.js');
+$this->addScript('jquery.fileupload-validate.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
@@ -138,7 +138,7 @@ echo $this->subLayout('Widget/Lightbox');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('assets/js/sisyphus.js');
+	$this->addScript('sisyphus.js');
 }
 ?>
 	<div id="modal_confirm_template_category" class="modal hide fade" tabindex="-1" role="dialog"

@@ -81,14 +81,15 @@ $this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
 
 HTMLHelper::_('jquery.ui');
-$this->addScript('load-image.min.js');
+$this->addScript('load-image.all.min.js');
 $this->addScript('canvas-to-blob.min.js');
+$this->addScript('jquery.iframe-transport.js');
 $this->addScript('jquery.fileupload.js');
 $this->addScript('jquery.fileupload-process.js');
-$this->addScript('jquery.iframe-transport.js');
 $this->addScript('jquery.fileupload-image.js');
 $this->addScript('jquery.fileupload-audio.js');
 $this->addScript('jquery.fileupload-video.js');
+$this->addScript('jquery.fileupload-validate.js');
 $this->addScript('upload.main.js');
 $this->addStyleSheet('fileupload.css');
 

@@ -793,16 +793,17 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Send email notifications from the first post in the topic.
 	 *
 	 * @param   null|string $url url
+	 * @param   boolean     $approved false
 	 *
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
 	 * @return void
 	 */
-	public function sendNotification($url = null)
+	public function sendNotification($url = null, $approved = false)
 	{
 		// Reload message just in case if it was published by bulk update.
-		KunenaForumMessageHelper::get($this->first_post_id, true)->sendNotification($url);
+		KunenaForumMessageHelper::get($this->first_post_id, true)->sendNotification($url, $approved);
 	}
 
 	/**

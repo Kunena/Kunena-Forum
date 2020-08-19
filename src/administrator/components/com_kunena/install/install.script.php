@@ -299,6 +299,24 @@ class Com_KunenaInstallerScript
 			$this->deleteFile($sitePath . '/template/crypsisb3/template.xml');
 		}
 
+		// Delete completly the directory assets/js of Crypsis to don't keep old JS files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsis/assets/js/jssocials.js'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsis/assets/js');
+		}
+
+		// Delete completly the directory assets/js of Crypsisb3 to don't keep old JS files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsisb3/assets/js/jssocials.js'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsisb3/assets/js');
+		}
+
+		// Delete completly the directory assets/js of Crypsisb4 to don't keep old JS files
+		if (is_file(JPATH_ROOT . '/components/com_kunena/template/crypsisb4/assets/js/jssocials.js'))
+		{
+			$this->deleteKfolder($sitePath . '/template/crypsisb4/assets/js');
+		}
+
 		$language_folders = Folder::folders(JPATH_ROOT . '/language');
 
 		foreach ($language_folders as $folder)

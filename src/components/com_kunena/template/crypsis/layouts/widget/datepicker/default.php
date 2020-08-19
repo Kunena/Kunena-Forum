@@ -11,5 +11,5 @@
 defined('_JEXEC') or die;
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
-$this->addScript('assets/js/locales/bootstrap-datepicker.kunena.js');
+$this->addScript('bootstrap.datepicker.js');
+$this->addScript('bootstrap-datepicker.lang.kunena.js');

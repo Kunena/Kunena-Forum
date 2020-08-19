@@ -27,6 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 Joomla version: 
 Kunena version:
+Kunena template name and version:
 Php version:
 Database version:
 

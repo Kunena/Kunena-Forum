@@ -19,9 +19,9 @@ $this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
 $this->addScript('assets/js/wysibb.lang.js');
 echo $this->subLayout('Widget/Datepicker');
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
-$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('jquery.caret.js');
+$this->addScript('jquery.atwho.js');
+$this->addStyleSheet('jquery.atwho.css');
 
 Text::script('COM_KUNENA_WYSIBB_EDITOR_BOLD');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_ITALIC');

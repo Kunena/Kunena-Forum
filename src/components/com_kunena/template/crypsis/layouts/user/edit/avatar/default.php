@@ -26,7 +26,7 @@ $this->addScript('assets/js/jquery.fileupload-process.js');
 $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/jquery.fileupload-validate.js');
 $this->addScript('assets/js/upload.avatar.js');
-$this->addStyleSheet('assets/css/fileupload.css');
+$this->addStyleSheet('fileupload.css');
 
 $this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));

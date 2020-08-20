@@ -66,7 +66,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		if ($storage)
 		{
-			$this->addScript('assets/js/localstorage.js');
+			$this->addScript('localstorage.js');
 		}
 
 		// Compile CSS from LESS files.

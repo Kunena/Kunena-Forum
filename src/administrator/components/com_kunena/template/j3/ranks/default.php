@@ -205,7 +205,7 @@ HTMLHelper::_('behavior.tabstate');
 												<td class="nowrap">
 													<a href="#edit"
 													   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
-														<?php echo $this->escape($row->rank_title); ?>
+														<?php echo Text::_($row->rank_title); ?>
 													</a>
 												</td>
 												<td class="nowrap center">

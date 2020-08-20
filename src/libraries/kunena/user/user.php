@@ -1535,7 +1535,7 @@ class KunenaUser extends CMSObject
 				$width    = $data[0];
 				$height   = $data[1];
 
-				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" />';
+				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . Text::_($rank->rank_title) . '" />';
 			}
 			elseif ($config->rankimages == 2)
 			{
@@ -1549,7 +1549,7 @@ class KunenaUser extends CMSObject
 				$width    = $data[0];
 				$height   = $data[1];
 
-				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . $rank->rank_title . '" /><br>
+				return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="' . Text::_($rank->rank_title) . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 			elseif ($config->rankimages == 4)
@@ -1579,130 +1579,130 @@ class KunenaUser extends CMSObject
 
 		if ($topicicontype == 'fa')
 		{
-			if ($rank->rank_title == 'New Member')
+			if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Junior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Senior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Premium Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Elite Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK5')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Platinum Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK6')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
 			</li>';
 			}
 
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>
 			</li>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			if ($rank->rank_title == 'New Member')
+			if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Junior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Senior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Premium Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Elite Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK5')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Platinum Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK6')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
 			</li>';
 			}
 
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span><span class="icon icon-one-fine-dot"></span>
 			</li>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			if ($rank->rank_title == 'New Member')
+			if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Junior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Senior Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Premium Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" style="color:#e8f7ff;"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Elite Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK5')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
 			</li>';
 			}
-			elseif ($rank->rank_title == 'Platinum Member')
+			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK6')
 			{
-				return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			    return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
 			</li>';
 			}
 
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . $rank->rank_title . '">
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
 				<span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot"></span>
 			</li>';
 		}

@@ -19,7 +19,15 @@ $author            = $this->message->getAuthor();
 $subject           = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 $this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
-$msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
+if ($this->approved)
+{
+	$msg1 = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE');
+}
+else
+{
+	$msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
+}
+
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
 $more = ($this->once ?
 	Text::_(

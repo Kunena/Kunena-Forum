@@ -130,6 +130,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	protected $_authfcache = array();
 
 	/**
+	 * @var boolean
+	 * @since Kunena 5.2
+	 */
+	protected $_approved = false;
+
+	/**
 	 * @param   mixed $properties properties
 	 *
 	 * @internal
@@ -372,13 +378,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Send email notifications from the message.
 	 *
 	 * @param   null|string $url url
+	 * @param   boolean     $approved false
 	 *
 	 * @return boolean|null
 	 * @throws Exception
 	 * @since Kunena
 	 * @throws null
 	 */
-	public function sendNotification($url = null)
+	public function sendNotification($url = null, $approved = false)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -403,6 +410,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$mailmods   = $config->mailmod >= 1;
 			$mailadmins = $config->mailadmin >= 1;
 		}
+
+		$this->_approved = $approved;
 
 		$once = false;
 
@@ -588,7 +597,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			->set('mail', $mail)
 			->set('message', $this)
 			->set('messageUrl', $url)
-			->set('once', $once);
+			->set('once', $once)
+		->set('approved', $this->_approved);
 
 		try
 		{

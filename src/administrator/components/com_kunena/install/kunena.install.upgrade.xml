@@ -848,6 +848,11 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `qq` `qqsocial` varchar(50);
             </query>             
         </version>
+        <version version="5.2.0-ALPHA1"
+                 versiondate="2020-08-20"
+                 versionname="Internal">
+            <phpfile name="5.2.0-2020-08-20_updaterankstitle"/>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

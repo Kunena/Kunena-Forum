@@ -13,14 +13,14 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
-$this->addScript('jquery.wysibb.js');
-$this->addStyleSheet('wbbtheme.css');
-$this->addScript('wysibb.lang.js');
+$this->addScript('assets/js/jquery.wysibb.js');
+$this->addStyleSheet('assets/css/wbbtheme.css');
+$this->addScript('assets/js/wysibb.lang.js');
 echo $this->subLayout('Widget/Datepicker');
 $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
 $this->addStyleSheet('jquery.atwho.css');
-$this->addScript('pollcheck.js');
+$this->addScript('assets/js/pollcheck.js');
 
 Text::script('COM_KUNENA_WYSIBB_EDITOR_BOLD');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_ITALIC');

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 $categoryActions = $this->getCategoryActions();
 $cols            = empty($this->checkbox) ? 5 : 6;
-$this->addStyleSheet('rating.css');
+$this->addStyleSheet('assets/css/rating.css');
 ?>
 
 <?php if ($this->category->headerdesc) : ?>

@@ -14,9 +14,9 @@ use Joomla\CMS\Language\Text;
 
 $this->addScript('assets/js/jquery.wysibb.js');
 $this->addStyleSheet('assets/css/wbbtheme.css');
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
-$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('jquery.caret.js');
+$this->addScript('jquery.atwho.js');
+$this->addStyleSheet('jquery.atwho.css');
 $this->addScript('assets/js/wysibb.lang.js');
 
 Text::script('COM_KUNENA_WYSIBB_EDITOR_BOLD');

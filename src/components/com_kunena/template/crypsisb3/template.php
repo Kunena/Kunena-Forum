@@ -122,7 +122,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		if ($storage)
 		{
-			$this->addScript('assets/js/localstorage.js');
+			$this->addScript('localstorage.js');
 		}
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';

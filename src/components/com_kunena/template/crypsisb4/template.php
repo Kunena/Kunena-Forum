@@ -125,7 +125,7 @@ class KunenaTemplateCrypsisb4 extends KunenaTemplate
 
 		if ($storage)
 		{
-			$this->addScript('assets/js/localstorage.js');
+			$this->addScript('localstorage.js');
 		}
 
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/crypsisb4/assets/less/custom.less';

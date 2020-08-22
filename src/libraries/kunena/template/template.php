@@ -73,7 +73,7 @@ class KunenaTemplate extends CMSObject
 		'categoryicons' => 'media/category_icons',
 		'images'        => 'media/images',
 		'js'            => 'media/kunena/core/js',
-		'css'           => 'media/css',
+		'css'           => 'media/kunena/core/css',
 	);
 
 	/**

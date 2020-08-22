@@ -97,8 +97,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected $shortname;
 
 	/**
-	 * @param   mixed $identifier identifier
-	 * @param   bool  $reload     reload
+	 * @param   mixed  $identifier  identifier
+	 * @param   bool   $reload      reload
 	 *
 	 * @return KunenaAttachment
 	 *
@@ -123,9 +123,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @internal
-	 * @since  K4.0
 	 * @return void
+	 * @since  K4.0
+	 * @internal
 	 */
 	protected function deleteFile()
 	{
@@ -160,7 +160,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Getter function.
 	 *
-	 * @param   string $property property
+	 * @param   string  $property  property
 	 *
 	 * @return integer
 	 * @since  K4.0
@@ -184,9 +184,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @internal
-	 * @since  K4.0
 	 * @return void
+	 * @since  K4.0
+	 * @internal
 	 */
 	protected function initialize()
 	{
@@ -205,7 +205,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get path for the file.
 	 *
-	 * @param   bool $thumb thumb
+	 * @param   bool  $thumb  thumb
 	 *
 	 * @return string|false  Path to the file or false if file doesn't exist.
 	 *
@@ -297,7 +297,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get extension of file for output.
 	 *
-	 * @param   bool $escape escape
+	 * @param   bool  $escape  escape
 	 *
 	 * @return string
 	 *
@@ -316,10 +316,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * The first 8 characters of the filename, followed by three dots and the last 5 character of the filename.
 	 *
-	 * @param   int    $front  front
-	 * @param   int    $back   back
-	 * @param   string $filler filler
-	 * @param   bool   $escape escape
+	 * @param   int     $front   front
+	 * @param   int     $back    back
+	 * @param   string  $filler  filler
+	 * @param   bool    $escape  escape
 	 *
 	 * @return string
 	 *
@@ -338,7 +338,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get filename for output.
 	 *
-	 * @param   bool $escape escape
+	 * @param   bool  $escape  escape
 	 *
 	 * @return string
 	 *
@@ -346,7 +346,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getFilename($escape = true)
 	{
-		$filename = $this->protected ? $this->filename_real : $this->filename;
+		$filename = $this->filename;
 
 		return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
 	}
@@ -354,15 +354,15 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get URL pointing to the attachment.
 	 *
-	 * @param   bool $thumb  thumb
-	 * @param   bool $inline inline
-	 * @param   bool $escape escape
+	 * @param   bool  $thumb   thumb
+	 * @param   bool  $inline  inline
+	 * @param   bool  $escape  escape
 	 *
 	 * @return string
 	 *
 	 * @throws Exception
-	 * @since  K4.0
 	 * @throws null
+	 * @since  K4.0
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
@@ -400,9 +400,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 			$url = preg_replace('/.html/', '', $url);
 		}
 
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
 		if ($protect && $inline && $this->isPdf())
 		{
 			$url = Uri::base() . $this->folder . '/' . $this->filename;
+		}
+		elseif ($protect && $format == 'feed')
+		{
+			$url = Uri::base() . $this->folder;
 		}
 
 		return $url;
@@ -412,8 +419,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * Get attachment layout.
 	 *
 	 * @return KunenaLayout
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
 	public function getLayout()
 	{
@@ -422,8 +429,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
-	 * @since K4.0
 	 * @throws Exception
+	 * @since K4.0
 	 */
 	public function getTextLink()
 	{
@@ -432,8 +439,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
-	 * @since K4.0
 	 * @throws Exception
+	 * @since K4.0
 	 */
 	public function getImageLink()
 	{
@@ -467,8 +474,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string     $action action
-	 * @param   KunenaUser $user   user
+	 * @param   string      $action  action
+	 * @param   KunenaUser  $user    user
 	 *
 	 * @return boolean
 	 *
@@ -483,9 +490,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string     $action action
-	 * @param   KunenaUser $user   user
-	 * @param   bool       $throw  throw
+	 * @param   string      $action  action
+	 * @param   KunenaUser  $user    user
+	 * @param   bool        $throw   throw
 	 *
 	 * @return mixed
 	 * @throws null
@@ -553,9 +560,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string $action action
-	 * @param   mixed  $user   user
-	 * @param   bool   $silent silent
+	 * @param   string  $action  action
+	 * @param   mixed   $user    user
+	 * @param   bool    $silent  silent
 	 *
 	 * @return boolean
 	 * @throws null
@@ -589,8 +596,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   string   $key   key
-	 * @param   null|int $catid catid
+	 * @param   string    $key    key
+	 * @param   null|int  $catid  catid
 	 *
 	 * @return boolean
 	 *
@@ -711,11 +718,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * Copies the attachment into proper location and makes sure that all the unset fields get properly assigned.
 	 *
-	 * @param   string $source    Absolute path to the upcoming attachment.
-	 * @param   string $basename  Filename without extension.
-	 * @param   string $extension File extension.
-	 * @param   bool   $unlink    Whether to delete the original file or not.
-	 * @param   bool   $overwrite If not allowed, throw exception if the file exists.
+	 * @param   string  $source     Absolute path to the upcoming attachment.
+	 * @param   string  $basename   Filename without extension.
+	 * @param   string  $extension  File extension.
+	 * @param   bool    $unlink     Whether to delete the original file or not.
+	 * @param   bool    $overwrite  If not allowed, throw exception if the file exists.
 	 *
 	 * @return boolean
 	 * @throws Exception
@@ -792,7 +799,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return mixed
 	 *
@@ -810,7 +817,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return mixed
 	 *
@@ -844,7 +851,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   KunenaUser $user user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return mixed
 	 *
@@ -865,7 +872,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Set inline to the attachment object
 	 *
-	 * @param   int $inline inline
+	 * @param   int  $inline  inline
 	 *
 	 * @return boolean
 	 * @throws Exception

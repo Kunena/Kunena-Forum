@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-// Kunena 5.2.0: Update ranks title value to have string which can be translated
+// Kunena 5.2.0: Update ranks rank_title value to have string which can be translated
 /**
  * @param $parent
  *
@@ -29,12 +29,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1')
 	);
 
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 1'
+		$db->quoteName('rank_id') . ' = 1'
 	);
 
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -53,12 +53,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 2'
+		$db->quoteName('rank_id') . ' = 2'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -77,12 +77,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 3'
+		$db->quoteName('rank_id') . ' = 3'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -101,12 +101,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 4'
+		$db->quoteName('rank_id') . ' = 4'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -125,12 +125,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 5'
+		$db->quoteName('rank_id') . ' = 5'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -149,12 +149,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 6'
+		$db->quoteName('rank_id') . ' = 6'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -173,12 +173,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 7'
+		$db->quoteName('rank_id') . ' = 7'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -197,12 +197,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 8'
+		$db->quoteName('rank_id') . ' = 8'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -221,12 +221,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 9'
+		$db->quoteName('rank_id') . ' = 9'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
@@ -245,12 +245,12 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 	
 	// Fields to update.
 	$fields = array(
-		$db->quoteName('title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')
+		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')
 	);
 	
 	// Conditions for which records should be updated.
 	$conditions = array(
-		$db->quoteName('id') . ' = 10'
+		$db->quoteName('rank_id') . ' = 10'
 	);
 	
 	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);

@@ -71,7 +71,6 @@ IF exist %GitTarget%\libraries\kunena ( rmdir /S/q %GitTarget%\libraries\kunena 
 IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
-
 IF exist %GitTarget%\plugins\kunena\ ( rmdir /S/q %GitTarget%\plugins\kunena )
 IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\finder\kunena )
 
@@ -82,6 +81,17 @@ mklink /d %GitTarget%\libraries\kunena %GitSource%\src\libraries\kunena
 mklink /d %GitTarget%\plugins\system\kunena %GitSource%\src\plugins\plg_system_kunena
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\src\plugins\plg_quickicon_kunena
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
+echo Make symbolic links for language files in frontend
+IF exist %GitTarget%\language\en-GB ( ren %GitTarget%\language\en-GB en-GB_temp )
+mklink /d %GitTarget%\language\en-GB %GitSource%\src\components\com_kunena\language\en-GB
+Copy %GitTarget%\language\en-GB_temp\* %GitTarget%\language\en-GB
+rmdir /S /Q %GitTarget%\language\en-GB_temp
+echo Make symbolic links for language files in backend
+IF exist %GitTarget%\administrator\language\en-GB ( ren %GitTarget%\administrator\language\en-GB en-GB_temp )
+mklink /d %GitTarget%\administrator\language\en-GB %GitSource%\src\administrator\components\com_kunena\language\en-GB
+Copy %GitTarget%\administrator\language\en-GB_temp\* %GitTarget%\administrator\language\en-GB
+rmdir /S /Q %GitTarget%\administrator\language\en-GB_temp
+echo Make symbolic links for plugins
 IF not exist %GitTarget%\plugins\kunena mkdir %GitTarget%\plugins\kunena
 mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_altauserpoints
 mklink /d %GitTarget%\plugins\kunena\community %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_community

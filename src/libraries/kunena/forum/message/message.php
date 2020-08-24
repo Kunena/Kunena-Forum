@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Utilities\IpHelper;
 
 /**
  * Class KunenaForumMessage
@@ -323,20 +324,23 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip      = $_SERVER ["REMOTE_ADDR"];
+		$message->ip      = IpHelper::getIP();
 
 		// Add IP to user.
 		if (KunenaConfig::getInstance()->iptracking)
 		{
 			if (empty($user->ip))
 			{
-				$user->ip = $_SERVER ["REMOTE_ADDR"];
+				$user->ip = IpHelper::getIP();
 			}
 		}
 
 		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
-			$topic->subject = $fields['subject'];
+			if (isset($fields['subject']))
+			{
+				$topic->subject = $fields['subject'];
+			}
 		}
 
 		if ($topic->hold)

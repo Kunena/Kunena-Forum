@@ -26,6 +26,7 @@ if ($this->approved)
 else
 {
 	$msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
+	$msg1 .= " " . $config->board_title;
 }
 
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
@@ -105,7 +106,7 @@ if (!$config->plain_email) :
 
 		</style>
 
-		<title><?php echo $msg1 . " " . $config->board_title; ?></title>
+		<title><?php echo $msg1; ?></title>
 
 	</head>
 
@@ -146,7 +147,7 @@ if (!$config->plain_email) :
 					<tr>
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
 			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-							<?php echo $msg1 . " " . $config->board_title; ?>
+							<?php echo $msg1; ?>
 						</td>
 					</tr>
 
@@ -254,7 +255,7 @@ if (!$config->plain_email) :
 	}
 
 	$alt = <<<EOS
-{$msg1} {$config->board_title}
+{$msg1}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
 

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Install;
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -30,9 +31,9 @@ class KunenaSampleData
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public static function installSampleData()
 	{
@@ -40,10 +41,10 @@ class KunenaSampleData
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-		$db       = Factory::getDBO();
-		$posttime = new Date;
-		$my       = Factory::getApplication()->getIdentity();
-		$queries  = [];
+		$db        = Factory::getDBO();
+		$posttime  = new Date;
+		$my        = Factory::getApplication()->getIdentity();
+		$queries   = [];
 
 		$query = "INSERT INTO `#__kunena_ranks`
 		(`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES

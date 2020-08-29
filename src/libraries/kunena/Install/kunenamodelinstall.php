@@ -21,6 +21,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -43,6 +44,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use \Exception;
 use \stdClass;
+use const KPATH_ADMIN;
 
 /**
  *
@@ -3001,28 +3003,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 		$menu    = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
 		            'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0]];
-		$submenu = [
-			'index'     => ['name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
-			                'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
-			'recent'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_RECENT'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
-			                'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
-			'unread'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
-			                'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
-			'newtopic'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
-			                'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
-			'noreplies' => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
-			                'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
-			'mylatest'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
-			                'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
-			'profile'   => ['name' => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
-			                'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
-			'help'      => ['name' => Text::_('COM_KUNENA_MENU_ITEM_HELP'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
-			                'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
-			'search'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
-			                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
-		];
 
-		$this->buildMenu($menu, $submenu);
+		$this->buildMenu($menu);
 		MenuHelper::cleanCache();
 	}
 
@@ -3039,13 +3021,14 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @throws  KunenaInstallerException
 	 * @throws  Exception
 	 */
-	public function buildMenu($menu, $submenu)
+	public function buildMenu($menu)
 	{
 		$config = KunenaFactory::getConfig();
 
 		$component_id = (int) ComponentHelper::getComponent('com_kunena')->id;
 
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
+		$languages = LanguageHelper::getInstalledLanguages(1, true);
 
 		// First fix all broken menu items
 		$db = Factory::getDbo();
@@ -3132,37 +3115,64 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$parent      = $table;
 		$defaultmenu = 0;
 
-		foreach ($submenu as $menuitem)
+		foreach ($languages as $langCode => $language)
 		{
-			$params = clone $gparams;
-			$params->loadArray($menuitem['params']);
-			$table = Table::getInstance('menu');
-			$table->load(['menutype' => 'kunenamenu', 'link' => $menuitem ['link']]);
-			$data = [
-				'menutype'     => 'kunenamenu',
-				'title'        => $menuitem ['name'],
-				'alias'        => $menuitem ['alias'],
-				'link'         => $menuitem ['link'],
-				'type'         => 'component',
-				'published'    => 1,
-				'parent_id'    => $parent->id,
-				'component_id' => $component_id,
-				'access'       => $menuitem ['access'],
-				'params'       => (string) $params,
-				'home'         => 0,
-				'language'     => '*',
-				'client_id'    => 0,
+			$lang = Factory::getLanguage();
+			$lang->load('com_kunena.install', KPATH_ADMIN, $langCode);
+
+			$submenu = [
+				'index'     => ['name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
+				                'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
+				'recent'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_RECENT'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
+				                'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+				'unread'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
+				                'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
+				'newtopic'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
+				                'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
+				'noreplies' => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
+				                'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+				'mylatest'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
+				                'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
+				'profile'   => ['name' => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
+				                'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
+				'help'      => ['name' => Text::_('COM_KUNENA_MENU_ITEM_HELP'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
+				                'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
+				'search'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
+				                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
 			];
-			$table->setLocation($parent->id, 'last-child');
 
-			if (!$table->bind($data) || !$table->check() || !$table->store())
+			foreach ($submenu as $menuitem)
 			{
-				throw new KunenaInstallerException($table->getError());
-			}
+				$params = clone $gparams;
+				$params->loadArray($menuitem['params']);
+				$table = Table::getInstance('menu');
+				$table->load(['menutype' => 'kunenamenu', 'link' => $menuitem ['link'], 'language' => $langCode]);
+				$data = [
+					'menutype'     => 'kunenamenu',
+					'title'        => $menuitem ['name'],
+					'alias'        => $menuitem ['alias'] . '-'.$langCode,
+					'link'         => $menuitem ['link'],
+					'type'         => 'component',
+					'published'    => 1,
+					'parent_id'    => $parent->id,
+					'component_id' => $component_id,
+					'access'       => $menuitem ['access'],
+					'params'       => (string) $params,
+					'home'         => 0,
+					'language'     => $langCode,
+					'client_id'    => 0,
+				];
+				$table->setLocation($parent->id, 'last-child');
 
-			if (!$defaultmenu || (isset($menuitem ['default']) && $config->defaultpage == $menuitem ['default']))
-			{
-				$defaultmenu = $table->id;
+				if (!$table->bind($data) || !$table->check() || !$table->store())
+				{
+					throw new KunenaInstallerException($table->getError());
+				}
+
+				if (!$defaultmenu || (isset($menuitem ['default']) && $config->defaultpage == $menuitem ['default']))
+				{
+					$defaultmenu = $table->id;
+				}
 			}
 		}
 
@@ -3183,7 +3193,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 
 		$table = Table::getInstance('menu');
-		$table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM')]);
+		$table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $language->lang_code]);
 
 		if (!$table->id)
 		{
@@ -3199,7 +3209,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 				'access'       => 1,
 				'params'       => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
 				'home'         => 0,
-				'language'     => '*',
+				'language'     => $language->lang_code,
 				'client_id'    => 0,
 			];
 			$table->setLocation(1, 'last-child');
@@ -3212,7 +3222,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 				'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
 			];
 		}
-
 
 		if (!$table->bind($data))
 		{

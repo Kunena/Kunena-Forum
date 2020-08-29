@@ -255,8 +255,9 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$this->addDashboardMenu('kunena', 'kunena');
 
-		// Hard add namespace for now, until Joomla 4.0 has been fixed.
-		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
+		JLoader::register('JNamespacePsr4Map', JPATH_LIBRARIES . '/namespacemap.php');
+		$extensionPsr4Loader = new \JNamespacePsr4Map;
+		$extensionPsr4Loader->load();
 
 		$installer = new KunenaModelInstall;
 		$installer->createMenu();

@@ -62,6 +62,9 @@ class ToolsController extends FormController
 	 */
 	public function __construct($config = [])
 	{
+		$lang = Factory::getLanguage();
+		$lang->load('com_kunena.controllers', KPATH_ADMIN);
+
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=tools';
 	}

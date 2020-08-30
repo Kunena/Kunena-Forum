@@ -259,6 +259,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$extensionPsr4Loader = new \JNamespacePsr4Map;
 		$extensionPsr4Loader->load();
 
+		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
+		
 		$installer = new KunenaModelInstall;
 		$installer->createMenu();
 

@@ -3118,7 +3118,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		foreach ($languages as $langCode => $language)
 		{
 			$lang = Factory::getLanguage();
-			$lang->load('com_kunena.install', KPATH_ADMIN, $langCode);
+			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR .'/components/com_kunena', $langCode);
 
 			$submenu = [
 				'index'     => ['name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),

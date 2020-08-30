@@ -43,16 +43,16 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td width="20%"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_LOGIN') ?></td>
 								<td>
-									<div>
-										<input class="col-md-3" type="text" name="username" value=""/>
+									<div class="form-group">
+										<input class="form-control" type="text" name="username" value=""/>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td width="20%"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PASSWORD') ?></td>
 								<td>
-									<div>
-										<input class="col-md-3" type="password" name="password" value=""/>
+									<div class="form-group">
+										<input class="form-control" type="password" name="password" value=""/>
 									</div>
 								</td>
 							</tr>
@@ -62,8 +62,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 								<tr>
 									<td width="20%"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_SECRETKEY') ?></td>
 									<td>
-										<div>
-											<input class="col-md-3" type="text" name="secretkey" value=""/>
+										<div class="form-group">
+											<input class="form-control" type="text" name="secretkey" value=""/>
 										</div>
 									</td>
 								</tr>

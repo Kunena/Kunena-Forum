@@ -89,7 +89,7 @@ $this->addScriptOptions('com_kunena.avatar_upload_url', JUri::root(true) . '/ind
 					?>
 					<div>
 						<?php echo HTMLHelper::_(
-							'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
+							'select.genericlist', $this->galleryOptions, 'gallery', 'class="custom-select"', 'value', 'text',
 							$this->gallery, 'avatar_gallery_select'
 						); ?>
 					</div>

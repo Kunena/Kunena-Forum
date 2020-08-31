@@ -122,7 +122,7 @@ $this->addStyleSheet('assets/css/rating.css');
 									<?php if (!empty($this->topicActions)) : ?>
 										<?php echo HTMLHelper::_(
 											'select.genericlist', $this->topicActions, 'task',
-											'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+											'class="form-control kchecktask custom-select"', 'value', 'text', 0, 'kchecktask'); ?>
 
 										<?php if ($this->actionMove) : ?>
 											<?php

@@ -43,7 +43,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
 					      id="timeselect" name="timeselect"
 					      method="post" target="_self" class="form-inline hidden-xs-down">
-						<?php $this->displayTimeFilter('sel'); ?>
+						<?php $this->displayTimeFilter('sel', 'class="form-control filter custom-select" onchange="this.form.submit()"'); ?>
 						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
 				</div>
@@ -162,7 +162,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 	<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
 	      name="timeselect"
 	      method="post" target="_self" class="timefilter float-right">
-		<?php $this->displayTimeFilter('sel'); ?>
+		<?php $this->displayTimeFilter('sel', 'class="form-control filter custom-select" onchange="this.form.submit()"'); ?>
 	</form>
 <?php endif; ?>
 

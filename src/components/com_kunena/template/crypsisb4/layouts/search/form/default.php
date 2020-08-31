@@ -71,7 +71,7 @@ $this->addScript('assets/js/search.js');
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<?php $this->displayModeList('mode'); ?>
+							<?php $this->displayModeList('mode', 'class="form-control custom-select"'); ?>
 						</div>
 					</div>
 				</fieldset>
@@ -119,8 +119,8 @@ $this->addScript('assets/js/search.js');
 							<?php echo Text::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
 						<div class="form-group">
-							<?php $this->displayDateList('date'); ?>
-							<?php $this->displayBeforeAfterList('beforeafter'); ?>
+							<?php $this->displayDateList('date', 'class="form-control custom-select"'); ?>
+							<?php $this->displayBeforeAfterList('beforeafter', 'class="form-control custom-select"'); ?>
 						</div>
 					</fieldset>
 
@@ -129,8 +129,8 @@ $this->addScript('assets/js/search.js');
 							<?php echo Text::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
 						<div class="form-group">
-							<?php $this->displaySortByList('sort'); ?>
-							<?php $this->displayOrderList('order'); ?>
+							<?php $this->displaySortByList('sort', 'class="form-control custom-select"'); ?>
+							<?php $this->displayOrderList('order', 'class="form-control custom-select"'); ?>
 						</div>
 					</fieldset>
 
@@ -162,7 +162,7 @@ $this->addScript('assets/js/search.js');
 								       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							</div>
 							<div class="col-md-6">
-								<?php $this->displayLimitlist('limit'); ?>
+								<?php $this->displayLimitlist('limit', 'class="form-control custom-select"'); ?>
 							</div>
 						</fieldset>
 

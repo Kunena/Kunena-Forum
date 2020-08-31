@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
 <div class="shadow-lg rounded" id="announcement<?php echo $this->announcement->id; ?>">
 	<div class="alert alert-info">
 		<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">

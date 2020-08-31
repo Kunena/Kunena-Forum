@@ -30,6 +30,8 @@ $config = KunenaFactory::getTemplate()->params;
 		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
 
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
+
 	if ($config->get('displayAnnouncement'))
 	{
 		echo $this->subRequest('Widget/Announcement');

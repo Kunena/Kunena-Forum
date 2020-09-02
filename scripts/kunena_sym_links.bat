@@ -82,15 +82,9 @@ mklink /d %GitTarget%\plugins\system\kunena %GitSource%\src\plugins\plg_system_k
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\src\plugins\plg_quickicon_kunena
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 echo Make symbolic links for language files in frontend
-IF exist %GitTarget%\language\en-GB ( ren %GitTarget%\language\en-GB en-GB_temp )
-mklink /d %GitTarget%\language\en-GB %GitSource%\src\components\com_kunena\language\en-GB
-Copy %GitTarget%\language\en-GB_temp\* %GitTarget%\language\en-GB
-rmdir /S /Q %GitTarget%\language\en-GB_temp
+xcopy %GitSource%\src\administrator\components\com_kunena\language\en-GB %GitTarget%\administrator\language\en-GB
 echo Make symbolic links for language files in backend
-IF exist %GitTarget%\administrator\language\en-GB ( ren %GitTarget%\administrator\language\en-GB en-GB_temp )
-mklink /d %GitTarget%\administrator\language\en-GB %GitSource%\src\administrator\components\com_kunena\language\en-GB
-Copy %GitTarget%\administrator\language\en-GB_temp\* %GitTarget%\administrator\language\en-GB
-rmdir /S /Q %GitTarget%\administrator\language\en-GB_temp
+xcopy %GitSource%\src\components\com_kunena\language\en-GB %GitTarget%\language\en-GB
 echo Make symbolic links for plugins
 IF not exist %GitTarget%\plugins\kunena mkdir %GitTarget%\plugins\kunena
 mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_altauserpoints

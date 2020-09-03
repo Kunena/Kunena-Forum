@@ -300,25 +300,22 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<?php foreach ($this->topicIcons as $id => $icon) : ?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
 								       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicicons && $topicicontype == 'B3') : ?>
-								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
-											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
-											aria-hidden="true"></span>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
-									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
+									<?php if ($this->config->topicicons && $topicicontype == 'B4') : ?>
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>">
 										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<?php echo KunenaSvgIcons::loadsvg($icon->b4, 'usertopicicons', $this->category->iconset);?>
+										<img src="<?php echo Uri::root() . 'media/kunena/topic_icons/' .  $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+												alt="<?php echo $icon->name; ?>" width="32" height="32"/>
 									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
-									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
+										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-										<?php else : ?>
+									<?php else : ?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>
-											<?php endif; ?>
+									<?php endif; ?>
 										</label>
-										<?php endforeach; ?>
+								<?php endforeach; ?>
 							</div>
 						</div>
 					</div>

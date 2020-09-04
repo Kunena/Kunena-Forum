@@ -115,7 +115,7 @@ if ($this->config->pollenabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('poll.js');
+	$this->addScript('assets/js/poll.js');
 }
 
 $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));

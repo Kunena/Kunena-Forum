@@ -106,15 +106,7 @@ $this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
-$editor          = $this->ktemplate->params->get('editor');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-
-if ($editor == 0)
-{
-	$this->addScript('assets/js/markitup.js');
-	$this->addScript('assets/js/markitup.editor.js');
-	$this->addScript('assets/js/markitup.set.js');
-}
 
 // If polls are enabled, load also poll JavaScript.
 $this->addScript('assets/js/pollcheck.js');
@@ -125,6 +117,9 @@ if ($this->config->pollenabled)
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 	$this->addScript('assets/js/poll.js');
 }
+
+$this->addScript('ckeditor.js');
+$this->addScriptOptions('com_kunena.ckeditor_config', '/media/kunena/core/js/ckeditor_config.js');
 
 $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
@@ -353,14 +348,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php if ($editor == 1)
-						{
-							echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
-						}
-						else
-						{
-							echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
-						} ?>
+						<?php 
+							echo $this->subLayout('Widget/Editor')->setLayout('ckeditor')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
+						?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup)
 							:

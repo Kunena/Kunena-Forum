@@ -147,7 +147,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 * Install
+	 * Install the new template
 	 *
 	 * @return boolean|void
 	 *
@@ -213,14 +213,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 						if (is_dir($dest . $template->directory))
 						{
-							if (is_file($dest . $template->directory . '/params.ini'))
+							if (is_file($dest . $template->directory . '/config/params.ini'))
 							{
-								if (is_file($tmp_kunena . $template->sourcedir . '/params.ini'))
+								if (is_file($tmp_kunena . $template->sourcedir . '/config/params.ini'))
 								{
-									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/params.ini');
+								    KunenaFile::delete($tmp_kunena . $template->sourcedir . '/config/params.ini');
 								}
 
-								KunenaFile::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
+								KunenaFile::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . 'config/params.ini');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))

@@ -65,6 +65,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$this->message = KunenaForumMessage::getInstance($mesid);
 		$this->topic   = $this->message->getTopic();
+		$this->category  = $this->topic->getCategory();
 
 		$id     = $this->message->thread;
 		$catid  = $this->message->catid;
@@ -583,6 +584,21 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				$this->messageButtons->set('delete',
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button)
 				);
+			}
+		}
+
+		// Show admins the IP address of the user.
+		if ($this->category->isAuthorised('admin')
+		    || ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+		{
+			if (!empty($this->message->ip))
+			{
+				$this->ipLink = '<a href="https://www.geoiptool.com/en/?ip=' . $this->message->ip
+					. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+			}
+			else
+			{
+				$this->ipLink = '&nbsp;';
 			}
 		}
 

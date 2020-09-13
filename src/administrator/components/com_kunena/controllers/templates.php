@@ -217,10 +217,20 @@ class KunenaAdminControllerTemplates extends KunenaController
 							{
 								if (is_file($tmp_kunena . $template->sourcedir . '/config/params.ini'))
 								{
-								    KunenaFile::delete($tmp_kunena . $template->sourcedir . '/config/params.ini');
+									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/config/params.ini');
 								}
 
 								KunenaFile::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . 'config/params.ini');
+							}
+
+							if (is_dir($dest . $template->directory . '/assets/images'))
+							{
+								if (is_dir($tmp_kunena . $template->sourcedir . '/assets/images'))
+								{
+									KunenaFolder::delete($tmp_kunena . $template->sourcedir . '/assets/images');
+								}
+
+								KunenaFolder::move($dest . $template->directory . '/assets/images', $tmp_kunena . $template->sourcedir . '/assets/images');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))

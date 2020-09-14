@@ -760,16 +760,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.4.11",
+            "version": "v4.4.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "55d07021da933dd0d633ffdab6f45d5b230c7e02"
+                "reference": "b39fd99b9297b67fb7633b7d8083957a97e1e727"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/55d07021da933dd0d633ffdab6f45d5b230c7e02",
-                "reference": "55d07021da933dd0d633ffdab6f45d5b230c7e02",
+                "url": "https://api.github.com/repos/symfony/console/zipball/b39fd99b9297b67fb7633b7d8083957a97e1e727",
+                "reference": "b39fd99b9297b67fb7633b7d8083957a97e1e727",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +847,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-06T13:18:39+00:00"
+            "time": "2020-09-02T07:07:21+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1214,7 +1214,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.18.0",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -1291,7 +1291,7 @@
         },
         {
             "name": "symfony/polyfill-php73",
-            "version": "v1.18.0",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
@@ -1367,7 +1367,7 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.18.0",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",

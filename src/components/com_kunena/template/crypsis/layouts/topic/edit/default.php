@@ -436,16 +436,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<?php if ($editor == 1): ?>
-				<input type="submit" class="btn btn-success form-validate" name="submit"
-				       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-				       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
-			<?php else : ?>
-				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
-					<?php echo KunenaIcons::save(); ?>
-					<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
-				</button>
-			<?php endif; ?>
+			<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
+				<?php echo KunenaIcons::save(); ?>
+				<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
+			</button>
 
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<?php echo KunenaIcons::cancel(); ?>

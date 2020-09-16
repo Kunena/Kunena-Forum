@@ -119,7 +119,7 @@ if ($this->config->pollenabled)
 }
 
 $this->addScript('ckeditor.js');
-$this->addScriptOptions('com_kunena.ckeditor_config', '/media/kunena/core/js/ckeditor_config.js');
+$this->addScriptOptions('com_kunena.ckeditor_config', KunenaRoute::_('/media/kunena/core/js/ckeditor_config.js'));
 
 $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);

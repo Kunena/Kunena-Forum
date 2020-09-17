@@ -166,11 +166,6 @@
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
-        <field name="editor" type="list" default="1" label="COM_KUNENA_TEMPLATE_EDITOR"
-               description="COM_KUNENA_TEMPLATE_EDITOR_DESC">
-            <option value="0">COM_KUNENA_TEMPLATE_EDITOR_BBCODE</option>
-            <option value="1">COM_KUNENA_TEMPLATE_EDITOR_WYSIBB</option>
-        </field>
         <field name="video" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_VIDEO"
                description="COM_KUNENA_TEMPLATE_DISPLAY_VIDEO_DESC">
             <option value="0">COM_KUNENA_NO</option>

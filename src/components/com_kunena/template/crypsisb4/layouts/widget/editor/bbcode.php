@@ -16,11 +16,7 @@ use Joomla\CMS\Language\Text;
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
-$this->addScript('assets/js/markitup.js');
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
 $this->addStyleSheet('jquery.atwho.css');
-$this->addStyleSheet('assets/css/markitup.css');
 $this->addScript('assets/js/pollcheck.js');
 
 echo $this->subLayout('Widget/Datepicker');

@@ -22,7 +22,7 @@ class KunenaViewTopic extends KunenaView
 {
 	/**
 	 * @param   null $tpl tpl
-	 *
+	 *@deprecated 5.2
 	 * @throws Exception
 	 * @since Kunena
 	 */

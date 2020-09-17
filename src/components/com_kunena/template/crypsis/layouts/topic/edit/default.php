@@ -107,15 +107,7 @@ $this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 // If polls are enabled, load also poll JavaScript.
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
-$editor          = $this->ktemplate->params->get('editor');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-
-if ($editor == 0)
-{
-	$this->addScript('assets/js/markitup.js');
-	$this->addScript('assets/js/markitup.editor.js');
-	$this->addScript('assets/js/markitup.set.js');
-}
 
 if ($this->config->pollenabled)
 {
@@ -123,6 +115,9 @@ if ($this->config->pollenabled)
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 	$this->addScript('assets/js/poll.js');
 }
+
+$this->addScript('ckeditor.js');
+$this->addScriptOptions('com_kunena.ckeditor_config', KunenaRoute::_('/media/kunena/core/js/ckeditor_config.js'));
 
 $this->addScript('assets/js/pollcheck.js');
 
@@ -344,14 +339,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php if ($editor == 1)
-						{
-							echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
-						}
-						else
-						{
-							echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
-						} ?>
+						<?php 
+							echo $this->subLayout('Widget/Editor')->setLayout('ckeditor')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
+						?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup)
 							:
@@ -446,16 +436,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<?php if ($editor == 1): ?>
-				<input type="submit" class="btn btn-success form-validate" name="submit"
-				       value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-				       title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
-			<?php else : ?>
-				<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
-					<?php echo KunenaIcons::save(); ?>
-					<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
-				</button>
-			<?php endif; ?>
+			<button id="form_submit_button" name="submit" type="submit" class="btn btn-success form-validate" tabindex="8">
+				<?php echo KunenaIcons::save(); ?>
+				<?php echo ' ' . Text::_('COM_KUNENA_SUBMIT') . ' '; ?>
+			</button>
 
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<?php echo KunenaIcons::cancel(); ?>

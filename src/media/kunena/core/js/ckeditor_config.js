@@ -27,4 +27,21 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 
 	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language';
+
+	config.smiley_path = '/media/kunena/emoticons/';
+	config.smiley_images = [
+	'angry.png', 'arrow.png', 'blink.png', 'blush.png', 'cheerful.png', 'confused.png',
+	'cool.png', 'devil.png', 'dizzy.png', 'ermm.png', 'exclamation.png', 'grin.png',
+	'idea.png', 'kissing.png', 'laughing.png', 'mrgreen.png', 'neutral.png', 'pinch.png',
+	'question.png', 'sad.png', 'shocked.png', 'sick.png', 'sideways.png', 'silly.png', 'smile.png', 'tongue.png', 'unsure.png', 'w00t.png', 'wassat.png', 'whistling.png', 'wink.png'
+	];
+	/*config.smiley_descriptions = [
+	 'B)', '8)', '8-)', ':-(', ':(', ':sad:', ':cry:', ':)', ':-)', ':cheer:', ';)', ';-)', 
+       ':wink:', ';-)', ':P', ':p', ':-p', ':-P', ':razz:', ':angry:', ':mad:', ':unsure:', ':o', 
+       ':-o', ':O', ':-O', ':eek:', ':ohmy:', ':huh:', ':?', ':-?', ':???', ':dry:', ':ermm:', ':lol:', 
+       ':X', ':x', ':sick:', ':silly:', ':y32b4:', ':blink:', ':blush:', ':oops:', ':kiss:', ':rolleyes:', 
+       ':roll:', ':woohoo:', ':side:', ':S', ':s', ':evil:', ':twisted:', ':whistle:', ':pinch:', 
+       ':D', ':-D', ':grin:', ':laugh:', ':|', ':-|', ':neutral:', ':mrgreen:', ':?:',
+       ':!:', ':arrow:', ':idea:'
+	];*/
 };

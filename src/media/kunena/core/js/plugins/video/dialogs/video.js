@@ -21,53 +21,64 @@ CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 		type: 'text',
 		id: 'videourl',
 		label: 'Video URL',
-		default: '',
-		validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
+		default: ''
 	},
 	{
 		type: 'text',
 		id: 'videosize',
-		label: 'Select of the video',
+		label: 'Size of the video',
 		'default': ''
 	},
 	{
 		type: 'text',
 		id: 'width',
 		label: 'Width',
-		default: '',
-		validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
+		default: ''
 	},
 	{
 		type: 'text',
 		id: 'height',
 		label: 'Height',
-		default: '',
-		validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
+		default: ''
 	},
 	{
 		type: 'text',
 		id: 'provider',
 		label: 'Provider',
-		default: '',
-		validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
+		default: ''
 	},
 	{
 		type: 'text',
-		id: 'id',
+		id: 'videoid',
 		label: 'ID',
-		default: '',
-		validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
+		default: ''
 	}
 		]
             }
         ],
         onOk: function() {
-            var dialog = this;
+			var dialog = this;
+			var videourl = null;
+			var videosize = '';
+			var width = '';
+			var height = '';
 
-            var abbr = editor.document.createElement( 'city' );
-            
-            abbr.setText( dialog.getValueOf( 'tab-basic', 'city' ) );
-            editor.insertHtml( '[map type='+ dialog.getValueOf( 'tab-basic', 'maptype' ) +' zoom='+ dialog.getValueOf( 'tab-basic', 'zoomlevel' ) +']' + dialog.getValueOf( 'tab-basic', 'city' ) + '[/map]' );
-        }
+			if(dialog.getValueOf( 'tab-basic', 'videourl' ).length != 0)
+			{
+				videourl = dialog.getValueOf( 'tab-basic', 'videourl' );
+			}
+			else
+			{
+				videosize = dialog.getValueOf( 'tab-basic', 'videosize' );
+				videosize = 'type='+videosize;
+				width = dialog.getValueOf( 'tab-basic', 'width' );
+				width = 'width='+width;
+				height = dialog.getValueOf( 'tab-basic', 'height' );
+				height = 'height='+height;
+				videourl = dialog.getValueOf( 'tab-basic', 'videoid' );
+			}
+
+			editor.insertHtml( '[video '+videosize+' '+width+' '+height+']' + videourl + '[/video]' );
+		}
 	};
 });

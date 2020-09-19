@@ -55,7 +55,7 @@ CKEDITOR.dialog.add( 'mapDialog', function( editor ) {
             var abbr = editor.document.createElement( 'city' );
             
             abbr.setText( dialog.getValueOf( 'tab-basic', 'city' ) );
-alert( 'Current value: ' + dialog.getValueOf( 'tab-basic', 'maptype' ));
+
             editor.insertHtml( '[map]' + dialog.getValueOf( 'tab-basic', 'city' ) + '[/map]' );
         }
 	};

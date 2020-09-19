@@ -117,7 +117,7 @@ if ($this->config->pollenabled)
 }
 
 $this->addScript('ckeditor.js');
-$this->addScriptOptions('com_kunena.ckeditor_config', '/media/kunena/core/js/ckeditor_config.js');
+$this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
 
 $this->addScript('assets/js/pollcheck.js');
 

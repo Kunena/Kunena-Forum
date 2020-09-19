@@ -339,7 +339,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php 
+						<?php
 							echo $this->subLayout('Widget/Editor')->setLayout('ckeditor')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
 						?>
 

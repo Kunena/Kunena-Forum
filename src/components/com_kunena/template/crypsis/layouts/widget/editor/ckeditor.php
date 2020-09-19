@@ -31,21 +31,19 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 	}
 </script>
 
-		<textarea class="span12" name="message" id="message" rows="12" tabindex="7" required="required"
-		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
-			{
-				echo $this->message->getCategory()->topictemplate;
-			}
-			else
-			{
-				echo $this->escape($this->message->message);
-			} ?></textarea>
+<textarea class="span12" name="message" id="message" rows="12" tabindex="7" required="required"
+          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+	{
+		echo $this->message->getCategory()->topictemplate;
+	}
+	else
+	{
+		echo $this->escape($this->message->message);
+	} ?>
+</textarea>
 
-
-	<!-- Hidden preview placeholder -->
-	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
-</div>
-
+<!-- Hidden preview placeholder -->
+<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 
 <!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">

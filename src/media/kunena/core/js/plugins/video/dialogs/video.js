@@ -42,10 +42,16 @@ CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 		default: ''
 	},
 	{
-		type: 'text',
+		type: 'select',
 		id: 'provider',
-		label: 'Provider',
-		default: ''
+		label: 'Select a video provider',
+		items: [ [ '' ], [ 'Bofunk' ], [ 'Break' ], [ 'Clipfish' ], [ 'DivX,divx]http://' ], [ 'Flash,flash]http://' ], [ 'FlashVars,flashvars param=]http://' ], 
+		[ 'MediaPlayer,mediaplayer]http://' ], [ 'Metacafe' ], [ 'MySpace' ], [ 'QuickTime,quicktime]http://' ], [ 'RealPlayer,realplayer]http://' ], [ 'RuTube' ], [ 'Sapo' ]
+		, [ 'Streetfire' ], [ 'Veoh' ], [ 'Videojug' ], [ 'Vimeo' ], [ 'Wideo.fr' ], [ 'YouTube' ] ],
+		'default': '',
+		onChange: function( api ) {
+			// this = CKEDITOR.ui.dialog.select
+		}
 	},
 	{
 		type: 'text',

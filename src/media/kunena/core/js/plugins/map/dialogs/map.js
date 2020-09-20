@@ -36,7 +36,6 @@ CKEDITOR.dialog.add( 'mapDialog', function( editor ) {
     'default': '10',
     onChange: function( api ) {
         // this = CKEDITOR.ui.dialog.select
-        alert( 'Current value: ' + this.getValue() );
     }
 },
 {

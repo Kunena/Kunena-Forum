@@ -18,6 +18,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
 		{ name: 'links', groups: [ 'links' ] },
 		{ name: 'insert', groups: [ 'insert' ] },
+		{ name: 'social', groups: [ 'social' ] },
 		'/',
 		{ name: 'styles', groups: [ 'styles' ] },
 		{ name: 'colors', groups: [ 'colors' ] },
@@ -26,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language';
+	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
 
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = [

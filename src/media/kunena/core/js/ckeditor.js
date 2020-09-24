@@ -1397,7 +1397,7 @@ CKEDITOR.plugins.add( 'ebay', {
         editor.ui.addButton( 'Ebay', {
             label: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),
             command: 'insertEbay',
-            toolbar: 'insert'
+            toolbar: 'social'
         });
     }
 });
@@ -1412,7 +1412,7 @@ CKEDITOR.plugins.add( 'instagram', {
         editor.ui.addButton( 'Instagram', {
             label: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'),
             command: 'insertInstagram',
-            toolbar: 'insert'
+            toolbar: 'social'
         });
     }
 });
@@ -1427,7 +1427,7 @@ CKEDITOR.plugins.add( 'soundcloud', {
         editor.ui.addButton( 'Soundcloud', {
             label: Joomla.JText._('COM_KUNENA_EDITOR_SOUNDCLOUD'),
             command: 'insertSoundcloud',
-            toolbar: 'insert'
+            toolbar: 'social'
         });
     }
 });
@@ -1442,7 +1442,7 @@ CKEDITOR.plugins.add( 'twitter', {
         editor.ui.addButton( 'Twitter', {
             label: Joomla.JText._('COM_KUNENA_EDITOR_TWEET'),
             command: 'insertTwitter',
-            toolbar: 'others'
+            toolbar: 'social'
         });
     }
 });

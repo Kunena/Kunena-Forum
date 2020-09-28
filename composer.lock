@@ -1027,16 +1027,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.4.11",
+            "version": "v4.4.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "2727aa35fddfada1dd37599948528e9b152eb742"
+                "reference": "5ef0f6c609c1a36f723880dfe78301199bc96868"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/2727aa35fddfada1dd37599948528e9b152eb742",
-                "reference": "2727aa35fddfada1dd37599948528e9b152eb742",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/5ef0f6c609c1a36f723880dfe78301199bc96868",
+                "reference": "5ef0f6c609c1a36f723880dfe78301199bc96868",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-05T09:39:30+00:00"
+            "time": "2020-09-02T16:08:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2459,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "0323d0d0741b0c9096bec5a015fc39444dd28cf5"
+                "reference": "d5a1e284fccc271121bfc096bc72e34ea61293a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/0323d0d0741b0c9096bec5a015fc39444dd28cf5",
-                "reference": "0323d0d0741b0c9096bec5a015fc39444dd28cf5",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/d5a1e284fccc271121bfc096bc72e34ea61293a7",
+                "reference": "d5a1e284fccc271121bfc096bc72e34ea61293a7",
                 "shasum": ""
             },
             "require": {
@@ -2502,7 +2502,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2020-05-01T19:53:33+00:00"
+            "time": "2020-09-18T20:24:29+00:00"
         },
         {
             "name": "joomla/cms-coding-standards",

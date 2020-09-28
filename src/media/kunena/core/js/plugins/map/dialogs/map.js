@@ -21,7 +21,7 @@ CKEDITOR.dialog.add( 'mapDialog', function( editor ) {
     type: 'select',
     id: 'maptype',
     label: 'Select the map type',
-    items: [ [ 'Hybrid' ], [ 'Roadmap' ], [ 'Terrain' ], [ 'Satelite' ] ],
+    items: [ [ 'HYBRID' ], [ 'ROADMAP' ], [ 'TERRAIN' ], [ 'SATELITE' ] ],
     'default': 'Roadmap',
     onChange: function( api ) {
         // this = CKEDITOR.ui.dialog.select
@@ -55,7 +55,7 @@ CKEDITOR.dialog.add( 'mapDialog', function( editor ) {
             
             abbr.setText( dialog.getValueOf( 'tab-basic', 'city' ) );
 
-            editor.insertHtml( '[map]' + dialog.getValueOf( 'tab-basic', 'city' ) + '[/map]' );
+            editor.insertHtml( '[map type='+dialog.getValueOf( 'tab-basic', 'maptype' )+' mode='+dialog.getValueOf( 'tab-basic', 'zoomlevel' )+']' + dialog.getValueOf( 'tab-basic', 'city' ) + '[/map]' );
         }
 	};
 });

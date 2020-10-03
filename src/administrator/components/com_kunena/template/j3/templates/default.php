@@ -133,7 +133,7 @@ HTMLHelper::_('dropdown.init');
 						<th width="25%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
 						<th width="30%"></th>
 					</tr>
-					<?php if ($this->templatesxml) : ?>
+					<?php if ($this->templatesxml!==FALSE) : ?>
 						<?php foreach ($this->templatesxml as $row) : ?>
 							<tr>
 								<td style="width: 5%;"><?php echo $row->price;?>
@@ -166,7 +166,7 @@ HTMLHelper::_('dropdown.init');
 							<?php endforeach; ?>
 						<?php else : ?>
 							<tr>
-								<td style="width: 30%;"> Could not connect to Kunena server. Please try again later.
+								<td style="width: 30%;"><?php echo Text::_('COM_KUNENA_ADMIN_TEMPLATE_MANAGER_ERROR_CANNOT_CONNECT_TO_KUNENA_SERVER'); ?> 
 								</td>
 							</tr>
 						<?php endif; ?>

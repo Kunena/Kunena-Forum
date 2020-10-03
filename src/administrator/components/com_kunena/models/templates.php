@@ -327,39 +327,52 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	public function loadTemplatesXml()
 	{
 		$this->template = array();
-		$context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+
 		$url = 'https://update.kunena.org/templates.xml';
 
-		$xml = file_get_contents($url, false, $context);
-		$xml = simplexml_load_string($xml);
+		$options = new Joomla\Registry\Registry;
 
-		if ($xml)
+		$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new Joomla\CMS\Http\Http($options, $transport);
+
+		$response = $http->get($url);
+
+		if ($response->code == '200')
 		{
-			foreach ($xml->templates as $template)
+			$xml = simplexml_load_string($response->body);
+
+			if ($xml)
 			{
-				foreach ($template as $temp)
+				foreach ($xml->templates as $template)
 				{
-					$attributes                  = $temp->attributes();
-					$temp                        = new stdClass;
-					$temp->name                  = (string) $attributes->name;
-					$temp->type                  = (string) $attributes->element;
-					$temp->created               = (string) $attributes->created;
-					$temp->author                = (string) $attributes->author;
-					$temp->version               = (string) $attributes->version;
-					$temp->description           = (string) $attributes->description;
-					$temp->detailsurl            = (string) $attributes->detailsurl;
-					$temp->price                 = (string) $attributes->price;
-					$temp->thumbnail             = (string) $attributes->thumbnail;
-					$temp->authorurl             = (string) $attributes->authorurl;
-					$temp->authoremail           = (string) $attributes->authoremail;
-					$this->template[$temp->name] = $temp;
+					foreach ($template as $temp)
+					{
+						$attributes                  = $temp->attributes();
+						$temp                        = new stdClass;
+						$temp->name                  = (string) $attributes->name;
+						$temp->type                  = (string) $attributes->element;
+						$temp->created               = (string) $attributes->created;
+						$temp->author                = (string) $attributes->author;
+						$temp->version               = (string) $attributes->version;
+						$temp->description           = (string) $attributes->description;
+						$temp->detailsurl            = (string) $attributes->detailsurl;
+						$temp->price                 = (string) $attributes->price;
+						$temp->thumbnail             = (string) $attributes->thumbnail;
+						$temp->authorurl             = (string) $attributes->authorurl;
+						$temp->authoremail           = (string) $attributes->authoremail;
+						$this->template[$temp->name] = $temp;
+					}
 				}
+
+				return $this->template;
 			}
-
-			return $this->template;
 		}
-
-		return false;
+		else 
+		{
+			return false;
+		}
 	}
 
 	/**

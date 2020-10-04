@@ -27,7 +27,25 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
+var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+var pollexist = jQuery('#poll_exist_edit');
+
+	if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+		var catid = jQuery('#kcategory_poll').val();
+
+		if (pollcategoriesid[catid] !== undefined) {
+			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
+		}
+		else {
+			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks,Polls';
+		}
+	}
+	else if (pollexist.length > 0) {
+		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
+	}
+	else {
+		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks,Polls';
+	}
 
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = [

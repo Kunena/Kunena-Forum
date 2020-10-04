@@ -1143,26 +1143,6 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 												</tr>
 												</thead>
 												<tbody>
-												<tr <?php if ($this->config->disemoticons != 0) : echo 'class="changed"'; endif; ?>>
-													<td><?php echo Text::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
-													<td><?php echo $this->lists ['disemoticons'] ?></td>
-													<td><?php echo Text::_('COM_KUNENA_A_DISEMOTICONS_DESC') ?></td>
-												</tr>
-												<tr <?php if ($this->config->showspoilertag != 1) : echo 'class="changed"'; endif; ?>>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWSPOILERTAG') ?></td>
-													<td><?php echo $this->lists ['showspoilertag'] ?></td>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWSPOILERTAG_DESC') ?></td>
-												</tr>
-												<tr <?php if ($this->config->showvideotag != 1) : echo 'class="changed"'; endif; ?>>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWVIDEOTAG') ?></td>
-													<td><?php echo $this->lists ['showvideotag'] ?></td>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWVIDEOTAG_DESC') ?></td>
-												</tr>
-												<tr <?php if ($this->config->showebaytag != 1) : echo 'class="changed"'; endif; ?>>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWEBAYTAG') ?></td>
-													<td><?php echo $this->lists ['showebaytag'] ?></td>
-													<td><?php echo Text::_('COM_KUNENA_A_SHOWEBAYTAG_DESC') ?></td>
-												</tr>
 												<tr <?php if ($this->config->trimlongurls != 1) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_A_TRIMLONGURLS') ?></td>
 													<td><?php echo $this->lists ['trimlongurls'] ?></td>

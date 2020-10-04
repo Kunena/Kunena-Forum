@@ -108,9 +108,6 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
-// If polls are enabled, load also poll JavaScript.
-$this->addScript('assets/js/pollcheck.js');
-
 if ($this->config->pollenabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');

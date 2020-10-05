@@ -120,7 +120,6 @@ if ($this->config->pollenabled)
 $this->addScript('ckeditor.js');
 $this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
 
-$this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
 

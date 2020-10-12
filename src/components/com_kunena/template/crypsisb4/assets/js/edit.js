@@ -268,12 +268,12 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid}
 			})
 				.done(function (data) {
-					if ($('#editor').val().length > 1) {
-						if ($('#editor').val().length > 1) {
+					if ($('#message').val().length > 1) {
+						if ($('#message').val().length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#editor').val(category_template_text);
+							$('#message').val(category_template_text);
 						}
 					}
 					else {
@@ -281,7 +281,7 @@ jQuery(document).ready(function ($) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#editor').val(data);
+							$('#message').val(data);
 						}
 					}
 

@@ -34,17 +34,17 @@ var pollexist = jQuery('#poll_exist_edit');
 		var catid = jQuery('#kcategory_poll').val();
 
 		if (pollcategoriesid[catid] !== undefined) {
-			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
+			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
 		}
 		else {
-			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks,Polls';
+			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks,Polls';
 		}
 	}
 	else if (pollexist.length > 0) {
-		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks';
+		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
 	}
 	else {
-		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Blockquote,Anchor,CreateDiv,ShowBlocks,Polls';
+		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks,Polls';
 	}
 
 	config.smiley_path = '/media/kunena/emoticons/';

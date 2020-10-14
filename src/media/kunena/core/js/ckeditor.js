@@ -1472,21 +1472,6 @@ CKEDITOR.plugins.add( 'video', {
 		CKEDITOR.dialog.add( 'videoDialog', this.path + 'dialogs/video.js' );
 	}
 });
-CKEDITOR.plugins.add( 'quote', {
-    icons: 'quote',
-    init: function( editor ) {
-        editor.addCommand( 'insertQuote', {
-            exec: function( editor ) {
-                editor.insertHtml( '[quote][/quote]' );
-            }
-        });
-        editor.ui.addButton( 'Quote', {
-            label: Joomla.JText._('COM_KUNENA_EDITOR_QUOTE'),
-            command: 'insertQuote',
-            toolbar: 'insert'
-        });
-    }
-});
 CKEDITOR.plugins.add( 'confidential', {
     icons: 'confidential',
     init: function( editor ) {

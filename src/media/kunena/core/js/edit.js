@@ -63,10 +63,6 @@ jQuery(document).ready(function ($) {
 			item = '.qreply';
 		}
 
-		if ($('#wysibb-body').length > 0) {
-			item = '#wysibb-body';
-		}
-
 		if (item != undefined) {
 			$(item).atwho({
 				at: ":",
@@ -121,20 +117,6 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('.Kreplyclick').click(function () {
-		var name = '#' + $(this).attr('data-related');
-		if ($(name).is(":visible")) {
-			$(name).hide();
-		}
-		else {
-			$(name).show();
-		}
-	});
-
-	$('.kreply-cancel').click(function () {
-		$('.qreplyform').hide();
-	});
-
 	$('#form_submit_button').click(function () {
 		$("#subject").attr('required', 'required');
 		$("#editor").attr('required', 'required');
@@ -145,6 +127,30 @@ jQuery(document).ready(function ($) {
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = $('#kurl_topicons_request').val();
+		var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+		var pollexist = jQuery('#poll_exist_edit');
+		var pollcatid = jQuery('#poll_catid').val();
+
+		if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) 
+		{
+			if(pollcatid !== undefined)
+			{
+				var catid = jQuery('#kcategory_poll').val();
+			}
+
+			if (pollcategoriesid[catid] !== undefined) {
+				$('.cke_button__polls').show();
+			}
+			else {
+				$('.cke_button__polls').hide();
+			}
+		}
+		else if (pollexist.length > 0) {
+			$('.cke_button__polls').show();
+		}
+		else {
+			$('.cke_button__polls').hide();
+		}
 
 		if ($('#kanynomous-check').length > 0) {
 			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
@@ -194,12 +200,12 @@ jQuery(document).ready(function ($) {
 
 						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
 							var label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<span>', {
-								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
+								'class': 'icon icon-topic icon-' + value.b2,
 								'border': '0',
 								'al': ''
 							}));
@@ -282,8 +288,8 @@ jQuery(document).ready(function ($) {
 
 	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for poll
-		$('#datepoll-container .input-group.date').datepicker({
-			orientation: "bottom auto"
+		$('#datepoll-container .input-append.date').datepicker({
+			orientation: "top auto"
 		});
 	}
 

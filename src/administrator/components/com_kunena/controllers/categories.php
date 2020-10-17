@@ -512,12 +512,9 @@ class KunenaAdminControllerCategories extends KunenaController
 
 			$aliases = $app->input->post->getArray(array('aliases' => ''));
 
-			if ($aliases_all)
+			if ($aliases_all && $aliases)
 			{
-				if ($aliases)
-				{
-					$aliases = array_diff($aliases_all, $aliases['aliases']);
-				}
+				$aliases = array_diff($aliases_all, $aliases);
 
 				foreach ($aliases_all as $alias)
 				{

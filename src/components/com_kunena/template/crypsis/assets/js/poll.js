@@ -77,21 +77,6 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var postcatid = $('#postcatid');
-	if (postcatid !== undefined) {
-		postcatid.change(function () {
-			var catid = $('select#postcatid option').filter(':selected').val();
-			var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-
-			if (pollcategoriesid[catid] !== undefined) {
-				$('.pollbutton').show();
-			}
-			else {
-				$('.pollbutton').hide();
-			}
-		});
-	}
-
 	var results = $('#poll-results');
 	var hide = $('#kpoll_hide_results');
 

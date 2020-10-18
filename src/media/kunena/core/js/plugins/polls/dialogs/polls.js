@@ -12,41 +12,50 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		title: 'Polls Properties',
 		minWidth: 400,
 		minHeight: 200,
-		contents: [
-            {
-                id: 'tab-basic',
-                label: 'Basic Settings',
-                elements: [
-                    {
-		type: 'text',
-		id: 'polltitle',
-		label: 'Poll title',
-		default: ''
-	},
- {
-    type: 'select',
-    id: 'zoomlevel',
-    label: 'Select the zoom level',
-    items: [ [ '2' ], [ '4' ], [ '6' ], [ '8' ], [ '10' ], [ '12' ], [ '14' ], [ '16' ], [ '18' ] ],
-    'default': '10',
-    onChange: function( api ) {
-        // this = CKEDITOR.ui.dialog.select
-    }
-},
-{
-                        type: 'text',
-                        id: 'city',
-                        label: 'City',
-                        default: '',
-                        validate: CKEDITOR.dialog.validate.notEmpty( "City cannot be empty." )
-                    }
-                ]
-            }
-        ],
-        onOk: function() {
-            var dialog = this;
+		contents: 
+		[
+			{
+				id: 'tab-basic',
+				label: 'Basic Settings',
+				elements: 
+				[
+					{
+						type: 'text',
+						id: 'polltitle',
+						label: 'Poll title',
+						default: ''
+					},
+					{
+						type: 'button',
+						id: 'polladdoption',
+						label: 'Add option',
+						title: 'Add option',
+						onClick: function() {
+							// this = CKEDITOR.ui.dialog.button
+							//alert( 'Clicked: ' + this.id );
+						}
+					},
+					{
+						type: 'button',
+						id: 'pollremoveoption',
+						label: 'Remove option',
+						title: 'Remove option',
+						onClick: function() {
+							// this = CKEDITOR.ui.dialog.button
+							//alert( 'Clicked: ' + this.id );
+						}
+					},
+					{
+						type: 'text',
+						id: 'polllifespan',
+						label: 'Poll life span (optional)',
+						default: ''
+					}
+				]
+			}
+		],
+		onOk: function() {
 
-            var abbr = editor.document.createElement( 'city' );
-        }
+		}
 	};
 });

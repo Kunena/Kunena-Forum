@@ -16,7 +16,7 @@ $this->addScript('ckeditor.js');
 $this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
 $this->addScriptOptions('com_kunena.ckeditor_base', JUri::root());
 
-$this->addScript('assets/js/edit.js');
+$this->addScript('edit.js');
 
 echo $this->subLayout('Widget/Datepicker');
 

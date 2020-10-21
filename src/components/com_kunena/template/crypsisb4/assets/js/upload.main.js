@@ -21,8 +21,7 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		var value = $('#editor').val();
-		$('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		CKEDITOR.instances.message.setData(' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
 		if (button !== undefined) {
 			button.removeClass('btn-primary');

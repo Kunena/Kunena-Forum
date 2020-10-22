@@ -15,9 +15,7 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -48,15 +46,15 @@ class UserController extends FormController
 	 *
 	 * @see     BaseController
 	 *
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
-	 * @param   Input                $input    Input
+	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface|null  $factory  The factory.
+	 * @param   null                      $app      The CMSApplication for the dispatcher
+	 * @param   null                      $input    Input
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -69,7 +67,7 @@ class UserController extends FormController
 	 * Method to save the form data.
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -77,7 +75,7 @@ class UserController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -101,9 +99,9 @@ class UserController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function saveInternal($type)
+	protected function saveInternal(string $type): void
 	{
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
@@ -121,7 +119,7 @@ class UserController extends FormController
 			$user = KunenaFactory::getUser($uid);
 
 			// Prepare variables
-			if ($deleteSig == 1)
+			if ($deleteSig === 1)
 			{
 				$user->signature = '';
 			}
@@ -155,7 +153,7 @@ class UserController extends FormController
 			$user->ordering     = $neworder;
 			$user->rank         = $newrank;
 
-			if ($deleteAvatar == 1)
+			if ($deleteAvatar === 1)
 			{
 				$user->avatar = '';
 			}
@@ -169,7 +167,7 @@ class UserController extends FormController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
 			}
 
-			if ($type == 'save')
+			if ($type === 'save')
 			{
 				$this->setModerate($user, $modCatids);
 			}
@@ -180,13 +178,13 @@ class UserController extends FormController
 
 				foreach ($categories as $category)
 				{
-					$category->setModerator($user, in_array($category->id, $modCatids));
+					$category->setModerator($user, in_array($category->id, $modCatids, true));
 				}
 
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+					Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -204,7 +202,7 @@ class UserController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function cleanSocial(&$user, $app)
+	protected function cleanSocial(&$user, $app): void
 	{
 		foreach ($user->socialButtons() as $key => $social)
 		{
@@ -224,20 +222,20 @@ class UserController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	protected function setModerate(KunenaUser $user, $modCatids)
+	protected function setModerate(KunenaUser $user, $modCatids): bool
 	{
 		// Update moderator rights
 		$categories = CategoryHelper::getCategories(false, false, 'admin');
 
 		foreach ($categories as $category)
 		{
-			$category->setModerator($user, in_array($category->id, $modCatids));
+			$category->setModerator($user, in_array($category->id, $modCatids, true));
 		}
 
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+			Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
 		}
 
 		return true;
@@ -252,7 +250,7 @@ class UserController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function apply()
+	public function apply(): void
 	{
 		if (!Session::checkToken('post'))
 		{

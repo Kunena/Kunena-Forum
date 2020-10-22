@@ -737,7 +737,7 @@ class KunenaUser extends CMSObject
 				}
 				break;
 			case 'edit' :
-				if (!isset($this->registerDate) || !$this->isMyself() && !$user->isAdmin() && !$user->isModerator())
+				if (!isset($this->registerDate) || (!$this->isMyself() && !$user->isAdmin() && !$user->isModerator()))
 				{
 					$exception = new Authorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}

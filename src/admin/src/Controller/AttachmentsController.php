@@ -61,7 +61,7 @@ class AttachmentsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function delete()
+	public function delete(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -107,7 +107,7 @@ class AttachmentsController extends FormController
 
 			if ($topic->attachments > 0)
 			{
-				$topic->attachments = $topic->attachments - 1;
+				--$topic->attachments;
 				$topic->save(false);
 			}
 		}

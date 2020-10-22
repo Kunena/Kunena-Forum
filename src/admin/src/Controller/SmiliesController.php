@@ -65,7 +65,7 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function add()
+	public function add(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -82,7 +82,7 @@ class SmiliesController extends FormController
 	 * Edit
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *
@@ -90,7 +90,7 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function edit($key = null, $urlVar = null)
+	public function edit($key = null, $urlVar = null): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -120,7 +120,7 @@ class SmiliesController extends FormController
 	 * Save
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *
@@ -128,7 +128,7 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function save($key = null, $urlVar = null)
+	public function save($key = null, $urlVar = null): void
 	{
 		$db = Factory::getDbo();
 
@@ -234,7 +234,7 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function remove()
+	public function remove(): void
 	{
 		$db = Factory::getDbo();
 
@@ -285,7 +285,7 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function cancel($key = null)
+	public function cancel($key = null): void
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}

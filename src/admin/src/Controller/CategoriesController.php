@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -31,6 +32,7 @@ use function defined;
  * Kunena Categories Controller
  *
  * @since   Kunena 2.0
+ * @property  $me  KunenaUser
  */
 class CategoriesController extends FormController
 {
@@ -82,9 +84,9 @@ class CategoriesController extends FormController
 	/**
 	 * Set variable
 	 *
-	 * @param   int      $cid       id
-	 * @param   string   $variable  variable
-	 * @param   string   $value     value
+	 * @param   int     $cid       id
+	 * @param   string  $variable  variable
+	 * @param   string  $value     value
 	 *
 	 * @return  void
 	 *
@@ -375,8 +377,8 @@ class CategoriesController extends FormController
 	/**
 	 * Edit
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  urlvar
 	 *
 	 * @return  void
 	 *
@@ -492,7 +494,7 @@ class CategoriesController extends FormController
 	/**
 	 * Cancel
 	 *
-	 * @param   null  $key key
+	 * @param   null  $key  key
 	 *
 	 * @return  void
 	 *

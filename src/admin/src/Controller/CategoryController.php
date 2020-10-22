@@ -15,11 +15,8 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -52,17 +49,13 @@ class CategoryController extends FormController
 	 *
 	 * @see     BaseController
 	 *
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The CMSApplication for the dispatcher
-	 * @param   Input                $input    Input
-	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = array())
 	{
 		parent::__construct($config);
 
@@ -89,7 +82,7 @@ class CategoryController extends FormController
 
 		if ($this->app->isClient('administrator'))
 		{
-			if ($this->task == 'apply')
+			if ($this->task === 'apply')
 			{
 				$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$post_catid}", false));
 			}
@@ -136,7 +129,7 @@ class CategoryController extends FormController
 		$post       = $input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
-		if ($post['task'] == 'save2copy')
+		if ($post['task'] === 'save2copy')
 		{
 			$post['title'] = $this->app->getUserState('com_kunena.category_title');
 			$post['alias'] = $this->app->getUserState('com_kunena.category_alias');

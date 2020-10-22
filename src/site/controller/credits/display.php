@@ -78,7 +78,7 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 		if (PluginHelper::isEnabled('kunena', 'powered'))
 		{
 			$this->baseurl = 'index.php?option=com_kunena';
-			$this->app->redirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_($this->baseurl, false));
+			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 		}
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
@@ -87,7 +87,7 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 

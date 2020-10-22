@@ -76,7 +76,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 			if (!$default || $default->id == $home->id)
 			{
 				// There is no default menu item, use category view instead.
-				$default = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID('index.php?option=com_kunena&view=category&layout=list'));
+				$default = $menu->getItem(KunenaRoute::getItemID('index.php?option=com_kunena&view=category&layout=list'));
 
 				if ($default)
 				{

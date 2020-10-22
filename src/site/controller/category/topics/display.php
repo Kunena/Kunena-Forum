@@ -110,7 +110,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 
@@ -161,7 +161,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		if ($limitstart > 1 && !$this->topics)
 		{
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 

@@ -147,7 +147,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(\Kunena\Forum\Libraries\Route\KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
 				$itemidfix = $getid->id;
 			}
 
@@ -157,7 +157,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 

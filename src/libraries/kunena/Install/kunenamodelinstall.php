@@ -504,7 +504,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			}
 		}
 
-		/** @var \Joomla\CMS\Cache\Cache|CacheController $cache */
+		/** @var Cache|CacheController $cache */
 		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
 	}
@@ -655,7 +655,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		// Only install module if it can be used in current Joomla version (manifest exists)
 		if ($success && is_file("{$dest}/mod_{$name}.xml"))
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Installer;
 			$success   = $installer->install($dest);
 			$this->addStatus(Text::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		}
@@ -781,7 +781,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
 		if ($success && is_file("{$dest}/{$name}.xml"))
 		{
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Installer;
 			$success   = $installer->install($dest);
 
 			if ($success)
@@ -1154,7 +1154,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   array    $versionlist  versionlist
 	 * @param   boolean  $state        state
 	 *
-	 * @return  mixed|null|\StdClass
+	 * @return  mixed|null|stdClass
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1234,7 +1234,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			}
 
 			// Create version object
-			$version              = new \StdClass;
+			$version              = new stdClass;
 			$version->id          = 0;
 			$version->component   = $match ['component'];
 			$version->version     = strtoupper($match ['version']);
@@ -2632,7 +2632,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @return  mixed|\stdClass
+	 * @return  mixed|stdClass
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2641,7 +2641,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	protected function getAvatarStatus()
 	{
 		$app            = Factory::getApplication();
-		$stats          = new \stdClass;
+		$stats          = new stdClass;
 		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		$stats          = $app->getUserState('com_kunena.install.avatars', $stats);
 
@@ -2901,7 +2901,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  mixed|\stdClass
+	 * @return  mixed|stdClass
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2910,7 +2910,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	protected function getAttachmentStatus()
 	{
 		$app            = Factory::getApplication();
-		$stats          = new \stdClass;
+		$stats          = new stdClass;
 		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		$stats          = $app->getUserState('com_kunena.install.attachments', $stats);
 
@@ -3264,7 +3264,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			$query->select('MAX(id)')->from('#__kunena_messages');
 			$db->setQuery($query);
 
-			$state        = new \stdClass;
+			$state        = new stdClass;
 			$state->step  = 0;
 			$state->maxId = (int) $db->loadResult();
 			$state->start = 0;

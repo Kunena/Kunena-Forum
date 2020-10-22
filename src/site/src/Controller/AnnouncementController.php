@@ -37,7 +37,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function none()
@@ -51,7 +51,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function publish()
@@ -119,7 +119,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function unpublish()
@@ -187,7 +187,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function edit()
@@ -205,7 +205,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function delete()
@@ -265,7 +265,7 @@ class AnnouncementController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function save()

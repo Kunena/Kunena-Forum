@@ -100,12 +100,12 @@ class Base extends LayoutBase
 	/**
 	 * Method to instantiate the layout.
 	 *
-	 * @param   string  $name   name
-	 * @param   array   $paths  The paths queue.
+	 * @param   string      $name   name
+	 * @param   array|null  $paths  The paths queue.
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function __construct($name, array $paths = null)
 	{
@@ -793,9 +793,9 @@ class Base extends LayoutBase
 	 * By using $this->subRequest() instead of \Kunena\Forum\Libraries\Request\Request::factory() you can make your
 	 * template files both easier to read and gain some context awareness.
 	 *
-	 * @param   string  $path     path
-	 * @param   Input   $input    input
-	 * @param   mixed   $options  options
+	 * @param   string      $path     path
+	 * @param   Input|null  $input    input
+	 * @param   mixed       $options  options
 	 *
 	 * @return  KunenaControllerDisplay|Layout
 	 *

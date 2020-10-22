@@ -301,8 +301,8 @@ class Announcement extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
 	 *
 	 * @return  boolean
 	 *
@@ -316,16 +316,14 @@ class Announcement extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
-	 * @param   bool        $throw   trow
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
+	 * @param   bool             $throw   trow
 	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  InvalidArgumentException
-	 * @throws  Authorise
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{

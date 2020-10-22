@@ -37,16 +37,16 @@ class Entry
 	public $data;
 
 	/**
-	 * @param   mixed       $type       type
-	 * @param   mixed       $operation  operation
-	 * @param   mixed       $data       data
-	 * @param   Category    $category   category
-	 * @param   Topic       $topic      topic
-	 * @param   KunenaUser  $user       user
+	 * @param   mixed            $type       type
+	 * @param   mixed            $operation  operation
+	 * @param   mixed            $data       data
+	 * @param   Category|null    $category   category
+	 * @param   Topic|null       $topic      topic
+	 * @param   KunenaUser|null  $user       user
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function __construct(
 		$type,

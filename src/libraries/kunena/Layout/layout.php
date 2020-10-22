@@ -253,21 +253,20 @@ class Layout extends Base
 	}
 
 	/**
-	 * @param   Topic     $topic      topic
-	 * @param   null      $action     action
-	 * @param   null      $content    content
-	 * @param   null      $title      title
-	 * @param   null      $class      class
-	 * @param   Category  $category   category
-	 * @param   bool      $follow     follow
-	 * @param   bool      $canonical  canonical
+	 * @param   Topic          $topic      topic
+	 * @param   null           $action     action
+	 * @param   null           $content    content
+	 * @param   null           $title      title
+	 * @param   null           $class      class
+	 * @param   Category|null  $category   category
+	 * @param   bool           $follow     follow
+	 * @param   bool           $canonical  canonical
 	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function getTopicLink(Topic $topic, $action = null, $content = null, $title = null, $class = null, Category $category = null, $follow = true, $canonical = false)
 	{

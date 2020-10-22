@@ -100,9 +100,9 @@ class KunenaApplication extends WebApplication
 	protected $userstate = [];
 
 	/**
-	 * @param   Input      $input   input
-	 * @param   Registry   $config  config
-	 * @param   WebClient  $client  client
+	 * @param   Input|null      $input   input
+	 * @param   Registry|null   $config  config
+	 * @param   WebClient|null  $client  client
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -139,7 +139,7 @@ class KunenaApplication extends WebApplication
 	}
 
 	/**
-	 * @param   Session  $session  session
+	 * @param   Session|null  $session  session
 	 *
 	 * @return  $this
 	 *

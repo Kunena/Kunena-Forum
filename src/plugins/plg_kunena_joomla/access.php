@@ -263,7 +263,7 @@ class AccessJoomla
 	 *
 	 * Results may be cached.
 	 *
-	 * @param   array  $categories  List of categories, null = all.
+	 * @param   array|null  $categories  List of categories, null = all.
 	 *
 	 * @return  array of (catid=>userid)
 	 *

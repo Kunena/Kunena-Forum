@@ -238,14 +238,14 @@ class TopicUser extends CMSObject
 	}
 
 	/**
-	 * @param   Message  $message    message
-	 * @param   int      $postDelta  postdelta
+	 * @param   Message|null  $message    message
+	 * @param   int           $postDelta  postdelta
 	 *
 	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function update(Message $message = null, $postDelta = 0)
 	{

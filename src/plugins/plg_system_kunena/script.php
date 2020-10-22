@@ -78,9 +78,12 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 
 	/**
 	 *  Constructor
-	 * @param   string                                        $type   'install', 'update' or 'discover_install'
+	 *
+	 * @param   string  $type  'install', 'update' or 'discover_install'
 	 *
 	 * @since   Kunena 6.0
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function __construct($type)
 	{
@@ -158,9 +161,9 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * @param   string $group   group
-	 * @param   string $element element
+	 * @param $pluginName
 	 *
+	 * @return false
 	 * @since version
 	 */
 	public function enablePlugin($pluginName)

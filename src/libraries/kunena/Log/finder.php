@@ -48,8 +48,8 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Date  $starting  Starting date or null if older than ending date.
-	 * @param   Date  $ending    Ending date or null if newer than starting date.
+	 * @param   Date|null  $starting  Starting date or null if older than ending date.
+	 * @param   Date|null  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return  $this
 	 *
@@ -150,7 +150,7 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  void
 	 *

@@ -110,6 +110,8 @@ class PlgSampledataKunena extends CMSPlugin
 	 * @return  array|void  Will be converted into the JSON response to the module.
 	 *
 	 * @since   4.0.0
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function onAjaxSampledataApplyStep1()
 	{

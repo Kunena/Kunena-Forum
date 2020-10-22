@@ -45,9 +45,9 @@ class Request
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string  $path     Controller path.
-	 * @param   Input   $input    input
-	 * @param   mixed   $options  options
+	 * @param   string      $path     Controller path.
+	 * @param   Input|null  $input    input
+	 * @param   mixed       $options  options
 	 *
 	 * @return  KunenaControllerBase| KunenaControllerDisplay
 	 *

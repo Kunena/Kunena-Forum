@@ -1201,17 +1201,16 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Topic     $topic     topic
-	 * @param   bool      $xhtml     xhtml
-	 * @param   null      $action    actions
-	 * @param   Category  $category  category
+	 * @param   Topic          $topic     topic
+	 * @param   bool           $xhtml     xhtml
+	 * @param   null           $action    actions
+	 * @param   Category|null  $category  category
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public static function getTopicUrl(Topic $topic, $xhtml = true, $action = null, Category $category = null)
 	{
@@ -1224,17 +1223,16 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   Message   $message   message
-	 * @param   bool      $xhtml     xhtml
-	 * @param   Topic     $topic     topic
-	 * @param   Category  $category  category
+	 * @param   Message        $message   message
+	 * @param   bool           $xhtml     xhtml
+	 * @param   Topic|null     $topic     topic
+	 * @param   Category|null  $category  category
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public static function getMessageUrl(Message $message, $xhtml = true, Topic $topic = null, Category $category = null)
 	{

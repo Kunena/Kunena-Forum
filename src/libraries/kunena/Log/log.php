@@ -395,18 +395,18 @@ class Log
 	/**
 	 * Log new entry.
 	 *
-	 * @param   int           $type       Log entry type.
-	 * @param   string        $operation  Performed operation.
-	 * @param   string|array  $data       JSON encoded string.
-	 * @param   Category      $category   Target category.
-	 * @param   Topic         $topic      Target topic.
-	 * @param   KunenaUser    $user       Target user.
+	 * @param   int              $type       Log entry type.
+	 * @param   string           $operation  Performed operation.
+	 * @param   string|array     $data       JSON encoded string.
+	 * @param   Category|null    $category   Target category.
+	 * @param   Topic|null       $topic      Target topic.
+	 * @param   KunenaUser|null  $user       Target user.
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public static function log(
 		$type,

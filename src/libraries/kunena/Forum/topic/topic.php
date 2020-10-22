@@ -1464,15 +1464,14 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
@@ -1491,15 +1490,15 @@ class Topic extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
-	 * @param   bool        $throw   throw
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
+	 * @param   bool             $throw   throw
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{

@@ -229,13 +229,13 @@ class KunenaAccessComprofiler
 	 *
 	 * Results may be cached.
 	 *
-	 * @param   array  $categories  List of categories, null = all.
+	 * @param   array|null  $categories  List of categories, null = all.
 	 *
 	 * @return  array(array => u, 'category_id'=>c, 'role'=>r))
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{

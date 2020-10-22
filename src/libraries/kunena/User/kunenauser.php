@@ -681,14 +681,14 @@ class KunenaUser extends CMSObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
@@ -698,15 +698,15 @@ class KunenaUser extends CMSObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
-	 * @param   bool        $throw   throw
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
+	 * @param   bool             $throw   throw
 	 *
 	 * @return  Authorise|boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -810,13 +810,13 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
-	 * @param   Category  $category  category
+	 * @param   Category|null  $category  category
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isAdmin(Category $category = null)
 	{
@@ -828,13 +828,13 @@ class KunenaUser extends CMSObject
 	 *
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
-	 * @param   Category  $category  category
+	 * @param   Category|null  $category  category
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isModerator(Category $category = null)
 	{

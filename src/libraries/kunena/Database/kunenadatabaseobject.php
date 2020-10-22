@@ -102,9 +102,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * This method optionally takes an array of properties to ignore or allow when binding.
 	 *
-	 * @param   array    $src      An associative array or object to bind to the Joomla\CMS\Table\Table instance.
-	 * @param   array    $fields   An optional array list of properties to ignore / include only while binding.
-	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
+	 * @param   array|null  $src      An associative array or object to bind to the Joomla\CMS\Table\Table instance.
+	 * @param   array|null  $fields   An optional array list of properties to ignore / include only while binding.
+	 * @param   boolean     $include  True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
 	 *

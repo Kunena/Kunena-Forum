@@ -32,12 +32,13 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @internal param null $tpl
 	 *
+	 * @param   null  $tpl
+	 *
 	 * @return  void
 	 *
 	 * @since    Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function displayDefault($tpl = null)
 	{

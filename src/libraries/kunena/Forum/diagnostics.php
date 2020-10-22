@@ -317,7 +317,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -361,7 +361,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -423,7 +423,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -455,7 +455,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -499,7 +499,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -543,7 +543,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -587,7 +587,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -604,7 +604,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -648,7 +648,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -719,7 +719,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -763,7 +763,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -807,7 +807,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -851,7 +851,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -894,7 +894,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -936,7 +936,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -980,7 +980,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1024,7 +1024,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1068,7 +1068,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1112,7 +1112,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1156,7 +1156,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1200,7 +1200,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1244,7 +1244,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1288,7 +1288,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1332,7 +1332,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1376,7 +1376,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1420,7 +1420,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1464,7 +1464,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1509,7 +1509,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1553,7 +1553,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1597,7 +1597,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1641,7 +1641,7 @@ abstract class Diagnostics
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  array
 	 *
@@ -1667,10 +1667,10 @@ abstract class Diagnostics
 	//      $db    = Factory::getDbo();
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	// 
+	//
 	//      return $query;
 	//  }
-	// 
+	//
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *
@@ -1683,10 +1683,10 @@ abstract class Diagnostics
 	//      {
 	//          $query->select('*');
 	//      }
-	// 
+	//
 	//      return array('channels' => 'invalid');
 	//  }
-	// 
+	//
 	//  /**
 	//   * @return QueryInterface
 	//   * @since   Kunena
@@ -1694,7 +1694,7 @@ abstract class Diagnostics
 	//  protected static function fix_topicsownersOrphaned()
 	//  {
 	//      $query = self::query_topicsownersOrphaned()->insert('#__kunena_user_topics');
-	// 
+	//
 	//      return $query;
 	//  }
 }

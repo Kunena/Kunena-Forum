@@ -30,11 +30,13 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @param   null  $tpl
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

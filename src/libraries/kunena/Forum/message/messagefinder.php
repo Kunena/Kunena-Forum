@@ -128,8 +128,8 @@ class MessageFinder extends Finder
 	/**
 	 * Filter by time.
 	 *
-	 * @param   Date  $starting  Starting date or null if older than ending date.
-	 * @param   Date  $ending    Ending date or null if newer than starting date.
+	 * @param   Date|null  $starting  Starting date or null if older than ending date.
+	 * @param   Date|null  $ending    Ending date or null if newer than starting date.
 	 *
 	 * @return  $this
 	 *
@@ -158,8 +158,8 @@ class MessageFinder extends Finder
 	 *
 	 * posted = User has posted the message.
 	 *
-	 * @param   KunenaUser  $user    user
-	 * @param   string      $action  Action or negation of the action (!action).
+	 * @param   KunenaUser|null  $user    user
+	 * @param   string           $action  Action or negation of the action (!action).
 	 *
 	 * @return  $this
 	 *
@@ -239,7 +239,7 @@ class MessageFinder extends Finder
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  void
 	 *

@@ -74,10 +74,10 @@ class KunenaTableMap
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
 	 *
-	 * @param   string          $table   Name of the table to model.
-	 * @param   string          $key     Name of the primary key field in the table.
-	 * @param   string          $mapped  Name of the mapped key field in the table.
-	 * @param   DatabaseDriver  $db      DatabaseDriver object.
+	 * @param   string               $table   Name of the table to model.
+	 * @param   string               $key     Name of the primary key field in the table.
+	 * @param   string               $mapped  Name of the mapped key field in the table.
+	 * @param   DatabaseDriver|null  $db      DatabaseDriver object.
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -364,14 +364,13 @@ class KunenaTableMap
 	 * Method to provide a shortcut to binding, checking and storing a Joomla\CMS\Table\Table
 	 * instance to the database table.
 	 *
-	 * @param   array  $map     An array of mapped Ids.
-	 * @param   array  $filter  Touch only these filtered items.
+	 * @param   array|null  $map     An array of mapped Ids.
+	 * @param   array|null  $filter  Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  UnexpectedValueException
 	 */
 	public function save(array $map = null, array $filter = null)
 	{
@@ -431,13 +430,12 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/store
 	 *
-	 * @param   array  $filter  Touch only these filtered items.
+	 * @param   array|null  $filter  Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  UnexpectedValueException
 	 */
 	public function store(array $filter = null)
 	{

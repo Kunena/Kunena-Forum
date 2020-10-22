@@ -60,14 +60,14 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   Input            $input                           The input object.
-	 * @param   BaseApplication  $app                             The application object.
-	 * @param   Registry|array   $options                         Array Joomla\Registry\Registry object with the
+	 * @param   Input|null  $input                                The input object.
+	 * @param   null        $app                                  The application object.
+	 * @param   null        $options                              Array Joomla\Registry\Registry object with the
 	 *                                                            options to load.
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	public function __construct(Input $input = null, $app = null, $options = null)
 	{

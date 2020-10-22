@@ -12,13 +12,10 @@ defined('_JEXEC') or die();
 
 // Kunena 5.0.5: Update setting allow guest to see userlist
 /**
- * @param   string  $parent parent
- *
  * @return  array
  *
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_505_2016_12_20_userlist()
 {

@@ -179,7 +179,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  ReflectionException
 	 */
 	protected function getFilterOperationFields()
 	{

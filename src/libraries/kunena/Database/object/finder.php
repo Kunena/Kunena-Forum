@@ -250,7 +250,7 @@ abstract class Finder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  void
 	 *

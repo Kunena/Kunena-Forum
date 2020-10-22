@@ -216,7 +216,7 @@ class Access
 	}
 
 	/**
-	 * @param   array  $list  list
+	 * @param   array|null  $list  list
 	 *
 	 * @return  mixed|void
 	 *

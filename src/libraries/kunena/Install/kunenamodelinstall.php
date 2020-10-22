@@ -2424,7 +2424,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  KunenaInstallerException
 	 * @throws  Exception
 	 */
 	public function installSampleData()
@@ -3012,15 +3011,13 @@ class KunenaModelInstall extends BaseDatabaseModel
 	/**
 	 * Build the Kunena menu
 	 *
-	 * @param   array   $menu     menu
-	 * @param   object  $submenu  submenu
+	 * @param   array  $menu  menu
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  KunenaInstallerException
-	 * @throws  Exception
+	 * @throws KunenaInstallerException
 	 */
 	public function buildMenu($menu)
 	{

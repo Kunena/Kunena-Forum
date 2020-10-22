@@ -52,6 +52,8 @@ class KunenaPath extends Path
 	 * @return  string  Path to temporary directory.
 	 *
 	 * @since   Kunena 6.0
+	 * @throws \Exception
+	 * @throws \Exception
 	 */
 	public static function tmpdir()
 	{
@@ -105,6 +107,8 @@ class KunenaPath extends Path
 	 * @return  boolean  True if the php script owns the path passed.
 	 *
 	 * @since   Kunena 6.0
+	 * @throws \Exception
+	 * @throws \Exception
 	 */
 	public static function isOwner($path)
 	{

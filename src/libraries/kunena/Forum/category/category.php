@@ -608,14 +608,14 @@ class Category extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
@@ -634,15 +634,15 @@ class Category extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param   string      $action  action
-	 * @param   KunenaUser  $user    user
-	 * @param   bool        $throw   throw
+	 * @param   string           $action  action
+	 * @param   KunenaUser|null  $user    user
+	 * @param   bool             $throw   throw
 	 *
 	 * @return  Authorise|boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
+	 * @throws Exception
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -1084,15 +1084,15 @@ class Category extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   array  $fields      fields
-	 * @param   mixed  $user        user
-	 * @param   array  $safefields  safefields
+	 * @param   array|null  $fields      fields
+	 * @param   mixed       $user        user
+	 * @param   array|null  $safefields  safefields
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public function newTopic(array $fields = null, $user = null, array $safefields = null)
 	{
@@ -1295,9 +1295,9 @@ class Category extends KunenaDatabaseObject
 	/**
 	 * @see     KunenaDatabaseObject::bind()
 	 *
-	 * @param   array  $src      src
-	 * @param   array  $fields   fields
-	 * @param   bool   $include  include
+	 * @param   array|null  $src      src
+	 * @param   array|null  $fields   fields
+	 * @param   bool        $include  include
 	 *
 	 * @return  boolean
 	 *

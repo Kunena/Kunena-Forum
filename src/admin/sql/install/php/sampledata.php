@@ -43,6 +43,7 @@ class KText
  * @since   Kunena 6.0
  *
  * @throws  KunenaInstallerException
+ * @throws Exception
  */
 function installSampleData()
 {

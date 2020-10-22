@@ -133,9 +133,9 @@ class TopicFinder extends Finder
 	/**
 	 * Filter by time, either on first or last post.
 	 *
-	 * @param   Date  $starting  Starting date or null if older than ending date.
-	 * @param   Date  $ending    Ending date or null if newer than starting date.
-	 * @param   bool  $lastPost  True = last post, False = first post.
+	 * @param   Date|null  $starting  Starting date or null if older than ending date.
+	 * @param   Date|null  $ending    Ending date or null if newer than starting date.
+	 * @param   bool       $lastPost  True = last post, False = first post.
 	 *
 	 * @return  $this
 	 *
@@ -388,7 +388,7 @@ class TopicFinder extends Finder
 	}
 
 	/**
-	 * @param   QueryInterface  $query  query
+	 * @param   QueryInterface|null  $query  query
 	 *
 	 * @return  void
 	 *

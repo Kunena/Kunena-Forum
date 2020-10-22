@@ -1128,9 +1128,9 @@ class HtmlView extends BaseHtmlView
 	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
-	 * @param   string  $path     path
-	 * @param   Input   $input    input
-	 * @param   array   $options  options
+	 * @param   string      $path     path
+	 * @param   Input|null  $input    input
+	 * @param   null        $options  options
 	 *
 	 * @return  KunenaControllerDisplay
 	 *

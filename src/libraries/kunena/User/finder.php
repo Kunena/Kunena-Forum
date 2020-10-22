@@ -58,9 +58,9 @@ class Finder extends \Kunena\Forum\Libraries\Database\Object\Finder
 	/**
 	 * Filter by time, either on registration or last visit date.
 	 *
-	 * @param   Date  $starting  Starting date or null if older than ending date.
-	 * @param   Date  $ending    Ending date or null if newer than starting date.
-	 * @param   bool  $register  True = registration date, False = last visit date.
+	 * @param   Date|null  $starting  Starting date or null if older than ending date.
+	 * @param   Date|null  $ending    Ending date or null if newer than starting date.
+	 * @param   bool       $register  True = registration date, False = last visit date.
 	 *
 	 * @return  $this
 	 *

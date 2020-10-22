@@ -1417,14 +1417,14 @@ class UserController extends KunenaController
 	/**
 	 * Reports a user to stopforumspam.com
 	 *
-	 * @param   int     $userid    userid
-	 * @param   string  $evidence  evidence
+	 * @param   int          $userid    userid
+	 * @param   string|null  $evidence  evidence
 	 *
 	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{

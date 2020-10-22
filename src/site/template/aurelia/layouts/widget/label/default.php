@@ -15,9 +15,10 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
-$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate = KunenaFactory::getTemplate();
 $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $class           = ' class="' . ' badge badge-' . $icon->labeltype . '"';

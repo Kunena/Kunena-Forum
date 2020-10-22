@@ -17,6 +17,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Login\Login;
 use function defined;
 
 ?>
@@ -31,7 +33,7 @@ use function defined;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
+						<?php echo Icons::user(); ?>
 						<label for="klogin-username" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 						</label>
@@ -46,7 +48,7 @@ use function defined;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::lock(); ?>
+						<?php echo Icons::lock(); ?>
 						<label for="klogin-passwd" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 						</label>
@@ -58,7 +60,7 @@ use function defined;
 			</div>
 		</div>
 
-		<?php $login = \Kunena\Forum\Libraries\Login\Login::getInstance(); ?>
+		<?php $login = Login::getInstance(); ?>
 		<?php
 		if ($login->getTwoFactorMethods() > 1)
 			:
@@ -67,7 +69,7 @@ use function defined;
 				<div class="controls">
 					<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::star(); ?>
+						<?php echo Icons::star(); ?>
 						<label for="kk-lgn-secretkey" class="element-invisible">
 							<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 						</label>

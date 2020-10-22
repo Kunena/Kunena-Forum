@@ -14,9 +14,10 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
-$config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params;
+$config = KunenaFactory::getTemplate()->params;
 ?>
 
 <div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">

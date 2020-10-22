@@ -19,6 +19,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
@@ -88,7 +89,7 @@ class InstallController extends FormController
 			$app->setUserState('com_kunena.uninstall.allowed', null);
 
 
-			$installer = new \Joomla\CMS\Installer\Installer;
+			$installer = new Installer;
 			$component = ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Exception\Authorise;
 use function defined;
 
 $attachment = $this->attachment;
@@ -25,7 +26,7 @@ $exception = $attachment->tryAuthorise('read', $user, false);
 
 if (!$exception)
 {
-	$exception = new \Kunena\Forum\Libraries\Exception\Authorise('Bad Request.', 400);
+	$exception = new Authorise('Bad Request.', 400);
 }
 ?>
 <div class="kmsgattach">

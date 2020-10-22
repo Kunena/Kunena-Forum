@@ -22,6 +22,9 @@ use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 use function defined;
 
@@ -74,14 +77,14 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if (!$me->exists())
 		{
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
-		$this->user = \Kunena\Forum\Libraries\User\KunenaUserHelper::get($this->state->get('user'));
+		$this->user = KunenaUserHelper::get($this->state->get('user'));
 
 		$limit = $this->input->getInt('limit', 0);
 
@@ -113,7 +116,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicIds, 'none');
+		$topics = TopicHelper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -122,8 +125,8 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
-		\Kunena\Forum\Libraries\Forum\Message\MessageHelper::getMessages($postIds);
+		KunenaUserHelper::loadUsers($userIds);
+		MessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		if ($me->exists() && !$me->isBanned())

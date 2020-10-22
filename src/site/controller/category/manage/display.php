@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Template\Template;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -97,7 +98,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	 */
 	protected function before()
 	{
-		$this->me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		if (!$this->me->isAdmin())
 		{

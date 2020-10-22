@@ -13,6 +13,7 @@ namespace Leafo\ScssPhp;
 
 use ArrayAccess;
 use Exception;
+use Exception\ParserException;
 use Leafo\ScssPhp\Base\Range;
 use Leafo\ScssPhp\Block;
 use Leafo\ScssPhp\Colors;
@@ -181,7 +182,7 @@ class Compiler
 	 *
 	 * @return  string
 	 * @throws CompilerException
-	 * @throws  \Exception\ParserException
+	 * @throws  ParserException
 	 */
 	public function compile($code, $path = null)
 	{

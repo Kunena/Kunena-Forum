@@ -15,13 +15,15 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
 $attachment = $this->attachment;
 
 echo $this->subLayout('Widget/Lightbox');
 
-$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+$config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
@@ -51,7 +53,7 @@ else
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo \Kunena\Forum\Libraries\Icons\Icons::file(); ?>
+		<?php echo Icons::file(); ?>
 	</a>
 	<?php
 }

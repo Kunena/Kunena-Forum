@@ -16,6 +16,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 HTMLHelper::_('behavior.core');
@@ -26,7 +29,7 @@ $attachments = $this->attachments;
 	<?php echo $this->headerText; ?>
 </h3>
 
-<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" id="adminForm"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" id="adminForm"
 	  name="adminForm">
 	<input type="hidden" name="task" value="delfile"/>
 	<input type="hidden" name="boxchecked" value="0"/>
@@ -38,7 +41,7 @@ $attachments = $this->attachments;
 			<th class="col-md-1 center">
 				#
 			</th>
-			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
+			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator())
 :
 				?>
 				<th class="col-md-1 center">
@@ -63,7 +66,7 @@ $attachments = $this->attachments;
 			<th class="col-md-1 center">
 				<?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
 			</th>
-			<?php if ($this->me->userid == $this->profile->userid || \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
+			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator())
 :
 				?>
 				<th class="col-md-1 center">
@@ -104,7 +107,7 @@ $attachments = $this->attachments;
 							</td>
 						<?php endif; ?>
 						<td class="center">
-							<?php echo $attachment->isImage() ? \Kunena\Forum\Libraries\Icons\Icons::picture() : \Kunena\Forum\Libraries\Icons\Icons::file(); ?>
+							<?php echo $attachment->isImage() ? Icons::picture() : Icons::file(); ?>
 						</td>
 						<td>
 							<?php echo $attachment->getShortName(10, 5); ?>
@@ -123,7 +126,7 @@ $attachments = $this->attachments;
 							?>
 							<td class="center">
 								<a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
-								   data-toggle="modal"><?php echo \Kunena\Forum\Libraries\Icons\Icons::delete(); ?></a>
+								   data-toggle="modal"><?php echo Icons::delete(); ?></a>
 
 								<div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
 									 aria-labelledby="modaldelete<?php echo $i ?>Label">
@@ -162,7 +165,7 @@ $attachments = $this->attachments;
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
 	</div>
-	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator())
+	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator())
 	:
 		?>
 		<a href="#modaldeleteall" class="btn btn-outline-primary border float-right"

@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
@@ -31,7 +35,7 @@ $this->addScript('pollcheck.js');
 echo $this->subLayout('Widget/Datepicker');
 
 $this->getBBcodesEnabled();
-$topictemplate = !\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->pickup_category;
+$topictemplate = !KunenaConfig::getInstance()->pickup_category;
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -331,8 +335,8 @@ if (!empty($codeTypes))
 							/>
 						</div>
 						<div class="clearfix"></div>
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::poll_add(); ?>
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::poll_rem(); ?>
+						<?php echo Icons::poll_add(); ?>
+						<?php echo Icons::poll_rem(); ?>
 						<div class="clearfix"></div>
 						<div id="datepoll-container">
 							<label class="kpoll-term-lbl"
@@ -342,7 +346,7 @@ if (!empty($codeTypes))
 									   data-date-format="mm/dd/yyyy"
 									   value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 								<span class="input-group-addon">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::grid(); ?>
+								<?php echo Icons::grid(); ?>
 							</span>
 							</div>
 						</div>
@@ -393,7 +397,7 @@ if (!empty($codeTypes))
 			</div>
 			<div class="modal-body">
 				<div id="smilie"><?php
-					$emoticons = \Kunena\Forum\Libraries\Html\Parser::getEmoticons(0, 1);
+					$emoticons = Parser::getEmoticons(0, 1);
 
 				foreach ($emoticons as $emo_code => $emo_properties)
 {
@@ -421,7 +425,7 @@ if (!empty($codeTypes))
 <div class="control-group">
 	<div class="controls">
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-			   value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
 			   value="<?php echo $this->config->disemoticons ?>"/>
 	</div>

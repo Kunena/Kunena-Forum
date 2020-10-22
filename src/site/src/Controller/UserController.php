@@ -30,15 +30,19 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Integration\Profile;
 use Kunena\Forum\Libraries\Log\Log;
 use Kunena\Forum\Libraries\Login\Login;
 use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Upload\Upload;
 use Kunena\Forum\Libraries\User\Ban;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -151,7 +155,7 @@ class UserController extends KunenaController
 			$uri->setVar('limitstart', $search);
 		}
 
-		$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_($uri, false));
+		$this->setRedirect(KunenaRoute::_($uri, false));
 	}
 
 	/**
@@ -888,11 +892,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -908,11 +912,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = \Kunena\Forum\Libraries\Forum\Message\MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -1123,7 +1127,7 @@ class UserController extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		$upload = \Kunena\Forum\Libraries\Upload\Upload::getInstance();
+		$upload = Upload::getInstance();
 		$user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		// We are converting all exceptions into JSON.
@@ -1359,7 +1363,7 @@ class UserController extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment  = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($id);
+				$attachment  = AttachmentHelper::get($id);
 				$message     = $attachment->getMessage();
 				$attachments = [$attachment->id, 1];
 				$attach      = [];

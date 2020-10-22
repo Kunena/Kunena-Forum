@@ -14,7 +14,9 @@ namespace Kunena\Forum\Site\Controller\Widget\Statistics;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -59,14 +61,14 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+		$this->config = KunenaConfig::getInstance();
 
 		if (!$this->config->get('showstats'))
 		{

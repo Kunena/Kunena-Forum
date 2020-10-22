@@ -15,14 +15,17 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
 $user              = $this->user;
-$this->ktemplate   = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate   = KunenaFactory::getTemplate();
 $avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
-$config            = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+$config            = KunenaConfig::getInstance();
 $show              = $config->showuserstats;
-$optional_username = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('optional_username');
+$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {
@@ -156,7 +159,7 @@ if ($show)
 	</li>
 	<li>
 		<strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-		<span> <?php echo \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
+		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal_' . $user->userid); ?>

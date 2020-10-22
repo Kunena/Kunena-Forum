@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
 $tabs = $this->getTabs();
@@ -30,7 +31,7 @@ $tabs = $this->getTabs();
 		:
 		?>
 		<?php echo $this->profile->getLink(
-		\Kunena\Forum\Libraries\Icons\Icons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
+		Icons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
 		Text::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
 	); ?>
 	<?php endif; ?>

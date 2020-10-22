@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Joomla\Archive\Archive;
 use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\CacheController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -503,7 +504,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			}
 		}
 
-		/** @var \Joomla\CMS\Cache\Cache|\Joomla\CMS\Cache\CacheController $cache */
+		/** @var \Joomla\CMS\Cache\Cache|CacheController $cache */
 		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
 	}

@@ -16,6 +16,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $config = $this->config;
@@ -43,7 +46,7 @@ $this->addScript('assets/js/search.js');
 		->set('display', true); ?>
 </div>
 
-<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
       method="post" id="kuserlist-form" name="kuserlist-form">
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
@@ -55,7 +58,7 @@ $this->addScript('assets/js/search.js');
 			<th class="col-md-1 center hidden-xs-down">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom" rel="nofollow">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowdown(); ?>
+					<?php echo Icons::arrowdown(); ?>
 				</a>
 			</th>
 
@@ -145,7 +148,7 @@ $this->addScript('assets/js/search.js');
 		<tbody class="user-list">
 		<?php
 		$i               = $this->pagination->limitstart;
-		$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		foreach ($this->users as $user) :
 			$avatar = $config->userlist_avatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
@@ -219,7 +222,7 @@ $this->addScript('assets/js/search.js');
 			<td class="col-md-1 center hidden-xs-down">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowup(); ?>
+					<?php echo Icons::arrowup(); ?>
 				</a>
 			</td>
 			<td colspan="8" class="hidden-xs-down">

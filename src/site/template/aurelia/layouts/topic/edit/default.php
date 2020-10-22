@@ -21,6 +21,11 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\SvgIcons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 HTMLHelper::_('behavior.formvalidator');
@@ -105,23 +110,23 @@ $this->addStyleSheet('fileupload.css');
 
 $this->k = 0;
 
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem', \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_preload', \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 $this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
-$this->addScriptOptions('com_kunena.icons.upload', \Kunena\Forum\Libraries\Icons\Icons::upload());
-$this->addScriptOptions('com_kunena.icons.trash', \Kunena\Forum\Libraries\Icons\Icons::delete());
-$this->addScriptOptions('com_kunena.icons.attach', \Kunena\Forum\Libraries\Icons\Icons::attach());
-$this->addScriptOptions('com_kunena.icons.secure', \Kunena\Forum\Libraries\Icons\Icons::secure());
+$this->addScriptOptions('com_kunena.icons.upload', Icons::upload());
+$this->addScriptOptions('com_kunena.icons.trash', Icons::delete());
+$this->addScriptOptions('com_kunena.icons.attach', Icons::attach());
+$this->addScriptOptions('com_kunena.icons.secure', Icons::secure());
 
 $suffix = CMSApplication::getInstance('site')->get('sef_suffix');
 $this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 
-$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
-$me              = isset($this->me) ? $this->me : \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+$me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollenabled)
@@ -139,7 +144,7 @@ $this->addScript('assets/js/edit.js');
 
 echo $this->subLayout('Widget/Lightbox');
 
-if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('formRecover'))
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('sisyphus.js');
 }
@@ -171,17 +176,17 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 		<?php echo $this->escape($this->headerText) ?>
 	</h1>
 
-	<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
 	      class="form-validate" role="form"
 	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic"/>
 		<input id="kurl_topicons_request" type="hidden"
-		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
 		<input id="kurl_category_template_text" type="hidden"
-		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
 		<input id="kpreview_url" type="hidden" name="kpreview_url"
-		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
 		<?php if (!$this->config->allow_change_subject)
 			:
 			?>
@@ -222,12 +227,12 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 		<input type="hidden" id="kunena_upload" name="kunena_upload"
 		       value="<?php echo intval($this->message->catid) ?>"/>
 		<input type="hidden" id="kunena_upload_files_url"
-		       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . Session::getFormToken() . '=1', false) ?>"/>
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . Session::getFormToken() . '=1', false) ?>"/>
 		<?php if ($this->me->exists())
 			:
 			?>
 			<input type="hidden" id="kurl_users" name="kurl_users"
-			       value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+			       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -289,7 +294,7 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 				<label for="subject"
 				       class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 				<div class="col-md-10">
-					<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
+					<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
 						<input class="form-control" type="text" name="subject" id="subject"
 						       value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
 					<?php else : ?>
@@ -320,7 +325,7 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
 										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<?php echo \Kunena\Forum\Libraries\Icons\SvgIcons::loadsvg($icon->b4, 'usertopicicons', $this->category->iconset);?>
+										<?php echo SvgIcons::loadsvg($icon->b4, 'usertopicicons', $this->category->iconset);?>
 									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
@@ -387,24 +392,24 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 							<br/>
 							<!-- The fileinput-button span is used to style the file input field as button -->
 							<span class="btn btn-outline-primary fileinput-button">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::plus(); ?>
+								<?php echo Icons::plus(); ?>
 								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 								<!-- The file input field used as target for the file upload widget -->
 								<input id="fileupload" type="file" name="file" multiple>
 							</span>
 							<button id="insert-all" class="btn btn-outline-primary" type="submit"
 							        style="display:none;">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::upload(); ?>
+								<?php echo Icons::upload(); ?>
 								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
 							</button>
 							<button id="remove-all" class="btn btn-outline-danger" type="submit"
 							        style="display:none;">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::cancel(); ?>
+								<?php echo Icons::cancel(); ?>
 								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 							</button>
 							<button id="set-secure-all" class="btn btn-outline-primary" type="submit"
 							        style="display:none;">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::secure(); ?>
+								<?php echo Icons::secure(); ?>
 								<span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
 							</button>
 							<div class="clearfix"></div>
@@ -493,13 +498,13 @@ if (\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('f
 				<?php else : ?>
 					<button id="form_submit_button" name="submit" type="submit"
 					        class="btn btn-outline-success btn-md form-validate" tabindex="8">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
+						<?php echo Icons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
 					</button>
 				<?php endif; ?>
 
 				<button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();"
 				        tabindex="10">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::delete(); ?>
+					<?php echo Icons::delete(); ?>
 					<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 				</button>
 			</div>

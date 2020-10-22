@@ -22,8 +22,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\Message;
 use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -148,7 +150,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 				break;
 		}
 
-		$categories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+		$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new Pagination($finder->count(), $start, $limit);
@@ -229,7 +231,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
 
-		$this->topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicIds, 'none');
+		$this->topics = TopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = [];
 

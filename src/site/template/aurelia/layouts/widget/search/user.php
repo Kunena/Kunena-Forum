@@ -16,21 +16,24 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
-$me    = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+$me    = KunenaUserHelper::getMyself();
 $state = $this->state;
 ?>
 
 <div class="kunena-search">
-	<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
 		  name="usrlform" id="usrlform">
 		<input type="hidden" name="view" value="user"/>
 		<?php if ($me->exists())
 		:
 			?>
 			<input type="hidden" id="kurl_users" name="kurl_users"
-				   value="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+				   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group search">
@@ -40,7 +43,7 @@ $state = $this->state;
 				   placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 			<span class="input-group-append">
 					<button class="btn btn-light border" type="submit">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::search(); ?>
+						<?php echo Icons::search(); ?>
 					</button>
 				</span>
 		</div>

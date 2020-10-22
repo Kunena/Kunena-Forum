@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\Authorise;
@@ -120,7 +121,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 			throw new Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
-		$attachment = \Kunena\Forum\Libraries\Attachment\AttachmentHelper::get($id);
+		$attachment = AttachmentHelper::get($id);
 		$attachment->tryAuthorise();
 
 		$path = $attachment->getPath($thumb);

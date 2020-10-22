@@ -16,6 +16,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
 $categoryActions = $this->getCategoryActions();
@@ -52,7 +56,7 @@ $this->addStyleSheet('rating.css');
 		</div>
 	<?php endif; ?>
 
-	<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
 		<input type="hidden" name="view" value="topics"/>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div>
@@ -65,13 +69,13 @@ $this->addStyleSheet('rating.css');
 			</ul>
 		</div>
 		<?php if ($this->topics) : ?>
-		<table class="table<?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->borderless(); ?>">
+		<table class="table<?php echo Template::getInstance()->borderless(); ?>">
 			<thead>
 			<tr>
 				<th scope="col" class="center hidden-xs-down">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom" rel="nofollow">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowdown(); ?>
+						<?php echo Icons::arrowdown(); ?>
 					</a>
 				</th>
 				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
@@ -87,7 +91,7 @@ $this->addStyleSheet('rating.css');
 			</thead>
 			<tbody class="category-item">
 			<?php
-			/** @var \Kunena\Forum\Libraries\Forum\Topic\Topic $previous */
+			/** @var Topic $previous */
 			$previous = null;
 
 			foreach ($this->topics as $position => $topic)
@@ -109,7 +113,7 @@ $this->addStyleSheet('rating.css');
 						<a id="forumbottom"> </a>
 						<a href="#forumtop" rel="nofollow">
 							<span class="dropdown-divider"></span>
-							<?php echo \Kunena\Forum\Libraries\Icons\Icons::arrowup(); ?>
+							<?php echo Icons::arrowup(); ?>
 						</a>
 					</th>
 					<th scope="col" class="hidden-xs-down">

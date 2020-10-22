@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use function defined;
 
 // [tweet]112233445566[/tweet]
@@ -65,9 +66,9 @@ use function defined;
 					   data-datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
 					   href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
 						<time class="dt-updated"
-						      title="Time posted: <?php echo \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
+						      title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
 						      datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-						      pubdate=""><?php echo \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
+						      pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
 					</a>
 				</div>
 			</div>

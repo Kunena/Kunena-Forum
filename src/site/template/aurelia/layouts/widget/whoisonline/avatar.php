@@ -15,6 +15,8 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
 ?>
@@ -24,8 +26,8 @@ use function defined;
 		<?php
 		foreach ($this->onlineList as $user)
 		{
-			$avatar       = $user->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-			$onlinelist[] = $user->getLink($avatar, null, '', '', null, 0, \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->avataredit);
+			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
+			$onlinelist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit);
 		}
 		?>
 		<?php echo implode(', ', $onlinelist); ?>
@@ -39,8 +41,8 @@ use function defined;
 		<?php
 		foreach ($this->hiddenList as $user)
 		{
-			$avatar       = $user->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-			$hiddenlist[] = $user->getLink($avatar, null, '', '', null, 0, \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->avataredit);
+			$avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
+			$hiddenlist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avataredit);
 		}
 		?>
 		<?php echo implode(', ', $hiddenlist); ?>

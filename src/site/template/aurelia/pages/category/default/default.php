@@ -14,12 +14,13 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use function defined;
 
 $content = $this->execute('Category/Topics');
 
 // Display breadcrumb path to the current category.
-$parents   = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getParents($content->category->id);
+$parents   = CategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 foreach ($parents as $parent)

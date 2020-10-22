@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
 $title    = $this->title;
@@ -26,7 +27,7 @@ $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');
 
-$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+$config = KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';

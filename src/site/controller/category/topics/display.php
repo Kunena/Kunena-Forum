@@ -23,11 +23,14 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 use function defined;
 
@@ -95,7 +98,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		$this->model = new CategoryModel;
 
-		$this->me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
 		$catid      = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
@@ -119,7 +122,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		// TODO:
 		$direction = 'DESC';
 
-		$this->category = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::get($catid);
+		$this->category = CategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
 		$this->headerText = $this->category->name;
@@ -153,7 +156,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 				$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
 		}
 
-		list($this->total, $this->topics) = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
 		if ($limitstart > 1 && !$this->topics)
 		{
@@ -178,11 +181,11 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			// Prefetch all users/avatars to avoid user by user queries during template iterations.
 			if (!empty($userlist))
 			{
-				\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userlist);
+				KunenaUserHelper::loadUsers($userlist);
 			}
 
-			\Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getUserTopics(array_keys($this->topics));
-			$lastreadlist = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::fetchNewStatus($this->topics);
+			TopicHelper::getUserTopics(array_keys($this->topics));
+			$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
 
 			// Fetch last / new post positions when user can see unapproved or deleted posts.
 			if ($lastreadlist || $this->me->isAdmin() || Access::getInstance()->getModeratorStatus())

@@ -15,9 +15,11 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
-$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 ?>
 
@@ -42,7 +44,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 		) : ?>
 			<div class="btn-group">
 				<a class="btn border" data-toggle="dropdown">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
+					<?php echo Icons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
 				</a>
 				<a class="btn border dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
@@ -70,7 +72,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			) : ?>
 				<div class="btn-group">
 					<a class="btn border" data-toggle="dropdown">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
+						<?php echo Icons::pencil(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?>
 					</a>
 					<a class="btn border dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
@@ -92,7 +94,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 			) : ?>
 				<div class="btn-group">
 					<a class="btn border" data-toggle="dropdown">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
+						<?php echo Icons::shuffle(); ?><?php echo Text::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?>
 					</a>
 					<a class="btn border dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>

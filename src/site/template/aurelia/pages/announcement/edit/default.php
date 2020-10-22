@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $content = $this->execute('Announcement/Edit');
@@ -25,7 +26,7 @@ $this->addBreadcrumb(
 );
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_EDIT'),
-	\Kunena\Forum\Libraries\Route\KunenaRoute::normalize()
+	KunenaRoute::normalize()
 );
 
 echo $content;

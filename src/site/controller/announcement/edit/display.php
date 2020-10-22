@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\Announement\Edit;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -48,7 +49,7 @@ class ComponentAnnouncementControllerEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -86,7 +87,7 @@ class ComponentAnnouncementControllerEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

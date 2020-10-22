@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Pagination\Pagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -86,7 +87,7 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 			$limitstart = 0;
 		}
 
-		$moderator           = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->isModerator();
+		$moderator           = KunenaUserHelper::getMyself()->isModerator();
 		$this->pagination    = new Pagination(AnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
 		$this->announcements = AnnouncementHelper::getAnnouncements(
 			$this->pagination->limitstart,

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
 $attachment = $this->attachment;
@@ -25,7 +26,7 @@ if (!$attachment->isImage())
 	return;
 }
 
-$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+$config = KunenaConfig::getInstance();
 
 // Load FancyBox library if enabled in configuration
 if ($config->lightbox == 1)

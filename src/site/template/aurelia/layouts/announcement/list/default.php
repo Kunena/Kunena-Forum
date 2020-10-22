@@ -16,13 +16,14 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $options = $this->getOptions();
 HTMLHelper::_('behavior.core');
 ?>
 
-<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
       id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -44,7 +45,7 @@ HTMLHelper::_('behavior.core');
 							<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-outline-primary border"
-							   href="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
+							   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 								<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 							</a>
 						</div>

@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\Widget\Menu;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -89,7 +90,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function before()
 	{

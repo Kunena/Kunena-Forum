@@ -17,13 +17,15 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Login\Login;
 use function defined;
 
 ?>
 <ul class="nav float-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-desktop">
-			<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
+			<?php echo Icons::user(); ?>
 			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>
@@ -38,7 +40,7 @@ use function defined;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::user(); ?>
+								<?php echo Icons::user(); ?>
 								<label for="kdesktop-username" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
@@ -54,7 +56,7 @@ use function defined;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::lock(); ?>
+								<?php echo Icons::lock(); ?>
 								<label for="klogin-desktop-passwd" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
@@ -66,7 +68,7 @@ use function defined;
 					</div>
 				</div>
 
-				<?php $login = \Kunena\Forum\Libraries\Login\Login::getInstance(); ?>
+				<?php $login = Login::getInstance(); ?>
 				<?php
 				if ($login->getTwoFactorMethods() > 1)
 					:
@@ -75,7 +77,7 @@ use function defined;
 						<div class="controls">
 							<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo \Kunena\Forum\Libraries\Icons\Icons::star(); ?>
+								<?php echo Icons::star(); ?>
 								<label for="k-lgn-secretkey" class="element-invisible">
 									<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>

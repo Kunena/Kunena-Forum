@@ -15,6 +15,9 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
 use function defined;
 
 ?>
@@ -95,7 +98,7 @@ use function defined;
 					<b><?php echo Text::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b>
 				</td>
 				<td colspan="4">
-					<?php echo \Kunena\Forum\Libraries\Html\Parser::parseText($banInfo->reason_public); ?>
+					<?php echo Parser::parseText($banInfo->reason_public); ?>
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -108,7 +111,7 @@ use function defined;
 				<td>
 					<b><?php echo Text::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b></td>
 				<td colspan="4">
-					<?php echo \Kunena\Forum\Libraries\Html\Parser::parseText($banInfo->reason_private); ?>
+					<?php echo Parser::parseText($banInfo->reason_private); ?>
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -124,16 +127,16 @@ use function defined;
 						<td>
 							<strong>
 								<?php echo Text::sprintf(
-									'COM_KUNENA_BAN_COMMENT_BY', \Kunena\Forum\Libraries\Factory\KunenaFactory::getUser((int) $comment->userid)->getLink()
+									'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink()
 								);
 								?>
 							</strong>
 						</td>
 						<td>
-							<?php echo \Kunena\Forum\Libraries\Date\KunenaDate::getInstance($comment->time)->toKunena(); ?>
+							<?php echo KunenaDate::getInstance($comment->time)->toKunena(); ?>
 						</td>
 						<td colspan="3">
-							<?php echo \Kunena\Forum\Libraries\Html\Parser::parseText($comment->comment); ?>
+							<?php echo Parser::parseText($comment->comment); ?>
 						</td>
 					</tr>
 				<?php endforeach;

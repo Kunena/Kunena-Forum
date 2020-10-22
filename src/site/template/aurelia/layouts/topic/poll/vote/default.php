@@ -16,6 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $this->addScript('poll.js');
@@ -24,11 +26,11 @@ $this->addScript('poll.js');
 		&times;
 	</div>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . \Kunena\Forum\Libraries\Html\Parser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title); ?>
 	</h2>
 
 	<div class="" id="poll-vote">
-		<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post">
 			<input type="hidden" name="task" value="vote"/>
 			<input type="hidden" name="catid" value="<?php echo $this->topic->category_id; ?>"/>
 			<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
@@ -50,7 +52,7 @@ $this->addScript('poll.js');
 									{
 										echo 'checked="checked"';
 									} ?> />
-								<?php echo \Kunena\Forum\Libraries\Html\Parser::parseText($poll_option->text); ?>
+								<?php echo Parser::parseText($poll_option->text); ?>
 							</label>
 						</li>
 					<?php endforeach; ?>

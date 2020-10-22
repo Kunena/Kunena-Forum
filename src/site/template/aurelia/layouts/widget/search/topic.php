@@ -16,6 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $this->addScript('assets/js/search.js');
@@ -23,7 +25,7 @@ $this->addScript('assets/js/search.js');
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 <div class="kunena-search search">
-	<form role="search" action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_(); ?>" method="post">
+	<form role="search" action="<?php echo KunenaRoute::_(); ?>" method="post">
 		<input type="hidden" name="view" value="search"/>
 		<input type="hidden" name="task" value="results"/>
 		<?php if (isset($this->catid))
@@ -44,7 +46,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 				   placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>">
 			<span class="input-group-append">
 				<button class="btn btn-light border" type="submit">
-				<?php echo \Kunena\Forum\Libraries\Icons\Icons::search(); ?>
+				<?php echo Icons::search(); ?>
 			</button>
 			</span>
 		</div>

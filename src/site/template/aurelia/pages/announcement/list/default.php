@@ -15,11 +15,12 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-	\Kunena\Forum\Libraries\Route\KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list")
+	KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list")
 );
 
 echo $this->subRequest('Announcement/List');

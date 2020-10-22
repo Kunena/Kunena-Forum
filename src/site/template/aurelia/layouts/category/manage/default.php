@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 HTMLHelper::_('behavior.multiselect');
@@ -35,7 +36,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 		: <?php echo $this->escape($this->category->name); ?>
 	</div>
 	<div class="card-body">
-		<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
 		      method="post" id="adminForm"
 		      name="adminForm">
 			<input type="hidden" name="task" value="save"/>

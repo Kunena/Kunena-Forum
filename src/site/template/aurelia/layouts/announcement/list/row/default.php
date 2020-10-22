@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
 $row          = $this->row;
@@ -66,7 +67,7 @@ $announcement = $this->announcement;
 	<?php endif; ?>
 
 	<td>
-		<?php if (\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->username)
+		<?php if (KunenaConfig::getInstance()->username)
 			:
 			?>
 			<?php echo $announcement->getAuthor()->username; ?>

@@ -14,6 +14,8 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
 $attachment = $this->attachment;
@@ -25,14 +27,14 @@ if (!$attachment->isImage())
 	return;
 }
 
-$config = \Kunena\Forum\Libraries\Factory\KunenaFactory::getConfig();
+$config = KunenaFactory::getConfig();
 
 // Load FancyBox library if enabled in configuration
 if ($config->lightbox == 1)
 {
 	echo $this->subLayout('Widget/Lightbox');
 
-	$config = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
+	$config = KunenaConfig::getInstance();
 
 	$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';

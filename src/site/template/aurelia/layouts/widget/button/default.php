@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
@@ -33,7 +34,7 @@ $success = !empty($this->success) ? ' btn-outline-success' : '';
 $primary = !empty($this->primary) ? ' btn-outline-primary' : '';
 $normal  = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-outline-primary border';
 $icon    = $this->icon;
-$ktemplate     = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$ktemplate     = KunenaFactory::getTemplate();
 $topicicontype = $ktemplate->params->get('topicicontype');
 ?>
 

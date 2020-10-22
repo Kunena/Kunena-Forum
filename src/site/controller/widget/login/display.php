@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\Widget\Login;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
@@ -22,6 +23,7 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
 use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -122,7 +124,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	protected function before()
@@ -139,7 +141,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			return false;
 		}
 
-		$this->me   = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me   = KunenaUserHelper::getMyself();
 		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
 		$this->my = Factory::getApplication()->getIdentity();

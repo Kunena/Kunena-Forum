@@ -14,8 +14,11 @@ namespace Kunena\Forum\Site\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
@@ -30,7 +33,7 @@ class MiscController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -42,7 +45,7 @@ class MiscController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @throws  null
 	 */
 	public function template()
@@ -53,7 +56,7 @@ class MiscController extends KunenaController
 
 		if ($name)
 		{
-			$name = \Kunena\Forum\Libraries\Path\KunenaPath::clean($name);
+			$name = KunenaPath::clean($name);
 
 			if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml"))
 			{
@@ -67,6 +70,6 @@ class MiscController extends KunenaController
 			setcookie('kunena_template', null, time() - 3600, Uri::root(true) . '/', '', true);
 		}
 
-		$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena', false));
+		$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
 	}
 }

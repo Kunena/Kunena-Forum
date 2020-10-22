@@ -15,6 +15,9 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
 $k = 0;
@@ -43,8 +46,8 @@ $k = 0;
 					</li>
 					<li>
 						<?php
-						$profile    = \Kunena\Forum\Libraries\Factory\KunenaFactory::getUser(intval($this->message->userid));
-						$useravatar = $profile->getAvatarImage(\Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
+						$profile    = KunenaFactory::getUser(intval($this->message->userid));
+						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 
 						if ($useravatar)
 							:
@@ -56,12 +59,12 @@ $k = 0;
 			</div>
 			<div class="col-md-10">
 				<small class="text-muted float-right hidden-xs-down" style="margin-top:-5px;">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+					<?php echo Icons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory"
 				     data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">
-						<p class="kmsg"><?php echo \Kunena\Forum\Libraries\Html\Parser::parseBBCode($this->message->message, $this) ?></p>
+						<p class="kmsg"><?php echo Parser::parseBBCode($this->message->message, $this) ?></p>
 					</div>
 					<?php
 					$attachments = $this->message->getAttachments();

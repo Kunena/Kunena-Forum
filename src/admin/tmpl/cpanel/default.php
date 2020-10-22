@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Statistics;
@@ -209,7 +210,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo \Kunena\Forum\Libraries\Attachment\AttachmentHelper::getTotalAttachments(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo AttachmentHelper::getTotalAttachments(); ?></h3>
 									<p class="mb-0">photo.png (topic id: 44343)</p>
 								</div>
 								<div class="col-auto">

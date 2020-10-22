@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller\Category\Index;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -26,9 +27,13 @@ use Kunena\Forum\Libraries\Access\Access;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Html\Parser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -45,7 +50,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	protected $name = 'Category/Index';
 
 	/**
-	 * @var     \Kunena\Forum\Libraries\User\KunenaUser
+	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
@@ -82,13 +87,13 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$this->me        = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$this->me        = KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Get sections to display.
@@ -163,11 +168,11 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 		if ($catid)
 		{
-			$sections = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getCategories($catid);
+			$sections = CategoryHelper::getCategories($catid);
 		}
 		else
 		{
-			$sections = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren();
+			$sections = CategoryHelper::getChildren();
 		}
 
 		$sectionIds = [];
@@ -215,7 +220,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		$this->sections = $sections;
-		$categories     = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($sectionIds);
+		$categories     = CategoryHelper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
@@ -291,7 +296,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$subcategories = \Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getChildren($categoryIds);
+		$subcategories = CategoryHelper::getChildren($categoryIds);
 
 		foreach ($subcategories as $category)
 		{
@@ -316,7 +321,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = \Kunena\Forum\Libraries\Forum\Topic\TopicHelper::getTopics($topicIds, 'none');
+		$topics = TopicHelper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -325,7 +330,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
-		\Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers($userIds);
+		KunenaUserHelper::loadUsers($userIds);
 		MessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
@@ -334,7 +339,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		if ($this->me->exists() && !$this->me->isBanned())
 		{
 			// Load new topic counts.
-			\Kunena\Forum\Libraries\Forum\Category\CategoryHelper::getNewTopics(array_keys($categories + $subcategories));
+			CategoryHelper::getNewTopics(array_keys($categories + $subcategories));
 
 			// Get categories which are moderated by current user.
 			$access   = Access::getInstance();
@@ -427,7 +432,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

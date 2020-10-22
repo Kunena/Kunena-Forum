@@ -16,11 +16,12 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 ?>
 
-<form method="post" action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
+<form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
 	<input type="hidden" name="view" value="topic"/>
 	<input type="hidden" name="task" value="report"/>
 	<input type="hidden" name="catid" value="<?php echo (int) $this->category->id; ?>"/>

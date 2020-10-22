@@ -22,6 +22,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\Log\Log;
 use function defined;
 
 /**
@@ -103,7 +104,7 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
+					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
@@ -171,7 +172,7 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
+					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
@@ -249,7 +250,7 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
+					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
@@ -334,7 +335,7 @@ class AnnouncementController extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			\Kunena\Forum\Libraries\Log\Log::log(\Kunena\Forum\Libraries\Log\Log::TYPE_MODERATION, $id ? \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_EDIT : \Kunena\Forum\Libraries\Log\Log::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
+			Log::log(Log::TYPE_MODERATION, $id ? Log::LOG_ANNOUNCEMENT_EDIT : Log::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
 		}
 
 		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Community;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -160,7 +161,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 *
 	 * @return  KunenaActivityCommunity|null|void
 	 * @since   Kunena 6.0
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function onKunenaGetActivity()
 	{

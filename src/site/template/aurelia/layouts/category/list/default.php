@@ -16,12 +16,14 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<form action="<?php echo \Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
 		      name="kcategoryform" id="kcategoryform">
 			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
@@ -52,7 +54,7 @@ use function defined;
 				<?php endif; ?>
 			</h3>
 
-			<table class="table table-striped<?php echo \Kunena\Forum\Libraries\Template\Template::getInstance()->borderless(); ?>">
+			<table class="table table-striped<?php echo Template::getInstance()->borderless(); ?>">
 
 				<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 					<thead>

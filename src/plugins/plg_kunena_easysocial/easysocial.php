@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial;
 defined('_JEXEC') or die('Unauthorized Access');
 
 use EasySocialPlugins;
+use Exception;
 use Joomla\CMS\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use function defined;
@@ -132,7 +133,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @return  KunenaActivityEasySocial
 	 *
 	 * @since   Kunena 6.0
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function onKunenaGetActivity()
 	{

@@ -15,14 +15,16 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
-if (\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->socialshare == 0 && \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->exists())
+if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists())
 {
 	return false;
 }
 
-$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate = KunenaFactory::getTemplate();
 $socialsharetag  = $this->ktemplate->params->get('socialsharetag');
 
 echo HTMLHelper::_('content.prepare', $socialsharetag);

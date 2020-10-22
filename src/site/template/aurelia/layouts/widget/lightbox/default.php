@@ -14,9 +14,10 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use function defined;
 
-if (\Kunena\Forum\Libraries\Config\KunenaConfig::getInstance()->lightbox != 1)
+if (KunenaConfig::getInstance()->lightbox != 1)
 {
 	return false;
 }

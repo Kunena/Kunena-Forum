@@ -15,10 +15,13 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
-$config          = \Kunena\Forum\Libraries\Config\KunenaConfig::getInstance();
-$this->ktemplate = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$config          = KunenaConfig::getInstance();
+$this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 $quick           = $this->ktemplate->params->get('quick');
 ?>
@@ -37,7 +40,7 @@ $quick           = $this->ktemplate->params->get('quick');
 				   class="btn btn-outline-primary border Kreplyclick"
 				   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
 				   rel="nofollow">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					<?php echo Icons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 
@@ -90,12 +93,12 @@ endif; ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
 				   class="btn btn-outline-primary border Kreplyclick"
 				   data-toggle="modal" rel="nofollow">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+					<?php echo Icons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
 			<div class="btn-group">
 				<button class="btn btn-outline-primary border" data-toggle="dropdown">
-					<?php echo \Kunena\Forum\Libraries\Icons\Icons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
+					<?php echo Icons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
 				</button>
 				<button class="btn btn-outline-primary border dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
@@ -118,7 +121,7 @@ endif; ?>
 				?>
 				<div class="btn-group">
 					<button class="btn btn-outline-primary border" data-toggle="dropdown">
-						<?php echo \Kunena\Forum\Libraries\Icons\Icons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+						<?php echo Icons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 					</button>
 					<button class="btn btn-outline-primary border dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>

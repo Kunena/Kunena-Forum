@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use function defined;
 
 $this->addScript('jquery.wysibb.js');
@@ -88,7 +89,7 @@ Text::script('COM_KUNENA_WYSIBB_EDITOR_SM7');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM8');
 Text::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
-$this->ktemplate  = \Kunena\Forum\Libraries\Factory\KunenaFactory::getTemplate();
+$this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
 $settings         = $templatesettings->get('wysibb');
 ?>

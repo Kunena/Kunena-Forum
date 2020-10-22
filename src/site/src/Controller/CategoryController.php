@@ -21,6 +21,9 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Controller\CategoriesController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
@@ -58,11 +61,11 @@ class CategoryController extends CategoriesController
 
 		if (!$catid)
 		{
-			$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
+			$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
 		}
 		else
 		{
-			$this->setRedirect(\Kunena\Forum\Libraries\Route\KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
+			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
 		}
 	}
 
@@ -128,7 +131,7 @@ class CategoryController extends CategoriesController
 				}
 
 				// Mark all unread topics in selected categories as read.
-				\Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper::markRead(array_keys($categories));
+				CategoryUserHelper::markRead(array_keys($categories));
 
 				if (count($categories) > 1)
 				{
@@ -203,7 +206,7 @@ class CategoryController extends CategoriesController
 			return;
 		}
 
-		$me = \Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		$userid = $this->app->input->getInt('userid');
 

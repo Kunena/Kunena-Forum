@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site\Controller;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use function defined;
 
@@ -29,7 +30,7 @@ class CommonController extends KunenaController
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  \Exception
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

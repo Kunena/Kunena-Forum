@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Libraries\Icons\Icons;
 use function defined;
 
 $pathway  = $this->breadcrumb->getPathway();
@@ -27,7 +28,7 @@ if ($item)
 		<ol class="mod-kunena-breadcrumbs breadcrumb" itemtype="https://schema.org/BreadcrumbList" itemscope="">
 			<li class="mod-kunena-breadcrumbs__item breadcrumb-item active" aria-current="page"
 				itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				<?php echo \Kunena\Forum\Libraries\Icons\Icons::home(); ?>
+				<?php echo Icons::home(); ?>
 				<a itemprop="item" href="<?php echo $item->link; ?>"><span
 							itemprop="name"><?php echo $this->escape($item->name); ?></span></a>
 				<meta itemprop="position" content="1"/>

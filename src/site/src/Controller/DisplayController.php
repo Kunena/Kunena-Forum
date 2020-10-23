@@ -11,11 +11,7 @@ namespace Kunena\Forum\Site\Controller;
 
 defined('_JEXEC') or die;
 
-use Exception;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
 /**
  * Kunena Component Controller

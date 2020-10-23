@@ -14,7 +14,6 @@ namespace Kunena\Forum\Libraries\Install;
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Route\KunenaRoute;

@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 

@@ -323,6 +323,7 @@ class Upload
 	 * @return  string  Absolute path.
 	 *
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function getFolder()
 	{

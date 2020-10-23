@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Path;
 
 defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
@@ -52,8 +53,7 @@ class KunenaPath extends Path
 	 * @return  string  Path to temporary directory.
 	 *
 	 * @since   Kunena 6.0
-	 * @throws \Exception
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function tmpdir()
 	{
@@ -88,6 +88,7 @@ class KunenaPath extends Path
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public static function isWritable($path)
 	{
@@ -107,8 +108,7 @@ class KunenaPath extends Path
 	 * @return  boolean  True if the php script owns the path passed.
 	 *
 	 * @since   Kunena 6.0
-	 * @throws \Exception
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function isOwner($path)
 	{

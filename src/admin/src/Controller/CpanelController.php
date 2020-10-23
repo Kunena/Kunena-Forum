@@ -21,8 +21,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Statistics;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 use function defined;
 

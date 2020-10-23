@@ -369,12 +369,12 @@ wbbdebug = false;
 								url = url.replace(/^\s+/, "").replace(/\s+$/, "");
 							}
 							let a;
-							if (url.indexOf("youtu.be") != -1) {
+							if (url.indexOf("youtu.be") !== -1) {
 								a = url.match(/^http[s]*:\/\/youtu\.be\/([a-z0-9_-]+)/i);
 							} else {
 								a = url.match(/^http[s]*:\/\/www\.youtube\.com\/watch\?.*?v=([a-z0-9_-]+)/i);
 							}
-							if (a && a.length == 2) {
+							if (a && a.length === 2) {
 								const code = a[1];
 								this.insertAtCursor(this.getCodeByCommand(cmd, {src: code}));
 							}
@@ -581,17 +581,17 @@ wbbdebug = false;
 				ob.en = true;
 
 				//check for simplebbcode
-				if (ob.simplebbcode && $.isArray(ob.simplebbcode) && ob.simplebbcode.length == 2) {
+				if (ob.simplebbcode && $.isArray(ob.simplebbcode) && ob.simplebbcode.length === 2) {
 					ob.bbcode = ob.html = ob.simplebbcode[0] + "{SELTEXT}" + ob.simplebbcode[1];
 					if (ob.transform) delete ob.transform;
 					if (ob.modal) delete ob.modal;
 				}
 
 				//add transforms to option list
-				if (ob.type == "select" && typeof(ob.options) == "string") {
+				if (ob.type === "select" && typeof(ob.options) == "string") {
 					const olist = ob.options.split(",");
 					$.each(olist, function (i, op) {
-						if ($.inArray(op, btnlist) == -1) {
+						if ($.inArray(op, btnlist) === -1) {
 							btnlist.push(op);
 						}
 					});
@@ -617,7 +617,7 @@ wbbdebug = false;
 						if (!ob.bbSelector) {
 							ob.bbSelector = [];
 						}
-						if ($.inArray(bbcode, ob.bbSelector) == -1) {
+						if ($.inArray(bbcode, ob.bbSelector) === -1) {
 							ob.bbSelector.push(bbcode);
 						}
 						if (this.options.onlyBBmode === false) {
@@ -631,7 +631,7 @@ wbbdebug = false;
 
 
 							//check if current rootSelector is exist, create unique selector for each transform (1.2.2)
-							if (rootSelector == "div" || typeof(o.rules[rootSelector]) != "undefined") {
+							if (rootSelector === "div" || typeof(o.rules[rootSelector]) != "undefined") {
 								//create unique selector
 								$.log("create unique selector: " + rootSelector);
 								this.setUID($bel.children());
@@ -671,7 +671,7 @@ wbbdebug = false;
 									const attributes = this.getAttributeList(el);
 									$.each(attributes, $.proxy(function (i, item) {
 										const attr = $(el).attr(item);
-										if (item.substr(0, 1) == '_') {
+										if (item.substr(0, 1) === '_') {
 											item = item.substr(1);
 										}
 
@@ -736,7 +736,7 @@ wbbdebug = false;
 								let nbhtml = $bel.html();
 								//UnWrap attributes
 								nbhtml = this.unwrapAttrs(nbhtml);
-								if (orightml != nbhtml) {
+								if (orightml !== nbhtml) {
 									//if we modify html, replace it
 									delete ob.transform[orightml];
 									ob.transform[nbhtml] = bbcode;
@@ -882,7 +882,7 @@ wbbdebug = false;
 
 				//clear html on paste from external editors
 				this.$body.bind('keydown', $.proxy(function (e) {
-					if ((e.which == 86 && (e.ctrlKey == true || e.metaKey == true)) || (e.which == 45 && (e.shiftKey == true || e.metaKey == true))) {
+					if ((e.which === 86 && (e.ctrlKey === true || e.metaKey === true)) || (e.which === 45 && (e.shiftKey === true || e.metaKey === true))) {
 						if (!this.$pasteBlock) {
 							this.saveRange();
 							this.$pasteBlock = $(this.elFromString('<div style="opacity:0;" contenteditable="true">\uFEFF</div>'));
@@ -917,7 +917,7 @@ wbbdebug = false;
 
 				//insert BR on press enter
 				this.$body.bind('keydown', $.proxy(function (e) {
-					if (e.which == 13) {
+					if (e.which === 13) {
 						const isLi = this.isContain(this.getSelectNode(), 'li');
 						if (!isLi) {
 							if (e.preventDefault) {
@@ -997,20 +997,20 @@ wbbdebug = false;
 			let $btnContainer;
 			$.each(this.options.buttons, $.proxy(function (i, bn) {
 				const opt = this.options.allButtons[bn];
-				if (i == 0 || bn == "|" || bn == "-") {
-					if (bn == "-") {
+				if (i === 0 || bn === "|" || bn === "-") {
+					if (bn === "-") {
 						this.$toolbar.append("<div>");
 					}
 					$btnContainer = $('<div class="wysibb-toolbar-container">').appendTo(this.$toolbar);
 				}
 				if (opt) {
-					if (opt.type == "colorpicker") {
+					if (opt.type === "colorpicker") {
 						this.buildColorpicker($btnContainer, bn, opt);
-					} else if (opt.type == "table") {
+					} else if (opt.type === "table") {
 						this.buildTablepicker($btnContainer, bn, opt);
-					} else if (opt.type == "select") {
+					} else if (opt.type === "select") {
 						this.buildSelect($btnContainer, bn, opt);
-					} else if (opt.type == "smilebox") {
+					} else if (opt.type === "smilebox") {
 						this.buildSmilebox($btnContainer, bn, opt);
 					} else {
 						this.buildButton($btnContainer, bn, opt);
@@ -1028,7 +1028,7 @@ wbbdebug = false;
 			//build bbcode switch button
 			//var $bbsw = $('<div class="wysibb-toolbar-container modeSwitch"><div class="wysibb-toolbar-btn" unselectable="on"><span class="btn-inner ve-tlb-bbcode" unselectable="on"></span></div></div>').appendTo(this.$toolbar);
 			const $bbsw = $(document.createElement('div')).addClass("wysibb-toolbar-container modeSwitch").html('<div class="wysibb-toolbar-btn mswitch" unselectable="on"><span class="btn-inner modesw" unselectable="on">[bbcode]</span></div>').appendTo(this.$toolbar);
-			if (this.options.bbmode == true) {
+			if (this.options.bbmode === true) {
 				$bbsw.children(".wysibb-toolbar-btn").addClass("on");
 			}
 			if (this.options.onlyBBmode === false) {
@@ -1069,7 +1069,7 @@ wbbdebug = false;
 			const colorlist = (opt.colors) ? opt.colors.split(",") : [];
 			for (let j = 0; j < colorlist.length; j++) {
 				colorlist[j] = $.trim(colorlist[j]);
-				if (colorlist[j] == "-") {
+				if (colorlist[j] === "-") {
 					//insert padding
 					$dropblock.append('<span class="pl"></span>');
 				} else {
@@ -1199,7 +1199,7 @@ wbbdebug = false;
 						const $el = $(el);
 						const r = this.queryState($el.attr("oid"), true);
 						const cmdvalue = $el.attr("cmdvalue");
-						if ((cmdvalue && r == $el.attr("cmdvalue")) || (!cmdvalue && r)) {
+						if ((cmdvalue && r === $el.attr("cmdvalue")) || (!cmdvalue && r)) {
 							$el.prop("selected", true);
 							return false;
 						}
@@ -1226,7 +1226,7 @@ wbbdebug = false;
 					const $el = $(el);
 					const r = this.queryState($el.attr("oid"), true);
 					const cmdvalue = $el.attr("cmdvalue");
-					if ((cmdvalue && r == $el.attr("cmdvalue")) || (!cmdvalue && r)) {
+					if ((cmdvalue && r === $el.attr("cmdvalue")) || (!cmdvalue && r)) {
 						$sval.text($el.text());
 						$el.addClass("selected");
 						return false;
@@ -1268,7 +1268,7 @@ wbbdebug = false;
 			}
 		},
 		updateUI: function (e) {
-			if (!e || ((e.which >= 8 && e.which <= 46) || e.which > 90 || e.type == "mouseup")) {
+			if (!e || ((e.which >= 8 && e.which <= 46) || e.which > 90 || e.type === "mouseup")) {
 				$.each(this.controllers, $.proxy(function (i, $btn) {
 					$btn.trigger('queryState');
 				}, this));
@@ -1280,14 +1280,14 @@ wbbdebug = false;
 		},
 		initModal: function () {
 			this.$modal = $("#wbbmodal");
-			if (this.$modal.length == 0) {
+			if (this.$modal.length === 0) {
 				$.log("Init modal");
 				this.$modal = $('<div>').attr("id", "wbbmodal").prependTo(document.body)
 					.html('<div class="wbbm"><div class="wbbm-title"><span class="wbbm-title-text"></span><span class="wbbclose" title="' + CURLANG.close + '">×</span></div><div class="wbbm-content"></div><div class="wbbm-bottom"><button id="wbbm-submit" class="wbb-button">' + CURLANG.save + '</button><button id="wbbm-cancel" class="wbb-cancel-button">' + CURLANG.cancel + '</button><button id="wbbm-remove" class="wbb-remove-button">' + CURLANG.remove + '</button></div></div>').hide();
 
 				this.$modal.find('#wbbm-cancel,.wbbclose').click($.proxy(this.closeModal, this));
 				this.$modal.bind('click', $.proxy(function (e) {
-					if ($(e.target).parents(".wbbm").length == 0) {
+					if ($(e.target).parents(".wbbm").length === 0) {
 						this.closeModal();
 					}
 				}, this));
@@ -1333,7 +1333,7 @@ wbbdebug = false;
 			}, this))
 		},
 		presskey: function (e) {
-			if (e.ctrlKey == true || e.shiftKey == true || e.altKey == true) {
+			if (e.ctrlKey === true || e.shiftKey === true || e.altKey === true) {
 				const metasum = ((e.ctrlKey == true) ? 1 : 0) + ((e.shiftKey == true) ? 4 : 0) + ((e.altKey == true) ? 7 : 0);
 				if (this.hotkeys["m" + metasum] && this.hotkeys["m" + metasum]["k" + e.which]) {
 					this.execCommand(this.hotkeys["m" + metasum]["k" + e.which], false);
@@ -1354,7 +1354,7 @@ wbbdebug = false;
 
 			//check for onlyClearText
 			const skipcmd = this.isInClearTextBlock();
-			if (skipcmd && skipcmd != command) {
+			if (skipcmd && skipcmd !== command) {
 				return;
 			}
 
@@ -1363,7 +1363,7 @@ wbbdebug = false;
 				//use NativeCommand
 				if (this.options.bbmode) {
 					$.log("Native command in bbmode: " + command);
-					if (queryState && opt.subInsert != true) {
+					if (queryState && opt.subInsert !== true) {
 						//remove bbcode
 						this.wbbRemoveCallback(command, value);
 					} else {
@@ -1411,7 +1411,7 @@ wbbdebug = false;
 						try {
 							//Firefox fix
 							let v = (document.queryCommandValue(opt.excmd) + "").replace(/\'/g, "");
-							if (opt.excmd == "foreColor") {
+							if (opt.excmd === "foreColor") {
 								v = this.rgbToHex(v);
 							}
 							//return (v==value);
@@ -1421,9 +1421,9 @@ wbbdebug = false;
 						}
 					} else {
 						try { //Firefox fix, exception while get queryState for UnorderedList
-							if ((opt.excmd == "bold" || opt.excmd == "italic" || opt.excmd == "underline" || opt.excmd == "strikeThrough") && $(this.getSelectNode()).is("img")) { //Fix, when img selected
+							if ((opt.excmd === "bold" || opt.excmd === "italic" || opt.excmd === "underline" || opt.excmd === "strikeThrough") && $(this.getSelectNode()).is("img")) { //Fix, when img selected
 								return false;
-							} else if (opt.excmd == "underline" && $(this.getSelectNode()).closest("a").length > 0) { //fix, when link select
+							} else if (opt.excmd === "underline" && $(this.getSelectNode()).closest("a").length > 0) { //fix, when link select
 								return false;
 							}
 							return document.queryCommandState(opt.excmd);
@@ -1458,7 +1458,7 @@ wbbdebug = false;
 						this.showModal.call(this, command, opt.modal, queryState);
 					}
 				} else {
-					if (queryState && opt.subInsert != true) {
+					if (queryState && opt.subInsert !== true) {
 						//remove formatting
 						//removeCallback(command,value);
 						this.wbbRemoveCallback(command);
@@ -1494,7 +1494,7 @@ wbbdebug = false;
 			const data = this.getCodeByCommand(command, paramobj);
 			this.insertAtCursor(data);
 
-			if (this.seltextID && data.indexOf(this.seltextID) != -1) {
+			if (this.seltextID && data.indexOf(this.seltextID) !== -1) {
 				const snode = this.$body.find("#" + this.seltextID)[0];
 				this.selectNode(snode);
 				$(snode).removeAttr("id");
@@ -1512,7 +1512,7 @@ wbbdebug = false;
 				$.each(opt.bbSelector, $.proxy(function (i, bbcode) {
 					const stext = bbcode.match(/\{[\s\S]+?\}/g);
 					$.each(stext, function (n, s) {
-						if (s.toLowerCase() == "{seltext}") {
+						if (s.toLowerCase() === "{seltext}") {
 							stextnum = n;
 							return false
 						}
@@ -1561,7 +1561,7 @@ wbbdebug = false;
 						const rng = this.getRange();
 						let shtml = this.getSelectText();
 						const rnode = this.getSelectNode();
-						if (shtml == "") {
+						if (shtml === "") {
 							shtml = "\uFEFF";
 						} else {
 							shtml = this.clearFromSubInsert(shtml, command);
@@ -1586,7 +1586,7 @@ wbbdebug = false;
 						}
 						const bf = this.getSelectText(false, before_rng);
 						const af = this.getSelectText(false, after_rng);
-						if (af != "") {
+						if (af !== "") {
 							const $af = $root.clone().html(af);
 							$root.after($af);
 						}
@@ -1605,7 +1605,7 @@ wbbdebug = false;
 		execNativeCommand: function (cmd, param) {
 			//$.log("execNativeCommand: '"+cmd+"' : "+param);
 			this.body.focus(); //set focus to frame body
-			if (cmd == "insertHTML" && !window.getSelection) { //IE does't support insertHTML
+			if (cmd === "insertHTML" && !window.getSelection) { //IE does't support insertHTML
 				const r = (this.lastRange) ? this.lastRange : document.selection.createRange(); //IE 7,8 range lost fix
 				r.pasteHTML(param);
 				const txt = $('<div>').html(param).text(); //for ie selection inside block
@@ -1615,7 +1615,7 @@ wbbdebug = false;
 					r.select();
 				}
 				this.lastRange = false;
-			} else if (cmd == "insertHTML") { //fix webkit bug with insertHTML
+			} else if (cmd === "insertHTML") { //fix webkit bug with insertHTML
 				const sel = this.getSelection();
 				const e = this.elFromString(param);
 				const rng = (this.lastRange) ? this.lastRange : this.getRange();
@@ -1716,7 +1716,7 @@ wbbdebug = false;
 				//get selected text
 				params["seltext"] = this.getSelectText(false);
 				//$.log("seltext: '"+params["seltext"]+"'");
-				if (params["seltext"] == "") {
+				if (params["seltext"] === "") {
 					params["seltext"] = "\uFEFF";
 				}
 				else {
@@ -1733,7 +1733,7 @@ wbbdebug = false;
 
 			let postsel = "";
 			this.seltextID = "wbbid_" + (++this.lastid);
-			if (command != "link" && command != "img") {
+			if (command !== "link" && command !== "img") {
 				params["seltext"] = '<span id="' + this.seltextID + '">' + params["seltext"] + '</span>'; //use for select seltext
 			} else {
 				postsel = '<span id="' + this.seltextID + '">\uFEFF</span>'
@@ -1851,7 +1851,7 @@ wbbdebug = false;
 					//IE
 					this.txtArea.focus();
 					this.getSelection().text = code;
-				} else if (this.txtArea.selectionStart || this.txtArea.selectionStart == '0') {
+				} else if (this.txtArea.selectionStart || this.txtArea.selectionStart === '0') {
 					this.txtArea.value = this.txtArea.value.substring(0, this.txtArea.selectionStart) + code + this.txtArea.value.substring(this.txtArea.selectionEnd, this.txtArea.value.length);
 				}
 				if (p < 0) {
@@ -1989,12 +1989,12 @@ wbbdebug = false;
 					item = '_'+item;
 				} */
 				//$.log(item);
-				if (item.substr(0, 1) == "_") {
+				if (item.substr(0, 1) === "_") {
 					item = item.substr(1, item.length)
 				}
 				if (v && !v.match(/\{.*?\}/)) {
 					//$.log("I1: "+item);
-					if (item == "style") {
+					if (item === "style") {
 						var v = $n.attr(item);
 						var va = v.split(";");
 						$.each(va, function (i, f) {
@@ -2005,10 +2005,10 @@ wbbdebug = false;
 					} else {
 						filter += '[' + item + '="' + v + '"]';
 					}
-				} else if (v && item == "style") {
+				} else if (v && item === "style") {
 					//$.log("I2: "+item);
 					const vf = v.substr(0, v.indexOf("{"));
-					if (vf && vf != "") {
+					if (vf && vf !== "") {
 						var v = v.substr(0, v.indexOf("{"));
 						var va = v.split(";");
 						$.each(va, function (i, f) {
@@ -2034,7 +2034,7 @@ wbbdebug = false;
 			$.each(this.options.attrWrap, function (i, a) {
 				stop = stop.replace('[' + a, '[_' + a);
 			});
-			while (node && node.tagName != "BODY" && !$(node).is(stop)) {
+			while (node && node.tagName !== "BODY" && !$(node).is(stop)) {
 				p = this.filterByNode(node) + " " + p;
 				if (node) {
 					node = node.parentNode;
@@ -2068,11 +2068,11 @@ wbbdebug = false;
 			const $e = (typeof (data) == "string") ? $('<span>').html(data) : $(data);
 			//remove last BR
 			$e.find("div,blockquote,p").each(function () {
-				if (this.nodeType != 3 && this.lastChild && this.lastChild.tagName == "BR") {
+				if (this.nodeType !== 3 && this.lastChild && this.lastChild.tagName === "BR") {
 					$(this.lastChild).remove();
 				}
 			});
-			if ($e.is("div,blockquote,p") && $e[0].nodeType != 3 && $e[0].lastChild && $e[0].lastChild.tagName == "BR") {
+			if ($e.is("div,blockquote,p") && $e[0].nodeType !== 3 && $e[0].lastChild && $e[0].lastChild.tagName === "BR") {
 				$($e[0].lastChild).remove();
 			}
 			//END remove last BR
@@ -2130,10 +2130,10 @@ wbbdebug = false;
 									let regexp = c.rgx;
 
 									//style fix
-									if (regexp && c.attr == "style" && regexp.substr(regexp.length - 1, 1) != ";") {
+									if (regexp && c.attr === "style" && regexp.substr(regexp.length - 1, 1) !== ";") {
 										regexp += ";";
 									}
-									if (c.attr == "style" && cont && cont.substr(cont.length - 1, 1) != ";") {
+									if (c.attr === "style" && cont && cont.substr(cont.length - 1, 1) !== ";") {
 										cont += ";"
 									}
 									//prepare regexp
@@ -2141,7 +2141,7 @@ wbbdebug = false;
 									if (rgx) {
 										if (cont.match(rgx)) {
 											const m = cont.match(rgx);
-											if (m && m.length == 2) {
+											if (m && m.length === 2) {
 												cont = m[1];
 											}
 										} else {
@@ -2151,18 +2151,18 @@ wbbdebug = false;
 
 									//if it is style attr, then keep tag alive, remove this style
 									if (c.attr && skip === false) {
-										if (c.attr == "style") {
+										if (c.attr === "style") {
 											keepElement = true;
 											let nstyle = "";
 											const r = c.rgx.replace(/^\.\*\?/, "").replace(/\.\*$/, "").replace(/;$/, "");
 											$($cel.attr("style").split(";")).each(function (idx, style) {
-												if (style && style != "") {
+												if (style && style !== "") {
 													if (!style.match(r)) {
 														nstyle += style + ";";
 													}
 												}
 											});
-											if (nstyle == "") {
+											if (nstyle === "") {
 												$cel.removeAttr("style");
 											} else {
 												$cel.attr("style", nstyle);
@@ -2237,7 +2237,7 @@ wbbdebug = false;
 
 
 			$.each(this.options.btnlist, $.proxy(function (i, b) {
-				if (b != "|" && b != "-") {
+				if (b !== "|" && b !== "-") {
 					const find = true;
 					if (!this.options.allButtons[b] || !this.options.allButtons[b].transform) {
 						return true;
@@ -2306,14 +2306,14 @@ wbbdebug = false;
 		},
 		getHTMLSmiles: function (rel) {
 			$(rel).contents().filter(function () {
-				return this.nodeType == 3
+				return this.nodeType === 3
 			}).each($.proxy(this.smileRPL, this));
 		},
 		smileRPL: function (i, el) {
 			let ndata = el.data;
 			$.each(this.options.smileList, $.proxy(function (i, row) {
 				const fidx = ndata.indexOf(row.bbcode);
-				if (fidx != -1) {
+				if (fidx !== -1) {
 					const afternode_txt = ndata.substring(fidx + row.bbcode.length, ndata.length);
 					const afternode = document.createTextNode(afternode_txt);
 					el.data = ndata = el.data.substr(0, fidx);
@@ -2334,7 +2334,7 @@ wbbdebug = false;
 		},
 		keysToLower: function (o) {
 			$.each(o, function (k, v) {
-				if (k != k.toLowerCase()) {
+				if (k !== k.toLowerCase()) {
 					delete o[k];
 					o[k.toLowerCase()] = v;
 				}
@@ -2354,7 +2354,7 @@ wbbdebug = false;
 			});
 		},
 		elFromString: function (str) {
-			if (str.indexOf("<") != -1 && str.indexOf(">") != -1) {
+			if (str.indexOf("<") !== -1 && str.indexOf(">") !== -1) {
 				//create tag
 				const wr = document.createElement("SPAN");
 				$(wr).html(str);
@@ -2401,7 +2401,7 @@ wbbdebug = false;
 			if (!node) {
 				$node = this.body;
 			}
-			if (node.nodeType == 3) {
+			if (node.nodeType === 3) {
 				node = node.parentNode;
 			}
 			var $node = $(node);
@@ -2410,11 +2410,11 @@ wbbdebug = false;
 			}
 			if (this.options.bbmode === false && $node.is('div,blockquote,code') && $node.contents().length > 0) {
 				const l = $node[0].lastChild;
-				if (!l || (l && l.tagName != "BR")) {
+				if (!l || (l && l.tagName !== "BR")) {
 					$node.append("<br/>");
 				}
 			}
-			if (this.$body.contents().length > 0 && this.body.lastChild.tagName != "BR") {
+			if (this.$body.contents().length > 0 && this.body.lastChild.tagName !== "BR") {
 				this.$body.append('<br/>');
 			}
 		},
@@ -2453,7 +2453,7 @@ wbbdebug = false;
 			return html;
 		},
 		splitPrevNext: function (node) {
-			if (node.nodeType == 3) {
+			if (node.nodeType === 3) {
 				node = node.parentNode
 			}
 			;
@@ -2489,11 +2489,11 @@ wbbdebug = false;
 					//clear empty only for span,font
 					return false;
 				}
-				if (!$(this).hasClass("wbbtab") && $.trim($(this).html()).length == 0) {
+				if (!$(this).hasClass("wbbtab") && $.trim($(this).html()).length === 0) {
 					return true;
 				} else if ($(this).children().length > 0) {
 					$(this).children().filter(emptyFilter).remove();
-					if ($(this).html().length == 0 && this.tagName != "BODY") {
+					if ($(this).html().length === 0 && this.tagName !== "BODY") {
 						return true;
 					}
 				}
@@ -2533,7 +2533,7 @@ wbbdebug = false;
 			$btn.toggleClass("on");
 		},
 		dropdownhandler: function ($btn, bsel, tsel, e) {
-			if ($(e.target).parents(bsel).length == 0) {
+			if ($(e.target).parents(bsel).length === 0) {
 				$btn.removeClass("on").find(tsel).hide();
 				$(document).unbind('mousedown', this.dropdownhandler);
 				if (this.$body) {
@@ -2542,11 +2542,11 @@ wbbdebug = false;
 			}
 		},
 		rgbToHex: function (rgb) {
-			if (rgb.substr(0, 1) == '#') {
+			if (rgb.substr(0, 1) === '#') {
 				return rgb;
 			}
 			//if (rgb.indexOf("rgb")==-1) {return rgb;}
-			if (rgb.indexOf("rgb") == -1) {
+			if (rgb.indexOf("rgb") === -1) {
 				//IE
 				let color = parseInt(rgb);
 				color = ((color & 0x0000ff) << 16) | (color & 0x00ff00) | ((color & 0xff0000) >>> 16);
@@ -2585,7 +2585,7 @@ wbbdebug = false;
 			}, this));
 			$block.find("*[wbbkeep!='1']").each($.proxy(function (i, el) {
 				const $this = $(el);
-				if ($this.is('div,p') && ($this.children().length == 0 || el.lastChild.tagName != "BR")) {
+				if ($this.is('div,p') && ($this.children().length === 0 || el.lastChild.tagName !== "BR")) {
 					$this.after("<br/>");
 				}
 			}, this));
@@ -2640,7 +2640,7 @@ wbbdebug = false;
 			this.$txtArea.data("wbb", null);
 		},
 		pressTab: function (e) {
-			if (e && e.which == 9) {
+			if (e && e.which === 9) {
 				//insert tab
 				if (e.preventDefault) {
 					e.preventDefault();
@@ -2654,19 +2654,19 @@ wbbdebug = false;
 			}
 		},
 		removeLastBodyBR: function () {
-			if (this.body.lastChild && this.body.lastChild.nodeType != 3 && this.body.lastChild.tagName == "BR") {
+			if (this.body.lastChild && this.body.lastChild.nodeType !== 3 && this.body.lastChild.tagName === "BR") {
 				this.body.removeChild(this.body.lastChild);
 				this.removeLastBodyBR();
 			}
 		},
 		traceTextareaEvent: function (e) {
-			if ($(e.target).closest("div.wysibb").length == 0) {
+			if ($(e.target).closest("div.wysibb").length === 0) {
 				if ($(document.activeElement).is("div.wysibb-body")) {
 					this.saveRange();
 				}
 				setTimeout($.proxy(function () {
 					const data = this.$txtArea.val();
-					if (this.options.bbmode === false && data != "" && $(e.target).closest("div.wysibb").length == 0 && !this.$txtArea.attr("wbbsync")) {
+					if (this.options.bbmode === false && data !== "" && $(e.target).closest("div.wysibb").length === 0 && !this.$txtArea.attr("wbbsync")) {
 						this.selectLastRange();
 						this.insertAtCursor(this.getHTML(data, true));
 						this.$txtArea.val("");
@@ -2690,13 +2690,13 @@ wbbdebug = false;
 		smileConversion: function () {
 			if (this.options.smileList && this.options.smileList.length > 0) {
 				const snode = this.getSelectNode();
-				if (snode.nodeType == 3) {
+				if (snode.nodeType === 3) {
 					const ndata = snode.data;
-					if (ndata.length >= 2 && !this.isInClearTextBlock(snode) && $(snode).parents("a").length == 0) {
+					if (ndata.length >= 2 && !this.isInClearTextBlock(snode) && $(snode).parents("a").length === 0) {
 						$.each(this.options.srules, $.proxy(function (i, sar) {
 							const smbb = sar[0];
 							const fidx = ndata.indexOf(smbb);
-							if (fidx != -1) {
+							if (fidx !== -1) {
 								const afternode_txt = ndata.substring(fidx + smbb.length, ndata.length);
 								const afternode = document.createTextNode(afternode_txt);
 								const afternode_cursor = document.createElement("SPAN");
@@ -2754,7 +2754,7 @@ wbbdebug = false;
 		},
 		imgEventHandler: function (e) {
 			const $e = $(e.target);
-			if (this.hasWrapedImage && ($e.closest(".wbb-img,#wbbmodal").length == 0 || $e.hasClass("wbb-cancel-button"))) {
+			if (this.hasWrapedImage && ($e.closest(".wbb-img,#wbbmodal").length === 0 || $e.hasClass("wbb-cancel-button"))) {
 				this.$body.find(".imgWrap ").each(function () {
 					$.log("Removed imgWrap block");
 					$(this).replaceWith($(this).find("img"));
@@ -2783,7 +2783,7 @@ wbbdebug = false;
 				$wbbm.addClass("hastabs");
 				const $ul = $('<div class="wbbm-tablist">').appendTo($cont).append("<ul>").children("ul");
 				$.each(opt.tabs, $.proxy(function (i, row) {
-					if (i == 0) {
+					if (i === 0) {
 						row['on'] = "on"
 					}
 					$ul.append(this.strf('<li class="{on}" onClick="$(this).parent().find(\'.on\').removeClass(\'on\');$(this).addClass(\'on\');$(this).parents(\'.wbbm-content\').find(\'.tab-cont\').hide();$(this).parents(\'.wbbm-content\').find(\'.tab' + i + '\').show()">{title}</li>', row));
@@ -2809,13 +2809,13 @@ wbbdebug = false;
 				} else {
 					$.each(r.input, $.proxy(function (j, inp) {
 						inp["value"] = queryState[inp.param.toLowerCase()];
-						if (inp.param.toLowerCase() == "seltext" && (!inp["value"] || inp["value"] == "")) {
+						if (inp.param.toLowerCase() === "seltext" && (!inp["value"] || inp["value"] === "")) {
 							inp["value"] = this.getSelectText(this.options.bbmode);
 						}
-						if (inp["value"] && inp["value"].indexOf("<span id='wbbid") == 0 && $(inp["value"]).is("span[id*='wbbid']")) {
+						if (inp["value"] && inp["value"].indexOf("<span id='wbbid") === 0 && $(inp["value"]).is("span[id*='wbbid']")) {
 							inp["value"] = $(inp["value"]).html();
 						}
-						if (inp.type && inp.type == "div") {
+						if (inp.type && inp.type === "div") {
 							//div input, support wysiwyg input
 							$c.append(this.strf('<div class="wbbm-inp-row"><label>{title}</label><div class="inp-text div-modal-text" contenteditable="true" name="{param}">{value}</div></div>', inp));
 						} else {
@@ -2904,7 +2904,7 @@ wbbdebug = false;
 			}, this), 10);
 		},
 		escModal: function (e) {
-			if (e.which == 27) {
+			if (e.which === 27) {
 				this.closeModal();
 			}
 		},
@@ -2945,7 +2945,7 @@ wbbdebug = false;
 					if (value) {
 						if (v.rgx !== false) {
 							const m = value.match(new RegExp(v.rgx));
-							if (m && m.length == 2) {
+							if (m && m.length === 2) {
 								value = m[1];
 							}
 						}
@@ -3023,7 +3023,7 @@ wbbdebug = false;
 			if (!html) {
 				return "";
 			}
-			if ($.inArray("table", this.options.buttons) == -1) {
+			if ($.inArray("table", this.options.buttons) === -1) {
 				return html.replace(/\<(\/*?(table|tr|td|tbody))[^>]*\>/ig, "");
 			} else {
 				return html.replace(/\<(\/*?(table|tr|td))[^>]*\>/ig, "[$1]".toLowerCase()).replace(/\<\/*tbody[^>]*\>/ig, "");
@@ -3083,10 +3083,10 @@ wbbdebug = false;
 			if (opt.axisY) {
 				axisY = e.pageY - start.y;
 			}
-			if (axisY != 0) {
+			if (axisY !== 0) {
 				const nheight = start.sheight + axisY;
 				if (nheight > start.height && nheight <= opt.scope.options.resize_maxheight) {
-					if (opt.scope.options.bbmode == true) {
+					if (opt.scope.options.bbmode === true) {
 						opt.scope.$txtArea.css((opt.scope.options.autoresize === true) ? "min-height" : "height", nheight + "px");
 					} else {
 						opt.scope.$body.css((opt.scope.options.autoresize === true) ? "min-height" : "height", nheight + "px");
@@ -3257,7 +3257,7 @@ wbbdebug = false;
 						},
 						dataType: 'json',
 						success: $.proxy(function (data) {
-							if (data && data.status == 1) {
+							if (data && data.status === 1) {
 								this.opt.success(data);
 							} else {
 								this.error(data.msg || CURLANG.error_onupload);

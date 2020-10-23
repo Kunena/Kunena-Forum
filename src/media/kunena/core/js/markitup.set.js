@@ -13,7 +13,7 @@
 jQuery(document).ready(function ($) {
 	$('#editor').markItUp(bbcodeSettings);
 
-	if ($('#modal-code').length == 0) {
+	if ($('#modal-code').length === 0) {
 		$('.codemodalboxbutton').hide();
 	} else {
 		$('.codesimplebutton').hide();
@@ -40,11 +40,11 @@ jQuery(document).ready(function ($) {
 		let type = '';
 		let zoom = '';
 
-		if (modaltype != undefined) {
+		if (modaltype !== undefined) {
 			type = 'type=' + modaltype;
 		}
 
-		if (modalzoom != undefined) {
+		if (modalzoom !== undefined) {
 			zoom = 'zoom=' + modalzoom;
 		}
 

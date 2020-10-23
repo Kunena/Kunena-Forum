@@ -31,7 +31,7 @@ $wa->useScript('multiselect')
 	  const direction = document.getElementById("directionTable");
 	  const order = table.options[table.selectedIndex].value;
 
-	  if (order != '<?php echo $this->listOrdering; ?>') {
+	  if (order !== '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;

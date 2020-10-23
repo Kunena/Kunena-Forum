@@ -585,7 +585,7 @@ jQuery(function ($) {
 						object.append(insertButton.clone(true).data(file));
 						object.append(removeButton.clone(true).data(data));
 
-						if (file.protected == 0)
+						if (file.protected === 0)
 						{
 							object.append(setsecureButton.clone(true).data(data));
 						}

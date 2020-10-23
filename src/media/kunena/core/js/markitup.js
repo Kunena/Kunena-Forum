@@ -465,7 +465,7 @@
 			function set(start, len) {
 				if (textarea.createTextRange) {
 					// quick fix to make it work on Opera 9.5
-					if (browser.opera && browser.version >= 9.5 && len == 0) {
+					if (browser.opera && browser.version >= 9.5 && len === 0) {
 						return false;
 					}
 					range = textarea.createTextRange();
@@ -520,7 +520,7 @@
 						});
 					} else {
 						iFrame = $('<iframe class="markItUpPreviewFrame"></iframe>');
-						if (options.previewPosition == 'after') {
+						if (options.previewPosition === 'after') {
 							iFrame.insertAfter(footer);
 						} else {
 							iFrame.insertBefore(header);
@@ -606,7 +606,7 @@
 
 				if (e.type === 'keydown') {
 					if (ctrlKey === true) {
-						li = $('a[accesskey="' + ((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode)) + '"]', header).parent('li');
+						li = $('a[accesskey="' + ((e.keyCode === 13) ? '\\n' : String.fromCharCode(e.keyCode)) + '"]', header).parent('li');
 						if (li.length !== 0) {
 							ctrlKey = false;
 							setTimeout(function () {
@@ -630,7 +630,7 @@
 						}
 					}
 					if (e.keyCode === 9) { // Tab key
-						if (shiftKey == true || ctrlKey == true || altKey == true) {
+						if (shiftKey === true || ctrlKey === true || altKey === true) {
 							return false;
 						}
 						if (caretOffset !== -1) {

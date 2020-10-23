@@ -21,7 +21,8 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		CKEDITOR.instances.message.setData(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		var ckeditor_existing_content = CKEDITOR.instances.message.getData();
+		CKEDITOR.instances.message.setData(ckeditor_existing_content + ' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
 		if (button !== undefined) {
 			button.removeClass('btn-primary');
@@ -163,6 +164,7 @@ jQuery(function ($) {
 
 		var child = $('#kattach-list').find('input');
 		var files_id = [];
+		var content_to_inject = '';
 
 		child.each(function (i, el) {
 			var elem = $(el);
@@ -171,7 +173,7 @@ jQuery(function ($) {
 				var attachid = elem.attr('id').match("[0-9]{1,8}");
 				var filename = elem.attr('placeholder');
 
-				insertInMessage(attachid, filename);
+				content_to_inject += '[attachment=' + attachid + ']' + filename + '[/attachment]';
 
 				$('#insert-all').removeClass('btn-primary');
 				$('#insert-all').addClass('btn-success');
@@ -188,11 +190,14 @@ jQuery(function ($) {
 			$(filesedit).each(function (index, file) {
 				if (file.inline!==true)
 				{
-					insertInMessage(file.id, file.name);
+					content_to_inject += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
 					files_id.push(file.id);
 				}
 			});
 		}
+
+		var ckeditor_existing_content = CKEDITOR.instances.message.getData();
+		CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
 
 		$('#files .btn.btn-primary').each(function () {
 			$('#files .btn.btn-primary').addClass('btn-success');

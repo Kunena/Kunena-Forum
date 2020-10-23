@@ -7,7 +7,7 @@
  * @link https://www.kunena.org
  **/
 ;(function($){
-	var Joomla = window.Joomla;
+	const Joomla = window.Joomla;
 	if (Joomla !== undefined) {
 		$.fn.datepicker.dates['kunena'] = {
 			days: [Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_SUNDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_MONDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_TUESDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_WEDNESDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_THURSDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_FRIDAY'), Joomla.Text._('COM_KUNENA_BOOTSTRAP_DATEPICKER_DAYS_SATURDAY')],

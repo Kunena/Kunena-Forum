@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
 
 	/* Allow to make working drop-down choose destination */
 	$('#kchecktask').change(function () {
-		var task = $("select#kchecktask").val();
+		const task = $("select#kchecktask").val();
 		if (task === 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
 		}
@@ -45,9 +45,9 @@ jQuery(document).ready(function ($) {
 	});
 
 	$('#avatar_gallery_select').change(function () {
-		var gallery_selected = $("select#avatar_gallery_select").val();
+		const gallery_selected = $("select#avatar_gallery_select").val();
 
-		var gallery_list = $('#gallery_list');
+		const gallery_list = $('#gallery_list');
 
 		// We remove avatar which exist in td tag to allow us to put new one items
 		gallery_list.empty();
@@ -74,7 +74,7 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var clearcache = $('#clearcache');
+	const clearcache = $('#clearcache');
 	clearcache.on('click', function (e) {
 		e.preventDefault();
 		clearcache.addClass('btn-success');

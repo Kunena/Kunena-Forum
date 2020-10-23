@@ -9,11 +9,11 @@
 
 jQuery(document).ready(function ($) {
 	// Krating element
-	var krating = document.querySelector('#krating');
+	const krating = document.querySelector('#krating');
 
 	// Initialize
 	(function init() {
-		var topic_id = $("#topic_id").val();
+		const topic_id = $("#topic_id").val();
 
 		if ($('#krating').length > 0) {
 			$.ajax({
@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
 
 	// Build krating item
 	function buildItem() {
-		var ratingItem = document.createElement('div');
+		const ratingItem = document.createElement('div');
 		ratingItem.innerHTML = '<ul class="c-rating"></ul>';
 		krating.appendChild(ratingItem);
 		return ratingItem;
@@ -38,10 +38,10 @@ jQuery(document).ready(function ($) {
 
 	// Add krating widget
 	function addRatingWidget(ratingItem, rate, topicid) {
-		var ratingElement = ratingItem.querySelector('.c-rating');
-		var currentRating = rate;
-		var maxRating = 5;
-		var callback = function (rating) {
+		const ratingElement = ratingItem.querySelector('.c-rating');
+		const currentRating = rate;
+		const maxRating = 5;
+		const callback = function (rating) {
 			$.ajax({
 				dataType: "json",
 				url: $('#krating_submit_url').val(),
@@ -49,14 +49,13 @@ jQuery(document).ready(function ($) {
 			}).done(function (response) {
 				if (response.success) {
 					$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_SUCCESS_LABEL') + '</h4>' + Joomla.Text._(response.message) + '</div>').appendTo('#system-message-container');
-				}
-				else {
+				} else {
 					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + Joomla.Text._(response.message) + '</div>').appendTo('#system-message-container');
 				}
 			}).fail(function (reponse) {
 				$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + reponse + '</div>').appendTo('#system-message-container');
 			});
 		};
-		var r = rating(ratingElement, currentRating, maxRating, callback);
+		const r = rating(ratingElement, currentRating, maxRating, callback);
 	}
 });

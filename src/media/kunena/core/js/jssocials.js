@@ -3,29 +3,29 @@
 * Copyright (c) 2017 Artem Tabalin; Licensed MIT */
 (function (window, $, undefined) {
 
-	var JSSOCIALS = "JSSocials",
+	const JSSOCIALS = "JSSocials",
 		JSSOCIALS_DATA_KEY = JSSOCIALS;
 
-	var getOrApply = function (value, context) {
+	const getOrApply = function (value, context) {
 		if ($.isFunction(value)) {
 			return value.apply(context, $.makeArray(arguments).slice(2));
 		}
 		return value;
 	};
 
-	var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp|svg)$|^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64)/i;
-	var URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g;
+	const IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp|svg)$|^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64)/i;
+	const URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g;
 
-	var MEASURES = {
+	const MEASURES = {
 		"G": 1000000000,
 		"M": 1000000,
 		"K": 1000
 	};
 
-	var shares = {};
+	const shares = {};
 
 	function Socials(element, config) {
-		var $element = $(element);
+		const $element = $(element);
 
 		$element.data(JSSOCIALS_DATA_KEY, this);
 
@@ -88,7 +88,7 @@
 					shareConfig = {share: shareConfig};
 				}
 
-				var share = (shareConfig.share && shares[shareConfig.share]);
+				const share = (shareConfig.share && shares[shareConfig.share]);
 
 				if (!share && !shareConfig.renderer) {
 					throw Error("Share '" + shareConfig.share + "' is not found");
@@ -139,7 +139,7 @@
 		},
 
 		_renderShare: function (share) {
-			var $share;
+			let $share;
 
 			if ($.isFunction(share.renderer)) {
 				$share = $(share.renderer());
@@ -154,12 +154,12 @@
 		},
 
 		_createShare: function (share) {
-			var $result = $("<div>");
-			var $shareLink = this._createShareLink(share).appendTo($result);
+			const $result = $("<div>");
+			const $shareLink = this._createShareLink(share).appendTo($result);
 
 			if (this._showCount) {
-				var isInsideCount = (this._showCount === "inside");
-				var $countContainer = isInsideCount ? $shareLink : $("<div>").addClass(this.shareCountBoxClass).appendTo($result);
+				const isInsideCount = (this._showCount === "inside");
+				const $countContainer = isInsideCount ? $shareLink : $("<div>").addClass(this.shareCountBoxClass).appendTo($result);
 				$countContainer.addClass(isInsideCount ? this.shareLinkCountClass : this.shareCountBoxClass);
 				this._renderShareCount(share, $countContainer);
 			}
@@ -168,9 +168,9 @@
 		},
 
 		_createShareLink: function (share) {
-			var shareStrategy = this._getShareStrategy(share);
+			const shareStrategy = this._getShareStrategy(share);
 
-			var $result = shareStrategy.call(share, {
+			const $result = shareStrategy.call(share, {
 				shareUrl: this._getShareUrl(share)
 			});
 
@@ -191,7 +191,7 @@
 		},
 
 		_getShareStrategy: function (share) {
-			var result = shareStrategies[share.shareIn || this.shareIn];
+			const result = shareStrategies[share.shareIn || this.shareIn];
 
 			if (!result)
 				throw Error("Share strategy '" + this.shareIn + "' not found");
@@ -200,14 +200,14 @@
 		},
 
 		_getShareUrl: function (share) {
-			var shareUrl = getOrApply(share.shareUrl, share);
+			const shareUrl = getOrApply(share.shareUrl, share);
 			return this._formatShareUrl(shareUrl, share);
 		},
 
 		_createShareLogo: function (share) {
-			var logo = share.logo;
+			const logo = share.logo;
 
-			var $result = IMG_SRC_REGEX.test(logo) ?
+			const $result = IMG_SRC_REGEX.test(logo) ?
 				$("<img>").attr("src", share.logo) :
 				$("<i>").addClass(logo);
 
@@ -222,7 +222,7 @@
 		},
 
 		_renderShareCount: function (share, $container) {
-			var $count = $("<span>").addClass(this.shareCountClass);
+			const $count = $("<span>").addClass(this.shareCountClass);
 
 			$container.addClass(this.shareZeroCountClass)
 				.append($count);
@@ -236,14 +236,14 @@
 		},
 
 		_loadCount: function (share) {
-			var deferred = $.Deferred();
-			var countUrl = this._getCountUrl(share);
+			const deferred = $.Deferred();
+			const countUrl = this._getCountUrl(share);
 
 			if (!countUrl) {
 				return deferred.resolve(0).promise();
 			}
 
-			var handleSuccess = $.proxy(function (response) {
+			const handleSuccess = $.proxy(function (response) {
 				deferred.resolve(this._getCountValue(response, share));
 			}, this);
 
@@ -259,12 +259,12 @@
 		},
 
 		_getCountUrl: function (share) {
-			var countUrl = getOrApply(share.countUrl, share);
+			const countUrl = getOrApply(share.countUrl, share);
 			return this._formatShareUrl(countUrl, share);
 		},
 
 		_getCountValue: function (response, share) {
-			var count = ($.isFunction(share.getCount) ? share.getCount(response) : response) || 0;
+			const count = ($.isFunction(share.getCount) ? share.getCount(response) : response) || 0;
 			return (typeof count === "string") ? count : this._formatNumber(count);
 		},
 
@@ -281,7 +281,7 @@
 
 		_formatShareUrl: function (url, share) {
 			return url.replace(URL_PARAMS_REGEX, function (match, key, field) {
-				var value = share[field] || "";
+				const value = share[field] || "";
 				return value ? (key || "") + window.encodeURIComponent(value) : "";
 			});
 		},
@@ -292,7 +292,7 @@
 		},
 
 		_passOptionToShares: function (key, value) {
-			var shares = this.shares;
+			const shares = this.shares;
 
 			$.each(["url", "text"], function (_, optionName) {
 				if (optionName !== key)
@@ -357,14 +357,14 @@
 
 
 	$.fn.jsSocials = function (config) {
-		var args = $.makeArray(arguments),
-			methodArgs = args.slice(1),
-			result = this;
+		const args = $.makeArray(arguments),
+			methodArgs = args.slice(1);
+		let result = this;
 
 		this.each(function () {
-			var $element = $(this),
-				instance = $element.data(JSSOCIALS_DATA_KEY),
-				methodResult;
+			const $element = $(this),
+				instance = $element.data(JSSOCIALS_DATA_KEY);
+			let methodResult;
 
 			if (instance) {
 				if (typeof config === "string") {
@@ -386,8 +386,8 @@
 		return result;
 	};
 
-	var setDefaults = function (config) {
-		var component;
+	const setDefaults = function (config) {
+		let component;
 
 		if ($.isPlainObject(config)) {
 			component = Socials.prototype;

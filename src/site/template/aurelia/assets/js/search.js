@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
 
 	/* Provide autocomplete user list in search form and in user list */
 	if ($('#kurl_users').length > 0) {
-		var users_url = $('#kurl_users').val();
+		const users_url = $('#kurl_users').val();
 
 		$('#kusersearch').atwho({
 			at: "",

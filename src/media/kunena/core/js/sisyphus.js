@@ -12,16 +12,16 @@
 	}
 
 	$.fn.sisyphus = function (options) {
-		var identifier = $.map(this, function (obj) {
+		const identifier = $.map(this, function (obj) {
 			return getElementIdentifier($(obj));
 		}).join();
 
-		var sisyphus = Sisyphus.getInstance(identifier);
+		const sisyphus = Sisyphus.getInstance(identifier);
 		sisyphus.protect(this, options);
 		return sisyphus;
 	};
 
-	var browserStorage = {};
+	const browserStorage = {};
 
 	/**
 	 * Check if local storage or other browser storage is available
@@ -75,7 +75,7 @@
 	 */
 	browserStorage.get = function (key) {
 		if (typeof $.jStorage === "object") {
-			var result = $.jStorage.get(key);
+			const result = $.jStorage.get(key);
 			return result ? result.toString() : result;
 		}
 		else {
@@ -101,11 +101,11 @@
 	};
 
 	Sisyphus = (function () {
-		var params = {
+		let params = {
 			instantiated: [],
 			started: []
 		};
-		var CKEDITOR = window.CKEDITOR;
+		const CKEDITOR = window.CKEDITOR;
 
 		function init() {
 
@@ -126,7 +126,7 @@
 				 * @return void
 				 */
 				setInitialOptions: function (options) {
-					var defaults = {
+					const defaults = {
 						excludeFields: [],
 						customKeySuffix: "",
 						locationBased: false,
@@ -170,7 +170,7 @@
 				protect: function (targets, options) {
 					this.setOptions(options);
 					targets = targets || {};
-					var self = this;
+					const self = this;
 					this.targets = this.targets || [];
 					if (self.options.name) {
 						this.href = self.options.name;
@@ -186,7 +186,7 @@
 						return false;
 					}
 
-					var callback_result = self.options.onBeforeRestore.call(self);
+					const callback_result = self.options.onBeforeRestore.call(self);
 					if (callback_result === undefined || callback_result) {
 						self.restoreAllData();
 					}
@@ -197,7 +197,7 @@
 
 					if (!params.started[this.getInstanceIdentifier()]) {
 						if (self.isCKEditorPresent()) {
-							var intervalId = setInterval(function () {
+							const intervalId = setInterval(function () {
 								if (CKEDITOR.isLoaded) {
 									clearInterval(intervalId);
 									self.bindSaveData();
@@ -239,22 +239,22 @@
 				 * @return void
 				 */
 				bindSaveData: function () {
-					var self = this;
+					const self = this;
 
 					if (self.options.timeout) {
 						self.saveDataByTimeout();
 					}
 
 					self.targets.each(function () {
-						var targetFormIdAndName = getElementIdentifier($(this));
+						const targetFormIdAndName = getElementIdentifier($(this));
 						self.findFieldsToProtect($(this)).each(function () {
 							if ($.inArray(this, self.options.excludeFields) !== -1) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
 
-							var field = $(this);
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
+							const field = $(this);
+							const prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 							if (field.is(":text") || field.is("textarea")) {
 								if (!self.options.timeout) {
 									self.bindSaveDataImmediately(field, prefix);
@@ -274,23 +274,23 @@
 				 * @return void
 				 */
 				saveAllData: function () {
-					var self = this;
+					const self = this;
 					self.targets.each(function () {
-						var targetFormIdAndName = getElementIdentifier($(this));
-						var multiCheckboxCache = {};
+						const targetFormIdAndName = getElementIdentifier($(this));
+						const multiCheckboxCache = {};
 
 						self.findFieldsToProtect($(this)).each(function () {
-							var field = $(this);
+							const field = $(this);
 							if ($.inArray(this, self.options.excludeFields) !== -1 || (field.attr("name") === undefined && field.attr("id") === undefined)) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
 
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
-							var value = field.val();
+							const prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
+							let value = field.val();
 
 							if (field.is(":checkbox")) {
-								var name = field.attr("name");
+								const name = field.attr("name");
 								if (name !== undefined && name.indexOf("[") !== -1) {
 									if (multiCheckboxCache[name] === true) {
 										return;
@@ -316,7 +316,7 @@
 							}
 							else {
 								if (self.isCKEditorExists()) {
-									var editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
+									const editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
 									if (editor) {
 										editor.updateElement();
 										self.saveToBrowserStorage(prefix, field.val(), false);
@@ -340,12 +340,12 @@
 				 * @return void
 				 */
 				restoreAllData: function () {
-					var self = this;
-					var restored = false;
+					const self = this;
+					let restored = false;
 
 					self.targets.each(function () {
-						var target = $(this);
-						var targetFormIdAndName = getElementIdentifier($(this));
+						const target = $(this);
+						const targetFormIdAndName = getElementIdentifier($(this));
 
 						self.findFieldsToProtect(target).each(function () {
 							if ($.inArray(this, self.options.excludeFields) !== -1) {
@@ -353,9 +353,9 @@
 								return true;
 							}
 
-							var field = $(this);
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
-							var resque = self.browserStorage.get(prefix);
+							const field = $(this);
+							const prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
+							const resque = self.browserStorage.get(prefix);
 							if (resque !== null) {
 								self.restoreFieldsData(field, resque);
 								restored = true;
@@ -381,7 +381,7 @@
 						return false;
 					}
 
-					var name = field.attr("name");
+					const name = field.attr("name");
 					if (field.is(":checkbox") && resque !== "false" && (name === undefined || name.indexOf("[") === -1)) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.prop("checked", true);
@@ -414,7 +414,7 @@
 				 * @return void
 				 */
 				bindSaveDataImmediately: function (field, prefix) {
-					var self = this;
+					const self = this;
 					if ('onpropertychange' in field) {
 						field.get(0).onpropertychange = function () {
 							self.saveToBrowserStorage(prefix, field.val());
@@ -427,7 +427,7 @@
 					}
 
 					if (this.isCKEditorExists()) {
-						var editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
+						const editor = CKEDITOR.instances[field.attr("name")] || CKEDITOR.instances[field.attr("id")];
 						if (editor) {
 							editor.document.on('keyup', function () {
 								editor.updateElement();
@@ -447,9 +447,9 @@
 				 * @return void
 				 */
 				saveToBrowserStorage: function (key, value, fireCallback) {
-					var self = this;
+					const self = this;
 
-					var callback_result = self.options.onBeforeSave.call(self);
+					const callback_result = self.options.onBeforeSave.call(self);
 					if (callback_result !== undefined && callback_result === false) {
 						return;
 					}
@@ -470,7 +470,7 @@
 				 * @return void
 				 */
 				bindSaveDataOnChange: function (field) {
-					var self = this;
+					const self = this;
 					field.change(function () {
 						self.saveAllData();
 					});
@@ -482,8 +482,8 @@
 				 * @return void
 				 */
 				saveDataByTimeout: function () {
-					var self = this;
-					var targetForms = self.targets;
+					const self = this;
+					const targetForms = self.targets;
 					setTimeout((function () {
 						function timeout() {
 							self.saveAllData();
@@ -500,10 +500,10 @@
 				 * @return void
 				 */
 				bindReleaseData: function () {
-					var self = this;
+					const self = this;
 					self.targets.each(function () {
-						var target = $(this);
-						var formIdAndName = getElementIdentifier(target);
+						const target = $(this);
+						const formIdAndName = getElementIdentifier(target);
 						$(this).bind("submit reset", function () {
 							self.releaseData(formIdAndName, self.findFieldsToProtect(target));
 						});
@@ -516,10 +516,10 @@
 				 * @return void
 				 */
 				manuallyReleaseData: function () {
-					var self = this;
+					const self = this;
 					self.targets.each(function () {
-						var target = $(this);
-						var formIdAndName = getElementIdentifier(target);
+						const target = $(this);
+						const formIdAndName = getElementIdentifier(target);
 						self.releaseData(formIdAndName, self.findFieldsToProtect(target));
 					});
 				},
@@ -533,8 +533,8 @@
 				 * @return void
 				 */
 				releaseData: function (targetFormIdAndName, fieldsToProtect) {
-					var released = false;
-					var self = this;
+					let released = false;
+					const self = this;
 
 					// Released form, are not started anymore. Fix for ajax loaded forms.
 					params.started[self.getInstanceIdentifier()] = false;
@@ -545,8 +545,8 @@
 							return true;
 						}
 
-						var field = $(this);
-						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
+						const field = $(this);
+						const prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 						self.browserStorage.remove(prefix);
 						released = true;
 					});

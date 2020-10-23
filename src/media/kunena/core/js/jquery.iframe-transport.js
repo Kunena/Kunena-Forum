@@ -27,11 +27,11 @@
   'use strict';
 
   // Helper variable to create unique names for the transport iframes:
-  var counter = 0,
-    jsonAPI = $,
-    jsonParse = 'parseJSON';
+	let counter = 0,
+		jsonAPI = $,
+		jsonParse = 'parseJSON';
 
-  if ('JSON' in window && 'parse' in JSON) {
+	if ('JSON' in window && 'parse' in JSON) {
     jsonAPI = JSON;
     jsonParse = 'parse';
   }
@@ -51,11 +51,11 @@
       // javascript:false as initial iframe src
       // prevents warning popups on HTTPS in IE6:
       // eslint-disable-next-line no-script-url
-      var initialIframeSrc = options.initialIframeSrc || 'javascript:false;',
-        form,
-        iframe,
-        addParamChar;
-      return {
+	    const initialIframeSrc = options.initialIframeSrc || 'javascript:false;';
+	    let form,
+		    iframe,
+		    addParamChar;
+	    return {
         send: function (_, completeCallback) {
           form = $('<form style="display:none;"></form>');
           form.attr('accept-charset', options.formAcceptCharset);
@@ -82,13 +82,13 @@
               counter +
               '"></iframe>'
           ).on('load', function () {
-            var fileInputClones,
-              paramNames = $.isArray(options.paramName)
-                ? options.paramName
-                : [options.paramName];
-            iframe.off('load').on('load', function () {
-              var response;
-              // Wrap in a try/catch block to catch exceptions thrown
+	          let fileInputClones;
+	          const paramNames = $.isArray(options.paramName)
+		          ? options.paramName
+		          : [options.paramName];
+	          iframe.off('load').on('load', function () {
+	            let response;
+	            // Wrap in a try/catch block to catch exceptions thrown
               // when trying to access cross-domain iframe contents:
               try {
                 response = iframe.contents();
@@ -163,8 +163,8 @@
               // by replacing the clones with the originals:
               if (fileInputClones && fileInputClones.length) {
                 options.fileInput.each(function (index, input) {
-                  var clone = $(fileInputClones[index]);
-                  // Restore the original name and form properties:
+	                const clone = $(fileInputClones[index]);
+	                // Restore the original name and form properties:
                   $(input)
                     .prop('name', clone.prop('name'))
                     .attr('form', clone.attr('form'));
@@ -211,8 +211,8 @@
         return iframe && $(iframe[0].body).html();
       },
       'iframe xml': function (iframe) {
-        var xmlDoc = iframe && iframe[0];
-        return xmlDoc && $.isXMLDoc(xmlDoc)
+	      const xmlDoc = iframe && iframe[0];
+	      return xmlDoc && $.isXMLDoc(xmlDoc)
           ? xmlDoc
           : $.parseXML(
               (xmlDoc.XMLDocument && xmlDoc.XMLDocument.xml) ||

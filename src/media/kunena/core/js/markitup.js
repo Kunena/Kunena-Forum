@@ -26,7 +26,7 @@
 // ----------------------------------------------------------------------------
 (function ($) {
 	$.fn.markItUp = function (settings, extraSettings) {
-		var method, params, options, ctrlKey, shiftKey, altKey;
+		let method, params, options, ctrlKey, shiftKey, altKey;
 		ctrlKey = shiftKey = altKey = false;
 
 		if (typeof settings == 'string') {
@@ -62,7 +62,7 @@
 		// compute markItUp! path
 		if (!options.root) {
 			$('script').each(function (a, tag) {
-				var miuScript = $(tag).get(0).src.match(/(.*)jquery\.markitup(\.pack)?\.js$/);
+				const miuScript = $(tag).get(0).src.match(/(.*)jquery\.markitup(\.pack)?\.js$/);
 				if (miuScript !== null) {
 					options.root = miuScript[1];
 				}
@@ -70,10 +70,10 @@
 		}
 
 		// Quick patch to keep compatibility with jQuery 1.9
-		var uaMatch = function (ua) {
+		const uaMatch = function (ua) {
 			ua = ua.toLowerCase();
 
-			var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+			const match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
 				/(webkit)[ \/]([\w.]+)/.exec(ua) ||
 				/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
 				/(msie) ([\w.]+)/.exec(ua) ||
@@ -85,8 +85,8 @@
 				version: match[2] || "0"
 			};
 		};
-		var matched = uaMatch(navigator.userAgent);
-		var browser = {};
+		const matched = uaMatch(navigator.userAgent);
+		const browser = {};
 
 		if (matched.browser) {
 			browser[matched.browser] = true;
@@ -99,7 +99,7 @@
 		}
 
 		return this.each(function () {
-			var $$, textarea, levels, scrollPosition, caretPosition, caretOffset,
+			let $$, textarea, levels, scrollPosition, caretPosition, caretOffset,
 				clicked, hash, header, footer, previewWindow, template, iFrame, abort;
 			$$ = $(this);
 			textarea = this;
@@ -163,7 +163,8 @@
 					resizeHandle = $('<div class="markItUpResizeHandle"></div>')
 						.insertAfter($$)
 						.bind("mousedown.markItUp", function (e) {
-							var h = $$.height(), y = e.clientY, mouseMove, mouseUp;
+							const h = $$.height(), y = e.clientY;
+							let mouseMove, mouseUp;
 							mouseMove = function (e) {
 								$$.css("height", Math.max(20, e.clientY + h - y) + "px");
 								return false;
@@ -202,10 +203,12 @@
 
 			// recursively build header with dropMenus from markupset
 			function dropMenus(markupSet) {
-				var ul = $('<ul></ul>'), i = 0;
+				const ul = $('<ul></ul>');
+				let i = 0;
 				$('li:hover > ul', ul).css('display', 'block');
 				$.each(markupSet, function () {
-					var button = this, t = '', title, li, j;
+					const button = this;
+					let t = '', title, li, j;
 					button.title ? title = (button.key) ? (button.title || '') + ' [Ctrl+' + button.key + ']' : (button.title || '') : title = (button.key) ? (button.name || '') + ' [Ctrl+' + button.key + ']' : (button.name || '');
 					key = (button.key) ? 'accesskey="' + button.key + '"' : '';
 					if (button.separator) {
@@ -255,7 +258,7 @@
 					string = string.toString();
 					string = string.replace(/\(\!\(([\s\S]*?)\)\!\)/g,
 						function (x, a) {
-							var b = a.split('|!|');
+							const b = a.split('|!|');
 							if (altKey === true) {
 								return (b[1] !== undefined) ? b[1] : b[0];
 							} else {
@@ -266,7 +269,7 @@
 					// [![prompt]!], [![prompt:!:value]!]
 					string = string.replace(/\[\!\[([\s\S]*?)\]\!\]/g,
 						function (x, a) {
-							var b = a.split(':!:');
+							const b = a.split(':!:');
 							if (abort === true) {
 								return false;
 							}
@@ -292,13 +295,13 @@
 
 			// build block to insert
 			function build(string) {
-				var openWith = prepare(clicked.openWith);
-				var placeHolder = prepare(clicked.placeHolder);
-				var replaceWith = prepare(clicked.replaceWith);
-				var closeWith = prepare(clicked.closeWith);
-				var openBlockWith = prepare(clicked.openBlockWith);
-				var closeBlockWith = prepare(clicked.closeBlockWith);
-				var multiline = clicked.multiline;
+				const openWith = prepare(clicked.openWith);
+				const placeHolder = prepare(clicked.placeHolder);
+				const replaceWith = prepare(clicked.replaceWith);
+				const closeWith = prepare(clicked.closeWith);
+				const openBlockWith = prepare(clicked.openBlockWith);
+				const closeBlockWith = prepare(clicked.closeBlockWith);
+				const multiline = clicked.multiline;
 
 				if (replaceWith !== "") {
 					block = openWith + replaceWith + closeWith;
@@ -307,15 +310,16 @@
 				} else {
 					string = string || selection;
 
-					var lines = [string], blocks = [];
+					let lines = [string];
+					const blocks = [];
 
 					if (multiline === true) {
 						lines = string.split(/\r?\n/);
 					}
 
-					for (var l = 0; l < lines.length; l++) {
+					for (let l = 0; l < lines.length; l++) {
 						line = lines[l];
-						var trailingSpaces;
+						let trailingSpaces;
 						if (trailingSpaces = line.match(/ *$/)) {
 							blocks.push(openWith + line.replace(/ *$/g, '') + closeWith + trailingSpaces);
 						} else {
@@ -341,7 +345,7 @@
 
 			// define markup to insert
 			function markup(button) {
-				var len, j, n, i;
+				let len, j, n, i;
 				hash = clicked = button;
 				get();
 				$.extend(hash, {
@@ -450,7 +454,7 @@
 			// add markup
 			function insert(block) {
 				if (document.selection) {
-					var newSelection = document.selection.createRange();
+					const newSelection = document.selection.createRange();
 					newSelection.text = block;
 				} else {
 					textarea.value = textarea.value.substring(0, caretPosition) + block + textarea.value.substring(caretPosition + selection.length, textarea.value.length);
@@ -484,7 +488,7 @@
 				if (document.selection) {
 					selection = document.selection.createRange().text;
 					if (browser.msie) { // ie
-						var range = document.selection.createRange(), rangeCopy = range.duplicate();
+						const range = document.selection.createRange(), rangeCopy = range.duplicate();
 						rangeCopy.moveToElementText(textarea);
 						caretPosition = -1;
 						while (rangeCopy.inRange(range)) {
@@ -545,8 +549,8 @@
 			}
 
 			function renderPreview() {
-				var phtml;
-				var parsedData = $$.val();
+				let phtml;
+				let parsedData = $$.val();
 				if (options.previewParser && typeof options.previewParser === 'function') {
 					parsedData = options.previewParser(parsedData);
 				}
@@ -647,7 +651,7 @@
 				$$.unbind(".markItUp").removeClass('markItUpEditor');
 				$$.parent('div').parent('div.markItUp').parent('div').replaceWith($$);
 
-				var relativeRef = $$.parent('div').parent('div.markItUp').parent('div');
+				const relativeRef = $$.parent('div').parent('div.markItUp').parent('div');
 				if (relativeRef.length) {
 					relativeRef.replaceWith($$);
 				}
@@ -667,7 +671,7 @@
 	};
 
 	$.markItUp = function (settings) {
-		var options = {target: false};
+		const options = {target: false};
 		$.extend(options, settings);
 		if (options.target) {
 			return $(options.target).each(function () {

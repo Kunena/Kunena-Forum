@@ -1,16 +1,16 @@
 jQuery(function ($) {
 	'use strict';
 
-	var fileCount = null;
-	var filesedit = null;
-	var max_avatar = 1;
+	let fileCount = null;
+	const filesedit = null;
+	const max_avatar = 1;
 
-	var removeButton = $('<button/>')
+	const removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
 		.html(Joomla.getOptions('com_kunena.avatar_delete') + ' ' + Joomla.Text._('COM_KUNENA_GEN_REMOVE_AVATAR'))
 		.on('click', function () {
-			var $this = $(this),
+			const $this = $(this),
 				data = $this.data();
 
 			if (data['files'] !== undefined) {
@@ -49,7 +49,7 @@ jQuery(function ($) {
 		previewMaxHeight: 100,
 		previewCrop: true
 	}).bind('fileuploadsubmit', function (e, data) {
-		var params = {};
+		let params = {};
 		$.each(data.files, function (index, file) {
 			params = {
 				'userid': $('#kunena_userid').val(),
@@ -62,12 +62,12 @@ jQuery(function ($) {
 		data.formData = params;
 	})
 		.bind('fileuploaddrop', function (e, data) {
-			var filecoutntmp = Object.keys(data['files']).length + fileCount;
+			const filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			fileCount = Object.keys(data['files']).length + fileCount;
 		})
 		.bind('fileuploadchange', function (e, data) {
-			var filecoutntmp = Object.keys(data['files']).length + fileCount;
+			const filecoutntmp = Object.keys(data['files']).length + fileCount;
 
 			fileCount = Object.keys(data['files']).length + fileCount;
 		})
@@ -82,7 +82,7 @@ jQuery(function ($) {
 			data.context = $('<div/>').appendTo('#files');
 
 			$.each(data.files, function (index, file) {
-				var node = $('<p/>')
+				const node = $('<p/>')
 					.append($('<span/>').text(file.name));
 				if (!index) {
 					node
@@ -91,7 +91,7 @@ jQuery(function ($) {
 				node.appendTo(data.context);
 			});
 		}).on('fileuploadprocessalways', function (e, data) {
-		var index = data.index,
+		const index = data.index,
 			file = data.files[index],
 			node = $(data.context.children()[index]);
 		if (file.preview) {
@@ -112,7 +112,7 @@ jQuery(function ($) {
 	}).on('fileuploaddone', function (e, data) {
 		// $.each(data.result.data, function (index, file)
 
-		var link = $('<a>')
+		const link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
 
@@ -146,7 +146,7 @@ jQuery(function ($) {
 		}
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {
-			var error = $('<span class="text-danger"/>').text(file.error);
+			const error = $('<span class="text-danger"/>').text(file.error);
 			$(data.context.children()[index])
 				.append('<br>')
 				.append(error);
@@ -173,7 +173,7 @@ jQuery(function ($) {
 						var name = '';
 					}
 
-					var object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
+					const object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
 					data.uploaded = true;
 					data.result = false;
 

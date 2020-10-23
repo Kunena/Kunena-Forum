@@ -20,7 +20,7 @@
 		 * @description The collection of stars in the rating.
 		 * @type {Array}
 		 */
-		var stars = [];
+		const stars = [];
 
 		/**
 		 * init
@@ -44,8 +44,8 @@
 				throw Error('Current rating is out of bounds.');
 			}
 
-			for (var i = 0; i < maxRating; i++) {
-				var star = document.createElement('li');
+			for (let i = 0; i < maxRating; i++) {
+				const star = document.createElement('li');
 				star.classList.add('c-rating__item');
 				star.setAttribute('data-index', i);
 				if (i < currentRating) {
@@ -67,8 +67,8 @@
 		 * @param {Function} callback The callback to run on items in the collection
 		 */
 		function iterate(collection, callback) {
-			for (var i = 0; i < collection.length; i++) {
-				var item = collection[i];
+			for (let i = 0; i < collection.length; i++) {
+				const item = collection[i];
 				callback(item, i);
 			}
 		}

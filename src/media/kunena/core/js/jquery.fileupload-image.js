@@ -163,11 +163,11 @@
         if (options.disabled) {
           return data;
         }
-        var that = this,
-          file = data.files[data.index],
-          // eslint-disable-next-line new-cap
-          dfd = $.Deferred();
-        if (
+	      const that = this,
+		      file = data.files[data.index],
+		      // eslint-disable-next-line new-cap
+		      dfd = $.Deferred();
+	      if (
           ($.type(options.maxFileSize) === 'number' &&
             file.size > options.maxFileSize) ||
           (options.fileTypes && !options.fileTypes.test(file.type)) ||
@@ -198,25 +198,25 @@
         }
         // eslint-disable-next-line no-param-reassign
         options = $.extend({ canvas: true }, options);
-        var that = this,
-          // eslint-disable-next-line new-cap
-          dfd = $.Deferred(),
-          img = (options.canvas && data.canvas) || data.img,
-          resolve = function (newImg) {
-            if (
-              newImg &&
-              (newImg.width !== img.width ||
-                newImg.height !== img.height ||
-                options.forceResize)
-            ) {
-              data[newImg.getContext ? 'canvas' : 'img'] = newImg;
-            }
-            data.preview = newImg;
-            dfd.resolveWith(that, [data]);
-          },
-          thumbnail,
-          thumbnailBlob;
-        if (data.exif) {
+	      const that = this,
+		      // eslint-disable-next-line new-cap
+		      dfd = $.Deferred(),
+		      img = (options.canvas && data.canvas) || data.img,
+		      resolve = function (newImg) {
+			      if (
+				      newImg &&
+				      (newImg.width !== img.width ||
+					      newImg.height !== img.height ||
+					      options.forceResize)
+			      ) {
+				      data[newImg.getContext ? 'canvas' : 'img'] = newImg;
+			      }
+			      data.preview = newImg;
+			      dfd.resolveWith(that, [data]);
+		      };
+	      let thumbnail,
+		      thumbnailBlob;
+	      if (data.exif) {
           if (options.orientation === true) {
             options.orientation = data.exif.get('Orientation');
           }
@@ -252,11 +252,11 @@
         if (!data.canvas || options.disabled) {
           return data;
         }
-        var that = this,
-          file = data.files[data.index],
-          // eslint-disable-next-line new-cap
-          dfd = $.Deferred();
-        if (data.canvas.toBlob) {
+	      const that = this,
+		      file = data.files[data.index],
+		      // eslint-disable-next-line new-cap
+		      dfd = $.Deferred();
+	      if (data.canvas.toBlob) {
           data.canvas.toBlob(
             function (blob) {
               if (!blob.name) {
@@ -291,10 +291,10 @@
         if (options.disabled) {
           return data;
         }
-        var that = this,
-          // eslint-disable-next-line new-cap
-          dfd = $.Deferred();
-        loadImage.parseMetaData(
+	      const that = this,
+		      // eslint-disable-next-line new-cap
+		      dfd = $.Deferred();
+	      loadImage.parseMetaData(
           data.files[data.index],
           function (result) {
             $.extend(data, result);
@@ -316,11 +316,11 @@
         ) {
           return data;
         }
-        var that = this,
-          file = data.files[data.index],
-          // eslint-disable-next-line new-cap
-          dfd = $.Deferred();
-        if (data.orientation && data.exifOffsets) {
+	      const that = this,
+		      file = data.files[data.index],
+		      // eslint-disable-next-line new-cap
+		      dfd = $.Deferred();
+	      if (data.orientation && data.exifOffsets) {
           // Reset Exif Orientation data:
           loadImage.writeExifData(data.imageHead, data, 'Orientation', 1);
         }

@@ -31,7 +31,7 @@
 	 */
 
 	"use strict";
-	var EditableCaret, InputCaret, Mirror, Utils, discoveryIframeOf, methods, oDocument, oFrame, oWindow, pluginName,
+	let EditableCaret, InputCaret, Mirror, Utils, discoveryIframeOf, methods, oDocument, oFrame, oWindow, pluginName,
 		setContextBy;
 
 	pluginName = 'caret';
@@ -43,12 +43,12 @@
 		}
 
 		EditableCaret.prototype.setPos = function (pos) {
-			var fn, found, offset, sel;
+			let fn, found, offset, sel;
 			if (sel = oWindow.getSelection()) {
 				offset = 0;
 				found = false;
 				(fn = function (pos, parent) {
-					var node, range, _i, _len, _ref, _results;
+					let node, range, _i, _len, _ref, _results;
 					_ref = parent.childNodes;
 					_results = [];
 					for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -87,7 +87,7 @@
 		};
 
 		EditableCaret.prototype.getPosition = function () {
-			var inputor_offset, offset;
+			let inputor_offset, offset;
 			offset = this.getOffset();
 			inputor_offset = this.$inputor.offset();
 			offset.left -= inputor_offset.left;
@@ -96,7 +96,7 @@
 		};
 
 		EditableCaret.prototype.getOldIEPos = function () {
-			var preCaretTextRange, textRange;
+			let preCaretTextRange, textRange;
 			textRange = oDocument.selection.createRange();
 			preCaretTextRange = oDocument.body.createTextRange();
 			preCaretTextRange.moveToElementText(this.domInputor);
@@ -105,7 +105,7 @@
 		};
 
 		EditableCaret.prototype.getPos = function () {
-			var clonedRange, pos, range;
+			let clonedRange, pos, range;
 			if (range = this.range()) {
 				clonedRange = range.cloneRange();
 				clonedRange.selectNodeContents(this.domInputor);
@@ -120,7 +120,7 @@
 		};
 
 		EditableCaret.prototype.getOldIEOffset = function () {
-			var range, rect;
+			let range, rect;
 			range = oDocument.selection.createRange().duplicate();
 			range.moveStart("character", -1);
 			rect = range.getBoundingClientRect();
@@ -132,7 +132,7 @@
 		};
 
 		EditableCaret.prototype.getOffset = function (pos) {
-			var clonedRange, offset, range, rect, shadowCaret;
+			let clonedRange, offset, range, rect, shadowCaret;
 			if (oWindow.getSelection && (range = this.range())) {
 				if (range.endOffset - 1 > 0 && range.endContainer !== this.domInputor) {
 					clonedRange = range.cloneRange();
@@ -175,7 +175,7 @@
 		};
 
 		EditableCaret.prototype.range = function () {
-			var sel;
+			let sel;
 			if (!oWindow.getSelection) {
 				return;
 			}
@@ -200,7 +200,7 @@
 		}
 
 		InputCaret.prototype.getIEPos = function () {
-			var endRange, inputor, len, normalizedValue, pos, range, textInputRange;
+			let endRange, inputor, len, normalizedValue, pos, range, textInputRange;
 			inputor = this.domInputor;
 			range = oDocument.selection.createRange();
 			pos = 0;
@@ -232,7 +232,7 @@
 		};
 
 		InputCaret.prototype.setPos = function (pos) {
-			var inputor, range;
+			let inputor, range;
 			inputor = this.domInputor;
 			if (oDocument.selection) {
 				range = inputor.createTextRange();
@@ -247,7 +247,7 @@
 		};
 
 		InputCaret.prototype.getIEOffset = function (pos) {
-			var h, textRange, x, y;
+			let h, textRange, x, y;
 			textRange = this.domInputor.createTextRange();
 			pos || (pos = this.getPos());
 			textRange.move('character', pos);
@@ -262,7 +262,7 @@
 		};
 
 		InputCaret.prototype.getOffset = function (pos) {
-			var $inputor, offset, position;
+			let $inputor, offset, position;
 			$inputor = this.$inputor;
 			if (oDocument.selection) {
 				offset = this.getIEOffset(pos);
@@ -282,7 +282,7 @@
 		};
 
 		InputCaret.prototype.getPosition = function (pos) {
-			var $inputor, at_rect, end_range, format, html, mirror, start_range;
+			let $inputor, at_rect, end_range, format, html, mirror, start_range;
 			$inputor = this.$inputor;
 			format = function (value) {
 				value = value.replace(/<|>|`|"|&/g, '?').replace(/\r\n|\r|\n/g, "<br/>");
@@ -306,7 +306,7 @@
 		};
 
 		InputCaret.prototype.getIEPosition = function (pos) {
-			var h, inputorOffset, offset, x, y;
+			let h, inputorOffset, offset, x, y;
 			offset = this.getIEOffset(pos);
 			inputorOffset = this.$inputor.offset();
 			x = offset.left - inputorOffset.left;
@@ -331,8 +331,8 @@
 		}
 
 		Mirror.prototype.mirrorCss = function () {
-			var css,
-				_this = this;
+			let css;
+			const _this = this;
 			css = {
 				position: 'absolute',
 				left: -9999,
@@ -358,7 +358,7 @@
 		};
 
 		Mirror.prototype.rect = function () {
-			var $flag, pos, rect;
+			let $flag, pos, rect;
 			$flag = this.$mirror.find("#caret");
 			pos = $flag.position();
 			rect = {
@@ -398,7 +398,7 @@
 			}
 		},
 		offset: function (pos) {
-			var offset;
+			let offset;
 			offset = this.getOffset(pos);
 			return offset;
 		}
@@ -411,7 +411,7 @@
 	oFrame = null;
 
 	setContextBy = function (settings) {
-		var iframe;
+		let iframe;
 		if (iframe = settings != null ? settings.iframe : void 0) {
 			oFrame = iframe;
 			oWindow = iframe.contentWindow;
@@ -425,7 +425,7 @@
 	};
 
 	discoveryIframeOf = function ($dom) {
-		var error;
+		let error;
 		oDocument = $dom[0].ownerDocument;
 		oWindow = oDocument.defaultView || oDocument.parentWindow;
 		try {
@@ -437,7 +437,7 @@
 	};
 
 	$.fn.caret = function (method, value, settings) {
-		var caret;
+		let caret;
 		if (methods[method]) {
 			if ($.isPlainObject(value)) {
 				setContextBy(value);

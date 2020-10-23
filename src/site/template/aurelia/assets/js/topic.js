@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 	/* To hide or open spoiler on click */
 	$(document).on('click', '.kspoiler-expand', function (e) {
 		e.preventDefault()
-		var show = $(this.children[0]).val() === Joomla.getOptions('com_kunena.expand');
+		const show = $(this.children[0]).val() === Joomla.getOptions('com_kunena.expand');
 		$(this.children[0]).val(show ? Joomla.getOptions('com_kunena.hide') : Joomla.getOptions('com_kunena.expand'));
 		$(this).parent().children('.kspoiler-wrapper').toggle()
 	});
@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
 
 	/* To allow to close or open the quick-reply modal box */
 	$('.openmodal').click(function () {
-		var boxToOpen = $(this).attr('href');
+		const boxToOpen = $(this).attr('href');
 		$(boxToOpen).css('visibility', 'visible');
 	});
 
@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
 			$(this).next(".content").slideToggle(500);
 		}
 		else {
-			var content = $(this).next(".heading").show();
+			const content = $(this).next(".heading").show();
 			$(this).hide();
 			content.next(".content").slideToggle(500);
 		}
@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
 
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
-		var id_item_selected = $(this).val();
+		const id_item_selected = $(this).val();
 		if (id_item_selected == 0) {
 			$('#kmod_subject').hide();
 		}
@@ -118,8 +118,8 @@ jQuery(document).ready(function ($) {
 		$.getJSON(
 			kunena_url_ajax, {catid: $(this).val()}
 		).done(function (json) {
-			var first_item = $('#kmod_topics option:nth-child(0)').clone();
-			var second_item = $('#kmod_topics option:nth-child(1)').clone();
+			const first_item = $('#kmod_topics option:nth-child(0)').clone();
+			const second_item = $('#kmod_topics option:nth-child(1)').clone();
 
 			$('#kmod_topics').empty();
 			first_item.appendTo('#kmod_topics');

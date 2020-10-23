@@ -1,7 +1,7 @@
 (function ($) {
 		$.fn.doRecount = function (href, data) {
-			var $this = $(this);
-			var kunenaRequest = $.ajax({
+			const $this = $(this);
+			const kunenaRequest = $.ajax({
 				type: 'POST',
 				url: href,
 				data: data,
@@ -11,7 +11,7 @@
 				timeout: 180000 // 3 minutes
 			})
 				.done(function (data) {
-					var $this = $(this);
+					const $this = $(this);
 
 					if ('header' in data) {
 						$this.find('.modal-header h3').text(data.header);
@@ -41,7 +41,7 @@
 					$this.find('.recount-close').removeAttr('disabled');
 				})
 				.fail(function () {
-					var $this = $(this);
+					const $this = $(this);
 					if (status === 'error' && error) {
 						$this.find('.modal-header h3').text(xhr.status + ' ' + error);
 						$this.find('.modal-body p').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_RESPONSE_BODY'));
@@ -68,11 +68,11 @@
 
 		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {
 			// Reset modal.
-			var $this = $(this);
-			var href = $this.attr('href');
-			var $target = $($this.attr('data-target'));
-			var data = $this.attr('data-form') ? $($this.attr('data-form')).serializeArray() : null;
-			var option = $target.data('modal') ? 'toggle' : $.extend({}, $target.data(), $this.data());
+			const $this = $(this);
+			const href = $this.attr('href');
+			const $target = $($this.attr('data-target'));
+			const data = $this.attr('data-form') ? $($this.attr('data-form')).serializeArray() : null;
+			const option = $target.data('modal') ? 'toggle' : $.extend({}, $target.data(), $this.data());
 
 			e.preventDefault();
 

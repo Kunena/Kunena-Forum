@@ -92,7 +92,7 @@ wbbdebug = false;
 		}
 		this.txtArea = txtArea;
 		this.$txtArea = $(txtArea);
-		var id = this.$txtArea.attr("id") || this.setUID(this.txtArea);
+		const id = this.$txtArea.attr("id") || this.setUID(this.txtArea);
 		this.options = {
 			bbmode: false,
 			onlyBBmode: false,
@@ -364,18 +364,18 @@ wbbdebug = false;
 							}
 						],
 						onSubmit: function (cmd, opt, queryState) {
-							var url = this.$modal.find('input[name="SRC"]').val();
+							let url = this.$modal.find('input[name="SRC"]').val();
 							if (url) {
 								url = url.replace(/^\s+/, "").replace(/\s+$/, "");
 							}
-							var a;
+							let a;
 							if (url.indexOf("youtu.be") != -1) {
 								a = url.match(/^http[s]*:\/\/youtu\.be\/([a-z0-9_-]+)/i);
 							} else {
 								a = url.match(/^http[s]*:\/\/www\.youtube\.com\/watch\?.*?v=([a-z0-9_-]+)/i);
 							}
 							if (a && a.length == 2) {
-								var code = a[1];
+								const code = a[1];
 								this.insertAtCursor(this.getCodeByCommand(cmd, {src: code}));
 							}
 							this.closeModal();
@@ -463,7 +463,7 @@ wbbdebug = false;
 		//init css prefix, if not set
 		if (!this.options.themePrefix) {
 			$('link').each($.proxy(function (idx, el) {
-				var sriptMatch = $(el).get(0).href.match(/(.*\/)(.*)\/wbbtheme\.css.*$/);
+				const sriptMatch = $(el).get(0).href.match(/(.*\/)(.*)\/wbbtheme\.css.*$/);
 				if (sriptMatch !== null) {
 					this.options.themeName = sriptMatch[2];
 					this.options.themePrefix = sriptMatch[1];
@@ -561,7 +561,7 @@ wbbdebug = false;
 		},
 		initTransforms: function () {
 			$.log("Create rules for transform HTML=>BB");
-			var o = this.options;
+			const o = this.options;
 			//need to check for active buttons
 			if (!o.rules) {
 				o.rules = {};
@@ -569,12 +569,12 @@ wbbdebug = false;
 			if (!o.groups) {
 				o.groups = {};
 			} //use for groupkey, For example: justifyleft,justifyright,justifycenter. It is must replace each other.
-			var btnlist = o.buttons.slice();
+			const btnlist = o.buttons.slice();
 
 			//add system transform
 			btnlist.push("_systr");
-			for (var bidx = 0; bidx < btnlist.length; bidx++) {
-				var ob = o.allButtons[btnlist[bidx]];
+			for (let bidx = 0; bidx < btnlist.length; bidx++) {
+				const ob = o.allButtons[btnlist[bidx]];
 				if (!ob) {
 					continue;
 				}
@@ -589,7 +589,7 @@ wbbdebug = false;
 
 				//add transforms to option list
 				if (ob.type == "select" && typeof(ob.options) == "string") {
-					var olist = ob.options.split(",");
+					const olist = ob.options.split(",");
 					$.each(olist, function (i, op) {
 						if ($.inArray(op, btnlist) == -1) {
 							btnlist.push(op);
@@ -597,7 +597,7 @@ wbbdebug = false;
 					});
 				}
 				if (ob.transform && ob.skipRules !== true) {
-					var obtr = $.extend({}, ob.transform);
+					const obtr = $.extend({}, ob.transform);
 
 					/* if (ob.addWrap) {
 						//addWrap
@@ -609,9 +609,9 @@ wbbdebug = false;
 						}
 					} */
 
-					for (var bhtml in obtr) {
-						var orightml = bhtml;
-						var bbcode = obtr[bhtml];
+					for (let bhtml in obtr) {
+						let orightml = bhtml;
+						const bbcode = obtr[bhtml];
 
 						//create root selector for isContain bbmode
 						if (!ob.bbSelector) {
@@ -626,8 +626,8 @@ wbbdebug = false;
 							bhtml = this.wrapAttrs(bhtml);
 
 
-							var $bel = $(document.createElement('DIV')).append($(this.elFromString(bhtml, document)));
-							var rootSelector = this.filterByNode($bel.children());
+							const $bel = $(document.createElement('DIV')).append($(this.elFromString(bhtml, document)));
+							let rootSelector = this.filterByNode($bel.children());
 
 
 							//check if current rootSelector is exist, create unique selector for each transform (1.2.2)
@@ -638,9 +638,9 @@ wbbdebug = false;
 								rootSelector = this.filterByNode($bel.children());
 								$.log("New rootSelector: " + rootSelector);
 								//replace transform with unique selector
-								var nhtml2 = $bel.html();
+								let nhtml2 = $bel.html();
 								nhtml2 = this.unwrapAttrs(nhtml2);
-								var obhtml = this.unwrapAttrs(bhtml);
+								const obhtml = this.unwrapAttrs(bhtml);
 
 
 								ob.transform[nhtml2] = bbcode;
@@ -662,26 +662,26 @@ wbbdebug = false;
 							if (typeof(o.rules[rootSelector]) == "undefined") {
 								o.rules[rootSelector] = [];
 							}
-							var crules = {};
+							const crules = {};
 
 							if (bhtml.match(/\{\S+?\}/)) {
 								$bel.find('*').each($.proxy(function (idx, el) {
 									//check attributes
 
-									var attributes = this.getAttributeList(el);
+									const attributes = this.getAttributeList(el);
 									$.each(attributes, $.proxy(function (i, item) {
-										var attr = $(el).attr(item);
+										const attr = $(el).attr(item);
 										if (item.substr(0, 1) == '_') {
 											item = item.substr(1);
 										}
 
-										var r = attr.match(/\{\S+?\}/g);
+										const r = attr.match(/\{\S+?\}/g);
 										if (r) {
-											for (var a = 0; a < r.length; a++) {
-												var rname = r[a].substr(1, r[a].length - 2);
+											for (let a = 0; a < r.length; a++) {
+												let rname = r[a].substr(1, r[a].length - 2);
 												rname = rname.replace(this.getValidationRGX(rname), "");
-												var p = this.relFilterByNode(el, rootSelector);
-												var regRepl = (attr != r[a]) ? this.getRegexpReplace(attr, r[a]) : false;
+												const p = this.relFilterByNode(el, rootSelector);
+												const regRepl = (attr != r[a]) ? this.getRegexpReplace(attr, r[a]) : false;
 												crules[rname.toLowerCase()] = {
 													sel: (p) ? $.trim(p) : false,
 													attr: item,
@@ -692,29 +692,29 @@ wbbdebug = false;
 									}, this));
 
 									//check for text
-									var sl = [];
+									let sl = [];
 									if (!$(el).is("iframe")) {
 										$(el).contents().filter(function () {
 											return this.nodeType === 3
 										}).each($.proxy(function (i, rel) {
-											var txt = rel.textContent || rel.data;
+											const txt = rel.textContent || rel.data;
 											if (typeof(txt) == "undefined") {
 												return true;
 											}
-											var r = txt.match(/\{\S+?\}/g);
+											const r = txt.match(/\{\S+?\}/g);
 											if (r) {
-												for (var a = 0; a < r.length; a++) {
-													var rname = r[a].substr(1, r[a].length - 2);
+												for (let a = 0; a < r.length; a++) {
+													let rname = r[a].substr(1, r[a].length - 2);
 													rname = rname.replace(this.getValidationRGX(rname), "");
-													var p = this.relFilterByNode(el, rootSelector);
-													var regRepl = (txt != r[a]) ? this.getRegexpReplace(txt, r[a]) : false;
-													var sel = (p) ? $.trim(p) : false;
+													const p = this.relFilterByNode(el, rootSelector);
+													let regRepl = (txt != r[a]) ? this.getRegexpReplace(txt, r[a]) : false;
+													let sel = (p) ? $.trim(p) : false;
 													if ($.inArray(sel, sl) > -1 || $(rel).parent().contents().length > 1) {
 														//has dublicate and not one children, need wrap
-														var nel = $("<span>").html("{" + rname + "}");
+														const nel = $("<span>").html("{" + rname + "}");
 														this.setUID(nel, "wbb");
-														var start = (txt.indexOf(rname) + rname.length) + 1;
-														var after_txt = txt.substr(start, txt.length - start);
+														const start = (txt.indexOf(rname) + rname.length) + 1;
+														const after_txt = txt.substr(start, txt.length - start);
 														//create wrap element
 														rel.data = txt.substr(0, txt.indexOf(rname) - 1);
 														$(rel).after(this.elFromString(after_txt, document)).after(nel);
@@ -733,7 +733,7 @@ wbbdebug = false;
 
 								}, this));
 
-								var nbhtml = $bel.html();
+								let nbhtml = $bel.html();
 								//UnWrap attributes
 								nbhtml = this.unwrapAttrs(nbhtml);
 								if (orightml != nbhtml) {
@@ -769,7 +769,7 @@ wbbdebug = false;
 						this.sortArray(ob.rootSelector, -1);
 					}
 
-					var htmll = $.map(ob.transform, function (bb, html) {
+					const htmll = $.map(ob.transform, function (bb, html) {
 						return html
 					}).sort(function (a, b) {
 						return ((b[0] || "").length - (a[0] || "").length)
@@ -789,8 +789,8 @@ wbbdebug = false;
 			o.srules = {};
 			if (this.options.smileList) {
 				$.each(o.smileList, $.proxy(function (i, sm) {
-					var $sm = $(this.strf(sm.img, o));
-					var f = this.filterByNode($sm);
+					const $sm = $(this.strf(sm.img, o));
+					const f = this.filterByNode($sm);
 					o.srules[f] = [sm.bbcode, sm.img];
 				}, this));
 			}
@@ -835,9 +835,9 @@ wbbdebug = false;
 			this.$txtArea.wrap('<div class="wysibb-text">');
 
 			if (this.options.onlyBBmode === false) {
-				var height = this.options.minheight || this.$txtArea.outerHeight();
-				var maxheight = this.options.resize_maxheight;
-				var mheight = (this.options.autoresize === true) ? this.options.resize_maxheight : height;
+				const height = this.options.minheight || this.$txtArea.outerHeight();
+				const maxheight = this.options.resize_maxheight;
+				const mheight = (this.options.autoresize === true) ? this.options.resize_maxheight : height;
 				this.$body = $(this.strf('<div class="wysibb-text-editor" style="max-height:{maxheight}px;min-height:{height}px"></div>', {
 					maxheight: mheight,
 					height: height
@@ -891,7 +891,7 @@ wbbdebug = false;
 							//if (!$.support.search?type=2) {this.$pasteBlock.focus();} //IE 7,8 FIX
 							setTimeout($.proxy(function () {
 									this.clearPaste(this.$pasteBlock);
-									var rdata = '<span>' + this.$pasteBlock.html() + '</span>';
+									let rdata = '<span>' + this.$pasteBlock.html() + '</span>';
 									this.$body.attr("contentEditable", "true");
 									this.$pasteBlock.blur().remove();
 									this.body.focus();
@@ -918,7 +918,7 @@ wbbdebug = false;
 				//insert BR on press enter
 				this.$body.bind('keydown', $.proxy(function (e) {
 					if (e.which == 13) {
-						var isLi = this.isContain(this.getSelectNode(), 'li');
+						const isLi = this.isContain(this.getSelectNode(), 'li');
 						if (!isLi) {
 							if (e.preventDefault) {
 								e.preventDefault();
@@ -994,9 +994,9 @@ wbbdebug = false;
 			//this.$toolbar = $('<div class="wysibb-toolbar">').prependTo(this.$editor);
 			this.$toolbar = $('<div>').addClass("wysibb-toolbar").prependTo(this.$editor);
 
-			var $btnContainer;
+			let $btnContainer;
 			$.each(this.options.buttons, $.proxy(function (i, bn) {
-				var opt = this.options.allButtons[bn];
+				const opt = this.options.allButtons[bn];
 				if (i == 0 || bn == "|" || bn == "-") {
 					if (bn == "-") {
 						this.$toolbar.append("<div>");
@@ -1027,7 +1027,7 @@ wbbdebug = false;
 
 			//build bbcode switch button
 			//var $bbsw = $('<div class="wysibb-toolbar-container modeSwitch"><div class="wysibb-toolbar-btn" unselectable="on"><span class="btn-inner ve-tlb-bbcode" unselectable="on"></span></div></div>').appendTo(this.$toolbar);
-			var $bbsw = $(document.createElement('div')).addClass("wysibb-toolbar-container modeSwitch").html('<div class="wysibb-toolbar-btn mswitch" unselectable="on"><span class="btn-inner modesw" unselectable="on">[bbcode]</span></div>').appendTo(this.$toolbar);
+			const $bbsw = $(document.createElement('div')).addClass("wysibb-toolbar-container modeSwitch").html('<div class="wysibb-toolbar-btn mswitch" unselectable="on"><span class="btn-inner modesw" unselectable="on">[bbcode]</span></div>').appendTo(this.$toolbar);
 			if (this.options.bbmode == true) {
 				$bbsw.children(".wysibb-toolbar-btn").addClass("on");
 			}
@@ -1042,9 +1042,9 @@ wbbdebug = false;
 			if (typeof(container) != "object") {
 				container = this.$toolbar;
 			}
-			var btnHTML = (opt.buttonHTML) ? $(this.strf(opt.buttonHTML, this.options)).addClass("btn-inner") : this.strf('<span class="btn-inner btn-text">{text}</span>', {text: opt.buttonText.replace(/</g, "&lt;")});
-			var hotkey = (this.options.hotkeys === true && this.options.showHotkeys === true && opt.hotkey) ? (' <span class="tthotkey">[' + opt.hotkey + ']</span>') : "";
-			var $btn = $('<div class="wysibb-toolbar-btn wbb-' + bn + '">').appendTo(container).append(btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/>{hotkey}</span>', {
+			const btnHTML = (opt.buttonHTML) ? $(this.strf(opt.buttonHTML, this.options)).addClass("btn-inner") : this.strf('<span class="btn-inner btn-text">{text}</span>', {text: opt.buttonText.replace(/</g, "&lt;")});
+			const hotkey = (this.options.hotkeys === true && this.options.showHotkeys === true && opt.hotkey) ? (' <span class="tthotkey">[' + opt.hotkey + ']</span>') : "";
+			const $btn = $('<div class="wysibb-toolbar-btn wbb-' + bn + '">').appendTo(container).append(btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/>{hotkey}</span>', {
 				title: opt.title,
 				hotkey: hotkey
 			}));
@@ -1061,13 +1061,13 @@ wbbdebug = false;
 			}, this));
 		},
 		buildColorpicker: function (container, bn, opt) {
-			var $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-cp">').appendTo(container).append('<div class="ve-tlb-colorpick"><span class="fonticon">\uE010</span><span class="cp-line"></span></div><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
-			var $cpline = $btn.find(".cp-line");
+			const $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-cp">').appendTo(container).append('<div class="ve-tlb-colorpick"><span class="fonticon">\uE010</span><span class="cp-line"></span></div><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
+			const $cpline = $btn.find(".cp-line");
 
-			var $dropblock = $('<div class="wbb-list">').appendTo($btn);
+			const $dropblock = $('<div class="wbb-list">').appendTo($btn);
 			$dropblock.append('<div class="nc">' + CURLANG.auto + '</div>');
-			var colorlist = (opt.colors) ? opt.colors.split(",") : [];
-			for (var j = 0; j < colorlist.length; j++) {
+			const colorlist = (opt.colors) ? opt.colors.split(",") : [];
+			for (let j = 0; j < colorlist.length; j++) {
 				colorlist[j] = $.trim(colorlist[j]);
 				if (colorlist[j] == "-") {
 					//insert padding
@@ -1076,13 +1076,13 @@ wbbdebug = false;
 					$dropblock.append(this.strf('<div class="sc" style="background:{color}" title="{color}"></div>', {color: colorlist[j]}));
 				}
 			}
-			var basecolor = $(document.body).css("color");
+			const basecolor = $(document.body).css("color");
 			//attach events
 			this.controllers.push($btn);
 			$btn.bind('queryState', $.proxy(function (e) {
 				//queryState
 				$cpline.css("background-color", basecolor);
-				var r = this.queryState(bn, true);
+				const r = this.queryState(bn, true);
 				if (r) {
 					$cpline.css("background-color", (this.options.bbmode) ? r.color : r);
 					$btn.find(".ve-tlb-colorpick span.fonticon").css("color", (this.options.bbmode) ? r.color : r);
@@ -1095,7 +1095,7 @@ wbbdebug = false;
 			$btn.find(".sc").mousedown($.proxy(function (e) {
 				e.preventDefault();
 				this.selectLastRange();
-				var c = $(e.currentTarget).attr("title");
+				const c = $(e.currentTarget).attr("title");
 				this.execCommand(bn, c);
 				$btn.trigger('queryState');
 			}, this));
@@ -1110,30 +1110,33 @@ wbbdebug = false;
 			});
 		},
 		buildTablepicker: function (container, bn, opt) {
-			var $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-tbl">').appendTo(container).append('<span class="btn-inner fonticon ve-tlb-table1">\uE00e</span><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
+			const $btn = $('<div class="wysibb-toolbar-btn wbb-dropdown wbb-tbl">').appendTo(container).append('<span class="btn-inner fonticon ve-tlb-table1">\uE00e</span><ins class="fonticon ar">\uE011</ins>').append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
 
-			var $listblock = $('<div class="wbb-list">').appendTo($btn);
-			var $dropblock = $('<div>').css({"position": "relative", "box-sizing": "border-box"}).appendTo($listblock);
-			var rows = opt.rows || 10;
-			var cols = opt.cols || 10;
-			var allcount = rows * cols;
+			const $listblock = $('<div class="wbb-list">').appendTo($btn);
+			const $dropblock = $('<div>').css({
+				"position": "relative",
+				"box-sizing": "border-box"
+			}).appendTo($listblock);
+			const rows = opt.rows || 10;
+			const cols = opt.cols || 10;
+			const allcount = rows * cols;
 			$dropblock.css("height", (rows * opt.cellwidth + 2) + "px");
 			for (var j = 1; j <= cols; j++) {
-				for (var h = 1; h <= rows; h++) {
+				for (let h = 1; h <= rows; h++) {
 					//var html = this.strf('<div class="tbl-sel" style="width:{width}px;height:{height}px;z-index:{zindex}" title="{row},{col}"></div>',{width: (j*opt.cellwidth),height: (h*opt.cellwidth),zindex: --allcount,row:h,col:j});
-					var html = '<div class="tbl-sel" style="width:' + (j * 100 / cols) + '%;height:' + (h * 100 / rows) + '%;z-index:' + (--allcount) + '" title="' + h + ',' + j + '"></div>';
+					const html = '<div class="tbl-sel" style="width:' + (j * 100 / cols) + '%;height:' + (h * 100 / rows) + '%;z-index:' + (--allcount) + '" title="' + h + ',' + j + '"></div>';
 					$dropblock.append(html);
 				}
 			}
 			//this.debug("Attach event on: tbl-sel");
 			$btn.find(".tbl-sel").mousedown($.proxy(function (e) {
 				e.preventDefault();
-				var t = $(e.currentTarget).attr("title");
-				var rc = t.split(",");
-				var code = (this.options.bbmode) ? '[table]' : '<table class="wbb-table" cellspacing="5" cellpadding="0">';
-				for (var i = 1; i <= rc[0]; i++) {
+				const t = $(e.currentTarget).attr("title");
+				const rc = t.split(",");
+				let code = (this.options.bbmode) ? '[table]' : '<table class="wbb-table" cellspacing="5" cellpadding="0">';
+				for (let i = 1; i <= rc[0]; i++) {
 					code += (this.options.bbmode) ? ' [tr]\n' : '<tr>';
-					for (var j = 1; j <= rc[1]; j++) {
+					for (let j = 1; j <= rc[1]; j++) {
 						code += (this.options.bbmode) ? '  [td][/td]\n' : '<td>\uFEFF</td>';
 					}
 					code += (this.options.bbmode) ? '[/tr]\n' : '</tr>';
@@ -1149,16 +1152,16 @@ wbbdebug = false;
 
 		},
 		buildSelect: function (container, bn, opt) {
-			var $btn = $('<div class="wysibb-toolbar-btn wbb-select wbb-' + bn + '">').appendTo(container).append(this.strf('<span class="val">{title}</span><ins class="fonticon sar">\uE012</ins>', opt)).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
-			var $sblock = $('<div class="wbb-list">').appendTo($btn);
-			var $sval = $btn.find("span.val");
+			const $btn = $('<div class="wysibb-toolbar-btn wbb-select wbb-' + bn + '">').appendTo(container).append(this.strf('<span class="val">{title}</span><ins class="fonticon sar">\uE012</ins>', opt)).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
+			const $sblock = $('<div class="wbb-list">').appendTo($btn);
+			const $sval = $btn.find("span.val");
 
-			var olist = ($.isArray(opt.options)) ? opt.options : opt.options.split(",");
-			var $selectbox = (this.isMobile) ? $("<select>").addClass("wbb-selectbox") : "";
-			for (var i = 0; i < olist.length; i++) {
-				var oname = olist[i];
+			const olist = ($.isArray(opt.options)) ? opt.options : opt.options.split(",");
+			const $selectbox = (this.isMobile) ? $("<select>").addClass("wbb-selectbox") : "";
+			for (let i = 0; i < olist.length; i++) {
+				const oname = olist[i];
 				if (typeof(oname) == "string") {
-					var option = this.options.allButtons[oname];
+					const option = this.options.allButtons[oname];
 					if (option) {
 						//$.log("create: "+oname);
 						if (option.html) {
@@ -1174,7 +1177,7 @@ wbbdebug = false;
 					}
 				} else {
 					//build option list from array
-					var params = {
+					const params = {
 						seltext: oname.title
 					};
 					params[opt.valueBBname] = oname.exvalue;
@@ -1193,9 +1196,9 @@ wbbdebug = false;
 				$selectbox.bind('queryState', $.proxy(function (e) {
 					//queryState
 					$selectbox.find("option").each($.proxy(function (i, el) {
-						var $el = $(el);
-						var r = this.queryState($el.attr("oid"), true);
-						var cmdvalue = $el.attr("cmdvalue");
+						const $el = $(el);
+						const r = this.queryState($el.attr("oid"), true);
+						const cmdvalue = $el.attr("cmdvalue");
 						if ((cmdvalue && r == $el.attr("cmdvalue")) || (!cmdvalue && r)) {
 							$el.prop("selected", true);
 							return false;
@@ -1205,10 +1208,10 @@ wbbdebug = false;
 
 				$selectbox.change($.proxy(function (e) {
 					e.preventDefault();
-					var $o = $(e.currentTarget).find(":selected");
-					var oid = $o.attr("oid");
-					var cmdvalue = $o.attr("cmdvalue");
-					var opt = this.options.allButtons[oid];
+					const $o = $(e.currentTarget).find(":selected");
+					const oid = $o.attr("oid");
+					const cmdvalue = $o.attr("cmdvalue");
+					const opt = this.options.allButtons[oid];
 					this.execCommand(oid, opt.exvalue || cmdvalue || false);
 					$(e.currentTarget).trigger('queryState');
 				}, this));
@@ -1220,9 +1223,9 @@ wbbdebug = false;
 				$sval.text(opt.title);
 				$btn.find(".option.selected").removeClass("selected");
 				$btn.find(".option").each($.proxy(function (i, el) {
-					var $el = $(el);
-					var r = this.queryState($el.attr("oid"), true);
-					var cmdvalue = $el.attr("cmdvalue");
+					const $el = $(el);
+					const r = this.queryState($el.attr("oid"), true);
+					const cmdvalue = $el.attr("cmdvalue");
 					if ((cmdvalue && r == $el.attr("cmdvalue")) || (!cmdvalue && r)) {
 						$sval.text($el.text());
 						$el.addClass("selected");
@@ -1236,18 +1239,18 @@ wbbdebug = false;
 			}, this));
 			$btn.find(".option").mousedown($.proxy(function (e) {
 				e.preventDefault();
-				var oid = $(e.currentTarget).attr("oid");
-				var cmdvalue = $(e.currentTarget).attr("cmdvalue");
-				var opt = this.options.allButtons[oid];
+				const oid = $(e.currentTarget).attr("oid");
+				const cmdvalue = $(e.currentTarget).attr("cmdvalue");
+				const opt = this.options.allButtons[oid];
 				this.execCommand(oid, opt.exvalue || cmdvalue || false);
 				$(e.currentTarget).trigger('queryState');
 			}, this));
 		},
 		buildSmilebox: function (container, bn, opt) {
 			if (this.options.smileList && this.options.smileList.length > 0) {
-				var $btnHTML = $(this.strf(opt.buttonHTML, opt)).addClass("btn-inner");
-				var $btn = $('<div class="wysibb-toolbar-btn wbb-smilebox wbb-' + bn + '">').appendTo(container).append($btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
-				var $sblock = $('<div class="wbb-list">').appendTo($btn);
+				const $btnHTML = $(this.strf(opt.buttonHTML, opt)).addClass("btn-inner");
+				const $btn = $('<div class="wysibb-toolbar-btn wbb-smilebox wbb-' + bn + '">').appendTo(container).append($btnHTML).append(this.strf('<span class="btn-tooltip">{title}<ins/></span>', {title: opt.title}));
+				const $sblock = $('<div class="wbb-list">').appendTo($btn);
 				if ($.isArray(this.options.smileList)) {
 					$.each(this.options.smileList, $.proxy(function (i, sm) {
 						$('<span>').addClass("smile").appendTo($sblock).append($(this.strf(sm.img, this.options)).attr("title", sm.title));
@@ -1295,13 +1298,13 @@ wbbdebug = false;
 		initHotkeys: function () {
 			$.log("initHotkeys");
 			this.hotkeys = [];
-			var klist = "0123456789       abcdefghijklmnopqrstuvwxyz";
+			const klist = "0123456789       abcdefghijklmnopqrstuvwxyz";
 			$.each(this.options.allButtons, $.proxy(function (cmd, opt) {
 				if (opt.hotkey) {
-					var keys = opt.hotkey.split("+");
+					const keys = opt.hotkey.split("+");
 					if (keys && keys.length >= 2) {
-						var metasum = 0;
-						var key = keys.pop();
+						let metasum = 0;
+						const key = keys.pop();
 						$.each(keys, function (i, k) {
 							switch ($.trim(k.toLowerCase())) {
 								case "ctrl": {
@@ -1331,7 +1334,7 @@ wbbdebug = false;
 		},
 		presskey: function (e) {
 			if (e.ctrlKey == true || e.shiftKey == true || e.altKey == true) {
-				var metasum = ((e.ctrlKey == true) ? 1 : 0) + ((e.shiftKey == true) ? 4 : 0) + ((e.altKey == true) ? 7 : 0);
+				const metasum = ((e.ctrlKey == true) ? 1 : 0) + ((e.shiftKey == true) ? 4 : 0) + ((e.altKey == true) ? 7 : 0);
 				if (this.hotkeys["m" + metasum] && this.hotkeys["m" + metasum]["k" + e.which]) {
 					this.execCommand(this.hotkeys["m" + metasum]["k" + e.which], false);
 					e.preventDefault();
@@ -1343,14 +1346,14 @@ wbbdebug = false;
 		//COgdfMMAND FUNCTIONS
 		execCommand: function (command, value) {
 			$.log("execCommand: " + command);
-			var opt = this.options.allButtons[command];
+			const opt = this.options.allButtons[command];
 			if (opt.en !== true) {
 				return false;
 			}
-			var queryState = this.queryState(command, value);
+			const queryState = this.queryState(command, value);
 
 			//check for onlyClearText
-			var skipcmd = this.isInClearTextBlock();
+			const skipcmd = this.isInClearTextBlock();
 			if (skipcmd && skipcmd != command) {
 				return;
 			}
@@ -1365,7 +1368,7 @@ wbbdebug = false;
 						this.wbbRemoveCallback(command, value);
 					} else {
 						//insert bbcode
-						var v = {};
+						const v = {};
 						if (opt.valueBBname && value) {
 							v[opt.valueBBname] = value;
 						}
@@ -1385,7 +1388,7 @@ wbbdebug = false;
 			this.updateUI();
 		},
 		queryState: function (command, withvalue) {
-			var opt = this.options.allButtons[command];
+			const opt = this.options.allButtons[command];
 			if (opt.en !== true) {
 				return false;
 			}
@@ -1394,7 +1397,7 @@ wbbdebug = false;
 				//bbmode
 				if (opt.bbSelector) {
 					for (var i = 0; i < opt.bbSelector.length; i++) {
-						var b = this.isBBContain(opt.bbSelector[i]);
+						const b = this.isBBContain(opt.bbSelector[i]);
 						if (b) {
 							return this.getParams(b, opt.bbSelector[i], b[1]);
 						}
@@ -1407,7 +1410,7 @@ wbbdebug = false;
 					if (withvalue) {
 						try {
 							//Firefox fix
-							var v = (document.queryCommandValue(opt.excmd) + "").replace(/\'/g, "");
+							let v = (document.queryCommandValue(opt.excmd) + "").replace(/\'/g, "");
 							if (opt.excmd == "foreColor") {
 								v = this.rgbToHex(v);
 							}
@@ -1432,7 +1435,7 @@ wbbdebug = false;
 					//custom command
 					if ($.isArray(opt.rootSelector)) {
 						for (var i = 0; i < opt.rootSelector.length; i++) {
-							var n = this.isContain(this.getSelectNode(), opt.rootSelector[i]);
+							const n = this.isContain(this.getSelectNode(), opt.rootSelector[i]);
 							if (n) {
 								return this.getParams(n, opt.rootSelector[i]);
 							}
@@ -1444,7 +1447,7 @@ wbbdebug = false;
 		},
 		wbbExecCommand: function (command, value, queryState) { //default command for custom bbcodes
 			$.log("wbbExecCommand");
-			var opt = this.options.allButtons[command];
+			const opt = this.options.allButtons[command];
 			if (opt) {
 				if (opt.modal) {
 					if ($.isFunction(opt.modal)) {
@@ -1462,14 +1465,14 @@ wbbdebug = false;
 					} else {
 						//insert format
 						if (opt.groupkey) {
-							var groupsel = this.options.groups[opt.groupkey];
+							const groupsel = this.options.groups[opt.groupkey];
 							if (groupsel) {
-								var snode = this.getSelectNode();
+								const snode = this.getSelectNode();
 								$.each(groupsel, $.proxy(function (i, sel) {
-									var is = this.isContain(snode, sel);
+									const is = this.isContain(snode, sel);
 									if (is) {
-										var $sp = $('<span>').html(is.innerHTML);
-										var id = this.setUID($sp);
+										const $sp = $('<span>').html(is.innerHTML);
+										const id = this.setUID($sp);
 										$(is).replaceWith($sp);
 										this.selectNode(this.$editor.find("#" + id)[0]);
 										return false;
@@ -1488,11 +1491,11 @@ wbbdebug = false;
 			}
 			;
 			$.log("wbbInsertCallback: " + command);
-			var data = this.getCodeByCommand(command, paramobj);
+			const data = this.getCodeByCommand(command, paramobj);
 			this.insertAtCursor(data);
 
 			if (this.seltextID && data.indexOf(this.seltextID) != -1) {
-				var snode = this.$body.find("#" + this.seltextID)[0];
+				const snode = this.$body.find("#" + this.seltextID)[0];
 				this.selectNode(snode);
 				$(snode).removeAttr("id");
 				this.seltextID = false;
@@ -1500,21 +1503,21 @@ wbbdebug = false;
 		},
 		wbbRemoveCallback: function (command, clear) {
 			$.log("wbbRemoveCallback: " + command);
-			var opt = this.options.allButtons[command];
+			const opt = this.options.allButtons[command];
 			if (this.options.bbmode) {
 				//bbmode
 				//REMOVE BBCODE
-				var pos = this.getCursorPosBB();
-				var stextnum = 0;
+				const pos = this.getCursorPosBB();
+				let stextnum = 0;
 				$.each(opt.bbSelector, $.proxy(function (i, bbcode) {
-					var stext = bbcode.match(/\{[\s\S]+?\}/g);
+					const stext = bbcode.match(/\{[\s\S]+?\}/g);
 					$.each(stext, function (n, s) {
 						if (s.toLowerCase() == "{seltext}") {
 							stextnum = n;
 							return false
 						}
 					});
-					var a = this.isBBContain(bbcode);
+					const a = this.isBBContain(bbcode);
 					if (a) {
 						this.txtArea.value = this.txtArea.value.substr(0, a[1]) + this.txtArea.value.substr(a[1], this.txtArea.value.length - a[1]).replace(a[0][0], (clear === true) ? '' : a[0][stextnum + 1]);
 						this.setCursorPosBB(a[1]);
@@ -1522,15 +1525,15 @@ wbbdebug = false;
 					}
 				}, this));
 			} else {
-				var node = this.getSelectNode();
+				const node = this.getSelectNode();
 				$.each(opt.rootSelector, $.proxy(function (i, s) {
 					//$.log("RS: "+s);
-					var root = this.isContain(node, s);
+					const root = this.isContain(node, s);
 					if (!root) {
 						return true;
 					}
-					var $root = $(root);
-					var cs = this.options.rules[s][0][1];
+					const $root = $(root);
+					const cs = this.options.rules[s][0][1];
 					if ($root.is("span[wbb]") || !$root.is("span,font")) { //remove only blocks
 						if (clear === true || (!cs || !cs["seltext"])) {
 							this.setCursorByEl($root);
@@ -1555,22 +1558,22 @@ wbbdebug = false;
 						return false;
 					} else {
 						//span,font - extract select content from this span,font
-						var rng = this.getRange();
-						var shtml = this.getSelectText();
-						var rnode = this.getSelectNode();
+						const rng = this.getRange();
+						let shtml = this.getSelectText();
+						const rnode = this.getSelectNode();
 						if (shtml == "") {
 							shtml = "\uFEFF";
 						} else {
 							shtml = this.clearFromSubInsert(shtml, command);
 						}
-						var ins = this.elFromString(shtml);
+						const ins = this.elFromString(shtml);
 
-						var before_rng = (window.getSelection) ? rng.cloneRange() : this.body.createTextRange();
-						var after_rng = (window.getSelection) ? rng.cloneRange() : this.body.createTextRange();
+						const before_rng = (window.getSelection) ? rng.cloneRange() : this.body.createTextRange();
+						const after_rng = (window.getSelection) ? rng.cloneRange() : this.body.createTextRange();
 
 						if (window.getSelection) {
 							this.insertAtCursor('<span id="wbbdivide"></span>');
-							var div = $root.find('span#wbbdivide').get(0);
+							const div = $root.find('span#wbbdivide').get(0);
 							before_rng.setStart(root.firstChild, 0);
 							before_rng.setEndBefore(div);
 							after_rng.setStartAfter(div);
@@ -1581,10 +1584,10 @@ wbbdebug = false;
 							before_rng.setEndPoint('EndToStart', rng);
 							after_rng.setEndPoint('StartToEnd', rng);
 						}
-						var bf = this.getSelectText(false, before_rng);
-						var af = this.getSelectText(false, after_rng);
+						const bf = this.getSelectText(false, before_rng);
+						const af = this.getSelectText(false, after_rng);
 						if (af != "") {
-							var $af = $root.clone().html(af);
+							const $af = $root.clone().html(af);
 							$root.after($af);
 						}
 						if (clear !== true) $root.after(ins); //insert select html
@@ -1603,19 +1606,19 @@ wbbdebug = false;
 			//$.log("execNativeCommand: '"+cmd+"' : "+param);
 			this.body.focus(); //set focus to frame body
 			if (cmd == "insertHTML" && !window.getSelection) { //IE does't support insertHTML
-				var r = (this.lastRange) ? this.lastRange : document.selection.createRange(); //IE 7,8 range lost fix
+				const r = (this.lastRange) ? this.lastRange : document.selection.createRange(); //IE 7,8 range lost fix
 				r.pasteHTML(param);
-				var txt = $('<div>').html(param).text(); //for ie selection inside block
-				var brsp = txt.indexOf("\uFEFF");
+				const txt = $('<div>').html(param).text(); //for ie selection inside block
+				const brsp = txt.indexOf("\uFEFF");
 				if (brsp > -1) {
 					r.moveStart('character', (-1) * (txt.length - brsp));
 					r.select();
 				}
 				this.lastRange = false;
 			} else if (cmd == "insertHTML") { //fix webkit bug with insertHTML
-				var sel = this.getSelection();
-				var e = this.elFromString(param);
-				var rng = (this.lastRange) ? this.lastRange : this.getRange();
+				const sel = this.getSelection();
+				const e = this.elFromString(param);
+				const rng = (this.lastRange) ? this.lastRange : this.getRange();
 				rng.deleteContents();
 				rng.insertNode(e);
 				rng.collapse(false);
@@ -1649,11 +1652,11 @@ wbbdebug = false;
 				params["seltext"] = this.getSelectText(true);
 			}
 
-			var bbcode = this.options.allButtons[command].bbcode;
+			let bbcode = this.options.allButtons[command].bbcode;
 			//bbcode = this.strf(bbcode,params);
 			bbcode = bbcode.replace(/\{(.*?)(\[.*?\])*\}/g, function (str, p, vrgx) {
 				if (vrgx) {
-					var vrgxp;
+					let vrgxp;
 					if (vrgx) {
 						vrgxp = new RegExp(vrgx + "+", "i");
 					}
@@ -1666,18 +1669,19 @@ wbbdebug = false;
 			});
 
 			//insert first with max params
-			var rbbcode = null, maxpcount = 0;
+			let rbbcode = null, maxpcount = 0;
 			if (this.options.allButtons[command].transform) {
-				var tr = [];
+				let tr = [];
 				$.each(this.options.allButtons[command].transform, function (html, bb) {
 					tr.push(bb);
 				});
 				tr = this.sortArray(tr, -1);
 				$.each(tr, function (i, v) {
-					var valid = true, pcount = 0, pname = {};
+					let valid = true, pcount = 0;
+					const pname = {};
 					;
 					v = v.replace(/\{(.*?)(\[.*?\])*\}/g, function (str, p, vrgx) {
-						var vrgxp;
+						let vrgxp;
 						p = p.toLowerCase();
 						if (vrgx) {
 							vrgxp = new RegExp(vrgx + "+", "i");
@@ -1727,17 +1731,17 @@ wbbdebug = false;
 				}
 			}
 
-			var postsel = "";
+			let postsel = "";
 			this.seltextID = "wbbid_" + (++this.lastid);
 			if (command != "link" && command != "img") {
 				params["seltext"] = '<span id="' + this.seltextID + '">' + params["seltext"] + '</span>'; //use for select seltext
 			} else {
 				postsel = '<span id="' + this.seltextID + '">\uFEFF</span>'
 			}
-			var html = this.options.allButtons[command].html;
+			let html = this.options.allButtons[command].html;
 			html = html.replace(/\{(.*?)(\[.*?\])*\}/g, function (str, p, vrgx) {
 				if (vrgx) {
-					var vrgxp = new RegExp(vrgx + "+", "i");
+					const vrgxp = new RegExp(vrgx + "+", "i");
 					if (typeof(params[p.toLowerCase()]) != "undefined" && params[p.toLowerCase()].toString().match(vrgxp) === null) {
 						//not valid value
 						return "";
@@ -1747,17 +1751,18 @@ wbbdebug = false;
 			});
 
 			//insert first with max params
-			var rhtml = null, maxpcount = 0;
+			let rhtml = null, maxpcount = 0;
 			if (this.options.allButtons[command].transform) {
-				var tr = [];
+				let tr = [];
 				$.each(this.options.allButtons[command].transform, function (html, bb) {
 					tr.push(html);
 				});
 				tr = this.sortArray(tr, -1);
 				$.each(tr, function (i, v) {
-					var valid = true, pcount = 0, pname = {};
+					let valid = true, pcount = 0;
+					const pname = {};
 					v = v.replace(/\{(.*?)(\[.*?\])*\}/g, function (str, p, vrgx) {
-						var vrgxp;
+						let vrgxp;
 						p = p.toLowerCase();
 						if (vrgx) {
 							vrgxp = new RegExp(vrgx + "+", "i");
@@ -1794,11 +1799,11 @@ wbbdebug = false;
 				//return select text from textarea
 				this.txtArea.focus();
 				if ('selectionStart' in this.txtArea) {
-					var l = this.txtArea.selectionEnd - this.txtArea.selectionStart;
+					const l = this.txtArea.selectionEnd - this.txtArea.selectionStart;
 					return this.txtArea.value.substr(this.txtArea.selectionStart, l);
 				} else {
 					//IE
-					var r = document.selection.createRange();
+					const r = document.selection.createRange();
 					return r.text;
 				}
 			} else {
@@ -1822,11 +1827,11 @@ wbbdebug = false;
 		},
 		getRange: function () {
 			if (window.getSelection) {
-				var sel = this.getSelection();
+				const sel = this.getSelection();
 				if (sel.getRangeAt && sel.rangeCount > 0) {
 					return sel.getRangeAt(0);
 				} else if (sel.anchorNode) {
-					var range = (this.options.bbmode) ? document.createRange() : document.createRange();
+					const range = (this.options.bbmode) ? document.createRange() : document.createRange();
 					range.setStart(sel.anchorNode, sel.anchorOffset);
 					range.setEnd(sel.focusNode, sel.focusOffset);
 					return range;
@@ -1840,8 +1845,8 @@ wbbdebug = false;
 				code = $("<div>").append(code).html();
 			}
 			if ((this.options.bbmode && typeof(forceBBMode) == "undefined") || forceBBMode === true) {
-				var clbb = code.replace(/.*(\[\/\S+?\])$/, "$1");
-				var p = this.getCursorPosBB() + ((code.indexOf(clbb) != -1 && code.match(/\[.*\]/)) ? code.indexOf(clbb) : code.length);
+				const clbb = code.replace(/.*(\[\/\S+?\])$/, "$1");
+				let p = this.getCursorPosBB() + ((code.indexOf(clbb) != -1 && code.match(/\[.*\]/)) ? code.indexOf(clbb) : code.length);
 				if (document.selection) {
 					//IE
 					this.txtArea.focus();
@@ -1855,7 +1860,7 @@ wbbdebug = false;
 				this.setCursorPosBB(p);
 			} else {
 				this.execNativeCommand("insertHTML", code);
-				var node = this.getSelectNode();
+				const node = this.getSelectNode();
 				if (!$(node).closest("table,tr,td")) {
 					this.splitPrevNext(node);
 				}
@@ -1870,20 +1875,20 @@ wbbdebug = false;
 				return this.$body;
 			}
 			//return (window.getSelection) ? rng.commonAncestorContainer:rng.parentElement();
-			var sn = (window.getSelection) ? rng.commonAncestorContainer : rng.parentElement();
+			let sn = (window.getSelection) ? rng.commonAncestorContainer : rng.parentElement();
 			if ($(sn).is(".imgWrap")) {
 				sn = $(sn).children("img")[0];
 			}
 			return sn;
 		},
 		getCursorPosBB: function () {
-			var pos = 0;
+			let pos = 0;
 			if ('selectionStart' in this.txtArea) {
 				pos = this.txtArea.selectionStart;
 			} else {
 				this.txtArea.focus();
-				var r = this.getRange();
-				var rt = document.body.createTextRange();
+				const r = this.getRange();
+				const rt = document.body.createTextRange();
 				rt.moveToElementText(this.txtArea);
 				rt.setEndPoint('EndToStart', r);
 				pos = rt.text.length;
@@ -1896,7 +1901,7 @@ wbbdebug = false;
 					this.txtArea.selectionStart = pos;
 					this.txtArea.selectionEnd = pos;
 				} else {
-					var range = this.txtArea.createTextRange();
+					const range = this.txtArea.createTextRange();
 					range.collapse(true);
 					range.move('character', pos);
 					range.select();
@@ -1911,7 +1916,7 @@ wbbdebug = false;
 				return;
 			}
 			if (window.getSelection) {
-				var sel = this.getSelection();
+				const sel = this.getSelection();
 				rng.selectNodeContents(node);
 				sel.removeAllRanges();
 				sel.addRange(rng);
@@ -1925,7 +1930,7 @@ wbbdebug = false;
 				if (!window.getSelection) {
 					rng.select();
 				} else {
-					var sel = this.getSelection();
+					const sel = this.getSelection();
 					sel.removeAllRanges();
 					sel.addRange(rng);
 				}
@@ -1973,10 +1978,10 @@ wbbdebug = false;
 
 		//TRANSFORM FUNCTIONS
 		filterByNode: function (node) {
-			var $n = $(node);
-			var tagName = $n.get(0).tagName.toLowerCase();
-			var filter = tagName;
-			var attributes = this.getAttributeList($n.get(0));
+			const $n = $(node);
+			const tagName = $n.get(0).tagName.toLowerCase();
+			let filter = tagName;
+			const attributes = this.getAttributeList($n.get(0));
 			$.each(attributes, $.proxy(function (i, item) {
 				var v = $n.attr(item);
 				/* $.log("v: "+v);
@@ -2002,7 +2007,7 @@ wbbdebug = false;
 					}
 				} else if (v && item == "style") {
 					//$.log("I2: "+item);
-					var vf = v.substr(0, v.indexOf("{"));
+					const vf = v.substr(0, v.indexOf("{"));
 					if (vf && vf != "") {
 						var v = v.substr(0, v.indexOf("{"));
 						var va = v.split(";");
@@ -2018,14 +2023,14 @@ wbbdebug = false;
 			}, this));
 
 			//index
-			var idx = $n.parent().children(filter).index($n);
+			const idx = $n.parent().children(filter).index($n);
 			if (idx > 0) {
 				filter += ":eq(" + $n.index() + ")";
 			}
 			return filter;
 		},
 		relFilterByNode: function (node, stop) {
-			var p = "";
+			let p = "";
 			$.each(this.options.attrWrap, function (i, a) {
 				stop = stop.replace('[' + a, '[_' + a);
 			});
@@ -2060,7 +2065,7 @@ wbbdebug = false;
 				return "";
 			}
 			;
-			var $e = (typeof(data) == "string") ? $('<span>').html(data) : $(data);
+			const $e = (typeof (data) == "string") ? $('<span>').html(data) : $(data);
 			//remove last BR
 			$e.find("div,blockquote,p").each(function () {
 				if (this.nodeType != 3 && this.lastChild && this.lastChild.tagName == "BR") {
@@ -2076,7 +2081,7 @@ wbbdebug = false;
 			$e.find("ul > br, table > br, tr > br").remove();
 			//IE
 
-			var outbb = "";
+			let outbb = "";
 
 			//transform smiles
 			$.each(this.options.srules, $.proxy(function (s, bb) {
@@ -2084,44 +2089,45 @@ wbbdebug = false;
 			}, this));
 
 			$e.contents().each($.proxy(function (i, el) {
-				var $el = $(el);
+				let $el = $(el);
 				if (el.nodeType === 3) {
 					outbb += el.data.replace(/\n+/, "").replace(/\t/g, "   ");
 				} else {
 					//process html tag
-					var rpl, processed = false;
+					let rpl;
+					const processed = false;
 
 					//for (var rootsel in this.options.rules) {
-					for (var j = 0; j < this.rsellist.length; j++) {
-						var rootsel = this.rsellist[j];
+					for (let j = 0; j < this.rsellist.length; j++) {
+						const rootsel = this.rsellist[j];
 						if ($el && $el.is(rootsel)) {
 							//it is root sel
-							var rlist = this.options.rules[rootsel];
+							const rlist = this.options.rules[rootsel];
 							for (var i = 0; i < rlist.length; i++) {
-								var bbcode = rlist[i][0];
-								var crules = rlist[i][1];
-								var skip = false, keepElement = false, keepAttr = false;
+								let bbcode = rlist[i][0];
+								const crules = rlist[i][1];
+								let skip = false, keepElement = false, keepAttr = false;
 								if (!$el.is("br")) {
 									bbcode = bbcode.replace(/\n/g, "<br>");
 								}
 								bbcode = bbcode.replace(/\{(.*?)(\[.*?\])*\}/g, $.proxy(function (str, s, vrgx) {
-									var c = crules[s.toLowerCase()];
+									const c = crules[s.toLowerCase()];
 									//if (typeof(c)=="undefined") {$.log("Param: {"+s+"} not found in HTML representation.");skip=true;return s;}
 									if (typeof(c) == "undefined") {
 										$.log("Param: {" + s + "} not found in HTML representation.");
 										skip = true;
 									}
-									var $cel = (c.sel) ? $(el).find(c.sel) : $(el);
+									const $cel = (c.sel) ? $(el).find(c.sel) : $(el);
 									if (c.attr && !$cel.attr(c.attr)) {
 										skip = true;
 										return s;
 									} //skip if needed attribute not present, maybe other bbcode
-									var cont = (c.attr) ? $cel.attr(c.attr) : $cel.html();
+									let cont = (c.attr) ? $cel.attr(c.attr) : $cel.html();
 									if (typeof(cont) == "undefined" || cont == null) {
 										skip = true;
 										return s;
 									}
-									var regexp = c.rgx;
+									let regexp = c.rgx;
 
 									//style fix
 									if (regexp && c.attr == "style" && regexp.substr(regexp.length - 1, 1) != ";") {
@@ -2131,10 +2137,10 @@ wbbdebug = false;
 										cont += ";"
 									}
 									//prepare regexp
-									var rgx = (regexp) ? new RegExp(regexp, "") : false;
+									const rgx = (regexp) ? new RegExp(regexp, "") : false;
 									if (rgx) {
 										if (cont.match(rgx)) {
-											var m = cont.match(rgx);
+											const m = cont.match(rgx);
 											if (m && m.length == 2) {
 												cont = m[1];
 											}
@@ -2147,8 +2153,8 @@ wbbdebug = false;
 									if (c.attr && skip === false) {
 										if (c.attr == "style") {
 											keepElement = true;
-											var nstyle = "";
-											var r = c.rgx.replace(/^\.\*\?/, "").replace(/\.\*$/, "").replace(/;$/, "");
+											let nstyle = "";
+											const r = c.rgx.replace(/^\.\*\?/, "").replace(/\.\*$/, "").replace(/;$/, "");
 											$($cel.attr("style").split(";")).each(function (idx, style) {
 												if (style && style != "") {
 													if (!style.match(r)) {
@@ -2232,14 +2238,14 @@ wbbdebug = false;
 
 			$.each(this.options.btnlist, $.proxy(function (i, b) {
 				if (b != "|" && b != "-") {
-					var find = true;
+					const find = true;
 					if (!this.options.allButtons[b] || !this.options.allButtons[b].transform) {
 						return true;
 					}
 
 					$.each(this.options.allButtons[b].transform, $.proxy(function (html, bb) {
 						html = html.replace(/\n/g, ""); //IE 7,8 FIX
-						var a = [];
+						const a = [];
 						bb = bb.replace(/(\(|\)|\[|\]|\.|\*|\?|\:|\\|\\)/g, "\\$1");
 						//.replace(/\s/g,"\\s");
 						bb = bb.replace(/\{(.*?)(\\\[.*?\\\])*\}/gi, $.proxy(function (str, s, vrgx) {
@@ -2251,14 +2257,15 @@ wbbdebug = false;
 							}
 							return "([\\s\\S]*?)";
 						}, this));
-						var n = 0, am;
+						const n = 0;
+						let am;
 						while ((am = (new RegExp(bb, "mgi")).exec(bbdata)) != null) {
 							if (am) {
-								var r = {};
+								const r = {};
 								$.each(a, $.proxy(function (i, k) {
 									r[k] = am[i + 1];
 								}, this));
-								var nhtml = html;
+								let nhtml = html;
 								nhtml = nhtml.replace(/\{(.*?)(\[.*?\])\}/g, "{$1}");
 								nhtml = this.strf(nhtml, r);
 								bbdata = bbdata.replace(am[0], nhtml);
@@ -2276,7 +2283,7 @@ wbbdebug = false;
 			});
 
 
-			var $wrap = $(this.elFromString("<div>" + bbdata + "</div>"));
+			const $wrap = $(this.elFromString("<div>" + bbdata + "</div>"));
 			//transform smiles
 			/* $wrap.contents().filter(function() {return this.nodeType==3}).each($.proxy(smilerpl,this)).end().find("*").contents().filter(function() {return this.nodeType==3}).each($.proxy(smilerpl,this));
 
@@ -2303,12 +2310,12 @@ wbbdebug = false;
 			}).each($.proxy(this.smileRPL, this));
 		},
 		smileRPL: function (i, el) {
-			var ndata = el.data;
+			let ndata = el.data;
 			$.each(this.options.smileList, $.proxy(function (i, row) {
-				var fidx = ndata.indexOf(row.bbcode);
+				const fidx = ndata.indexOf(row.bbcode);
 				if (fidx != -1) {
-					var afternode_txt = ndata.substring(fidx + row.bbcode.length, ndata.length);
-					var afternode = document.createTextNode(afternode_txt);
+					const afternode_txt = ndata.substring(fidx + row.bbcode.length, ndata.length);
+					const afternode = document.createTextNode(afternode_txt);
 					el.data = ndata = el.data.substr(0, fidx);
 					$(el).after(afternode).after(this.strf(row.img, this.options));
 					this.getHTMLSmiles(el.parentNode);
@@ -2319,7 +2326,7 @@ wbbdebug = false;
 		},
 		//UTILS
 		setUID: function (el, attr) {
-			var id = "wbbid_" + (++this.lastid);
+			const id = "wbbid_" + (++this.lastid);
 			if (el) {
 				$(el).attr(attr || "id", id);
 			}
@@ -2338,7 +2345,8 @@ wbbdebug = false;
 			data = this.keysToLower($.extend({}, data));
 			return str.replace(/\{([\w\.]*)\}/g, function (str, key) {
 				key = key.toLowerCase();
-				var keys = key.split("."), value = data[keys.shift().toLowerCase()];
+				const keys = key.split(".");
+				let value = data[keys.shift().toLowerCase()];
 				$.each(keys, function () {
 					value = value[this];
 				});
@@ -2348,7 +2356,7 @@ wbbdebug = false;
 		elFromString: function (str) {
 			if (str.indexOf("<") != -1 && str.indexOf(">") != -1) {
 				//create tag
-				var wr = document.createElement("SPAN");
+				const wr = document.createElement("SPAN");
 				$(wr).html(str);
 				this.setUID(wr, "wbb");
 				return ($(wr).contents().length > 1) ? wr : wr.firstChild;
@@ -2372,13 +2380,13 @@ wbbdebug = false;
 			}
 		},
 		isBBContain: function (bbcode) {
-			var pos = this.getCursorPosBB();
-			var b = this.prepareRGX(bbcode);
-			var bbrgx = new RegExp(b, "g");
-			var a;
-			var lastindex = 0;
+			const pos = this.getCursorPosBB();
+			const b = this.prepareRGX(bbcode);
+			const bbrgx = new RegExp(b, "g");
+			let a;
+			let lastindex = 0;
 			while ((a = bbrgx.exec(this.txtArea.value)) != null) {
-				var p = this.txtArea.value.indexOf(a[0], lastindex);
+				const p = this.txtArea.value.indexOf(a[0], lastindex);
 				if (pos > p && pos < (p + a[0].length)) {
 					return [a, p];
 				}
@@ -2401,7 +2409,7 @@ wbbdebug = false;
 				$node = $node.parent();
 			}
 			if (this.options.bbmode === false && $node.is('div,blockquote,code') && $node.contents().length > 0) {
-				var l = $node[0].lastChild;
+				const l = $node[0].lastChild;
 				if (!l || (l && l.tagName != "BR")) {
 					$node.append("<br/>");
 				}
@@ -2411,7 +2419,7 @@ wbbdebug = false;
 			}
 		},
 		getAttributeList: function (el) {
-			var a = [];
+			const a = [];
 			$.each(el.attributes, function (i, attr) {
 				if (attr.specified) {
 					a.push(attr.name);
@@ -2421,13 +2429,13 @@ wbbdebug = false;
 		},
 		clearFromSubInsert: function (html, cmd) {
 			if (this.options.allButtons[cmd] && this.options.allButtons[cmd].rootSelector) {
-				var $wr = $('<div>').html(html);
+				const $wr = $('<div>').html(html);
 				$.each(this.options.allButtons[cmd].rootSelector, $.proxy(function (i, s) {
-					var seltext = false;
+					let seltext = false;
 					if (typeof(this.options.rules[s][0][1]["seltext"]) != "undefined") {
 						seltext = this.options.rules[s][0][1]["seltext"]["sel"];
 					}
-					var res = true;
+					let res = true;
 					$wr.find("*").each(function () { //work with find("*") and "is", becouse in ie7-8 find is case sensitive
 						if ($(this).is(s)) {
 							if (seltext && seltext["sel"]) {
@@ -2449,7 +2457,7 @@ wbbdebug = false;
 				node = node.parentNode
 			}
 			;
-			var f = this.filterByNode(node).replace(/\:eq.*$/g, "");
+			const f = this.filterByNode(node).replace(/\:eq.*$/g, "");
 			if ($(node.nextSibling).is(f)) {
 				$(node).append($(node.nextSibling).html());
 				$(node.nextSibling).remove();
@@ -2493,7 +2501,7 @@ wbbdebug = false;
 		},
 		dropdownclick: function (bsel, tsel, e) {
 			//this.body.focus();
-			var $btn = $(e.currentTarget).closest(bsel);
+			const $btn = $(e.currentTarget).closest(bsel);
 			if ($btn.hasClass("dis")) {
 				return;
 			}
@@ -2540,11 +2548,11 @@ wbbdebug = false;
 			//if (rgb.indexOf("rgb")==-1) {return rgb;}
 			if (rgb.indexOf("rgb") == -1) {
 				//IE
-				var color = parseInt(rgb);
+				let color = parseInt(rgb);
 				color = ((color & 0x0000ff) << 16) | (color & 0x00ff00) | ((color & 0xff0000) >>> 16);
 				return '#' + color.toString(16);
 			}
-			var digits = /(.*?)rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(rgb);
+			const digits = /(.*?)rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(rgb);
 			return "#" + this.dec2hex(parseInt(digits[2])) + this.dec2hex(parseInt(digits[3])) + this.dec2hex(parseInt(digits[4]));
 		},
 		dec2hex: function (d) {
@@ -2562,12 +2570,12 @@ wbbdebug = false;
 			}
 		},
 		clearPaste: function (el) {
-			var $block = $(el);
+			const $block = $(el);
 			//NEW
 			$.each(this.options.rules, $.proxy(function (s, ar) {
-				var $sf = $block.find(s).attr("wbbkeep", 1);
+				const $sf = $block.find(s).attr("wbbkeep", 1);
 				if ($sf.length > 0) {
-					var s2 = ar[0][1];
+					const s2 = ar[0][1];
 					$.each(s2, function (i, v) {
 						if (v.sel) {
 							$sf.find(v.sel).attr("wbbkeep", 1);
@@ -2576,7 +2584,7 @@ wbbdebug = false;
 				}
 			}, this));
 			$block.find("*[wbbkeep!='1']").each($.proxy(function (i, el) {
-				var $this = $(el);
+				const $this = $(el);
 				if ($this.is('div,p') && ($this.children().length == 0 || el.lastChild.tagName != "BR")) {
 					$this.after("<br/>");
 				}
@@ -2611,11 +2619,11 @@ wbbdebug = false;
 		},
 		smileFind: function () {
 			if (this.options.smilefind) {
-				var $smlist = $(this.options.smilefind).find('img[alt]');
+				const $smlist = $(this.options.smilefind).find('img[alt]');
 				if ($smlist.length > 0) {
 					this.options.smileList = [];
 					$smlist.each($.proxy(function (i, el) {
-						var $el = $(el);
+						const $el = $(el);
 						this.options.smileList.push({
 							title: $el.attr("title"),
 							bbcode: $el.attr("alt"),
@@ -2657,7 +2665,7 @@ wbbdebug = false;
 					this.saveRange();
 				}
 				setTimeout($.proxy(function () {
-					var data = this.$txtArea.val();
+					const data = this.$txtArea.val();
 					if (this.options.bbmode === false && data != "" && $(e.target).closest("div.wysibb").length == 0 && !this.$txtArea.attr("wbbsync")) {
 						this.selectLastRange();
 						this.insertAtCursor(this.getHTML(data, true));
@@ -2681,17 +2689,17 @@ wbbdebug = false;
 		},
 		smileConversion: function () {
 			if (this.options.smileList && this.options.smileList.length > 0) {
-				var snode = this.getSelectNode();
+				const snode = this.getSelectNode();
 				if (snode.nodeType == 3) {
-					var ndata = snode.data;
+					const ndata = snode.data;
 					if (ndata.length >= 2 && !this.isInClearTextBlock(snode) && $(snode).parents("a").length == 0) {
 						$.each(this.options.srules, $.proxy(function (i, sar) {
-							var smbb = sar[0];
-							var fidx = ndata.indexOf(smbb);
+							const smbb = sar[0];
+							const fidx = ndata.indexOf(smbb);
 							if (fidx != -1) {
-								var afternode_txt = ndata.substring(fidx + smbb.length, ndata.length);
-								var afternode = document.createTextNode(afternode_txt);
-								var afternode_cursor = document.createElement("SPAN");
+								const afternode_txt = ndata.substring(fidx + smbb.length, ndata.length);
+								const afternode = document.createTextNode(afternode_txt);
+								const afternode_cursor = document.createElement("SPAN");
 								snode.data = snode.data.substr(0, fidx);
 								$(snode).after(afternode).after(afternode_cursor).after(this.strf(sar[1], this.options));
 								this.selectNode(afternode_cursor);
@@ -2704,7 +2712,7 @@ wbbdebug = false;
 		},
 		isInClearTextBlock: function () {
 			if (this.cleartext) {
-				var find = false;
+				let find = false;
 				$.each(this.cleartext, $.proxy(function (sel, command) {
 					if (this.queryState(command)) {
 						find = command;
@@ -2735,7 +2743,7 @@ wbbdebug = false;
 			}
 		},
 		setCursorByEl: function (el) {
-			var sl = document.createTextNode("\uFEFF");
+			const sl = document.createTextNode("\uFEFF");
 			$(el).after(sl);
 			this.selectNode(sl);
 		},
@@ -2745,7 +2753,7 @@ wbbdebug = false;
 			$(document).on("mousedown", $.proxy(this.imgEventHandler, this));
 		},
 		imgEventHandler: function (e) {
-			var $e = $(e.target);
+			const $e = $(e.target);
 			if (this.hasWrapedImage && ($e.closest(".wbb-img,#wbbmodal").length == 0 || $e.hasClass("wbb-cancel-button"))) {
 				this.$body.find(".imgWrap ").each(function () {
 					$.log("Removed imgWrap block");
@@ -2767,13 +2775,13 @@ wbbdebug = false;
 		showModal: function (cmd, opt, queryState) {
 			$.log("showModal: " + cmd);
 			this.saveRange();
-			var $cont = this.$modal.find(".wbbm-content").html("");
-			var $wbbm = this.$modal.find(".wbbm").removeClass("hastabs");
+			const $cont = this.$modal.find(".wbbm-content").html("");
+			const $wbbm = this.$modal.find(".wbbm").removeClass("hastabs");
 			this.$modal.find("span.wbbm-title-text").html(opt.title);
 			if (opt.tabs && opt.tabs.length > 1) {
 				//has tabs, create
 				$wbbm.addClass("hastabs");
-				var $ul = $('<div class="wbbm-tablist">').appendTo($cont).append("<ul>").children("ul");
+				const $ul = $('<div class="wbbm-tablist">').appendTo($cont).append("<ul>").children("ul");
 				$.each(opt.tabs, $.proxy(function (i, row) {
 					if (i == 0) {
 						row['on'] = "on"
@@ -2785,14 +2793,14 @@ wbbdebug = false;
 			if (opt.width) {
 				$wbbm.css("width", opt.width);
 			}
-			var $cnt = $('<div class="wbbm-cont">').appendTo($cont);
+			const $cnt = $('<div class="wbbm-cont">').appendTo($cont);
 			if (queryState) {
 				$wbbm.find('#wbbm-remove').show();
 			} else {
 				$wbbm.find('#wbbm-remove').hide();
 			}
 			$.each(opt.tabs, $.proxy(function (i, r) {
-				var $c = $('<div>').addClass("tab-cont tab" + i).attr("tid", i).appendTo($cnt);
+				const $c = $('<div>').addClass("tab-cont tab" + i).attr("tid", i).appendTo($cnt);
 				if (i > 0) {
 					$c.hide();
 				}
@@ -2829,26 +2837,26 @@ wbbdebug = false;
 			$wbbm.find('#wbbm-submit').click($.proxy(function () {
 
 				if ($.isFunction(opt.onSubmit)) { //custom submit function, if return false, then don't process our function
-					var r = opt.onSubmit.call(this, cmd, opt, queryState);
+					const r = opt.onSubmit.call(this, cmd, opt, queryState);
 					if (r === false) {
 						return;
 					}
 				}
-				var params = {};
-				var valid = true;
+				const params = {};
+				let valid = true;
 				this.$modal.find(".wbbm-inperr").remove();
 				this.$modal.find(".wbbm-brdred").removeClass("wbbm-brdred");
 				//$.each(this.$modal.find(".tab-cont:visible input"),$.proxy(function(i,el) {
 				$.each(this.$modal.find(".tab-cont:visible .inp-text"), $.proxy(function (i, el) {
-					var tid = $(el).parents(".tab-cont").attr("tid");
-					var pname = $(el).attr("name").toLowerCase();
-					var pval = "";
+					const tid = $(el).parents(".tab-cont").attr("tid");
+					const pname = $(el).attr("name").toLowerCase();
+					let pval = "";
 					if ($(el).is("input,textrea,select")) {
 						pval = $(el).val();
 					} else {
 						pval = $(el).html();
 					}
-					var validation = opt.tabs[tid]["input"][i]["validation"];
+					const validation = opt.tabs[tid]["input"][i]["validation"];
 					if (typeof(validation) != "undefined") {
 						if (!pval.match(new RegExp(validation, "i"))) {
 							valid = false;
@@ -2908,27 +2916,27 @@ wbbdebug = false;
 			return this;
 		},
 		getParams: function (src, s, offset) {
-			var params = {};
+			const params = {};
 			if (this.options.bbmode) {
 				//bbmode
-				var stext = s.match(/\{[\s\S]+?\}/g);
+				const stext = s.match(/\{[\s\S]+?\}/g);
 				s = this.prepareRGX(s);
-				var rgx = new RegExp(s, "g");
-				var val = this.txtArea.value;
+				const rgx = new RegExp(s, "g");
+				let val = this.txtArea.value;
 				if (offset > 0) {
 					val = val.substr(offset, val.length - offset);
 				}
-				var a = rgx.exec(val);
+				const a = rgx.exec(val);
 				if (a) {
 					$.each(stext, function (i, n) {
 						params[n.replace(/\{|\}/g, "").replace(/"/g, "'").toLowerCase()] = a[i + 1];
 					});
 				}
 			} else {
-				var rules = this.options.rules[s][0][1];
+				const rules = this.options.rules[s][0][1];
 				$.each(rules, $.proxy(function (k, v) {
-					var value = "";
-					var $v = (v.sel !== false) ? value = $(src).find(v.sel) : $(src);
+					let value = "";
+					const $v = (v.sel !== false) ? value = $(src).find(v.sel) : $(src);
 					if (v.attr !== false) {
 						value = $v.attr(v.attr);
 					} else {
@@ -2936,7 +2944,7 @@ wbbdebug = false;
 					}
 					if (value) {
 						if (v.rgx !== false) {
-							var m = value.match(new RegExp(v.rgx));
+							const m = value.match(new RegExp(v.rgx));
 							if (m && m.length == 2) {
 								value = m[1];
 							}
@@ -2997,7 +3005,7 @@ wbbdebug = false;
 		},
 		debug: function (msg) {
 			if (this.options.debug === true) {
-				var time = (new Date()).getTime();
+				const time = (new Date()).getTime();
 				if (typeof(console) != "undefined") {
 					console.log((time - this.startTime) + " ms: " + msg);
 				} else {
@@ -3034,7 +3042,7 @@ wbbdebug = false;
 	};
 	$.fn.wysibb = function (settings) {
 		return this.each(function () {
-			var data = $(this).data("wbb");
+			const data = $(this).data("wbb");
 			if (!data) {
 				new $.wysibb(this, settings);
 			}
@@ -3044,8 +3052,8 @@ wbbdebug = false;
 		if (!opt.scope) {
 			opt.scope = this;
 		}
-		var start = {x: 0, y: 0, height: 0};
-		var drag;
+		let start = {x: 0, y: 0, height: 0};
+		let drag;
 		opt.scope.drag_mousedown = function (e) {
 			e.preventDefault();
 			start = {
@@ -3068,7 +3076,7 @@ wbbdebug = false;
 		};
 		opt.scope.drag_mousemove = function (e) {
 			e.preventDefault();
-			var axisX = 0, axisY = 0;
+			let axisX = 0, axisY = 0;
 			if (opt.axisX) {
 				axisX = e.pageX - start.x;
 			}
@@ -3076,7 +3084,7 @@ wbbdebug = false;
 				axisY = e.pageY - start.y;
 			}
 			if (axisY != 0) {
-				var nheight = start.sheight + axisY;
+				const nheight = start.sheight + axisY;
 				if (nheight > start.height && nheight <= opt.scope.options.resize_maxheight) {
 					if (opt.scope.options.bbmode == true) {
 						opt.scope.$txtArea.css((opt.scope.options.autoresize === true) ? "min-height" : "height", nheight + "px");
@@ -3125,7 +3133,7 @@ wbbdebug = false;
 		return this.data('wbb').getBBCode();
 	};
 	$.fn.getHTML = function () {
-		var wbb = this.data('wbb');
+		const wbb = this.data('wbb');
 		return wbb.getHTML(wbb.$txtArea.val());
 	};
 	$.fn.getHTMLByCommand = function (command, params) {
@@ -3143,8 +3151,8 @@ wbbdebug = false;
 		return this.data("wbb");
 	};
 	$.fn.insertImage = function (imgurl, thumburl) {
-		var editor = this.data("wbb");
-		var code = (thumburl) ? editor.getCodeByCommand('link', {
+		const editor = this.data("wbb");
+		const code = (thumburl) ? editor.getCodeByCommand('link', {
 			url: imgurl,
 			seltext: editor.getCodeByCommand('img', {src: thumburl})
 		}) : editor.getCodeByCommand('img', {src: imgurl});
@@ -3172,7 +3180,7 @@ wbbdebug = false;
 
 	$.fn.dragfileupload = function (options) {
 		return this.each(function () {
-			var upl = new FileUpload(this, options);
+			const upl = new FileUpload(this, options);
 			upl.init();
 		});
 	};
@@ -3209,24 +3217,24 @@ wbbdebug = false;
 				});
 
 				//upload progress
-				var uploadProgress = $.proxy(function (e) {
-					var p = parseInt(e.loaded / e.total * 100, 10);
+				const uploadProgress = $.proxy(function (e) {
+					const p = parseInt(e.loaded / e.total * 100, 10);
 					this.$loader.children("span").text(CURLANG.loading + ': ' + p + '%');
 
 				}, this);
-				var xhr = jQuery.ajaxSettings.xhr();
+				const xhr = jQuery.ajaxSettings.xhr();
 				if (xhr.upload) {
 					xhr.upload.addEventListener('progress', uploadProgress, false);
 				}
 				this.$block[0].ondrop = $.proxy(function (e) {
 					e.preventDefault();
 					this.$block.removeClass('dragover');
-					var ufile = e.dataTransfer.files[0];
+					const ufile = e.dataTransfer.files[0];
 					if (this.opt.validation && !ufile.name.match(new RegExp(this.opt.validation))) {
 						this.error(CURLANG.validation_err);
 						return false;
 					}
-					var fData = new FormData();
+					const fData = new FormData();
 					fData.append(this.opt.fileParam, ufile);
 
 					if (this.opt.extraParams) { //check for extraParams to upload

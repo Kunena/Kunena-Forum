@@ -27,10 +27,10 @@ $wa->useScript('multiselect')
 
 <script type="text/javascript">
 	Joomla.orderTable = function () {
-		var table = document.getElementById("sortTable");
-		var direction = document.getElementById("directionTable");
-		var order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
+	  const table = document.getElementById("sortTable");
+	  const direction = document.getElementById("directionTable");
+	  const order = table.options[table.selectedIndex].value;
+	  if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;

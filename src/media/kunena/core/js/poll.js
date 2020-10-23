@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 	 * Get the number of field options inserted in form
 	 */
 	function getOptionsNumber() {
-		var myoptions = $('#kbbcode-poll-options').children('div.polloption');
+		const myoptions = $('#kbbcode-poll-options').children('div.polloption');
 
 		return myoptions.length;
 	}
@@ -21,12 +21,12 @@ jQuery(document).ready(function ($) {
 	 * This function will insert directly in DOM the new field for poll with attibutes
 	 */
 	function createNewOptionField() {
-		var options = getOptionsNumber();
+		let options = getOptionsNumber();
 		options++;
 
-		var polldiv = $('<div></div>').attr('class', 'polloption').appendTo('#kbbcode-poll-options');
+		const polldiv = $('<div></div>').attr('class', 'polloption').appendTo('#kbbcode-poll-options');
 
-		var label = $('<label>').text(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
+		const label = $('<label>').text(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
 		polldiv.append(label);
 
 		newInput = document.createElement('input');
@@ -40,8 +40,8 @@ jQuery(document).ready(function ($) {
 
 	if ($('#kbutton-poll-add') !== undefined) {
 		$('#kbutton-poll-add').click(function () {
-			var nboptionsmax = $('#nb_options_allowed').val();
-			var koptions = getOptionsNumber();
+			const nboptionsmax = $('#nb_options_allowed').val();
+			const koptions = getOptionsNumber();
 
 			if (!nboptionsmax || (koptions < nboptionsmax && koptions >= 2)) {
 				createNewOptionField();
@@ -60,9 +60,9 @@ jQuery(document).ready(function ($) {
 
 	if ($('#kbutton-poll-rem') !== undefined) {
 		$('#kbutton-poll-rem').click(function () {
-			var koption = $('div.polloption:last');
+			const koption = $('div.polloption:last');
 			if (koption) {
-				var isvisible = $('#kpoll-alert-error').is(":visible");
+				const isvisible = $('#kpoll-alert-error').is(":visible");
 
 				if (isvisible) {
 					$('#kpoll-alert-error').hide();
@@ -76,8 +76,8 @@ jQuery(document).ready(function ($) {
 
 	if ($('#postcatid') !== undefined) {
 		$('#postcatid').change(function () {
-			var catid = $('select#postcatid option').filter(':selected').val();
-			var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+			const catid = $('select#postcatid option').filter(':selected').val();
+			const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 			if (pollcategoriesid[catid] !== undefined) {
 				$('.pollbutton').show();
 			}

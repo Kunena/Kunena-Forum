@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
 
 	// For code
 	$('#code-modal-submit').click(function () {
-		var codetype = $("#kcodetype option:selected").val();
+		const codetype = $("#kcodetype option:selected").val();
 
 		$.markItUp(
 			{
@@ -34,11 +34,11 @@ jQuery(document).ready(function ($) {
 
 	// For map
 	$('#map-modal-submit').click(function () {
-		var modalcity = $('#modal-map-city').val();
-		var modaltype = $('#modal-map-type').val();
-		var modalzoom = $('#modal-map-zoomlevel').val();
-		var type = '';
-		var zoom = '';
+		const modalcity = $('#modal-map-city').val();
+		const modaltype = $('#modal-map-type').val();
+		const modalzoom = $('#modal-map-zoomlevel').val();
+		let type = '';
+		let zoom = '';
 
 		if (modaltype != undefined) {
 			type = 'type=' + modaltype;
@@ -66,16 +66,16 @@ jQuery(document).ready(function ($) {
 
 	// For picture settings
 	$('#picture-modal-submit').click(function () {
-		var modalpictureurl = $('#modal-picture-url').val();
-		var modalpicturesize = $("#kpicture-size-list-modal option:selected").val();
-		var modalpicturealt = $('#modal-picture-alt').val();
+		const modalpictureurl = $('#modal-picture-url').val();
+		const modalpicturesize = $("#kpicture-size-list-modal option:selected").val();
+		const modalpicturealt = $('#modal-picture-alt').val();
 
-		var size = '';
+		let size = '';
 		if (modalpicturesize.length > 0) {
 			size = 'size=' + modalpicturesize;
 		}
 
-		var alt = '';
+		let alt = '';
 		if (modalpicturealt.length > 0) {
 			alt = 'alt=' + modalpicturealt;
 		}
@@ -98,10 +98,10 @@ jQuery(document).ready(function ($) {
 
 	//For link settings
 	$('#link-modal-submit').click(function () {
-		var modallinkurl = $('#modal-link-url').val();
-		var modallinktext = $('#modal-link-text').val();
+		const modallinkurl = $('#modal-link-url').val();
+		const modallinktext = $('#modal-link-text').val();
 
-		var text = '';
+		let text = '';
 		if (modallinktext.length > 0) {
 			text = modallinktext;
 		}
@@ -126,15 +126,15 @@ jQuery(document).ready(function ($) {
 
 	// For video settings
 	$('#videosettings-modal-submit').click(function () {
-		var kvideoprovider = $('#kvideoprovider-modal').val();
-		var providerid = $('#modal-video-id').val();
-		var videowidth = $('#modal-video-width').val();
-		var videoheight = $('#modal-video-height').val();
-		var videosize = $('#modal-video-size').val();
-		var kvideoproviderlist = $("#kvideoprovider-list-modal option:selected").val();
+		const kvideoprovider = $('#kvideoprovider-modal').val();
+		const providerid = $('#modal-video-id').val();
+		const videowidth = $('#modal-video-width').val();
+		const videoheight = $('#modal-video-height').val();
+		const videosize = $('#modal-video-size').val();
+		const kvideoproviderlist = $("#kvideoprovider-list-modal option:selected").val();
 
-		var width = '425';
-		var height = '344';
+		let width = '425';
+		let height = '344';
 		if (videowidth.length > 0 && videoheight.length > 0) {
 			width = 'width=' + videowidth;
 			height = 'height=' + videoheight;
@@ -143,7 +143,7 @@ jQuery(document).ready(function ($) {
 			height = 'height=' + height;
 		}
 
-		var size = '';
+		let size = '';
 		if (videosize.length > 0) {
 			size = 'size=' + videosize;
 		}
@@ -179,7 +179,7 @@ jQuery(document).ready(function ($) {
 
 	// For video provider URL
 	$('#videourlprovider-modal-submit').click(function () {
-		var providerurl = $('#modal-video-urlprovider-input').val();
+		const providerurl = $('#modal-video-urlprovider-input').val();
 
 		$.markItUp(
 			{
@@ -195,7 +195,7 @@ jQuery(document).ready(function ($) {
 
 	// For smileys
 	$('.smileyimage').click(function () {
-		var smiley = $(this).attr('alt');
+		const smiley = $(this).attr('alt');
 
 		$.markItUp(
 			{

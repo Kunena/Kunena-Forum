@@ -8,7 +8,7 @@
  **/
 
 jQuery(document).ready(function () {
-	var avatartab = jQuery.parseJSON(Joomla.getOptions('com_kunena.avatartab'));
+	const avatartab = jQuery.parseJSON(Joomla.getOptions('com_kunena.avatartab'));
 
 	if (avatartab) {
 		jQuery('.nav-tabs a[href="#editavatar"]').tab('show');

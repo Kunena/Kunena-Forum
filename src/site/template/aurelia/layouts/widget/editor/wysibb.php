@@ -102,7 +102,7 @@ $topictemplate    = !KunenaConfig::getInstance()->pickup_category;
 $settings         = $templatesettings->get('wysibb');
 ?>
 <script>
-	var wbbOpt = {
+	const wbbOpt = {
 		lang: "kunena",
 		buttons: "<?php echo $settings;?>"
 	};

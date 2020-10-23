@@ -1,10 +1,10 @@
 jQuery(document).ready(function ($) {
-	var input_alias = $("#jform_aliases");
-	var box = $("#aliascheck");
-	var apply = $(".button-apply");
-	var save = $(".button-save");
-	var savenew = $(".button-save-new");
-	var savecopy = $(".button-save-copy");
+	const input_alias = $("#jform_aliases");
+	const box = $("#aliascheck");
+	const apply = $(".button-apply");
+	const save = $(".button-save");
+	const savenew = $(".button-save-new");
+	const savecopy = $(".button-save-copy");
 
 	input_alias.on('input', function () {
 		$.ajax({

@@ -10,10 +10,10 @@
 /**
  *  Helper function for to perform JSON request for preview
  */
-var previewActive = false;
+const previewActive = false;
 
 function kPreviewHelper(previewActive) {
-	var editor = jQuery('#editor');
+	const editor = jQuery('#editor');
 	if (Joomla.getOptions('com_kunena.suffixpreview'))
 	{
 		var url = 'index.php?option=com_kunena&view=topic&layout=edit&format=raw';
@@ -40,8 +40,8 @@ function kPreviewHelper(previewActive) {
 }
 
 jQuery(document).ready(function ($) {
-	var qreply = $('.qreply');
-	var editor = $('#editor');
+	const qreply = $('.qreply');
+	const editor = $('#editor');
 
 	$('#tabs_kunena_editor a:first').tab('show');
 
@@ -51,9 +51,9 @@ jQuery(document).ready(function ($) {
 		$('a[href="#preview"]').parents('li,ul').addClass('active');
 		e.preventDefault();
 
-		var preview = $("#kbbcode-preview");
-		var message = $("#editor");
-		var message_private = $("#editor-private");
+		const preview = $("#kbbcode-preview");
+		const message = $("#editor");
+		const message_private = $("#editor-private");
 
 		preview.css('display', 'block');
 
@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
 		kPreviewHelper();
 
 		preview.attr('class', 'kbbcode-preview-bottom controls');
-		var height = message.css('height');
+		const height = message.css('height');
 		preview.css('height', height);
 	});
 
@@ -73,8 +73,8 @@ jQuery(document).ready(function ($) {
 		$('a[href="#secure_reply"]').parents('li,ul').addClass('active');
 		e.preventDefault();
 
-		var message = $("#editor");
-		var message_private = $("#editor-private");
+		const message = $("#editor");
+		const message_private = $("#editor-private");
 
 		message.hide();
 		message_private.show();
@@ -98,7 +98,7 @@ jQuery(document).ready(function ($) {
 		$('#markItUpeditor').hide();
 	});
 
-	var cat = localStorage.getItem('copyKunenaeditor');
+	const cat = localStorage.getItem('copyKunenaeditor');
 	if (cat) {
 		var textarea = $("#editor").next();
 		textarea.empty();
@@ -152,7 +152,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	if (item !== undefined) {
-		var users_url = $('#kurl_users').val();
+		const users_url = $('#kurl_users').val();
 		$(item).atwho({
 			at: "@",
 			data: users_url,
@@ -179,7 +179,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	$('.Kreplyclick').click(function () {
-		var name = '#' + $(this).attr('data-related');
+		const name = '#' + $(this).attr('data-related');
 		if ($(name).is(":visible")) {
 			$(name).hide();
 		}
@@ -200,13 +200,13 @@ jQuery(document).ready(function ($) {
 		localStorage.removeItem('copyKunenaeditor');
 	});
 
-	var category_template_text;
+	let category_template_text;
 	$('#postcatid').change(function () {
-		var catid = $('select#postcatid option').filter(':selected').val();
-		var kurl_topicons_request = $('#kurl_topicons_request').val();
+		const catid = $('select#postcatid option').filter(':selected').val();
+		const kurl_topicons_request = $('#kurl_topicons_request').val();
 
 		if ($('#kanynomous-check').length > 0) {
-			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+			const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
@@ -228,7 +228,7 @@ jQuery(document).ready(function ($) {
 			.done(function (data) {
 				$('#iconset_topic_list').remove();
 
-				var div_object = $('<div>', {'id': 'iconset_topic_list'});
+				const div_object = $('<div>', {'id': 'iconset_topic_list'});
 
 				$('#iconset_inject').append(div_object);
 
@@ -251,7 +251,7 @@ jQuery(document).ready(function ($) {
 							});
 						}
 
-						var span_object = $('<span>', {'class': 'kiconsel'}).append(input);
+						const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
 						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
 							var label = $('<label>', {
@@ -326,15 +326,15 @@ jQuery(document).ready(function ($) {
 
 	$('#modal_confirm_erase').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var textarea = $("#editor").next();
+		const textarea = $("#editor").next();
 		textarea.empty();
 		$('#editor').val(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var existing_content = editor.val();
-		var textarea = $("#editor").next();
+		const existing_content = editor.val();
+		const textarea = $("#editor").next();
 		textarea.empty();
 		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
 	});
@@ -346,7 +346,7 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var test  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
+	const test = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
 	$('#gotoeditor'+test).click(function () {
 		localStorage.setItem("copyKunenaeditor", $(".test" + test).val());
 	});

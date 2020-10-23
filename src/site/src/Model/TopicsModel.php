@@ -41,7 +41,7 @@ class TopicsModel extends ListModel
 	protected $topics = false;
 
 	/**
-	 * @var     boolean
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;

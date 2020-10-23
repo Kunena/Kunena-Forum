@@ -71,9 +71,7 @@ class PluginsModel extends ListModel
 	 */
 	public function getFilterForm($data = array(), $loadData = true)
 	{
-		$form = parent::getFilterForm($data, $loadData);
-
-		return $form;
+		return parent::getFilterForm($data, $loadData);
 	}
 
 	/**

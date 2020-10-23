@@ -67,9 +67,7 @@ class AccessJoomla
 	 */
 	public function getAccessTypes()
 	{
-		static $accesstypes = ['joomla.level', 'joomla.group'];
-
-		return $accesstypes;
+		return ['joomla.level', 'joomla.group'];
 	}
 
 	/**

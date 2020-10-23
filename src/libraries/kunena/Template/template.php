@@ -1670,9 +1670,7 @@ HTML;
 			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
 
-		$html = '<img loading="lazy" src="' . $iconurl . '" alt="emo" />';
-
-		return $html;
+		return '<img loading="lazy" src="' . $iconurl . '" alt="emo" />';
 	}
 
 	/**
@@ -1821,9 +1819,7 @@ HTML;
 	 */
 	public function getTemplateDetails()
 	{
-		$xml = simplexml_load_file(KPATH_SITE . "/template/{$this->name}/config/template.xml");
-
-		return $xml;
+		return simplexml_load_file(KPATH_SITE . "/template/{$this->name}/config/template.xml");
 	}
 
 	/**
@@ -2004,9 +2000,7 @@ HTML;
 				$id = $topic->label_id;
 			}
 
-			$icon = $this->get_xml_label($xml, $id, $topicicontype);
-
-			return $icon;
+			return $this->get_xml_label($xml, $id, $topicicontype);
 		}
 	}
 

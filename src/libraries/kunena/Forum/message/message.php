@@ -723,9 +723,7 @@ class Message extends KunenaDatabaseObject
 			return false;
 		}
 
-		$uri = Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
-
-		return $uri;
+		return Uri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
 	}
 
 	/**

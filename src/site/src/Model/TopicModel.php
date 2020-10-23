@@ -323,9 +323,7 @@ class TopicModel extends ListModel
 	 */
 	public function getModerators()
 	{
-		$moderators = $this->getCategory()->getModerators(false);
-
-		return $moderators;
+		return $this->getCategory()->getModerators(false);
 	}
 
 	/**

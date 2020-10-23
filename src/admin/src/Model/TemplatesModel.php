@@ -173,9 +173,7 @@ class TemplatesModel extends AdminModel
 	public function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
-		$ftp = ClientHelper::setCredentialsFromRequest('ftp');
-
-		return $ftp;
+		return ClientHelper::setCredentialsFromRequest('ftp');
 	}
 
 	/**
@@ -401,8 +399,6 @@ class TemplatesModel extends AdminModel
 	public function getTemplatesxml()
 	{
 		// Get template xml file info
-		$rows = self::loadTemplatesXml();
-
-		return $rows;
+		return self::loadTemplatesXml();
 	}
 }

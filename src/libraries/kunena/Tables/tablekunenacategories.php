@@ -501,8 +501,6 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function store($updateNulls = false)
 	{
-		$ret = parent::store($updateNulls);
-
-		return $ret;
+		return parent::store($updateNulls);
 	}
 }

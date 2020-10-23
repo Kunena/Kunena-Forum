@@ -80,9 +80,7 @@ class KunenaAccessCommunity
 	 */
 	public function getAccessTypes()
 	{
-		static $accesstypes = ['jomsocial'];
-
-		return $accesstypes;
+		return ['jomsocial'];
 	}
 
 	/**

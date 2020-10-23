@@ -107,9 +107,7 @@ class UserModel extends Model
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$subscatslist = CategoryHelper::getSubscriptions($userid);
-
-		return $subscatslist;
+		return CategoryHelper::getSubscriptions($userid);
 	}
 
 	/**
@@ -206,9 +204,8 @@ class UserModel extends Model
 		$params  = [
 			'sections' => false,
 			'action'   => 'read'];
-		$modCats = HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 
-		return $modCats;
+		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 	}
 
 	/**
@@ -222,9 +219,7 @@ class UserModel extends Model
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		$user = KunenaUserHelper::get($userid);
-
-		return $user;
+		return KunenaUserHelper::get($userid);
 	}
 
 	/**
@@ -265,9 +260,7 @@ class UserModel extends Model
 		}
 
 		// Build special ranks select list
-		$selectRank = HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
-
-		return $selectRank;
+		return HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
 	}
 
 	/**

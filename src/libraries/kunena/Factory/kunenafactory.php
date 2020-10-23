@@ -53,9 +53,8 @@ abstract class KunenaFactory
 	public static function getAdminTemplate()
 	{
 		require_once KPATH_ADMIN . '/tmpl/template.php';
-		$template = new KunenaAdminTemplate;
 
-		return $template;
+		return new KunenaAdminTemplate;
 	}
 
 	/**

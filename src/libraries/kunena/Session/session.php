@@ -340,9 +340,8 @@ class Session extends CMSObject
 	{
 		// For existing users new indication expires after 3 months
 		$monthsAgo   = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
-		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
 
-		return $allreadtime;
+		return ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
 	}
 
 	/**

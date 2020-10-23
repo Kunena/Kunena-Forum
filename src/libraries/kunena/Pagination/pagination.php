@@ -300,9 +300,7 @@ class Pagination
 	 */
 	public function getAdditionalUrlParam($key)
 	{
-		$result = isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
-
-		return $result;
+		return isset($this->additionalUrlParams[$key]) ? $this->additionalUrlParams[$key] : null;
 	}
 
 	/**
@@ -329,9 +327,7 @@ class Pagination
 	public function getData()
 	{
 		// Do not have static cache here (if needed, keep it in object context).
-		$data = $this->_buildDataObject();
-
-		return $data;
+		return $this->_buildDataObject();
 	}
 
 	/**

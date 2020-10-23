@@ -544,9 +544,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query->where($this->db->quoteName('type') . ' = ' . $this->db->quote($type));
 		$query->where($this->db->quoteName('element') . ' = ' . $this->db->quote($element));
 		$this->db->setQuery($query);
-		$id = $this->db->loadResult();
 
-		return $id;
+		return $this->db->loadResult();
 	}
 
 	/**

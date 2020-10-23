@@ -1149,9 +1149,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 			if ($response->code == '200')
 			{
-				$resp = json_decode($response->body);
-
-				return $resp;
+				return json_decode($response->body);
 			}
 		}
 
@@ -1888,9 +1886,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		$cache = Factory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
 		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$ebay_item = $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
 
-		return $ebay_item;
+		return $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
 	}
 
 	/**
@@ -2067,9 +2064,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
 		}
 
-		$html = '<blockquote class="Quote UserQuote"><div class="QuoteText">' . $wrote . $content . '</div></blockquote>';
-
-		return $html;
+		return '<blockquote class="Quote UserQuote"><div class="QuoteText">' . $wrote . $content . '</div></blockquote>';
 	}
 
 	/**

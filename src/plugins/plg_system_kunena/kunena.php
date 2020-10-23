@@ -224,7 +224,7 @@ EOF;
 	 */
 	public function onPrivacyCollectAdminCapabilities()
 	{
-		$capabilities = [
+		return [
 			'Kunena' => [
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_EMAIL'),
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_IP_ADDRESS'),
@@ -237,8 +237,6 @@ EOF;
 				Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_SOCIAL'),
 			],
 		];
-
-		return $capabilities;
 	}
 
 	/**

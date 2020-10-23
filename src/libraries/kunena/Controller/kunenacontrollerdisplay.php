@@ -214,11 +214,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = Layout::factory($this->name)
+		return Layout::factory($this->name)
 			->setProperties($this->getProperties())
 			->setOptions($this->getOptions());
-
-		return $content;
 	}
 
 	/**

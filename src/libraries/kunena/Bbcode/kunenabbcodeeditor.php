@@ -449,9 +449,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 	 */
 	public function generateHMVCJs()
 	{
-		$js = $this->editorActionHMVCJs();
-
-		return $js;
+		return $this->editorActionHMVCJs();
 	}
 
 	/**
@@ -887,8 +885,6 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	 */
 	public function generateHMVCJs()
 	{
-		$js = "{separator:'|' }";
-
-		return $js;
+		return "{separator:'|' }";
 	}
 }

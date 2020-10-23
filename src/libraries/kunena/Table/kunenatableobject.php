@@ -656,11 +656,10 @@ abstract class KunenaTableObject
 	public static function getQuery()
 	{
 		$db    = static::$db;
-		$query = $db->getQuery(true)
+
+		return $db->getQuery(true)
 			->select($db->quoteName('a.*'))
 			->from($db->quoteName(static::$tbl, 'a'));
-
-		return $query;
 	}
 
 	/**
@@ -1075,10 +1074,9 @@ abstract class KunenaTableObject
 
 		static::$db = Factory::getDBO();
 		static::$db->setQuery('SELECT COUNT(' . static::$db->quoteName('userid') . ')' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));
-		$checkedOut = (boolean) static::$db->loadResult();
 
 		// If a session exists for the user then it is checked out.
-		return $checkedOut;
+		return (boolean) static::$db->loadResult();
 	}
 
 	/**

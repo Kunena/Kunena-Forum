@@ -91,8 +91,6 @@ class AvatarEasySocial extends Avatar
 
 		$user = FD::user($user->userid);
 
-		$avatar = $user->getAvatar(SOCIAL_AVATAR_LARGE);
-
-		return $avatar;
+		return $user->getAvatar(SOCIAL_AVATAR_LARGE);
 	}
 }

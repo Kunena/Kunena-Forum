@@ -90,9 +90,7 @@ class KunenaProfileEasySocial extends Profile
 
 			if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
 			{
-				$url = rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
-
-				return $url;
+				return rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
 			}
 
 			// If it's not configured for simple urls, just set the alias
@@ -201,8 +199,7 @@ class KunenaProfileEasySocial extends Profile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		$options = ['layout' => 'edit'];
-		$url     = FRoute::profile($options, $xhtml);
 
-		return $url;
+		return FRoute::profile($options, $xhtml);
 	}
 }

@@ -408,11 +408,9 @@ class TrashModel extends Model
 	 */
 	public function getNavigation()
 	{
-		$navigation = new Pagination($this->getState('list.total'),
+		return new Pagination($this->getState('list.total'),
 			$this->getState('list.start'), $this->getState('list.limit')
 		);
-
-		return $navigation;
 	}
 
 	/**

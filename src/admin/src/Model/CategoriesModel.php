@@ -62,9 +62,7 @@ class CategoriesModel extends Model
 	 */
 	public function getAdminNavigation()
 	{
-		$navigation = new Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
-
-		return $navigation;
+		return new Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 	}
 
 	/**
@@ -263,9 +261,7 @@ class CategoriesModel extends Model
 			return false;
 		}
 
-		$moderators = $category->getModerators(false);
-
-		return $moderators;
+		return $category->getModerators(false);
 	}
 
 	/**
@@ -374,9 +370,7 @@ class CategoriesModel extends Model
 			$batch_categories [] = HTMLHelper::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
 		}
 
-		$list = HTMLHelper::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox form-control" size="1"', 'value', 'text', 'select');
-
-		return $list;
+		return HTMLHelper::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox form-control" size="1"', 'value', 'text', 'select');
 	}
 
 	/**

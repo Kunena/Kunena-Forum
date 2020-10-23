@@ -487,9 +487,7 @@ class Attachment extends KunenaDatabaseObject
 	{
 		$this->inline = $inline;
 
-		$success = $this->save();
-
-		return $success;
+		return $this->save();
 	}
 
 	/**
@@ -1089,9 +1087,8 @@ class Attachment extends KunenaDatabaseObject
 
 		$find    = ['/\[attachment=' . $this->id . '\](.*?)\[\/attachment\]/su'];
 		$replace = '';
-		$text    = preg_replace($find, $replace, $editor_text);
 
-		return $text;
+		return preg_replace($find, $replace, $editor_text);
 	}
 
 	/**

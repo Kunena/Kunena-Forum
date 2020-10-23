@@ -220,9 +220,7 @@ abstract class Grid
 			$hover = '<span class="editlinktip hasTip" title="' . Text::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
 		}
 
-		$checked = $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
-
-		return $checked;
+		return $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
 	}
 
 	/**
@@ -439,9 +437,7 @@ abstract class Grid
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
-		$href = '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
-
-		return $href;
+		return '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 	}
 
 	/**

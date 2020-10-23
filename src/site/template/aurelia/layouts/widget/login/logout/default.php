@@ -38,7 +38,7 @@ $config         = KunenaFactory::getTemplate()->params;
 			<li class="dropdown mobile-user">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<?php
-					$showOnlineStatus = ($this->me->showOnline == 1) ? true : false;
+					$showOnlineStatus = $this->me->showOnline == 1;
 
 					if ($this->me->getStatus() == 0 && $status && $showOnlineStatus)
 					:

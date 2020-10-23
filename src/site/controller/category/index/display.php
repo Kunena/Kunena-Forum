@@ -387,7 +387,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 				if ($this->me->ordering != 0)
 				{
-					$topic_ordering = $this->me->ordering == 1 ? true : false;
+					$topic_ordering = $this->me->ordering == 1;
 				}
 				else
 				{

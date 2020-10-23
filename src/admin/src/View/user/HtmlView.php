@@ -107,7 +107,7 @@ class HtmlView extends BaseHtmlView
 		$this->ipslist      = $this->get('IPlist');
 
 		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof Avatar) && $this->user->avatar ? true : false;
+		$this->editavatar = ($avatarint instanceof Avatar) && $this->user->avatar;
 		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag

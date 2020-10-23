@@ -203,12 +203,6 @@ class ToolsModel extends AdminModel
 	protected $integration_settings = null;
 
 	/**
-	 * @var     KunenaConfig|mixed
-	 * @since   Kunena 6.0
-	 */
-	private $config;
-
-	/**
 	 * @inheritDoc
 	 *
 	 * @param   array    $data     data
@@ -765,11 +759,11 @@ class ToolsModel extends AdminModel
 	 */
 	protected function _getKunenaConfiguration()
 	{
-		$this->config = KunenaConfig::getInstance();
+		$config = KunenaConfig::getInstance();
 
-		if ($this->config)
+		if ($config)
 		{
-			$params = $this->config->getProperties();
+			$params = $config->getProperties();
 
 			$kconfigsettings = '[table]';
 			$kconfigsettings .= '[tr][th]Kunena config settings:[/th][/tr]';

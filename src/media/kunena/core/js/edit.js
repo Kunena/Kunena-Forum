@@ -10,36 +10,9 @@
 jQuery(document).ready(function ($) {
 	var qreply = $('.qreply');
 	var editor = $('#editor');
-
-	$('#tabs_kunena_editor a:first').tab('show');
-
-	$('#tabs_kunena_editor a:last').click(function (e) {
-		e.preventDefault();
-
-		var preview = $("#kbbcode-preview");
-		var message = $("#editor");
-
-		preview.css('display', 'block');
-
-		message.hide();
-
-		kPreviewHelper();
-
-		preview.attr('class', 'kbbcode-preview-bottom controls');
-		var height = message.css('height');
-		preview.css('height', height);
-	});
-
-	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
-		$('#kbbcode-preview').hide();
-		editor.css('display', 'inline-block');
-		$('#markItUpeditor').css('display', 'inline-block');
-	});
-
-	$('#tabs_kunena_editor a:last').click(function (e) {
-		editor.hide();
-		$('#markItUpeditor').hide();
-	});
+	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+	var pollexist = $('#poll_exist_edit');
+	var pollcatid = jQuery('#poll_catid').val();
 
 	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
 	{
@@ -53,6 +26,30 @@ jQuery(document).ready(function ($) {
 			if (cat) {
 				editor.setData(cat);
 				localStorage.removeItem('copyKunenaeditor');
+			}
+
+			if(pollcatid !== undefined)
+			{
+				if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+					var catid = $('#kcategory_poll').val();
+
+					if (pollcategoriesid[catid] !== undefined) {
+						CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+					}
+					else {
+						CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+					}
+				}
+				else if (pollexist.length > 0) {
+					CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+				}
+				else {
+					CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+				}
+			}
+			else
+			{
+				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
 			}
 		});
 	}
@@ -147,17 +144,17 @@ jQuery(document).ready(function ($) {
 			}
 
 			if (pollcategoriesid[catid] !== undefined) {
-				$('.cke_button__polls').show();
+				CKEDITOR.instances.message.getCommand( 'polls' ).enable();
 			}
 			else {
-				$('.cke_button__polls').hide();
+				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
 			}
 		}
 		else if (pollexist.length > 0) {
-			$('.cke_button__polls').show();
+			CKEDITOR.instances.message.getCommand( 'polls' ).enable();
 		}
 		else {
-			$('.cke_button__polls').hide();
+			CKEDITOR.instances.message.getCommand( 'polls' ).disable();
 		}
 
 		if ($('#kanynomous-check').length > 0) {

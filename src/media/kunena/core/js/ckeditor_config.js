@@ -27,36 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-	var pollexist = jQuery('#poll_exist_edit');
-	var pollcatid = jQuery('#poll_catid').val();
-
-	if(pollcatid !== undefined)
-	{
-		if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-			var catid = jQuery('#kcategory_poll').val();
-
-			if (pollcategoriesid[catid] !== undefined) {
-				config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
-			}
-			else 
-			{
-				config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks,Polls';
-			}
-		}
-		else if (pollexist.length > 0) 
-		{
-			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
-		}
-		else
-		{
-			config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks,Polls';
-		}
-	}
-	else
-	{
-		config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
-	}
+	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
 
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = [

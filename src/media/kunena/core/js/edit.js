@@ -41,12 +41,20 @@ jQuery(document).ready(function ($) {
 		$('#markItUpeditor').hide();
 	});
 
-	var cat = localStorage.getItem('copyKunenaeditor');
-	if (cat) {
-		var textarea = $("#editor").next();
-		textarea.empty();
-		$('#editor').val(cat);
-		localStorage.removeItem('copyKunenaeditor');
+	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
+	{
+		CKEDITOR.on('instanceReady', function(evt){
+			// Do your bindings and other actions here for example
+			// You can access each editor that this event has fired on from the event
+			var editor = evt.editor;
+
+			var cat = localStorage.getItem('copyKunenaeditor');
+
+			if (cat) {
+				editor.setData(cat);
+				localStorage.removeItem('copyKunenaeditor');
+			}
+		});
 	}
 
 	$('#reset').onclick = function() {

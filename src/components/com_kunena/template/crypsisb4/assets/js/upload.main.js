@@ -77,7 +77,7 @@ jQuery(function ($) {
 		$('#remove-all').hide();
 		$('#insert-all').hide();
 
-		var editor_text = $('#editor').val();
+		var editor_text = CKEDITOR.instances.message.getData();
 
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) === false) {
@@ -104,7 +104,7 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						$('#editor').val(data.text_prepared);
+						CKEDITOR.instances.message.getData(data.text_prepared);
 					}
 				})
 				.fail(function () {
@@ -146,7 +146,7 @@ jQuery(function ($) {
 
 				if (data.text_prepared!==false)
 				{
-					$('#editor').val(data.text_prepared);
+					CKEDITOR.instances.message.getData(data.text_prepared);
 				}
 			})
 			.fail(function () {
@@ -296,7 +296,7 @@ jQuery(function ($) {
 			}
 
 			$('#alert_max_file').remove();
-			var editor_text = $('#editor').val();
+			var editor_text = CKEDITOR.instances.message.getData();
 
 			// Ajax Request to delete the file from filesystem
 			$.ajax({
@@ -308,7 +308,7 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						$('#editor').val(data.text_prepared);
+						CKEDITOR.instances.message.getData(data.text_prepared);
 					}
 				})
 				.fail(function () {

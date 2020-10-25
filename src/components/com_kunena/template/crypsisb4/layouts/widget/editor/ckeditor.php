@@ -48,6 +48,9 @@ $topictemplate = !KunenaConfig::getInstance()->pickup_category;
 	} ?>
 </textarea>
 
+<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
+				       value="<?php echo KunenaConfig::getInstance()->pollnboptions; ?>"/>
+
 <!-- Hidden preview placeholder -->
 <div class="controls" id="kbbcode-preview" style="display: none;"></div>
 

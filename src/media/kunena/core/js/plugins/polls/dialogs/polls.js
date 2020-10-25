@@ -8,6 +8,28 @@
  **/
 
 CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
+	var options = null;
+	var nboptionsmax = jQuery('#nb_options_allowed').val();
+
+	function createNewOptionField() {
+		options++;
+		var paragraph = new CKEDITOR.dom.element( 'p' );
+		paragraph.setStyle( 'margin-top', '5px' );
+		var label = new CKEDITOR.dom.element( 'label' );
+		label.appendText(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+ ' ' + options + ' ');
+		label.setAttribute('id', 'labeloption' + options);
+		paragraph.append( label );
+		var inputField = new CKEDITOR.dom.element( 'input' );
+		inputField.addClass( 'cke_dialog_ui_input_text' );
+		inputField.setAttribute('id', 'field_option' + options);
+		inputField.setAttribute('name', 'polloptionsID[new' + options + ']' );
+		inputField.setAttribute('type', 'text');
+		inputField.setAttribute('maxLength', 100);
+		paragraph.append( inputField );
+
+		CKEDITOR.document.getById( 'dynamicContent' ).append( paragraph );
+	}
+
 	return {
 		title: 'Polls Properties',
 		minWidth: 400,
@@ -32,7 +54,18 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 						title: 'Add option',
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
-							//alert( 'Clicked: ' + this.id );
+							if (!nboptionsmax || (options < nboptionsmax && options >= 2)) {
+								createNewOptionField();
+							}
+							else if (!nboptionsmax || options < 2) {
+								createNewOptionField();
+								createNewOptionField();
+							}
+							else {
+								// TODO :  Hide button add
+								
+								console.log('max options reach ');
+							}
 						}
 					},
 					{
@@ -42,7 +75,11 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 						title: 'Remove option',
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
-							//alert( 'Clicked: ' + this.id );
+							jQuery('#field_option' + options).remove();
+							jQuery('#labeloption' + options).remove();
+							options--;
+							
+							// TODO : show button hide if it was hidden
 						}
 					},
 					{
@@ -50,6 +87,18 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 						id: 'polllifespan',
 						label: 'Poll life span (optional)',
 						default: ''
+					},
+					// Add HTML container for dynamic content
+					{
+						id : 'divdynamiccontent',
+						type: 'html',
+						html: '<div id="dynamicContent"></div>',
+						setup: function(selectedTable) {
+
+						},
+						commit: function(data) {
+
+						}
 					}
 				]
 			}

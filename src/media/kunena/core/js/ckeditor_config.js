@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,Flash,Language,PageBreak,Anchor,CreateDiv,ShowBlocks';
+	config.removeButtons = 'Anchor';
 
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = [

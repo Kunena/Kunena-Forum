@@ -1674,16 +1674,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "4.1.8",
+            "version": "4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "41036e8af66e727c4587012f0366b7f0576a99da"
+                "reference": "5782e342b978a3efd0b7a776b7808902840b8213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/41036e8af66e727c4587012f0366b7f0576a99da",
-                "reference": "41036e8af66e727c4587012f0366b7f0576a99da",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/5782e342b978a3efd0b7a776b7808902840b8213",
+                "reference": "5782e342b978a3efd0b7a776b7808902840b8213",
                 "shasum": ""
             },
             "require": {
@@ -1695,7 +1695,7 @@
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "guzzlehttp/psr7": "~1.4",
-                "php": ">=5.6.0 <8.0",
+                "php": ">=5.6.0 <9.0",
                 "symfony/console": ">=2.7 <6.0",
                 "symfony/css-selector": ">=2.7 <6.0",
                 "symfony/event-dispatcher": ">=2.7 <6.0",
@@ -1761,26 +1761,26 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2020-10-11T17:54:58+00:00"
+            "time": "2020-10-23T17:59:47+00:00"
         },
         {
             "name": "codeception/lib-asserts",
-            "version": "1.13.1",
+            "version": "1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/lib-asserts.git",
-                "reference": "263ef0b7eff80643e82f4cf55351eca553a09a10"
+                "reference": "184231d5eab66bc69afd6b9429344d80c67a33b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/lib-asserts/zipball/263ef0b7eff80643e82f4cf55351eca553a09a10",
-                "reference": "263ef0b7eff80643e82f4cf55351eca553a09a10",
+                "url": "https://api.github.com/repos/Codeception/lib-asserts/zipball/184231d5eab66bc69afd6b9429344d80c67a33b6",
+                "reference": "184231d5eab66bc69afd6b9429344d80c67a33b6",
                 "shasum": ""
             },
             "require": {
                 "codeception/phpunit-wrapper": ">6.0.15 <6.1.0 | ^6.6.1 | ^7.7.1 | ^8.0.3 | ^9.0",
                 "ext-dom": "*",
-                "php": ">=5.6.0 <8.0"
+                "php": ">=5.6.0 <9.0"
             },
             "type": "library",
             "autoload": {
@@ -1811,7 +1811,7 @@
             "keywords": [
                 "codeception"
             ],
-            "time": "2020-08-28T07:49:36+00:00"
+            "time": "2020-10-21T16:26:20+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",

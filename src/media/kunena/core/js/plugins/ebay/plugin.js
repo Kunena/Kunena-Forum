@@ -8,17 +8,17 @@
  **/
 
 CKEDITOR.plugins.add( 'ebay', {
-    icons: 'ebay',
-    init: function( editor ) {
-        editor.addCommand( 'insertEbay', {
-            exec: function( editor ) {
-                editor.insertHtml( '[ebay][/ebay]' );
-            }
-        });
-        editor.ui.addButton( 'Ebay', {
-            label: 'Insert Timestamp',
-            command: 'insertEbay',
-            toolbar: 'insert'
-        });
-    }
+	icons: 'ebay',
+	init: function( editor ) {
+		editor.addCommand( 'insertEbay', {
+			exec: function( editor ) {
+				editor.insertHtml( '[ebay][/ebay]' );
+			}
+		});
+		editor.ui.addButton( 'Ebay', {
+			label: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),
+			command: 'insertEbay',
+			toolbar: 'social'
+		});
+	}
 });

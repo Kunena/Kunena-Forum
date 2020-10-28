@@ -29,6 +29,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.removeButtons = 'Anchor';
 
+	config.extraPlugins = 'ebay,twitter,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls';
+
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = [
 	'angry.png', 'arrow.png', 'blink.png', 'blush.png', 'cheerful.png', 'confused.png',

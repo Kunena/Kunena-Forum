@@ -7,18 +7,18 @@
  * @link https://www.kunena.org
  **/
 
-CKEDITOR.plugins.add( 'instagram', {
-	icons: 'instagram',
+CKEDITOR.plugins.add( 'code', {
+	icons: 'code',
 	init: function( editor ) {
-		editor.addCommand( 'insertInstagram', {
+		editor.addCommand( 'insertCode', {
 			exec: function( editor ) {
-				editor.insertHtml( '[instagram][/instagram]' );
+				editor.insertHtml( '[code][/code]' );
 			}
 		});
-		editor.ui.addButton( 'Instagram', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'),
-			command: 'insertInstagram',
-			toolbar: 'social'
+		editor.ui.addButton( 'Code', {
+			label: Joomla.JText._('COM_KUNENA_EDITOR_CODE'),
+			command: 'insertCode',
+			toolbar: 'insert'
 		});
 	}
 });

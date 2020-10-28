@@ -8,17 +8,17 @@
  **/
 
 CKEDITOR.plugins.add( 'twitter', {
-    icons: 'twitter',
-    init: function( editor ) {
-        editor.addCommand( 'insertTwitter', {
-            exec: function( editor ) {
-                editor.insertHtml( '[tweet][/tweet]' );
-            }
-        });
-        editor.ui.addButton( 'Twitter', {
-            label: 'Insert Timestamp',
-            command: 'insertTwitter',
-            toolbar: 'others'
-        });
-    }
+	icons: 'twitter',
+	init: function( editor ) {
+		editor.addCommand( 'insertTwitter', {
+			exec: function( editor ) {
+				editor.insertHtml( '[tweet][/tweet]' );
+			}
+		});
+		editor.ui.addButton( 'Twitter', {
+			label: Joomla.JText._('COM_KUNENA_EDITOR_TWEET'),
+			command: 'insertTwitter',
+			toolbar: 'social'
+		});
+	}
 });

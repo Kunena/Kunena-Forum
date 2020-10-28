@@ -6,19 +6,19 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/
-
-CKEDITOR.plugins.add( 'instagram', {
-	icons: 'instagram',
+ 
+ CKEDITOR.plugins.add( 'hidetext', {
+	icons: 'hidetext',
 	init: function( editor ) {
-		editor.addCommand( 'insertInstagram', {
+		editor.addCommand( 'insertHidetext', {
 			exec: function( editor ) {
-				editor.insertHtml( '[instagram][/instagram]' );
+				editor.insertHtml( '[hide][/hide]' );
 			}
 		});
-		editor.ui.addButton( 'Instagram', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'),
-			command: 'insertInstagram',
-			toolbar: 'social'
+		editor.ui.addButton( 'Hidetext', {
+			label: Joomla.JText._('COM_KUNENA_EDITOR_HIDE'),
+			command: 'insertHidetext',
+			toolbar: 'insert'
 		});
 	}
 });

@@ -17,7 +17,7 @@ namespace Nbbc;
  */
 class Profiler
 {
-	var $start_time, $total_times;
+	public $start_time, $total_times;
 
 	public function __construct()
 	{

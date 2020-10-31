@@ -26,11 +26,10 @@ namespace Nbbc;
  */
 class EmailAddressValidator
 {
-
 	// Check email address validity.
 	// @param   strEmailAddress     Email address to be checked
 	// @return  True if email is valid, false if not
-	function check_email_address($strEmailAddress)
+	public function check_email_address($strEmailAddress)
 	{
 
 		// If magic quotes is "on", email addresses with quote marks will
@@ -95,7 +94,7 @@ class EmailAddressValidator
 	// Checks email section before "@" symbol for validity
 	// @param   strLocalPortion     Text to be checked
 	// @return  True if local portion is valid, false if not
-	function check_local_portion($strLocalPortion)
+	public function check_local_portion($strLocalPortion)
 	{
 		// Local portion can only be from 1 to 64 characters, inclusive.
 		// Please note that servers are encouraged to accept longer local
@@ -111,7 +110,7 @@ class EmailAddressValidator
 		// 3) an obsolete format string (combination of the above)
 		$arrLocalPortion = explode('.', $strLocalPortion);
 
-		for ($i = 0, $max = sizeof($arrLocalPortion); $i < $max; $i++)
+		for ($i = 0, $max = count($arrLocalPortion); $i < $max; $i++)
 		{
 			if (!preg_match('.^('
 				. '([A-Za-z0-9!#$%&\'*+/=?^_`{|}~-]'
@@ -133,7 +132,7 @@ class EmailAddressValidator
 	// Checks email section after "@" symbol for validity
 	// @param   strDomainPortion     Text to be checked
 	// @return  True if domain portion is valid, false if not
-	function check_domain_portion($strDomainPortion)
+	public function check_domain_portion($strDomainPortion)
 	{
 		// Total domain can only be from 1 to 255 characters, inclusive
 		if (!$this->check_text_length($strDomainPortion, 1, 255))
@@ -158,12 +157,12 @@ class EmailAddressValidator
 		{
 			$arrDomainPortion = explode('.', $strDomainPortion);
 
-			if (sizeof($arrDomainPortion) < 2)
+			if (count($arrDomainPortion) < 2)
 			{
 				return false; // Not enough parts to domain
 			}
 
-			for ($i = 0, $max = sizeof($arrDomainPortion); $i < $max; $i++)
+			for ($i = 0, $max = count($arrDomainPortion); $i < $max; $i++)
 			{
 				// Each portion must be between 1 and 63 characters, inclusive
 				if (!$this->check_text_length($arrDomainPortion[$i], 1, 63))
@@ -189,7 +188,7 @@ class EmailAddressValidator
 	// @param   intMinimum  Minimum acceptable length
 	// @param   intMaximum  Maximum acceptable length
 	// @return  True if string is within bounds (inclusive), false if not
-	function check_text_length($strText, $intMinimum, $intMaximum)
+	public function check_text_length($strText, $intMinimum, $intMaximum)
 	{
 		// Minimum and maximum are both inclusive
 		$intTextLength = strlen($strText);

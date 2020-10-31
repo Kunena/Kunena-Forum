@@ -33,14 +33,14 @@ class Number extends Node implements ArrayAccess
 	/**
 	 * @var integer
 	 */
-	static public $precision = 10;
+	public static $precision = 10;
 
 	/**
 	 * @see http://www.w3.org/TR/2012/WD-css3-values-20120308/
 	 *
 	 * @var array
 	 */
-	static protected $unitTable = [
+	protected static $unitTable = [
 		'in'   => [
 			'in' => 1,
 			'pc' => 6,

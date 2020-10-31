@@ -12,11 +12,7 @@
 namespace Leafo\ScssPhp;
 
 use Exception;
-use Leafo\ScssPhp\Block;
-use Leafo\ScssPhp\Compiler;
 use Leafo\ScssPhp\Exception\ParserException;
-use Leafo\ScssPhp\Node;
-use Leafo\ScssPhp\Type;
 
 /**
  * Parser
@@ -935,7 +931,7 @@ class Parser
 		$m           = [
 			$match . $token,
 			$match,
-			$token
+			$token,
 		];
 		$this->count = $end + strlen($token);
 
@@ -1581,7 +1577,7 @@ class Parser
 			if ($this->literal(')'))
 			{
 				$out = [Type::T_STRING, '', [
-					'progid:', $fn, '(', $args, ')'
+					'progid:', $fn, '(', $args, ')',
 				]];
 
 				return true;

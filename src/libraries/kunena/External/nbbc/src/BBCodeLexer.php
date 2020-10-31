@@ -411,7 +411,7 @@ class BBCodeLexer
 							$matches += [1 => null, 2 => null];
 
 							$this->tag   = ['_name'    => 'wiki', '_endtag' => false,
-											'_default' => $matches[1], 'title' => $matches[2]];
+											'_default' => $matches[1], 'title' => $matches[2], ];
 							$this->state = self::BBCODE_LEXSTATE_TEXT;
 
 							return $this->token = BBCode::BBCODE_TAG;
@@ -474,7 +474,7 @@ class BBCodeLexer
 			'input'    => $this->input,
 			'ptr'      => $this->ptr,
 			'unget'    => $this->unget,
-			'verbatim' => $this->verbatim
+			'verbatim' => $this->verbatim,
 		];
 	}
 
@@ -492,7 +492,7 @@ class BBCodeLexer
 
 		$state += [
 			'token' => null, 'text' => null, 'tag' => null, 'state' => null, 'input' => null, 'ptr' => null,
-			'unget' => null, 'verbatim' => null
+			'unget' => null, 'verbatim' => null,
 		];
 
 		$this->token    = $state['token'];

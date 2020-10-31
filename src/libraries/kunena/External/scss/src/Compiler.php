@@ -15,17 +15,11 @@ use ArrayAccess;
 use Exception;
 use Exception\ParserException;
 use Leafo\ScssPhp\Base\Range;
-use Leafo\ScssPhp\Block;
-use Leafo\ScssPhp\Colors;
 use Leafo\ScssPhp\Compiler\Environment;
 use Leafo\ScssPhp\Exception\CompilerException;
 use Leafo\ScssPhp\Formatter\OutputBlock;
-use Leafo\ScssPhp\Node;
 use Leafo\ScssPhp\Node\Number;
 use Leafo\ScssPhp\SourceMap\SourceMapGenerator;
-use Leafo\ScssPhp\Type;
-use Leafo\ScssPhp\Parser;
-use Leafo\ScssPhp\Util;
 use stdClass;
 
 /**
@@ -77,7 +71,7 @@ class Compiler
 	/**
 	 * @var array
 	 */
-	static protected $operatorNames = [
+	protected static $operatorNames = [
 		'+' => 'add',
 		'-' => 'sub',
 		'*' => 'mul',
@@ -97,23 +91,23 @@ class Compiler
 	/**
 	 * @var array
 	 */
-	static protected $namespaces = [
+	protected static $namespaces = [
 		'special'  => '%',
 		'mixin'    => '@',
 		'function' => '^',
 	];
 
-	static public $true = [Type::T_KEYWORD, 'true'];
-	static public $false = [Type::T_KEYWORD, 'false'];
-	static public $null = [Type::T_NULL];
-	static public $nullString = [Type::T_STRING, '', []];
-	static public $defaultValue = [Type::T_KEYWORD, ''];
-	static public $selfSelector = [Type::T_SELF];
-	static public $emptyList = [Type::T_LIST, '', []];
-	static public $emptyMap = [Type::T_MAP, [], []];
-	static public $emptyString = [Type::T_STRING, '"', []];
-	static public $with = [Type::T_KEYWORD, 'with'];
-	static public $without = [Type::T_KEYWORD, 'without'];
+	public static $true = [Type::T_KEYWORD, 'true'];
+	public static $false = [Type::T_KEYWORD, 'false'];
+	public static $null = [Type::T_NULL];
+	public static $nullString = [Type::T_STRING, '', []];
+	public static $defaultValue = [Type::T_KEYWORD, ''];
+	public static $selfSelector = [Type::T_SELF];
+	public static $emptyList = [Type::T_LIST, '', []];
+	public static $emptyMap = [Type::T_MAP, [], []];
+	public static $emptyString = [Type::T_STRING, '"', []];
+	public static $with = [Type::T_KEYWORD, 'with'];
+	public static $without = [Type::T_KEYWORD, 'without'];
 
 	protected $importPaths = [''];
 	protected $importCache = [];
@@ -663,7 +657,6 @@ class Compiler
 
 		return $found;
 	}
-
 
 	/**
 	 * Extract a relationship from the fragment.
@@ -1526,7 +1519,7 @@ class Compiler
 
 							if (empty($type))
 							{ // merge failed
-								return null;
+								return;
 							}
 						}
 						else
@@ -1667,7 +1660,7 @@ class Compiler
 		{
 			if ($t1 === $t2)
 			{
-				return null;
+				return;
 			}
 
 			return [
@@ -1681,7 +1674,7 @@ class Compiler
 			// CSS has no way of representing "neither screen nor print"
 			if ($t1 !== $t2)
 			{
-				return null;
+				return;
 			}
 
 			return [Type::T_NOT, $t1];
@@ -1689,7 +1682,7 @@ class Compiler
 
 		if ($t1 !== $t2)
 		{
-			return null;
+			return;
 		}
 
 		// t1 == t2, neither m1 nor m2 are "not"
@@ -3885,7 +3878,7 @@ class Compiler
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -4425,7 +4418,7 @@ class Compiler
 				$list[] = [
 					Type::T_LIST,
 					'',
-					[[Type::T_KEYWORD, $this->compileStringContent($this->coerceString($key))], $value]
+					[[Type::T_KEYWORD, $this->compileStringContent($this->coerceString($key))], $value],
 				];
 			}
 
@@ -4478,10 +4471,10 @@ class Compiler
 						: [Type::T_COLOR, (int) $rgba[0], (int) $rgba[1], (int) $rgba[2]];
 				}
 
-				return null;
+				return;
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -4870,7 +4863,7 @@ class Compiler
 
 	protected static $libRgba = [
 		['red', 'color'],
-		'green', 'blue', 'alpha'];
+		'green', 'blue', 'alpha', ];
 
 	protected function libRgba($args)
 	{
@@ -4931,7 +4924,7 @@ class Compiler
 
 	protected static $libAdjustColor = [
 		'color', 'red', 'green', 'blue',
-		'hue', 'saturation', 'lightness', 'alpha'
+		'hue', 'saturation', 'lightness', 'alpha',
 	];
 
 	protected function libAdjustColor($args)
@@ -4943,7 +4936,7 @@ class Compiler
 
 	protected static $libChangeColor = [
 		'color', 'red', 'green', 'blue',
-		'hue', 'saturation', 'lightness', 'alpha'
+		'hue', 'saturation', 'lightness', 'alpha',
 	];
 
 	protected function libChangeColor($args)
@@ -4955,7 +4948,7 @@ class Compiler
 
 	protected static $libScaleColor = [
 		'color', 'red', 'green', 'blue',
-		'hue', 'saturation', 'lightness', 'alpha'
+		'hue', 'saturation', 'lightness', 'alpha',
 	];
 
 	protected function libScaleColor($args)
@@ -5042,7 +5035,7 @@ class Compiler
 		}
 
 		// this might be the IE function, so return value unchanged
-		return null;
+		return;
 	}
 
 	protected static $libOpacity = ['color'];
@@ -5053,7 +5046,7 @@ class Compiler
 
 		if ($value[0] === Type::T_NUMBER)
 		{
-			return null;
+			return;
 		}
 
 		return $this->libAlpha($args);
@@ -5204,7 +5197,7 @@ class Compiler
 
 		if ($value[0] === Type::T_NUMBER)
 		{
-			return null;
+			return;
 		}
 
 		$color  = $this->assertColor($value);
@@ -5231,7 +5224,7 @@ class Compiler
 
 		if ($value[0] === Type::T_NUMBER)
 		{
-			return null;
+			return;
 		}
 
 		return $this->adjustHsl($this->assertColor($value), 2, -100);
@@ -5252,7 +5245,7 @@ class Compiler
 
 		if ($value[0] === Type::T_NUMBER)
 		{
-			return null;
+			return;
 		}
 
 		$color    = $this->assertColor($value);

@@ -56,7 +56,7 @@ class SourceMapGenerator
 		'sourceMapRootpath' => '',
 
 		// Base path for filename normalization
-		'sourceMapBasepath' => ''
+		'sourceMapBasepath' => '',
 	];
 
 	/**
@@ -116,7 +116,7 @@ class SourceMapGenerator
 			'generated_column' => $generatedColumn,
 			'original_line'    => $originalLine,
 			'original_column'  => $originalColumn,
-			'source_file'      => $sourceFile
+			'source_file'      => $sourceFile,
 		];
 
 		$this->sources[$sourceFile] = $sourceFile;
@@ -156,7 +156,6 @@ class SourceMapGenerator
 	 *
 	 * @see https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#
 	 * @return  string
-	 *
 	 */
 	public function generateJson()
 	{
@@ -223,7 +222,7 @@ class SourceMapGenerator
 	{
 		if (empty($this->sources))
 		{
-			return null;
+			return;
 		}
 
 		$content = [];

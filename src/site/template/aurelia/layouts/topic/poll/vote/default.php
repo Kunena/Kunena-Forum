@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -45,8 +45,8 @@ $this->addScript('poll.js');
 						<li>
 							<label>
 								<input class="kpoll-boxvote" type="radio" name="kpollradio"
-								       id="radio_name<?php echo (int) $key; ?>"
-								       value="<?php echo (int) $poll_option->id; ?>"
+									   id="radio_name<?php echo (int) $key; ?>"
+									   value="<?php echo (int) $poll_option->id; ?>"
 									<?php
 									if ($this->userhasvoted && $this->userhasvoted->lastvote == $poll_option->id)
 									{
@@ -60,13 +60,13 @@ $this->addScript('poll.js');
 				</ul>
 
 				<input id="kpoll-button-vote" class="btn btn-outline-success" type="submit"
-				       value="<?php echo $this->userhasvoted && !$this->config->pollallowvoteone
-					       ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
-					       : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
+					   value="<?php echo $this->userhasvoted && !$this->config->pollallowvoteone
+						   ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
+						   : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
 				<input id="kpoll_go_results" type="button" class="btn btn-outline-success"
-				       value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
+					   value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
 				<input id="kpoll_hide_results" type="button" class="btn btn-outline-success" style="display:none;"
-				       value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
+					   value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
 			</div>
 		</form>
 	</div>

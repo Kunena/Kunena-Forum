@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -98,13 +98,13 @@ else
 <?php if ($this->config->reportmsg && $this->me->exists()) : ?>
 	<div class="report pb-5">
 		<?php echo Layout::factory('Widget/Button')
-			->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-			                 'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => Icons::reportname(),
-			                 'modal' => 'modal', 'pullright' => 'pullright',]); ?>
+	->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+							 'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => Icons::reportname(),
+							 'modal' => 'modal', 'pullright' => 'pullright', ]); ?>
 	</div>
 	<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
 		<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
-		     aria-hidden="true" data-backdrop="false" style="display: none;">
+			 aria-hidden="true" data-backdrop="false" style="display: none;">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

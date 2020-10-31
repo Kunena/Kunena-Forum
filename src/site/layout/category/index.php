@@ -39,12 +39,14 @@ class KunenaLayoutCategoryIndex extends Layout
 	 * @since   Kunena 6.0
 	 */
 	public $state;
+
 	/**
 	 * @var     Template|void
 	 * @since   Kunena 6.0
 	 *
 	 */
 	public $ktemplate;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0

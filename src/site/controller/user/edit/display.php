@@ -37,11 +37,13 @@ class ComponentUserControllerEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $user;
+
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

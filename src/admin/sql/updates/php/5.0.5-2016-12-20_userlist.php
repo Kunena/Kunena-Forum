@@ -15,7 +15,6 @@ defined('_JEXEC') or die();
  * @return  array
  *
  * @since   Kunena 6.0
- *
  */
 function kunena_505_2016_12_20_userlist()
 {
@@ -33,5 +32,5 @@ function kunena_505_2016_12_20_userlist()
 	// Save configuration
 	$config->save();
 
-	return null;
+	return;
 }

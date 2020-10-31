@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -24,30 +24,30 @@ use function defined;
 ?>
 
 <div id="kunena_twitter_widget"
-     style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;"
-     class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet"
-     data-iframe-title="Embedded Tweet" data-dt-pm="PM"
-     data-dt-am="AM" data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
-     data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
+	 style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;"
+	 class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet"
+	 data-iframe-title="Embedded Tweet" data-dt-pm="PM"
+	 data-dt-am="AM" data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
+	 data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
 	<blockquote class="tweet subject expanded h-entry" data-scribe="section:subject"
-	            cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
-	            data-tweet-id="<?php echo $this->tweetid ?>">
+				cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
+				data-tweet-id="<?php echo $this->tweetid ?>">
 		<div class="header">
 			<div class="h-card p-author with-verification" data-scribe="component:author">
 				<a class="u-url profile" data-scribe="element:user_link"
 				   aria-label="<?php echo $this->user_name ?> (screen name: <?php echo $this->user_screen_name ?>)"
 				   href="https://twitter.com/<?php echo $this->user_screen_name ?>">
 					<img loading="lazy" class="u-photo avatar" data-scribe="element:avatar"
-					     data-src-2x="<?php echo $this->user_profile_url_big ?>"
-					     src="<?php echo $this->user_profile_url_normal ?>" alt="<?php echo $this->user_name ?>">
+						 data-src-2x="<?php echo $this->user_profile_url_big ?>"
+						 src="<?php echo $this->user_profile_url_normal ?>" alt="<?php echo $this->user_name ?>">
 					<span class="full-name">
 					<span class="p-name customisable-highlight"
-					      data-scribe="element:name"><?php echo $this->user_name ?></span>
+						  data-scribe="element:name"><?php echo $this->user_name ?></span>
 						<?php if ($this->verified)
 							:
 							?>
 							<span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account"
-							      title="Verified Account">
+								  title="Verified Account">
 							<b>✔</b>
 						</span>
 						<?php endif; ?>
@@ -66,9 +66,9 @@ use function defined;
 					   data-datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
 					   href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
 						<time class="dt-updated"
-						      title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
-						      datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-						      pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
+							  title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
+							  datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
+							  pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
 					</a>
 				</div>
 			</div>

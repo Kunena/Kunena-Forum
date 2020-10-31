@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -43,14 +43,14 @@ $this->addStyleSheet('rating.css');
 			<div class="col-md-12">
 				<h2 class="float-right">
 					<?php echo $this->subLayout('Widget/Search')
-						->set('catid', $this->category->id)
-						->setLayout('topic'); ?>
+	->set('catid', $this->category->id)
+	->setLayout('topic'); ?>
 				</h2>
 
 				<div class="float-left">
 					<?php echo $this->subLayout('Widget/Pagination/List')
-						->set('pagination', $this->pagination)
-						->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 				</div>
 			</div>
 		</div>
@@ -142,7 +142,7 @@ $this->addStyleSheet('rating.css');
 											);
 											?>
 											<button class="btn btn-outline-primary border" name="kcheckgo"
-											        type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+													type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 										<?php endif; ?>
 									<?php endif; ?>
 								</div>
@@ -159,8 +159,8 @@ $this->addStyleSheet('rating.css');
 	<?php if ($this->topics) : ?>
 		<div class="float-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
-				->set('pagination', $this->pagination)
-				->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 		</div>
 	<?php endif; ?>
 

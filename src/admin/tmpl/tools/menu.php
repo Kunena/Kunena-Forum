@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -23,8 +24,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 			<div class="card card-block bg-faded p-2">
 
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -46,7 +47,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td></td>
 										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 										<td><?php echo $item->link ?></td>
-										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
 							<?php endif;?>
@@ -62,7 +63,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td></td>
 										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 										<td><?php echo $item->link ?></td>
-										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
 							<?php endif;?>
@@ -78,7 +79,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td></td>
 										<td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
 										<td><?php echo $item->link ?></td>
-										<td><?php echo($item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED'))) ?></td>
+										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
 							<?php endif;?>

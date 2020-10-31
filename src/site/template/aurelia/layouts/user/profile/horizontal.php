@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -123,7 +123,7 @@ if ($show)
 	<?php if ($canseekarma && $config->showkarma) : ?>
 		<li>
 			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
-			<span> <?php $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid).$this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?> </span>
+			<span> <?php $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid) . $this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?> </span>
 		</li>
 	<?php endif; ?>
 

@@ -48,7 +48,8 @@ class HtmlView extends BaseHtmlView
 
 		$this->sampledata = Statistics::getTotalEmoticons() == 0 && $this->count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
 
-		if ($this->sampledata) {
+		if ($this->sampledata)
+		{
 			Factory::getApplication()->getDocument()->getWebAssetManager()
 				->registerAndUseScript('mod_sampledata', 'mod_sampledata/sampledata-process.js', [], ['defer' => true], ['core']);
 
@@ -62,7 +63,7 @@ class HtmlView extends BaseHtmlView
 			Factory::getApplication()->getDocument()->addScriptOptions(
 				'sample-data',
 				[
-					'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif'
+					'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif',
 				]
 			);
 		}

@@ -80,7 +80,7 @@ class KunenaLayoutTopicModerate extends Layout
 		$db     = Factory::getDbo();
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->quote($this->topic->id)} "];
+			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", ];
 		list($total, $topics) = TopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)

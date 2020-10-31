@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -50,14 +50,14 @@ use function defined;
 			</label>
 			<div class="controls">
 				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40"
-				          rows="10"></textarea>
+						  rows="10"></textarea>
 			</div>
 		</div>
 		<br>
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-outline-primary" type="submit" name="Submit"
-				       value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
+					   value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
 				<button type="button" class="btn btn-secondary border" data-dismiss="modal" aria-hidden="true">
 					<?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>

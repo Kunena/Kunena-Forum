@@ -22,8 +22,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				      method="post"
-				      id="adminForm" name="adminForm">
+					  method="post"
+					  id="adminForm" name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -37,8 +37,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-									       value="<?php echo $this->escape($user->id); ?>"
-									       onclick="Joomla.isChecked(this.checked);"/>
+										   value="<?php echo $this->escape($user->id); ?>"
+										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>
 								<td><?php echo $user->id ?></td>
 								<td><?php echo $user->username ?></td>
@@ -53,8 +53,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-									       value="<?php echo $this->escape($user->id); ?>"
-									       onclick="Joomla.isChecked(this.checked);"/>
+										   value="<?php echo $this->escape($user->id); ?>"
+										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>
 								<td><?php echo $user->id ?></td>
 								<td><?php echo $user->username ?></td>
@@ -69,8 +69,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-									       value="<?php echo $this->escape($sub->id); ?>"
-									       onclick="Joomla.isChecked(this.checked);"/>
+										   value="<?php echo $this->escape($sub->id); ?>"
+										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>
 								<td><?php echo $sub->id ?></td>
 								<td><?php echo $sub->username ?></td>

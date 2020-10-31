@@ -128,7 +128,7 @@ class KunenaLayoutWidgetEditor extends Layout
 			"size",
 			"video",
 			"emoticons",
-			"ebay"
+			"ebay",
 		];
 
 		foreach ($bbcodes as $item)

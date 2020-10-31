@@ -31,13 +31,13 @@ $this->getBBcodesEnabled();
 			<div class="form-group shadow-textarea" id="kbbcode-preview-real">
 				<ul id="tabs_kunena_editor" class="nav nav-tabs">
 					<li class="active"><a href="#write"
-					                      data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
+										  data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
 					</li>
 					<li><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
 				</ul>
 				<textarea class="md-textarea form-control z-depth-1" name="message" id="kbbcode-message" rows="12"
-				          tabindex="7"
-				          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+						  tabindex="7"
+						  placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 			</div>
 
 			<!-- Hidden preview placeholder -->
@@ -48,7 +48,7 @@ $this->getBBcodesEnabled();
 
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-backdrop="false" style="display: none;">
+	 data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -75,16 +75,16 @@ $this->getBBcodesEnabled();
 						<option value="18">18</option>
 					</select><br/>
 					<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city"
-					                                                                            id="modal-map-city"
-					                                                                            type="text" value=""
-					                                                                            placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/>
+																								id="modal-map-city"
+																								type="text" value=""
+																								placeholder="<?php echo Text::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY_DESC') ?>"/>
 				</p>
 			</div>
 			<div class="modal-footer">
 				<button id="map-modal-submit"
-				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+						class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -92,7 +92,7 @@ $this->getBBcodesEnabled();
 <?php $codeTypes = $this->getCodeTypes();
 if (!empty($codeTypes)) : ?>
 	<div id="modal-code" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	     aria-hidden="true" data-backdrop="false" style="display: none;">
+		 aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -106,16 +106,16 @@ if (!empty($codeTypes)) : ?>
 				</div>
 				<div class="modal-footer">
 					<button id="code-modal-submit"
-					        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+							class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 					<button class="btn btn-outline-primary border" data-dismiss="modal"
-					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+							aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 				</div>
 			</div>
 		</div>
 	</div>
 <?php endif; ?>
 <div id="modal-picture" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-backdrop="false" style="display: none;">
+	 data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -125,13 +125,13 @@ if (!empty($codeTypes)) : ?>
 			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>:
 					<select id="kpicture-size-list-modal"
-					        name="modal-picture-size" class="kbutton">
+							name="modal-picture-size" class="kbutton">
 						<?php
 						$vid_provider = ['', '20', '40', '80', '100', '150', '200', '250', '500', '1000'];
 						foreach ($vid_provider as $vid_type)
 						{
 							$vid_type = explode(',', $vid_type);
-							echo '<option value = "' . (!empty ($vid_type [1]) ? $this->escape($vid_type [1]) : StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+							echo '<option value = "' . (!empty($vid_type [1]) ? $this->escape($vid_type [1]) : StringHelper::strtolower($this->escape($vid_type [0])) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 						}
 						?>
 					</select>
@@ -145,15 +145,15 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="picture-modal-submit"
-				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+						class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="modal-link" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-backdrop="false" style="display: none;">
+	 data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -171,15 +171,15 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="link-modal-submit"
-				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+						class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="modal-video-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" data-backdrop="false" style="display: none;">
+	 aria-hidden="true" data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -200,7 +200,7 @@ if (!empty($codeTypes)) : ?>
 					echo Text::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 					?>
 					<select id="kvideoprovider-list-modal"
-					        name="provider" class="kbutton form-control">
+							name="provider" class="kbutton form-control">
 						<?php
 						$vid_provider = ['', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube'];
 						foreach ($vid_provider as $vid_type)
@@ -216,15 +216,15 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="videosettings-modal-submit"
-				        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+						class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="modal-video-urlprovider" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" data-backdrop="false" style="display: none;">
+	 aria-hidden="true" data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -238,16 +238,16 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button id="videourlprovider-modal-submit"
-				        class="btn btn-outline-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+						class="btn btn-outline-primary modal-submit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
 	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	     aria-hidden="true" data-backdrop="false" style="display: none;">
+		 aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -258,11 +258,11 @@ if (!empty($codeTypes)) : ?>
 					<div id="kbbcode-poll-options">
 						<div class="input-group col-md-12" style="padding: 0;">
 							<label class="kpoll-title-lbl"
-							       for="kpoll-title"><?php echo Text::_('COM_KUNENA_POLL_TITLE'); ?></label>
+								   for="kpoll-title"><?php echo Text::_('COM_KUNENA_POLL_TITLE'); ?></label>
 							<input type="text" class="inputbox form-control col-md-12" name="poll_title"
-							       id="kpoll-title"
-							       maxlength="150" size="40"
-							       value="<?php echo $this->escape($this->poll->title) ?>"
+								   id="kpoll-title"
+								   maxlength="150" size="40"
+								   value="<?php echo $this->escape($this->poll->title) ?>"
 							/>
 						</div>
 						<div class="clearfix"></div>
@@ -271,11 +271,11 @@ if (!empty($codeTypes)) : ?>
 						<div class="clearfix"></div>
 						<div id="datepoll-container">
 							<label class="kpoll-term-lbl"
-							       for="kpoll-time-to-live"><?php echo Text::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+								   for="kpoll-time-to-live"><?php echo Text::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 							<div class="input-group date">
 								<input type="text" class="form-control" id="poll_time_to_live"
-								       data-date-format="mm/dd/yyyy"
-								       value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
+									   data-date-format="mm/dd/yyyy"
+									   value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 								<span class="input-group-addon">
 								<?php echo Icons::grid(); ?>
 							</span>
@@ -299,25 +299,25 @@ if (!empty($codeTypes)) : ?>
 						}
 						?>
 						<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-						       value="<?php echo $this->config->pollnboptions; ?>"/>
+							   value="<?php echo $this->config->pollnboptions; ?>"/>
 						<input type="hidden" name="number_total_options" id="numbertotal"
-						       value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
+							   value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button id="poll-settings-modal-submit"
-					        class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+							class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 					<button class="btn btn-outline-primary border" data-dismiss="modal"
-					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+							aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 					<button id="clearpoll" class="btn btn-outline-danger" data-dismiss="modal"
-					        aria-hidden="true"><?php echo Text::_('COM_KUNENA_CLEAR_MODAL') ?></button>
+							aria-hidden="true"><?php echo Text::_('COM_KUNENA_CLEAR_MODAL') ?></button>
 				</div>
 			</div>
 		</div>
 	</div>
 <?php endif; ?>
 <div id="modal-emoticons" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" data-backdrop="false" style="display: none;">
+	 aria-hidden="true" data-backdrop="false" style="display: none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -336,7 +336,7 @@ if (!empty($codeTypes)) : ?>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-outline-primary border" data-dismiss="modal"
-				        aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+						aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 			</div>
 		</div>
 	</div>
@@ -345,8 +345,8 @@ if (!empty($codeTypes)) : ?>
 <div class="control-group">
 	<div class="controls">
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-		       value="<?php echo $this->config->disemoticons ?>"/>
+			   value="<?php echo $this->config->disemoticons ?>"/>
 	</div>
 </div>

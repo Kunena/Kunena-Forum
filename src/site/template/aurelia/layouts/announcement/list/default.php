@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -24,7 +24,7 @@ HTMLHelper::_('behavior.core');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-      id="adminForm" name="adminForm">
+	  id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -43,7 +43,7 @@ HTMLHelper::_('behavior.core');
 						<div class="input-group-btn">
 							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-left"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
-							       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
+								   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-outline-primary border"
 							   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 								<?php echo Text::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>

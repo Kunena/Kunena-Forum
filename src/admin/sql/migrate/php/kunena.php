@@ -56,7 +56,7 @@ class KunenaMigratorKunena
 			// Do not detect FireBoard 1.0.5 RC1 / RC2.
 			if ($version && version_compare($version->version, '1.0.5', '<='))
 			{
-				return null;
+				return;
 			}
 
 			// Return FireBoard version.
@@ -66,6 +66,6 @@ class KunenaMigratorKunena
 			}
 		}
 
-		return null;
+		return;
 	}
 }

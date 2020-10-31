@@ -59,6 +59,6 @@ class KunenaMigratorJoomlaboard
 			}
 		}
 
-		return null;
+		return;
 	}
 }

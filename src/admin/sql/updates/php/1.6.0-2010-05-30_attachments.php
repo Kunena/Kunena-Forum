@@ -33,7 +33,7 @@ function kunena_160_2010_05_30_attachments($parent)
 	if (!isset($fields ['filelocation']))
 	{
 		// Already converted, there is nothing to do
-		return null;
+		return;
 	}
 
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";

@@ -66,7 +66,7 @@ abstract class Diagnostics
 			'ratingOrphaned',
 			'channelOrphaned',
 			'useravatarOrphaned',
-			'topicsownersOrphaned'
+			'topicsownersOrphaned',
 		];
 	}
 
@@ -1609,10 +1609,10 @@ abstract class Diagnostics
 	//      $db    = Factory::getDbo();
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	//
+	// 
 	//      return $query;
 	//  }
-	//
+	// 
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *
@@ -1625,10 +1625,10 @@ abstract class Diagnostics
 	//      {
 	//          $query->select('*');
 	//      }
-	//
+	// 
 	//      return array('channels' => 'invalid');
 	//  }
-	//
+	// 
 	//  /**
 	//   * @return QueryInterface
 	//   * @since   Kunena
@@ -1636,7 +1636,7 @@ abstract class Diagnostics
 	//  protected static function fix_topicsownersOrphaned()
 	//  {
 	//      $query = self::query_topicsownersOrphaned()->insert('#__kunena_user_topics');
-	//
+	// 
 	//      return $query;
 	//  }
 }

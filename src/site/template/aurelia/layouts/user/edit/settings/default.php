@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -41,7 +41,7 @@ Text::script('COM_KUNENA_CLEARED');
 		<td class="col-md-3"><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></td>
 		<td>
 			<button type="button" class="btn btn-outline-primary border btn-small" onClick="window.localStorage.clear()"
-			        data-loading-text="Loading..."><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
+					data-loading-text="Loading..."><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
 		</td>
 	</tr>
 	</tbody>

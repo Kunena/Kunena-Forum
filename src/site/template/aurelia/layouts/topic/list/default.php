@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -65,8 +65,8 @@ if (KunenaConfig::getInstance()->ratingenabled)
 			<div class="float-right" id="filter-time">
 				<h2 class="filter-sel float-right">
 					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-					      id="timeselect" name="timeselect"
-					      method="post" target="_self" class="form-inline hidden-xs-down">
+						  id="timeselect" name="timeselect"
+						  method="post" target="_self" class="form-inline hidden-xs-down">
 						<?php $this->displayTimeFilter('sel'); ?>
 						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
@@ -84,19 +84,19 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 
 <div class="float-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('catid', 'all')
-		->setLayout('topic'); ?>
+	->set('catid', 'all')
+	->setLayout('topic'); ?>
 </div>
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <div class="kfrontend shadow-lg rounded mt-4 border">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
-	      id="ktopicsform">
+		  id="ktopicsform">
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<?php if ($view == 'user'): ?>
 			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
@@ -146,7 +146,7 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 												echo HTMLHelper::_('link.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<button type="submit" name="kcheckgo"
-											        class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+													class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 										<?php endif; ?>
 									</label>
 								</div>
@@ -190,8 +190,8 @@ if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <div class="clearfix"></div>

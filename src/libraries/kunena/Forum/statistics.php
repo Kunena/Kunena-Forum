@@ -691,7 +691,6 @@ class Statistics
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
-	 *
 	 */
 	public function loadTopThankyous($limit = 0)
 	{
@@ -704,7 +703,7 @@ class Statistics
 				->select(
 					[
 						$this->_db->quoteName('t.targetuserid'),
-						$this->_db->quoteName('id')
+						$this->_db->quoteName('id'),
 					]
 				)
 				->select('COUNT(' . $this->_db->quoteName('t.targetuserid') . ') AS ' . $this->_db->quoteName('count'))

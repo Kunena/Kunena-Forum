@@ -38,5 +38,5 @@ function kunena_200_2012_06_10_pubwrite($parent)
 		return ['action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_200_PUBWRITE'), 'success' => $success];
 	}
 
-	return null;
+	return;
 }

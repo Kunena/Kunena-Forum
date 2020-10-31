@@ -13,4 +13,5 @@ jQuery(document).ready(function () {
 	if (avatartab) {
 		jQuery('.nav-tabs a[href="#editavatar"]').tab('show');
 	}
-});
+    }
+);

@@ -37,6 +37,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $model;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

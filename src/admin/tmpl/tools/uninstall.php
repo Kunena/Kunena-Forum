@@ -29,8 +29,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value="tools.uninstall"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -72,17 +72,17 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 								<td></td>
 								<td>
 									<button type="button" class="btn btn-outline-danger" data-toggle="modal"
-									        data-target="#modalconfirmuninstall"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+											data-target="#modalconfirmuninstall"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 
 									<div class="modal fade" id="modalconfirmuninstall" tabindex="-1" role="dialog"
-									     aria-labelledby="modalconfirmuninstalLabel" aria-hidden="true">
+										 aria-labelledby="modalconfirmuninstalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
 													<h5 class="modal-title"
-													    id="modalconfirmuninstalLabel"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h5>
+														id="modalconfirmuninstalLabel"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h5>
 													<button type="button" class="close" data-dismiss="modal"
-													        aria-label="Close">
+															aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
@@ -91,9 +91,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
-													        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_CLOSE') ?></button>
+															data-dismiss="modal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_CLOSE') ?></button>
 													<button type="submit"
-													        class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+															class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 												</div>
 											</div>
 										</div>

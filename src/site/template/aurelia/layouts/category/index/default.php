@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -63,9 +63,9 @@ foreach ($this->sections as $section) :
 					   href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo Icons::pencil(); ?></a>
 				<?php endif; ?>
 				<button class="btn btn-outline-primary btn-sm" type="button"
-				        data-toggle="collapse"
-				        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
-				        aria-controls="section<?php echo $section->id; ?>"><?php echo Icons::collapse(); ?></button>
+						data-toggle="collapse"
+						data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
+						aria-controls="section<?php echo $section->id; ?>"><?php echo Icons::collapse(); ?></button>
 			<?php endif; ?>
 		</h2>
 
@@ -77,7 +77,7 @@ foreach ($this->sections as $section) :
 		</h1>
 
 		<div class="<?php if (!empty($section->class)) : ?>section<?php echo $this->escape($section->class_sfx); ?><?php endif; ?> collapse show shadow-lg rounded"
-		     id="section<?php echo $section->id; ?>">
+			 id="section<?php echo $section->id; ?>">
 			<table class="table<?php echo Template::getInstance()->borderless(); ?> table-responsive w-100 d-block d-md-table">
 				<?php if (!empty($section->description)) : ?>
 					<thead>
@@ -114,7 +114,7 @@ foreach ($this->sections as $section) :
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>"
-						    id="category<?php echo $category->id; ?>">
+							id="category<?php echo $category->id; ?>">
 							<td colspan="1" id="kcat-icon">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
 							</td>

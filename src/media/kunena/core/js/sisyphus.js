@@ -7,14 +7,16 @@
 
 (function ($) {
 
-	function getElementIdentifier(el) {
+	function getElementIdentifier(el)
+	{
 		return '[id=' + el.attr("id") + '][name=' + el.attr("name") + ']';
 	}
 
 	$.fn.sisyphus = function (options) {
 		const identifier = $.map(this, function (obj) {
 			return getElementIdentifier($(obj));
-		}).join();
+		}
+		).join();
 
 		const sisyphus = Sisyphus.getInstance(identifier);
 		sisyphus.protect(this, options);
@@ -107,7 +109,8 @@
 		};
 		const CKEDITOR = window.CKEDITOR;
 
-		function init() {
+		function init()
+		{
 
 			return {
 				setInstanceIdentifier: function (identifier) {
@@ -203,7 +206,8 @@
 									self.bindSaveData();
 									params.started[self.getInstanceIdentifier()] = true;
 								}
-							}, 100);
+							}, 100
+							);
 						}
 						else {
 							self.bindSaveData();
@@ -217,7 +221,8 @@
 						CKEDITOR.isLoaded = false;
 						CKEDITOR.on('instanceReady', function () {
 							CKEDITOR.isLoaded = true;
-						});
+						}
+						);
 						return true;
 					}
 					else {
@@ -262,8 +267,10 @@
 							}
 
 							self.bindSaveDataOnChange(field);
-						});
-					});
+						}
+						);
+					}
+					);
 				},
 
 				/**
@@ -299,7 +306,8 @@
 									value = [];
 									$("[name='" + name + "']:checked").each(function () {
 										value.push($(this).val());
-									});
+									}
+									);
 									multiCheckboxCache[name] = true;
 								}
 								else {
@@ -329,8 +337,10 @@
 									self.saveToBrowserStorage(prefix, value, false);
 								}
 							}
-						});
-					});
+						}
+						);
+					}
+					);
 					self.options.onSave.call(self);
 				},
 
@@ -360,8 +370,10 @@
 								self.restoreFieldsData(field, resque);
 								restored = true;
 							}
-						});
-					});
+						}
+						);
+					}
+					);
 
 					if (restored) {
 						self.options.onRestore.call(self);
@@ -432,7 +444,8 @@
 							editor.document.on('keyup', function () {
 								editor.updateElement();
 								self.saveToBrowserStorage(prefix, field.val());
-							});
+							}
+							);
 						}
 					}
 				},
@@ -473,7 +486,8 @@
 					const self = this;
 					field.change(function () {
 						self.saveAllData();
-					});
+					}
+					);
 				},
 
 				/**
@@ -485,13 +499,15 @@
 					const self = this;
 					const targetForms = self.targets;
 					setTimeout((function () {
-						function timeout() {
+						function timeout()
+						{
 							self.saveAllData();
 							setTimeout(timeout, self.options.timeout * 1000);
 						}
 
 						return timeout;
-					})(targetForms), self.options.timeout * 1000);
+					})(targetForms), self.options.timeout * 1000
+					);
 				},
 
 				/**
@@ -506,8 +522,10 @@
 						const formIdAndName = getElementIdentifier(target);
 						$(this).bind("submit reset", function () {
 							self.releaseData(formIdAndName, self.findFieldsToProtect(target));
-						});
-					});
+						}
+						);
+					}
+					);
 				},
 
 				/**
@@ -521,7 +539,8 @@
 						const target = $(this);
 						const formIdAndName = getElementIdentifier(target);
 						self.releaseData(formIdAndName, self.findFieldsToProtect(target));
-					});
+					}
+					);
 				},
 
 				/**
@@ -549,7 +568,8 @@
 						const prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier(field) + self.options.customKeySuffix;
 						self.browserStorage.remove(prefix);
 						released = true;
-					});
+					}
+					);
 
 					if (released) {
 						self.options.onRelease.call(self);

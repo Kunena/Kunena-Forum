@@ -306,7 +306,7 @@ class TopicsModel extends ListModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions];
+			'subscribed' => $subscriptions, ];
 
 		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
@@ -401,7 +401,7 @@ class TopicsModel extends ListModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where];
+			'where'     => $where, ];
 
 		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 

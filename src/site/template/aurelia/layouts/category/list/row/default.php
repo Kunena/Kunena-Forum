@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -80,7 +80,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<td class="center">
 			<label>
 				<input class="kcheckallcategory" type="checkbox"
-				       name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>
+					   name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>
 			</label>
 		</td>
 	<?php endif; ?>

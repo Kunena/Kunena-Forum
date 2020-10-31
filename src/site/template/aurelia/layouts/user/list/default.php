@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -36,18 +36,18 @@ $this->addScript('assets/js/search.js');
 
 <h2 class="float-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('state', $this->state->get('list.search'))
-		->setLayout('user'); ?>
+	->set('state', $this->state->get('list.search'))
+	->setLayout('user'); ?>
 </h2>
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination)
-		->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
-      method="post" id="kuserlist-form" name="kuserlist-form">
+	  method="post" id="kuserlist-form" name="kuserlist-form">
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -196,14 +196,14 @@ $this->addScript('assets/js/search.js');
 
 				<?php if ($config->userlist_joindate) : ?>
 					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>"
-					    class="col-md-2 hidden-xs-down">
+						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : ?>
 					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>"
-					    class="col-md-2 hidden-xs-down">
+						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>
@@ -233,8 +233,8 @@ $this->addScript('assets/js/search.js');
 
 	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 	</div>
 </form>
 <div class="clearfix"></div>

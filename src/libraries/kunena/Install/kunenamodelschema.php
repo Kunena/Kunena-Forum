@@ -99,7 +99,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct()
 	{
@@ -127,7 +126,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		$value = parent::getState($property);
 
-		return (is_null($value) ? $default : $value);
+		return is_null($value) ? $default : $value;
 	}
 
 	/**
@@ -147,7 +146,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena
-	 *
 	 */
 	public function getCreateSQL()
 	{
@@ -185,7 +183,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null)
 	{
@@ -226,7 +223,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSchema()
 	{
@@ -245,7 +241,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSchemaFromDatabase($reload = false)
 	{
@@ -363,7 +358,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function listTables($prefix, $reload = false)
 	{
@@ -463,7 +457,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function upgradeSchema($dbschema, $upgrade)
 	{
@@ -488,7 +481,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getDOMDocument($input)
 	{
@@ -521,7 +513,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		if (!isset($schema) || $schema == false)
 		{
-			return null;
+			return;
 		}
 
 		$schema->formatOutput       = true;
@@ -639,7 +631,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -725,7 +717,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSchemaDiff($old, $new)
 	{
@@ -734,7 +725,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		if (!$old || !$new)
 		{
-			return null;
+			return;
 		}
 
 		// $old->validate();
@@ -1044,7 +1035,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 							case '':
 								break;
 							default:
-								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
+								echo "Kunena Installer: Unknown action $tablename.$action2 on xml file<br />";
 						}
 					}
 
@@ -1089,7 +1080,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 					}
 					break;
 				default:
-					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+					echo "Kunena Installer: Unknown action $tablename.$action on xml file<br />";
 			}
 
 			if (!empty($str))
@@ -1195,7 +1186,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function updateSchemaTable($table)
 	{
@@ -1203,7 +1193,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		if (!isset($sql[$table]))
 		{
-			return null;
+			return;
 		}
 
 		$this->db->setQuery($sql[$table]['sql']);
@@ -1228,7 +1218,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getSQL()
 	{
@@ -1246,7 +1235,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @throws  KunenaSchemaException
 	 * @since   Kunena
-	 *
 	 */
 	public function updateSchema()
 	{

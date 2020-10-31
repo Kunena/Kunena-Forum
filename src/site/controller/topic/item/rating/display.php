@@ -31,6 +31,7 @@ class ComponentTopicControllerItemRatingDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

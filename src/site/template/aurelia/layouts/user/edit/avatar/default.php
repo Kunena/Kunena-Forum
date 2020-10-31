@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -85,7 +85,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', Icons::delete());
 			<td class="col-md-3">
 				<label><?php echo Text::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
-				       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
+					   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=galleryimages&format=raw') ?>"/>
 			</td>
 			<td>
 
@@ -110,7 +110,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', Icons::delete());
 							?>
 							<li class="col-md-2">
 								<input type="radio" name="avatar_gallery" id="radio<?php echo $image ?>"
-								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
+									   value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
 									<img loading="lazy" src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="avatar"/>
 								</label>

@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -48,8 +48,8 @@ $view    = Factory::getApplication()->input->getWord('view');
 			<h2 class="filter-time float-right" id="filter-time">
 				<div class="filter-sel float-right">
 					<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-					      id="timeselect" name="timeselect"
-					      method="post" target="_self" class="form-inline hidden-xs-down">
+						  id="timeselect" name="timeselect"
+						  method="post" target="_self" class="form-inline hidden-xs-down">
 						<?php $this->displayTimeFilter('sel'); ?>
 						<?php echo HTMLHelper::_('form.token'); ?>
 					</form>
@@ -61,18 +61,18 @@ $view    = Factory::getApplication()->input->getWord('view');
 
 <div class="float-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('catid', 'all')
-		->setLayout('topic'); ?>
+	->set('catid', 'all')
+	->setLayout('topic'); ?>
 </div>
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
-      name="ktopicsform" id="ktopicsform">
+	  name="ktopicsform" id="ktopicsform">
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<table class="table<?php echo Template::getInstance()->borderless(); ?>">
@@ -131,7 +131,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 												echo HTMLHelper::_('select.genericlist', $options, 'target', 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
-											       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
+												   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 										<?php endif; ?>
 									</label>
 								</div>
@@ -159,16 +159,16 @@ $view    = Factory::getApplication()->input->getWord('view');
 
 <div class="float-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <?php if ($view != 'user')
 	:
 	?>
 	<form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
-	      name="timeselect"
-	      method="post" target="_self" class="timefilter float-right">
+		  name="timeselect"
+		  method="post" target="_self" class="timefilter float-right">
 		<?php $this->displayTimeFilter('sel'); ?>
 	</form>
 <?php endif; ?>

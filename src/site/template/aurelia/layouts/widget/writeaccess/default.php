@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -29,7 +29,7 @@ $config = KunenaFactory::getConfig();
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-			     data-target="#writeaccess"><?php echo Icons::collapse(); ?></div>
+				 data-target="#writeaccess"><?php echo Icons::collapse(); ?></div>
 		</div>
 	</div>
 

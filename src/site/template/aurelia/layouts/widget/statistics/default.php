@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -24,7 +24,7 @@ use function defined;
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-			     data-target="#kstats"><?php echo Icons::collapse(); ?></div>
+				 data-target="#kstats"><?php echo Icons::collapse(); ?></div>
 		</div>
 	</div>
 	<h2 class="card-header">

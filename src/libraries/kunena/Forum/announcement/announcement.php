@@ -45,7 +45,6 @@ use function defined;
  * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
- *
  */
 class Announcement extends KunenaDatabaseObject
 {
@@ -323,14 +322,13 @@ class Announcement extends KunenaDatabaseObject
 	 * @return  mixed
 	 *
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return null;
+			return;
 		}
 
 		// Load user if not given.
@@ -415,7 +413,7 @@ class Announcement extends KunenaDatabaseObject
 			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -439,7 +437,7 @@ class Announcement extends KunenaDatabaseObject
 			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -469,7 +467,7 @@ class Announcement extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -494,6 +492,6 @@ class Announcement extends KunenaDatabaseObject
 			return new Authorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return null;
+		return;
 	}
 }

@@ -111,6 +111,7 @@ class Ban extends parentAlias
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
+
 	/**
 	 * @var null
 	 * @since version

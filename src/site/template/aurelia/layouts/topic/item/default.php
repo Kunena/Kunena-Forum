@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -83,14 +83,14 @@ if ($topic->locked)
 
 	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 	</div>
 	<h2 class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
-			->set('id', $topic->id)
-			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
-			->setLayout('topic'); ?>
+	->set('id', $topic->id)
+	->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
+	->setLayout('topic'); ?>
 	</h2>
 
 	<div class="clearfix"></div>
@@ -144,14 +144,14 @@ if ($topic->locked)
 
 	<div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 	</div>
 	<div class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
-			->set('id', $topic->id)
-			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
-			->setLayout('topic'); ?>
+	->set('id', $topic->id)
+	->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
+	->setLayout('topic'); ?>
 	</div>
 
 	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

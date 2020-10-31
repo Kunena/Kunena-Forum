@@ -81,7 +81,7 @@ class CategoryList extends FormField
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return HTMLHelper::_('select.genericlist', $options,  $this->element, 'class="input-block-level" multiple="multiple" size="5"', $this->value);
+		return HTMLHelper::_('select.genericlist', $options, $this->element, 'class="input-block-level" multiple="multiple" size="5"', $this->value);
 	}
 
 	/**

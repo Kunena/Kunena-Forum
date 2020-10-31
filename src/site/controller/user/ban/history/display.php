@@ -34,21 +34,25 @@ class ComponentUserControllerBanHistoryDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
+
 	/**
 	 * @var     array|Ban[]
 	 * @since   Kunena 6.0
 	 */
 	public $banHistory;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

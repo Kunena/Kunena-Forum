@@ -1,6 +1,7 @@
 if (typeof (WBBLANG) == "undefined") {
 	WBBLANG = {};
 }
+
 WBBLANG['kunena'] = {
 	bold: Joomla.Text._('COM_KUNENA_WYSIBB_EDITOR_BOLD'),
 	italic: Joomla.Text._('COM_KUNENA_WYSIBB_EDITOR_ITALIC'),

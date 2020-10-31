@@ -42,5 +42,5 @@ function kunena_200_2012_04_13_menu($parent)
 		return ['action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_200_MENU', count($legacy)), 'success' => !$errors];
 	}
 
-	return null;
+	return;
 }

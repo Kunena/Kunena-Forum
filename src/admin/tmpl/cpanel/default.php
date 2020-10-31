@@ -50,7 +50,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 													Kunena Forum Sample Data
 												</div>
 												<button type="button" class="btn btn-secondary btn-sm apply-sample-data"
-												        data-type="kunena" data-steps="1">
+														data-type="kunena" data-steps="1">
 													<span class="fas fa-upload" aria-hidden="true"></span> Install
 													<span class="sr-only">Kunena Forum Sample Data</span>
 												</button>
@@ -60,7 +60,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 										<li class="list-group-item sampledata-progress-kunena d-none">
 											<div class="progress">
 												<div class="progress-bar progress-bar-striped progress-bar-animated"
-												     role="progressbar"></div>
+													 role="progressbar"></div>
 											</div>
 										</li>
 										<li class="list-group-item sampledata-progress-kunena d-none">
@@ -113,7 +113,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 							<div class="row align-items-center">
 								<div class="col pl-5">
 									<img loading="lazy" src="components/com_kunena/media/icons/kunena_logo.png"
-									     style="width: 70%"/>
+										 style="width: 70%"/>
 								</div>
 								<div class="col">
 									<h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>

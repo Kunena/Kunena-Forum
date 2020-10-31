@@ -21,8 +21,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')
-		;
+$wa->useScript('multiselect');
 
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
@@ -48,8 +47,8 @@ jQuery(function($) {
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="1"/>
 					<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
@@ -100,7 +99,7 @@ jQuery(function($) {
 												if ($this->editavatar) : ?>
 													<div>
 														<label><input type="checkbox" value="1"
-														              name="deleteAvatar"/> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
+																	  name="deleteAvatar"/> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
 														</label>
 													</div>
 												<?php endif; ?>
@@ -109,13 +108,13 @@ jQuery(function($) {
 												<legend><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 												<div>
 														<textarea id="user-signature" class="inputbox form-control"
-														          name="signature"
-														          cols="4" rows="6"
+																  name="signature"
+																  cols="4" rows="6"
 														><?php echo $this->escape($this->user->signature); ?></textarea>
 												</div>
 												<div>
 													<label><input type="checkbox" value="1"
-													              name="deleteSig"/> <?php echo Text::_('COM_KUNENA_DELSIG'); ?>
+																  name="deleteSig"/> <?php echo Text::_('COM_KUNENA_DELSIG'); ?>
 													</label>
 												</div>
 												<div>
@@ -138,10 +137,10 @@ jQuery(function($) {
 														</td>
 														<td>
 															<input id="personaltext" type="text"
-															       class="inputbox form-control"
-															       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-															       name="personaltext"
-															       value="<?php echo $this->escape($this->user->personalText); ?>"/>
+																   class="inputbox form-control"
+																   maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
+																   name="personaltext"
+																   value="<?php echo $this->escape($this->user->personalText); ?>"/>
 														</td>
 													</tr>
 													<tr>
@@ -154,8 +153,8 @@ jQuery(function($) {
 															<div id="birthdate">
 																<div class="input-append date">
 																	<input type="text" name="birthdate"
-																	       data-date-format="mm/dd/yyyy"
-																	       value="<?php echo $this->user->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+																		   data-date-format="mm/dd/yyyy"
+																		   value="<?php echo $this->user->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
 																</div>
 															</div>
 														</td>
@@ -168,8 +167,8 @@ jQuery(function($) {
 														</td>
 														<td>
 															<input id="location" type="text" name="location"
-															       class="inputbox form-control"
-															       value="<?php echo $this->escape($this->user->location); ?>"/>
+																   class="inputbox form-control"
+																   value="<?php echo $this->escape($this->user->location); ?>"/>
 														</td>
 													</tr>
 													<tr>
@@ -199,11 +198,11 @@ jQuery(function($) {
 														</td>
 														<td>
 															<span class="hasTooltip"
-															      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-																      . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+																  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+																	  . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 																<input id="social-site" type="text" name="websitename"
-																       class="inputbox form-control"
-																       value="<?php echo $this->escape($this->user->websitename); ?>"/>
+																	   class="inputbox form-control"
+																	   value="<?php echo $this->escape($this->user->websitename); ?>"/>
 															</span>
 														</td>
 													</tr>
@@ -215,10 +214,10 @@ jQuery(function($) {
 														</td>
 														<td>
 															<span class="hasTooltip"
-															      title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+																  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 																<input id="social-url" type="text" name="websiteurl"
-																       class="inputbox form-control"
-																       value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
+																	   class="inputbox form-control"
+																	   value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
 															</span>
 														</td>
 													</tr>
@@ -234,13 +233,13 @@ jQuery(function($) {
 																<td>
 																	<?php if ($key != 'qq') : ?>
 																	<span class="hasTooltip"
-																	      title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
-																		      . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
+																		  title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
+																			  . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																	<?php endif; ?>
 																		<input id="social-<?php echo $key; ?>"
-																		       type="text" class="inputbox form-control"
-																		       name="<?php echo $key ?>"
-																		       value="<?php echo $this->escape($this->user->$key); ?>"/>
+																			   type="text" class="inputbox form-control"
+																			   name="<?php echo $key ?>"
+																			   value="<?php echo $this->escape($this->user->$key); ?>"/>
 																	</span>
 																</td>
 															</tr>

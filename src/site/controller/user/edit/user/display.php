@@ -37,11 +37,13 @@ class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $changeUsername;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $frontendForm;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

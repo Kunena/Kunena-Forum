@@ -68,7 +68,7 @@ class SvgIcons
 		$opts     = [
 			'http' => [
 				'user_agent' => 'PHP libxml agent',
-			]
+			],
 		];
 		$context  = stream_context_create($opts);
 		libxml_set_streams_context($context);

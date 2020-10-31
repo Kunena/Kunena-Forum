@@ -54,7 +54,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 	{
 		if (!$this->config->highlightcode)
 		{
-			return null;
+			return;
 		}
 
 		$paths = [
@@ -81,7 +81,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 			return HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -129,7 +129,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 			"size",
 			"video",
 			"emoticons",
-			"ebay"
+			"ebay",
 		];
 
 		foreach ($bbcodes as $item)

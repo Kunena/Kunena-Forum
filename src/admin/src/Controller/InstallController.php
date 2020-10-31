@@ -87,7 +87,6 @@ class InstallController extends FormController
 
 			$app->setUserState('com_kunena.uninstall.allowed', null);
 
-
 			$installer = new Installer;
 			$component = ComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);

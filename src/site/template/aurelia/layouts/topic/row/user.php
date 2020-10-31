@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -129,13 +129,13 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 			<div class="float-right">
 				<?php /** TODO: New Feature - LABELS
-				 * <span class="label label-info">
-				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-				 * </span>    */ ?>
+					   * <span class="label label-info">
+					   * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+					   * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
 					<span class="label label-warning">
 						<span data-toggle="tooltip"
-						      title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo Icons::lock(); ?></span>
+							  title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo Icons::lock(); ?></span>
 					</span>
 				<?php endif; ?>
 			</div>
@@ -185,7 +185,7 @@ if (!empty($this->spacing)) : ?>
 		<td class="center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]"
-				       value="1"/>
+					   value="1"/>
 			</label>
 		</td>
 	<?php endif; ?>

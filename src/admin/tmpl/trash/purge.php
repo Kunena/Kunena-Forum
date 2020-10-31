@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect')
 
-		->useScript('formbehavior.chosen');
+	->useScript('formbehavior.chosen');
 
 $count = count($this->purgeitems);
 ?>
@@ -31,8 +31,8 @@ $count = count($this->purgeitems);
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>"
-			      method="post" id="adminForm"
-			      name="adminForm">
+				  method="post" id="adminForm"
+				  name="adminForm">
 				<input type="hidden" name="task" value="purge"/>
 				<input type="hidden" name="boxchecked" value="1"/>
 				<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>"/>

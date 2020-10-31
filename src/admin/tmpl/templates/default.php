@@ -22,8 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')
-		;
+$wa->useScript('multiselect');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -137,13 +136,13 @@ $wa->useScript('multiselect')
 								<tr>
 									<td style="width: 5%;"><?php echo $row->price;?>
 									</td>
-									<td style="width: 5%;"><?php echo $row->type == 'paid-template' ? Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_PAID') : Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FREE') ;?>
+									<td style="width: 5%;"><?php echo $row->type == 'paid-template' ? Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_PAID') : Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FREE');?>
 									</td>
 									<td style="width: 5%;"><?php echo $row->version;?>
 									</td>
 									<td style="width: 15%;">
 									<span class="editlinktip hasTip"
-									      title="<?php echo $row->name. $this->escape('::<img loading="lazy" border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+										  title="<?php echo $row->name . $this->escape('::<img loading="lazy" border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 										<a href="<?php echo $row->detailsurl;?>" target="_blank"
 										   rel="noopener noreferrer"><?php echo $row->name;?></a>
 									</span>

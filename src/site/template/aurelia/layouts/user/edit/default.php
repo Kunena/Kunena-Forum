@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -38,8 +38,8 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 </h2>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post"
-      enctype="multipart/form-data" name="kuserform"
-      class="form-validate" id="kuserform">
+	  enctype="multipart/form-data" name="kuserform"
+	  class="form-validate" id="kuserform">
 	<input type="hidden" name="task" value="save"/>
 	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -68,7 +68,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				<?php if ($name == 'avatar' && !$avatar instanceof Avatar): ?>
 			<?php else : ?>
 				<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>"
-				     id="edit<?php echo $name; ?>">
+					 id="edit<?php echo $name; ?>">
 					<div class="row">
 						<?php echo $tab->content; ?>
 					</div>
@@ -84,7 +84,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				<?php echo Icons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
 			</button>
 			<button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();"
-			        title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
+					title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo Icons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>

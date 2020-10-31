@@ -71,7 +71,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	{
 		if (!$this->params->get('login', 1))
 		{
-			return null;
+			return;
 		}
 
 		return new KunenaLoginEasySocial($this->params);
@@ -87,7 +87,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return null;
+			return;
 		}
 
 		return new AvatarEasySocial($this->params);
@@ -104,7 +104,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	{
 		if (!$this->params->get('profile', 1))
 		{
-			return null;
+			return;
 		}
 
 		return new KunenaProfileEasySocial($this->params);
@@ -121,7 +121,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	{
 		if (!$this->params->get('private', 1))
 		{
-			return null;
+			return;
 		}
 
 		return new KunenaPrivateEasySocial($this->params);
@@ -139,7 +139,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	{
 		if (!$this->params->get('activity', 1))
 		{
-			return null;
+			return;
 		}
 
 		return new KunenaActivityEasySocial($this->params);

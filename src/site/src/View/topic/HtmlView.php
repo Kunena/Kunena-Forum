@@ -698,7 +698,8 @@ class HtmlView extends BaseHtmlView
 
 		// TODO: add context (options, template) to caching
 		$cache      = Factory::getCache(
-			'com_kunena', 'output');
+			'com_kunena', 'output'
+		);
 		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
@@ -1188,11 +1189,11 @@ class HtmlView extends BaseHtmlView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$cat_params = ['ordering'    => 'ordering',
-		               'toplevel'    => 0,
-		               'sections'    => 0,
-		               'direction'   => 1,
-		               'hide_lonely' => 1,
-		               'action'      => 'topic.create'];
+					   'toplevel'    => 0,
+					   'sections'    => 0,
+					   'direction'   => 1,
+					   'hide_lonely' => 1,
+					   'action'      => 'topic.create', ];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = CategoryHelper::get($this->catid);

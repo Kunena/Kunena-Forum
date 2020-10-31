@@ -42,6 +42,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

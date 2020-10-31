@@ -21,16 +21,15 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')
-		;
+$wa->useScript('multiselect');
 ?>
 
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
-			      method="post" id="adminForm"
-			      name="adminForm">
+				  method="post" id="adminForm"
+				  name="adminForm">
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -122,7 +121,7 @@ $wa->useScript('multiselect')
 														?>
 														<tr>
 															<td width="40%"
-															    class="paramlist_key"><?php echo $field->label; ?></td>
+																class="paramlist_key"><?php echo $field->label; ?></td>
 															<td class="paramlist_value"><?php echo $field->input; ?></td>
 														</tr>
 													<?php endif; ?>

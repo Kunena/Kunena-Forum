@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -125,7 +125,7 @@ $labels          = $this->ktemplate->params->get('labels');
 									<?php else:
 										?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-                                                    loading="lazy"
+													loading="lazy"
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>
@@ -170,7 +170,7 @@ $labels          = $this->ktemplate->params->get('labels');
 		:
 										?>
 											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-                                                        loading="lazy"
+														loading="lazy"
 														src="<?php echo $icon->relpath; ?>"
 														alt="<?php echo $icon->name; ?>"
 														border="0"/>

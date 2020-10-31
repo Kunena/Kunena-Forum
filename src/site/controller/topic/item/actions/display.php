@@ -39,11 +39,13 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $topicButtons;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -364,7 +366,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return Layout::factory('Widget/Button')
 			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
-			                 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
+							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
 			);
 	}
 }

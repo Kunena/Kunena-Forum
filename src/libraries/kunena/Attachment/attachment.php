@@ -61,7 +61,6 @@ use function defined;
  * @property string $typeAlias
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
- *
  */
 class Attachment extends KunenaDatabaseObject
 {
@@ -826,7 +825,7 @@ class Attachment extends KunenaDatabaseObject
 
 		if ($action == 'create')
 		{
-			return null;
+			return;
 		}
 
 		// Need to load private message (for now allow only one private message per attachment).
@@ -843,7 +842,7 @@ class Attachment extends KunenaDatabaseObject
 		if (in_array($user->userid, $private->users()->getMapped()))
 		{
 			// Yes, I have access..
-			return null;
+			return;
 		}
 		else
 		{
@@ -854,7 +853,7 @@ class Attachment extends KunenaDatabaseObject
 				if ($user->isModerator($message->getCategory()))
 				{
 					// Yes, I have access..
-					return null;
+					return;
 				}
 			}
 		}

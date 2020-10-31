@@ -37,16 +37,19 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $model;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $data = [];
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

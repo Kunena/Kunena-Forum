@@ -21,8 +21,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')
-		;
+$wa->useScript('multiselect');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
@@ -34,8 +33,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
 				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=category') ?>"
-				      method="post" id="adminForm"
-				      name="adminForm">
+					  method="post" id="adminForm"
+					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
@@ -80,7 +79,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 										<?php endif; ?>
 									</ul>
 									<div class="tab-content"
-									     style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+										 style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 										<div class="tab-pane active" id="tab-general">
 											<fieldset>
 												<table class="table table-striped">
@@ -95,17 +94,17 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 														<td><?php echo Text::_('COM_KUNENA_NAMEADD'); ?></td>
 														<td>
 															<input class="inputbox form-control" type="text" name="name"
-															       size="80"
-															       value="<?php echo $this->escape($this->category->name); ?>"/>
+																   size="80"
+																   value="<?php echo $this->escape($this->category->name); ?>"/>
 														</td>
 													</tr>
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 														<td>
 															<input class="inputbox form-control" id="jform_aliases"
-															       type="text"
-															       name="alias" size="80"
-															       value="<?php echo $this->escape($this->category->alias); ?>"/>
+																   type="text"
+																   name="alias" size="80"
+																   value="<?php echo $this->escape($this->category->alias); ?>"/>
 															<?php
 															if ($this->options ['aliases'])
 																:
@@ -122,8 +121,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 														<td><?php echo Text::_('COM_KUNENA_ICON'); ?></td>
 														<td>
 															<input class="inputbox form-control" type="text" name="icon"
-															       size="80"
-															       value="<?php echo $this->escape($this->category->icon); ?>"/>
+																   size="80"
+																   value="<?php echo $this->escape($this->category->icon); ?>"/>
 															<p><?php echo Text::_('COM_KUNENA_ICON_DESC'); ?></p>
 														</td>
 													</tr>
@@ -131,10 +130,10 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 														<td><?php echo Text::_('COM_KUNENA_CLASS_SFX'); ?></td>
 														<td>
 															<input class="inputbox form-control" type="text"
-															       name="class_sfx"
-															       size="20"
-															       maxlength="20"
-															       value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
+																   name="class_sfx"
+																   size="20"
+																   maxlength="20"
+																   value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
 															<p><?php echo Text::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
 														</td>
 													</tr>
@@ -142,9 +141,9 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 														<td><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 														<td>
 															<textarea class="inputbox form-control" cols="50" rows="6"
-															          name="description"
-															          id="description"
-															          style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
+																	  name="description"
+																	  id="description"
+																	  style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
 															<p><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
 														</td>
 													</tr>
@@ -152,17 +151,17 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 														<td><?php echo Text::_('COM_KUNENA_HEADERADD'); ?></td>
 														<td>
 															<textarea class="inputbox form-control" cols="50" rows="6"
-															          name="headerdesc"
-															          id="headerdesc"
-															          style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
+																	  name="headerdesc"
+																	  id="headerdesc"
+																	  style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 														</td>
 													</tr>
 													<tr>
 														<td><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE'); ?></td>
 														<td>
 															<textarea class="inputbox form-control" cols="50" rows="6"
-															          name="topictemplate" id="topictemplate"
-															          style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
+																	  name="topictemplate" id="topictemplate"
+																	  style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
 														</td>
 													</tr>
 												</table>
@@ -185,7 +184,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 															:
 															?>
 															<tr class="kaccess kaccess-<?php echo $accesstype ?>"
-															    style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
+																style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 																<td><?php echo $accessinput['title'] ?></td>
 																<td><?php echo $accessinput['input'] ?></td>
 																<td><?php echo $accessinput['desc'] ?></td>
@@ -305,7 +304,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 															?>
 															<tr>
 																<td colspan="5"
-																    align="center"><?php echo Text::_('COM_KUNENA_NOMODS') ?></td>
+																	align="center"><?php echo Text::_('COM_KUNENA_NOMODS') ?></td>
 															</tr>
 														<?php else
 															:

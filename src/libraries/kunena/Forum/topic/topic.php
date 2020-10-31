@@ -80,7 +80,6 @@ use function defined;
  * @property string $params
  * @property int    $rating
  * @property int    $count
- *
  */
 class Topic extends KunenaDatabaseObject
 {
@@ -2355,7 +2354,7 @@ class Topic extends KunenaDatabaseObject
 
 		if ($user->isAdmin() || $user->isModerator())
 		{
-			return null;
+			return;
 		}
 
 		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
@@ -2363,7 +2362,7 @@ class Topic extends KunenaDatabaseObject
 			return new Authorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**

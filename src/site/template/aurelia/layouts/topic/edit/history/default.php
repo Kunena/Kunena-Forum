@@ -62,7 +62,7 @@ $k = 0;
 					<?php echo Icons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory"
-				     data-badger="<?php echo $this->message->displayField('subject'); ?>">
+					 data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">
 						<p class="kmsg"><?php echo Parser::parseBBCode($this->message->message, $this) ?></p>
 					</div>

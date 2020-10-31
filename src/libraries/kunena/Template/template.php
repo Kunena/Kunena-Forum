@@ -598,7 +598,7 @@ class Template extends CMSObject
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit'];
+		          'quickreply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

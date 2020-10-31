@@ -537,7 +537,7 @@ abstract class TopicUserHelper
 					"favorite = 0",
 					"subscribed = 0",
 					"params = ''",
-					"{$where3}",]
+					"{$where3}", ]
 			);
 
 		$db->setQuery($query);

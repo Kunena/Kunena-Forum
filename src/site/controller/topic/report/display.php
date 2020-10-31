@@ -37,16 +37,19 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
+
 	/**
 	 * @var     Message|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

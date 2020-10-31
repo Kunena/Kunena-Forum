@@ -38,31 +38,37 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $gallery;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $galleries;
+
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $galleryOptions;
+
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $galleryImages;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Avatar';
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

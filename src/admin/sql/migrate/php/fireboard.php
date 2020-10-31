@@ -68,7 +68,7 @@ class KunenaMigratorFireboard
 			// Do not detect Kunena 1.x.
 			if ($version && version_compare($version->version, '1.0.5', '>'))
 			{
-				return null;
+				return;
 			}
 
 			// Return FireBoard version.
@@ -86,6 +86,6 @@ class KunenaMigratorFireboard
 			}
 		}
 
-		return null;
+		return;
 	}
 }

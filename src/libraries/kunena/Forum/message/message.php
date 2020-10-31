@@ -78,7 +78,6 @@ use function defined;
  * @property string $modified_reason
  * @property string $params
  * @property string $message
- *
  */
 class Message extends KunenaDatabaseObject
 {
@@ -613,7 +612,7 @@ class Message extends KunenaDatabaseObject
 						'subject'    => $subject,
 						'message'    => $this,
 						'messageUrl' => $url,
-						'once'       => $once
+						'once'       => $once,
 					]
 				);
 
@@ -630,7 +629,7 @@ class Message extends KunenaDatabaseObject
 						'subject'    => $subject,
 						'message'    => $this,
 						'messageUrl' => $url,
-						'once'       => $once
+						'once'       => $once,
 					]
 				);
 
@@ -740,7 +739,6 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @param   int  $value  value
 	 *
 	 * @return  boolean
@@ -1743,7 +1741,6 @@ class Message extends KunenaDatabaseObject
 	}
 
 	/**
-	 *
 	 * @param   Mail    $mail          mail
 	 * @param   int     $subscription  subscription
 	 * @param   string  $subject       subject
@@ -2008,7 +2005,7 @@ class Message extends KunenaDatabaseObject
 
 		if ($user->isAdmin() || $user->isModerator())
 		{
-			return null;
+			return;
 		}
 
 		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getTopic()->getCategory()))
@@ -2016,7 +2013,7 @@ class Message extends KunenaDatabaseObject
 			return new Authorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**

@@ -58,26 +58,31 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+
 	/**
 	 * @var     Category
 	 * @since   Kunena 6.0
 	 */
 	public $category;
+
 	/**
 	 * @var     Topic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
+
 	/**
 	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -132,6 +137,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 
 		$options    = [];
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+
 		// Todo: fix params
 		$cat_params         = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');

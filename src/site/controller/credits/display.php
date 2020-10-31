@@ -99,23 +99,23 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 			[
 				'name'  => 'Florian Dal Fitto',
 				'url'   => 'https://www.kunena.org/forum/user/1288-xillibit',
-				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),],
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), ],
 			[
 				'name'  => 'Jelle Kok',
 				'url'   => 'https://www.kunena.org/forum/user/634-810',
-				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), Text::_('COM_KUNENA_CREDITS_DESIGN')),],
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), Text::_('COM_KUNENA_CREDITS_DESIGN')), ],
 			[
 				'name'  => 'Richard Binder',
 				'url'   => 'https://www.kunena.org/forum/user/2198-rich',
-				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_MODERATION'), Text::_('COM_KUNENA_CREDITS_TESTING')),],
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_MODERATION'), Text::_('COM_KUNENA_CREDITS_TESTING')), ],
 			[
 				'name'  => 'Matias Griese',
 				'url'   => 'https://www.kunena.org/forum/user/63-matias',
-				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),],
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), ],
 			[
 				'name'  => 'Oliver Ratzesberger',
 				'url'   => 'https://www.kunena.org/forum/user/64-fxstein',
-				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'),],
+				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'), ],
 		];
 		$this->thanks     = Text::sprintf(
 			'COM_KUNENA_CREDITS_THANKS_TO', 'https://www.kunena.org/team#special_thanks',

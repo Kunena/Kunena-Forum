@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -24,7 +24,7 @@ use function defined;
 <div class="row">
 	<div class="col-md-12">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
-		      name="kcategoryform" id="kcategoryform">
+			  name="kcategoryform" id="kcategoryform">
 			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
@@ -39,7 +39,7 @@ use function defined;
 								<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 									'kchecktask'); ?>
 								<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
-								       value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
+									   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							</div>
 						</div>
 					</div>
@@ -48,8 +48,8 @@ use function defined;
 				<?php if (!empty($this->embedded)) : ?>
 					<div class="float-right">
 						<?php echo $this->subLayout('Widget/Pagination/List')
-							->set('pagination', $this->pagination)
-							->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 					</div>
 				<?php endif; ?>
 			</h3>

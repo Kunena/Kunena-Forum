@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -39,7 +39,7 @@ use function defined;
 						</label>
 					</span>
 					<input id="klogin-username-full" type="text" name="username" class="input-small" tabindex="1"
-					       size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+						   size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
 				</div>
 			</div>
 		</div>
@@ -54,8 +54,8 @@ use function defined;
 						</label>
 					</span>
 					<input id="klogin-passwd-full" type="password" name="password" class="input-small" tabindex="2"
-					       size="18" autocomplete="current-password"
-					       placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+						   size="18" autocomplete="current-password"
+						   placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
 				</div>
 			</div>
 		</div>
@@ -75,7 +75,7 @@ use function defined;
 						</label>
 				  </span>
 						<input id="kk-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3"
-						       size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
+							   size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
 					</div>
 				</div>
 			</div>

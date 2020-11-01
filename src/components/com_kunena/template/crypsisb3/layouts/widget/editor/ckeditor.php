@@ -26,6 +26,7 @@ $this->addScript('jquery.atwho.js');
 $this->addStyleSheet('jquery.atwho.css');
 $pollcheck = isset($this->poll);
 $topictemplate = !KunenaConfig::getInstance()->pickup_category;
+$this->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaHtmlParser::getEmoticons(0, 1, 0)));
 ?>
 <script>
 	function localstorage() {

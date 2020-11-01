@@ -33,12 +33,13 @@ abstract class KunenaHtmlParser
 	/**
 	 * @param   bool $grayscale   grayscale
 	 * @param   bool $emoticonbar emoticonbar
+	 * @param   bool $addPath     addPath
 	 *
 	 * @return array
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public static function getEmoticons($grayscale = false, $emoticonbar = false)
+	public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true)
 	{
 		$db = Factory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
@@ -66,7 +67,14 @@ abstract class KunenaHtmlParser
 		foreach ($smilies as $smiley)
 		{
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
+			if ($addPath)
+			{
+				$smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
+			}
+			else
+			{
+				$smileyArray [$smiley->code] =  $smiley->file;
+			}
 		}
 
 		if ($emoticonbar == 0)

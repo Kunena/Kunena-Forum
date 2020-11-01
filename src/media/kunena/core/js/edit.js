@@ -13,46 +13,7 @@ jQuery(document).ready(function ($) {
 	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 	var pollexist = $('#poll_exist_edit');
 	var pollcatid = jQuery('#poll_catid').val();
-
-	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
-	{
-		CKEDITOR.on('instanceReady', function(evt){
-			// Do your bindings and other actions here for example
-			// You can access each editor that this event has fired on from the event
-			var editor = evt.editor;
-
-			var cat = localStorage.getItem('copyKunenaeditor');
-
-			if (cat) {
-				editor.setData(cat);
-				localStorage.removeItem('copyKunenaeditor');
-			}
-
-			if(pollcatid !== undefined)
-			{
-				if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-					var catid = $('#kcategory_poll').val();
-
-					if (pollcategoriesid[catid] !== undefined) {
-						CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-					}
-					else {
-						CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-					}
-				}
-				else if (pollexist.length > 0) {
-					CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-				}
-				else {
-					CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-				}
-			}
-			else
-			{
-				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-			}
-		});
-	}
+	var polliconstatus = false;
 
 	$('#reset').onclick = function() {
 		localStorage.removeItem('copyKunenaeditor');
@@ -135,6 +96,7 @@ jQuery(document).ready(function ($) {
 		var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 		var pollexist = jQuery('#poll_exist_edit');
 		var pollcatid = jQuery('#poll_catid').val();
+		polliconstatus = true;
 
 		if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) 
 		{
@@ -145,16 +107,20 @@ jQuery(document).ready(function ($) {
 
 			if (pollcategoriesid[catid] !== undefined) {
 				CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+				
 			}
 			else {
 				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+				
 			}
 		}
 		else if (pollexist.length > 0) {
 			CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+			
 		}
 		else {
 			CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+			
 		}
 
 		if ($('#kanynomous-check').length > 0) {
@@ -306,7 +272,44 @@ jQuery(document).ready(function ($) {
 	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
 	{
 		CKEDITOR.replace( 'message', {
-			customConfig: Joomla.getOptions('com_kunena.ckeditor_config')
+			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
+			on: {
+				mode: function( evt ) {
+					var cat = localStorage.getItem('copyKunenaeditor');
+
+					if (cat) {
+						editor.setData(cat);
+						localStorage.removeItem('copyKunenaeditor');
+					}
+
+					if(polliconstatus === false)
+					{
+						if(pollcatid !== undefined)
+						{
+							if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+								var catid = $('#kcategory_poll').val();
+
+								if (pollcategoriesid[catid] !== undefined) {
+									evt.editor.getCommand( 'polls' ).enable();
+								}
+								else {
+									evt.editor.getCommand( 'polls' ).disable();
+								}
+							}
+							else if (pollexist.length > 0) {
+								evt.editor.getCommand( 'polls' ).enable();
+							}
+							else {
+								evt.editor.getCommand( 'polls' ).disable();
+							}
+						}
+						else
+						{
+							evt.editor.getCommand( 'polls' ).disable();
+						}
+					}
+				}
+			}
 		});
 	}
 });

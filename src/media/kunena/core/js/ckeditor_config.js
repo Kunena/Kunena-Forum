@@ -30,14 +30,16 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Anchor,Paste';
 
 	config.extraPlugins = 'ebay,twitter,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls';
+	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
+	var obj = jQuery.parseJSON( emoticons );
+	var list_emoticons = [];
+
+	jQuery.each(obj, function( index, value ) {
+		list_emoticons.push(value);
+	});
 
 	config.smiley_path = '/media/kunena/emoticons/';
-	config.smiley_images = [
-	'angry.png', 'arrow.png', 'blink.png', 'blush.png', 'cheerful.png', 'confused.png',
-	'cool.png', 'devil.png', 'dizzy.png', 'ermm.png', 'exclamation.png', 'grin.png',
-	'idea.png', 'kissing.png', 'laughing.png', 'mrgreen.png', 'neutral.png', 'pinch.png',
-	'question.png', 'sad.png', 'shocked.png', 'sick.png', 'sideways.png', 'silly.png', 'smile.png', 'tongue.png', 'unsure.png', 'w00t.png', 'wassat.png', 'whistling.png', 'wink.png'
-	];
+	config.smiley_images = list_emoticons;
 	/*config.smiley_descriptions = [
 	 'B)', '8)', '8-)', ':-(', ':(', ':sad:', ':cry:', ':)', ':-)', ':cheer:', ';)', ';-)', 
        ':wink:', ';-)', ':P', ':p', ':-p', ':-P', ':razz:', ':angry:', ':mad:', ':unsure:', ':o', 

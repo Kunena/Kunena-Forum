@@ -9,13 +9,13 @@
 
 CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 	return {
-		title: 'Video Properties',
+		title: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES'),
 		minWidth: 400,
 		minHeight: 200,
 		contents: [
 			{
 				id: 'tab-basic',
-				label: 'Basic Settings',
+				label: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
 				elements: [
 			{
 		type: 'text',

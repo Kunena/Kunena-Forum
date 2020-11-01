@@ -31,14 +31,14 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 	}
 
 	return {
-		title: 'Polls Properties',
+		title: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES'),
 		minWidth: 400,
 		minHeight: 200,
 		contents: 
 		[
 			{
 				id: 'tab-basic',
-				label: 'Basic Settings',
+				label: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
 				elements: 
 				[
 					{
@@ -50,8 +50,8 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'button',
 						id: 'polladdoption',
-						label: 'Add option',
-						title: 'Add option',
+						label: Joomla.JText._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
+						title: Joomla.JText._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
 							if (!nboptionsmax || (options < nboptionsmax && options >= 2)) {
@@ -71,8 +71,8 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'button',
 						id: 'pollremoveoption',
-						label: 'Remove option',
-						title: 'Remove option',
+						label: Joomla.JText._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
+						title: Joomla.JText._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
 							jQuery('#field_option' + options).remove();
@@ -85,7 +85,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'text',
 						id: 'polllifespan',
-						label: 'Poll life span (optional)',
+						label: Joomla.JText._('COM_KUNENA_POLL_TIME_TO_LIVE'),
 						default: ''
 					},
 					// Add HTML container for dynamic content

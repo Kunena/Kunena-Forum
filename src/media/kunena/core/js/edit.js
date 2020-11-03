@@ -278,7 +278,7 @@ jQuery(document).ready(function ($) {
 					var cat = localStorage.getItem('copyKunenaeditor');
 
 					if (cat) {
-						editor.setData(cat);
+						evt.editor.setData(cat);
 						localStorage.removeItem('copyKunenaeditor');
 					}
 

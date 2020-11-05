@@ -34,24 +34,6 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	protected $default = array('crypsis');
 
 	/**
-	 * Relative paths to various file types in this template.
-	 *
-	 * These will override default files in JROOT/media/kunena
-	 *
-	 * @var array
-	 * @since Kunena
-	 */
-	protected $pathTypes = array(
-		'emoticons'     => 'media/emoticons',
-		'ranks'         => 'media/ranks',
-		'icons'         => 'media/icons',
-		'categoryicons' => 'media/category_icons',
-		'images'        => 'media/images',
-		'js'            => 'media/js',
-		'css'           => 'media/css',
-	);
-
-	/**
 	 * User group initialization.
 	 *
 	 * @return void

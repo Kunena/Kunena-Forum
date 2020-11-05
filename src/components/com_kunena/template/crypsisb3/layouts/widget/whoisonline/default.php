@@ -51,9 +51,9 @@ use Joomla\CMS\Language\Text;
 
 					<div class="col-md-11">
 						<ul class="list-unstyled">
-							<span>
+							<li>
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
-							</span>
+							</li>
 							<?php
 							$template  = KunenaTemplate::getInstance();
 							$direction = $template->params->get('whoisonlineName');
@@ -61,17 +61,17 @@ use Joomla\CMS\Language\Text;
 							if ($direction == 'both')
 								:
 								?>
-								<div><?php echo $this->setLayout('both'); ?></div>
+								<li><?php echo $this->setLayout('both'); ?></li>
 							<?php
 							elseif ($direction == 'avatar')
 								:
 								?>
-								<div><?php echo $this->setLayout('avatar'); ?></div>
+								<li><?php echo $this->setLayout('avatar'); ?></li>
 							<?php else
 
 								:
 								?>
-								<div><?php echo $this->setLayout('name'); ?></div>
+								<li><?php echo $this->setLayout('name'); ?></li>
 							<?php
 							endif;
 							?>
@@ -79,7 +79,7 @@ use Joomla\CMS\Language\Text;
 							<?php if (!empty($this->onlineList))
 								:
 								?>
-								<div>
+								<li>
 									<span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
 									<span class="kwho-admin">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
@@ -99,7 +99,7 @@ use Joomla\CMS\Language\Text;
 									<span class="kwho-guest">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
 									</span>
-								</div>
+								</li>
 							<?php endif; ?>
 						</ul>
 					</div>

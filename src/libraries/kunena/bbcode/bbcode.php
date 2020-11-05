@@ -3186,10 +3186,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
 			}
-			else
-			{
-				return false;
-			}
 
 			// Display tag in activity streams etc..
 			if (!empty($bbcode->parent->forceMinimal))

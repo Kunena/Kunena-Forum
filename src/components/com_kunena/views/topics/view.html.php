@@ -209,7 +209,7 @@ class KunenaViewTopics extends KunenaView
 
 			if ($usertype != 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+			    $contents = preg_replace_callback('|\[K=(\w\+)(?:\:([\w\_-]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 			}
 
 			echo $contents;

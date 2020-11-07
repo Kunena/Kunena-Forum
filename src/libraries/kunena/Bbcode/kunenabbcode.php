@@ -47,6 +47,7 @@ use function defined;
 // [hide], [confidential], [spoiler], [attachment], [code]
 
 /**
+ * @see  Nbbc\BBCode;
  * Class KunenaBbcode
  *
  * @since   6.0
@@ -76,6 +77,36 @@ class KunenaBbcode extends BBCode
 	 * @since   Kunena 6.0
 	 */
 	public $text_length = 0;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $url_target = null;
+
+	/**
+	 * @var     KunenaBBCodeLibrary
+	 * @since   Kunena 6.0
+	 */
+	private $defaults;
+
+	/**
+	 * @var     array|array[]
+	 * @since   Kunena 6.0
+	 */
+	private $tag_rules;
+
+	/**
+	 * @var     array|string[]
+	 * @since   Kunena 6.0
+	 */
+	private $smileys;
+
+	/**
+	 * @var     array|string[]
+	 * @since   Kunena 6.0
+	 */
+	private $url_pattern;
 
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
@@ -122,7 +153,7 @@ class KunenaBbcode extends BBCode
 	 *
 	 * @throws  Exception
 	 */
-	public static function getInstance($relative = true)
+	public static function getInstance($relative = true): KunenaBbcode
 	{
 		static $instance = false;
 
@@ -356,7 +387,7 @@ class KunenaBbcode extends BBCode
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function canCloakEmail(&$params)
+	public function canCloakEmail(&$params): bool
 	{
 		if (PluginHelper::isEnabled('content', 'emailcloak'))
 		{
@@ -379,7 +410,7 @@ class KunenaBbcode extends BBCode
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function get_title($url)
+	public function get_title($url): string
 	{
 		try
 		{
@@ -409,7 +440,7 @@ class KunenaBbcode extends BBCode
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function Internal_AutoDetectURLs($string)
+	public function Internal_AutoDetectURLs($string): array
 	{
 		$search = preg_split('/(?xi)
 		\b
@@ -535,6 +566,109 @@ class KunenaBbcode extends BBCode
 		}
 
 		return false;
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   bool  $false bool
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @return void
+	 */
+	private function SetEnableSmileys(bool $false): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetSmileyDir()
+	 *
+	 * @param   bool  $JPATH_ROOT jpath root
+	 *
+	 * @return  void
+	 * @since   Kunena 6.0
+	 */
+	private function SetSmileyDir(bool $JPATH_ROOT): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetSmileyURL()
+	 *
+	 * @param   string  $param  string params
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @return void
+	 */
+	private function SetSmileyURL(string $param): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   bool  $true  bool
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @return void
+	 */
+	private function SetDetectURLs(bool $true): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   mixed $url_pattern  mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @return void
+	 */
+	private function SetURLPattern($url_pattern): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   string  $string  string
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @return void
+	 */
+	private function SetURLTarget(string $string): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   string  $email  email
+	 *
+	 * @return  string|void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	private function IsValidEmail(string $email): string
+	{
+	}
+
+	/**
+	 * @see     BBCode::FillTemplate()
+	 *
+	 * @param   array      $url_pattern  url pattern
+	 * @param   bool|null  $params       params
+	 *
+	 * @return  string|void
+	 * @since   Kunena 6.0
+	 */
+	private function FillTemplate(array $url_pattern, ?bool $params): string
+	{
 	}
 }
 
@@ -1092,7 +1226,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	];
 
 	/**
-	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1130,9 +1263,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function getEbayItem($ItemID)
+	public static function getEbayItem(int $ItemID): string
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -1711,17 +1844,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return false;
 		}
-		elseif ($this->parent instanceof Message)
+
+		if ($this->parent instanceof Message)
 		{
 			return $this->parent;
 		}
-		elseif (isset($this->parent->message)
-		)
-		{
-			return $this->parent->message;
-		}
 
-		return false;
+		return $this->parent->message ?? false;
 	}
 
 	/**
@@ -1824,15 +1953,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	/**
 	 * Render eBay layout from template
 	 *
-	 * @param   integer  $ItemID  id
+	 * @param   int  $ItemID  id
 	 *
 	 * @return  boolean|string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function renderEbayLayout($ItemID)
+	public static function renderEbayLayout(int $ItemID)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -1842,7 +1971,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 			return false;
 		}
-		elseif (!is_numeric($ItemID))
+
+		if (!is_numeric($ItemID))
 		{
 			echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
 
@@ -1879,9 +2009,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function getEbayItemFromCache($ItemID)
+	public static function getEbayItemFromCache(int $ItemID): string
 	{
 		$cache = Factory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
@@ -2609,10 +2739,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	protected function renderAttachment(Attachment $attachment, $bbcode, $displayImage = true)
+	protected function renderAttachment(Attachment $attachment, string $bbcode, $displayImage = true): string
 	{
 		// Display nothing in subscription mails
 		if (!empty($bbcode->context))
@@ -2630,11 +2760,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return (string) $layout->setLayout('deleted');
 		}
-		elseif (!$attachment->isAuthorised() && !$config->showimgforguest && $attachment->id != '0')
+
+		if (!$attachment->isAuthorised() && !$config->showimgforguest && $attachment->id != '0')
 		{
 			return;
 		}
-		elseif (!$attachment->isAuthorised())
+
+		if (!$attachment->isAuthorised())
 		{
 			return (string) $layout->setLayout('unauthorised');
 		}
@@ -2928,9 +3060,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function renderTweet($tweetid)
+	public function renderTweet(int $tweetid): string
 	{
 		$tweet = $this->getTweet($tweetid);
 
@@ -2969,9 +3101,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function getTweet($tweetid)
+	protected function getTweet(int $tweetid)
 	{
 		// FIXME: use AJAX instead...
 		$config          = KunenaFactory::getConfig();

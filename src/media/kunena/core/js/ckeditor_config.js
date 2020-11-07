@@ -27,7 +27,14 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'Anchor,Paste';
+	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration').length !==0)
+	{
+		config.removeButtons = 'Anchor,Paste,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
+	}
+	else
+	{
+		config.removeButtons = 'Anchor,Paste';
+	}
 
 	config.extraPlugins = 'ebay,twitter,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls';
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');

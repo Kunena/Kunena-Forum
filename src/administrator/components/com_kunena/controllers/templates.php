@@ -697,131 +697,106 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$params = $this->app->input->get('jform', array(), 'post', 'array');
 
-		$params['wysibb'] = '';
+		$editorButtons = array();
 
-		if ($params['bold'])
+		if (!$params['Bold'])
 		{
-			$params['wysibb'] .= 'bold,';
+			$editorButtons[] = 'Bold';
 		}
 
-		if ($params['italic'])
+		if (!$params['Italic'])
 		{
-			$params['wysibb'] .= 'italic,';
+			$editorButtons[] = 'Italic';
 		}
 
-		if ($params['underline'])
+		if (!$params['Underline'])
 		{
-			$params['wysibb'] .= 'underline,';
+			$editorButtons[] = 'Underline';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Strike'])
 		{
-			$params['wysibb'] .= 'strike,';
+			$editorButtons[] = 'Strike';
 		}
 
-		if ($params['supscript'])
+		if (!$params['Superscript'])
 		{
-			$params['wysibb'] .= 'sup,';
+			$editorButtons[] = 'Superscript';
 		}
 
-		if ($params['subscript'])
+		if (!$params['Subscript'])
 		{
-			$params['wysibb'] .= 'sub,';
+			$editorButtons[] = 'Subscript';
 		}
 
-		if ($params['alignleft'])
+		if (!$params['JustifyBlock'])
 		{
-			$params['wysibb'] .= 'justifyleft,';
+			$editorButtons[] = 'JustifyBlock';
 		}
 
-		if ($params['center'])
+		if (!$params['JustifyCenter'])
 		{
-			$params['wysibb'] .= 'justifycenter,';
+			$editorButtons[] = 'JustifyCenter';
 		}
 
-		if ($params['alignright'])
+		if (!$params['Image'])
 		{
-			$params['wysibb'] .= 'justifyright,';
+			$editorButtons[] = 'Image';
 		}
 
-		if ($params['divider'])
+		if (!$params['Video'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'Video';
 		}
 
-		if ($params['picture'])
+		if (!$params['Link_Unlink'])
 		{
-			$params['wysibb'] .= 'img,';
+			$editorButtons[] = 'Link,Unlink';
 		}
 
-		if ($params['video'])
+		if (!$params['BulletedList'])
 		{
-			$params['wysibb'] .= 'video,';
+			$editorButtons[] = 'BulletedList';
 		}
 
-		if ($params['link'])
+		if (!$params['NumberedList'])
 		{
-			$params['wysibb'] .= 'link,';
+			$editorButtons[] = 'NumberedList';
 		}
 
-		if ($params['divider'])
+		if (!$params['colors'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'fontcolor';
 		}
 
-		if ($params['bulletedlist'])
+		if (!$params['fontsize'])
 		{
-			$params['wysibb'] .= 'bullist,';
+			$editorButtons[] = 'fontsize';
 		}
 
-		if ($params['numericlist'])
+		if (!$params['fontfamily'])
 		{
-			$params['wysibb'] .= 'numlist,';
+			$editorButtons[] = 'fontfamily';
 		}
 
-		if ($params['divider'])
+		if (!$params['Blockquote'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'Blockquote';
 		}
 
-		if ($params['colors'])
+		if (!$params['Code'])
 		{
-			$params['wysibb'] .= 'fontcolor,';
+			$editorButtons[] = 'Code';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Table'])
 		{
-			$params['wysibb'] .= 'fontsize,';
+			$editorButtons[] = 'Table';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['RemoveFormat'])
 		{
-			$params['wysibb'] .= 'fontfamily,';
-		}
-
-		if ($params['divider'])
-		{
-			$params['wysibb'] .= '|,';
-		}
-
-		if ($params['quote'])
-		{
-			$params['wysibb'] .= 'quote,';
-		}
-
-		if ($params['code'])
-		{
-			$params['wysibb'] .= 'code,';
-		}
-
-		if ($params['table'])
-		{
-			$params['wysibb'] .= 'table,';
-		}
-
-		if ($params['wysibb'])
-		{
-			$params['wysibb'] .= 'removeFormat';
+			$editorButtons[] = 'RemoveFormat';
 		}
 
 		// Set FTP credentials, if given
@@ -829,8 +804,18 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
-		if (count($params))
+		if (count($params) > 0)
 		{
+			if (count($editorButtons) > 0)
+			{
+				$editorButtons = implode(',', $editorButtons);
+				$params['editorButtons'] = $editorButtons;
+			}
+			else 
+			{
+				$params['editorButtons'] = '';
+			}
+
 			$registry = new \Joomla\Registry\Registry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');

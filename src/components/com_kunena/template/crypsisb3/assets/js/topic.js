@@ -102,10 +102,6 @@ jQuery(document).ready(function ($) {
 					label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
 				},
 				{
-					share: "stumbleupon",
-					label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
-				},
-				{
 					share: "whatsapp",
 					label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
 				}]

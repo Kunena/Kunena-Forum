@@ -11,9 +11,21 @@ jQuery(document).ready(function ($) {
 	var qreply = $('.qreply');
 	var editor = $('#editor');
 	var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+	var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 	var pollexist = $('#poll_exist_edit');
 	var pollcatid = jQuery('#poll_catid').val();
 	var polliconstatus = false;
+
+	// Check is anynomous options can be displayed on newtopic page
+	var catiddefault = $('#postcatid').val();
+
+	if (arrayanynomousbox !== undefined)
+	{
+		if(arrayanynomousbox[catiddefault]==1)
+		{
+			$('#kanonymous').prop('checked', true);
+		}
+	}
 
 	$('#reset').onclick = function() {
 		localStorage.removeItem('copyKunenaeditor');
@@ -124,7 +136,6 @@ jQuery(document).ready(function ($) {
 		}
 
 		if ($('#kanynomous-check').length > 0) {
-			var arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);

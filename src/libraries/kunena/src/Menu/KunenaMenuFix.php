@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Route\KunenaLegacy;
 use StdClass;
 use function defined;
@@ -127,7 +128,7 @@ abstract class KunenaMenuFix
 		}
 		catch (ExecutionFailureException $e)
 		{
-			throw new Exception(Text::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
+			throw new KunenaException(Text::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
 		foreach (self::$items as &$item)
@@ -204,7 +205,7 @@ abstract class KunenaMenuFix
 					self::$same[$item->route][$item->id]                                 = $item;
 					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
 
-					if (Legacy::isLegacy($view))
+					if (KunenaLegacy::isLegacy($view))
 					{
 						self::$legacy[$item->id] = $item->id;
 					}

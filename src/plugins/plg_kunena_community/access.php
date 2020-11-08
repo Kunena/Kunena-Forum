@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Tree\Tree;
+use Kunena\Forum\Libraries\Tree\KunenaTree;
 use RuntimeException;
 use function defined;
 
@@ -64,7 +64,7 @@ class KunenaAccessCommunity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -87,14 +87,14 @@ class KunenaAccessCommunity
 	 * Get group name in selected access type.
 	 *
 	 * @param   string  $accesstype  Access type.
-	 * @param   int     $id          Group id.
+	 * @param   null    $id          Group id.
 	 *
 	 * @return  boolean|void|string
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getGroupName($accesstype, $id = null)
+	public function getGroupName(string $accesstype, $id = null)
 	{
 		if ($accesstype == 'jomsocial')
 		{
@@ -118,7 +118,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws  Exception
 	 */
-	protected function loadGroups()
+	protected function loadGroups(): void
 	{
 		if ($this->groups === false)
 		{
@@ -155,9 +155,9 @@ class KunenaAccessCommunity
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getAccessOptions($accesstype, $category)
+	public function getAccessOptions(string $accesstype, int $category): array
 	{
 		$html = [];
 
@@ -195,7 +195,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws  Exception
 	 */
-	protected function loadCategories()
+	protected function loadCategories(): void
 	{
 		if ($this->categories === false)
 		{
@@ -215,7 +215,7 @@ class KunenaAccessCommunity
 				KunenaError::displayDatabaseError($e);
 			}
 
-			$this->tree = new Tree($this->categories);
+			$this->tree = new KunenaTree($this->categories);
 
 			if ($this->groups !== false)
 			{
@@ -239,7 +239,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws Exception
 	 */
-	public function loadCategoryRoles(array $categories = null)
+	public function loadCategoryRoles(array $categories = null): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -277,9 +277,9 @@ class KunenaAccessCommunity
 	 * @return  array, where category ids are in the keys.
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function authoriseCategories($userid, array &$categories)
+	public function authoriseCategories(int $userid, array &$categories): array
 	{
 		$allowed = [];
 
@@ -325,7 +325,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws  Exception
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
 	{
 		if (empty($userids))
 		{

@@ -20,7 +20,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use function defined;
 
 /**
@@ -28,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarEasyprofile extends Avatar
+class AvatarEasyprofile extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -43,7 +43,7 @@ class AvatarEasyprofile extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -67,9 +67,9 @@ class AvatarEasyprofile extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function _getURL($user, $sizex, $sizey)
+	public function _getURL(object $user, int $sizex, int $sizey)
 	{
 		if (!$user->userid == 0)
 		{

@@ -19,7 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use function defined;
 
 /**
@@ -75,7 +75,7 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  Avatar|void
+	 * @return  KunenaAvatar|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -85,7 +85,7 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 			return;
 		}
 
-		return new Avatar;
+		return new KunenaAvatar;
 	}
 
 	/**
@@ -111,7 +111,7 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function onKunenaGetActivity()
+	public function onKunenaGetActivity(): KunenaActivityAltaUserPoints
 	{
 		if (!$this->params->get('activity', 1))
 		{

@@ -20,7 +20,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Bbcode\KunenaBbcode;
+use Kunena\Forum\Libraries\Bbcode\KunenaBBCode;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Image\KunenaImage;
@@ -308,7 +308,7 @@ abstract class KunenaParser
 			$txt         = preg_replace($pattern, $replacement, $txt);
 		}
 
-		$bbcode                   = KunenaBbcode::getInstance(self::$relative);
+		$bbcode                   = KunenaBBCode::getInstance(self::$relative);
 		$bbcode->autolink_disable = 1;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);

@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -63,7 +64,8 @@ abstract class KunenaMessageHelper
 		{
 			return self::$_instances;
 		}
-		elseif (is_array($ids))
+
+		if (is_array($ids))
 		{
 			$ids = array_unique($ids);
 		}
@@ -236,7 +238,7 @@ abstract class KunenaMessageHelper
 			KunenaError::displayDatabaseError($e);
 		}
 
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : TopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order    = ($ordering == 'ASC') ? 1 : -1;
 		$list     = [];
 
@@ -335,11 +337,11 @@ abstract class KunenaMessageHelper
 			$categories = false;
 		}
 
-		$categories = CategoryHelper::getCategories($categories, $reverse, 'topic.' . $authorise);
+		$categories = KunenaCategoryHelper::getCategories($categories, $reverse, 'topic.' . $authorise);
 
 		if ($childforums)
 		{
-			$categories += CategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
+			$categories += KunenaCategoryHelper::getChildren($categories, -1, ['action' => 'topic.' . $authorise]);
 		}
 
 		$catlist = [];

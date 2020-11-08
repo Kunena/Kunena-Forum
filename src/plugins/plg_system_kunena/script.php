@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\Exception\ExecutionFailureException;
 
@@ -54,7 +56,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
-	 * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
+	 * @var  CMSApplication  Holds the application object
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -83,9 +85,8 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function __construct($type)
+	public function __construct(string $type)
 	{
 		$this->app = Factory::getApplication();
 	}
@@ -93,27 +94,27 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	/**
 	 * method to run before an install/update/uninstall method
 	 *
-	 * @param   string                                        $type   'install', 'update' or 'discover_install'
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   string            $type    'install', 'update' or 'discover_install'
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return  boolean  false will terminate the installation
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function preflight($type, $parent)
+	public function preflight(string $type, ComponentAdapter $parent): bool
 	{
 	}
 
 	/**
 	 * Method to install the component
 	 *
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function install($parent)
+	public function install(ComponentAdapter $parent)
 	{
 		// Notice $parent->getParent() returns JInstaller object
 	}
@@ -121,41 +122,41 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	/**
 	 * Method to uninstall the component
 	 *
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function uninstall($parent)
+	public function uninstall(ComponentAdapter $parent): void
 	{
 	}
 
 	/**
 	 * method to update the component
 	 *
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function update($parent)
+	public function update(ComponentAdapter $parent): void
 	{
 	}
 
 	/**
 	 * method to run after an install/update/uninstall method
 	 *
-	 * @param   string                                         $type    'install', 'update' or 'discover_install'
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter  $parent  Installerobject
+	 * @param   string            $type    'install', 'update' or 'discover_install'
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function postflight($type, $parent)
+	public function postflight(string $type, ComponentAdapter $parent): void
 	{
 		$this->enablePlugin('plg_system_kunena');
 	}
@@ -163,10 +164,10 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	/**
 	 * @param $pluginName
 	 *
-	 * @return false
+	 * @return void|boolean
 	 * @since version
 	 */
-	public function enablePlugin($pluginName)
+	public function enablePlugin($pluginName): bool
 	{
 		// Create a new db object.
 		$db    = Factory::getDbo();

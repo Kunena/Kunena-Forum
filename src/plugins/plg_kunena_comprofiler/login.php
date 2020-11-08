@@ -41,7 +41,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -55,10 +55,10 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	public function loginUser($username, $password, $rememberme)
+	public function loginUser(string $username, string $password, string $rememberme): ?string
 	{
 		cbimport('cb.authentication');
 		global $ueConfig;
@@ -83,7 +83,7 @@ class KunenaLoginComprofiler
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function logoutUser()
+	public function logoutUser(): ?string
 	{
 		cbimport('cb.authentication');
 
@@ -120,7 +120,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLoginURL()
+	public function getLoginURL(): string
 	{
 		global $_CB_framework;
 
@@ -132,7 +132,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLogoutURL()
+	public function getLogoutURL(): string
 	{
 		global $_CB_framework;
 
@@ -144,7 +144,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL()
+	public function getRegistrationURL(): string
 	{
 		global $_CB_framework, $ueConfig;
 
@@ -165,7 +165,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getResetURL()
+	public function getResetURL(): string
 	{
 		global $_CB_framework;
 
@@ -177,7 +177,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRemindURL()
+	public function getRemindURL(): string
 	{
 		global $_CB_framework;
 

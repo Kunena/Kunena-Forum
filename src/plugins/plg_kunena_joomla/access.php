@@ -22,7 +22,7 @@ use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
-use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use StdClass;
 use function defined;
@@ -51,7 +51,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -65,7 +65,7 @@ class AccessJoomla
 	 * @return  array    Supported access types.
 	 * @since   Kunena 6.0
 	 */
-	public function getAccessTypes()
+	public function getAccessTypes(): array
 	{
 		return ['joomla.level', 'joomla.group'];
 	}
@@ -73,13 +73,13 @@ class AccessJoomla
 	/**
 	 * Get access groups for the selected category.
 	 *
-	 * @param   Category  $category  Category
+	 * @param   KunenaCategory  $category  Category
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getCategoryAccess(Category $category)
+	public function getCategoryAccess(KunenaCategory $category)
 	{
 		$list = [];
 
@@ -114,13 +114,13 @@ class AccessJoomla
 	 * Get group name in selected access type.
 	 *
 	 * @param   string  $accesstype  Access type.
-	 * @param   int     $id          Group id.
+	 * @param   null    $id          Group id.
 	 *
 	 * @return  string|null
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getGroupName($accesstype, $id = null)
+	public function getGroupName(string $accesstype, $id = null): ?string
 	{
 		static $groups = [];
 
@@ -167,7 +167,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getAccessOptions($accesstype, $category)
+	public function getAccessOptions(string $accesstype, int $category): array
 	{
 		$html = [];
 
@@ -267,7 +267,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function loadCategoryRoles(array $categories = null)
+	public function loadCategoryRoles(array $categories = null): array
 	{
 		$list = [];
 
@@ -293,7 +293,7 @@ class AccessJoomla
 	 * @return  array
 	 * @since   Kunena 6.0
 	 */
-	protected function getAuthorisedUsers($action, $asset = null)
+	protected function getAuthorisedUsers(string $action, $asset = null): array
 	{
 		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
 		$asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
@@ -360,7 +360,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = [])
+	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = []): array
 	{
 		// Get a database object.
 		$db = Factory::getDbo();
@@ -407,14 +407,14 @@ class AccessJoomla
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   Category  $category  category
-	 * @param   int       $userid    userid
+	 * @param   KunenaCategory  $category  category
+	 * @param   int             $userid    userid
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getAuthoriseActions(Category $category, $userid)
+	public function getAuthoriseActions(KunenaCategory $category, int $userid): array
 	{
 		$category->params = new Registry($category->params);
 		$groups           = (array) Access::getGroupsByUser($userid, true);
@@ -441,7 +441,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function authoriseCategories($userid, array &$categories)
+	public function authoriseCategories(int $userid, array &$categories): array
 	{
 		$user = Factory::getUser($userid);
 
@@ -493,7 +493,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
 	{
 		$allow = $deny = [];
 
@@ -537,7 +537,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getGroupsByViewLevel($viewlevel)
+	protected function getGroupsByViewLevel(int $viewlevel): array
 	{
 		// Only load the view levels once.
 		if (empty(self::$viewLevels))

@@ -62,9 +62,9 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function trigger($event, &$params)
+	public static function trigger(string $event, object $params): void
 	{
 		global $_PLUGINS;
 		$config            = KunenaFactory::getConfig();
@@ -80,7 +80,7 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	public static function close()
+	public static function close(): void
 	{
 		if (!self::$open)
 		{

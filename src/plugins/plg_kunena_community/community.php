@@ -19,7 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use function defined;
 
@@ -77,7 +77,7 @@ class plgKunenaCommunity extends CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return  Access|KunenaAccessCommunity|void
+	 * @return  KunenaAccess|KunenaAccessCommunity|void
 	 *
 	 * @since   Kunena
 	 * @todo    Should we remove category ACL integration?
@@ -98,7 +98,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaLoginCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetLogin()
+	public function onKunenaGetLogin(): ?KunenaLoginCommunity
 	{
 		if (!$this->params->get('login', 1))
 		{
@@ -114,7 +114,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  AvatarCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar()
+	public function onKunenaGetAvatar(): ?AvatarCommunity
 	{
 		if (!$this->params->get('avatar', 1))
 		{
@@ -130,7 +130,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaProfileCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile()
+	public function onKunenaGetProfile(): ?KunenaProfileCommunity
 	{
 		if (!$this->params->get('profile', 1))
 		{
@@ -146,7 +146,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaPrivateCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetPrivate()
+	public function onKunenaGetPrivate(): ?KunenaPrivateCommunity
 	{
 		if (!$this->params->get('private', 1))
 		{
@@ -163,7 +163,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function onKunenaGetActivity()
+	public function onKunenaGetActivity(): ?KunenaActivityCommunity
 	{
 		if (!$this->params->get('activity', 1))
 		{

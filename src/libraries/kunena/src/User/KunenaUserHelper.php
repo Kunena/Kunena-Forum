@@ -655,7 +655,8 @@ abstract class KunenaUserHelper
 		{
 			return -1;
 		}
-		elseif ($online && self::$_online [$user->userid]->time < time() - 30)
+
+		if ($online && self::$_online [$user->userid]->time < time() - 30)
 		{
 			return 1;
 		}
@@ -866,9 +867,7 @@ abstract class KunenaUserHelper
 
 			return $response;
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 }

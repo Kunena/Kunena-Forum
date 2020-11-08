@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -37,10 +38,11 @@ use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -264,13 +266,13 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  User\KunenaTopicUser
+	 * @return  KunenaTopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserTopic($user = null): User\KunenaTopicUser
+	public function getUserTopic($user = null): KunenaTopicUser
 	{
 		return KunenaTopicUserHelper::get($this, $user);
 	}
@@ -590,7 +592,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param   KunenaMessage  $message    message
-	 * @param   int      $postdelta  postdelta
+	 * @param   int            $postdelta  postdelta
 	 *
 	 * @return  boolean
 	 *
@@ -1109,19 +1111,19 @@ class KunenaTopic extends KunenaDatabaseObject
 			$direction = ($direction == 'asc' ? 'both' : 0);
 		}
 
-		return MessageHelper::getLocation($mesid, $direction, $hold);
+		return KunenaMessageHelper::getLocation($mesid, $direction, $hold);
 	}
 
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  User\KunenaTopicUser
+	 * @return  KunenaTopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserInfo($user = null): User\TKunenaopicUser
+	public function getUserInfo($user = null): KunenaTopicUser
 	{
 		return KunenaTopicUserHelper::get($this->id, $user);
 	}
@@ -1193,7 +1195,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			}
 
 			$ids[$topic->moved_id] = 1;
-			$topic                 = TopicHelper::get($topic->moved_id);
+			$topic                 = KunenaTopicHelper::get($topic->moved_id);
 		}
 
 		return $topic;
@@ -1275,8 +1277,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   KunenaCategory  $category  category
-	 * @param   bool      $xhtml     xhtml
-	 * @param   string    $action    action
+	 * @param   bool            $xhtml     xhtml
+	 * @param   string          $action    action
 	 *
 	 * @return  boolean
 	 *
@@ -1591,7 +1593,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @param   string  $subject       New subject
 	 * @param   bool    $subjectall    Change subject from every message
 	 * @param   null    $topic_iconid  Define a new topic icon
-	 * @param   int     $keep_poll     Define if you want keep the poll to the original topic or to the splitted topic
+	 * @param   int     $keep_poll     Define if you want keep the poll to the original topic or to the split topic
 	 *
 	 * @return  boolean|KunenaCategory|KunenaTopic    Target \Kunena\Forum\Libraries\Forum\Category\Category or
 	 *                                    \Kunena\Forum\Libraries\Forum\Topic\Topic or false on failure
@@ -1674,7 +1676,8 @@ class KunenaTopic extends KunenaDatabaseObject
 
 			return false;
 		}
-		elseif ($target instanceof Topic)
+
+		if ($target instanceof KunenaTopic)
 		{
 			// Move messages into another topic (original topic will always remain, either as real one or shadow)
 
@@ -1707,7 +1710,8 @@ class KunenaTopic extends KunenaDatabaseObject
 				$subject = $target->subject;
 			}
 		}
-		elseif ($target instanceof Category)
+
+		if ($target instanceof KunenaCategory)
 		{
 			// Move messages into category
 
@@ -1915,7 +1919,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			// Move topic into another category
 
 			// Update user topic information (topic, category)
-			TopicUserHelper::move($this, $target);
+			KunenaTopicUserHelper::move($this, $target);
 
 			// TODO: do we need this?
 			// \Kunena\Forum\Libraries\Forum\Topic\\Kunena\Forum\Libraries\Forum\Topic\User\Read\Helper::move($this, $target);

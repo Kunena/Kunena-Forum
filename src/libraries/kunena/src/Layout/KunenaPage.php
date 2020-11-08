@@ -130,7 +130,7 @@ class KunenaPage extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 */
-	public function execute($path, Input $input = null, $options = null)
+	public function execute($path, Input $input = null, $options = null): KunenaLayout
 	{
 		return $this->request($path, $input, $options)->execute();
 	}

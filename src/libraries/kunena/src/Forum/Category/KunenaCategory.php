@@ -394,7 +394,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserInfo($user = null)
+	public function getUserInfo($user = null): KunenaCategoryUser
 	{
 		return KunenaCategoryUserHelper::get($this->id, $user);
 	}
@@ -514,7 +514,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 */
-	public function getNewTopicCategory($user = null)
+	public function getNewTopicCategory($user = null): KunenaCategory
 	{
 		foreach ($this->getChannels() as $category)
 		{
@@ -577,13 +577,13 @@ class KunenaCategory extends KunenaDatabaseObject
 				if (!empty($ids))
 				{
 					// More category channels
-					$this->_channels['none'] += CategoryHelper::getCategories(array_keys($ids), null, 'none');
+					$this->_channels['none'] += KunenaCategoryHelper::getCategories(array_keys($ids), null, 'none');
 				}
 
 				if (isset($ids['CHILDREN']))
 				{
 					// Children category channels
-					$this->_channels['none'] += CategoryHelper::getChildren($this->id, 1, [$action => 'none']);
+					$this->_channels['none'] += KunenaCategoryHelper::getChildren($this->id, 1, [$action => 'none']);
 				}
 			}
 		}
@@ -684,7 +684,7 @@ class KunenaCategory extends KunenaDatabaseObject
 			// Load custom authorisation from the plugins (except for admins and moderators).
 			if (!$user->isModerator($this) && !isset($this->authorised[$user->userid]))
 			{
-				$this->authorised[$user->userid] = Access::getInstance()->authoriseActions($this, $user->userid);
+				$this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
 			}
 
 			if (isset($this->authorised[$user->userid][$action])
@@ -863,9 +863,9 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function displayField($field)
+	public function displayField(string $field)
 	{
 		switch ($field)
 		{
@@ -1511,9 +1511,9 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function trash($time, $params = [], $limit = 1000)
+	public function trash(int $time, $params = [], $limit = 1000): int
 	{
 		// FIXME: why time isn't used?
 		if (!$this->exists())
@@ -2001,7 +2001,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseNotBanned(KunenaUser $user)
+	protected function authoriseNotBanned(KunenaUser $user): KunenaAuthorise
 	{
 		$banned = $user->isBanned();
 
@@ -2011,11 +2011,11 @@ class KunenaCategory extends KunenaDatabaseObject
 
 			if (!$banned->isLifetime())
 			{
-				return new Authorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+				return new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
 			else
 			{
-				return new Authorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 			}
 		}
 

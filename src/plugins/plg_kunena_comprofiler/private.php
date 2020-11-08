@@ -40,7 +40,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -147,7 +147,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getCBUserid()
+	protected function getCBUserid(): int
 	{
 		global $_CB_framework;
 

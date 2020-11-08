@@ -85,7 +85,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * Method to check if TFA is enabled when user ins't logged
+	 * Method to check if TFA is enabled when user isn't logged
 	 *
 	 * @return  integer
 	 *

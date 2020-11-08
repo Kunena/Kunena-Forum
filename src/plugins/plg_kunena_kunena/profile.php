@@ -19,7 +19,8 @@ use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -27,11 +28,11 @@ use RuntimeException;
 use function defined;
 
 /**
- * Class \Kunena\Forum\Libraries\Integration\Profile
+ * Class KunenaProfile
  *
  * @since   Kunena 6.0
  */
-class KunenaProfile extends Profile
+class KunenaIntegrationProfile extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -44,7 +45,7 @@ class KunenaProfile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -121,7 +122,7 @@ class KunenaProfile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile(string $view, object $params)
 	{
 	}
 
@@ -133,10 +134,10 @@ class KunenaProfile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		$avatartab = '&avatartab=1';
 
@@ -153,10 +154,10 @@ class KunenaProfile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
+	public function getProfileURL(int $user, $task = '', $xhtml = true, $avatarTab = '')
 	{
 		if ($user == 0)
 		{
@@ -182,18 +183,14 @@ class KunenaProfile extends Profile
 
 			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
 		}
-		else
-		{
-			$layout = $task ? '&layout=' . $task : '';
 
-			if ($layout)
-			{
-				return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}{$avatarTab}", $xhtml);
-			}
-			else
-			{
-				return KunenaRoute::getUserUrl($user, $xhtml);
-			}
+		$layout = $task ? '&layout=' . $task : '';
+
+		if ($layout)
+		{
+			return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}{$avatarTab}", $xhtml);
 		}
+
+		return KunenaRoute::getUserUrl($user, $xhtml);
 	}
 }

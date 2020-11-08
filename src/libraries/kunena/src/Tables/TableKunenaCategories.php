@@ -372,7 +372,8 @@ class TableKunenaCategories extends KunenaTable
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
-			elseif ($this->isChild($this->parent_id))
+
+			if ($this->isChild($this->parent_id))
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
@@ -484,10 +485,8 @@ class TableKunenaCategories extends KunenaTable
 
 			return $success;
 		}
-		else
-		{
-			return parent::reorder($where);
-		}
+
+		return parent::reorder($where);
 	}
 
 	/**

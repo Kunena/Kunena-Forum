@@ -35,7 +35,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object &$subject, object $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
@@ -78,7 +78,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar()
+	public function onKunenaGetAvatar(): AvatarEasyprofile
 	{
 		if (!$this->params->get('avatar', 1))
 		{
@@ -95,7 +95,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile()
+	public function onKunenaGetProfile(): KunenaProfileEasyprofile
 	{
 		if (!$this->params->get('profile', 1))
 		{

@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -38,7 +39,7 @@ abstract class KunenaTopicUserHelper
 	protected static $_instances = [];
 
 	/**
-	 * @var     array|TopicUser[]
+	 * @var     array|KunenaTopicUser[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_topics = [];
@@ -53,8 +54,8 @@ abstract class KunenaTopicUserHelper
 	 * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicUser object.
 	 *
 	 * @param   KunenaTopic|int|null  $topic   topic
-	 * @param   mixed           $user    user
-	 * @param   bool            $reload  reload
+	 * @param   mixed                 $user    user
+	 * @param   bool                  $reload  reload
 	 *
 	 * @return  KunenaTopicUser
 	 *
@@ -104,7 +105,8 @@ abstract class KunenaTopicUserHelper
 		{
 			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : [];
 		}
-		elseif (!is_array($ids))
+
+		if (!is_array($ids))
 		{
 			$ids = [$ids];
 		}
@@ -112,7 +114,7 @@ abstract class KunenaTopicUserHelper
 		// Convert topic objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof Topic)
+			if ($id instanceof KunenaTopic)
 			{
 				$ids[$i] = $id->id;
 			}
@@ -195,7 +197,7 @@ abstract class KunenaTopicUserHelper
 			}
 			else
 			{
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new TopicUser($id, $user->userid);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaTopicUser($id, $user->userid);
 			}
 		}
 
@@ -206,7 +208,7 @@ abstract class KunenaTopicUserHelper
 	 * Get all user ids who have participated to the given topics.
 	 *
 	 * @param   array|KunenaTopic[]  $topics  topics
-	 * @param   string         $value   Row to pick up as value.
+	 * @param   string               $value   Row to pick up as value.
 	 *
 	 * @return  array List of [topic][userid] = value.
 	 *

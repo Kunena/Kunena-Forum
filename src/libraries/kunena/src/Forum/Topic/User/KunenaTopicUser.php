@@ -240,7 +240,7 @@ class KunenaTopicUser extends CMSObject
 
 	/**
 	 * @param   KunenaMessage|null  $message    message
-	 * @param   int           $postDelta  postdelta
+	 * @param   int                 $postDelta  postdelta
 	 *
 	 * @return  boolean|void
 	 *

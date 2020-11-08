@@ -28,7 +28,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic as KunenaTopicAlias;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -267,13 +267,15 @@ abstract class KunenaRoute
 
 			return false;
 		}
-		elseif ($option && $option != 'com_kunena')
+
+		if ($option && $option != 'com_kunena')
 		{
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return false;
 		}
-		elseif ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena'))
+
+		if ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena'))
 		{
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -629,10 +631,8 @@ abstract class KunenaRoute
 
 			return $matchcount;
 		}
-		else
-		{
-			return 1;
-		}
+
+		return 1;
 	}
 
 	/**
@@ -781,10 +781,8 @@ abstract class KunenaRoute
 				// Use default routing in administration
 				return Route::_(substr($uri, 14), $xhtml, $ssl);
 			}
-			else
-			{
-				return Uri::root(true) . "/{$uri}";
-			}
+
+			return Uri::root(true) . "/{$uri}";
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -1110,16 +1108,16 @@ abstract class KunenaRoute
 
 	/**
 	 * @param   KunenaCategory  $category  category
-	 * @param   bool      $xhtml     xhtml
+	 * @param   bool            $xhtml     xhtml
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	public static function getCategoryUrl(KunenaCategory $category, $xhtml = true)
+	public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true): bool
 	{
 		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
@@ -1194,16 +1192,14 @@ abstract class KunenaRoute
 		{
 			return $items[0]->id;
 		}
-		else
-		{
-			return 0;
-		}
+
+		return 0;
 	}
 
 	/**
-	 * @param   KunenaTopic          $topic     topic
-	 * @param   bool           $xhtml     xhtml
-	 * @param   null           $action    actions
+	 * @param   KunenaTopicAlias     $topic     topic
+	 * @param   bool                 $xhtml     xhtml
+	 * @param   null                 $action    actions
 	 * @param   KunenaCategory|null  $category  category
 	 *
 	 * @return  boolean
@@ -1212,7 +1208,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 */
-	public static function getTopicUrl(KunenaTopic $topic, $xhtml = true, $action = null, KunenaCategory $category = null)
+	public static function getTopicUrl(KunenaTopicAlias $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null): bool
 	{
 		if (!$category)
 		{
@@ -1223,10 +1219,10 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaMessage        $message   message
-	 * @param   bool           $xhtml     xhtml
-	 * @param   KunenaTopic|null     $topic     topic
-	 * @param   KunenaCategory|null  $category  category
+	 * @param   KunenaMessage          $message   message
+	 * @param   bool                   $xhtml     xhtml
+	 * @param   KunenaTopicAlias|null  $topic     topic
+	 * @param   KunenaCategory|null    $category  category
 	 *
 	 * @return  boolean
 	 *
@@ -1234,7 +1230,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 */
-	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopic $topic = null, KunenaCategory $category = null)
+	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopicAlias $topic = null, KunenaCategory $category = null)
 	{
 		// FIXME: not yet fully implemented...
 		if (!$category)
@@ -1281,7 +1277,7 @@ abstract class KunenaRoute
 		// Replace double byte whitespaces by single byte (East Asian languages)
 		$str = preg_replace('/\xE3\x80\x80/', ' ', $string);
 
-		// Remove any '-' from the string as they will be used as concatenator.
+		// Remove any '-' from the string as they will be used as concatenated.
 		// Would be great to let the spaces in but only Firefox is friendly with this
 
 		$str = str_replace('-', ' ', $str);

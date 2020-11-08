@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Activity;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use function defined;
 
 /**
@@ -28,7 +28,7 @@ use function defined;
  *
  * @since    Kunena 6.0
  */
-class KunenaActivityEasySocial extends Activity
+class KunenaActivityEasySocial extends KunenaActivity
 {
 	/**
 	 * @var     null
@@ -42,9 +42,9 @@ class KunenaActivityEasySocial extends Activity
 	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 
@@ -58,7 +58,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterPost($message)
+	public function onAfterPost(string $message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
@@ -90,7 +90,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function assignPoints($command, $target = null)
+	public function assignPoints(string $command, $target = null)
 	{
 		$user = FD::user($target);
 
@@ -108,7 +108,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function assignBadge($command, $message, $target = null)
+	public function assignBadge(string $command, string $message, $target = null)
 	{
 		$user  = FD::user($target);
 		$badge = FD::badges();
@@ -129,9 +129,9 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @access    public
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onAfterReply($message)
+	public function onAfterReply(string $message): void
 	{
 		$length = StringHelper::strlen($message->message);
 
@@ -193,9 +193,9 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @access    public
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getSubscribers($message)
+	public function getSubscribers(string $message)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -203,7 +203,8 @@ class KunenaActivityEasySocial extends Activity
 		{
 			return false;
 		}
-		elseif ($message->hold == 1)
+
+		if ($message->hold == 1)
 		{
 			$mailsubs   = 0;
 			$mailmods   = $config->mailmod >= 0;
@@ -244,7 +245,7 @@ class KunenaActivityEasySocial extends Activity
 
 		// Get all subscribers, moderators and admins who will get the email
 		$me          = Helper::get();
-		$acl         = Access::getInstance();
+		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
 		if (!$subscribers)
@@ -274,7 +275,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterThankyou($actor, $target, $message)
+	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
@@ -301,7 +302,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onBeforeDeleteTopic($target)
+	public function onBeforeDeleteTopic(object $target): void
 	{
 		FD::stream()->delete($target->id, 'thread.new');
 	}
@@ -313,7 +314,7 @@ class KunenaActivityEasySocial extends Activity
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function onAfterDeleteTopic($topic)
+	public function onAfterDeleteTopic(object $topic): void
 	{
 		FD::stream()->delete($topic->id, 'thread.new');
 	}

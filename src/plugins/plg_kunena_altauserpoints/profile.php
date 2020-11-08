@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use RuntimeException;
 use function defined;
 
@@ -27,7 +27,7 @@ use function defined;
  *
  * @since  5.0
  */
-class KunenaProfileAltaUserPoints extends Profile
+class KunenaProfileAltaUserPoints extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -120,9 +120,9 @@ class KunenaProfileAltaUserPoints extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, '', $xhtml);
 	}

@@ -20,6 +20,7 @@ use Joomla\CMS\User\User;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -352,7 +353,7 @@ class KunenaTopicFinder extends KunenaFinder
 	{
 		$results = parent::find();
 
-		return TopicHelper::getTopics($results, $access);
+		return KunenaTopicHelper::getTopics($results, $access);
 	}
 
 	/**

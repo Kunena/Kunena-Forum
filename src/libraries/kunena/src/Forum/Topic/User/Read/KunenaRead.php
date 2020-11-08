@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -128,9 +129,9 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	public function getTopic()
+	public function getTopic(): KunenaRead
 	{
-		return TopicUserReadHelper::get($this->topic_id);
+		return KunenaTopicUserReadHelper::get($this->topic_id);
 	}
 
 	/**

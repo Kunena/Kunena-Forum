@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -25,7 +25,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatarGravatar extends Avatar
+class KunenaAvatarGravatar extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -40,10 +40,10 @@ class KunenaAvatarGravatar extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
-		require_once dirname(__FILE__) . '/gravatar.php';
+		require_once __DIR__ . '/gravatar.php';
 	}
 
 	/**
@@ -68,9 +68,9 @@ class KunenaAvatarGravatar extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	protected function _getURL(int $user, int $sizex, int $sizey)
 	{
 		$user     = KunenaFactory::getUser($user);
 		$gravatar = new KunenaGravatar($user->email);

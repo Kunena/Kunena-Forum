@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -27,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileEasyprofile extends Profile
+class KunenaProfileEasyprofile extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -42,7 +42,7 @@ class KunenaProfileEasyprofile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -67,14 +67,13 @@ class KunenaProfileEasyprofile extends Profile
 		{
 			return false;
 		}
-		elseif ($this->params->get('userlist', 0) == 0)
+
+		if ($this->params->get('userlist', 0) == 0)
 		{
 			return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list' . $action, $xhtml);
 		}
-		else
-		{
-			return Route::_('index.php?option=com_jsn&view=list&Itemid=' . $this->params->get('menuitem', ''), false);
-		}
+
+		return Route::_('index.php?option=com_jsn&view=list&Itemid=' . $this->params->get('menuitem', ''), false);
 	}
 
 	/**
@@ -85,7 +84,7 @@ class KunenaProfileEasyprofile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile(object $view, object $params)
 	{
 	}
 
@@ -97,7 +96,7 @@ class KunenaProfileEasyprofile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
@@ -111,7 +110,7 @@ class KunenaProfileEasyprofile extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true)
 	{
 		// Make sure that user profile exist.
 		if (!$userid || JsnHelper::getUser($userid) === null)

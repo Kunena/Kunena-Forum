@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use function defined;
 
 /**
@@ -26,7 +26,7 @@ use function defined;
  *
  * @since       Kunena 6.0
  */
-class KunenaProfileEasySocial extends Profile
+class KunenaProfileEasySocial extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -41,7 +41,7 @@ class KunenaProfileEasySocial extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -78,7 +78,7 @@ class KunenaProfileEasySocial extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true)
 	{
 		if ($userid)
 		{
@@ -132,7 +132,7 @@ class KunenaProfileEasySocial extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile(object $view, object $params)
 	{
 		$userid = $view->profile->userid;
 
@@ -180,7 +180,7 @@ class KunenaProfileEasySocial extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLegacyDate($birthday)
+	public function getLegacyDate(int $birthday)
 	{
 		$birthday = json_decode($birthday);
 		$birthday = FD::date($birthday->day . '-' . $birthday->month . '-' . $birthday->year);
@@ -196,7 +196,7 @@ class KunenaProfileEasySocial extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		$options = ['layout' => 'edit'];
 

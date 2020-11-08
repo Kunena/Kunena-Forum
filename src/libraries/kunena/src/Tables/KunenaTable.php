@@ -16,6 +16,7 @@ use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use RuntimeException;
 use UnexpectedValueException;
 use function defined;
@@ -85,7 +86,8 @@ abstract class KunenaTable extends Table
 			{
 				throw new RuntimeException('No table keys defined.');
 			}
-			elseif ($keyCount > 1)
+
+			if ($keyCount > 1)
 			{
 				throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
 			}
@@ -188,7 +190,7 @@ abstract class KunenaTable extends Table
 			}
 			catch (Exception $e)
 			{
-				throw new Exception($e->getMessage());
+				throw new KunenaException($e->getMessage());
 			}
 		}
 		else
@@ -199,7 +201,7 @@ abstract class KunenaTable extends Table
 			}
 			catch (Exception $e)
 			{
-				throw new Exception($e->getMessage());
+				throw new KunenaException($e->getMessage());
 			}
 		}
 
@@ -325,7 +327,7 @@ abstract class KunenaTable extends Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			throw new Exception($e->getMessage());
+			throw new KunenaException($e->getMessage());
 
 			return false;
 		}
@@ -400,7 +402,7 @@ abstract class KunenaTable extends Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			throw new Exception($e->getMessage());
+			throw new KunenaException($e->getMessage());
 
 			return false;
 		}
@@ -488,7 +490,7 @@ abstract class KunenaTable extends Table
 			// Catch any database errors.
 			$this->_db->transactionRollback();
 
-			throw new Exception($e->getMessage());
+			throw new KunenaException($e->getMessage());
 
 			return false;
 		}

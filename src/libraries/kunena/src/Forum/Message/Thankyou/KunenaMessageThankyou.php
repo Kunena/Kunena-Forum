@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -57,7 +58,7 @@ class KunenaMessageThankyou extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($id)
+	public function __construct(int $id)
 	{
 		$this->id = (int) $id;
 
@@ -110,22 +111,22 @@ class KunenaMessageThankyou extends CMSObject
 
 		if (!$user->exists())
 		{
-			throw new Exception(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
 		}
 
 		if ($user->userid == $message->userid)
 		{
-			throw new Exception(Text::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
+			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
 		}
 
 		if ($this->exists($user->userid))
 		{
-			throw new Exception(Text::_('COM_KUNENA_THANKYOU_ALLREADY'));
+			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_ALLREADY'));
 		}
 
 		if ($user->isBanned())
 		{
-			throw new Exception(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
+			throw new KunenaException(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 		}
 
 		$db    = Factory::getDBO();
@@ -227,12 +228,12 @@ class KunenaMessageThankyou extends CMSObject
 
 		if (!$user->exists())
 		{
-			throw new Exception(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
+			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_LOGIN'));
 		}
 
 		if (!$this->exists($user->userid))
 		{
-			throw new Exception(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
+			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 		}
 
 		$db    = Factory::getDBO();

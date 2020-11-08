@@ -37,12 +37,12 @@ class KunenaEntry
 	public $data;
 
 	/**
-	 * @param   mixed            $type       type
-	 * @param   mixed            $operation  operation
-	 * @param   mixed            $data       data
-	 * @param   KunenaCategory|null    $category   category
-	 * @param   KunenaTopic|null       $topic      topic
-	 * @param   KunenaUser|null  $user       user
+	 * @param   mixed                $type       type
+	 * @param   mixed                $operation  operation
+	 * @param   mixed                $data       data
+	 * @param   KunenaCategory|null  $category   category
+	 * @param   KunenaTopic|null     $topic      topic
+	 * @param   KunenaUser|null      $user       user
 	 *
 	 * @since   Kunena 5.0
 	 *

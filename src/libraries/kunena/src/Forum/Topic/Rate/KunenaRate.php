@@ -111,9 +111,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function load($id): bool
+	public function load(int $id): bool
 	{
 		// Create the table object
 		$table = $this->getTable();
@@ -182,9 +182,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @since    Kunena 2.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function save($user)
+	public function save(string $user)
 	{
 		$user  = KunenaFactory::getUser($user);
 		$topic = KunenaTopicHelper::get($this->topic_id);

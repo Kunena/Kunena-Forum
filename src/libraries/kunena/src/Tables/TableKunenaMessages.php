@@ -258,7 +258,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function check()
+	public function check(): bool
 	{
 		$category = KunenaCategoryHelper::get($this->catid);
 
@@ -267,11 +267,8 @@ class TableKunenaMessages extends KunenaTable
 			// TODO: maybe we should have own error message? or not?
 			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
 		}
-		else
-		{
-			$this->catid = $category->id;
-		}
 
+		$this->catid   = $category->id;
 		$this->subject = trim($this->subject);
 
 		if (!$this->subject)

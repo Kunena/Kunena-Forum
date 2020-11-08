@@ -58,7 +58,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-arrow-down hasTooltip" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-down');
+		return KunenaSvgIcons::loadsvg('arrow-down');
 	}
 
 	/**
@@ -90,7 +90,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-arrow-up hasTooltip" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-up');
+		return KunenaSvgIcons::loadsvg('arrow-up');
 	}
 
 	/**
@@ -127,7 +127,7 @@ class KunenaIcons
 			return '<span class="kicon kforumtop"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-down');
+		return KunenaSvgIcons::loadsvg('arrow-down');
 	}
 
 	/**
@@ -164,7 +164,7 @@ class KunenaIcons
 			return '<span class="kicon kforumbottom"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-up');
+		return KunenaSvgIcons::loadsvg('arrow-up');
 	}
 
 	/**
@@ -196,7 +196,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-right');
+		return KunenaSvgIcons::loadsvg('arrow-right');
 	}
 
 	/**
@@ -228,7 +228,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-user glyphicon-super" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('people');
+		return KunenaSvgIcons::loadsvg('people');
 	}
 
 	/**
@@ -260,7 +260,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('person');
+		return KunenaSvgIcons::loadsvg('person');
 	}
 
 	/**
@@ -292,7 +292,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('lock');
+		return KunenaSvgIcons::loadsvg('lock');
 	}
 
 	/**
@@ -329,7 +329,7 @@ class KunenaIcons
 			return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('star');
+		return KunenaSvgIcons::loadsvg('star');
 	}
 
 	/**
@@ -361,7 +361,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('eye-slash');
+		return KunenaSvgIcons::loadsvg('eye-slash');
 	}
 
 	/**
@@ -398,7 +398,7 @@ class KunenaIcons
 			return '<span class="kicon ktopicmy ksmall"></span>';
 		}
 
-		return SvgIcons::loadsvg('flag');
+		return KunenaSvgIcons::loadsvg('flag');
 	}
 
 	/**
@@ -430,7 +430,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('kanban');
+		return KunenaSvgIcons::loadsvg('kanban');
 	}
 
 	/**
@@ -462,7 +462,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-stats glyphicon-super" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('bar-chart');
+		return KunenaSvgIcons::loadsvg('bar-chart');
 	}
 
 	/**
@@ -494,7 +494,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('search');
+		return KunenaSvgIcons::loadsvg('search');
 	}
 
 	/**
@@ -526,7 +526,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-sort" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrows-collapse');
+		return KunenaSvgIcons::loadsvg('arrows-collapse');
 	}
 
 	/**
@@ -558,7 +558,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-time" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('clock');
+		return KunenaSvgIcons::loadsvg('clock');
 	}
 
 	/**
@@ -590,7 +590,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('heart-fill');
+		return KunenaSvgIcons::loadsvg('heart-fill');
 	}
 
 	/**
@@ -622,7 +622,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-shield" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('shield');
+		return KunenaSvgIcons::loadsvg('shield');
 	}
 
 	/**
@@ -654,7 +654,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('x-circle');
+		return KunenaSvgIcons::loadsvg('x-circle');
 	}
 
 	/**
@@ -691,7 +691,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-compass" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('compass');
+		return KunenaSvgIcons::loadsvg('compass');
 	}
 
 	/**
@@ -728,7 +728,7 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('envelope');
+		return KunenaSvgIcons::loadsvg('envelope');
 	}
 
 	/**
@@ -760,7 +760,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('bookmark');
+		return KunenaSvgIcons::loadsvg('bookmark');
 	}
 
 	/**
@@ -792,7 +792,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-left');
+		return KunenaSvgIcons::loadsvg('arrow-left');
 	}
 
 	/**
@@ -824,7 +824,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-save" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('check-circle');
+		return KunenaSvgIcons::loadsvg('check-circle');
 	}
 
 	/**
@@ -856,7 +856,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('pencil');
+		return KunenaSvgIcons::loadsvg('pencil');
 	}
 
 	/**
@@ -888,7 +888,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('pencil');
+		return KunenaSvgIcons::loadsvg('pencil');
 	}
 
 	/**
@@ -925,7 +925,7 @@ class KunenaIcons
 			return '<span class="kicon ktopicattach ksmall"></span>';
 		}
 
-		return SvgIcons::loadsvg('images');
+		return KunenaSvgIcons::loadsvg('images');
 	}
 
 	/**
@@ -957,7 +957,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('plus');
+		return KunenaSvgIcons::loadsvg('plus');
 	}
 
 	/**
@@ -992,7 +992,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-list-alt ' . $class . '" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('rss');
+		return KunenaSvgIcons::loadsvg('rss');
 	}
 
 	/**
@@ -1024,7 +1024,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('upload');
+		return KunenaSvgIcons::loadsvg('upload');
 	}
 
 	/**
@@ -1063,7 +1063,7 @@ class KunenaIcons
 			return '<span class="large-kicon glyphicon glyphicon-picture' . $big . '" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('image');
+		return KunenaSvgIcons::loadsvg('image');
 	}
 
 	/**
@@ -1102,7 +1102,7 @@ class KunenaIcons
 			return '<span class="large-kicon glyphicon glyphicon-file' . $big . '" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('document-richtext');
+		return KunenaSvgIcons::loadsvg('document-richtext');
 	}
 
 	/**
@@ -1134,7 +1134,7 @@ class KunenaIcons
 			return '<span class="large-kicon glyphicon glyphicon-trash" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('trash');
+		return KunenaSvgIcons::loadsvg('trash');
 	}
 
 	/**
@@ -1169,7 +1169,7 @@ class KunenaIcons
 						alt="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 
-		return SvgIcons::loadsvg('pie-chart-fill');
+		return KunenaSvgIcons::loadsvg('pie-chart-fill');
 	}
 
 	/**
@@ -1204,7 +1204,7 @@ class KunenaIcons
 						alt="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i>';
 		}
 
-		return SvgIcons::loadsvg('bar-chart');
+		return KunenaSvgIcons::loadsvg('bar-chart');
 	}
 
 	/**
@@ -1241,7 +1241,7 @@ class KunenaIcons
 			return '<span class="kicon-reply" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-clockwise');
+		return KunenaSvgIcons::loadsvg('arrow-clockwise');
 	}
 
 	/**
@@ -1273,7 +1273,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-random" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('arrow-repeat');
+		return KunenaSvgIcons::loadsvg('arrow-repeat');
 	}
 
 	/**
@@ -1443,11 +1443,11 @@ class KunenaIcons
 			{
 				if ($newchar)
 				{
-					return SvgIcons::loadsvg('folder-fill');
+					return KunenaSvgIcons::loadsvg('folder-fill');
 				}
 				else
 				{
-					return SvgIcons::loadsvg('folder');
+					return KunenaSvgIcons::loadsvg('folder');
 				}
 			}
 			else
@@ -1456,7 +1456,7 @@ class KunenaIcons
 
 				if ($svg)
 				{
-					return SvgIcons::loadsvg($categoryicon);
+					return KunenaSvgIcons::loadsvg($categoryicon);
 				}
 				else
 				{
@@ -1502,7 +1502,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-home hasTooltip" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('house');
+		return KunenaSvgIcons::loadsvg('house');
 	}
 
 	/**
@@ -1534,7 +1534,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('calendar');
+		return KunenaSvgIcons::loadsvg('calendar');
 	}
 
 	/**
@@ -1566,7 +1566,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-large glyphicon-menu-hamburger" aria-hidden="true"></span> <b class="caret"></b>';
 		}
 
-		return SvgIcons::loadsvg('three-dots-vertical');
+		return KunenaSvgIcons::loadsvg('three-dots-vertical');
 	}
 
 	/**
@@ -1598,7 +1598,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('alert-circle');
+		return KunenaSvgIcons::loadsvg('alert-circle');
 	}
 
 	/**
@@ -1630,7 +1630,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('plus');
+		return KunenaSvgIcons::loadsvg('plus');
 	}
 
 	/**
@@ -1662,7 +1662,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-plus yellow" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('plus');
+		return KunenaSvgIcons::loadsvg('plus');
 	}
 
 	/**
@@ -1694,7 +1694,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('dash');
+		return KunenaSvgIcons::loadsvg('dash');
 	}
 
 	/**
@@ -1726,7 +1726,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-minus grey" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('dash');
+		return KunenaSvgIcons::loadsvg('dash');
 	}
 
 	/**
@@ -1758,7 +1758,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('gear');
+		return KunenaSvgIcons::loadsvg('gear');
 	}
 
 	/**
@@ -1790,7 +1790,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('inbox');
+		return KunenaSvgIcons::loadsvg('inbox');
 	}
 
 	/**
@@ -1822,7 +1822,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('power');
+		return KunenaSvgIcons::loadsvg('power');
 	}
 
 	/**
@@ -1854,7 +1854,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-th" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('grid');
+		return KunenaSvgIcons::loadsvg('grid');
 	}
 
 	/**
@@ -1891,7 +1891,7 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-website" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('window');
+		return KunenaSvgIcons::loadsvg('window');
 	}
 
 	/**
@@ -1928,7 +1928,7 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-location" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('geo');
+		return KunenaSvgIcons::loadsvg('geo');
 	}
 
 	/**
@@ -1965,7 +1965,7 @@ class KunenaIcons
 			return '<span class="kicon-profile kicon-profile-pm" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('chat');
+		return KunenaSvgIcons::loadsvg('chat');
 	}
 
 	/**
@@ -2002,7 +2002,7 @@ class KunenaIcons
 			return '<span class="kicon-report" aria-hidden="true"></span>';
 		}
 
-		return SvgIcons::loadsvg('alert-octagon');
+		return KunenaSvgIcons::loadsvg('alert-octagon');
 	}
 
 	/**

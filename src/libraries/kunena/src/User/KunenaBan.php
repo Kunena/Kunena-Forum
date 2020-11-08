@@ -25,6 +25,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use stdClass;
 use function defined;
@@ -775,7 +776,7 @@ class KunenaBan extends parentAlias
 		}
 		catch (Exception $e)
 		{
-			throw new Exception($e->getMessage());
+			throw new KunenaException($e->getMessage());
 		}
 
 		$user = Factory::getUser($this->userid);
@@ -881,27 +882,27 @@ class KunenaBan extends parentAlias
 
 		if (!$me->isModerator())
 		{
-			throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
+			throw new KunenaException(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 		}
 
 		if (!$user->exists())
 		{
-			throw new Exception(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
+			throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
 		}
 
 		if ($userid == $me->userid)
 		{
-			throw new Exception(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
+			throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF'));
 		}
 
 		if ($user->isAdmin())
 		{
-			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
+			throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
 		}
 
 		if ($user->isModerator() && !$me->isAdmin())
 		{
-			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
+			throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
 		}
 
 		return true;

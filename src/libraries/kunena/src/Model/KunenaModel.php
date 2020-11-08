@@ -217,10 +217,8 @@ class KunenaModel extends BaseDatabaseModel
 			{
 				return $this->input->get($name, $default, $type);
 			}
-			else
-			{
-				return $this->input->{$hash}->get($name, $default, $type);
-			}
+
+			return $this->input->{$hash}->get($name, $default, $type);
 		}
 
 		return $this->filter->clean($this->params->get($name, $default), $type);

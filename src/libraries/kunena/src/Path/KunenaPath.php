@@ -92,12 +92,7 @@ class KunenaPath extends Path
 	 */
 	public static function isWritable(string $path): bool
 	{
-		if (is_writable($path) || self::isOwner($path))
-		{
-			return true;
-		}
-
-		return false;
+		return is_writable($path) || self::isOwner($path);
 	}
 
 	/**

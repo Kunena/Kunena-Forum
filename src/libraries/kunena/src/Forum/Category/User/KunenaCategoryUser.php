@@ -120,7 +120,7 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	public static function getInstance($id = null, $user = null, $reload = false)
+	public static function getInstance($id = null, $user = null, $reload = false): KunenaCategoryUser
 	{
 		return KunenaCategoryUserHelper::get($id, $user, $reload);
 	}

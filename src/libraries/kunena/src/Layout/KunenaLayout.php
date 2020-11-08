@@ -189,20 +189,20 @@ class KunenaLayout extends KunenaBase
 
 	/**
 	 * @param   KunenaCategory  $category   category
-	 * @param   null      $content    content
-	 * @param   null      $title      title
-	 * @param   null      $class      class
-	 * @param   bool      $follow     follow
-	 * @param   null      $canonical  canonical
+	 * @param   null            $content    content
+	 * @param   null            $title      title
+	 * @param   null            $class      class
+	 * @param   bool            $follow     follow
+	 * @param   null            $canonical  canonical
 	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
+	 * @throws null
 	 */
-	public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
+	public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null, bool $follow = true, $canonical = null)
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -254,13 +254,13 @@ class KunenaLayout extends KunenaBase
 
 	/**
 	 * @param   KunenaTopic          $topic      topic
-	 * @param   null           $action     action
-	 * @param   null           $content    content
-	 * @param   null           $title      title
-	 * @param   null           $class      class
+	 * @param   null                 $action     action
+	 * @param   null                 $content    content
+	 * @param   null                 $title      title
+	 * @param   null                 $class      class
 	 * @param   KunenaCategory|null  $category   category
-	 * @param   bool           $follow     follow
-	 * @param   bool           $canonical  canonical
+	 * @param   bool                 $follow     follow
+	 * @param   bool                 $canonical  canonical
 	 *
 	 * @return  mixed
 	 *
@@ -268,7 +268,7 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @throws Exception
 	 */
-	public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null, $follow = true, $canonical = false)
+	public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null, bool $follow = true, bool $canonical = false)
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

@@ -100,7 +100,7 @@ class KunenaGravatar
 	 * @return  void $email
 	 * @since   Kunena 6.0
 	 */
-	public function setEmail($email)
+	public function setEmail(string $email): void
 	{
 		$this->email = $email;
 	}
@@ -114,7 +114,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function setExtra($extra)
+	public function setExtra(string $extra): void
 	{
 		$this->extra = $extra;
 	}
@@ -130,7 +130,7 @@ class KunenaGravatar
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function setAvatarSize($size)
+	public function setAvatarSize(int $size): KunenaGravatar
 	{
 		// Wipe out the param cache.
 		$this->param_cache = null;
@@ -159,7 +159,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLink($hash_email)
+	public function getLink(string $hash_email): string
 	{
 		$gravatarURL = $this->buildGravatarURL($hash_email);
 
@@ -176,7 +176,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function buildGravatarURL($hash_email = true)
+	public function buildGravatarURL($hash_email = true): string
 	{
 		if ($this->usingSecureURL())
 		{
@@ -237,7 +237,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function usingSecureURL()
+	public function usingSecureURL(): bool
 	{
 		$uri = Uri::getInstance();
 
@@ -245,10 +245,8 @@ class KunenaGravatar
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -260,7 +258,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEmailHash($email)
+	public function getEmailHash(string $email): string
 	{
 		// Using md5 as per gravatar docs.
 		return hash('md5', strtolower(trim($email)));
@@ -273,7 +271,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getAvatarSize()
+	public function getAvatarSize(): int
 	{
 		return $this->size;
 	}
@@ -285,7 +283,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getMaxRating()
+	public function getMaxRating(): string
 	{
 		return $this->max_rating;
 	}
@@ -301,7 +299,7 @@ class KunenaGravatar
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function setMaxRating($rating)
+	public function setMaxRating(string $rating): KunenaGravatar
 	{
 		// Wipe out the param cache.
 		$this->param_cache = null;
@@ -326,7 +324,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getDefaultImage()
+	public function getDefaultImage(): bool
 	{
 		return $this->default_image;
 	}
@@ -342,7 +340,7 @@ class KunenaGravatar
 	 * @since   Kunena 6.0
 	 * @throws  InvalidArgumentException
 	 */
-	public function setDefaultImage($image)
+	public function setDefaultImage($image): KunenaGravatar
 	{
 		// Quick check against boolean false.
 		if ($image === false)
@@ -365,10 +363,8 @@ class KunenaGravatar
 			{
 				throw new InvalidArgumentException('The default image specified is not a recognized gravatar "default" and is not a valid URL');
 			}
-			else
-			{
-				$this->default_image = rawurlencode($image);
-			}
+
+			$this->default_image = rawurlencode($image);
 		}
 		else
 		{
@@ -385,7 +381,7 @@ class KunenaGravatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->buildGravatarURL();
 	}

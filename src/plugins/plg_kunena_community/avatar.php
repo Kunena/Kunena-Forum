@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
@@ -26,7 +26,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarCommunity extends Avatar
+class AvatarCommunity extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -41,7 +41,7 @@ class AvatarCommunity extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}

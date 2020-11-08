@@ -19,9 +19,9 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Integration\Activity;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use stdClass;
 use function defined;
 
@@ -30,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityCommunity extends Activity
+class KunenaActivityCommunity extends KunenaActivity
 {
 	/**
 	 * @var     null
@@ -44,9 +44,9 @@ class KunenaActivityCommunity extends Activity
 	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 
@@ -60,7 +60,7 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @throws  Exception
 	 */
-	public function onAfterPost($message)
+	public function onAfterPost($message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
@@ -113,13 +113,13 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @throws  Exception
 	 */
-	private function buildContent($message)
+	private function buildContent($message): string
 	{
 		$parent               = new stdClass;
 		$parent->forceSecure  = true;
 		$parent->forceMinimal = true;
 
-		$content = Parser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
+		$content = KunenaParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
 		$content .= '<br/><br /><a rel="nofollow" href="' . $message->getPermaUrl() . '" class="small profile-newsfeed-item-action">' . Text::_('COM_KUNENA_READMORE') . '</a>';
@@ -134,7 +134,7 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getAccess($category)
+	protected function getAccess($category): int
 	{
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
 		$accesstype = $category->accesstype;
@@ -176,7 +176,7 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @throws  Exception
 	 */
-	public function onAfterReply($message)
+	public function onAfterReply($message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
@@ -185,9 +185,9 @@ class KunenaActivityCommunity extends Activity
 		}
 
 		// Get users who have subscribed to the topic, excluding current user.
-		$acl         = Access::getInstance();
+		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers(
-			$message->catid, $message->thread, Access::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
+			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
 		);
 
 		foreach ($subscribers as $userid)
@@ -250,7 +250,7 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterThankyou($actor, $target, $message)
+	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
 		CFactory::load('libraries', 'userpoints');
 		CUserPoints::assignPoint('com_kunena.thread.thankyou', $target);
@@ -310,7 +310,7 @@ class KunenaActivityCommunity extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterDeleteTopic($target)
+	public function onAfterDeleteTopic($target): void
 	{
 		CFactory::load('libraries', 'activities');
 		CActivityStream::remove('kunena.thread.post', $target->id);

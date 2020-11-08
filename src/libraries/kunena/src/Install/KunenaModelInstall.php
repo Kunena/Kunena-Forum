@@ -1002,6 +1002,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @since   Kunena 6.0
 	 *
 	 * @throws KunenaInstallerException
+	 * @return void
 	 */
 	public function deleteTables(string $prefix): void
 	{
@@ -3017,6 +3018,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @since   Kunena 6.0
 	 *
 	 * @throws KunenaInstallerException
+	 * @throws Exception
 	 */
 	public function buildMenu(array $menu): bool
 	{

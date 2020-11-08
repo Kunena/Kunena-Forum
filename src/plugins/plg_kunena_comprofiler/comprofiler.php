@@ -19,14 +19,14 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Integration\Activity;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
-use Kunena\Forum\Libraries\Integration\Profile;
-use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 use function defined;
 
 /**
@@ -50,9 +50,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object &$subject, object $config)
 	{
 		global $ueConfig;
 
@@ -107,9 +107,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaDisplay($type, $view = null, $params = null)
+	public function onKunenaDisplay(string $type, $view = null, $params = null): void
 	{
 		$integration = KunenaFactory::getProfile();
 
@@ -138,9 +138,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
+	public function onKunenaPrepare(string $context, int &$item, object $params, $page = 0): void
 	{
 		if ($context == 'kunena.user')
 		{
@@ -157,7 +157,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return  Access|KunenaAccessComprofiler|void
+	 * @return  KunenaAccess|KunenaAccessComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -174,7 +174,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return  Login|KunenaLoginComprofiler|void
+	 * @return  KunenaLogin|KunenaLoginComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -191,7 +191,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  Avatar|void
+	 * @return  KunenaAvatar|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -208,7 +208,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return  Profile|void
+	 * @return  KunenaProfile|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -242,7 +242,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return  Activity|void
+	 * @return  KunenaActivity|void
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception

@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use function defined;
 
 /**
@@ -26,7 +26,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarAltaUserPoints extends Avatar
+class AvatarAltaUserPoints extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -81,7 +81,7 @@ class AvatarAltaUserPoints extends Avatar
 	 *
 	 * @throws  Exception
 	 */
-	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
+	public function getLink($user, $class = '', $sizex = 90, $sizey = 90): string
 	{
 		$user = KunenaFactory::getUser($user);
 		$size = $this->getSize($sizex, $sizey);

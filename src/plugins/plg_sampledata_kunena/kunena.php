@@ -148,7 +148,7 @@ class PlgSampledataKunena extends CMSPlugin
 	 *
 	 * @since   4.0.0
 	 */
-	private function enablePlugin($pluginName)
+	private function enablePlugin(string $pluginName): bool
 	{
 		// Create a new db object.
 		$db    = Factory::getDbo();

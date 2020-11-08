@@ -36,6 +36,7 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -48,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -332,7 +334,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 	/**
 	 * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
-	 * @param   bool           $xhtml     xhtml
+	 * @param   bool                 $xhtml     xhtml
 	 *
 	 * @return  boolean
 	 *
@@ -491,7 +493,8 @@ class KunenaMessage extends KunenaDatabaseObject
 		{
 			return false;
 		}
-		elseif ($this->hold == 1)
+
+		if ($this->hold == 1)
 		{
 			$mailsubs   = 0;
 			$mailmods   = $config->mailmod >= 0;
@@ -551,131 +554,130 @@ class KunenaMessage extends KunenaDatabaseObject
 		{
 			return true;
 		}
-		else
+
+		if (!$config->getEmail())
 		{
-			if (!$config->getEmail())
+			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
+
+			return false;
+		}
+
+		if (!MailHelper::isEmailAddress($config->getEmail()))
+		{
+			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
+
+			return false;
+		}
+
+		$topic = $this->getTopic();
+
+		// Make a list from all receivers; split the receivers into two distinct groups.
+		$sentusers = [];
+		$receivers = [0 => [], 1 => []];
+
+		foreach ($emailToList as $emailTo)
+		{
+			if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email))
 			{
-				KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
-
-				return false;
-			}
-			elseif (!MailHelper::isEmailAddress($config->getEmail()))
-			{
-				KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
-
-				return false;
-			}
-
-			$topic = $this->getTopic();
-
-			// Make a list from all receivers; split the receivers into two distinct groups.
-			$sentusers = [];
-			$receivers = [0 => [], 1 => []];
-
-			foreach ($emailToList as $emailTo)
-			{
-				if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email))
-				{
-					continue;
-				}
-
-				$receivers[$emailTo->subscription][] = $emailTo->email;
-				$sentusers[]                         = $emailTo->id;
+				continue;
 			}
 
-			$mailsender  = MailHelper::cleanAddress($config->board_title);
-			$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
-			$subject     = $this->subject ? $this->subject : $topic->subject;
+			$receivers[$emailTo->subscription][] = $emailTo->email;
+			$sentusers[]                         = $emailTo->id;
+		}
 
-			// Create email.
-			$user = Factory::getUser();
-			$mail = Factory::getMailer();
-			$mail->setSubject($mailsubject);
-			$mail->setSender([$config->getEmail(), $mailsender]);
-			$app = Factory::getApplication();
+		$mailsender  = MailHelper::cleanAddress($config->board_title);
+		$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+		$subject     = $this->subject ? $this->subject : $topic->subject;
 
-			// Here is after respond sends. so close connection to leave browser, and
-			// continue to work
-			static::notificationCloseConnection();
-			$app->getSession()->close();
-			flush();
+		// Create email.
+		$user = Factory::getUser();
+		$mail = Factory::getMailer();
+		$mail->setSubject($mailsubject);
+		$mail->setSender([$config->getEmail(), $mailsender]);
+		$app = Factory::getApplication();
 
-			$ok         = true;
-			$start_time = microtime(true);
+		// Here is after respond sends. so close connection to leave browser, and
+		// continue to work
+		static::notificationCloseConnection();
+		$app->getSession()->close();
+		flush();
 
-			// Send email to all subscribers.
-			if (!empty($receivers[1]))
-			{
-				$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
-				$mailer->addTemplateData(
-					[
-						'mail'       => $mail,
-						'subject'    => $subject,
-						'message'    => $this,
-						'messageUrl' => $url,
-						'once'       => $once,
-					]
-				);
+		$ok         = true;
+		$start_time = microtime(true);
 
-				$ok = KunenaEmail::send($mailer, $receivers[1]);
-			}
-
-			// Send email to all moderators.
-			if (!empty($receivers[0]))
-			{
-				$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
-				$mailer->addTemplateData(
-					[
-						'mail'       => $mail,
-						'subject'    => $subject,
-						'message'    => $this,
-						'messageUrl' => $url,
-						'once'       => $once,
-					]
-				);
-
-				if (!KunenaEmail::send($mailer, $receivers[0]))
-				{
-					$ok = false;
-				}
-			}
-
-			$end_time = microtime(true);
-
-			$time_secs   = ($end_time - $start_time);
-			$mid         = $this->thread;
-			$recv_amount = count($receivers[1]) + count($receivers[0]);
-
-			Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
-			\Kunena\Forum\Libraries\Log\Log::log(($ok) ? \Kunena\Forum\Libraries\Log\Log::TYPE_REPORT : \Kunena\Forum\Libraries\Log\Log::TYPE_ERROR,
-				\Kunena\Forum\Libraries\Log\Log::LOG_TOPIC_NOTIFY,
-				"$recv_amount subscriptions sent for $time_secs sec",
-				$this->getCategory(),
-				$this->getTopic(),
-				KunenaFactory::getUser($this->userid)
+		// Send email to all subscribers.
+		if (!empty($receivers[1]))
+		{
+			$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
+			$mailer->addTemplateData(
+				[
+					'mail'       => $mail,
+					'subject'    => $subject,
+					'message'    => $this,
+					'messageUrl' => $url,
+					'once'       => $once,
+				]
 			);
 
-			// Update subscriptions.
-			if ($once && $sentusers)
-			{
-				$sentusers = implode(',', $sentusers);
-				$db        = Factory::getDbo();
-				$query     = $db->getQuery(true)
-					->update($db->quoteName('#__kunena_user_topics'))
-					->set($db->quoteName('subscribed') . ' = 2')
-					->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
-					->where($db->quoteName('user_id') . ' IN (' . $sentusers . ')')
-					->where($db->quoteName('subscribed') . ' = 1');
-				$db->setQuery($query);
+			$ok = KunenaEmail::send($mailer, $receivers[1]);
+		}
 
-				try
-				{
-					$db->execute();
-				}
-				catch (ExecutionFailureException $e)
-				{
-					KunenaError::displayDatabaseError($e);
-				}
+		// Send email to all moderators.
+		if (!empty($receivers[0]))
+		{
+			$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
+			$mailer->addTemplateData(
+				[
+					'mail'       => $mail,
+					'subject'    => $subject,
+					'message'    => $this,
+					'messageUrl' => $url,
+					'once'       => $once,
+				]
+			);
+
+			if (!KunenaEmail::send($mailer, $receivers[0]))
+			{
+				$ok = false;
+			}
+		}
+
+		$end_time = microtime(true);
+
+		$time_secs   = ($end_time - $start_time);
+		$mid         = $this->thread;
+		$recv_amount = count($receivers[1]) + count($receivers[0]);
+
+		Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
+		KunenaLog::log(($ok) ? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR,
+			KunenaLog::LOG_TOPIC_NOTIFY,
+			"$recv_amount subscriptions sent for $time_secs sec",
+			$this->getCategory(),
+			$this->getTopic(),
+			KunenaFactory::getUser($this->userid)
+		);
+
+		// Update subscriptions.
+		if ($once && $sentusers)
+		{
+			$sentusers = implode(',', $sentusers);
+			$db        = Factory::getDbo();
+			$query     = $db->getQuery(true)
+				->update($db->quoteName('#__kunena_user_topics'))
+				->set($db->quoteName('subscribed') . ' = 2')
+				->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
+				->where($db->quoteName('user_id') . ' IN (' . $sentusers . ')')
+				->where($db->quoteName('subscribed') . ' = 1');
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KunenaError::displayDatabaseError($e);
 			}
 		}
 
@@ -689,7 +691,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * Uri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
-	 * @param   bool           $xhtml     xhtml
+	 * @param   bool                 $xhtml     xhtml
 	 *
 	 * @return  boolean
 	 *
@@ -1145,7 +1147,8 @@ class KunenaMessage extends KunenaDatabaseObject
 			// Publish message or move it into new topic
 			return 1;
 		}
-		elseif (!$this->_hold && $this->hold)
+
+		if (!$this->_hold && $this->hold)
 		{
 			// Unpublish message
 			return -1;
@@ -1247,9 +1250,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function displayField($field, $html = true, $context = '')
+	public function displayField(string $field, $html = true, $context = '')
 	{
 		switch ($field)
 		{
@@ -1431,9 +1434,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function uploadAttachment($tmpid, $postvar, $catid = null): bool
+	public function uploadAttachment(int $tmpid, string $postvar, $catid = null): bool
 	{
 		$attachment                     = new KunenaAttachment;
 		$attachment->userid             = $this->userid;
@@ -1782,7 +1785,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user)
+	protected function authoriseRead(KunenaUser $user): KunenaAuthorise
 	{
 		if ($this->hold && !$user->exists())
 		{

@@ -403,48 +403,47 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|null
-	 *
+	 * @return  KunenaAuthorise|boolean
 	 * @since   Kunena 6.0
 	 */
-	protected function authoriseNew(KunenaUser $user)
+	protected function authoriseNew(KunenaUser $user): ?KunenaAuthorise
 	{
 		if ($this->exists())
 		{
-			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|null
+	 * @return  KunenaAuthorise|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user)
+	protected function authoriseRead(KunenaUser $user): ?KunenaAuthorise
 	{
 		if (!$this->exists())
 		{
-			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if ($this->published != 1 && !$user->isModerator())
 		{
-			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|null
+	 * @return  KunenaAuthorise|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -456,43 +455,43 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 
 		if ($banned)
 		{
-			$banned = Ban::getInstanceByUserid($user->userid, true);
+			$banned = KunenaBan::getInstanceByUserid($user->userid, true);
 
 			if (!$banned->isLifetime())
 			{
-				return new Authorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+				return new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
 			else
 			{
-				return new Authorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|null
+	 * @return  KunenaAuthorise|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseWrite(KunenaUser $user)
+	protected function authoriseWrite(KunenaUser $user): ?KunenaAuthorise
 	{
 		// Check that user is global moderator
 		if (!$user->exists())
 		{
-			return new Authorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator())
 		{
-			return new Authorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return;
+		return true;
 	}
 }

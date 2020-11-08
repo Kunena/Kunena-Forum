@@ -263,12 +263,9 @@ class TableKunenaTopics extends KunenaTable
 		{
 			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
 		}
-		else
-		{
-			$this->category_id = $category->id;
-		}
 
-		$this->subject = trim($this->subject);
+		$this->category_id = $category->id;
+		$this->subject     = trim($this->subject);
 
 		if (!$this->subject)
 		{

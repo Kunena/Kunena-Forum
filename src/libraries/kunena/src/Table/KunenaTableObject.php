@@ -1045,7 +1045,7 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * Method to determine if a row is checked out and therefore uneditable by
+	 * Method to determine if a row is checked out and therefore editable by
 	 * a user. If the row is checked out by the same user, then it is considered
 	 * not checked out -- as the user can still edit it.
 	 *

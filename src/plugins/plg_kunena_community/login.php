@@ -37,7 +37,7 @@ class KunenaLoginCommunity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -47,7 +47,7 @@ class KunenaLoginCommunity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLoginURL()
+	public function getLoginURL(): string
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
@@ -57,7 +57,7 @@ class KunenaLoginCommunity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLogoutURL()
+	public function getLogoutURL(): string
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
@@ -66,7 +66,7 @@ class KunenaLoginCommunity
 	 * @return  void|string
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL()
+	public function getRegistrationURL(): string
 	{
 		$usersConfig = ComponentHelper::getParams('com_users');
 

@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -31,7 +32,7 @@ use function defined;
 abstract class KunenaMessageThankyouHelper
 {
 	/**
-	 * @var     KunenaMesssageThankyou[]
+	 * @var     KunenaMessageThankyou[]
 	 * @since   Kunena 6.0
 	 */
 	protected static $_instances = [];
@@ -409,7 +410,7 @@ abstract class KunenaMessageThankyouHelper
 	 *
 	 * @param   bool|array|int  $ids  ids
 	 *
-	 * @return  KunenaMesssageThankyou[]
+	 * @return  KunenaMessageThankyou[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -421,13 +422,14 @@ abstract class KunenaMessageThankyouHelper
 		{
 			return self::$_instances;
 		}
-		elseif (is_array($ids))
+
+		if (is_array($ids))
 		{
 			$ids2 = [];
 
 			foreach ($ids as $id)
 			{
-				if ($id instanceof Message)
+				if ($id instanceof KunenaMessage)
 				{
 					$id = $id->id;
 				}

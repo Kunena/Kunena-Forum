@@ -15,7 +15,7 @@ namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 defined('_JEXEC') or die();
 
 use Exception;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -55,13 +55,13 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	}
 
 	/**
-	 * @param   KunenaMessage  $message  message object
+	 * @param   KunenaPrivateMessage  $message  message object
 	 *
 	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByMessage(KunenaMessage $message): KunenaFinder
+	public function filterByMessage(KunenaPrivateMessage $message): KunenaFinder
 	{
 		if (!$message->id)
 		{
@@ -99,24 +99,24 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	}
 
 	/**
-	 * @return  \Kunena\Forum\Libraries\KunenaPrivate\KunenaMessage|mixed
+	 * @return  KunenaPrivateMessage|mixed
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function firstOrNew(): \Kunena\Forum\Libraries\KunenaPrivate\KunenaMessage
+	public function firstOrNew(): KunenaPrivateMessage
 	{
 		$results = $this->find();
 		$first   = array_pop($results);
 
-		return $first ? $first : new \Kunena\Forum\Libraries\KunenaPrivate\KunenaMessage;
+		return $first ?: new KunenaPrivateMessage;
 	}
 
 	/**
 	 * Get private messages.
 	 *
-	 * @return  array|\Kunena\Forum\Libraries\KunenaPrivate\KunenaMessage[]
+	 * @return  array|KunenaPrivateMessage[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -152,7 +152,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 
 		foreach ($results as $id => $instance)
 		{
-			$pm_instance = new \Kunena\Forum\Libraries\KunenaPrivate\KunenaMessage;
+			$pm_instance = new KunenaPrivateMessage;
 			$pm_instance->load($id);
 			$pm_instance->id  = $id;
 			$_instances [$id] = $pm_instance;

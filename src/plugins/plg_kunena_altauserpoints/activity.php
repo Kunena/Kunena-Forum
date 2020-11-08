@@ -21,7 +21,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Activity;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use RuntimeException;
 use function defined;
@@ -31,7 +31,7 @@ use function defined;
  *
  * @since  5.0
  */
-class KunenaActivityAltaUserPoints extends Activity
+class ActivityAltaUserPoints extends KunenaActivity
 {
 	/**
 	 * @var     null
@@ -64,7 +64,7 @@ class KunenaActivityAltaUserPoints extends Activity
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function onAfterPost($message)
+	public function onAfterPost($message): bool
 	{
 		// Check for permissions of the current category - activity only if public or registered
 		if ($this->_checkPermissions($message))
@@ -107,11 +107,13 @@ class KunenaActivityAltaUserPoints extends Activity
 		{
 			return true;
 		}
-		elseif ($category->pub_access == 1 || $category->pub_access == 2)
+
+		if ($category->pub_access == 1 || $category->pub_access == 2)
 		{
 			return true;
 		}
-		elseif ($category->admin_access == 1 || $category->admin_access == 2)
+
+		if ($category->admin_access == 1 || $category->admin_access == 2)
 		{
 			return true;
 		}
@@ -178,7 +180,7 @@ class KunenaActivityAltaUserPoints extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterDelete($message)
+	public function onAfterDelete($message): void
 	{
 		// Check for permissions of the current category - activity only if public or registered
 		if ($this->_checkPermissions($message))
@@ -202,9 +204,9 @@ class KunenaActivityAltaUserPoints extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onAfterThankyou($actor, $target, $message)
+	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
 		$infoTargetUser = Text::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
 		$infoRootUser   = Text::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
@@ -288,7 +290,7 @@ class KunenaActivityAltaUserPoints extends Activity
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function escape($var)
+	public function escape($var): string
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
@@ -302,7 +304,7 @@ class KunenaActivityAltaUserPoints extends Activity
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserPoints($userid)
+	public function getUserPoints($userid): bool
 	{
 		if ($userid == 0)
 		{

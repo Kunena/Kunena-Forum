@@ -703,10 +703,8 @@ class KunenaPagination
 		{
 			return HTMLHelper::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
 		}
-		else
-		{
-			return '&#160;';
-		}
+
+		return '&#160;';
 	}
 
 	/**
@@ -730,10 +728,8 @@ class KunenaPagination
 		{
 			return HTMLHelper::_('jgrid.orderDown', $i, $task, '', $alt, $enabled, $checkbox);
 		}
-		else
-		{
-			return '&#160;';
-		}
+
+		return '&#160;';
 	}
 
 	/**
@@ -745,7 +741,7 @@ class KunenaPagination
 	 *
 	 * @since   1.5
 	 */
-	protected function _list_footer($list): string
+	protected function _list_footer(array $list): string
 	{
 		$html = "<div class=\"list-footer\">\n";
 
@@ -809,16 +805,12 @@ class KunenaPagination
 				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base
 					. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
 			}
-			else
-			{
-				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
+
+			return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
 					. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
-			}
 		}
-		else
-		{
-			return "<a title=\"" . $item->text . "\" href=\"" . $item->link . "\" class=\"pagenav\">" . $item->text . "</a>";
-		}
+
+		return "<a title=\"" . $item->text . "\" href=\"" . $item->link . "\" class=\"pagenav\">" . $item->text . "</a>";
 	}
 
 	/**
@@ -840,9 +832,7 @@ class KunenaPagination
 		{
 			return '<span>' . $item->text . '</span>';
 		}
-		else
-		{
-			return '<span class="pagenav">' . $item->text . '</span>';
-		}
+
+		return '<span class="pagenav">' . $item->text . '</span>';
 	}
 }

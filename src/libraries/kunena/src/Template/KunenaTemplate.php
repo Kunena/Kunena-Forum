@@ -28,6 +28,7 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -378,9 +379,9 @@ class KunenaTemplate extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function addScriptDeclaration($content, $type = 'text/javascript'): Document
+	public function addScriptDeclaration(string $content, $type = 'text/javascript'): Document
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -773,7 +774,7 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getPaginationItemActive($item): string
+	public function getPaginationItemActive(string $item): string
 	{
 		return '<a title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
 	}
@@ -785,7 +786,7 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getPaginationItemInactive($item): string
+	public function getPaginationItemInactive(string $item): string
 	{
 		return '<span class="pagenav">' . $item->text . '</span>';
 	}
@@ -798,7 +799,7 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getClass($class, $class_sfx = ''): string
+	public function getClass(string $class, $class_sfx = ''): string
 	{
 		return $class . ($class_sfx ? " {$class}.{$class_sfx}" : '');
 	}
@@ -883,7 +884,7 @@ HTML;
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !Forum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
 				$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
 			}
@@ -1066,9 +1067,9 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function addScript($filename, $options = [], $attribs = []): Document
+	public function addScript(string $filename, $options = [], $attribs = []): Document
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -1094,7 +1095,7 @@ HTML;
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !Forum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
 				$filemin = preg_replace('/\.js$/u', '-min.js', $filename);
 			}
@@ -1458,7 +1459,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B4')
 			{
-				return SvgIcons::loadsvg($icon->b4, 'usertopicicons', $category_iconset);
+				return KunenaSvgIcons::loadsvg($icon->b4, 'usertopicicons', $category_iconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1539,7 +1540,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B4')
 			{
-				return SvgIcons::loadsvg($icon->b4, 'systemtopicicons', $category_iconset);
+				return KunenaSvgIcons::loadsvg($icon->b4, 'systemtopicicons', $category_iconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -2056,10 +2057,8 @@ HTML;
 		{
 			return '';
 		}
-		else
-		{
-			return ' table-bordered';
-		}
+
+		return ' table-bordered';
 	}
 
 	/**
@@ -2082,10 +2081,8 @@ HTML;
 			{
 				return 'class="hasTooltip"';
 			}
-			else
-			{
-				return 'hasTooltip';
-			}
+
+			return 'hasTooltip';
 		}
 	}
 

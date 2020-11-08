@@ -321,7 +321,7 @@ abstract class KunenaLegacy
 
 				// Convert URI to have both id and mesid
 				$id      = $uri->getVar('id');
-				$message = MessageHelper::get($id);
+				$message = KunenaMessageHelper::get($id);
 				$mesid   = $uri->getVar('mesid');
 
 				if ($message->exists())

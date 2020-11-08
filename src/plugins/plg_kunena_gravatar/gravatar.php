@@ -33,7 +33,7 @@ class plgKunenaGravatar extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object $subject, object $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
@@ -51,7 +51,7 @@ class plgKunenaGravatar extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar()
+	public function onKunenaGetAvatar(): KunenaAvatarGravatar
 	{
 		if (!$this->params->get('avatar', 1))
 		{

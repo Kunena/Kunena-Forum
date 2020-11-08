@@ -864,15 +864,18 @@ class KunenaUser extends CMSObject
 				{
 					return $this->name;
 				}
-				elseif ($ueConfig['name_format'] == 2)
+
+				if ($ueConfig['name_format'] == 2)
 				{
 					return $this->name . ' (' . $this->username . ')';
 				}
-				elseif ($ueConfig['name_format'] == 3)
+
+				if ($ueConfig['name_format'] == 3)
 				{
 					return $this->username;
 				}
-				elseif ($ueConfig['name_format'] == 4)
+
+				if ($ueConfig['name_format'] == 4)
 				{
 					return $this->username . ' (' . $this->name . ')';
 				}
@@ -994,10 +997,8 @@ class KunenaUser extends CMSObject
 		{
 			return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
 		}
-		else
-		{
-			return $default == 'asc' ? 'asc' : 'desc';
-		}
+
+		return $default == 'asc' ? 'asc' : 'desc';
 	}
 
 	/**
@@ -1426,15 +1427,11 @@ class KunenaUser extends CMSObject
 			{
 				return Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count);
 			}
-			else
-			{
-				return Text::_('COM_KUNENA_PMS_INBOX');
-			}
+
+			return Text::_('COM_KUNENA_PMS_INBOX');
 		}
-		else
-		{
-			return Text::_('COM_KUNENA_PM_WRITE');
-		}
+
+		return Text::_('COM_KUNENA_PM_WRITE');
 	}
 
 	/**
@@ -1955,7 +1952,8 @@ class KunenaUser extends CMSObject
 			{
 				return false;
 			}
-			elseif ($config->rankimages == 1)
+
+			if ($config->rankimages == 1)
 			{
 				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
@@ -1963,11 +1961,13 @@ class KunenaUser extends CMSObject
 
 				return '<img loading="lazy" src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" />';
 			}
-			elseif ($config->rankimages == 2)
+
+			if ($config->rankimages == 2)
 			{
 				return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
-			elseif ($config->rankimages == 3)
+
+			if ($config->rankimages == 3)
 			{
 				$url             = Template::getInstance()->getRankPath($rank->rank_image, true);
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
@@ -1976,7 +1976,8 @@ class KunenaUser extends CMSObject
 				return '<img loading="lazy" src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
-			elseif ($config->rankimages == 4)
+
+			if ($config->rankimages == 4)
 			{
 				return self::rankCss($rank, $catid);
 			}
@@ -2511,10 +2512,8 @@ class KunenaUser extends CMSObject
 		{
 			return '<span class="kicon-profile kicon-profile-' . $name . '-off"></span>';
 		}
-		else
-		{
-			return '';
-		}
+
+		return '';
 	}
 
 	/**

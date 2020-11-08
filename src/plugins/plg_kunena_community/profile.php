@@ -19,7 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use RuntimeException;
 use function defined;
 
@@ -28,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileCommunity extends Profile
+class KunenaProfileCommunity extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -43,7 +43,7 @@ class KunenaProfileCommunity extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -109,7 +109,7 @@ class KunenaProfileCommunity extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile($view, object &$params)
 	{
 	}
 
@@ -126,14 +126,14 @@ class KunenaProfileCommunity extends Profile
 	}
 
 	/**
-	 * @param           $userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   integer  $userid
+	 * @param   string   $task   task
+	 * @param   bool     $xhtml  xhtml
 	 *
 	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true)
 	{
 		// Make sure that user profile exist.
 		if (!$userid || CFactory::getUser($userid) === null)

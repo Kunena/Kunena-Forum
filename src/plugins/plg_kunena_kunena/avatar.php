@@ -17,18 +17,18 @@ defined('_JEXEC') or die();
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Image\ImageHelper;
+use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
- * Class \Kunena\Forum\Libraries\Integration\Avatar
+ * Class KunenaAvatar
  *
  * @since   Kunena 6.0
  */
-class KunenaAvatar extends Avatar
+class KunenaIntegrationAvatar extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -47,7 +47,7 @@ class KunenaAvatar extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 		$this->resize = true;
@@ -74,9 +74,9 @@ class KunenaAvatar extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	protected function _getURL(int $user, int $sizex, int $sizey)
 	{
 		$user   = KunenaFactory::getUser($user);
 		$avatar = $user->avatar;
@@ -131,7 +131,7 @@ class KunenaAvatar extends Avatar
 
 		if (!is_file("{$path}/{$resized}/{$file}"))
 		{
-			ImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex,
+			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex,
 				$sizey, intval($config->avatarquality), KunenaImage::SCALE_INSIDE, intval($config->avatarcrop)
 			);
 

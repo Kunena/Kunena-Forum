@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Tree\Tree;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Tree\KunenaTree;
 use function defined;
 
-require_once dirname(__FILE__) . '/integration.php';
+require_once __DIR__ . '/integration.php';
 
 /**
  * Kunena Access Control for CommunityBuilder
@@ -62,7 +62,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -78,7 +78,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	public function getAccessTypes()
+	public function getAccessTypes(): array
 	{
 		static $accesstypes = ['communitybuilder'];
 
@@ -93,15 +93,15 @@ class KunenaAccessComprofiler
 	 * Get group name in selected access type.
 	 *
 	 * @param   string  $accesstype  Access type.
-	 * @param   int     $id          Group id.
+	 * @param   null    $id          Group id.
 	 *
 	 * @return  boolean|integer|null
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getGroupName($accesstype, $id = null)
+	public function getGroupName(string $accesstype, $id = null)
 	{
 		if ($accesstype == 'communitybuilder')
 		{
@@ -130,7 +130,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	protected function loadGroups()
+	protected function loadGroups(): void
 	{
 		if ($this->groups === false)
 		{
@@ -155,9 +155,9 @@ class KunenaAccessComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getAccessOptions($accesstype, $category)
+	public function getAccessOptions(string $accesstype, int $category): array
 	{
 		$html = [];
 
@@ -205,14 +205,14 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	protected function loadCategories()
+	protected function loadCategories(): void
 	{
 		if ($this->categories === false)
 		{
 			$this->categories = [];
 			$params           = ['categories' => &$this->categories, 'groups' => $this->groups];
 			KunenaIntegrationComprofiler::trigger('loadCategories', $params);
-			$this->tree = new Tree($this->categories);
+			$this->tree = new KunenaTree($this->categories);
 
 			if ($this->groups !== false)
 			{
@@ -237,7 +237,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws Exception
 	 */
-	public function loadCategoryRoles(array $categories = null)
+	public function loadCategoryRoles(array $categories = null): array
 	{
 		$roles  = [];
 		$params = ['categories' => $categories, 'roles' => &$roles];
@@ -251,16 +251,16 @@ class KunenaAccessComprofiler
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param   Category  $category  category
-	 * @param   int       $userid    userid
+	 * @param   KunenaCategory  $category  category
+	 * @param   int             $userid    userid
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getAuthoriseActions(Category $category, $userid)
+	public function getAuthoriseActions(KunenaCategory $category, int $userid): array
 	{
 		$actions = [];
 		$params  = ['category' => $category, 'userid' => $userid, 'actions' => &$actions];
@@ -285,9 +285,9 @@ class KunenaAccessComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function authoriseCategories($userid, array &$categories)
+	public function authoriseCategories(int $userid, array &$categories): array
 	{
 		$allowed = '0';
 		$params  = [$userid, &$allowed];
@@ -320,7 +320,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids)
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
 	{
 		$allow = $deny = [];
 

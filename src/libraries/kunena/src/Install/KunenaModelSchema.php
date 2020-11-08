@@ -176,7 +176,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
 	 */
-	public function getDiffSchema($from = null, $to = null, $using = null)
+	public function getDiffSchema($from = null, $to = null, $using = null): ?DOMDocument
 	{
 		if ($this->diffschema == null)
 		{
@@ -1179,7 +1179,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
 	 */
-	public function updateSchemaTable(string $table): mixed
+	public function updateSchemaTable(string $table)
 	{
 		$sql = $this->getSQL();
 

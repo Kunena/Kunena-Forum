@@ -270,7 +270,7 @@ class KunenaBase extends KunenaLayoutBase
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
 
-		return $layout ? $layout : 'default';
+		return $layout ?: 'default';
 	}
 
 	/**
@@ -801,7 +801,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function subRequest($path, Input $input = null, $options = null)
+	public function subRequest(string $path, Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());

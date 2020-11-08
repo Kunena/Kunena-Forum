@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -177,14 +178,14 @@ abstract class KunenaCategoryUserHelper
 		{
 			if (isset($results[$id]))
 			{
-				$instance = new CategoryUser;
+				$instance = new KunenaCategoryUser;
 				$instance->bind($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
 			}
 			else
 			{
-				self::$_instances [$user->userid][$id] = new CategoryUser($id, $user);
+				self::$_instances [$user->userid][$id] = new KunenaCategoryUser($id, $user);
 			}
 		}
 
@@ -201,7 +202,7 @@ abstract class KunenaCategoryUserHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function markRead(array $ids, $user = null)
+	public static function markRead(array $ids, $user = null): void
 	{
 		$user = KunenaUserHelper::get($user);
 

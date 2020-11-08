@@ -54,7 +54,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function getList(Registry &$params): array
+	public static function getList(Registry $params): array
 	{
 		$app  = Factory::getApplication();
 		$menu = $app->getMenu();
@@ -196,7 +196,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function getBase(Registry &$params)
+	public static function getBase(Registry $params)
 	{
 		// Get base menu item from parameters
 		if ($params->get('base'))
@@ -228,7 +228,7 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function getActive(Registry &$params): object
+	public static function getActive(Registry $params): object
 	{
 		$menu = Factory::getApplication()->getMenu();
 
@@ -254,9 +254,7 @@ abstract class KunenaMenuHelper
 		{
 			return $menu->getDefault($lang->getTag());
 		}
-		else
-		{
-			return $menu->getDefault();
-		}
+
+		return $menu->getDefault();
 	}
 }

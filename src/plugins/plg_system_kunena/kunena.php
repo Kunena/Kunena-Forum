@@ -21,8 +21,8 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Installer;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\KunenaInstaller;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 /**
  * Class plgSystemKunena
@@ -37,9 +37,9 @@ class plgSystemKunena extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object $subject, array $config)
 	{
 		// Check if Kunena API exists
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
@@ -80,7 +80,7 @@ class plgSystemKunena extends CMSPlugin
 		#kunena + div { display: block !important;}
 EOF;
 
-					Template::getInstance()->addStyleDeclaration($styles);
+					KunenaTemplate::getInstance()->addStyleDeclaration($styles);
 				}
 			}
 
@@ -105,7 +105,7 @@ EOF;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetConfiguration($context, &$params)
+	public function onKunenaGetConfiguration(string $context, bool &$params): void
 	{
 		if ($context == 'kunena.configuration')
 		{
@@ -123,9 +123,9 @@ EOF;
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onUserAfterSave($user, $isnew, $success, $msg)
+	public function onUserAfterSave($user, bool $isnew, bool $success, string $msg): void
 	{
 		// Don't continue if the user wasn't stored successfully
 		if (!$success)
@@ -151,9 +151,9 @@ EOF;
 	 * @return  boolean|void
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
+	public function onExtensionBeforeInstall(string $method, string $type, string $manifest, int $eid): bool
 	{
 		// We don't want to handle discover install (where there's no manifest provided)
 		if (!$manifest)
@@ -174,9 +174,9 @@ EOF;
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onExtensionBeforeUpdate($type, $manifest)
+	public function onExtensionBeforeUpdate(bool $type, string $manifest): bool
 	{
 		if ($type != 'component')
 		{
@@ -199,7 +199,7 @@ EOF;
 		}
 
 		// Check if we can downgrade to the current version
-		if (class_exists('KunenaInstaller') && Installer::canDowngrade($manifest->version))
+		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version))
 		{
 			return true;
 		}
@@ -222,7 +222,7 @@ EOF;
 	 *
 	 * @since   Kunena 5.1.6
 	 */
-	public function onPrivacyCollectAdminCapabilities()
+	public function onPrivacyCollectAdminCapabilities(): array
 	{
 		return [
 			'Kunena' => [
@@ -253,9 +253,9 @@ EOF;
 	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function runJoomlaContentEvent(&$text, &$params, $page = 0)
+	protected function runJoomlaContentEvent(string &$text, object $params, $page = 0)
 	{
 
 		PluginHelper::importPlugin('content');

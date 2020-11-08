@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use function defined;
 
@@ -25,7 +25,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarEasySocial extends Avatar
+class AvatarEasySocial extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -40,7 +40,7 @@ class AvatarEasySocial extends Avatar
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -52,7 +52,7 @@ class AvatarEasySocial extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function load($userlist)
+	public function load(array $userlist)
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -83,9 +83,9 @@ class AvatarEasySocial extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	protected function _getURL(int $user, int $sizex, int $sizey)
 	{
 		$user = KunenaFactory::getUser($user);
 

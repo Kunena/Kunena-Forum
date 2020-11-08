@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -103,7 +104,8 @@ abstract class KunenaTopicUserReadHelper
 		{
 			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : [];
 		}
-		elseif (!is_array($ids))
+
+		if (!is_array($ids))
 		{
 			$ids = [$ids];
 		}
@@ -111,7 +113,7 @@ abstract class KunenaTopicUserReadHelper
 		// Convert topic objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof Topic)
+			if ($id instanceof KunenaTopic)
 			{
 				$ids[$i] = $id->id;
 			}
@@ -189,7 +191,7 @@ abstract class KunenaTopicUserReadHelper
 			}
 			else
 			{
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new Read($id, $user->userid);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaRead($id, $user->userid);
 			}
 		}
 
@@ -204,9 +206,9 @@ abstract class KunenaTopicUserReadHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function move($old, $new): bool
+	public static function move(KunenaTopic $old, KunenaTopic $new): bool
 	{
 		// Update database
 		$db    = Factory::getDBO();

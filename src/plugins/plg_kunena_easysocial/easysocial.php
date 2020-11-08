@@ -43,11 +43,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @param   object  $subject  subject
 	 * @param   object  $config   config
 	 *
-	 * @return  void|boolean
-	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object $subject, object $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
@@ -67,7 +65,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetLogin()
+	public function onKunenaGetLogin(): KunenaLoginEasySocial
 	{
 		if (!$this->params->get('login', 1))
 		{
@@ -83,7 +81,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @return  AvatarEasySocial
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar()
+	public function onKunenaGetAvatar(): AvatarEasySocial
 	{
 		if (!$this->params->get('avatar', 1))
 		{
@@ -100,7 +98,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile()
+	public function onKunenaGetProfile(): KunenaProfileEasySocial
 	{
 		if (!$this->params->get('profile', 1))
 		{
@@ -117,7 +115,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetPrivate()
+	public function onKunenaGetPrivate(): KunenaPrivateEasySocial
 	{
 		if (!$this->params->get('private', 1))
 		{
@@ -135,7 +133,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function onKunenaGetActivity()
+	public function onKunenaGetActivity(): KunenaActivityEasySocial
 	{
 		if (!$this->params->get('activity', 1))
 		{

@@ -159,22 +159,20 @@ class TableKunenaAttachments extends KunenaTable
 		{
 			throw new UnexpectedValueException(Text::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING', "{$this->folder}/{$this->filename}"));
 		}
-		else
+
+		if (!$this->hash)
 		{
-			if (!$this->hash)
-			{
-				$this->hash = md5_file($file);
-			}
+			$this->hash = md5_file($file);
+		}
 
-			if (!$this->size)
-			{
-				$this->size = filesize($file);
-			}
+		if (!$this->size)
+		{
+			$this->size = filesize($file);
+		}
 
-			if (!$this->filetype)
-			{
-				$this->filetype = KunenaFile::getMime($file);
-			}
+		if (!$this->filetype)
+		{
+			$this->filetype = KunenaFile::getMime($file);
 		}
 
 		return true;

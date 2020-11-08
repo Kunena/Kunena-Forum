@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use function defined;
 
 /**
@@ -24,7 +24,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarComprofiler extends Avatar
+class AvatarComprofiler extends KunenaAvatar
 {
 	/**
 	 * @var     null
@@ -39,7 +39,7 @@ class AvatarComprofiler extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -51,7 +51,7 @@ class AvatarComprofiler extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function load($userlist)
+	public function load(object $userlist)
 	{
 		CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
@@ -77,9 +77,9 @@ class AvatarComprofiler extends Avatar
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	protected function _getURL(int $user, int $sizex, int $sizey)
 	{
 		$user = KunenaFactory::getUser($user);
 

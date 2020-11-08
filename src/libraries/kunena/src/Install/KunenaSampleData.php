@@ -16,6 +16,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 defined('_JEXEC') or die();
@@ -209,7 +210,7 @@ class KunenaSampleData
 				}
 				catch (ExecutionFailureException $e)
 				{
-					throw new Exception($e->getMessage(), $e->getCode());
+					throw new KunenaException($e->getMessage(), $e->getCode());
 				}
 			}
 		}
@@ -226,7 +227,7 @@ class KunenaSampleData
 		}
 		catch (ExecutionFailureException $e)
 		{
-			throw new Exception($e->getMessage(), $e->getCode());
+			throw new KunenaException($e->getMessage(), $e->getCode());
 		}
 
 		$query = $db->getQuery(true);

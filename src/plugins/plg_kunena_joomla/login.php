@@ -38,7 +38,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -49,15 +49,15 @@ class Login
 	 * @param   string   $username    Username of user
 	 * @param   string   $password    Password of user
 	 * @param   boolean  $rememberme  Remember the user next time it wants login
-	 * @param   string   $secretkey   The secretkey given by user when TFA is enabled
+	 * @param   null     $secretkey   The secretkey given by user when TFA is enabled
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function loginUser($username, $password, $rememberme, $secretkey = null)
+	public function loginUser(string $username, string $password, bool $rememberme, $secretkey = null)
 	{
 		$credentials = ['username' => $username, 'password' => $password];
 
@@ -91,7 +91,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRememberMe()
+	public function getRememberMe(): bool
 	{
 		return (bool) PluginHelper::isEnabled('system', 'remember');
 	}
@@ -101,7 +101,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLoginURL()
+	public function getLoginURL(): string
 	{
 		return Route::_('index.php?option=com_users&view=login');
 	}
@@ -111,7 +111,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLogoutURL()
+	public function getLogoutURL(): string
 	{
 		return Route::_('index.php?option=com_users&view=login');
 	}
@@ -120,7 +120,7 @@ class Login
 	 * @return  void|string
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL()
+	public function getRegistrationURL(): string
 	{
 		$usersConfig = ComponentHelper::getParams('com_users');
 
@@ -137,7 +137,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getResetURL()
+	public function getResetURL(): string
 	{
 		return Route::_('index.php?option=com_users&view=reset');
 	}
@@ -147,7 +147,7 @@ class Login
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRemindURL()
+	public function getRemindURL(): string
 	{
 		return Route::_('index.php?option=com_users&view=remind');
 	}
@@ -159,7 +159,7 @@ class Login
 	 *
 	 * @since   Kunena 5.1
 	 */
-	public function getParams()
+	public function getParams(): ?object
 	{
 		return $this->params;
 	}

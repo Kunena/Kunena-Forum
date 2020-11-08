@@ -37,9 +37,9 @@ class plgKunenaFinder extends CMSPlugin
 	 *
 	 * @since   2.5
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaAfterSave($context, $table, $isNew)
+	public function onKunenaAfterSave(string $context, object $table, bool $isNew): void
 	{
 		Log::add('onKunenaAfterSave context: ' . $context, Log::INFO);
 		ob_start();
@@ -66,9 +66,9 @@ class plgKunenaFinder extends CMSPlugin
 	 *
 	 * @since   2.5
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaBeforeSave($context, $table, $isNew)
+	public function onKunenaBeforeSave(string $context, object $table, bool $isNew): void
 	{
 		Log::add('onKunenaBeforeSave context: ' . $context, Log::INFO);
 		ob_start();
@@ -93,9 +93,9 @@ class plgKunenaFinder extends CMSPlugin
 	 *
 	 * @since   2.5
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaAfterDelete($context, $table)
+	public function onKunenaAfterDelete(string $context, object $table): void
 	{
 		Log::add('onKunenaAfterDelete context: ' . $context, Log::INFO);
 		ob_start();
@@ -119,9 +119,9 @@ class plgKunenaFinder extends CMSPlugin
 	 *
 	 * @since   2.5
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onKunenaBeforeDelete($context, $table)
+	public function onKunenaBeforeDelete(string $context, object $table): void
 	{
 		Log::add('onKunenaBeforeDelete context: ' . $context, Log::INFO);
 		ob_start();

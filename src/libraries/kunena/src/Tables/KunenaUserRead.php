@@ -91,10 +91,8 @@ class KunenaUserRead extends KunenaTable
 		{
 			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id));
 		}
-		else
-		{
-			$this->category_id = $topic->category_id;
-		}
+
+		$this->category_id = $topic->category_id;
 
 		return true;
 	}

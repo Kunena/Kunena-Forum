@@ -584,14 +584,12 @@ class KunenaView extends HtmlView
 
 			return $output;
 		}
-		else
-		{
-			KunenaProfiler::getInstance() ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			if ($this->app->scope == 'com_kunena')
-			{
-				throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
-			}
+		KunenaProfiler::getInstance() ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+		if ($this->app->scope == 'com_kunena')
+		{
+			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
 		}
 	}
 
@@ -607,9 +605,9 @@ class KunenaView extends HtmlView
 
 	/**
 	 * @param   KunenaCategory  $category  category
-	 * @param   null      $content   content
-	 * @param   null      $title     title
-	 * @param   null      $class     class
+	 * @param   null            $content   content
+	 * @param   null            $title     title
+	 * @param   null            $class     class
 	 *
 	 * @return  mixed
 	 *
@@ -634,10 +632,10 @@ class KunenaView extends HtmlView
 
 	/**
 	 * @param   KunenaTopic          $topic     topic
-	 * @param   null           $action    action
-	 * @param   null           $content   content
-	 * @param   null           $title     title
-	 * @param   null           $class     class
+	 * @param   null                 $action    action
+	 * @param   null                 $content   content
+	 * @param   null                 $title     title
+	 * @param   null                 $class     class
 	 * @param   KunenaCategory|null  $category  category
 	 *
 	 * @return  mixed

@@ -122,7 +122,7 @@ class KunenaPrivate
 		}
 
 		// We should offer the user a PM link
-		return '<a class="' . $class . '" href="' . $url . '""' . $onclick . '">' . Icons::pm() . '</a>';
+		return '<a class="' . $class . '" href="' . $url . '""' . $onclick . '">' . KunenaIcons::pm() . '</a>';
 	}
 
 	/**
@@ -204,11 +204,11 @@ class KunenaPrivate
 			$text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
 			$url     = $this->getInboxURL();
 
-			return '<a class="' . $class . '" href="' . $url . '">' . Icons::pm() . ' ' . $text . '</a>';
+			return '<a class="' . $class . '" href="' . $url . '">' . KunenaIcons::pm() . ' ' . $text . '</a>';
 		}
 
 		// We should offer the user a PM link
-		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . Icons::pm() . ' ' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
+		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . ' ' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
 	}
 
 	/**

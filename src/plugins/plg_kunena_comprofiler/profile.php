@@ -18,18 +18,18 @@ use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Profile;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use RuntimeException;
 use function defined;
 
-require_once dirname(__FILE__) . '/integration.php';
+require_once __DIR__ . '/integration.php';
 
 /**
  * Class KunenaProfileComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaProfileComprofiler extends Profile
+class KunenaProfileComprofiler extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -44,7 +44,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}
@@ -57,9 +57,9 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function trigger($event, &$params)
+	public static function trigger(string $event, object $params): void
 	{
 		KunenaIntegrationComprofiler::trigger($event, $params);
 	}
@@ -71,7 +71,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @throws  Exception
 	 */
-	public function open()
+	public function open(): void
 	{
 		KunenaIntegrationComprofiler::open();
 	}
@@ -83,7 +83,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @throws  Exception
 	 */
-	public function close()
+	public function close(): void
 	{
 		KunenaIntegrationComprofiler::close();
 	}
@@ -122,9 +122,9 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true)
+	public function getProfileURL(int $user, $task = '', $xhtml = true)
 	{
 		global $_CB_framework;
 
@@ -154,7 +154,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile(string $view, object &$params)
 	{
 		global $_PLUGINS;
 
@@ -209,7 +209,7 @@ class KunenaProfileComprofiler extends Profile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		global $_CB_framework;
 

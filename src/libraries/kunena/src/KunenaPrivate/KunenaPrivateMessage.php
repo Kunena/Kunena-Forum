@@ -37,7 +37,7 @@ use function defined;
  *
  * @property int      $id
  */
-class KunenaMessage extends KunenaDatabaseObject
+class KunenaPrivateMessage extends KunenaDatabaseObject
 {
 	/**
 	 * @var     string

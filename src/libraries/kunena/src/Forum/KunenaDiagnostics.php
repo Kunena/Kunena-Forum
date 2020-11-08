@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use stdClass;
 use function defined;
 
@@ -152,9 +151,9 @@ abstract class KunenaDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public static function fix($function)
+	public static function fix(string $function): bool
 	{
 		$queryFunction = 'fix_' . $function;
 
@@ -184,7 +183,7 @@ abstract class KunenaDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function canFix($function)
+	public static function canFix(string $function): bool
 	{
 		$queryFunction = 'fix_' . $function;
 
@@ -1068,7 +1067,7 @@ abstract class KunenaDiagnostics
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected static function query_pollTopicMismatch()
+	protected static function query_pollTopicMismatch(): QueryInterface
 	{
 		// Query to find polls which do not belong in any existing topic
 		$db    = Factory::getDbo();
@@ -1610,10 +1609,10 @@ abstract class KunenaDiagnostics
 	//      $db    = Factory::getDbo();
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	// 
+	//
 	//      return $query;
 	//  }
-	// 
+	//
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *
@@ -1626,10 +1625,10 @@ abstract class KunenaDiagnostics
 	//      {
 	//          $query->select('*');
 	//      }
-	// 
+	//
 	//      return array('channels' => 'invalid');
 	//  }
-	// 
+	//
 	//  /**
 	//   * @return QueryInterface
 	//   * @since   Kunena
@@ -1637,7 +1636,7 @@ abstract class KunenaDiagnostics
 	//  protected static function fix_topicsOwnersOrphaned()
 	//  {
 	//      $query = self::query_topicsOwnersOrphaned()->insert('#__kunena_user_topics');
-	// 
+	//
 	//      return $query;
 	//  }
 }

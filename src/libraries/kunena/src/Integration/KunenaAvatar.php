@@ -86,7 +86,7 @@ class KunenaAvatar
 
 			if (!self::$instance)
 			{
-				self::$instance = new KunenaAvatar;
+				self::$instance = new self;
 			}
 		}
 
@@ -152,7 +152,7 @@ class KunenaAvatar
 		{
 			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{
-				$link = '<span ' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">' . SvgIcons::loadsvg('person') . '</span>';
+				$link = '<span ' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">' . KunenaSvgIcons::loadsvg('person') . '</span>';
 			}
 			else
 			{

@@ -37,7 +37,7 @@ class KunenaLoginEasySocial
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct($params)
+	public function __construct(object $params)
 	{
 		$this->params = $params;
 	}

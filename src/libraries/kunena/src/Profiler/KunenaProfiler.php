@@ -30,12 +30,6 @@ class KunenaProfiler extends Profiler
 	protected static $_instances = [];
 
 	/**
-	 * @var     array
-	 * @since   Kunena 6.0
-	 */
-	protected $_kstart = [];
-
-	/**
 	 * @var     array| KunenaProfilerItem[]
 	 * @since   Kunena 6.0
 	 */

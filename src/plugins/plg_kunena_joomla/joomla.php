@@ -31,7 +31,7 @@ class Joomla extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(&$subject, $config)
+	public function __construct(object $subject, array $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
@@ -49,7 +49,7 @@ class Joomla extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAccessControl()
+	public function onKunenaGetAccessControl(): AccessJoomla
 	{
 		if (!$this->params->get('access', 1))
 		{
@@ -64,7 +64,7 @@ class Joomla extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetLogin()
+	public function onKunenaGetLogin(): ?Login
 	{
 		return new Login($this->params);
 	}

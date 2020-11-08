@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration').length !==0)
+	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined)
 	{
 		config.removeButtons = 'Anchor,Paste,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
 	}

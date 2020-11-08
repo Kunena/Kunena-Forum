@@ -52,7 +52,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showIcon($userid)
+	public function showIcon(int $userid)
 	{
 		global $_CB_framework, $_CB_PMS;
 
@@ -95,7 +95,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function shownewIcon($userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
+	public function shownewIcon(int $userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2')
 	{
 		global $_CB_framework, $_CB_PMS;
 
@@ -181,7 +181,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink($text)
+	public function getInboxLink(string $text)
 	{
 		global $_CB_framework;
 
@@ -207,7 +207,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getURL($userid)
+	protected function getURL(int $userid)
 	{
 	}
 }

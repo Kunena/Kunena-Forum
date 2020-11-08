@@ -59,7 +59,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink($text)
+	public function getInboxLink(string $text)
 	{
 		if (!$text)
 		{
@@ -88,7 +88,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getOnClick($userid)
+	protected function getOnClick(int $userid)
 	{
 		$userid = (int) $userid;
 
@@ -102,7 +102,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getURL($userid)
+	protected function getURL(int $userid)
 	{
 		return "javascript:void(0)";
 	}

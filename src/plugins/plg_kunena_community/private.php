@@ -53,13 +53,13 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	}
 
 	/**
-	 * @param $text
+	 * @param   string  $text
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink($text)
+	public function getInboxLink(string $text)
 	{
 		if (!$text)
 		{
@@ -80,15 +80,15 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   int  $userid
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function getOnClick($userid)
+	protected function getOnClick(int $userid)
 	{
 		if (!$this->loaded)
 		{
@@ -104,13 +104,13 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	}
 
 	/**
-	 * @param $userid
+	 * @param   int  $userid
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getURL($userid)
+	protected function getURL(int $userid)
 	{
 		return "javascript:void(0)";
 	}

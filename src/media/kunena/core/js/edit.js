@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
 	// Check is anynomous options can be displayed on newtopic page
 	var catiddefault = $('#postcatid').val();
 
-	if (arrayanynomousbox !== undefined)
+	if (arrayanynomousbox !== null)
 	{
 		if(arrayanynomousbox[catiddefault]==1)
 		{

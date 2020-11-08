@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -84,8 +84,7 @@ class AttachmentsController extends FormController
 
 		foreach ($cid as $id)
 		{
-			$attachment = AttachmentHelper::get($id);
-
+			$attachment  = KunenaAttachmentHelper::get($id);
 			$message     = $attachment->getMessage();
 			$attachments = [$attachment->id, 1];
 			$attach      = [];

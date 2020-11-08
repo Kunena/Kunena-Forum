@@ -546,10 +546,8 @@ class KunenaBase extends KunenaLayoutBase
 			{
 				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
 			}
-			else
-			{
-				return;
-			}
+
+			return;
 		}
 
 		return $this->closures[$property]();
@@ -573,24 +571,24 @@ class KunenaBase extends KunenaLayoutBase
 	/**
 	 * Modifies a property of the object, creating it if it does not already exist.
 	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $value     The value of the property to set.
+	 * @param   string  $key    The name of the property.
+	 * @param   mixed   $value  The value of the property to set.
 	 *
 	 * @return  KunenaLayout|KunenaLayoutBase
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function set(string $property, $value = null)
+	public function set($key, $value)
 	{
 		$isFactory = is_object($value) && method_exists($value, '__invoke');
 
 		if ($isFactory)
 		{
-			$this->closures[$property] = $value;
+			$this->closures[$key] = $value;
 		}
 		else
 		{
-			$this->{$property} = $value;
+			$this->{$key} = $value;
 		}
 
 		return $this;

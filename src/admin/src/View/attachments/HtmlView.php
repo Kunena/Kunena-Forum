@@ -75,7 +75,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'filename', Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE'));
@@ -95,7 +95,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -111,7 +111,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
 		ToolbarHelper::help('COM_KUNENA', false, $help_url);

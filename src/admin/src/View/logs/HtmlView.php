@@ -38,7 +38,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayClean()
+	public function displayClean(): void
 	{
 		$this->setToolBarClean();
 		$this->display();
@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolbarClean()
+	protected function setToolbarClean(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
@@ -111,7 +111,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getFilterUserFields()
+	protected function getFilterUserFields(): array
 	{
 		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
@@ -129,7 +129,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields = [];
 
@@ -149,7 +149,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
@@ -163,7 +163,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getFilterTypeFields()
+	protected function getFilterTypeFields(): array
 	{
 		$filterFields   = [];
 		$filterFields[] = HTMLHelper::_('select.option', 1, 'MOD');
@@ -180,11 +180,11 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 *
 	 */
-	protected function getFilterOperationFields()
+	protected function getFilterOperationFields(): array
 	{
 		$filterFields = [];
 
-		$reflection = new ReflectionClass('Kunena\Forum\Libraries\Log\Log');
+		$reflection = new ReflectionClass('Kunena\Forum\Libraries\Log\KunenaLog');
 
 		$constants = $reflection->getConstants();
 		ksort($constants);
@@ -207,7 +207,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
@@ -223,7 +223,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getType($id)
+	public function getType(int $id): string
 	{
 		static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
 
@@ -237,7 +237,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getGroupCheckbox($name)
+	public function getGroupCheckbox(string $name): string
 	{
 		$checked = isset($this->group[$name]) ? ' checked="checked"' : '';
 

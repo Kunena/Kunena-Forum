@@ -11,4 +11,4 @@
  **/
 defined('_JEXEC') or die();
 
-include dirname(__FILE__) . '/edit.php';
+include __DIR__ . '/edit.php';

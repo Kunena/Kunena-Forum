@@ -15,7 +15,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-
 ?>
 
 <div id="kunena" class="container-fluid">

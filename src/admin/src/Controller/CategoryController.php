@@ -20,8 +20,8 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -67,7 +67,7 @@ class CategoryController extends FormController
 	 * Save changes on the category
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -100,14 +100,14 @@ class CategoryController extends FormController
 	/**
 	 * Internal method to save category
 	 *
-	 * @return Category|void
+	 * @return KunenaCategory|void
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	protected function _save()
+	protected function _save(): KunenaCategory
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 		$me = KunenaUserHelper::getMyself();
@@ -141,8 +141,8 @@ class CategoryController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = CategoryHelper::get(intval($post ['catid']));
-		$parent   = CategoryHelper::get(intval($post ['parent_id']));
+		$category = KunenaCategoryHelper::get(intval($post ['catid']));
+		$parent   = KunenaCategoryHelper::get(intval($post ['parent_id']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
@@ -250,7 +250,7 @@ class CategoryController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function escape($var)
+	protected function escape(string $var): string
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
@@ -265,7 +265,7 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function apply()
+	public function apply(): void
 	{
 		$category = $this->_save();
 
@@ -283,7 +283,7 @@ class CategoryController extends FormController
 	 * Cancel
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -294,7 +294,7 @@ class CategoryController extends FormController
 	public function cancel($key = null, $urlVar = null)
 	{
 		$post_catid = $this->app->input->post->get('catid', '', 'raw');
-		$category   = CategoryHelper::get($post_catid);
+		$category   = KunenaCategoryHelper::get($post_catid);
 		$category->checkin();
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -310,7 +310,7 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function save2copy()
+	public function save2copy(): void
 	{
 		$post_catid = $this->app->input->post->get('catid', '', 'raw');
 		$post_alias = $this->app->input->post->get('alias', '', 'raw');
@@ -337,11 +337,11 @@ class CategoryController extends FormController
 	 *
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function _generateNewTitle($category_id, $alias, $name)
+	protected function _generateNewTitle(int $category_id, string $alias, string $name): array
 	{
-		while (CategoryHelper::getAlias($category_id, $alias))
+		while (KunenaCategoryHelper::getAlias($category_id, $alias))
 		{
 			$name  = StringHelper::increment($name);
 			$alias = StringHelper::increment($alias, 'dash');
@@ -360,7 +360,7 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function save2new()
+	public function save2new(): void
 	{
 		$this->_save();
 		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));

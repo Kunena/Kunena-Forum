@@ -19,7 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -43,7 +43,7 @@ class HtmlView extends BaseHtmlView
 		$this->items      = $this->get('Items');
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-		$this->ktemplate  = Template::getInstance();
+		$this->ktemplate  = KunenaTemplate::getInstance();
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
@@ -65,7 +65,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'code', Text::_('COM_KUNENA_EMOTICONS_CODE'));
@@ -80,7 +80,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -96,7 +96,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');

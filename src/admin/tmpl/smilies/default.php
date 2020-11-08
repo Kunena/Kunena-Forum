@@ -16,7 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
@@ -89,7 +89,7 @@ $wa->useScript('multiselect');
 											</button>
 										</div>
 										<div class="btn-group pull-right hidden-phone">
-											<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+											<?php echo $this->pagination->getLimitBox(); ?>
 										</div>
 										<div class="btn-group pull-right hidden-phone">
 											<label for="directionTable"
@@ -159,7 +159,7 @@ $wa->useScript('multiselect');
 										<tfoot>
 										<tr>
 											<td colspan="5">
-												<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+												<?php echo $this->pagination->getListFooter(); ?>
 											</td>
 										</tr>
 										</tfoot>

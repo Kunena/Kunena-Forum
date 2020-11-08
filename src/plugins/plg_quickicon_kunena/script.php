@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\Exception\ExecutionFailureException;
 
@@ -54,7 +56,7 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	/**
-	 * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
+	 * @var  CMSApplication  Holds the application object
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -78,11 +80,13 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
 
 	/**
 	 *  Constructor
-	 * @param   string                                        $type   'install', 'update' or 'discover_install'
+	 *
+	 * @param   string  $type  'install', 'update' or 'discover_install'
 	 *
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
-	public function __construct($type)
+	public function __construct(string $type)
 	{
 		$this->app = Factory::getApplication();
 	}
@@ -90,14 +94,14 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
 	/**
 	 * method to run before an install/update/uninstall method
 	 *
-	 * @param   string                                        $type   'install', 'update' or 'discover_install'
-	 * @param   Joomla\CMS\Installer\Adapter\ComponentAdapter $parent Installerobject
+	 * @param   string            $type    'install', 'update' or 'discover_install'
+	 * @param   ComponentAdapter  $parent  Installer object
 	 *
 	 * @return  boolean  false will terminate the installation
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function preflight($type, $parent)
+	public function preflight(string $type, ComponentAdapter $parent): bool
 	{
 	}
 

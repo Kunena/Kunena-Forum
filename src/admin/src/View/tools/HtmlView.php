@@ -19,10 +19,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Login\Login;
-use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
+use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -132,9 +132,9 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($layout == 'menu')
 		{
-			$this->legacy    = MenuFix::getLegacy();
-			$this->invalid   = MenuFix::getInvalid();
-			$this->conflicts = MenuFix::getConflicts();
+			$this->legacy    = KunenaMenuFix::getLegacy();
+			$this->invalid   = KunenaMenuFix::getInvalid();
+			$this->conflicts = KunenaMenuFix::getConflicts();
 
 			$this->setToolBarMenu();
 		}
@@ -203,7 +203,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBar()
+	protected function setToolBar(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
 		$help_url = 'https://docs.kunena.org/en/manual/backend/tools';
@@ -215,7 +215,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarPrune()
+	protected function setToolBarPrune(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -232,7 +232,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarSyncUsers()
+	protected function setToolBarSyncUsers(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -249,7 +249,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarRecount()
+	protected function setToolBarRecount(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -266,7 +266,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarMenu()
+	protected function setToolBarMenu(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -289,7 +289,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarPurgeReStatements()
+	protected function setToolBarPurgeReStatements(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -306,7 +306,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarCleanupIP()
+	protected function setToolBarCleanupIP(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -323,7 +323,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarDiagnostics()
+	protected function setToolBarDiagnostics(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -338,7 +338,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarUninstall()
+	protected function setToolBarUninstall(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
@@ -353,7 +353,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarReport()
+	protected function setToolBarReport(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
 		ToolbarHelper::spacer();
@@ -368,7 +368,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarSubscriptions()
+	protected function setToolBarSubscriptions(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
 		ToolbarHelper::spacer();

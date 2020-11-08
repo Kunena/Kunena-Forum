@@ -1366,7 +1366,7 @@ class ConfigModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getConfiglists()
+	public function getConfiglists(): array
 	{
 		$lists        = [];
 		$this->config = KunenaConfig::getInstance();

@@ -18,12 +18,12 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Model\Model;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -34,7 +34,7 @@ use function defined;
  *
  * @since  3.0
  */
-class UserModel extends Model
+class UserModel extends KunenaModel
 {
 	/**
 	 * @param   array    $data     data
@@ -50,14 +50,14 @@ class UserModel extends Model
 	}
 
 	/**
-	 * @return  array|Topic[]|void
+	 * @return  array|KunenaTopic[]|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function getSubscriptions()
+	public function getSubscriptions(): array
 	{
 		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
@@ -88,24 +88,24 @@ class UserModel extends Model
 				$topic_list[] = $sub->thread;
 			}
 
-			$topic_list = TopicHelper::getTopics($topic_list);
+			$topic_list = KunenaTopicHelper::getTopics($topic_list);
 		}
 
 		return $topic_list;
 	}
 
 	/**
-	 * @return  Category[]
+	 * @return  KunenaCategory[]
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getCatsubcriptions()
+	public function getCatsubcriptions(): array
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
-		return CategoryHelper::getSubscriptions($userid);
+		return KunenaCategoryHelper::getSubscriptions($userid);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class UserModel extends Model
 	 *
 	 * @throws  Exception
 	 */
-	public function getIPlist()
+	public function getIPlist(): array
 	{
 		$db     = Factory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
@@ -184,7 +184,7 @@ class UserModel extends Model
 	{
 		$user = $this->getUser();
 
-		$modCatList = array_keys(Access::getInstance()->getModeratorStatus($user));
+		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 
 		if (empty($modCatList))
 		{
@@ -213,7 +213,7 @@ class UserModel extends Model
 	 *
 	 * @throws  Exception
 	 */
-	public function getUser()
+	public function getUser(): KunenaUser
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
@@ -227,7 +227,7 @@ class UserModel extends Model
 	 *
 	 * @throws  Exception
 	 */
-	public function getListuserranks()
+	public function getListuserranks(): array
 	{
 		$db   = Factory::getDBO();
 		$user = $this->getUser();
@@ -322,7 +322,7 @@ class UserModel extends Model
 	 *
 	 * @throws Exception
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		$this->context = 'com_kunena.admin.user';
 

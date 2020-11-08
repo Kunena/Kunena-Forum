@@ -17,8 +17,8 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\Template\TemplateHelper;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use stdClass;
 
 /**
@@ -40,11 +40,11 @@ class TemplateModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getForm($data = [], $loadData = true)
+	public function getForm($data = [], $loadData = true): bool
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
-		$xml      = Template::getInstance($template)->getConfigXml();
+		$xml      = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
@@ -69,12 +69,12 @@ class TemplateModel extends AdminModel
 		$app = Factory::getApplication();
 
 		$template = $app->getUserState('kunena.edit.template');
-		$details  = TemplateHelper::parseXmlFile($template);
+		$details  = KunenaTemplateHelper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = TemplateHelper::parseXmlFile($template);
+			$details  = KunenaTemplateHelper::parseXmlFile($template);
 		}
 
 		return $details;
@@ -128,9 +128,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
+	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
 		$app       = Factory::getApplication();
 		$input     = $app->input;

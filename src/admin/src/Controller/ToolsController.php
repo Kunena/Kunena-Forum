@@ -21,16 +21,16 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Diagnostics;
-use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\PollHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Forum\Topic\User\TopicUserHelper;
-use Kunena\Forum\Libraries\Login\Login;
-use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
+use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -79,7 +79,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function diagnostics()
+	public function diagnostics(): void
 	{
 		if (!Session::checkToken('get'))
 		{
@@ -94,7 +94,7 @@ class ToolsController extends FormController
 
 		if ($fix)
 		{
-			$success = Diagnostics::fix($fix);
+			$success = KunenaDiagnostics::fix($fix);
 
 			if (!$success)
 			{
@@ -103,7 +103,7 @@ class ToolsController extends FormController
 		}
 		elseif ($delete)
 		{
-			$success = Diagnostics::delete($delete);
+			$success = KunenaDiagnostics::delete($delete);
 
 			if (!$success)
 			{
@@ -124,7 +124,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function prune()
+	public function prune(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -137,7 +137,7 @@ class ToolsController extends FormController
 		$ids = $this->app->input->get('prune_forum', [], 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
-		$categories = CategoryHelper::getCategories($ids, false, 'admin');
+		$categories = KunenaCategoryHelper::getCategories($ids, false, 'admin');
 
 		if (!$categories)
 		{
@@ -248,7 +248,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function syncusers()
+	public function syncusers(): void
 	{
 		$useradd     = $this->app->input->getBool('useradd', 0);
 		$userdel     = $this->app->input->getBool('userdel', 0);
@@ -397,7 +397,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function recount()
+	public function recount(): void
 	{
 		$ajax = $this->input->getWord('format', 'html') == 'json';
 
@@ -476,7 +476,7 @@ class ToolsController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 */
-	protected function setResponse($response, $ajax)
+	protected function setResponse(array $response, bool $ajax): void
 	{
 		if (!$ajax)
 		{
@@ -513,7 +513,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function dorecount()
+	public function dorecount(): void
 	{
 		$ajax = $this->input->getWord('format', 'html') == 'json';
 
@@ -551,8 +551,8 @@ class ToolsController extends FormController
 						if ($state->topics)
 						{
 							// Update topic statistics
-							AttachmentHelper::cleanup();
-							TopicHelper::recount(false, $state->start, $state->start + $count);
+							KunenaAttachmentHelper::cleanup();
+							KunenaTopicHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
@@ -564,7 +564,7 @@ class ToolsController extends FormController
 						if ($state->usertopics)
 						{
 							// Update user's topic statistics
-							TopicUserHelper::recount(false, $state->start, $state->start + $count);
+							KunenaTopicUserHelper::recount(false, $state->start, $state->start + $count);
 							$state->start += $count;
 							$msg          = Text::sprintf(
 								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
@@ -576,8 +576,8 @@ class ToolsController extends FormController
 						if ($state->categories)
 						{
 							// Update category statistics
-							CategoryHelper::recount();
-							CategoryHelper::fixAliases();
+							KunenaCategoryHelper::recount();
+							KunenaCategoryHelper::fixAliases();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
 						}
 						break;
@@ -585,7 +585,7 @@ class ToolsController extends FormController
 						if ($state->users)
 						{
 							// Update user statistics
-							MessageThankyouHelper::recountThankyou();
+							KunenaMessageThankyouHelper::recountThankyou();
 							KunenaUserHelper::recount();
 							KunenaUserHelper::recountPostsNull();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
@@ -595,7 +595,7 @@ class ToolsController extends FormController
 						if ($state->polls)
 						{
 							// Update user statistics
-							PollHelper::recount();
+							KunenaPollHelper::recount();
 							$msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
 						break;
@@ -675,7 +675,7 @@ class ToolsController extends FormController
 	 *
 	 * @since   Kunena 2.0
 	 */
-	protected function checkTimeout($stop = false)
+	protected function checkTimeout($stop = false): bool
 	{
 		static $start = null;
 
@@ -711,7 +711,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function trashmenu()
+	public function trashmenu(): void
 	{
 		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
@@ -731,7 +731,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function fixlegacy()
+	public function fixlegacy(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -741,8 +741,8 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$legacy = MenuFix::getLegacy();
-		$errors = MenuFix::fixLegacy();
+		$legacy = KunenaMenuFix::getLegacy();
+		$errors = KunenaMenuFix::fixLegacy();
 
 		if ($errors)
 		{
@@ -766,7 +766,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function purgeReStatements()
+	public function purgeReStatements(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -830,7 +830,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function cleanupIP()
+	public function cleanupIP(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -939,7 +939,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function uninstall()
+	public function uninstall(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -994,7 +994,7 @@ class ToolsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function systemreport()
+	public function systemreport(): void
 	{
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Log\Finder;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Log\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -92,7 +92,7 @@ class LogsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getTotal()
+	public function getTotal(): int
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getTotal');
@@ -127,7 +127,7 @@ class LogsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.id');
@@ -149,13 +149,13 @@ class LogsModel extends ListModel
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @return  Finder
+	 * @return  KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function getFinder()
+	protected function getFinder(): KunenaFinder
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getFinder');
@@ -168,7 +168,7 @@ class LogsModel extends ListModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new Finder;
+		$finder = new KunenaFinder;
 
 		// Filter by type.
 		$filter = $this->getState('filter.type');
@@ -286,7 +286,7 @@ class LogsModel extends ListModel
 
 		if (is_numeric($usertypes))
 		{
-			$access = Access::getInstance();
+			$access = KunenaAccess::getInstance();
 
 			switch ($usertypes)
 			{
@@ -333,7 +333,6 @@ class LogsModel extends ListModel
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return  KunenaUser  List of \Kunena\Forum\Libraries\User\KunenaUser objects found.
 	 *
 	 * @since   Kunena 5.0
 	 *
@@ -357,21 +356,7 @@ class LogsModel extends ListModel
 			->limit((int) $this->getState('list.limit'))
 			->find();
 
-		$userIds1 = $items->map(function ($item, $key) {
-			return $item->user_id;
-		});
-
-		$userIds2 = $items->map(function ($item, $key) {
-			return $item->target_user;
-		});
-
-		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
-
-		KunenaUserHelper::loadUsers($userIds);
-
-		TopicHelper::getTopics($items->map(function ($item, $key) {
-			return $item->topic_id;
-		})->all());
+		KunenaUserHelper::loadUsers($items);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $items;

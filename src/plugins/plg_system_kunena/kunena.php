@@ -99,13 +99,13 @@ EOF;
 	 * @internal
 	 *
 	 * @param   string   $context  Context
-	 * @param   boolean  $params   Params
+	 * @param   array    $params   Params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetConfiguration(string $context, bool &$params): void
+	public function onKunenaGetConfiguration(string $context, array &$params): void
 	{
 		if ($context == 'kunena.configuration')
 		{
@@ -158,7 +158,7 @@ EOF;
 		// We don't want to handle discover install (where there's no manifest provided)
 		if (!$manifest)
 		{
-			return;
+			return false;
 		}
 
 		return $this->onExtensionBeforeUpdate($type, $manifest);

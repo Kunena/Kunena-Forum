@@ -135,7 +135,7 @@ class RanksModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getListQuery()
+	protected function getListQuery(): QueryInterface
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true);

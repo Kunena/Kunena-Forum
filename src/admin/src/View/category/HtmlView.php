@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 
 /**
  * About view for Kunena backend
@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Forum\Category\Category;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @var     array|Category[]
+	 * @var     array|KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public $category = [];
@@ -47,7 +47,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayCreate()
+	public function displayCreate(): void
 	{
 		$this->displayEdit();
 	}
@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();

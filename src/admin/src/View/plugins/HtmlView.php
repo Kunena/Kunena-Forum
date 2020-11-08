@@ -142,7 +142,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   3.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'enable', Text::_('JSTATUS'));
@@ -161,7 +161,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   3.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -177,7 +177,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   K1.6
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		ToolbarHelper::spacer();
@@ -199,7 +199,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function publishedOptions()
+	public function publishedOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];

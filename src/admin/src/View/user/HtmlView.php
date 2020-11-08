@@ -22,7 +22,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use StdClass;
 use function defined;
 
@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayMove()
+	public function displayMove(): void
 	{
 		$this->setToolBarMove();
 		$this->catslist = $this->get('movecatslist');
@@ -79,7 +79,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarMove()
+	protected function setToolBarMove(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
@@ -107,7 +107,7 @@ class HtmlView extends BaseHtmlView
 		$this->ipslist      = $this->get('IPlist');
 
 		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof Avatar) && $this->user->avatar;
+		$this->editavatar = ($avatarint instanceof KunenaAvatar) && $this->user->avatar;
 		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
@@ -214,7 +214,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');

@@ -172,7 +172,7 @@ abstract class KunenaLegacy
 
 		if ($uri->getVar('option') != 'com_kunena')
 		{
-			return;
+			return false;
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -187,7 +187,7 @@ abstract class KunenaLegacy
 		{
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			return;
+			return false;
 		}
 
 		$legacy = clone $uri;

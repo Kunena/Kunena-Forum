@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
@@ -106,7 +106,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -122,7 +122,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');
@@ -171,7 +171,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function signatureOptions()
+	public function signatureOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -188,7 +188,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function blockOptions()
+	public function blockOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -205,7 +205,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bannedOptions()
+	public function bannedOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -222,7 +222,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function moderatorOptions()
+	public function moderatorOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -239,7 +239,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function ranksOptions()
+	public function ranksOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];

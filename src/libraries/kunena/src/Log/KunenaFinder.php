@@ -108,13 +108,13 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	/**
 	 * Get log entries.
 	 *
-	 * @return  array|KunenaCollection
+	 * @return  array
 	 *
 	 * @since   Kunena 5.0
 	 *
 	 * @throws  Exception
 	 */
-	public function find()
+	public function find(): array
 	{
 		if ($this->skip)
 		{
@@ -123,13 +123,12 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 
 		$query = clone $this->query;
 		$this->build($query);
-		$query->select($this->db->quoteName('a.*'));
-		$query->setLimit($this->limit, $this->start);
-		$this->db->setQuery($query);
+		$query->select('a.' . $this->primaryKey);
+		$this->db->setQuery($query, $this->start, $this->limit);
 
 		try
 		{
-			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
+			$results = (array) $this->db->loadColumn();
 		}
 		catch (ExecutionFailureException $e)
 		{
@@ -146,7 +145,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	 *
 	 * @since   Kunena 5.0
 	 */
-	protected function build(QueryInterface $query = null)
+	protected function build(QueryInterface $query = null): void
 	{
 	}
 }

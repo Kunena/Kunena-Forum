@@ -20,8 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\Template\TemplateHelper;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 
@@ -59,11 +59,11 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getForm($data = [], $loadData = true)
+	public function getForm($data = [], $loadData = true): bool
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
-		$xml      = Template::getInstance($template)->getConfigXml();
+		$xml      = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
@@ -83,15 +83,15 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getTemplates()
+	public function getTemplates(): array
 	{
 		// Get template xml file info
-		$rows = TemplateHelper::parseXmlFiles();
+		$rows = KunenaTemplateHelper::parseXmlFiles();
 
 		// Set dynamic template information
 		foreach ($rows as $row)
 		{
-			$row->published = TemplateHelper::isDefault($row->directory);
+			$row->published = KunenaTemplateHelper::isDefault($row->directory);
 		}
 
 		$this->setState('list.total', count($rows));
@@ -112,12 +112,12 @@ class TemplatesModel extends AdminModel
 	public function getTemplatedetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$details  = TemplateHelper::parseXmlFile($template);
+		$details  = KunenaTemplateHelper::parseXmlFile($template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = TemplateHelper::parseXmlFile($template);
+			$details  = KunenaTemplateHelper::parseXmlFile($template);
 		}
 
 		return $details;
@@ -181,7 +181,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getPagination()
+	public function getPagination(): Pagination
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getPagination');
@@ -209,7 +209,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Add the list state to the store id.
 		$id .= ':' . $this->getState('list.start');
@@ -225,7 +225,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTotal()
+	public function getTotal(): int
 	{
 		return $this->getState('list.total');
 	}
@@ -235,7 +235,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getStart()
+	public function getStart(): int
 	{
 		return $this->getState('list.start');
 	}
@@ -294,9 +294,9 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
+	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
 		$app       = Factory::getApplication();
 		$input     = $app->input;
@@ -331,7 +331,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function loadFormData()
+	protected function loadFormData(): array
 	{
 		// Check the session for previously entered form data.
 		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', []);
@@ -339,7 +339,7 @@ class TemplatesModel extends AdminModel
 		if (empty($data))
 		{
 			$template = $this->getState('template');
-			$data     = Template::getInstance($template)->params->toArray();
+			$data     = KunenaTemplate::getInstance($template)->params->toArray();
 		}
 
 		return $data;

@@ -19,7 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use function defined;
 
 /**
@@ -47,7 +47,7 @@ class HtmlView extends BaseHtmlView
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
 
-		$kunena_stats = Statistics::getInstance();
+		$kunena_stats = KunenaStatistics::getInstance();
 		$kunena_stats->loadAll(true);
 		$this->kunena_stats = $kunena_stats;
 

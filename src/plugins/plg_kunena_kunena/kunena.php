@@ -56,7 +56,7 @@ class PlgKunenaKunena extends CMSPlugin
 	{
 		if (!$this->params->get('avatar', 1))
 		{
-			return;
+			return false;
 		}
 
 		return new KunenaAvatar;
@@ -71,7 +71,7 @@ class PlgKunenaKunena extends CMSPlugin
 	{
 		if (!$this->params->get('profile', 1))
 		{
-			return;
+			return false;
 		}
 
 		return new KunenaProfile;

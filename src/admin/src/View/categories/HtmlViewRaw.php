@@ -31,7 +31,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayChkAliases()
+	public function displayChkAliases(): void
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 
@@ -60,7 +60,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayDeleteAlias()
+	public function displayDeleteAlias(): void
 	{
 		$alias = $this->app->input->get('alias', null, 'string');
 

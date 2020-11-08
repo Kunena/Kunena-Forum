@@ -59,7 +59,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function cleanentries()
+	public function cleanentries(): void
 	{
 		$this->setRedirect(Route::_("index.php?option=com_kunena&view=logs&layout=clean", false));
 	}
@@ -74,7 +74,7 @@ class LogsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function clean()
+	public function clean(): bool
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -124,7 +124,7 @@ class LogsController extends FormController
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *

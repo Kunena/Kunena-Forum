@@ -64,7 +64,7 @@ class InstallController extends FormController
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function uninstall()
+	public function uninstall(): bool
 	{
 		if (!Session::checkToken('get'))
 		{

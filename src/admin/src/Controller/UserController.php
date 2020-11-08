@@ -21,9 +21,9 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -174,7 +174,7 @@ class UserController extends FormController
 			else
 			{
 				// Update moderator rights
-				$categories = CategoryHelper::getCategories(false, false, 'admin');
+				$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 
 				foreach ($categories as $category)
 				{
@@ -184,7 +184,7 @@ class UserController extends FormController
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
+					KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -202,7 +202,7 @@ class UserController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function cleanSocial(&$user, $app): void
+	protected function cleanSocial(KunenaUser $user, Factory $app): void
 	{
 		foreach ($user->socialButtons() as $key => $social)
 		{
@@ -220,12 +220,12 @@ class UserController extends FormController
 	 *
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function setModerate(KunenaUser $user, $modCatids): bool
+	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
 		// Update moderator rights
-		$categories = CategoryHelper::getCategories(false, false, 'admin');
+		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 
 		foreach ($categories as $category)
 		{
@@ -235,7 +235,7 @@ class UserController extends FormController
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			Access::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
 		}
 
 		return true;

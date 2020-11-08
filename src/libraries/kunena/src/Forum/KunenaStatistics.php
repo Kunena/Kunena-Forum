@@ -225,13 +225,13 @@ class KunenaStatistics
 	}
 
 	/**
-	 * @return  array
+	 * @return  int
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public static function getTotalEmoticons(): ?array
+	public static function getTotalEmoticons(): ?int
 	{
 		$smilies = null;
 

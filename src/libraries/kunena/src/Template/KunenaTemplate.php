@@ -388,7 +388,7 @@ class KunenaTemplate extends CMSObject
 
 		if (!empty($format) && $format != 'html')
 		{
-			return;
+			return false;
 		}
 
 		return Factory::getApplication()->getDocument()->addScriptDeclaration($content, $type);
@@ -968,7 +968,7 @@ HTML;
 
 		if (!empty($format) && $format != 'html')
 		{
-			return;
+			return false;
 		}
 
 		return Factory::getApplication()->getDocument()->addStyleDeclaration($style);
@@ -1076,7 +1076,7 @@ HTML;
 
 		if (!empty($format) && $format != 'html')
 		{
-			return;
+			return false;
 		}
 
 		if (!preg_match('|https?://|', $filename))
@@ -1131,7 +1131,7 @@ HTML;
 
 		if (!empty($format) && $format != 'html')
 		{
-			return;
+			return false;
 		}
 
 		return Factory::getApplication()->getDocument()->addScriptOptions($key, $options, $merge);

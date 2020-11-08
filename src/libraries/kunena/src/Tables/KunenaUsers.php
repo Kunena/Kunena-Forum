@@ -539,7 +539,7 @@ class KunenaUsers extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function load($userid = null, $reset = true)
+	public function load($userid = null, $reset = true): bool
 	{
 		$this->_exists = false;
 		$k             = $this->_tbl_key;

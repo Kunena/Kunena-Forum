@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use RuntimeException;
@@ -71,7 +71,7 @@ class CategoriesController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function lock()
+	public function lock(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -91,10 +91,10 @@ class CategoriesController extends FormController
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws Exception
+	 * @throws null
 	 */
-	protected function setVariable($cid, $variable, $value)
+	protected function setVariable(int $cid, string $variable, string $value): void
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -115,7 +115,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = CategoryHelper::getCategories($cid);
+		$categories = KunenaCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -168,7 +168,7 @@ class CategoriesController extends FormController
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function escape($var)
+	protected function escape(string $var): string
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
@@ -183,7 +183,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unlock()
+	public function unlock(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -202,7 +202,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function review()
+	public function review(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -221,7 +221,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unreview()
+	public function unreview(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -240,7 +240,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function allow_anonymous()
+	public function allow_anonymous(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -259,7 +259,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function deny_anonymous()
+	public function deny_anonymous(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -278,7 +278,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function allow_polls()
+	public function allow_polls(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -297,7 +297,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function deny_polls()
+	public function deny_polls(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -316,7 +316,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function publish()
+	public function publish(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -335,7 +335,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unpublish()
+	public function unpublish(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -377,7 +377,7 @@ class CategoriesController extends FormController
 	 * Edit
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -409,10 +409,8 @@ class CategoriesController extends FormController
 
 			return;
 		}
-		else
-		{
-			$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=category&layout=edit&catid={$id}", false));
-		}
+
+		$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=category&layout=edit&catid={$id}", false));
 	}
 
 	/**
@@ -451,7 +449,7 @@ class CategoriesController extends FormController
 		$count = 0;
 		$name  = null;
 
-		$categories = CategoryHelper::getCategories($cid);
+		$categories = KunenaCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -515,7 +513,7 @@ class CategoriesController extends FormController
 
 		$id = $this->app->input->getInt('catid', 0);
 
-		$category = CategoryHelper::get($id);
+		$category = KunenaCategoryHelper::get($id);
 
 		if (!$category->isAuthorised('admin'))
 		{
@@ -570,7 +568,7 @@ class CategoriesController extends FormController
 
 		$success = false;
 
-		$categories = CategoryHelper::getCategories($cid);
+		$categories = KunenaCategoryHelper::getCategories($cid);
 
 		foreach ($categories as $category)
 		{
@@ -617,7 +615,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function saveOrderAjax()
+	public function saveOrderAjax(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -657,7 +655,7 @@ class CategoriesController extends FormController
 	 *
 	 * @since   1.6
 	 */
-	public function getModel($name = 'Categories', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	public function getModel($name = 'Categories', $prefix = 'Administrator', $config = array('ignore_request' => true)): object
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -672,7 +670,7 @@ class CategoriesController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function orderup()
+	public function orderup(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -691,9 +689,9 @@ class CategoriesController extends FormController
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  null
+	 * @throws null
 	 */
-	protected function orderUpDown($id, $direction)
+	protected function orderUpDown(int $id, int $direction): void
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -709,7 +707,7 @@ class CategoriesController extends FormController
 			return;
 		}
 
-		$category = CategoryHelper::get($id);
+		$category = KunenaCategoryHelper::get($id);
 
 		if (!$category->getParent()->tryAuthorise('admin'))
 		{
@@ -745,7 +743,7 @@ class CategoriesController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function orderdown()
+	public function orderdown(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
@@ -764,7 +762,7 @@ class CategoriesController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function archive()
+	public function archive(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 
@@ -785,7 +783,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function trash()
+	public function trash(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 
@@ -806,7 +804,7 @@ class CategoriesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function batch_categories()
+	public function batch_categories(): bool
 	{
 		if (!Session::checkToken('post'))
 		{

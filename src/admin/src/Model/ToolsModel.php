@@ -28,7 +28,7 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Menu\MenuFix;
+use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use RuntimeException;
 use stdClass;
 use function defined;
@@ -292,7 +292,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getSystemReportAnonymous()
+	public function getSystemReportAnonymous(): string
 	{
 		$this->app = Factory::getApplication();
 		$kunena_db = Factory::getDBO();
@@ -375,7 +375,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function getReportData()
+	protected function getReportData(): void
 	{
 		$this->app = Factory::getApplication();
 
@@ -551,7 +551,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena 5.1.1
 	 */
-	protected function getKunenaTemplateParams($params)
+	protected function getKunenaTemplateParams(object $params): string
 	{
 		$template_params = json_decode($params);
 
@@ -642,9 +642,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena 1.6
 	 */
-	protected function _getJoomlaMenuDetails()
+	protected function _getJoomlaMenuDetails(): string
 	{
-		$items = MenuFix::getAll();
+		$items = KunenaMenuFix::getAll();
 
 		if (!empty($items))
 		{
@@ -683,7 +683,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function _getTablesCollation()
+	protected function _getTablesCollation(): string
 	{
 		$kunena_db = Factory::getDBO();
 
@@ -705,7 +705,7 @@ class ToolsModel extends AdminModel
 				{
 					Factory::getApplication()->enqueueMessage($e->getMessage());
 
-					return;
+					return false;
 				}
 
 				$fieldTypes = ['tinytext', 'text', 'char', 'varchar'];
@@ -755,7 +755,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function _getKunenaConfiguration()
+	protected function _getKunenaConfiguration(): string
 	{
 		$config = KunenaConfig::getInstance();
 
@@ -794,7 +794,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena 2.0
 	 */
-	protected function _getJoomlaLanguagesInstalled()
+	protected function _getJoomlaLanguagesInstalled(): string
 	{
 		$languages  = LanguageHelper::getKnownLanguages();
 		$table_lang = '[table]';
@@ -820,7 +820,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena  1.6
 	 */
-	protected function getExtensionVersion($extension, $name)
+	protected function getExtensionVersion(string $extension, string $name): string
 	{
 		if (substr($extension, 0, 4) == 'com_')
 		{
@@ -850,7 +850,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function findExtensionVersion($path)
+	public function findExtensionVersion(string $path): ?string
 	{
 		if (is_file($path))
 		{
@@ -891,7 +891,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getIntegrationSettings()
+	public function getIntegrationSettings(): array
 	{
 		$plugins_list = ['finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena'];
 		$plugin_final = [];
@@ -939,7 +939,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getSystemReport()
+	public function getSystemReport(): string
 	{
 		$kunena_db = Factory::getDBO();
 		$this->app = Factory::getApplication();

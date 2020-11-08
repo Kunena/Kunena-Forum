@@ -147,7 +147,7 @@ class CpanelController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparams = false): BaseController
 	{
 		$db = Factory::getDbo();
 

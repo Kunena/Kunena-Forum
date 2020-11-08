@@ -760,13 +760,9 @@ class KunenaCategory extends KunenaDatabaseObject
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
-			else
-			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
-			}
-		}
 
-		return;
+			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+		}
 	}
 
 	/**
@@ -1300,11 +1296,10 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @param   array|null  $fields   fields
 	 * @param   bool        $include  include
 	 *
-	 * @return  boolean
-	 *
+	 * @return  boolean  True on success.
 	 * @since   Kunena 6.0
 	 */
-	public function bind(array $src = null, array $fields = null, $include = false)
+	public function bind(array $src = null, array $fields = null, $include = false): bool
 	{
 		if (isset($src['channels']) && is_array($src['channels']))
 		{
@@ -1343,7 +1338,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function load($id = null)
+	public function load($id = null): bool
 	{
 		$exists = parent::load($id);
 
@@ -1379,7 +1374,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function check()
+	public function check(): bool
 	{
 		$this->alias = trim($this->alias);
 
@@ -1563,7 +1558,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function delete()
+	public function delete(): bool
 	{
 		if (!$this->exists())
 		{
@@ -1907,7 +1902,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function saveInternal()
+	protected function saveInternal(): bool
 	{
 		// Reorder categories
 		$table = $this->getTable();
@@ -2013,13 +2008,9 @@ class KunenaCategory extends KunenaDatabaseObject
 			{
 				return new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
-			else
-			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
-			}
-		}
 
-		return;
+			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+		}
 	}
 
 	/**
@@ -2038,8 +2029,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
-
-		return;
 	}
 
 	/**
@@ -2065,8 +2054,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
-
-		return;
 	}
 
 	/**
@@ -2092,8 +2079,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
-
-		return;
 	}
 
 	/**
@@ -2117,8 +2102,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
 		}
-
-		return;
 	}
 
 	/**
@@ -2137,8 +2120,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2174,8 +2155,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2194,8 +2173,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2219,8 +2196,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2244,8 +2219,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2269,8 +2242,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2295,8 +2266,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}
-
-		return;
 	}
 
 	/**
@@ -2313,8 +2282,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
 		}
-
-		return;
 	}
 
 	/**
@@ -2333,7 +2300,5 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
-
-		return;
 	}
 }

@@ -43,7 +43,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayPurge()
+	public function displayPurge(): void
 	{
 		$this->purgeitems    = $this->get('PurgeItems');
 		$this->md5Calculated = $this->get('Md5');
@@ -57,7 +57,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarPurge()
+	protected function setToolBarPurge(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
@@ -112,7 +112,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields = [];
 
@@ -143,7 +143,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -159,7 +159,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		// Set the titlebar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');

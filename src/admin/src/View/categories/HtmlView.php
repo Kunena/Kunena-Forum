@@ -23,7 +23,8 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Forum\Category\Category;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -34,7 +35,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @var     array|Category[]
+	 * @var     array|KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
@@ -48,7 +49,7 @@ class HtmlView extends BaseHtmlView
 	protected $state;
 
 	/**
-	 * @var     array|Category[]
+	 * @var     array|KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
 	public $batch_categories;
@@ -58,7 +59,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayCreate()
+	public function displayCreate(): void
 	{
 		$this->displayEdit();
 	}
@@ -77,7 +78,7 @@ class HtmlView extends BaseHtmlView
 		$this->categories = $this->get('AdminCategories');
 		$this->pagination = $this->get('AdminNavigation');
 		$this->state      = $this->get('State');
-
+		$this->pagesTotal = 100;
 		$this->batch_categories = $this->get('BatchCategories');
 
 		// Preprocess the list of items to find ordering divisions.
@@ -128,7 +129,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortFields()
+	protected function getSortFields(): array
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'ordering', Text::_('COM_KUNENA_REORDER'));
@@ -151,7 +152,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getSortDirectionFields()
+	protected function getSortDirectionFields(): array
 	{
 		$sortDirection   = [];
 		$sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
@@ -167,7 +168,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
@@ -211,7 +212,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function publishedOptions()
+	public function publishedOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -228,7 +229,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function lockOptions()
+	public function lockOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -245,7 +246,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function reviewOptions()
+	public function reviewOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -262,7 +263,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function allowpollsOptions()
+	public function allowpollsOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];
@@ -278,7 +279,7 @@ class HtmlView extends BaseHtmlView
 	 * @return  array  The HTML code for the select tag
 	 * @since   Kunena 6.0
 	 */
-	public function anonymousOptions()
+	public function anonymousOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];

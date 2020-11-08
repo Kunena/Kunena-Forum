@@ -311,7 +311,7 @@ abstract class KunenaDiagnostics
 			return (string) $query;
 		}
 
-		return;
+		return false;
 	}
 
 	/**

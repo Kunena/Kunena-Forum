@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-
 ?>
 <div class="modal hide fade" id="subscribecatsusersModal">
 	<div class="modal-dialog">

@@ -105,7 +105,7 @@ class KunenaPath extends Path
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public static function isOwner(string $path): bool
+	public static function isOwner($path)
 	{
 		if (!self::$owner)
 		{

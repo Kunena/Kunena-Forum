@@ -20,7 +20,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -39,7 +39,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayAdd()
+	public function displayAdd(): void
 	{
 		$this->setToolBarAdd();
 		$this->display();
@@ -50,7 +50,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarAdd()
+	protected function setToolBarAdd(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
@@ -87,7 +87,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
@@ -113,7 +113,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEdit()
+	public function displayEdit(): void
 	{
 		$this->setToolBarEdit();
 
@@ -121,7 +121,7 @@ class HtmlView extends BaseHtmlView
 		$this->params       = $this->get('editparams');
 		$this->details      = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
-		$template           = Template::getInstance($this->templatename);
+		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
@@ -144,7 +144,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEdit()
+	protected function setToolBarEdit(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
@@ -167,7 +167,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayChooseless()
+	public function displayChooseless(): void
 	{
 		$this->setToolBarChooseless();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -192,7 +192,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarChooseless()
+	protected function setToolBarChooseless(): void
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -210,7 +210,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEditless()
+	public function displayEditless(): void
 	{
 		$this->setToolBarEditless();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -227,7 +227,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEditless()
+	protected function setToolBarEditless(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
@@ -247,7 +247,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayChoosecss()
+	public function displayChoosecss(): void
 	{
 		$this->setToolBarChoosecss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -276,9 +276,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarChoosecss()
+	protected function setToolBarChoosecss(): void
 	{
-
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
@@ -295,7 +294,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayEditcss()
+	public function displayEditcss(): void
 	{
 		$this->setToolBarEditcss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
@@ -311,7 +310,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEditcss()
+	protected function setToolBarEditcss(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();

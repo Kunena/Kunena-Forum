@@ -23,7 +23,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Upload\UploadHelper;
+use Kunena\Forum\Libraries\Upload\KunenaUploadHelper;
 use RuntimeException;
 use function defined;
 
@@ -82,7 +82,7 @@ class RanksController extends FormController
 	 * Edit
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *
@@ -112,17 +112,15 @@ class RanksController extends FormController
 
 			return;
 		}
-		else
-		{
-			$this->setRedirect(Route::_("index.php?option=com_kunena&view=rank&layout=edit&id={$id}", false));
-		}
+
+		$this->setRedirect(Route::_("index.php?option=com_kunena&view=rank&layout=edit&id={$id}", false));
 	}
 
 	/**
 	 * Save
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *
@@ -202,7 +200,7 @@ class RanksController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function rankupload()
+	public function rankupload(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -239,7 +237,7 @@ class RanksController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function remove()
+	public function remove(): void
 	{
 		$db = Factory::getDbo();
 
@@ -285,7 +283,7 @@ class RanksController extends FormController
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *

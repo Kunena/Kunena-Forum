@@ -1177,7 +1177,7 @@ class KunenaUser extends CMSObject
 		// Note: We want to link also existing users who have never visited Kunena before.
 		if (!$this->userid || !$this->registerDate)
 		{
-			return;
+			return false;
 		}
 
 		$config = KunenaFactory::getConfig();
@@ -2354,7 +2354,7 @@ class KunenaUser extends CMSObject
 			case 'profile' :
 				if (!$this->userid)
 				{
-					return;
+					return false;
 				}
 
 				return $this->getLink('<span class="profile" title="' . Text::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');

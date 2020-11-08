@@ -23,12 +23,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Model\Model;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use RuntimeException;
 
 /**
@@ -36,7 +36,7 @@ use RuntimeException;
  *
  * @since 2.0
  */
-class CategoriesModel extends Model
+class CategoriesModel extends KunenaModel
 {
 	/**
 	 * @var     string
@@ -45,13 +45,13 @@ class CategoriesModel extends Model
 	public $context;
 
 	/**
-	 * @var     Category[]
+	 * @var     KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_admincategories = false;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	protected $_admincategory = false;
@@ -60,7 +60,7 @@ class CategoriesModel extends Model
 	 * @return  Pagination
 	 * @since   Kunena 6.0
 	 */
-	public function getAdminNavigation()
+	public function getAdminNavigation(): Pagination
 	{
 		return new Pagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 	}
@@ -166,7 +166,7 @@ class CategoriesModel extends Model
 
 		if (empty($category->iconset))
 		{
-			$value = Template::getInstance()->params->get('DefaultIconset');
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
 		}
 		else
 		{
@@ -179,7 +179,7 @@ class CategoriesModel extends Model
 	}
 
 	/**
-	 * @return  boolean|Category|void
+	 * @return  boolean|KunenaCategory|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -187,7 +187,7 @@ class CategoriesModel extends Model
 	 */
 	public function getAdminCategory()
 	{
-		$category = CategoryHelper::get($this->getState('item.id'));
+		$category = KunenaCategoryHelper::get($this->getState('item.id'));
 
 		if (!$this->me->isAdmin($category))
 		{
@@ -274,7 +274,7 @@ class CategoriesModel extends Model
 	 *
 	 * @throws  Exception
 	 */
-	public function saveorder($pks = null, $order = null)
+	public function saveorder($pks = null, $order = null): bool
 	{
 		$table      = Table::getInstance('KunenaCategories', 'Table');
 		$conditions = [];
@@ -341,7 +341,7 @@ class CategoriesModel extends Model
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getReorderConditions($table)
+	protected function getReorderConditions(array $table): array
 	{
 		$condition   = [];
 		$condition[] = 'parent_id = ' . (int) $table->parent_id;
@@ -359,7 +359,7 @@ class CategoriesModel extends Model
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getBatchCategories()
+	public function getBatchCategories(): array
 	{
 		$categories         = $this->getAdminCategories();
 		$batch_categories   = [];
@@ -367,14 +367,16 @@ class CategoriesModel extends Model
 
 		foreach ($categories as $category)
 		{
-			$batch_categories [] = HTMLHelper::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
+			$batch_categories [] = HTMLHelper::_('select.option', $category->id,
+				str_repeat('...', count($category->indent) - 1) . ' ' . $category->name
+			);
 		}
 
-		return HTMLHelper::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="inputbox form-control" size="1"', 'value', 'text', 'select');
+		return $batch_categories;
 	}
 
 	/**
-	 * @return  array|Category[]
+	 * @return  array|KunenaCategory[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -407,18 +409,18 @@ class CategoriesModel extends Model
 
 			if ($catid)
 			{
-				$categories   = CategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
-				$categories[] = CategoryHelper::get($catid);
+				$categories   = KunenaCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
+				$categories[] = KunenaCategoryHelper::get($catid);
 			}
 			else
 			{
-				$orphans = CategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
+				$orphans = KunenaCategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
 			}
 
-			$categories = array_merge($categories, CategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
+			$categories = array_merge($categories, KunenaCategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
 			$categories = array_merge($orphans, $categories);
 
-			$categories = CategoryHelper::getIndentation($categories);
+			$categories = KunenaCategoryHelper::getIndentation($categories);
 			$this->setState('list.total', count($categories));
 
 			if ($this->getState('list.limit'))
@@ -431,13 +433,13 @@ class CategoriesModel extends Model
 			}
 
 			$admin = 0;
-			$acl   = Access::getInstance();
+			$acl   = KunenaAccess::getInstance();
 
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:
 				$parent   = $category->getParent();
-				$siblings = array_keys(CategoryHelper::getCategoryTree($category->parent_id));
+				$siblings = array_keys(KunenaCategoryHelper::getCategoryTree($category->parent_id));
 
 				if ($parent)
 				{

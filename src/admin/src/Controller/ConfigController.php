@@ -69,7 +69,7 @@ class ConfigController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function apply()
+	public function apply(): void
 	{
 		$this->save(null, $this->baseurl);
 	}
@@ -78,7 +78,7 @@ class ConfigController extends FormController
 	 * Save
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -156,7 +156,7 @@ class ConfigController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function setdefault()
+	public function setdefault(): void
 	{
 		if (!Session::checkToken('post'))
 		{

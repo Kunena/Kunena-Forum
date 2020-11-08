@@ -90,7 +90,7 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @throws  Exception|RunTimeException
 	 */
-	public function render($layout = null)
+	public function render($layout = null): string
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 

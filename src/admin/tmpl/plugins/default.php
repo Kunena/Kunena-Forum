@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -68,7 +68,7 @@ if ($saveOrder)
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
@@ -163,7 +163,7 @@ if ($saveOrder)
 						<tfoot>
 						<tr>
 							<td colspan="10">
-								<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+								<?php echo $this->pagination->getListFooter(); ?>
 							</td>
 						</tr>
 						</tfoot>

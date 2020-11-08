@@ -49,7 +49,7 @@ class DisplayController extends BaseController
 	 *
 	 * @throws  Exception
 	 */
-	public function display($cachable = false, $urlparams = array())
+	public function display($cachable = false, $urlparams = array()): BaseController
 	{
 		$view   = $this->input->get('view', 'cpanel');
 		$layout = $this->input->get('layout', 'default');

@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use Kunena\Forum\Libraries\Attachment\Attachment;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -66,7 +66,7 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = array(), $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
 	}
@@ -134,7 +134,7 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.title');
@@ -152,18 +152,18 @@ class AttachmentsModel extends ListModel
 	 * @param   int     $limitstart  limitstart
 	 * @param   int     $limit       limit
 	 *
-	 * @return  Attachment[]
+	 * @return  KunenaAttachment[]
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	protected function _getList($query, $limitstart = 0, $limit = 0)
+	protected function _getList($query, $limitstart = 0, $limit = 0): array
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();
-		$results = AttachmentHelper::getById($ids);
+		$results = KunenaAttachmentHelper::getById($ids);
 		$userids = [];
 		$mesids  = [];
 
@@ -174,7 +174,7 @@ class AttachmentsModel extends ListModel
 		}
 
 		KunenaUserHelper::loadUsers($userids);
-		MessageHelper::getMessages($mesids);
+		KunenaMessageHelper::getMessages($mesids);
 
 		return $results;
 	}
@@ -184,7 +184,7 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getListQuery()
+	protected function getListQuery(): QueryInterface
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true);

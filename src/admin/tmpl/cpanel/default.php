@@ -13,12 +13,12 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Statistics;
-use Kunena\Forum\Libraries\Integration\Plugins;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
+use Kunena\Forum\Libraries\Integration\KunenaPlugins;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
@@ -210,7 +210,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo AttachmentHelper::getTotalAttachments(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaAttachmentHelper::getTotalAttachments(); ?></h3>
 									<p class="mb-0">photo.png (topic id: 44343)</p>
 								</div>
 								<div class="col-auto">
@@ -231,7 +231,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo Statistics::getTotalEmoticons() ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaStatistics::getTotalEmoticons() ?></h3>
 									<p class="mb-0"><?php echo Text::_('COM_KUNENA_EDITOR_SMILIES') ?></p>
 								</div>
 								<div class="col-auto">
@@ -294,7 +294,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo count(Template::getInstance()->getTemplatePaths()); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo count(KunenaTemplate::getInstance()->getTemplatePaths()); ?></h3>
 									<p class="mb-0">Installed</p>
 								</div>
 								<div class="col-auto">
@@ -336,7 +336,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
 										</a>
 									</h6>
-									<h3 class="fw-700 text-cyan"><?php echo Plugins::getTotalPlugins(); ?></h3>
+									<h3 class="fw-700 text-cyan"><?php echo KunenaPlugins::getTotalPlugins(); ?></h3>
 									<p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></p>
 								</div>
 								<div class="col-auto">

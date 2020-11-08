@@ -221,7 +221,7 @@ abstract class KunenaMenuFix
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected static function getHome(StdClass $item)
+	protected static function getHome($item)
 	{
 		if (!$item)
 		{

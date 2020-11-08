@@ -166,34 +166,32 @@ class PluginsModel extends ListModel
 
 			return array_slice($result, $limitstart, $limit ? $limit : null);
 		}
-		else
+
+		// Add the list ordering clause.
+		$direction = strtoupper($this->state->get('list.direction'));
+
+		switch ($this->state->get('list.ordering'))
 		{
-			// Add the list ordering clause.
-			$direction = strtoupper($this->state->get('list.direction'));
-
-			switch ($this->state->get('list.ordering'))
-			{
-				case 'ordering':
-					$query->order('a.ordering ' . $direction);
-					break;
-				case 'enabled':
-					$query->order('a.enabled ' . $direction);
-					break;
-				case 'element':
-					$query->order('a.element ' . $direction);
-					break;
-				case 'access':
-					$query->order('a.access ' . $direction);
-					break;
-				default:
-					$query->order('a.extension_id ' . $direction);
-			}
-
-			$result = parent::_getList($query, $limitstart, $limit);
-			$this->translate($result);
-
-			return $result;
+			case 'ordering':
+				$query->order('a.ordering ' . $direction);
+				break;
+			case 'enabled':
+				$query->order('a.enabled ' . $direction);
+				break;
+			case 'element':
+				$query->order('a.element ' . $direction);
+				break;
+			case 'access':
+				$query->order('a.access ' . $direction);
+				break;
+			default:
+				$query->order('a.extension_id ' . $direction);
 		}
+
+		$result = parent::_getList($query, $limitstart, $limit);
+		$this->translate($result);
+
+		return $result;
 	}
 
 	/**
@@ -205,7 +203,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function translate(&$items)
+	protected function translate(array &$items): void
 	{
 		$lang = Factory::getLanguage();
 
@@ -234,7 +232,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
@@ -253,7 +251,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getListQuery()
+	protected function getListQuery(): QueryInterface
 	{
 		// Create a new query object.
 		$db    = $this->getDbo();

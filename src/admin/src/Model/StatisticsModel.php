@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Log\Finder;
-use Kunena\Forum\Libraries\Log\Log;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Log\KunenaFinder;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
@@ -83,7 +83,7 @@ class StatisticsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getTotal()
+	public function getTotal(): int
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getTotal');
@@ -118,7 +118,7 @@ class StatisticsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.user');
@@ -133,13 +133,13 @@ class StatisticsModel extends ListModel
 	 *
 	 * @param   string  $field  field
 	 *
-	 * @return  Finder
+	 * @return  KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function getFinder($field = 'user_id')
+	protected function getFinder($field = 'user_id'): KunenaFinder
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getFinder_' . $field);
@@ -152,7 +152,7 @@ class StatisticsModel extends ListModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new Finder;
+		$finder = new KunenaFinder;
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');
@@ -175,7 +175,7 @@ class StatisticsModel extends ListModel
 			$finder->filterByTime($start, $stop);
 		}
 
-		$access = Access::getInstance();
+		$access = KunenaAccess::getInstance();
 		$finder->where($field, 'IN', array_keys($access->getAdmins() + $access->getModerators()));
 		$finder->where('type', '!=', 3);
 
@@ -213,7 +213,7 @@ class StatisticsModel extends ListModel
 			return $this->cache[$store];
 		}
 
-		$access  = Access::getInstance();
+		$access  = KunenaAccess::getInstance();
 		$userIds = array_keys($access->getAdmins() + $access->getModerators());
 
 		$data = [];
@@ -242,28 +242,28 @@ class StatisticsModel extends ListModel
 
 			switch ($item->operation)
 			{
-				case Log::LOG_TOPIC_CREATE:
-				case Log::LOG_POST_CREATE:
+				case KunenaLog::LOG_TOPIC_CREATE:
+				case KunenaLog::LOG_POST_CREATE:
 					$class->posts += $item->count;
 					break;
 
-				case Log::LOG_TOPIC_MODERATE:
-				case Log::LOG_POST_MODERATE:
+				case KunenaLog::LOG_TOPIC_MODERATE:
+				case KunenaLog::LOG_POST_MODERATE:
 					$class->moves += $item->count;
 					break;
 
-				case Log::LOG_TOPIC_EDIT:
-				case Log::LOG_POST_EDIT:
+				case KunenaLog::LOG_TOPIC_EDIT:
+				case KunenaLog::LOG_POST_EDIT:
 					// Case \Kunena\Forum\Libraries\Log\Log::LOG_PRIVATE_POST_EDIT:
-					if ($item->type == Log::TYPE_MODERATION)
+					if ($item->type == KunenaLog::TYPE_MODERATION)
 					{
 						$class->edits += $item->count;
 					}
 					break;
 
-				case Log::LOG_POST_DELETE:
+				case KunenaLog::LOG_POST_DELETE:
 					// Case \Kunena\Forum\Libraries\Log\Log::LOG_PRIVATE_POST_DELETE:
-					if ($item->type == Log::TYPE_MODERATION)
+					if ($item->type == KunenaLog::TYPE_MODERATION)
 					{
 						$class->deletes += $item->count;
 					}
@@ -296,7 +296,7 @@ class StatisticsModel extends ListModel
 
 			switch ($item->operation)
 			{
-				case Log::LOG_POST_THANKYOU:
+				case KunenaLog::LOG_POST_THANKYOU:
 					$class->thanks += $item->count;
 					break;
 			}

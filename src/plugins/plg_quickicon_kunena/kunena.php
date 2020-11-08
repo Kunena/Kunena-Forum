@@ -50,9 +50,9 @@ class plgQuickiconKunena extends CMSPlugin
 	 * @return  array|void
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function onGetIcons($context)
+	public function onGetIcons(string $context): array
 	{
 		if ($context != $this->params->get('context', 'mod_quickicon') || !$this->app->getIdentity()->authorise('core.manage', 'com_kunena'))
 		{

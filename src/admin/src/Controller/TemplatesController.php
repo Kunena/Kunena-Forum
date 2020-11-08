@@ -21,11 +21,11 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Cache\CacheHelper;
+use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\TemplateHelper;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use function defined;
 
 /**
@@ -72,7 +72,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function publish()
+	public function publish(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$id  = array_shift($cid);
@@ -125,7 +125,7 @@ class TemplatesController extends FormController
 	 * Edit
 	 *
 	 * @param   null  $key    key
-	 * @param   null  $urlVar urlvar
+	 * @param   null  $urlVar url var
 	 *
 	 * @return  void
 	 *
@@ -170,7 +170,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function install()
+	public function install(): bool
 	{
 		$tmp_kunena = KunenaPath::tmpdir() . '/kinstall/';
 		$dest       = KPATH_SITE . '/template/';
@@ -213,7 +213,7 @@ class TemplatesController extends FormController
 
 			if (is_dir($tmp_kunena))
 			{
-				$templates = TemplateHelper::parseXmlFiles($tmp_kunena);
+				$templates = KunenaTemplateHelper::parseXmlFiles($tmp_kunena);
 
 				if (!empty($templates))
 				{
@@ -269,7 +269,7 @@ class TemplatesController extends FormController
 					}
 
 					// Clear all cache, just in case.
-					CacheHelper::clearAll();
+					KunenaCacheHelper::clearAll();
 				}
 				else
 				{
@@ -295,7 +295,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function uninstall()
+	public function uninstall(): void
 	{
 		$cid      = $this->app->input->get('cid', [], 'array');
 		$id       = array_shift($cid);
@@ -310,7 +310,7 @@ class TemplatesController extends FormController
 		}
 
 		// Initialize variables
-		$otemplate = TemplateHelper::parseXmlFile($id);
+		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
 
 		if (!$otemplate)
 		{
@@ -328,7 +328,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		if (TemplateHelper::isDefault($template))
+		if (KunenaTemplateHelper::isDefault($template))
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -344,7 +344,7 @@ class TemplatesController extends FormController
 			$retval = Folder::delete($tpl);
 
 			// Clear all cache, just in case.
-			CacheHelper::clearAll();
+			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
 		}
 		else
@@ -366,7 +366,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function chooseless()
+	public function chooseless(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -394,7 +394,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function editless()
+	public function editless(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -423,7 +423,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function choosecss()
+	public function choosecss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -443,7 +443,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function applyless()
+	public function applyless(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -492,7 +492,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function saveless()
+	public function saveless(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -545,7 +545,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function editcss()
+	public function editcss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -574,7 +574,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function applycss()
+	public function applycss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -620,7 +620,7 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function savecss()
+	public function savecss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);

@@ -60,7 +60,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');

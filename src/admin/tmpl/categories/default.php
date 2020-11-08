@@ -18,7 +18,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\Layout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
@@ -82,7 +81,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
@@ -235,8 +234,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<tfoot>
 						<tr>
 							<td colspan="10">
-								<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination);
-								?>
+								<?php echo $this->pagination->getListFooter(); ?>
 								<?php // Load the batch processing form. ?>
 								<?php echo $this->loadTemplate('batch'); ?>
 								<?php // Load the modal to confirm delete. ?>
@@ -364,7 +362,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<td class="center hidden-phone">
 										<a class="btn btn-micro <?php echo $item->locked ? 'active' : ''; ?>"
 										   href="javascript: void(0);"
-										   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
+										   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->locked ? 'un' : '') . 'lock'; ?>')">
 											<?php echo $item->locked == 1 ? $img_yes : $img_no; ?>
 										</a>
 									</td>
@@ -381,21 +379,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo $item->review ? 'active' : ''; ?>"
 											   href="javascript: void(0);"
-											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->review ? 'un' : '') . 'review'; ?>')">
 												<?php echo $item->review == 1 ? $img_yes : $img_no; ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo $item->allow_polls ? 'active' : ''; ?>"
 											   href="javascript: void(0);"
-											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
 												<?php echo $item->allow_polls == 1 ? $img_yes : $img_no; ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">
 											<a class="btn btn-micro <?php echo $item->allow_anonymous ? 'active' : ''; ?>"
 											   href="javascript: void(0);"
-											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
 												<?php echo $item->allow_anonymous == 1 ? $img_yes : $img_no; ?>
 											</a>
 										</td>

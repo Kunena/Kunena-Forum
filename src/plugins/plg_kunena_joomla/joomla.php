@@ -53,8 +53,10 @@ class Joomla extends CMSPlugin
 	{
 		if (!$this->params->get('access', 1))
 		{
-			return;
+			return false;
 		}
+
+		require_once __DIR__ . "/access.php";
 
 		return new AccessJoomla($this->params);
 	}

@@ -24,13 +24,13 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -85,7 +85,7 @@ class UsersController extends AdminController
 	 *
 	 * @since   1.6
 	 */
-	public function getModel($name = 'User', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	public function getModel($name = 'User', $prefix = 'Administrator', $config = array('ignore_request' => true)): object
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -100,7 +100,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function edit()
+	public function edit(): bool
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -137,7 +137,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function trashusermessages()
+	public function trashusermessages(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -154,7 +154,7 @@ class UsersController extends AdminController
 		{
 			foreach ($cid as $id)
 			{
-				list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $mes)
 				{
@@ -184,7 +184,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function move()
+	public function move(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -220,7 +220,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function movemessages()
+	public function movemessages(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -239,7 +239,7 @@ class UsersController extends AdminController
 		{
 			foreach ($uids as $id)
 			{
-				list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $object)
 				{
@@ -251,7 +251,7 @@ class UsersController extends AdminController
 					}
 					else
 					{
-						$target = CategoryHelper::get($catid);
+						$target = KunenaCategoryHelper::get($catid);
 
 						if (!$topic->move($target, false, false, '', false))
 						{
@@ -291,7 +291,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function logout()
+	public function logout(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -330,7 +330,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function remove()
+	public function remove(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -410,7 +410,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function ban()
+	public function ban(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -432,7 +432,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$ban = Ban::getInstanceByUserid($userid, true);
+		$ban = KunenaBan::getInstanceByUserid($userid, true);
 
 		if (!$ban->id)
 		{
@@ -470,7 +470,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unban()
+	public function unban(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -492,7 +492,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$ban = Ban::getInstanceByUserid($userid, true);
+		$ban = KunenaBan::getInstanceByUserid($userid, true);
 
 		if (!$ban->id)
 		{
@@ -529,7 +529,7 @@ class UsersController extends AdminController
 	 *
 	 * @throws  null
 	 */
-	public function moderate()
+	public function moderate(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -581,7 +581,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unmoderate()
+	public function unmoderate(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -606,7 +606,7 @@ class UsersController extends AdminController
 		$user     = KunenaUserHelper::get($userid);
 		$category = null;
 
-		if ($category instanceof Category)
+		if ($category instanceof KunenaCategory)
 		{
 			$category = $category->id;
 		}
@@ -627,10 +627,10 @@ class UsersController extends AdminController
 			$success = $usercategory->save();
 
 			// Clear role cache
-			Access::getInstance()->clearCache();
+			KunenaAccess::getInstance()->clearCache();
 
 			// Change user moderator status
-			$moderator = Access::getInstance()->getModeratorStatus($user);
+			$moderator = KunenaAccess::getInstance()->getModeratorStatus($user);
 
 			if ($user->moderator != !empty($moderator))
 			{
@@ -685,7 +685,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$ban = Ban::getInstanceByUserid($userid, true);
+		$ban = KunenaBan::getInstanceByUserid($userid, true);
 
 		if (!$ban->id)
 		{
@@ -723,7 +723,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function unblock()
+	public function unblock(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -745,7 +745,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$ban = Ban::getInstanceByUserid($userid, true);
+		$ban = KunenaBan::getInstanceByUserid($userid, true);
 
 		if (!$ban->id)
 		{
@@ -783,7 +783,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function batch_moderators()
+	public function batch_moderators(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -815,7 +815,7 @@ class UsersController extends AdminController
 		}
 
 		// Update moderator rights
-		$categories = CategoryHelper::getCategories(false, false, 'admin');
+		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 		$users      = KunenaUserHelper::loadUsers($cid);
 
 		foreach ($users as $user)
@@ -831,7 +831,7 @@ class UsersController extends AdminController
 			// Global moderator is a special case
 			if ($this->me->isAdmin() && in_array(0, $catids))
 			{
-				Access::getInstance()->setModerator(0, $user, true);
+				KunenaAccess::getInstance()->setModerator(0, $user, true);
 			}
 		}
 
@@ -849,7 +849,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function cancel()
+	public function cancel(): void
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -864,7 +864,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function removecatsubscriptions()
+	public function removecatsubscriptions(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -913,7 +913,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function removetopicsubscriptions()
+	public function removetopicsubscriptions(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -962,7 +962,7 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function subscribeuserstocategories()
+	public function subscribeuserstocategories(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -993,7 +993,7 @@ class UsersController extends AdminController
 			return;
 		}
 
-		$categories = CategoryHelper::getCategories($catids);
+		$categories = KunenaCategoryHelper::getCategories($catids);
 
 		foreach ($userids as $userid)
 		{

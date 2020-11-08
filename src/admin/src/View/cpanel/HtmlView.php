@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -44,9 +44,9 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->addToolbar();
 
-		$this->count = Statistics::getInstance()->loadCategoryCount();
+		$this->count = KunenaStatistics::getInstance()->loadCategoryCount();
 
-		$this->sampledata = Statistics::getTotalEmoticons() == 0 && $this->count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
+		$this->sampledata = KunenaStatistics::getTotalEmoticons() == 0 && $this->count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
 
 		if ($this->sampledata)
 		{
@@ -78,7 +78,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar(): void
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::divider();

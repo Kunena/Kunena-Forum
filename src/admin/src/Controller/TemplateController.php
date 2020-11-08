@@ -64,7 +64,7 @@ class TemplateController extends FormController
 	 * Save template settings
 	 *
 	 * @param   null  $key     key
-	 * @param   null  $urlVar  urlvar
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
@@ -109,10 +109,10 @@ class TemplateController extends FormController
 	 *
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws null
+	 * @throws Exception
 	 */
-	protected function _saveParamFile($template)
+	protected function _saveParamFile(string $template): void
 	{
 		$params = $this->app->input->get('jform', [], 'array');
 
@@ -273,7 +273,7 @@ class TemplateController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function apply()
+	public function apply(): void
 	{
 		$template = $this->app->input->get('templatename', '', 'cmd');
 		$menus    = $this->app->input->get('selections', [], 'array');
@@ -310,7 +310,7 @@ class TemplateController extends FormController
 	 *
 	 * @throws  Exception
 	 */
-	public function restore()
+	public function restore(): void
 	{
 		$template = $this->app->input->get('templatename', '', 'cmd');
 		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';

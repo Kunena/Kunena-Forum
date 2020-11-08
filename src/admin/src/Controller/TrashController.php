@@ -19,10 +19,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -65,7 +65,7 @@ class TrashController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function purge()
+	public function purge(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -95,7 +95,7 @@ class TrashController extends FormController
 			{
 				if ($type == 'topics')
 				{
-					$topics = TopicHelper::getTopics($ids, 'none');
+					$topics = KunenaTopicHelper::getTopics($ids, 'none');
 
 					foreach ($topics as $topic)
 					{
@@ -109,20 +109,20 @@ class TrashController extends FormController
 
 					if ($success)
 					{
-						TopicHelper::recount($ids);
-						CategoryHelper::recount($topic->getCategory()->id);
+						KunenaTopicHelper::recount($ids);
+						KunenaCategoryHelper::recount($topic->getCategory()->id);
 						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
 					}
 				}
 				elseif ($type == 'messages')
 				{
-					$messages = MessageHelper::getMessages($ids, 'none');
+					$messages = KunenaMessageHelper::getMessages($ids, 'none');
 
 					foreach ($messages as $message)
 					{
 						$success = $message->delete();
-						$target  = MessageHelper::get($message->id);
-						$topic   = TopicHelper::get($target->getTopic());
+						$target  = KunenaMessageHelper::get($message->id);
+						$topic   = KunenaTopicHelper::get($target->getTopic());
 
 						if ($topic->attachments > 0)
 						{
@@ -138,8 +138,8 @@ class TrashController extends FormController
 
 					if ($success)
 					{
-						TopicHelper::recount($ids);
-						CategoryHelper::recount($topic->getCategory()->id);
+						KunenaTopicHelper::recount($ids);
+						KunenaCategoryHelper::recount($topic->getCategory()->id);
 						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
 					}
 				}
@@ -187,7 +187,7 @@ class TrashController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function restore()
+	public function restore(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -214,7 +214,7 @@ class TrashController extends FormController
 
 		if ($type == 'messages')
 		{
-			$messages = MessageHelper::getMessages($cid, 'none');
+			$messages = KunenaMessageHelper::getMessages($cid, 'none');
 
 			foreach ($messages as $target)
 			{
@@ -230,7 +230,7 @@ class TrashController extends FormController
 		}
 		elseif ($type == 'topics')
 		{
-			$topics = TopicHelper::getTopics($cid, 'none');
+			$topics = KunenaTopicHelper::getTopics($cid, 'none');
 
 			foreach ($topics as $target)
 			{
@@ -267,8 +267,8 @@ class TrashController extends FormController
 		}
 
 		KunenaUserHelper::recount();
-		TopicHelper::recount();
-		CategoryHelper::recount();
+		KunenaTopicHelper::recount();
+		KunenaCategoryHelper::recount();
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

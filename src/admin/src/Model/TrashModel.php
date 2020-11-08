@@ -20,24 +20,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Model\Model;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 
 /**
  * Trash Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class TrashModel extends Model
+class TrashModel extends KunenaModel
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $__state_set = false;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
@@ -103,9 +97,9 @@ class TrashModel extends Model
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	protected function _getTopics()
+	protected function _getTopics(): object
 	{
-		$finder = new MessageFinder;
+		$finder = new KunenaMessageFinder;
 		$finder->filterByHold([2, 3]);
 
 		$direction = strtoupper($this->getState('list.direction'));
@@ -198,7 +192,7 @@ class TrashModel extends Model
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	protected function _getMessages()
+	protected function _getMessages(): array
 	{
 		$db   = Factory::getDBO();
 		$join = [];
@@ -340,7 +334,7 @@ class TrashModel extends Model
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 
-		return MessageHelper::getMessages($ids, 'none');
+		return KunenaMessageHelper::getMessages($ids, 'none');
 	}
 
 	/**
@@ -350,7 +344,7 @@ class TrashModel extends Model
 	 *
 	 * @since   Kunena 1.6
 	 */
-	public function getViewOptions()
+	public function getViewOptions(): array
 	{
 		$view_options   = [];
 		$view_options[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
@@ -371,7 +365,7 @@ class TrashModel extends Model
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function getPurgeItems()
+	public function getPurgeItems(): array
 	{
 		$ids  = (array) $this->app->getUserState('com_kunena.purge');
 		$type = (string) $this->app->getUserState('com_kunena.type');
@@ -380,11 +374,11 @@ class TrashModel extends Model
 
 		if ($type == 'topics')
 		{
-			$items = TopicHelper::getTopics($ids, 'none');
+			$items = KunenaTopicHelper::getTopics($ids, 'none');
 		}
 		elseif ($type == 'messages')
 		{
-			$items = MessageHelper::getMessages($ids, 'none');
+			$items = KunenaMessageHelper::getMessages($ids, 'none');
 		}
 
 		return $items;
@@ -397,7 +391,7 @@ class TrashModel extends Model
 	 *
 	 * @since   Kunena 1.6
 	 */
-	public function getMd5()
+	public function getMd5(): string
 	{
 		$ids = (array) $this->app->getUserState('com_kunena.purge');
 
@@ -409,7 +403,7 @@ class TrashModel extends Model
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getNavigation()
+	public function getNavigation(): Pagination
 	{
 		return new Pagination($this->getState('list.total'),
 			$this->getState('list.start'), $this->getState('list.limit')
@@ -423,7 +417,7 @@ class TrashModel extends Model
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function populateState()
+	protected function populateState(): void
 	{
 		$this->context = 'com_kunena.admin.trash';
 

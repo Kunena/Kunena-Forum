@@ -76,7 +76,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = array(), $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
 	}
@@ -143,7 +143,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
@@ -168,7 +168,7 @@ class UsersModel extends ListModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getModcatslist()
+	public function getModcatslist(): string
 	{
 		$options = [];
 		$me      = KunenaUserHelper::getMyself();
@@ -250,7 +250,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getListQuery()
+	protected function getListQuery(): QueryInterface
 	{
 		// Create a new query object.
 		$db    = $this->getDbo();

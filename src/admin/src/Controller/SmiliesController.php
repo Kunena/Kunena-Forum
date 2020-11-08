@@ -23,7 +23,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Upload\UploadHelper;
+use Kunena\Forum\Libraries\Upload\KunenaUploadHelper;
 use RuntimeException;
 use function defined;
 
@@ -197,7 +197,7 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function smileyupload()
+	public function smileyupload(): void
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -209,8 +209,8 @@ class SmiliesController extends FormController
 
 		$file = $this->app->input->files->get('Filedata');
 
-		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\UploadHelper::upload()
-		$upload = UploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
+		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
 
 		if ($upload)
 		{

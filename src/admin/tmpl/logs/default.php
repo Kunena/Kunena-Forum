@@ -14,20 +14,14 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\WebAsset\WebAssetManager;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-
-/** @var WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect')
-	->useScript('bootstrap.popover');
 
 $filterItem = $this->escape($this->state->get('item.id'));
 ?>
@@ -78,7 +72,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo Layout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
@@ -235,7 +229,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<tfoot>
 						<tr>
 							<td colspan="10">
-								<?php echo Layout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
+								<?php echo $this->pagination->getListFooter(); ?>
 							</td>
 						</tr>
 						</tfoot>
@@ -249,8 +243,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								:
 								$date = new KunenaDate($item->time);
 								$user     = KunenaUserHelper::get($item->user_id);
-								$category = CategoryHelper::get($item->category_id);
-								$topic    = TopicHelper::get($item->topic_id);
+								$category = KunenaCategoryHelper::get($item->category_id);
+								$topic    = KunenaTopicHelper::get($item->topic_id);
 								$target   = KunenaUserHelper::get($item->target_user);
 
 								$document = Factory::getApplication()->getDocument();
@@ -338,7 +332,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 												<div>
 													<textarea style="margin-top: -3000px"
 															  id="report_final<?php echo $item->id; ?>"
-															  for="report_final<?php echo $item->id; ?>"><?php echo Parser::plainBBCode($item->data); ?></textarea>
+															  for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode($item->data); ?></textarea>
 													<pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
 												</div>
 											</div>

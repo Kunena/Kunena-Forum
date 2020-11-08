@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Bbcode\KunenaBbcodeEditor;
+use Kunena\Forum\Libraries\Bbcode\KunenaBBCodeEditor;
 use function defined;
 
 /**
@@ -135,7 +135,7 @@ class PluginsController extends AdminController
 			}
 		}
 
-		$editor = KunenaBbcodeEditor::getInstance();
+		$editor = KunenaBBCodeEditor::getInstance();
 		$editor->initializeHMVC();
 
 		$extension    = $this->input->get('extension');
@@ -154,7 +154,7 @@ class PluginsController extends AdminController
 	 *
 	 * @since   Kunena 2.0
 	 */
-	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = array('ignore_request' => true)): object
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -168,7 +168,7 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 */
-	public function reorder()
+	public function reorder(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -189,14 +189,12 @@ class PluginsController extends AdminController
 
 			return false;
 		}
-		else
-		{
-			// Reorder succeeded.
-			$message = Text::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
 
-			return true;
-		}
+		// Reorder succeeded.
+		$message = Text::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+
+		return true;
 	}
 
 	/**
@@ -206,7 +204,7 @@ class PluginsController extends AdminController
 	 *
 	 * @since   12.2
 	 */
-	public function saveorder()
+	public function saveorder(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -232,14 +230,12 @@ class PluginsController extends AdminController
 
 			return false;
 		}
-		else
-		{
-			// Reorder succeeded.
-			$this->setMessage(Text::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 
-			return true;
-		}
+		// Reorder succeeded.
+		$this->setMessage(Text::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+
+		return true;
 	}
 
 	/**
@@ -251,7 +247,7 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 */
-	public function checkin()
+	public function checkin(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -270,17 +266,15 @@ class PluginsController extends AdminController
 
 			return false;
 		}
-		else
-		{
-			$editor = KunenaBbcodeEditor::getInstance();
-			$editor->initializeHMVC();
 
-			// Checkin succeeded.
-			$message = Text::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+		$editor = KunenaBbcodeEditor::getInstance();
+		$editor->initializeHMVC();
 
-			return true;
-		}
+		// Checkin succeeded.
+		$message = Text::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+
+		return true;
 	}
 
 	/**
@@ -292,7 +286,7 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 */
-	public function resync()
+	public function resync(): void
 	{
 		$editor = KunenaBbcodeEditor::getInstance();
 		$editor->initializeHMVC();

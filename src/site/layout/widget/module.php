@@ -16,7 +16,8 @@ defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
 /**
@@ -24,7 +25,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetModule extends Layout
+class KunenaLayoutWidgetModule extends KunenaLayout
 {
 	/**
 	 * @var     null

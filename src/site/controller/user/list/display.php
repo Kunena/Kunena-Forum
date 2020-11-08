@@ -20,10 +20,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Finder;
+use Kunena\Forum\Libraries\User\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use function defined;
@@ -87,7 +87,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 
 		if (!$this->config->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$this->model = new UserModel([], $this->input);
@@ -120,13 +120,13 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 			$filter = [];
 		}
 
-		$finder = new Finder;
+		$finder = new KunenaFinder;
 		$finder
 			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
 		$this->total      = $finder->count();
-		$this->pagination = new Pagination($this->total, $start, $limit);
+		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		$alias     = 'ku';
 		$aliasList = ['id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate'];
@@ -146,13 +146,13 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$page      = $this->pagination->pagesCurrent;
 		$pages     = $this->pagination->pagesTotal;

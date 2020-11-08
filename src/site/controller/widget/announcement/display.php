@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use function defined;
 
 /**
@@ -59,7 +59,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 			return false;
 		}
 
-		$items              = AnnouncementHelper::getAnnouncements();
+		$items              = KunenaAnnouncementHelper::getAnnouncements();
 		$this->announcement = array_pop($items);
 
 		if (!$this->announcement || !$this->announcement->isAuthorised('read'))

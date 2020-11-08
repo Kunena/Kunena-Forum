@@ -17,9 +17,9 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
@@ -78,7 +78,7 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();
-		$this->isModerator = ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = [];
 		$this->total   = $this->model->getTotal();
@@ -104,7 +104,7 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->pagination = new Pagination(
+		$this->pagination = new KunenaPagination(
 			$this->total,
 			$this->state->get('list.start'),
 			$this->state->get('list.limit')
@@ -116,13 +116,13 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

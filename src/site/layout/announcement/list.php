@@ -17,7 +17,8 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -26,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementList extends Layout
+class KunenaLayoutAnnouncementList extends KunenaLayout
 {
 	/**
 	 * Method to get moderation action in announcements list

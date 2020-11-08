@@ -22,8 +22,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -139,7 +142,7 @@ class SearchModel extends ListModel
 		];
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
-		list($this->total, $this->messages) = MessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
+		list($this->total, $this->messages) = KunenaMessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
 
 		if ($this->total < $limitstart)
 		{
@@ -157,7 +160,7 @@ class SearchModel extends ListModel
 
 		if ($topicids)
 		{
-			$topics = TopicHelper::getTopics($topicids);
+			$topics = KunenaTopicHelper::getTopics($topicids);
 
 			foreach ($topics as $topic)
 			{
@@ -166,7 +169,7 @@ class SearchModel extends ListModel
 		}
 
 		KunenaUserHelper::loadUsers($userids);
-		MessageHelper::loadLocation($this->messages);
+		KunenaMessageHelper::loadLocation($this->messages);
 
 		if (empty($this->messages))
 		{

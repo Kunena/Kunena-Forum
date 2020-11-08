@@ -23,9 +23,9 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -120,7 +120,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
-		$finder = new TopicFinder;
+		$finder = new KunenaTopicFinder;
 		$finder->filterByMoved(false);
 
 		switch ($this->state->get('list.mode'))
@@ -169,10 +169,10 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 				break;
 		}
 
-		$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+		$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
-		$this->pagination = new Pagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$doc = Factory::getApplication()->getDocument();
 
@@ -346,13 +346,13 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;

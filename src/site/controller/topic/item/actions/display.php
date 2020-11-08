@@ -20,10 +20,10 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -35,7 +35,7 @@ use function defined;
 class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -68,7 +68,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 
 		$id = $this->input->getInt('id');
 
-		$this->topic = Topic::getInstance($id);
+		$this->topic = KunenaTopic::getInstance($id);
 
 		$catid = $this->topic->category_id;
 		$token = Session::getFormToken();
@@ -87,7 +87,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->config->read_only)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		if ($this->topic->isAuthorised('reply'))
@@ -355,7 +355,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
 	 * @param   string  $icon     icon
 	 *
-	 * @return  Layout
+	 * @return  KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -364,7 +364,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
-		return Layout::factory('Widget/Button')
+		return KunenaLayout::factory('Widget/Button')
 			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
 							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
 			);

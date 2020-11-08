@@ -14,11 +14,12 @@ namespace Kunena\Forum\Site\View\Topics;
 defined('_JEXEC') or die;
 
 use Exception;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
 use function defined;
 
@@ -27,7 +28,7 @@ use function defined;
  *
  * @since       version
  */
-class json extends View
+class json extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tmpl
@@ -40,7 +41,7 @@ class json extends View
 	 */
 	public function display($tpl = null)
 	{
-		list($count, $topics) = TopicHelper::getLatestTopics(false, 0, 55);
+		list($count, $topics) = KunenaTopicHelper::getLatestTopics(false, 0, 55);
 
 		$template = KunenaFactory::getTemplate();
 		$list     = [];
@@ -52,12 +53,12 @@ class json extends View
 
 			$response           = new stdClass;
 			$response->id       = $topic->id;
-			$response->subject  = Parser::parseText($topic->subject);
+			$response->subject  = KunenaParser::parseText($topic->subject);
 			$response->category = $topic->getCategory()->name;
 			$response->icon     = $topic->getIcon($topic->getCategory()->iconset);
-			$response->message  = Parser::stripBBCode($topic->last_post_message);
+			$response->message  = KunenaParser::stripBBCode($topic->last_post_message);
 			$response->started  = $topic->getFirstPostTime()->toKunena('config_post_dateformat');
-			$response->tooltip  = Parser::stripBBCode($topic->last_post_message, 200, false);
+			$response->tooltip  = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
 			$response->author   = $topic->getLastPostAuthor()->username;
 			$response->avatar   = $topic->getLastPostAuthor()->getAvatarImage($template->params->get('avatarType'), 'thumb');
 			$response->rank     = $users->getRank($topic->getCategory()->id, 'title');

@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -56,7 +56,7 @@ class ComponentAnnouncementControllerItemDisplay extends KunenaControllerDisplay
 
 		$id = $this->input->getInt('id', null);
 
-		$this->announcement = AnnouncementHelper::get($id);
+		$this->announcement = KunenaAnnouncementHelper::get($id);
 		$this->announcement->tryAuthorise();
 
 		$Itemid = $this->input->getInt('Itemid');
@@ -73,13 +73,13 @@ class ComponentAnnouncementControllerItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

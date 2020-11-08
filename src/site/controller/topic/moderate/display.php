@@ -21,13 +21,13 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Template\Template;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use function defined;
 
 /**
@@ -38,13 +38,13 @@ use function defined;
 class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     Message|null
+	 * @var     KunenaMessage|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
@@ -99,19 +99,19 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 		if (!$mesid)
 		{
-			$this->topic = TopicHelper::get($id);
+			$this->topic = KunenaTopicHelper::get($id);
 			$this->topic->tryAuthorise('move');
 		}
 		else
 		{
-			$this->message = MessageHelper::get($mesid);
+			$this->message = KunenaMessageHelper::get($mesid);
 			$this->message->tryAuthorise('move');
 			$this->topic = $this->message->getTopic();
 		}
 
 		if ($this->config->read_only)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$this->category = $this->topic->getCategory();
@@ -123,7 +123,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
 			Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
-		$this->template = Template::getInstance();
+		$this->template = KunenaTemplate::getInstance();
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
 		$this->topicIcons = $this->template->getTopicIcons(false);
 
@@ -145,7 +145,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 		if ($this->message)
 		{
-			$this->banHistory = Ban::getUserHistory($this->message->userid);
+			$this->banHistory = KunenaBan::getUserHistory($this->message->userid);
 			$this->me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
@@ -171,19 +171,19 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->banInfo = Ban::getInstanceByUserid($this->app->getIdentity()->id, true);
+		$this->banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
 	}
 
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

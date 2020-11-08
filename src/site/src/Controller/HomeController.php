@@ -19,7 +19,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -48,7 +50,7 @@ class HomeController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparams = false): BaseController
 	{
 		$menu = $this->app->getMenu();
 		$home = $menu->getActive();
@@ -85,7 +87,7 @@ class HomeController extends KunenaController
 
 			if (!$default)
 			{
-				throw new Exception(Text::_('COM_KUNENA_NO_ACCESS'), 500);
+				throw new KunenaException(Text::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item
@@ -130,7 +132,7 @@ class HomeController extends KunenaController
 		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
 		{
 			// There is no highlighted menu item
-			return;
+			return false;
 		}
 
 		$item = $menu->getItem($active->query ['defaultmenu']);
@@ -140,21 +142,21 @@ class HomeController extends KunenaController
 			// Menu item points to nowhere, abort
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
-			return;
+			return false;
 		}
 		elseif (isset($visited[$item->id]))
 		{
 			// Menu loop detected, abort
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
-			return;
+			return false;
 		}
 		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view']))
 		{
 			// Menu item doesn't point to Kunena, abort
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
-			return;
+			return false;
 		}
 		elseif ($item->query ['view'] == 'home')
 		{

@@ -19,14 +19,14 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -74,18 +74,18 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		if (!$mesid)
 		{
-			$this->topic = TopicHelper::get($id);
-			$parent      = MessageHelper::get($this->topic->first_post_id);
+			$this->topic = KunenaTopicHelper::get($id);
+			$parent      = KunenaMessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = MessageHelper::get($mesid);
+			$parent      = KunenaMessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
 		if ($this->config->read_only)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$doc = Factory::getApplication()->getDocument();
@@ -114,7 +114,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = Template::getInstance()->recaptcha();
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else
@@ -125,7 +125,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		$parent->tryAuthorise('reply');
 
 		$arraypollcatid = [];
-		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		// Run event.
 		$params = new Registry;
@@ -148,10 +148,10 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
 		$this->action = 'post';
 
-		$this->privateMessage       = new Message;
+		$this->privateMessage       = new KunenaMessage;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -182,13 +182,13 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

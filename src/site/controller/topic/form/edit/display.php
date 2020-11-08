@@ -19,14 +19,14 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -63,7 +63,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
-		$this->message  = MessageHelper::get($mesid);
+		$this->message  = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
 		$this->topic    = $this->message->getTopic();
@@ -78,10 +78,10 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 
 		if ($this->config->read_only)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$categories        = CategoryHelper::getCategories();
+		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -101,8 +101,8 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		Template::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
@@ -147,7 +147,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{
@@ -155,7 +155,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			$this->message->edit($saved);
 		}
 
-		$finder = new Finder;
+		$finder = new KunenaFinder;
 		$finder
 			->filterByMessage($this->message)
 			->where('parent_id', '=', 0)
@@ -199,13 +199,13 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

@@ -62,7 +62,8 @@ if (!KunenaConfig::getInstance()->access_component)
 		Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
 		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 	}
-	elseif ($active->type != 'component' || $active->component != 'com_kunena')
+
+	if ($active->type != 'component' || $active->component != 'com_kunena')
 	{
 		// Prevent spoofed access by using random menu item.
 		Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');

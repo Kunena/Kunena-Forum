@@ -14,8 +14,9 @@ namespace Kunena\Forum\Site\Layout\Category;
 
 defined('_JEXEC') or die;
 
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use function defined;
 
 /**
@@ -23,7 +24,7 @@ use function defined;
  *
  * @since  K5.1
  */
-class KunenaLayoutCategoryManage extends Layout
+class KunenaLayoutCategoryManage extends KunenaLayout
 {
 	/**
 	 * @var     integer
@@ -42,13 +43,13 @@ class KunenaLayoutCategoryManage extends Layout
 	 *
 	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
-	 * @return  Pagination
+	 * @return  KunenaPagination
 	 *
 	 * @since   Kunena 5.1
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination;

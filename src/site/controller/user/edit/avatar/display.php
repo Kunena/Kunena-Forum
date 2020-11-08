@@ -21,9 +21,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\Avatar;
+use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use function defined;
 
 /**
@@ -90,9 +90,9 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 
-		if (!($avatar instanceof Avatar))
+		if (!($avatar instanceof KunenaAvatar))
 		{
-			throw new Authorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
 
 		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';
@@ -182,13 +182,13 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$this->setTitle($this->headerText);
 	}

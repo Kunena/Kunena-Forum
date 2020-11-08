@@ -23,9 +23,9 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -106,7 +106,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
-		$finder = new TopicFinder;
+		$finder = new KunenaTopicFinder;
 		$finder
 			->filterByMoved(false)
 			->filterByHold([$hold])
@@ -201,11 +201,11 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 
 		if ($categoryIds !== null)
 		{
-			$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+			$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 			$finder->filterByCategories($categories);
 		}
 
-		$this->pagination = new Pagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		if ($this->moreUri)
 		{
@@ -311,13 +311,13 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$this->setMetaData('og:url', Uri::current(), 'property');
 

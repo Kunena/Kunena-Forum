@@ -20,11 +20,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -49,13 +49,13 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 	public $message;
 
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -103,7 +103,7 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
 		$this->detail   = $this->input->get('detail', false);
-		$this->message  = MessageHelper::get($mesid);
+		$this->message  = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
 		$this->topic     = $this->message->getTopic();
@@ -120,7 +120,7 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && $this->config->quickreply)
 		{
-			$this->captchaDisplay = Template::getInstance()->recaptcha();
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else

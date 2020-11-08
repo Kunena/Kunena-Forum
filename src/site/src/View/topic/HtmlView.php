@@ -27,18 +27,19 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Pagination\Pagination;
-use Kunena\Forum\Libraries\Request\Request;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use LogicException;
@@ -148,7 +149,7 @@ class HtmlView extends BaseHtmlView
 				$mesid = $this->topic->first_post_id;
 			}
 
-			$message = MessageHelper::get($mesid);
+			$message = KunenaMessageHelper::get($mesid);
 
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
@@ -161,7 +162,7 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 
-		if (!MessageHelper::get($this->topic->first_post_id)->exists())
+		if (!KunenaMessageHelper::get($this->topic->first_post_id)->exists())
 		{
 			$this->displayError([Text::_('COM_KUNENA_NO_ACCESS')], 404);
 
@@ -229,9 +230,9 @@ class HtmlView extends BaseHtmlView
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get('Category');
 		$topic    = $this->get('Topic');
-		TopicHelper::fetchNewStatus([$topic->id => $topic]);
+		KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
 
-		$message = Message::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
+		$message = KunenaMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
 		while (@ob_end_clean())
 		{
@@ -386,7 +387,7 @@ class HtmlView extends BaseHtmlView
 					$this->usermedals    = null;
 				}
 
-				$this->personalText = Parser::parseText($this->profile->personalText);
+				$this->personalText = KunenaParser::parseText($this->profile->personalText);
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
 
@@ -742,7 +743,7 @@ class HtmlView extends BaseHtmlView
 				}
 			}
 
-			$this->signatureHtml = Parser::parseBBCode($this->profile->signature, null, $this->config->maxsig);
+			$this->signatureHtml = KunenaParser::parseBBCode($this->profile->signature, null, $this->config->maxsig);
 			$this->attachments   = $this->message->getAttachments();
 
 			// Link to individual message
@@ -853,7 +854,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   integer  $maxpages  max pages
 	 *
-	 * @return  Pagination
+	 * @return  KunenaPagination
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -862,7 +863,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		$uri = KunenaRoute::normalize(null, true);
@@ -920,10 +921,10 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$this->history      = MessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
+		$this->history      = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
 		$this->historycount = count($this->history);
 		$this->replycount   = $this->topic->getReplies();
-		AttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -1112,7 +1113,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @param   string  $path  path
 	 *
-	 * @return  Layout
+	 * @return  KunenaLayout
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -1139,7 +1140,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function subRequest($path, Input $input = null, $options = null)
 	{
-		return Request::factory($path . '/Display', $input, $options)
+		return KunenaRequest::factory($path . '/Display', $input, $options)
 			->setLayout($this->getLayout());
 	}
 
@@ -1166,7 +1167,7 @@ class HtmlView extends BaseHtmlView
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
-		$categories        = CategoryHelper::getCategories();
+		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -1196,7 +1197,7 @@ class HtmlView extends BaseHtmlView
 					   'action'      => 'topic.create', ];
 
 		$this->catid    = $this->state->get('item.catid');
-		$this->category = CategoryHelper::get($this->catid);
+		$this->category = KunenaCategoryHelper::get($this->catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		if (!$this->topic->category_id)
@@ -1227,7 +1228,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
@@ -1262,12 +1263,12 @@ class HtmlView extends BaseHtmlView
 
 		if (!$this->mesid)
 		{
-			$this->topic = TopicHelper::get($this->state->get('item.id'));
-			$parent      = MessageHelper::get($this->topic->first_post_id);
+			$this->topic = KunenaTopicHelper::get($this->state->get('item.id'));
+			$parent      = KunenaMessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent      = MessageHelper::get($this->mesid);
+			$parent      = KunenaMessageHelper::get($this->mesid);
 			$this->topic = $parent->getTopic();
 		}
 
@@ -1304,7 +1305,7 @@ class HtmlView extends BaseHtmlView
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -1330,7 +1331,7 @@ class HtmlView extends BaseHtmlView
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->message = MessageHelper::get($mesid);
+		$this->message = KunenaMessageHelper::get($mesid);
 
 		try
 		{
@@ -1373,7 +1374,7 @@ class HtmlView extends BaseHtmlView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{
@@ -1483,7 +1484,7 @@ class HtmlView extends BaseHtmlView
 				{
 					// Create Meta Description form the content of the first message
 					// better for search results display but NOT for search ranking!
-					$description = Parser::stripBBCode($this->topic->first_post_message, 182);
+					$description = KunenaParser::stripBBCode($this->topic->first_post_message, 182);
 					$description = preg_replace('/\s+/', ' ', $description); // Remove newlines
 					$description = trim($description); // Remove trailing spaces and beginning
 

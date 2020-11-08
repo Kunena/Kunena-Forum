@@ -21,8 +21,8 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
-use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -131,7 +131,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	{
 		parent::before();
 
-		$login = Login::getInstance();
+		$login = KunenaLogin::getInstance();
 
 		$params         = new Registry($login->getParams());
 		$this->plglogin = $params->get('login', '1');
@@ -173,7 +173,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 			// Display announcements.
 			if ($this->me->isModerator())
 			{
-				$this->announcementsUrl = AnnouncementHelper::getUrl('list');
+				$this->announcementsUrl = KunenaAnnouncementHelper::getUrl('list');
 			}
 		}
 

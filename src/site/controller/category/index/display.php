@@ -23,14 +23,14 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -151,7 +151,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		/*
 		$cache   = Factory::getCache('com_kunena', 'output');
@@ -168,11 +168,11 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 		if ($catid)
 		{
-			$sections = CategoryHelper::getCategories($catid);
+			$sections = KunenaCategoryHelper::getCategories($catid);
 		}
 		else
 		{
-			$sections = CategoryHelper::getChildren();
+			$sections = KunenaCategoryHelper::getChildren();
 		}
 
 		$sectionIds = [];
@@ -220,7 +220,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		$this->sections = $sections;
-		$categories     = CategoryHelper::getChildren($sectionIds);
+		$categories     = KunenaCategoryHelper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
@@ -296,7 +296,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$subcategories = CategoryHelper::getChildren($categoryIds);
+		$subcategories = KunenaCategoryHelper::getChildren($categoryIds);
 
 		foreach ($subcategories as $category)
 		{
@@ -321,7 +321,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = TopicHelper::getTopics($topicIds, 'none');
+		$topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -331,7 +331,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		}
 
 		KunenaUserHelper::loadUsers($userIds);
-		MessageHelper::getMessages($postIds);
+		KunenaMessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		$this->pending = [];
@@ -339,10 +339,10 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		if ($this->me->exists() && !$this->me->isBanned())
 		{
 			// Load new topic counts.
-			CategoryHelper::getNewTopics(array_keys($categories + $subcategories));
+			KunenaCategoryHelper::getNewTopics(array_keys($categories + $subcategories));
 
 			// Get categories which are moderated by current user.
-			$access   = Access::getInstance();
+			$access   = KunenaAccess::getInstance();
 			$moderate = $access->getAdminStatus($this->me) + $access->getModeratorStatus($this->me);
 
 			if (!empty($moderate[0]))
@@ -397,7 +397,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				// Fix last post position when user can see unapproved or deleted posts.
 				if (!$topic_ordering)
 				{
-					MessageHelper::loadLocation($postIds);
+					KunenaMessageHelper::loadLocation($postIds);
 				}
 			}
 		}
@@ -422,7 +422,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		Parser::prepareContent($content, 'index_top');
+		KunenaParser::prepareContent($content, 'index_top');
 	}
 
 	/**

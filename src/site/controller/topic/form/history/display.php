@@ -19,11 +19,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\Finder;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -58,15 +58,15 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 		$id       = $this->input->getInt('id');
 		$this->me = KunenaUserHelper::getMyself();
 
-		$this->topic    = TopicHelper::get($id);
+		$this->topic    = KunenaTopicHelper::get($id);
 		$this->category = $this->topic->getCategory();
-		$this->history  = MessageHelper::getMessagesByTopic(
+		$this->history  = KunenaMessageHelper::getMessagesByTopic(
 			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
 		$this->replycount   = $this->topic->getReplies();
 		$this->historycount = count($this->history);
-		AttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = [];
 
 		foreach ($this->history as $message)
@@ -77,7 +77,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 
 		if ($this->me->exists())
 		{
-			$pmFinder = new Finder;
+			$pmFinder = new KunenaFinder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
 			if (!$this->me->isModerator($this->category))
@@ -119,7 +119,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments        = AttachmentHelper::getByMessage($this->history);
+		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = [];
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
@@ -128,11 +128,11 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 
 	}

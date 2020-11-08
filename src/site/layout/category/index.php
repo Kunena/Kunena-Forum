@@ -18,12 +18,13 @@ use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Icons\Icons;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -32,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutCategoryIndex extends Layout
+class KunenaLayoutCategoryIndex extends KunenaLayout
 {
 	/**
 	 * @var     object
@@ -41,7 +42,7 @@ class KunenaLayoutCategoryIndex extends Layout
 	public $state;
 
 	/**
-	 * @var     Template|void
+	 * @var     KunenaTemplate|void
 	 * @since   Kunena 6.0
 	 *
 	 */
@@ -58,12 +59,12 @@ class KunenaLayoutCategoryIndex extends Layout
 	 *
 	 * @param   integer  $maxpages  Maximum that are allowed for pagination
 	 *
-	 * @return  Pagination
+	 * @return  KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public function getPaginationObject($maxpages)
 	{
-		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination;
@@ -89,24 +90,18 @@ class KunenaLayoutCategoryIndex extends Layout
 		{
 			if (!empty($category->icon))
 			{
-				return Icons::caticon($category->icon, true, true);
+				return KunenaIcons::caticon($category->icon, true, true);
 			}
-			else
-			{
-				return Icons::caticon($caticonpath, true, true);
-			}
+
+			return KunenaIcons::caticon($caticonpath, true, true);
 		}
-		else
+
+		if (!empty($category->icon))
 		{
-			if (!empty($category->icon))
-			{
-				return Icons::caticon($category->icon, false, true);
-			}
-			else
-			{
-				return Icons::caticon($caticonpath, false, true);
-			}
+			return KunenaIcons::caticon($category->icon, false, true);
 		}
+
+		return KunenaIcons::caticon($caticonpath, false, true);
 	}
 
 	/**
@@ -129,24 +124,18 @@ class KunenaLayoutCategoryIndex extends Layout
 		{
 			if (!empty($subcategory->icon))
 			{
-				return Icons::caticon($subcategory->icon, true, false);
+				return KunenaIcons::caticon($subcategory->icon, true, false);
 			}
-			else
-			{
-				return Icons::caticon($defaultcategoryicon, true, false);
-			}
+
+			return KunenaIcons::caticon($defaultcategoryicon, true, false);
 		}
-		else
+
+		if (!empty($subcategory->icon))
 		{
-			if (!empty($subcategory->icon))
-			{
-				return Icons::caticon($subcategory->icon, false, false);
-			}
-			else
-			{
-				return Icons::caticon($defaultcategoryicon, false, false);
-			}
+			return KunenaIcons::caticon($subcategory->icon, false, false);
 		}
+
+		return KunenaIcons::caticon($defaultcategoryicon, false, false);
 	}
 
 	/**
@@ -198,12 +187,10 @@ class KunenaLayoutCategoryIndex extends Layout
 			{
 				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}") . '?format=feed&type=rss';
 			}
-			else
-			{
-				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=default{$params}", $xhtml);
-			}
+
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=default{$params}", $xhtml);
 		}
 
-		return;
+		return false;
 	}
 }

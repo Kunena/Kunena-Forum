@@ -19,9 +19,10 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -29,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicEditEditor extends Layout
+class KunenaLayoutTopicEditEditor extends KunenaLayout
 {
 	/**
 	 * @var     KunenaConfig
@@ -38,7 +39,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 	public $config;
 
 	/**
-	 * @var     Template
+	 * @var     KunenaTemplate
 	 * @since   Kunena 6.0
 	 */
 	public $ktemplate;
@@ -54,7 +55,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 	{
 		if (!$this->config->highlightcode)
 		{
-			return;
+			return false;
 		}
 
 		$paths = [
@@ -81,7 +82,7 @@ class KunenaLayoutTopicEditEditor extends Layout
 			return HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 		}
 
-		return;
+		return false;
 	}
 
 	/**

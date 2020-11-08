@@ -19,9 +19,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Controller\CategoriesController;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Category\User\CategoryUserHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -108,7 +109,7 @@ class CategoryController extends CategoriesController
 		else
 		{
 			// One category
-			$category = CategoryHelper::get($catid);
+			$category = KunenaCategoryHelper::get($catid);
 
 			if (!$category->isAuthorised('read'))
 			{
@@ -131,7 +132,7 @@ class CategoryController extends CategoriesController
 				}
 
 				// Mark all unread topics in selected categories as read.
-				CategoryUserHelper::markRead(array_keys($categories));
+				KunenaCategoryUserHelper::markRead(array_keys($categories));
 
 				if (count($categories) > 1)
 				{
@@ -165,7 +166,7 @@ class CategoryController extends CategoriesController
 			return;
 		}
 
-		$category = CategoryHelper::get($this->app->input->getInt('catid', 0));
+		$category = KunenaCategoryHelper::get($this->app->input->getInt('catid', 0));
 
 		if (!$category->isAuthorised('read'))
 		{
@@ -216,7 +217,7 @@ class CategoryController extends CategoriesController
 			: array_keys($this->app->input->get('categories', [], 'post'));
 		$catids = ArrayHelper::toInteger($catids);
 
-		$categories = CategoryHelper::getCategories($catids);
+		$categories = KunenaCategoryHelper::getCategories($catids);
 
 		foreach ($categories as $category)
 		{

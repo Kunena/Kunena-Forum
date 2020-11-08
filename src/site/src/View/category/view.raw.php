@@ -16,7 +16,8 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\View\KunenaView;
 use StdClass;
 use function defined;
 
@@ -25,7 +26,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class raw extends View
+class raw extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl

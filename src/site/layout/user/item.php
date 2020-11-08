@@ -19,11 +19,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Input\Input;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
 use function defined;
@@ -33,7 +34,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutUserItem extends Layout
+class KunenaLayoutUserItem extends KunenaLayout
 {
 	/**
 	 * @var     KunenaUser
@@ -70,7 +71,7 @@ class KunenaLayoutUserItem extends Layout
 	 */
 	public function getTabs()
 	{
-		$banInfo   = Ban::getInstanceByUserid($this->user->id, true);
+		$banInfo   = KunenaBan::getInstanceByUserid($this->user->id, true);
 		$myProfile = $this->profile->isMyself();
 		$moderator = $this->me->isModerator();
 
@@ -79,7 +80,7 @@ class KunenaLayoutUserItem extends Layout
 		$showSubscriptions = $this->config->allowsubscriptions && ($myProfile || $moderator);
 		$showFavorites     = $this->config->allowfavorites && $myProfile;
 		$showThankYou      = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved    = $myProfile && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus());
+		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager    = $moderator && $myProfile;
 

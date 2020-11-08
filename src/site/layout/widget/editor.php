@@ -19,9 +19,10 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -29,10 +30,10 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetEditor extends Layout
+class KunenaLayoutWidgetEditor extends KunenaLayout
 {
 	/**
-	 * @var     Template
+	 * @var     KunenaTemplate
 	 * @since   Kunena 6.0
 	 */
 	public $ktemplate;

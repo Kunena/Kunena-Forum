@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -38,7 +38,7 @@ class ComponentKunenaControllerApplicationTopicFlatDisplay extends KunenaControl
 	 */
 	public function exists()
 	{
-		$this->page = Page::factory("{$this->input->getCmd('view')}/default");
+		$this->page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
 
 		return (bool) $this->page->getPath();
 	}

@@ -19,12 +19,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Pagination\Pagination;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -33,7 +34,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutCategoryItem extends Layout
+class KunenaLayoutCategoryItem extends KunenaLayout
 {
 	/**
 	 * @var     integer
@@ -60,13 +61,13 @@ class KunenaLayoutCategoryItem extends Layout
 	public $sections;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var     Template|void
+	 * @var     KunenaTemplate|void
 	 * @since   Kunena 6.0
 	 */
 	public $ktemplate;
@@ -293,22 +294,22 @@ class KunenaLayoutCategoryItem extends Layout
 	 *
 	 * @see     \Kunena\Forum\Libraries\Layout\Layout::getLastPostLink()
 	 *
-	 * @param   Category  $category   The KunenaCategory object
-	 * @param   string    $content    The content of last topic subject
-	 * @param   string    $title      The title of the link
-	 * @param   string    $class      The class attribute of the link
-	 * @param   int       $length     length
-	 * @param   bool      $follow     follow
-	 * @param   bool      $canonical  canonical
+	 * @param   KunenaCategory  $category   The KunenaCategory object
+	 * @param   string          $content    The content of last topic subject
+	 * @param   string          $title      The title of the link
+	 * @param   string          $class      The class attribute of the link
+	 * @param   int             $length     length
+	 * @param   bool            $follow     follow
+	 * @param   bool            $canonical  canonical
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
+	 * @throws null
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = false)
+	public function getLastPostLink(KunenaCategory $category, string $content, string $title, string $class, int $length = 30, bool $follow = true, bool $canonical = false): string
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels  = $category->getChannels();
@@ -324,12 +325,12 @@ class KunenaLayoutCategoryItem extends Layout
 		{
 			if (KunenaConfig::getInstance()->disable_re)
 			{
-				$content = Parser::parseText($category->getLastTopic()->subject, $length);
+				$content = KunenaParser::parseText($category->getLastTopic()->subject, $length);
 			}
 			else
 			{
 				$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? Text::_('COM_KUNENA_RE') . ' ' : '';
-				$content .= Parser::parseText($category->getLastTopic()->subject, $length);
+				$content .= KunenaParser::parseText($category->getLastTopic()->subject, $length);
 			}
 		}
 
@@ -354,7 +355,7 @@ class KunenaLayoutCategoryItem extends Layout
 	 */
 	public function getPagination($maxpages)
 	{
-		$pagination = new Pagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination->getPagesLinks();

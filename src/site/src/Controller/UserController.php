@@ -30,20 +30,21 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Integration\Profile;
-use Kunena\Forum\Libraries\Log\Log;
-use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Log\KunenaLog;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Upload\Upload;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\Upload\KunenaUpload;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -70,7 +71,7 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparams = false): BaseController
 	{
 		// Redirect profile to integrated component if profile integration is turned on
 		$redirect = 1;
@@ -114,14 +115,14 @@ class UserController extends KunenaController
 		{
 			if (!KunenaFactory::getConfig()->userlist_allowed && $this->app->getIdentity()->guest)
 			{
-				throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
 		// Else the user does not exists.
 		if (!$this->me)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
 		}
 
 		parent::display();
@@ -325,7 +326,7 @@ class UserController extends KunenaController
 
 		if (!Session::checkToken('post'))
 		{
-			throw new Authorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 
 		// Check permission
@@ -336,14 +337,14 @@ class UserController extends KunenaController
 		{
 			if ($userid != $my->id)
 			{
-				throw new Authorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+				throw new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 			}
 		}
 
 		// Make sure that the user exists.
 		if (!$this->me->exists())
 		{
-			throw new Authorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new KunenaAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		if (!$userid)
@@ -384,7 +385,7 @@ class UserController extends KunenaController
 
 		if ($errors)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
 		if ($this->user->userid == $this->me->userid)
@@ -400,10 +401,10 @@ class UserController extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			$log = Log::LOG_USER_EDIT;
+			$log = KunenaLog::LOG_USER_EDIT;
 
-			Log::log(
-				Log::TYPE_ACTION,
+			KunenaLog::log(
+				KunenaLog::TYPE_ACTION,
 				$log,
 				[
 					'edited_by_moderator' => $edited_by_moderator,
@@ -725,7 +726,7 @@ class UserController extends KunenaController
 			return;
 		}
 
-		$ban = Ban::getInstanceByUserid($user->userid, true);
+		$ban = KunenaBan::getInstanceByUserid($user->userid, true);
 
 		try
 		{
@@ -783,12 +784,12 @@ class UserController extends KunenaController
 			{
 				$this->app->logout($user->userid);
 				$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
-				$log     = Log::LOG_USER_BLOCK;
+				$log     = KunenaLog::LOG_USER_BLOCK;
 			}
 			else
 			{
 				$message = Text::_('COM_KUNENA_USER_UNBLOCKED_DONE');
-				$log     = Log::LOG_USER_UNBLOCK;
+				$log     = KunenaLog::LOG_USER_UNBLOCK;
 			}
 		}
 		else
@@ -796,12 +797,12 @@ class UserController extends KunenaController
 			if ($ban->isEnabled())
 			{
 				$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
-				$log     = Log::LOG_USER_BAN;
+				$log     = KunenaLog::LOG_USER_BAN;
 			}
 			else
 			{
 				$message = Text::_('COM_KUNENA_USER_UNBANNED_DONE');
-				$log     = Log::LOG_USER_UNBAN;
+				$log     = KunenaLog::LOG_USER_UNBAN;
 			}
 		}
 
@@ -818,8 +819,8 @@ class UserController extends KunenaController
 		{
 			if ($this->config->log_moderation)
 			{
-				Log::log(
-					Log::TYPE_MODERATION,
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
 					$log,
 					[
 						'expiration'     => $delban ? 'NOW' : $expiration,
@@ -892,11 +893,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -912,11 +913,11 @@ class UserController extends KunenaController
 		{
 			$params = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved'];
 
-			list($total, $messages) = MessageHelper::getLatestMessages(false, 0, 0, $params);
+			list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $params);
 
 			$parmas_recent = ['starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid];
 
-			list($total, $messages_recent) = MessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+			list($total, $messages_recent) = KunenaMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
 			$messages = array_merge($messages_recent, $messages);
 
@@ -972,7 +973,7 @@ class UserController extends KunenaController
 		$remember  = $this->input->getBool('remember', false);
 		$secretkey = $input->$method->get('secretkey', '', 'RAW');
 
-		$login = Login::getInstance();
+		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
@@ -1007,7 +1008,7 @@ class UserController extends KunenaController
 			return;
 		}
 
-		$login = Login::getInstance();
+		$login = KunenaLogin::getInstance();
 
 		if (!$this->app->getIdentity()->guest)
 		{
@@ -1127,7 +1128,7 @@ class UserController extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		$upload = Upload::getInstance();
+		$upload = KunenaUpload::getInstance();
 		$user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
 		// We are converting all exceptions into JSON.
@@ -1363,7 +1364,7 @@ class UserController extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment  = AttachmentHelper::get($id);
+				$attachment  = KunenaAttachmentHelper::get($id);
 				$message     = $attachment->getMessage();
 				$attachments = [$attachment->id, 1];
 				$attach      = [];

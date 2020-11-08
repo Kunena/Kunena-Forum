@@ -12,18 +12,19 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  *
  * @since   Kunena 6.0
  */
-class KunenaViewTopic extends View
+class KunenaViewTopic extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tmpl
@@ -37,11 +38,11 @@ class KunenaViewTopic extends View
 	public function display($tpl = null)
 	{
 		$id                        = Factory::getApplication()->input->getInt('id');
-		$topic                     = TopicHelper::get($id);
-		$topic->subject            = Parser::parseText($topic->subject);
-		$topic->first_post_message = Parser::stripBBCode($topic->first_post_message);
-		$topic->last_post_message  = Parser::stripBBCode($topic->last_post_message);
-		$messages                  = MessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
+		$topic                     = KunenaTopicHelper::get($id);
+		$topic->subject            = KunenaParser::parseText($topic->subject);
+		$topic->first_post_message = KunenaParser::stripBBCode($topic->first_post_message);
+		$topic->last_post_message  = KunenaParser::stripBBCode($topic->last_post_message);
+		$messages                  = KunenaMessageHelper::getMessagesByTopic($topic, 0, $topic->posts);
 
 		$list     = [];
 		$template = KunenaFactory::getTemplate();
@@ -51,7 +52,7 @@ class KunenaViewTopic extends View
 			$user              = KunenaUserHelper::get($message->userid);
 			$response          = new stdClass;
 			$response->id      = $message->id;
-			$response->message = Parser::stripBBCode(MessageHelper::get($message->id)->message);
+			$response->message = KunenaParser::stripBBCode(KunenaMessageHelper::get($message->id)->message);
 			$response->author  = $user->username;
 			$response->avatar  = $user->getAvatarImage($template->params->get('avatarType'), 'thumb');
 			$response->rank    = $user->getRank($topic->getCategory()->id, 'title');

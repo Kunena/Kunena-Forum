@@ -16,7 +16,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
 
 $attachment = $this->attachment;
@@ -53,7 +54,7 @@ else
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo Icons::file(); ?>
+		<?php echo KunenaIcons::file(); ?>
 	</a>
 	<?php
 }

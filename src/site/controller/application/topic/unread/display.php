@@ -17,9 +17,9 @@ defined('_JEXEC') or die();
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use function defined;
 
 /**
@@ -57,14 +57,14 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$catid = $this->input->getInt('catid', 0);
 		$id    = $this->input->getInt('id', 0);
 
-		$category = CategoryHelper::get($catid);
+		$category = KunenaCategoryHelper::get($catid);
 		$category->tryAuthorise();
 
-		$topic = TopicHelper::get($id);
+		$topic = KunenaTopicHelper::get($id);
 		$topic->tryAuthorise();
 
-		TopicHelper::fetchNewStatus([$topic->id => $topic]);
-		$message = MessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
+		KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
+		$message = KunenaMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
 		while (@ob_end_clean())

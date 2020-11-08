@@ -24,9 +24,10 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -211,7 +212,7 @@ class Router extends RouterView
 			{
 				$numeric = true;
 
-				$alias = CategoryHelper::get($catid)->alias;
+				$alias = KunenaCategoryHelper::get($catid)->alias;
 
 				// If category alias is empty, use category id; otherwise use alias
 				$segments[] = empty($alias) ? $catid : $alias;
@@ -243,7 +244,7 @@ class Router extends RouterView
 
 			if ($id)
 			{
-				$subject = KunenaRoute::stringURLSafe(TopicHelper::get($id)->subject);
+				$subject = KunenaRoute::stringURLSafe(KunenaTopicHelper::get($id)->subject);
 
 				if (empty($subject))
 				{

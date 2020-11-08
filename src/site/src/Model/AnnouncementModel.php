@@ -18,8 +18,9 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -36,17 +37,17 @@ class AnnouncementModel extends ListModel
 	protected $total = false;
 
 	/**
-	 * @return  Announcement
+	 * @return  KunenaAnnouncement
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function getNewAnnouncement()
 	{
-		return new Announcement;
+		return new KunenaAnnouncement;
 	}
 
 	/**
-	 * @return  Announcement
+	 * @return  KunenaAnnouncement
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -54,7 +55,7 @@ class AnnouncementModel extends ListModel
 	 */
 	public function getAnnouncement()
 	{
-		return AnnouncementHelper::get($this->getState('item.id'));
+		return KunenaAnnouncementHelper::get($this->getState('item.id'));
 	}
 
 	/**
@@ -73,7 +74,7 @@ class AnnouncementModel extends ListModel
 	}
 
 	/**
-	 * @return  Announcement[]
+	 * @return  KunenaAnnouncement[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -84,7 +85,7 @@ class AnnouncementModel extends ListModel
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
 
-		$this->total = AnnouncementHelper::getCount(!$this->me->isModerator());
+		$this->total = KunenaAnnouncementHelper::getCount(!$this->me->isModerator());
 
 		// If out of range, use last page
 		if ($limit && $this->total < $start)
@@ -92,7 +93,7 @@ class AnnouncementModel extends ListModel
 			$start = intval($this->total / $limit) * $limit;
 		}
 
-		$announces = AnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
+		$announces = KunenaAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
 		if ($this->total < $start)
 		{

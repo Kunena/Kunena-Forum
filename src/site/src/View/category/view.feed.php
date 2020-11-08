@@ -20,9 +20,10 @@ use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\View\KunenaView;
 use function defined;
 
 /**
@@ -30,7 +31,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class feed extends View
+class feed extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -48,7 +49,7 @@ class feed extends View
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
 
-		Parser::$relative = false;
+		KunenaParser::$relative = false;
 
 		$this->category = $this->get('Category');
 
@@ -123,11 +124,11 @@ class feed extends View
 
 			if ((bool) $this->config->rss_allow_html)
 			{
-				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
 			}
 			else
 			{
-				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseText($description, (int) $this->config->rss_word_count);
 			}
 		}
 

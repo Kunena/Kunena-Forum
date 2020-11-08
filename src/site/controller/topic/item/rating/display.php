@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use function defined;
 
 /**
@@ -27,7 +27,7 @@ use function defined;
 class ComponentTopicControllerItemRatingDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;

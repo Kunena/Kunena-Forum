@@ -20,12 +20,12 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -57,7 +57,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
-		$access         = Access::getInstance();
+		$access         = KunenaAccess::getInstance();
 		$start          = $this->state->get('list.start');
 		$limit          = $this->state->get('list.limit');
 		$params         = ComponentHelper::getParams('com_kunena');
@@ -103,7 +103,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$finder = new TopicFinder;
+		$finder = new KunenaTopicFinder;
 
 		$this->topics = $finder
 			->start($start)
@@ -116,7 +116,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 
 		$mesIds = [];
 
-		$mesIds += TopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
 		$list = [];
 
@@ -133,7 +133,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 
 		$this->topics = $list;
 
-		$this->pagination = new Pagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		if ($this->moreUri)
 		{

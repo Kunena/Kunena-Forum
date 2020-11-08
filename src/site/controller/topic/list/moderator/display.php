@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicFinder;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -49,7 +49,7 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 		parent::before();
 
 		$this->me       = KunenaUserHelper::getMyself();
-		$access         = Access::getInstance();
+		$access         = KunenaAccess::getInstance();
 		$this->moreUri  = null;
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
@@ -101,16 +101,16 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 			$categoryIds = false;
 		}
 
-		$categories = CategoryHelper::getCategories($categoryIds, $reverse);
+		$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse);
 
-		$finder = new TopicFinder;
+		$finder = new KunenaTopicFinder;
 		$finder
 			->filterByCategories($categories)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
 			->where('locked', '=', 0);
 
-		$this->pagination = new Pagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		if ($this->moreUri)
 		{

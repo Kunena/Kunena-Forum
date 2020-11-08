@@ -17,11 +17,11 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -33,13 +33,13 @@ use function defined;
 class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     Message|null
+	 * @var     KunenaMessage|null
 	 * @since   Kunena 6.0
 	 */
 	public $message;
@@ -77,23 +77,23 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 		if (!$this->config->reportmsg)
 		{
 			// Deny access if report feature has been disabled.
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (!$me->exists())
 		{
 			// Deny access if user is guest.
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		if (!$mesid)
 		{
-			$this->topic = TopicHelper::get($id);
+			$this->topic = KunenaTopicHelper::get($id);
 			$this->topic->tryAuthorise();
 		}
 		else
 		{
-			$this->message = MessageHelper::get($mesid);
+			$this->message = KunenaMessageHelper::get($mesid);
 			$this->message->tryAuthorise();
 			$this->topic = $this->message->getTopic();
 		}
@@ -107,13 +107,13 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

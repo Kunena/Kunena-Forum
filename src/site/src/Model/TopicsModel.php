@@ -20,11 +20,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -105,7 +106,7 @@ class TopicsModel extends ListModel
 		$params['reverse']   = !$this->getState('list.categories.in');
 		$params['starttime'] = $time;
 		$params['user']      = $this->getState('user');
-		list($this->total, $this->messages) = MessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
+		list($this->total, $this->messages) = KunenaMessageHelper::getLatestMessages($this->getState('list.categories'), $start, $limit, $params);
 
 		$topicids = [];
 
@@ -126,7 +127,7 @@ class TopicsModel extends ListModel
 				break;
 		}
 
-		$this->topics = TopicHelper::getTopics($topicids, $authorise);
+		$this->topics = KunenaTopicHelper::getTopics($topicids, $authorise);
 
 		$userlist = $postlist = [];
 
@@ -169,13 +170,13 @@ class TopicsModel extends ListModel
 				KunenaUserHelper::loadUsers($userlist);
 			}
 
-			TopicHelper::getUserTopics(array_keys($this->topics));
-			$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
+			KunenaTopicHelper::getUserTopics(array_keys($this->topics));
+			$lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
 			// Fetch last / new post positions when user can see unapproved or deleted posts
-			if ($postlist || $lastreadlist || ($this->me->userid && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus())))
+			if ($postlist || $lastreadlist || ($this->me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())))
 			{
-				MessageHelper::loadLocation($postlist + $lastpostlist + $lastreadlist);
+				KunenaMessageHelper::loadLocation($postlist + $lastpostlist + $lastreadlist);
 			}
 		}
 	}
@@ -308,7 +309,7 @@ class TopicsModel extends ListModel
 			'favorited'  => $favorites,
 			'subscribed' => $subscriptions, ];
 
-		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}
@@ -367,7 +368,7 @@ class TopicsModel extends ListModel
 				$where = 'AND tt.posts=1';
 				break;
 			case 'unapproved' :
-				$allowed = CategoryHelper::getCategories(false, false, 'topic.approve');
+				$allowed = KunenaCategoryHelper::getCategories(false, false, 'topic.approve');
 
 				if (empty($allowed))
 				{
@@ -379,7 +380,7 @@ class TopicsModel extends ListModel
 				$where   = "AND tt.category_id IN ({$allowed})";
 				break;
 			case 'deleted' :
-				$allowed = CategoryHelper::getCategories(false, false, 'topic.undelete');
+				$allowed = KunenaCategoryHelper::getCategories(false, false, 'topic.undelete');
 
 				if (empty($allowed))
 				{
@@ -403,7 +404,7 @@ class TopicsModel extends ListModel
 			'hold'      => $hold,
 			'where'     => $where, ];
 
-		list($this->total, $this->topics) = TopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}

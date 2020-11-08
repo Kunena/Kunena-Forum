@@ -17,13 +17,13 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Attachment\Finder;
+use Kunena\Forum\Libraries\Attachment\KunenaFinder;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -69,7 +69,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return  Authorise|void
+	 * @return  KunenaAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -96,15 +96,15 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
-		$finder = new Finder;
+		$finder = new KunenaFinder;
 		$finder->where('userid', '=', $userid);
 
 		$this->total      = $finder->count();
-		$this->pagination = new Pagination($this->total, $start, $limit);
+		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		if (!$this->config->show_imgfiles_manage_profile || !$this->me->exists() && !$this->config->pubprofile)
 		{
-			return new Authorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
 		if ($this->moreUri)
@@ -126,7 +126,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$messageIds[] = (int) $attachment->mesid;
 		}
 
-		$messages = MessageHelper::getMessages($messageIds, 'none');
+		$messages = KunenaMessageHelper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
 		$topicIds = [];
@@ -136,7 +136,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 			$topicIds[] = $message->thread;
 		}
 
-		TopicHelper::getTopics($topicIds, 'none');
+		KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		$this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 	}
@@ -144,13 +144,13 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

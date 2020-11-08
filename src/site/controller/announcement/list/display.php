@@ -18,8 +18,8 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -88,8 +88,8 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 		}
 
 		$moderator           = KunenaUserHelper::getMyself()->isModerator();
-		$this->pagination    = new Pagination(AnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
-		$this->announcements = AnnouncementHelper::getAnnouncements(
+		$this->pagination    = new KunenaPagination(KunenaAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
+		$this->announcements = KunenaAnnouncementHelper::getAnnouncements(
 			$this->pagination->limitstart,
 			$this->pagination->limit,
 			!$moderator
@@ -99,13 +99,13 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

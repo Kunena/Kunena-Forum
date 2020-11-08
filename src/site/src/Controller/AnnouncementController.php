@@ -21,8 +21,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
-use Kunena\Forum\Libraries\Log\Log;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 use function defined;
 
 /**
@@ -69,7 +70,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = AnnouncementHelper::get($id);
+			$announcement = KunenaAnnouncementHelper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
@@ -104,7 +105,7 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
@@ -137,7 +138,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = AnnouncementHelper::get($id);
+			$announcement = KunenaAnnouncementHelper::get($id);
 			$date_today   = Factory::getDate();
 
 			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
@@ -172,7 +173,7 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
@@ -195,7 +196,7 @@ class AnnouncementController extends KunenaController
 		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid, []);
 
-		$announcement = AnnouncementHelper::get(array_pop($cid));
+		$announcement = KunenaAnnouncementHelper::get(array_pop($cid));
 
 		$this->setRedirect($announcement->getUrl('edit', false));
 	}
@@ -223,7 +224,7 @@ class AnnouncementController extends KunenaController
 
 		foreach ($cid as $id)
 		{
-			$announcement = AnnouncementHelper::get($id);
+			$announcement = KunenaAnnouncementHelper::get($id);
 
 			try
 			{
@@ -250,14 +251,14 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->log_moderation)
 				{
-					Log::log(Log::TYPE_MODERATION, Log::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
 				}
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
 			}
 		}
 
-		$this->setRedirect(AnnouncementHelper::getUrl('list', false));
+		$this->setRedirect(KunenaAnnouncementHelper::getUrl('list', false));
 	}
 
 	/**
@@ -290,7 +291,7 @@ class AnnouncementController extends KunenaController
 		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
 		$id           = $this->app->input->getInt('id');
-		$announcement = AnnouncementHelper::get($id);
+		$announcement = KunenaAnnouncementHelper::get($id);
 
 		if ($fields['created'] == null)
 		{
@@ -335,7 +336,7 @@ class AnnouncementController extends KunenaController
 
 		if ($this->config->log_moderation)
 		{
-			Log::log(Log::TYPE_MODERATION, $id ? Log::LOG_ANNOUNCEMENT_EDIT : Log::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
+			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
 		}
 
 		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

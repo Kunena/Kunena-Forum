@@ -14,17 +14,18 @@ namespace Kunena\Forum\Site\Model;
 
 use Exception;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Access\Access;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Message\Thankyou\MessageThankyouHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 defined('_JEXEC') or die();
@@ -61,7 +62,7 @@ class TopicModel extends ListModel
 	protected $topic = false;
 
 	/**
-	 * @return  array|boolean|Message[]
+	 * @return  array|boolean|KunenaMessage[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -73,12 +74,12 @@ class TopicModel extends ListModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = MessageHelper::getMessagesByTopic($this->getState('item.id'),
+			$this->messages = KunenaMessageHelper::getMessagesByTopic($this->getState('item.id'),
 				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded
 			);
 
 			// Get thankyous for all messages in the page
-			$thankyous = MessageThankyouHelper::getByMessage($this->messages);
+			$thankyous = KunenaMessageThankyouHelper::getByMessage($this->messages);
 
 			// First collect ids and users
 			$userlist       = [];
@@ -135,7 +136,7 @@ class TopicModel extends ListModel
 			KunenaUserHelper::loadUsers($userlist);
 
 			// Get attachments
-			AttachmentHelper::getByMessage($this->messages);
+			KunenaAttachmentHelper::getByMessage($this->messages);
 		}
 
 		return $this->messages;
@@ -234,7 +235,7 @@ class TopicModel extends ListModel
 	}
 
 	/**
-	 * @return  boolean|Topic
+	 * @return  boolean|KunenaTopic
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -249,13 +250,13 @@ class TopicModel extends ListModel
 			if ($mesid)
 			{
 				// Find actual topic by fetching current message
-				$message = MessageHelper::get($mesid);
-				$topic   = TopicHelper::get($message->thread);
+				$message = KunenaMessageHelper::get($mesid);
+				$topic   = KunenaTopicHelper::get($message->thread);
 				$this->setState('list.start', intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
 			}
 			else
 			{
-				$topic = TopicHelper::get($this->getState('item.id'));
+				$topic = KunenaTopicHelper::get($this->getState('item.id'));
 				$ids   = [];
 
 				// If topic has been moved, find the new topic
@@ -268,7 +269,7 @@ class TopicModel extends ListModel
 					}
 
 					$ids[$topic->moved_id] = 1;
-					$topic                 = TopicHelper::get($topic->moved_id);
+					$topic                 = KunenaTopicHelper::get($topic->moved_id);
 				}
 			}
 
@@ -303,7 +304,7 @@ class TopicModel extends ListModel
 	}
 
 	/**
-	 * @return  Poll
+	 * @return  KunenaPoll
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -327,7 +328,7 @@ class TopicModel extends ListModel
 	}
 
 	/**
-	 * @return  Category
+	 * @return  KunenaCategory
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -335,7 +336,7 @@ class TopicModel extends ListModel
 	 */
 	public function getCategory()
 	{
-		return CategoryHelper::get($this->getState('item.catid'));
+		return KunenaCategoryHelper::get($this->getState('item.catid'));
 	}
 
 	/**
@@ -392,7 +393,7 @@ class TopicModel extends ListModel
 		$id = $this->getInt('mesid', 0);
 		$this->setState('item.mesid', $id);
 
-		$access = Access::getInstance();
+		$access = KunenaAccess::getInstance();
 		$value  = $access->getAllowedHold($this->me, $catid);
 		$this->setState('hold', $value);
 

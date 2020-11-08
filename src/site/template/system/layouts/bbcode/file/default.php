@@ -15,7 +15,8 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use function defined;
 
 $title    = $this->title;
@@ -34,7 +35,7 @@ $size     = $this->size;
 
 		<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
 		<a href="<?php echo $url; ?>" title="<?php echo $this->escape($filename); ?>">
-			<?php echo $this->escape(AttachmentHelper::shortenFilename($filename)); ?>
+			<?php echo $this->escape(KunenaAttachmentHelper::shortenFilename($filename)); ?>
 		</a>
 
 		<br/>

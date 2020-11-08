@@ -15,9 +15,10 @@ namespace Kunena\Forum\Site\Layout\Announcement;
 defined('_JEXEC') or die;
 
 use Exception;
-use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
-use Kunena\Forum\Libraries\Forum\Announcement\AnnouncementHelper;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -26,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementItem extends Layout
+class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
 	/**
 	 * @var     array
@@ -35,7 +36,7 @@ class KunenaLayoutAnnouncementItem extends Layout
 	public $buttons;
 
 	/**
-	 * @var     Announcement
+	 * @var     KunenaAnnouncement
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;
@@ -66,7 +67,7 @@ class KunenaLayoutAnnouncementItem extends Layout
 
 		if ($this->buttons)
 		{
-			$this->buttons['cpanel'] = $this->getButton(AnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
+			$this->buttons['cpanel'] = $this->getButton(KunenaAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
 		}
 
 		return $this->buttons;
@@ -82,7 +83,7 @@ class KunenaLayoutAnnouncementItem extends Layout
 	 * @param   int     $id      Id of the button.
 	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
-	 * @return  Layout
+	 * @return  KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -91,7 +92,7 @@ class KunenaLayoutAnnouncementItem extends Layout
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
-		return Layout::factory('Widget/Announcement/Button')
+		return KunenaLayout::factory('Widget/Announcement/Button')
 			->setProperties(['url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal]);
 	}
 }

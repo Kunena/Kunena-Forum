@@ -17,9 +17,10 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Icons\Icons;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -29,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetFooter extends Layout
+class KunenaLayoutWidgetFooter extends KunenaLayout
 {
 	/**
 	 * Method to get the time of page generation
@@ -100,11 +101,7 @@ class KunenaLayoutWidgetFooter extends Layout
 			$doc = Factory::getApplication()->getDocument();
 			$doc->addHeadLink($url, 'alternate', 'rel', ['type' => 'application/rss+xml']);
 
-			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . Icons::rss($text = true) . '</a>';
-		}
-		else
-		{
-			return;
+			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';
 		}
 	}
 }

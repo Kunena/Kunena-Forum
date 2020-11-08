@@ -20,9 +20,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -65,15 +65,15 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		if (!$this->config->statslink_allowed && Factory::getApplication()->getIdentity()->guest)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$statistics = Statistics::getInstance();
+		$statistics = KunenaStatistics::getInstance();
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 
@@ -84,13 +84,13 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 		$componentParams = ComponentHelper::getParams('com_config');

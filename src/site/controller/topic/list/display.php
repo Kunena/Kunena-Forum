@@ -20,13 +20,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -43,21 +43,25 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+
 	/**
-	 * @var     array|Topic[]
+	 * @var     array|KunenaTopic[]
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
+
 	/**
-	 * @var     Pagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -95,13 +99,13 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		}
 
 		$topicIds = array_keys($this->topics);
-		TopicHelper::getUserTopics($topicIds);
+		KunenaTopicHelper::getUserTopics($topicIds);
 
-		$mesIds += TopicHelper::fetchNewStatus($this->topics);
+		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...
-		if ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
+		if ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
 		{
 			$mesIds += $lastIds;
 		}
@@ -109,7 +113,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		// Load position information for all selected messages.
 		if ($mesIds)
 		{
-			MessageHelper::loadLocation($mesIds);
+			KunenaMessageHelper::loadLocation($mesIds);
 		}
 
 		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
@@ -133,20 +137,20 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'list');
 		PluginHelper::importPlugin('kunena');
-		Parser::prepareContent($content, 'topic_list_default');
+		KunenaParser::prepareContent($content, 'topic_list_default');
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
 	}
 
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;

@@ -21,11 +21,11 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Administrator\Helper\UserHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\RateHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
 use function defined;
 
@@ -34,7 +34,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class raw extends View
+class raw extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -52,7 +52,7 @@ class raw extends View
 
 		if ($this->me->exists() || $this->config->pubwrite)
 		{
-			$msgbody              = Parser::parseBBCode($body, $this);
+			$msgbody              = KunenaParser::parseBBCode($body, $this);
 			$response ['preview'] = $msgbody;
 		}
 
@@ -132,7 +132,7 @@ class raw extends View
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category         = CategoryHelper::get($catid);
+		$category         = KunenaCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 		$app              = Factory::getApplication();
 
@@ -218,13 +218,13 @@ class raw extends View
 		$response = [];
 		$app      = Factory::getApplication();
 
-		if ($user->id == 0 || TopicHelper::get($topicid)->first_post_userid == $this->me->userid)
+		if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
 		{
-			$response = RateHelper::getSelected($topicid);
+			$response = KunenaRateHelper::getSelected($topicid);
 		}
 		else
 		{
-			$response = RateHelper::getRate($topicid, $user->id);
+			$response = KunenaRateHelper::getRate($topicid, $user->id);
 		}
 
 		// Set the MIME type and header for JSON output.
@@ -256,15 +256,15 @@ class raw extends View
 
 		if ($user->exists() || $this->config->ratingenabled)
 		{
-			$rate           = RateHelper::get($topicid);
+			$rate           = KunenaRateHelper::get($topicid);
 			$rate->stars    = $starid;
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
 
-			$selected = RateHelper::getSelected($topicid);
+			$selected = KunenaRateHelper::getSelected($topicid);
 
-			$topic         = TopicHelper::get($topicid);
+			$topic         = KunenaTopicHelper::get($topicid);
 			$topic->rating = $selected;
 			$topic->save();
 		}
@@ -294,7 +294,7 @@ class raw extends View
 		$catid    = $this->app->input->getInt('catid', 0);
 		$response = '';
 
-		$category = CategoryHelper::get($catid);
+		$category = KunenaCategoryHelper::get($catid);
 
 		$response = $category->topictemplate;
 

@@ -20,14 +20,14 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -54,7 +54,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	public $headerText;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -66,13 +66,13 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	public $total;
 
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
 
 	/**
-	 * @var     Pagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
@@ -122,14 +122,14 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		// TODO:
 		$direction = 'DESC';
 
-		$this->category = CategoryHelper::get($catid);
+		$this->category = KunenaCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
 		$this->headerText = $this->category->name;
 
 		$topic_ordering = $this->category->topic_ordering;
 
-		$access = Access::getInstance();
+		$access = KunenaAccess::getInstance();
 		$hold   = $access->getAllowedHold($this->me, $catid);
 		$moved  = 1;
 		$params = [
@@ -156,7 +156,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 				$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
 		}
 
-		list($this->total, $this->topics) = TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
 		if ($limitstart > 1 && !$this->topics)
 		{
@@ -184,13 +184,13 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 				KunenaUserHelper::loadUsers($userlist);
 			}
 
-			TopicHelper::getUserTopics(array_keys($this->topics));
-			$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
+			KunenaTopicHelper::getUserTopics(array_keys($this->topics));
+			$lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
 			// Fetch last / new post positions when user can see unapproved or deleted posts.
-			if ($lastreadlist || $this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
+			if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
 			{
-				MessageHelper::loadLocation($lastpostlist + $lastreadlist);
+				KunenaMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
 
@@ -230,14 +230,14 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;

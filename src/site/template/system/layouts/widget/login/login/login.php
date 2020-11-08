@@ -17,8 +17,9 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Icons\Icons;
-use Kunena\Forum\Libraries\Login\Login;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 use function defined;
 
 ?>
@@ -33,7 +34,7 @@ use function defined;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo Icons::user(); ?>
+						<?php echo KunenaIcons::user(); ?>
 						<label for="klogin-username" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 						</label>
@@ -48,7 +49,7 @@ use function defined;
 			<div class="controls">
 				<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo Icons::lock(); ?>
+						<?php echo KunenaIcons::lock(); ?>
 						<label for="klogin-passwd" class="element-invisible">
 							<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 						</label>
@@ -69,7 +70,7 @@ use function defined;
 				<div class="controls">
 					<div class="input-prepend input-append">
 					<span class="add-on">
-						<?php echo Icons::star(); ?>
+						<?php echo KunenaIcons::star(); ?>
 						<label for="kk-lgn-secretkey" class="element-invisible">
 							<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 						</label>

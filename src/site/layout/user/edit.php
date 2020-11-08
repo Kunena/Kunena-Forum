@@ -19,7 +19,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
@@ -30,7 +31,7 @@ use function defined;
  *
  * @since   Kunena 5.1
  */
-class KunenaLayoutUserEdit extends Layout
+class KunenaLayoutUserEdit extends KunenaLayout
 {
 	/**
 	 * @var     KunenaUser

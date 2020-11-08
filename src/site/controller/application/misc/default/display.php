@@ -19,8 +19,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Layout\Layout;
-use Kunena\Forum\Libraries\Layout\Page;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -46,7 +46,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	/**
 	 * Return custom display layout.
 	 *
-	 * @return  Layout
+	 * @return  KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -113,7 +113,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		}
 
 		// Display layout with given parameters.
-		return Page::factory('Misc/Default')
+		return KunenaPage::factory('Misc/Default')
 			->set('header', $this->header)
 			->set('body', $this->body);
 	}

@@ -15,8 +15,9 @@ namespace Kunena\Forum\Site\Layout\Announcement\Kunenalist;
 defined('_JEXEC') or die;
 
 use Exception;
-use Kunena\Forum\Libraries\Forum\Announcement\Announcement;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
 /**
@@ -24,10 +25,10 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementListRow extends Layout
+class KunenaLayoutAnnouncementListRow extends KunenaLayout
 {
 	/**
-	 * @var     Announcement
+	 * @var     KunenaAnnouncement
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;

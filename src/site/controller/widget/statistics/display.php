@@ -18,9 +18,9 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Statistics;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use function defined;
 
 /**
@@ -72,10 +72,10 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		if (!$this->config->get('showstats'))
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		$statistics = Statistics::getInstance();
+		$statistics = KunenaStatistics::getInstance();
 		$statistics->loadGeneral();
 		$this->setProperties($statistics);
 

@@ -20,15 +20,15 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Attachment\Finder;
+use Kunena\Forum\Libraries\Attachment\KunenaFinder;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Log\Log;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 use function defined;
 
 /**
@@ -75,7 +75,7 @@ class TopicsController extends KunenaController
 		$ids     = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids     = ArrayHelper::toInteger($ids);
 
-		$topics = TopicHelper::getTopics($ids);
+		$topics = KunenaTopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -84,7 +84,7 @@ class TopicsController extends KunenaController
 		}
 		else
 		{
-			$messages = MessageHelper::getMessagesByTopics($ids);
+			$messages = KunenaMessageHelper::getMessagesByTopics($ids);
 
 			foreach ($topics as $topic)
 			{
@@ -94,7 +94,7 @@ class TopicsController extends KunenaController
 					$activity = KunenaFactory::getActivityIntegration();
 					$activity->onAfterDeleteTopic($topic);
 					$message = Text::_('COM_KUNENA_BULKMSG_DELETED');
-					CategoryHelper::recount($topic->getCategory()->id);
+					KunenaCategoryHelper::recount($topic->getCategory()->id);
 				}
 				else
 				{
@@ -103,7 +103,7 @@ class TopicsController extends KunenaController
 			}
 
 			// Delete attachments in each message
-			$finder = new Finder;
+			$finder = new KunenaFinder;
 			$finder->where('mesid', 'IN', array_keys($messages));
 			$attachments = $finder->find();
 
@@ -158,9 +158,9 @@ class TopicsController extends KunenaController
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
-						Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_DESTROY,
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_DESTROY,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -197,7 +197,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = TopicHelper::getTopics($ids);
+		$topics  = KunenaTopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -225,9 +225,9 @@ class TopicsController extends KunenaController
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
-						Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_DELETE,
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_DELETE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -264,7 +264,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = TopicHelper::getTopics($ids);
+		$topics  = KunenaTopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -292,9 +292,9 @@ class TopicsController extends KunenaController
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
-						Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_UNDELETE,
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_UNDELETE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -331,7 +331,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$message = '';
-		$topics  = TopicHelper::getTopics($ids);
+		$topics  = KunenaTopicHelper::getTopics($ids);
 
 		if (!$topics)
 		{
@@ -360,9 +360,9 @@ class TopicsController extends KunenaController
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
-						Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_APPROVE,
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_APPROVE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -398,12 +398,12 @@ class TopicsController extends KunenaController
 		$topics_ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$topics_ids = ArrayHelper::toInteger($topics_ids);
 
-		$topics = TopicHelper::getTopics($topics_ids);
+		$topics = KunenaTopicHelper::getTopics($topics_ids);
 
 		$messages_ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
 		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
-		$messages = MessageHelper::getMessages($messages_ids);
+		$messages = KunenaMessageHelper::getMessages($messages_ids);
 
 		if (!$topics && !$messages)
 		{
@@ -412,7 +412,7 @@ class TopicsController extends KunenaController
 		}
 		else
 		{
-			$target = CategoryHelper::get($this->app->input->getInt('target', 0));
+			$target = KunenaCategoryHelper::get($this->app->input->getInt('target', 0));
 
 			if (empty($target->id))
 			{
@@ -465,9 +465,9 @@ class TopicsController extends KunenaController
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
-						Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_MODERATE,
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_MODERATE,
 						[
 							'move'   => ['id' => $topic->id, 'mode' => 'topic'],
 							'target' => ['category_id' => $target->id],
@@ -506,17 +506,17 @@ class TopicsController extends KunenaController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = TopicHelper::getTopics($ids);
+		$topics = KunenaTopicHelper::getTopics($ids);
 
-		if (TopicHelper::favorite(array_keys($topics), 0))
+		if (KunenaTopicHelper::favorite(array_keys($topics), 0))
 		{
 			if ($this->config->log_moderation)
 			{
 				foreach ($topics as $topic)
 				{
-					Log::log(
+					KunenaLog::log(
 						$this->me->userid == $topic->getAuthor()->userid ? Log::TYPE_ACTION : Log::TYPE_MODERATION,
-						Log::LOG_TOPIC_UNFAVORITE,
+						KunenaLog::LOG_TOPIC_UNFAVORITE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),
 						$topic,
@@ -558,9 +558,9 @@ class TopicsController extends KunenaController
 		$ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
 		$ids = ArrayHelper::toInteger($ids);
 
-		$topics = TopicHelper::getTopics($ids);
+		$topics = KunenaTopicHelper::getTopics($ids);
 
-		if (TopicHelper::subscribe(array_keys($topics), 0, $userid))
+		if (KunenaTopicHelper::subscribe(array_keys($topics), 0, $userid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'));
 		}
@@ -594,7 +594,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = MessageHelper::getMessages($ids);
+		$messages = KunenaMessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -646,7 +646,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = MessageHelper::getMessages($ids);
+		$messages = KunenaMessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -697,7 +697,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = MessageHelper::getMessages($ids);
+		$messages = KunenaMessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{
@@ -748,7 +748,7 @@ class TopicsController extends KunenaController
 		$ids = ArrayHelper::toInteger($ids);
 
 		$success  = 0;
-		$messages = MessageHelper::getMessages($ids);
+		$messages = KunenaMessageHelper::getMessages($ids);
 
 		if (!$messages)
 		{

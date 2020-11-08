@@ -21,9 +21,9 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -51,7 +51,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return  BaseLayout|Layout
+	 * @return  BaseLayout|KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -95,7 +95,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 
 			if (!$default)
 			{
-				throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 500);
+				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item.
@@ -125,7 +125,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 
 		if (!$controller)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		return $controller->execute();
@@ -138,7 +138,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   object        $active   Active menu item.
 	 * @param   array         $visited  Already visited menu items.
 	 *
-	 * @return  object|null
+	 * @return  object|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -151,7 +151,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		if (empty($active->query['defaultmenu']) || $active->id == $active->query['defaultmenu'])
 		{
 			// There is no highlighted menu item!
-			return;
+			return false;
 		}
 
 		$item = $menu->getItem($active->query['defaultmenu']);
@@ -161,23 +161,26 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 			// Menu item points to nowhere, abort!
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
-			return;
+			return false;
 		}
-		elseif (isset($visited[$item->id]))
+
+		if (isset($visited[$item->id]))
 		{
 			// Menu loop detected, abort!
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
-			return;
+			return false;
 		}
-		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query['view']))
+
+		if (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query['view']))
 		{
 			// Menu item doesn't point to Kunena, abort!
 			KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
-			return;
+			return false;
 		}
-		elseif ($item->query['view'] == 'home')
+
+		if ($item->query['view'] == 'home')
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there.
 			$visited[$item->id] = 1;

@@ -11,19 +11,22 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  * Topics View
  *
  * @since   Kunena 6.0
  */
-class KunenaViewTopics extends View
+class KunenaViewTopics extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl
@@ -41,7 +44,7 @@ class KunenaViewTopics extends View
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
-		Parser::$relative = false;
+		KunenaParser::$relative = false;
 		$config           = KunenaFactory::getConfig();
 		$cache            = Factory::getCache('com_kunena_rss', 'output');
 
@@ -185,11 +188,11 @@ class KunenaViewTopics extends View
 
 			if ((bool) $this->config->rss_allow_html)
 			{
-				$description = Parser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
 			}
 			else
 			{
-				$description = Parser::parseText($description, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseText($description, (int) $this->config->rss_word_count);
 			}
 		}
 
@@ -273,7 +276,7 @@ class KunenaViewTopics extends View
 	{
 		if (!$this->config->enablerss)
 		{
-			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
+			throw new KunenaException(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout   = 'posts';
@@ -340,7 +343,7 @@ class KunenaViewTopics extends View
 				$description = $message->message;
 			}
 
-			$date     = new Joomla\CMS\Date\Date($message->time);
+			$date     = new Date($message->time);
 			$userid   = $message->userid;
 			$username = KunenaFactory::getUser($userid)->getName($message->name);
 

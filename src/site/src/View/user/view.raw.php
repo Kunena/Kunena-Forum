@@ -18,7 +18,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\View\View;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
 use function defined;
 
@@ -27,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class Raw extends View
+class Raw extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl

@@ -18,12 +18,13 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Html\Parser;
-use Kunena\Forum\Libraries\Layout\Layout;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -32,16 +33,16 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutSearchResults extends Layout
+class KunenaLayoutSearchResults extends KunenaLayout
 {
 	/**
-	 * @var     Message
+	 * @var     KunenaMessage
 	 * @since   Kunena 6.0
 	 */
 	public $message;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
@@ -59,7 +60,7 @@ class KunenaLayoutSearchResults extends Layout
 	public $results;
 
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
@@ -132,8 +133,8 @@ class KunenaLayoutSearchResults extends Layout
 			$this->topic        = $this->message->getTopic();
 			$this->category     = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-			$ressubject         = Parser::parseText($this->message->subject);
-			$resmessage         = Parser::parseBBCode($this->message->message, 500);
+			$ressubject         = KunenaParser::parseText($this->message->subject);
+			$resmessage         = KunenaParser::parseBBCode($this->message->message, 500);
 
 			$profile          = KunenaFactory::getUser((int) $this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');

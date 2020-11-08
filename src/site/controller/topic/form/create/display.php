@@ -19,14 +19,15 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -42,6 +43,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -103,7 +105,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$categories        = CategoryHelper::getCategories();
+		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
 		$arraypollcatid    = [];
 
@@ -129,10 +131,10 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		}
 
 		// FIXME: We need to proxy this...
-		Template::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		Template::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$this->category = CategoryHelper::get($catid);
+		$this->category = KunenaCategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -145,7 +147,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = Template::getInstance()->recaptcha();
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else
@@ -188,14 +190,14 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = AttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->privateMessage       = new Message;
+		$this->privateMessage       = new KunenaPrivateMessage;
 		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
 		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
@@ -231,13 +233,13 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

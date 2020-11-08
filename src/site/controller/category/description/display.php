@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site\Controller\Category\Description;
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use function defined;
 
 /**
@@ -46,7 +46,7 @@ class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisp
 
 		$catid = $this->input->getInt('catid');
 
-		$this->category = CategoryHelper::get($catid);
+		$this->category = KunenaCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 	}
 }

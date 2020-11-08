@@ -22,11 +22,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Forum\Message\MessageFinder;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -46,7 +46,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	protected $name = 'Message/List';
 
 	/**
-	 * @var     array|Message[]
+	 * @var     array|KunenaMessage[]
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
@@ -116,7 +116,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 		$authorise   = 'read';
 		$order       = 'time';
 
-		$finder = new MessageFinder;
+		$finder = new KunenaMessageFinder;
 		$finder->filterByTime($time);
 
 		switch ($this->state->get('list.mode'))
@@ -150,10 +150,10 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 				break;
 		}
 
-		$categories = CategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+		$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
-		$this->pagination = new Pagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$doc = Factory::getApplication()->getDocument();
 
@@ -231,7 +231,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
 
-		$this->topics = TopicHelper::getTopics($topicIds, 'none');
+		$this->topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = [];
 
@@ -296,13 +296,13 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;

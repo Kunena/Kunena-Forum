@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -36,7 +36,7 @@ class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 	public $profile;
 
 	/**
-	 * @var     Ban
+	 * @var     KunenaBan
 	 * @since   Kunena 6.0
 	 */
 	public $banInfo;
@@ -71,7 +71,7 @@ class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('ban');
 
-		$this->banInfo = Ban::getInstanceByUserid($userid, true);
+		$this->banInfo = KunenaBan::getInstanceByUserid($userid, true);
 
 		$this->headerText = $this->banInfo->exists() ? Text::_('COM_KUNENA_BAN_EDIT') : Text::_('COM_KUNENA_BAN_NEW');
 	}
@@ -79,13 +79,13 @@ class ComponentUserControllerBanFormDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

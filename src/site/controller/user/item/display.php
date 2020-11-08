@@ -23,10 +23,10 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\Ban;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
@@ -94,7 +94,7 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new Authorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');
@@ -117,7 +117,7 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 
 		$this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 		$this->banInfo = $this->config->showbannedreason
-			? Ban::getInstanceByUserid($this->profile->userid)
+			? KunenaBan::getInstanceByUserid($this->profile->userid)
 			: null;
 
 		// Update profile hits.
@@ -168,13 +168,13 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$this->setMetaData('profile:username', $this->profile->getName(), 'property');
 

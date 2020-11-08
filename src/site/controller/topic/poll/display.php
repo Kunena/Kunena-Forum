@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\Poll;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -41,19 +41,19 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	public $me;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
 
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
 
 	/**
-	 * @var     Poll
+	 * @var     KunenaPoll
 	 * @since   Kunena 6.0
 	 */
 	public $poll;
@@ -78,7 +78,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->topic    = TopicHelper::get($this->input->getInt('id'));
+		$this->topic    = KunenaTopicHelper::get($this->input->getInt('id'));
 		$this->category = $this->topic->getCategory();
 		$this->config   = KunenaFactory::getConfig();
 		$this->me       = KunenaUserHelper::getMyself();
@@ -154,13 +154,13 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
@@ -177,7 +177,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title));
+				$this->setTitle(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title));
 			}
 
 			if (!empty($params_description))
@@ -187,7 +187,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title));
+				$this->setDescription(Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title));
 			}
 		}
 	}

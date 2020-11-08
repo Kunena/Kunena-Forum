@@ -19,14 +19,14 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Pagination\Pagination;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -51,7 +51,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	public $headerText;
 
 	/**
-	 * @var     Category
+	 * @var     KunenaCategory
 	 * @since   Kunena 5.1
 	 */
 	public $category;
@@ -69,7 +69,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	public $topics;
 
 	/**
-	 * @var     Pagination
+	 * @var     KunenaPagination
 	 * @since   Kunena 5.1
 	 */
 	public $pagination;
@@ -89,7 +89,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare category display.
 	 *
-	 * @return  Authorise|void
+	 * @return  KunenaAuthorise|void
 	 *
 	 * @since   Kunena 5.1
 	 *
@@ -101,7 +101,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		if (!$this->me->isAdmin())
 		{
-			return new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		parent::before();
@@ -112,7 +112,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$this->category = CategoryHelper::get($catid);
+		$this->category = KunenaCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
 		$category = $this->category;
@@ -215,7 +215,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		if (empty($category->iconset))
 		{
-			$value = Template::getInstance()->params->get('DefaultIconset');
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
 		}
 		else
 		{
@@ -230,13 +230,13 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 5.1
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

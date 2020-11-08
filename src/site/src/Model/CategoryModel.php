@@ -20,14 +20,14 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Access\Access;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -68,7 +68,7 @@ class CategoryModel extends ListModel
 	protected $actionMove = false;
 
 	/**
-	 * @var     Topic
+	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	protected $total;
@@ -86,7 +86,7 @@ class CategoryModel extends ListModel
 		{
 			$this->items = [];
 			$user        = KunenaFactory::getUser();
-			list($total, $categories) = CategoryHelper::getLatestSubscriptions($user->userid);
+			list($total, $categories) = KunenaCategoryHelper::getLatestSubscriptions($user->userid);
 			$this->items = $categories;
 		}
 
@@ -94,7 +94,7 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  array|boolean|Category[]
+	 * @return  array|boolean|KunenaCategory[]
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -112,12 +112,12 @@ class CategoryModel extends ListModel
 
 			if ($layout == 'user')
 			{
-				$categories[0] = CategoryHelper::getSubscriptions();
+				$categories[0] = KunenaCategoryHelper::getSubscriptions();
 				$flat          = true;
 			}
 			elseif ($catid)
 			{
-				$categories[0] = CategoryHelper::getCategories($catid);
+				$categories[0] = KunenaCategoryHelper::getCategories($catid);
 
 				if (empty($categories[0]))
 				{
@@ -126,7 +126,7 @@ class CategoryModel extends ListModel
 			}
 			else
 			{
-				$categories[0] = CategoryHelper::getChildren();
+				$categories[0] = KunenaCategoryHelper::getChildren();
 			}
 
 			if ($flat)
@@ -135,7 +135,7 @@ class CategoryModel extends ListModel
 			}
 			else
 			{
-				$allsubcats = CategoryHelper::getChildren(array_keys($categories [0]), 1);
+				$allsubcats = KunenaCategoryHelper::getChildren(array_keys($categories [0]), 1);
 			}
 
 			if (empty($allsubcats))
@@ -143,7 +143,7 @@ class CategoryModel extends ListModel
 				return [];
 			}
 
-			CategoryHelper::getNewTopics(array_keys($allsubcats));
+			KunenaCategoryHelper::getNewTopics(array_keys($allsubcats));
 
 			$modcats      = [];
 			$lastpostlist = [];
@@ -179,7 +179,7 @@ class CategoryModel extends ListModel
 			}
 
 			// Prefetch topics
-			$topics = TopicHelper::getTopics($topiclist);
+			$topics = KunenaTopicHelper::getTopics($topiclist);
 
 			foreach ($topics as $topic)
 			{
@@ -228,10 +228,10 @@ class CategoryModel extends ListModel
 			}
 
 			// Fix last post position when user can see unapproved or deleted posts
-			if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || Access::getInstance()->getModeratorStatus()))
+			if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))
 			{
-				MessageHelper::getMessages($lastpostlist);
-				MessageHelper::loadLocation($lastpostlist);
+				KunenaMessageHelper::getMessages($lastpostlist);
+				KunenaMessageHelper::loadLocation($lastpostlist);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -297,7 +297,7 @@ class CategoryModel extends ListModel
 
 			$topic_ordering = $this->getCategory()->topic_ordering;
 
-			$access = Access::getInstance();
+			$access = KunenaAccess::getInstance();
 			$hold   = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = [
@@ -325,10 +325,10 @@ class CategoryModel extends ListModel
 
 			if ($format == 'feed')
 			{
-				$catid = array_keys(CategoryHelper::getChildren($catid, 100) + [$catid => 1]);
+				$catid = array_keys(KunenaCategoryHelper::getChildren($catid, 100) + [$catid => 1]);
 			}
 
-			list($this->total, $this->topics) = TopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+			list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
 			if ($this->total > 0)
 			{
@@ -349,13 +349,13 @@ class CategoryModel extends ListModel
 					KunenaUserHelper::loadUsers($userlist);
 				}
 
-				TopicHelper::getUserTopics(array_keys($this->topics));
-				$lastreadlist = TopicHelper::fetchNewStatus($this->topics);
+				KunenaTopicHelper::getUserTopics(array_keys($this->topics));
+				$lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if ($lastreadlist || $this->me->isAdmin() || Access::getInstance()->getModeratorStatus())
+				if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
 				{
-					MessageHelper::loadLocation($lastpostlist + $lastreadlist);
+					KunenaMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 			}
 		}
@@ -364,7 +364,7 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  Category
+	 * @return  KunenaCategory
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -372,7 +372,7 @@ class CategoryModel extends ListModel
 	 */
 	public function getCategory()
 	{
-		return CategoryHelper::get($this->getState('item.id'));
+		return KunenaCategoryHelper::get($this->getState('item.id'));
 	}
 
 	/**

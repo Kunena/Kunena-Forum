@@ -20,10 +20,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Pagination\Pagination;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\Authorise;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\MessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 use function defined;
@@ -81,7 +81,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 
 		if (!$me->exists())
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		$this->user = KunenaUserHelper::get($this->state->get('user'));
@@ -100,7 +100,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			$limitstart = 0;
 		}
 
-		list($total, $this->categories) = CategoryHelper::getLatestSubscriptions($this->state->get('user'));
+		list($total, $this->categories) = KunenaCategoryHelper::getLatestSubscriptions($this->state->get('user'));
 
 		$topicIds = [];
 		$userIds  = [];
@@ -116,7 +116,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = TopicHelper::getTopics($topicIds, 'none');
+		$topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		// Pre-fetch users (and get last post ids for moderators).
 		foreach ($topics as $topic)
@@ -126,13 +126,13 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 		}
 
 		KunenaUserHelper::loadUsers($userIds);
-		MessageHelper::getMessages($postIds);
+		KunenaMessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		if ($me->exists() && !$me->isBanned())
 		{
 			// Load new topic counts.
-			CategoryHelper::getNewTopics(array_keys($this->categories));
+			KunenaCategoryHelper::getNewTopics(array_keys($this->categories));
 		}
 
 		$this->actions = $this->getActions();
@@ -161,13 +161,13 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return  void|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

@@ -18,8 +18,9 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -27,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaTemplateAurelia extends Template
+class KunenaTemplateAurelia extends KunenaTemplate
 {
 	/**
 	 * List of parent template names.
@@ -87,7 +88,7 @@ class KunenaTemplateAurelia extends Template
 	 *
 	 * @throws  Exception
 	 */
-	public function loadLanguage()
+	public function loadLanguage(): void
 	{
 		$lang = Factory::getLanguage();
 		KunenaFactory::loadLanguage('kunena_tmpl_aurelia');
@@ -108,7 +109,7 @@ class KunenaTemplateAurelia extends Template
 	 *
 	 * @throws  Exception
 	 */
-	public function initialize()
+	public function initialize(): void
 	{
 		HTMLHelper::_('bootstrap.tooltip');
 
@@ -206,7 +207,7 @@ EOF;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getButton($link, $name, $scope, $type, $id = null)
+	public function getButton($link, $name, $scope, $type, $id = null): string
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod'];
 		$names = ['unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply'];
@@ -254,7 +255,7 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getIcon($name, $title = '')
+	public function getIcon($name, $title = ''): string
 	{
 		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
 	}
@@ -267,7 +268,7 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getImage($image, $alt = '')
+	public function getImage($image, $alt = ''): string
 	{
 		return '<img loading="lazy" src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}

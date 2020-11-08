@@ -18,7 +18,7 @@ use Exception;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Menu\MenuHelper;
+use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -110,7 +110,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 		$parameters->set('startLevel', $basemenu->level + 1);
 		$parameters->set('endLevel', $basemenu->level + $template->params->get('menu_levels', 1));
 
-		$this->list      = MenuHelper::getList($parameters);
+		$this->list      = KunenaMenuHelper::getList($parameters);
 		$this->menu      = $this->app->getMenu();
 		$this->active    = $this->menu->getActive();
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;

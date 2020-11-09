@@ -810,7 +810,7 @@ class CategoriesController extends FormController
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
-			return;
+			return false;
 		}
 
 		$cid        = $this->app->input->get('cid', '', 'array');
@@ -847,7 +847,7 @@ class CategoriesController extends FormController
 					{
 						$this->app->enqueueMessage($e->getMessage());
 
-						return;
+						return false;
 					}
 				}
 			}

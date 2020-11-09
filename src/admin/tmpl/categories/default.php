@@ -292,6 +292,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 											:
 											$disableClassName = '';
 											$disabledLabel = '';
+											$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
 
 											if (!$this->saveOrder)
 												:

@@ -306,6 +306,60 @@ class KunenaCategory extends KunenaDatabaseObject
 	public $indent;
 
 	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $icon;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $class_sfx;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $access;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $review;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $allow_polls;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $allow_anonymous;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $post_anonymous;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $topic_ordering;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $allow_ratings;
+
+	/**
 	 * @param   mixed|array  $properties  properties
 	 *
 	 * @since   Kunena 6.0

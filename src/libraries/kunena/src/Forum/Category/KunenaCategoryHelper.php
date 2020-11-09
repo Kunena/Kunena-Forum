@@ -324,7 +324,7 @@ abstract class KunenaCategoryHelper
 
 		if (!$reverse)
 		{
-			$allowed = $authorise != 'none' ? array_intersect_key($ids, Access::getInstance()->getAllowedCategories()) : $ids;
+			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaAccess::getInstance()->getAllowedCategories()) : $ids;
 			$list    = array_intersect_key(self::$_instances, $allowed);
 
 			if ($authorise != 'none' && $authorise != 'read')
@@ -340,7 +340,7 @@ abstract class KunenaCategoryHelper
 		}
 		else
 		{
-			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, Access::getInstance()->getAllowedCategories()) : self::$_instances;
+			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaAccess::getInstance()->getAllowedCategories()) : self::$_instances;
 			$list    = array_diff_key($allowed, $ids);
 
 			if ($authorise != 'none' && $authorise != 'read')

@@ -131,8 +131,8 @@ class CategoriesModel extends KunenaModel
 		$aliases = array_keys($category->getAliases());
 
 		$lists                     = [];
-		$lists ['accesstypes']     = Access::getInstance()->getAccessTypesList($category);
-		$lists ['accesslists']     = Access::getInstance()->getAccessOptions($category);
+		$lists ['accesstypes']     = KunenaAccess::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists']     = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']      = HTMLHelper::_('select.genericlist', $cat_params, 'parent_id', 'class="inputbox form-control"', 'value', 'text', $category->parent_id);
 		$lists ['channels']        = HTMLHelper::_('select.genericlist', $channels_options, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;

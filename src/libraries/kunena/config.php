@@ -1362,6 +1362,18 @@ class KunenaConfig extends CMSObject
 	 * @since  K5.1.19
 	 */
 	public $display_filename_attachment = 0;
+	
+	/**
+	 * @var integer
+	 * @since  K5.2.0
+	 */
+	public $new_users_prevent_post_url_images = 0;
+	
+	/**
+	 * @var integer
+	 * @since  K5.2.0
+	 */
+	public $minimal_user_posts_add_url_image = 10;
 
 	/**
 	 * @since Kunena

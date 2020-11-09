@@ -15,6 +15,31 @@ use Joomla\CMS\Language\Text;
 $this->addScript('ckeditor.js');
 $this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
 $this->addScriptOptions('com_kunena.ckeditor_base', JUri::root());
+
+// TODO: move this logic outside of the template
+if (KunenaConfig::getInstance()->new_users_prevent_post_url_images && KunenaConfig::getInstance()->minimal_user_posts_add_url_image <= $this->me->posts)
+{
+	$this->addScriptOptions('com_kunena.ckeditor_remove_buttons_url_image', KunenaConfig::getInstance()->new_users_prevent_post_url_images);
+	$editorbuttons = $this->template->params->get('editorButtons');
+	
+	if (empty($editorbuttons))
+	{
+		$this->template->params->set('editorButtons', 'Image,Link,Unlink');
+	}
+	else
+	{
+		if(strstr($editorbuttons, 'Image')!==false && strstr($editorbuttons, 'Link,Unlink')===false)
+		{
+			$editorbuttons .= ',Link,Unlink';
+			$this->template->params->set('editorButtons', $editorbuttons);
+		}
+		elseif(strstr($editorbuttons, 'Link,Unlink')!==false && strstr($editorbuttons, 'Image')==false)
+		{
+			$editorbuttons .= ',Image';
+			$this->template->params->set('editorButtons', $editorbuttons);
+		}
+	}
+}
 $this->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
 
 $this->addScript('edit.js');

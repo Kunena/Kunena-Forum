@@ -659,6 +659,16 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		$message->message = $this->removeLinksInMessage($text);
+
+		if (!$message->message)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGE_EMPTY_LINKS_IMAGES_REMOVED_NOT_ALLOWED'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
 		if (!$maxlinks)
@@ -981,6 +991,16 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		$message->message = $this->removeLinksInMessage($text);
+
+		if (!$message->message)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGE_EMPTY_LINKS_IMAGES_REMOVED_NOT_ALLOWED'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
 		if (!$maxlinks)
@@ -1179,6 +1199,23 @@ class KunenaControllerTopic extends KunenaController
 
 		return true;
 	}
+	
+	/**
+	 * Remove links in message content
+	 * 
+	 * @param $text
+	 * 
+	 * @since Kunena 5.2.0
+	 */
+	protected function removeLinksInMessage($text)
+	{
+		if ($this->config->new_users_prevent_post_url_images && $this->me->posts <= $this->config->minimal_user_posts_add_url_image)
+		{
+			$text = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)/i', '', $text);
+
+			return $text;
+		}
+	}
 
 	/**
 	 * Check in the text the max links
@@ -1188,7 +1225,7 @@ class KunenaControllerTopic extends KunenaController
 	 *
 	 * @return boolean
 	 * @throws Exception
-	 * @since Kunena
+	
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{

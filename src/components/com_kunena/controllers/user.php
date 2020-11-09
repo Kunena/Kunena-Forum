@@ -984,7 +984,17 @@ class KunenaControllerUser extends KunenaController
 
 		if ($this->config->signature)
 		{
-			$user->signature = $input->$method->get('signature', '', 'raw');
+			$signature = $input->$method->get('signature', '', 'raw');
+
+			if ($this->config->new_users_prevent_post_url_images && $this->me->posts <= $this->config->minimal_user_posts_add_url_image)
+			{
+				$signature = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $signature);
+				$signature = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $signature);
+
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'));
+			}
+
+			$user->signature = $signature;
 		}
 
 		$user->personalText = $input->$method->get('personaltext', '', 'string');

@@ -27,13 +27,21 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
+	var remove_buttons_url_image = Joomla.getOptions('com_kunena.ckeditor_remove_buttons_url_image');
 	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined)
 	{
 		config.removeButtons = 'Anchor,Paste,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
 	}
 	else
 	{
-		config.removeButtons = 'Anchor,Paste';
+		if (remove_buttons_url_image)
+		{
+			config.removeButtons = 'Anchor,Paste,Image,Link,Unlink';
+		}
+		else
+		{
+			config.removeButtons = 'Anchor,Paste';
+		}
 	}
 
 	config.extraPlugins = 'ebay,twitter,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls';
@@ -47,13 +55,4 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.smiley_path = '/media/kunena/emoticons/';
 	config.smiley_images = list_emoticons;
-	/*config.smiley_descriptions = [
-	 'B)', '8)', '8-)', ':-(', ':(', ':sad:', ':cry:', ':)', ':-)', ':cheer:', ';)', ';-)', 
-       ':wink:', ';-)', ':P', ':p', ':-p', ':-P', ':razz:', ':angry:', ':mad:', ':unsure:', ':o', 
-       ':-o', ':O', ':-O', ':eek:', ':ohmy:', ':huh:', ':?', ':-?', ':???', ':dry:', ':ermm:', ':lol:', 
-       ':X', ':x', ':sick:', ':silly:', ':y32b4:', ':blink:', ':blush:', ':oops:', ':kiss:', ':rolleyes:', 
-       ':roll:', ':woohoo:', ':side:', ':S', ':s', ':evil:', ':twisted:', ':whistle:', ':pinch:', 
-       ':D', ':-D', ':grin:', ':laugh:', ':|', ':-|', ':neutral:', ':mrgreen:', ':?:',
-       ':!:', ':arrow:', ':idea:'
-	];*/
 };

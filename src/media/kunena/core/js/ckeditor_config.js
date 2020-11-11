@@ -45,7 +45,15 @@ CKEDITOR.editorConfig = function( config ) {
 		list_emoticons.push(value);
 	});
 
-	config.smiley_path = '/media/kunena/emoticons/';
+	if (Joomla.getOptions('com_kunena.ckeditor_subfolder')!==undefined)
+	{
+		config.smiley_path = Joomla.getOptions('com_kunena.ckeditor_subfolder')+'/media/kunena/emoticons/';
+	}
+	else
+	{
+		config.smiley_path = '/media/kunena/emoticons/';
+	}
+
 	config.smiley_images = list_emoticons;
 	/*config.smiley_descriptions = [
 	 'B)', '8)', '8-)', ':-(', ':(', ':sad:', ':cry:', ':)', ':-)', ':cheer:', ';)', ';-)', 

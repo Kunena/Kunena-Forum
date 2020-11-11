@@ -19,8 +19,10 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		label.appendText(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+ ' ' + options + ' ');
 		label.setAttribute('id', 'labeloption' + options);
 		paragraph.append( label );
+		var br = new CKEDITOR.dom.element( 'br' );
+		paragraph.append( br);
 		var inputField = new CKEDITOR.dom.element( 'input' );
-		inputField.addClass( 'cke_dialog_ui_input_text' );
+		inputField.addClass( 'kunenackeditorpolloption' );
 		inputField.setAttribute('id', 'field_option' + options);
 		inputField.setAttribute('name', 'polloptionsID[new' + options + ']' );
 		inputField.setAttribute('type', 'text');
@@ -104,7 +106,26 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 			}
 		],
 		onOk: function() {
+			var inputTitlePoll = new CKEDITOR.dom.element( 'input' );
+			inputTitlePoll.setAttribute('type', 'hidden');
+			inputTitlePoll.setAttribute('name', 'poll_title' );
+			inputTitlePoll.setAttribute('value', this.getValueOf( 'tab-basic', 'polltitle' ) );
+			CKEDITOR.document.getById( 'poll_options' ).append( inputTitlePoll );
 
+			var inputPollTTL = new CKEDITOR.dom.element( 'input' );
+			inputPollTTL.setAttribute('type', 'hidden');
+			inputPollTTL.setAttribute('name', 'poll_time_to_live' );
+			inputPollTTL.setAttribute('value', this.getValueOf( 'tab-basic', 'polllifespan' ) );
+			CKEDITOR.document.getById( 'poll_options' ).append( inputPollTTL );
+
+			jQuery('[class=kunenackeditorpolloption]').each(function (index) {
+				index++
+				var inputPollOption = new CKEDITOR.dom.element( 'input' );
+				inputPollOption.setAttribute('type', 'hidden');
+				inputPollOption.setAttribute('name', 'polloptionsID['+index+']' );
+				inputPollOption.setAttribute('value', jQuery('#field_option'+index).val() );
+				CKEDITOR.document.getById( 'poll_options' ).append(  inputPollOption );
+			});
 		}
 	};
 });

@@ -486,6 +486,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			}
 			?>
 			<div id="kattach-list"></div>
+			<div id="poll_options">
+				<!-- Placeholder for polls options if inserted in message -->
+			</div>
 		</div>
 	</form>
 <?php

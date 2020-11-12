@@ -23,6 +23,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		paragraph.append( br);
 		var inputField = new CKEDITOR.dom.element( 'input' );
 		inputField.addClass( 'kunenackeditorpolloption' );
+		inputField.addClass( 'cke_dialog_ui_input_text' );
 		inputField.setAttribute('id', 'field_option' + options);
 		inputField.setAttribute('name', 'polloptionsID[new' + options + ']' );
 		inputField.setAttribute('type', 'text');
@@ -88,7 +89,17 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 						type: 'text',
 						id: 'polllifespan',
 						label: Joomla.JText._('COM_KUNENA_POLL_TIME_TO_LIVE'),
-						default: ''
+						default: '',
+						onShow: function (data) {
+							// Set the width of the outer div (otherwise it's affected by the CK CSS classes and is too wide)
+							jQuery('#' + this.domId).css('width', 230);
+							// Get the input element
+							var theInput = jQuery('#' + this.domId).find('input');
+							// Apply the datepicker to the input control
+							jQuery(theInput.selector).datepicker({
+								showButtonPanel: true
+							});
+						},
 					},
 					// Add HTML container for dynamic content
 					{
@@ -118,7 +129,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 			inputPollTTL.setAttribute('value', this.getValueOf( 'tab-basic', 'polllifespan' ) );
 			CKEDITOR.document.getById( 'poll_options' ).append( inputPollTTL );
 
-			jQuery('[class=kunenackeditorpolloption]').each(function (index) {
+			jQuery(".kunenackeditorpolloption").each(function(index) {
 				index++
 				var inputPollOption = new CKEDITOR.dom.element( 'input' );
 				inputPollOption.setAttribute('type', 'hidden');

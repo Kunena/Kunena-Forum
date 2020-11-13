@@ -1710,7 +1710,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		$document = Factory::getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof \Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof \Joomla\CMS\Document\HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('Maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 

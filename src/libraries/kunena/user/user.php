@@ -2185,4 +2185,25 @@ class KunenaUser extends CMSObject
 
 		return false;
 	}
+
+	/**
+	 * Check if the urls and images should be removed in message or signature
+	 *
+	 * @return boolean
+	 * @since Kunena 5.2.0
+	 */
+	public function checkUserAllowedLinksImages()
+	{
+		$config = KunenaConfig::getInstance();
+
+		if ($this->isModerator() || $this->isAdmin())
+		{
+			return false;
+		}
+
+		if ($config->new_users_prevent_post_url_images && $this->posts <= $config->minimal_user_posts_add_url_image)
+		{
+			return true;
+		}
+	}
 }

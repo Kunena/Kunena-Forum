@@ -11,7 +11,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 	var options = null;
 	var nboptionsmax = jQuery('#nb_options_allowed').val();
 
-	function createNewOptionField() {
+	function createNewOptionField(optionText) {
 		options++;
 		var paragraph = new CKEDITOR.dom.element( 'p' );
 		paragraph.setStyle( 'margin-top', '5px' );
@@ -28,6 +28,10 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		inputField.setAttribute('name', 'polloptionsID[new' + options + ']' );
 		inputField.setAttribute('type', 'text');
 		inputField.setAttribute('maxLength', 100);
+		if(optionText!==undefined)
+		{
+			inputField.setAttribute('value', optionText);
+		}
 		paragraph.append( inputField );
 
 		CKEDITOR.document.getById( 'dynamicContent' ).append( paragraph );
@@ -129,7 +133,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 			inputPollTTL.setAttribute('value', this.getValueOf( 'tab-basic', 'polllifespan' ) );
 			CKEDITOR.document.getById( 'poll_options' ).append( inputPollTTL );
 
-			jQuery(".kunenackeditorpolloption").each(function(index) {
+			jQuery('.kunenackeditorpolloption').each(function(index) {
 				index++
 				var inputPollOption = new CKEDITOR.dom.element( 'input' );
 				inputPollOption.setAttribute('type', 'hidden');
@@ -137,6 +141,16 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 				inputPollOption.setAttribute('value', jQuery('#field_option'+index).val() );
 				CKEDITOR.document.getById( 'poll_options' ).append(  inputPollOption );
 			});
+		},
+		onShow: function() {
+			if (jQuery('#poll_exist_edit') !== undefined) {
+				this.setValueOf( 'tab-basic', 'polltitle', jQuery('#ckeditor_dialog_polltitle').val() );
+				this.setValueOf( 'tab-basic', 'polllifespan', jQuery('#ckeditor_dialog_polltimetolive').val() );
+
+				jQuery('.ckeditor_dialog_polloption').each(function () {
+					createNewOptionField(jQuery(this).val());
+				});
+			}
 		}
 	};
 });

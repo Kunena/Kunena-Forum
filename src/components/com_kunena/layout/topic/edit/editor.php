@@ -25,6 +25,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 * Get geshi code types.
 	 *
 	 * @return array|null
+	 * @deprecated 5.2.0
 	 * @since       Kunena
 	 */
 	public function getCodeTypes()
@@ -68,6 +69,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @deprecated 5.2.0
 	 * @since       Kunena
 	 *
 	 */

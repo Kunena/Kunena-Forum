@@ -25,6 +25,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 *
 	 * @return array|null
 	 * @throws Exception
+	 * @deprecated 5.2.0
 	 * @since Kunena
 	 */
 	public function getCodeTypes()
@@ -70,6 +71,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	 *
 	 * @return void
 	 * @throws Exception
+	 * @deprecated 5.2.0
 	 * @since Kunena
 	 */
 	public function getBBcodesEnabled()

@@ -26,6 +26,7 @@ class Com_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',
 			'7.1' => '7.1.9',
@@ -33,14 +34,15 @@ class Com_KunenaInstallerScript
 			'0'   => '7.1.9', // Preferred version
 		),
 		'MySQL'   => array(
+			'5.7' => '5.7.8',
+			'5.6' => '5.6.5',
 			'5.5' => '5.5.3',
-			'5.1' => '5.1',
 			'0'   => '5.5.3', // Preferred version
 		),
 		'Joomla!' => array(
-			'3.10' => '3.10.0-alpha1',
-			'3.9'  => '3.9.20',
-			'0'    => '3.9.20', // Preferred version
+			'3.10' => '3.10.0-alpha3',
+			'3.9'  => '3.9.22',
+			'0'    => '3.9.22', // Preferred version
 		),
 	);
 

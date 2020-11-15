@@ -345,9 +345,16 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-
+						
 						<?php
-						echo $this->subLayout('Widget/Editor')->setLayout('ckeditor')->set('message', $this->message)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls)->set('template', $this->ktemplate);
+
+						echo $this->subLayout('Widget/Editor')
+							->setLayout('ckeditor')->set('message', $this->message)
+							->set('config', $this->config)
+							->set('poll', $this->message->getTopic()->getPoll())
+							->set('allow_polls', $this->topic->getCategory()->allow_polls)
+							->set('template', $this->ktemplate)
+							->set('me', $this->me);
 						?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup)

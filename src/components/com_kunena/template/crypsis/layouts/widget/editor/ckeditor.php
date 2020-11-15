@@ -17,6 +17,8 @@ $this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
 $this->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
 $this->addScriptOptions('com_kunena.ckeditor_subfolder', Joomla\CMS\Uri\Uri::root(true));
 
+$this->getAllowedtoUseLinksImages();
+
 $this->addScript('edit.js');
 
 echo $this->subLayout('Widget/Datepicker');
@@ -26,7 +28,7 @@ $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
 $this->addStyleSheet('jquery.atwho.css');
 $pollcheck = isset($this->poll);
-$topictemplate = !KunenaConfig::getInstance()->pickup_category;
+$topictemplate = !$this->config->pickup_category;
 $this->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaHtmlParser::getEmoticons(0, 1, 0)));
 ?>
 <script>
@@ -51,7 +53,7 @@ $this->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaHtmlP
 </textarea>
 
 <input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-				       value="<?php echo KunenaConfig::getInstance()->pollnboptions; ?>"/>
+				       value="<?php echo $this->config->pollnboptions; ?>"/>
 
 <!-- Hidden preview placeholder -->
 <div class="controls" id="kbbcode-preview" style="display: none;"></div>

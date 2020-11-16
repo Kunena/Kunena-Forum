@@ -991,6 +991,9 @@ class KunenaControllerUser extends KunenaController
 				$signature = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $signature);
 				$signature = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $signature);
 
+				// When the bbcode urls and images are removed just remove the others links
+				$signature = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $signature);
+
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'));
 			}
 

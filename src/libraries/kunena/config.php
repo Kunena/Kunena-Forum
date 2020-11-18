@@ -1367,7 +1367,7 @@ class KunenaConfig extends CMSObject
 	 * @var integer
 	 * @since  K5.2.0
 	 */
-	public $new_users_prevent_post_url_images = 1;
+	public $new_users_prevent_post_url_images = 0;
 
 	/**
 	 * @var integer

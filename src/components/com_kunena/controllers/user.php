@@ -986,7 +986,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$signature = $input->$method->get('signature', '', 'raw');
 
-			if ($this->me->checkUserAllowedLinksImages())
+			if ($this->me->checkUserAllowedLinksImages() && $signature != $user->signature)
 			{
 				$signature = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $signature);
 				$signature = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $signature);

@@ -35,21 +35,22 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$moderator = $this->me->isModerator();
 
 		// Decide which tabs to display.
-		$showPosts         = true;
-		$showSubscriptions = $this->config->allowsubscriptions && ($myProfile || $moderator);
-		$showFavorites     = $this->config->allowfavorites && $myProfile;
-		$showThankYou      = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
-		$showBanManager    = $moderator && $myProfile;
+		$showPosts             = true;
+		$showSubscriptions     = $this->config->allowsubscriptions && ($myProfile || $moderator);
+		$showFavorites         = $this->config->allowfavorites && $myProfile;
+		$showThankYou          = $this->config->showthankyou && $this->me->exists();
+		$showUnapproved        = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$showAttachments       = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
+		$showListofBanGiven    = $moderator && $myProfile;
+		$showBanUser           = $moderator && !$myProfile;
 
 		try
 		{
-			$showBanHistory = $showBanManager = $banInfo->canBan();
+			$showBanHistory = $banInfo->canBan();
 		}
 		catch (Exception $e)
 		{
-			$showBanHistory = $showBanManager = false;
+			$showBanHistory = false;
 		}
 
 		// Define all tabs.
@@ -223,11 +224,15 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tabs['attachments'] = $tab;
 		}
 
-		if ($showBanManager)
+		if ($showListofBanGiven)
 		{
+			$params              = array(
+				'embedded' => 1,
+				'userid'   => $this->profile->userid,
+			);
 			$tab                = new stdClass;
-			$tab->title         = Text::_('COM_KUNENA_BAN_BANMANAGER');
-			$tab->content       = $this->subRequest('User/Ban/Manager');
+			$tab->title         = Text::_('COM_KUNENA_BAN_LIST_OF_BANNED_USERS');
+			$tab->content       = $this->subRequest('User/Ban/Manager', new \Joomla\Input\Input($params), $params);
 			$tab->active        = false;
 			$tabs['banmanager'] = $tab;
 		}
@@ -241,7 +246,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tabs['banhistory'] = $tab;
 		}
 
-		if ($showBanManager)
+		if ($showBanUser)
 		{
 			$tab             = new stdClass;
 			$tab->title      = $banInfo->exists() ? Text::_('COM_KUNENA_BAN_EDIT') : Text::_('COM_KUNENA_BAN_NEW');

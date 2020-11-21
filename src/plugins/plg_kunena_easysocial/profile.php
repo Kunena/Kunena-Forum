@@ -70,19 +70,19 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $userid  userid
-	 * @param   string  $task    task
-	 * @param   bool    $xhtml   xhtml
+	 * @param   int     $user   userid
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
-		if ($userid)
+		if ($user)
 		{
-			$user = ES::user($userid);
+			$user = ES::user($user);
 
 			// When simple urls are enabled, we just hardcode the url
 			$config  = ES::config();
@@ -98,7 +98,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 		}
 		else
 		{
-			$alias = $userid;
+			$alias = $user;
 		}
 
 		$options = ['id' => $alias];

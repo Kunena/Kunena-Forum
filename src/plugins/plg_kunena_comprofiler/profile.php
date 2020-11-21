@@ -150,7 +150,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
-	 * @return string
+	 * @return  void|string
 	 *
 	 * @since   Kunena 6.0
 	 */

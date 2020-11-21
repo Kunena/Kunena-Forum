@@ -101,23 +101,23 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $userid  userid
-	 * @param   string  $task    task
-	 * @param   bool    $xhtml   xhtml
+	 * @param   int     $user   userid
+	 * @param   string  $task   task
+	 * @param   bool    $xhtml  xhtml
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
-		if (!$userid || JsnHelper::getUser($userid) === null)
+		if (!$user || JsnHelper::getUser($user) === null)
 		{
 			return false;
 		}
 
-		$user = JsnHelper::getUser($userid);
+		$user = JsnHelper::getUser($user);
 
 		return $user->getLink();
 	}

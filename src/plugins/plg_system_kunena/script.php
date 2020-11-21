@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\Exception\ExecutionFailureException;
 
@@ -95,13 +96,13 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	 * method to run before an install/update/uninstall method
 	 *
 	 * @param   string            $type    'install', 'update' or 'discover_install'
-	 * @param   ComponentAdapter  $parent  Installer object
+	 * @param   InstallerAdapter  $parent  Installer object
 	 *
 	 * @return  boolean  false will terminate the installation
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function preflight(string $type, ComponentAdapter $parent): bool
+	public function preflight(string $type, InstallerAdapter $parent): bool
 	{
 	}
 

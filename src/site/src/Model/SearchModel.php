@@ -433,13 +433,16 @@ class SearchModel extends ListModel
 	}
 
 	/**
+	 * @param   null  $ordering
+	 * @param   null  $direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		// Get search word list
 		$value = StringHelper::trim($this->app->input->get('query', '', 'string'));

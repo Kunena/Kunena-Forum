@@ -126,21 +126,21 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param   integer  $userid
+	 * @param   integer  $user
 	 * @param   string   $task   task
 	 * @param   bool     $xhtml  xhtml
 	 *
 	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
-		if (!$userid || CFactory::getUser($userid) === null)
+		if (!$user || CFactory::getUser($user) === null)
 		{
 			return false;
 		}
 
-		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
+		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $user, $xhtml);
 	}
 }

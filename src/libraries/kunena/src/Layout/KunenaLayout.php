@@ -346,21 +346,22 @@ class KunenaLayout extends KunenaBase
 	}
 
 	/**
-	 * @param   mixed  $category   category
-	 * @param   null   $content    content
-	 * @param   null   $title      title
-	 * @param   null   $class      class
-	 * @param   int    $length     length
-	 * @param   bool   $follow     follow
-	 * @param   null   $canonical  canonical
+	 * @param   KunenaCategory  $category   The KunenaCategory object
+	 * @param   string          $content    The content of last topic subject
+	 * @param   string          $title      The title of the link
+	 * @param   string          $class      The class attribute of the link
+	 * @param   int             $length     length
+	 * @param   bool            $follow     follow
+	 * @param   bool            $canonical  canonical
 	 *
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
+	 * @throws null
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
+	public function getLastPostLink(KunenaCategory $category, string $content, string $title, string $class, int $length = 30, bool $follow = true, bool $canonical = false): string
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels  = $category->getChannels();

@@ -70,11 +70,14 @@ class RateModel extends ListModel
 	}
 
 	/**
+	 * @param   null  $ordering
+	 * @param   null  $direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		$id = $this->getInt('topicid', 0);
 		$this->setState('item.topicid', $id);

@@ -136,7 +136,7 @@ class RankModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 */
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		$this->context = 'com_kunena.admin.rank';
 

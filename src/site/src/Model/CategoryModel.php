@@ -496,13 +496,16 @@ class CategoryModel extends ListModel
 	}
 
 	/**
+	 * @param   null  $ordering
+	 * @param   null  $direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function populateState()
+	protected function populateState($ordering = null, $direction = null): void
 	{
 		$layout = $this->getCmd('layout', 'default');
 		$this->setState('layout', $layout);

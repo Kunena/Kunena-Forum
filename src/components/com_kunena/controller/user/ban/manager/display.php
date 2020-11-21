@@ -61,9 +61,19 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 	{
 		parent::before();
 
+		$userid = $this->input->getInt('userid');
 		$this->me = KunenaUserHelper::getMyself();
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 30);
+		$this->moreUri  = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
+		{
+			$this->moreUri = new \Joomla\CMS\Uri\Uri('index.php?option=com_kunena&view=user&layout=banmanager&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+		}
 
 		// TODO: add authorisation
 		$userBanspre = KunenaUserBan::getBannedUsers(0, 100);
@@ -72,12 +82,17 @@ class ComponentKunenaControllerUserBanManagerDisplay extends KunenaControllerDis
 		$this->pagination = new KunenaPagination($count, $start, $limit);
 		$this->userBans = KunenaUserBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
 
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
+
 		if (!empty($this->userBans))
 		{
 			KunenaUserHelper::loadUsers(array_keys($this->userBans));
 		}
 
-		$this->headerText = Text::_('COM_KUNENA_BAN_BANMANAGER');
+		$this->headerText = Text::_('COM_KUNENA_BAN_LIST_OF_BANNED_USERS');
 	}
 
 	/**

@@ -77,13 +77,12 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	protected function prepareDocument()
+	protected function prepareDocument(): bool
 	{
 		$this->setMetaData('robots', 'follow, noindex');
 	}

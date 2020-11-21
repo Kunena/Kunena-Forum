@@ -59,7 +59,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink(string $text)
+	public function getInboxLink(string $text): string
 	{
 		if (!$text)
 		{
@@ -72,11 +72,11 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxURL()
+	public function getInboxURL(): string
 	{
 		return FRoute::conversations();
 	}
@@ -88,7 +88,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getOnClick(int $userid)
+	protected function getOnClick(int $userid): string
 	{
 		$userid = (int) $userid;
 
@@ -102,7 +102,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getURL(int $userid)
+	protected function getURL(int $userid): string
 	{
 		return "javascript:void(0)";
 	}

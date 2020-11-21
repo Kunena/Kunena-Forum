@@ -19,6 +19,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -49,9 +50,10 @@ class AvatarCommunity extends KunenaAvatar
 	/**
 	 * @param $userlist
 	 *
+	 * @return  void
 	 * @since   Kunena 6.0
 	 */
-	public function load($userlist)
+	public function load(array $userlist): void
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -68,15 +70,15 @@ class AvatarCommunity extends KunenaAvatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string
 	 *
@@ -84,7 +86,7 @@ class AvatarCommunity extends KunenaAvatar
 	 *
 	 * @throws  Exception
 	 */
-	protected function _getURL($user, $sizex, $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$kuser = KunenaFactory::getUser($user);
 

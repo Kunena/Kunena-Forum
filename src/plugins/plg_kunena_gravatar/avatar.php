@@ -18,6 +18,7 @@ use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -47,22 +48,21 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	}
 
 	/**
-	 * @return  boolean
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
 	}
 
 	/**
-	 * @param   int  $user   user
-	 * @param   int  $sizex  sizex
-	 * @param   int  $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string
 	 *
@@ -70,7 +70,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	protected function _getURL(int $user, int $sizex, int $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user     = KunenaFactory::getUser($user);
 		$gravatar = new KunenaGravatar($user->email);

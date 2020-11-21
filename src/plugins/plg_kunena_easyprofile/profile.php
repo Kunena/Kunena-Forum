@@ -51,14 +51,13 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws Exception
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -77,14 +76,14 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param   object  $view    view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
 	 * @return   void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(object $view, object $params)
+	public function showProfile(int $view, object $params): void
 	{
 	}
 
@@ -96,7 +95,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
@@ -110,7 +109,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
 		if (!$userid || JsnHelper::getUser($userid) === null)

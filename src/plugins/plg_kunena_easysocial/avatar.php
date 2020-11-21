@@ -18,6 +18,7 @@ use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -52,7 +53,7 @@ class AvatarEasySocial extends KunenaAvatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function load(array $userlist)
+	public function load(array $userlist): void
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -65,19 +66,19 @@ class AvatarEasySocial extends KunenaAvatar
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		return FRoute::profile(['layout' => 'edit']);
 	}
 
 	/**
-	 * @param   int  $user   user
-	 * @param   int  $sizex  sizex
-	 * @param   int  $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  mixed
 	 *
@@ -85,7 +86,7 @@ class AvatarEasySocial extends KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	protected function _getURL(int $user, int $sizex, int $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user = KunenaFactory::getUser($user);
 

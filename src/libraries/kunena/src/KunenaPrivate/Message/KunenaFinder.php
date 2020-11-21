@@ -122,7 +122,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	 *
 	 * @throws  Exception
 	 */
-	public function find()
+	public function find(): array
 	{
 		return $this->load(parent::find());
 	}

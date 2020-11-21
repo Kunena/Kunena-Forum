@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -45,13 +46,13 @@ class AvatarComprofiler extends KunenaAvatar
 	}
 
 	/**
-	 * @param   object  $userlist  userlist
+	 * @param   array  $userlist  userlist
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function load(object $userlist)
+	public function load(array $userlist): void
 	{
 		CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
@@ -61,7 +62,7 @@ class AvatarComprofiler extends KunenaAvatar
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		global $_CB_framework;
 
@@ -69,9 +70,9 @@ class AvatarComprofiler extends KunenaAvatar
 	}
 
 	/**
-	 * @param   int  $user   user
-	 * @param   int  $sizex  sizex
-	 * @param   int  $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string
 	 *
@@ -79,7 +80,7 @@ class AvatarComprofiler extends KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	protected function _getURL(int $user, int $sizex, int $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user = KunenaFactory::getUser($user);
 

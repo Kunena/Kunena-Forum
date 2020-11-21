@@ -19,6 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -47,24 +48,25 @@ class AvatarAltaUserPoints extends KunenaAvatar
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		return Route::_('index.php?option=com_altauserpoints&view=account');
 	}
 
 	/**
-	 * @param $user
-	 * @param $sizex
-	 * @param $sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
-	 * @return  string|void
+	 * @return  string
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
-	public function _getURL($user, $sizex, $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
 	}

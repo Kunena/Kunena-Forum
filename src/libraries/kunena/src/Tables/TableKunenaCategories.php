@@ -262,7 +262,7 @@ class TableKunenaCategories extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function load($id = null, $reset = true)
+	public function load($id = null, $reset = true): bool
 	{
 		$this->_exists = false;
 		$k             = $this->_tbl_key;
@@ -498,7 +498,7 @@ class TableKunenaCategories extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function store($updateNulls = false)
+	public function store($updateNulls = false): bool
 	{
 		return parent::store($updateNulls);
 	}

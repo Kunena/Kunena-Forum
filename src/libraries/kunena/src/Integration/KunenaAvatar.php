@@ -22,6 +22,7 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use StdClass;
 use function defined;
 
@@ -107,6 +108,7 @@ class KunenaAvatar
 	/**
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function getEditURL(): string
@@ -222,15 +224,15 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string   $user   user
-	 * @param   integer  $sizex  sizex
-	 * @param   integer  $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   integer     $sizex  sizex
+	 * @param   integer     $sizey  sizey
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function _getURL(string $user, int $sizex, int $sizey): string
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		return '';
 	}

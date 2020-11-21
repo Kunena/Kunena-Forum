@@ -54,14 +54,14 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -83,7 +83,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function _getTopHits($limit = 0)
+	public function _getTopHits($limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -115,14 +115,14 @@ class KunenaIntegrationProfile extends KunenaProfile
 	}
 
 	/**
-	 * @param   string  $view    view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(string $view, object $params)
+	public function showProfile(int $view, object $params): void
 	{
 	}
 
@@ -137,7 +137,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws null
 	 * @throws Exception
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		$avatartab = '&avatartab=1';
 
@@ -157,7 +157,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws null
 	 * @throws Exception
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true, $avatarTab = '')
+	public function getProfileURL(int $user, $task = '', $xhtml = true, $avatarTab = ''): bool
 	{
 		if ($user == 0)
 		{

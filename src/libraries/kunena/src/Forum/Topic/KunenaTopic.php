@@ -331,7 +331,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function save($cascade = true)
+	public function save($cascade = true): bool
 	{
 		$topicDelta = $this->delta();
 		$postDelta  = $this->posts - $this->_posts;
@@ -390,7 +390,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function exists($exists = null)
+	public function exists($exists = null): bool
 	{
 		if ($exists !== null)
 		{
@@ -804,7 +804,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function delete($recount = true)
+	public function delete($recount = true): bool
 	{
 		if (!$this->exists())
 		{
@@ -1574,7 +1574,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function load($id = null)
+	public function load($id = null): bool
 	{
 		$exists       = parent::load($id);
 		$this->_hold  = $this->hold === null ? 1 : $this->hold;

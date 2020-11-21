@@ -21,6 +21,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -49,19 +50,19 @@ class AvatarEasyprofile extends KunenaAvatar
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditURL()
+	public function getEditURL(): string
 	{
 		return Route::_('index.php?option=com_jsn&view=profile');
 	}
 
 	/**
-	 * @param   object  $user   user
-	 * @param   int     $sizex  sizex
-	 * @param   int     $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string
 	 *
@@ -69,7 +70,7 @@ class AvatarEasyprofile extends KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	public function _getURL(object $user, int $sizex, int $sizey)
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		if (!$user->userid == 0)
 		{

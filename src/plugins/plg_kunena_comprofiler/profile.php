@@ -98,7 +98,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		global $_CB_framework;
 
@@ -124,7 +124,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @throws Exception
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true)
+	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
 		global $_CB_framework;
 
@@ -147,14 +147,14 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   string  $view    view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
-	 * @return  string
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(string $view, object &$params)
+	public function showProfile(int $view, object $params): string
 	{
 		global $_PLUGINS;
 
@@ -177,7 +177,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function _getTopHits($limit = 0)
+	public function _getTopHits($limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -205,11 +205,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return  string
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		global $_CB_framework;
 

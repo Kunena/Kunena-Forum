@@ -114,7 +114,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function check()
+	public function check(): bool
 	{
 		$this->params = new Registry($this->params);
 
@@ -149,7 +149,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function delete()
+	public function delete(): bool
 	{
 		$attachments = $this->attachments()->delete();
 		$posts       = $this->posts()->delete();
@@ -209,13 +209,13 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * Save changes in the relations.
 	 *
-	 * @return  void
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	protected function saveInternal()
+	protected function saveInternal(): bool
 	{
 		if (!is_null($this->_attachments))
 		{

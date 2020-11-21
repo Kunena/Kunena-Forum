@@ -57,7 +57,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -79,7 +79,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function _getTopHits($limit = 0)
+	public function _getTopHits($limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -104,23 +104,23 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param           $view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, object &$params)
+	public function showProfile(int $view, object $params): void
 	{
 	}
 
 	/**
-	 * @param         $userid
+	 * @param   int   $userid
 	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
@@ -133,7 +133,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
 		if (!$userid || CFactory::getUser($userid) === null)

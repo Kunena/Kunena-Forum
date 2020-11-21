@@ -93,7 +93,7 @@ class TableKunenaSessions extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function load($oid = null, $reset = true)
+	public function load($oid = null, $reset = true): bool
 	{
 		if (!$oid)
 		{

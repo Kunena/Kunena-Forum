@@ -50,13 +50,13 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -74,11 +74,11 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   string  $task    task
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  string
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $userid, $task = '', $xhtml = true)
+	public function getProfileURL(int $userid, $task = '', $xhtml = true): bool
 	{
 		if ($userid)
 		{
@@ -120,19 +120,19 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function _getTopHits($limit = 0)
+	public function _getTopHits($limit = 0): array
 	{
 	}
 
 	/**
-	 * @param   object  $view    view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(object $view, object $params)
+	public function showProfile(int $view, object $params): void
 	{
 		$userid = $view->profile->userid;
 
@@ -196,7 +196,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		$options = ['layout' => 'edit'];
 

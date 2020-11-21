@@ -51,13 +51,13 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -76,7 +76,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 * @return  array|boolean
 	 * @since   Kunena 6.0
 	 */
-	public function _getTopHits($limit = 0)
+	public function _getTopHits($limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true)
@@ -101,14 +101,15 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   mixed  $view    view
-	 * @param   mixed  $params  params
+	 *
+	 * @param   int     $view
+	 * @param   object  $params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, &$params)
+	public function showProfile(int $view, object $params): void
 	{
 	}
 
@@ -122,7 +123,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @throws Exception
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 		return $this->getProfileURL($userid, '', $xhtml);
 	}
@@ -138,7 +139,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true)
+	public function getProfileURL($user, $task = '', $xhtml = true): bool
 	{
 		if ($user == 0)
 		{

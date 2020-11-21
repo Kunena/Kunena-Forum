@@ -179,7 +179,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function load($id = null, $reset = true)
+	public function load($id = null, $reset = true): bool
 	{
 		$this->_exists = false;
 		$k             = $this->_tbl_key;
@@ -304,7 +304,7 @@ class TableKunenaMessages extends KunenaTable
 	 *
 	 * @throws  Exception
 	 */
-	public function store($updateNulls = false)
+	public function store($updateNulls = false): bool
 	{
 		$k       = $this->_tbl_key;
 		$update  = $this->_exists;

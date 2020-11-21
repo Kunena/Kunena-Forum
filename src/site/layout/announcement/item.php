@@ -30,7 +30,7 @@ use function defined;
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
 	/**
-	 * @var     array
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $buttons;
@@ -90,7 +90,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
+	public function getButton($url, $name, $scope, $type, $id = null, $normal = true): string
 	{
 		return KunenaLayout::factory('Widget/Announcement/Button')
 			->setProperties(['url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal]);

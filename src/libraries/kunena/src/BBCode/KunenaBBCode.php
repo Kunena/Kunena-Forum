@@ -572,25 +572,23 @@ class KunenaBBCode extends BBCode
 	/**
 	 * @see     BBCode::SetEnableSmileys()
 	 *
-	 * @param   bool  $false bool
-	 *
-	 * @since   Kunena 6.0
+	 * @param   bool  $enable
 	 *
 	 * @return void
+	 * @since   Kunena 6.0
+	 *
 	 */
-	private function SetEnableSmileys(bool $false): void
+	private function SetEnableSmileys($enable = false)
 	{
 	}
 
 	/**
 	 * @see     BBCode::SetSmileyDir()
 	 *
-	 * @param   bool  $JPATH_ROOT jpath root
-	 *
 	 * @return  void
 	 * @since   Kunena 6.0
 	 */
-	private function SetSmileyDir(bool $JPATH_ROOT): void
+	private function SetSmileyDir($JPATH_ROOT)
 	{
 	}
 

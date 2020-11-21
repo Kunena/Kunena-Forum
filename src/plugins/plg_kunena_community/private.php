@@ -59,7 +59,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink(string $text)
+	public function getInboxLink(string $text): string
 	{
 		if (!$text)
 		{
@@ -74,7 +74,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxURL()
+	public function getInboxURL(): string
 	{
 		return CRoute::_('index.php?option=com_community&view=inbox');
 	}
@@ -88,7 +88,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @throws Exception
 	 */
-	protected function getOnClick(int $userid)
+	protected function getOnClick(int $userid): string
 	{
 		if (!$this->loaded)
 		{
@@ -110,7 +110,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getURL(int $userid)
+	protected function getURL(int $userid): string
 	{
 		return "javascript:void(0)";
 	}

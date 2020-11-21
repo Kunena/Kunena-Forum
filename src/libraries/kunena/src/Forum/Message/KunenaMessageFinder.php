@@ -232,7 +232,7 @@ class KunenaMessageFinder extends KunenaFinder
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function find($access = 'read')
+	public function find($access = 'read'): array
 	{
 		$results = parent::find();
 
@@ -246,7 +246,7 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function build(QueryInterface $query = null)
+	protected function build(QueryInterface $query = null): void
 	{
 		if (!empty($this->hold))
 		{

@@ -380,24 +380,26 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  boolean
+	 * @return  bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function check()
+	public function check(): bool
 	{
 		return true;
 	}
 
 	/**
-	 * @return  void
+	 * @return  bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function saveInternal()
+	protected function saveInternal(): bool
 	{
 		$cache = Factory::getCache('com_kunena', 'output');
 		$cache->remove('announcement', 'global');
+
+		return true;
 	}
 
 	/**

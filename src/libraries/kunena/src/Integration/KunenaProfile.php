@@ -130,36 +130,36 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  void
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): void
+	public function getUserListURL($action = '', $xhtml = true): string
 	{
 	}
 
 	/**
-	 * @param   string  $user   user
+	 * @param   int     $user   user
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return  void
+	 * @return bool|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(string $user, $task = '', $xhtml = true): void
+	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
 	}
 
 	/**
 	 * @param   int    $view    view
-	 * @param   mixed  $params  params
+	 * @param   object  $params  params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, &$params): void
+	public function showProfile(int $view, object $params): void
 	{
 	}
 
@@ -167,11 +167,11 @@ class KunenaProfile
 	 * @param   integer  $userid  userid
 	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @return  void|KunenaProfile
+	 * @return bool|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): KunenaProfile
+	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
 	}
 }

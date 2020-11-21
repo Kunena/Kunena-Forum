@@ -773,7 +773,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function save()
+	public function save(): bool
 	{
 		$user = KunenaUserHelper::getMyself();
 
@@ -976,7 +976,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function delete()
+	public function delete(): bool
 	{
 		if (!$this->exists())
 		{
@@ -1543,7 +1543,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function load($id = null)
+	public function load($id = null): bool
 	{
 		$exists        = parent::load($id);
 		$this->_hold   = $exists ? $this->hold : 1;
@@ -1560,7 +1560,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function check()
+	public function check(): bool
 	{
 		$author = KunenaUserHelper::get($this->userid);
 

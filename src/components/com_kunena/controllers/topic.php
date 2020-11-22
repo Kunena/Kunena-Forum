@@ -106,8 +106,15 @@ class KunenaControllerTopic extends KunenaController
 	{
 		$attachs_id = $this->input->get('files_id', array(), 'post', 'array');
 
-		foreach($attachs_id as $attach) {
-			if (!is_int($attach)) {
+		if (!is_array($attachs_id))
+		{
+			throw new RuntimeException(Text::_('Bad Request'), 400);
+		}
+
+		foreach($attachs_id as $attach)
+		{
+			if (!is_int($attach))
+			{
 				throw new RuntimeException(Text::_('Bad Request'), 400);
 			}
 		}

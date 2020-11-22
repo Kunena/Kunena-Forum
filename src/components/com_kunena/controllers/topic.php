@@ -104,7 +104,7 @@ class KunenaControllerTopic extends KunenaController
 	 */
 	public function setinline()
 	{
-		$attachs_id = $this->input->getString('files_id', ''); 
+		$attachs_id = $this->input->getString('files_id', '');
 		$attachs_id = json_decode($attachs_id);
 
 		if ($attachs_id===null)
@@ -233,7 +233,7 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$attachs_id = $this->input->get('files_id_delete', array(), 'post', 'array');
+		$attachs_id = $this->input->getString('files_id_delete', '');
 		$attachs_id = json_decode($attachs_id);
 
 		if ($attachs_id===null)
@@ -241,7 +241,13 @@ class KunenaControllerTopic extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		$instances  = KunenaAttachmentHelper::getById($attachs_id, 'none');
+		$attach_ids_final = array();
+		foreach($attachs_id as $attach)
+		{
+			$attach_ids_final[] = $attach['0'];
+		}
+
+		$instances  = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
 		$success   = array();
 
 		$editor_text = $this->app->input->get->get('editor_text', '', 'raw');

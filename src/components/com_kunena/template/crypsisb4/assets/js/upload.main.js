@@ -96,7 +96,7 @@ jQuery(function ($) {
 			});
 
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + filesidinedittodelete + '&editor_text=' + editor_text,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(filesidinedittodelete) + '&editor_text=' + editor_text,
 				type: 'POST'
 			})
 				.done(function (data) {

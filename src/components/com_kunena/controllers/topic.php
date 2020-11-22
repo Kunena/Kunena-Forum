@@ -234,7 +234,13 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$attachs_id = $this->input->get('files_id_delete', array(), 'post', 'array');
-		$attachs_id = explode(',',$attachs_id);
+		$attachs_id = json_decode($attachs_id);
+
+		if ($attachs_id===null)
+		{
+			throw new RuntimeException(Text::_('Bad Request'), 400);
+		}
+
 		$instances  = KunenaAttachmentHelper::getById($attachs_id, 'none');
 		$success   = array();
 

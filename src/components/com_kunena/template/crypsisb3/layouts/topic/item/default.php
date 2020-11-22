@@ -26,7 +26,6 @@ Text::script('COM_KUNENA_SOCIAL_FACEBOOK_LABEL');
 Text::script('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL');
 Text::script('COM_KUNENA_SOCIAL_LINKEDIN_LABEL');
 Text::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
-Text::script('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL');
 Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...

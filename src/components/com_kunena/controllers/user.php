@@ -709,12 +709,15 @@ class KunenaControllerUser extends KunenaController
 
 		$now = Factory::getDate()->toUnix();
 
-		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
+		if ($this->me->karma_time!==0)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
-			$this->setRedirectBack();
+			if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
+				$this->setRedirectBack();
 
-			return;
+				return;
+			}
 		}
 
 		if ($karmaDelta > 0)
@@ -743,13 +746,9 @@ class KunenaControllerUser extends KunenaController
 
 		$this->me->karma_time = $now;
 
-		try
+		if ($this->me->userid != $target->userid && !$this->me->save())
 		{
-			$this->me->userid == $target->userid && $this->me->save();
-		}
-		catch (\Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($this->me->getError(), 'notice');
 			$this->setRedirectBack();
 
 			return;

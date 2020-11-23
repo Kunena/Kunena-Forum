@@ -23,13 +23,14 @@ $points              = $activityIntegration->getUserPoints($user->userid);
 $medals              = $activityIntegration->getUserMedals($user->userid);
 $optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
 
+$canseekarma = false;
+if ($config->showkarma)
+{
+	$canseekarma = $user->canSeeKarma();
+}
+
 if ($show)
 {
-	if ($config->showkarma)
-	{
-		$canseekarma = $user->canSeeKarma();
-	}
-
 	$rankImage    = $user->getRank($this->category_id, 'image');
 	$rankTitle    = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();

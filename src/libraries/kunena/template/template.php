@@ -1468,7 +1468,7 @@ HTML;
 
 	/**
 	 * Retrieve icons attributes
-	 * 
+	 *
 	 * @return stdClass
 	 * @since Kunena 5.2
 	 */
@@ -1692,7 +1692,7 @@ HTML;
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)
+	public function getCategoryIconPath($filename, $url, $category_iconset)
 	{
 		if (!$this->isHmvc())
 		{
@@ -1961,7 +1961,7 @@ HTML;
 
 	/**
 	 * Load fontawesome libraries
-	 * 
+	 *
 	 * @since Kunena 5.2
 	 */
 	public function loadFontawesome()

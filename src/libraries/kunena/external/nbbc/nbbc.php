@@ -3374,44 +3374,53 @@ $/Dx", $string);
 								{
 									$value = $params[$param];
 								}
-								else
+								elseif (isset($tag_rule['default']))
 								{
 									$value = @$tag_rule['default'][$param];
 								}
 							}
 						}
-						if (!preg_match($pattern, $value))
+
+						if (isset($value))
 						{
-							return false;
+							if (!preg_match($pattern, $value))
+							{
+								return false;
+							}
 						}
 					}
 
 					return true;
 				}
-				switch (@$tag_rule['mode'])
+
+				if (isset($tag_rule['mode']))
 				{
-					default:
-					case BBCODE_MODE_SIMPLE:
-						$result = true;
-						break;
-					case BBCODE_MODE_ENHANCED:
-						$result = true;
-						break;
-					case BBCODE_MODE_INTERNAL:
-						$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_CHECK,
-							$tag_name, $default_value, $params, $contents);
-						break;
-					case BBCODE_MODE_LIBRARY:
-						$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_CHECK,
-							$tag_name, $default_value, $params, $contents);
-						break;
-					case BBCODE_MODE_CALLBACK:
-						$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_CHECK,
-							$tag_name, $default_value, $params, $contents);
-						break;
+					switch (@$tag_rule['mode'])
+					{
+						default:
+						case BBCODE_MODE_SIMPLE:
+							$result = true;
+							break;
+						case BBCODE_MODE_ENHANCED:
+							$result = true;
+							break;
+						case BBCODE_MODE_INTERNAL:
+							$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_CHECK,
+								$tag_name, $default_value, $params, $contents);
+							break;
+						case BBCODE_MODE_LIBRARY:
+							$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_CHECK,
+								$tag_name, $default_value, $params, $contents);
+							break;
+						case BBCODE_MODE_CALLBACK:
+							$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_CHECK,
+								$tag_name, $default_value, $params, $contents);
+							break;
+					}
+
+					return $result;
 				}
 
-				return $result;
 			case BBCODE_OUTPUT:
 				if ($this->plain_mode)
 				{
@@ -3476,30 +3485,34 @@ $/Dx", $string);
 
 					return $start . $result . $end;
 				}
-				switch (@$tag_rule['mode'])
-				{
-					default:
-					case BBCODE_MODE_SIMPLE:
-						$result = @$tag_rule['simple_start'] . $contents . @$tag_rule['simple_end'];
-						break;
-					case BBCODE_MODE_ENHANCED:
-						$result = $this->Internal_DoEnhancedTag($tag_rule, $params, $contents);
-						break;
-					case BBCODE_MODE_INTERNAL:
-						$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_OUTPUT,
-							$tag_name, $default_value, $params, $contents);
-						break;
-					case BBCODE_MODE_LIBRARY:
-						$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_OUTPUT,
-							$tag_name, $default_value, $params, $contents);
-						break;
-					case BBCODE_MODE_CALLBACK:
-						$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_OUTPUT,
-							$tag_name, $default_value, $params, $contents);
-						break;
-				}
 
-				return $result;
+				if (isset($tag_rule['mode']))
+				{
+					switch (@$tag_rule['mode'])
+					{
+						default:
+						case BBCODE_MODE_SIMPLE:
+							$result = @$tag_rule['simple_start'] . $contents . @$tag_rule['simple_end'];
+							break;
+						case BBCODE_MODE_ENHANCED:
+							$result = $this->Internal_DoEnhancedTag($tag_rule, $params, $contents);
+							break;
+						case BBCODE_MODE_INTERNAL:
+							$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_OUTPUT,
+								$tag_name, $default_value, $params, $contents);
+							break;
+						case BBCODE_MODE_LIBRARY:
+							$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_OUTPUT,
+								$tag_name, $default_value, $params, $contents);
+							break;
+						case BBCODE_MODE_CALLBACK:
+							$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_OUTPUT,
+								$tag_name, $default_value, $params, $contents);
+							break;
+					}
+
+					return $result;
+				}
 			default:
 				return false;
 		}
@@ -3759,9 +3772,21 @@ $/Dx", $string);
 		$contents   = $this->Internal_FinishTag($tag_name);
 		if ($contents === false)
 		{
-			if (@$this->lost_start_tags[$tag_name] > 0)
+			if (isset($this->lost_start_tags[$tag_name]))
 			{
-				$this->lost_start_tags[$tag_name]--;
+				if ($this->lost_start_tags[$tag_name] > 0)
+				{
+					$this->lost_start_tags[$tag_name]--;
+				}
+				else
+				{
+					$this->stack[] = array(
+						BBCODE_STACK_TOKEN => BBCODE_TEXT,
+						BBCODE_STACK_TEXT  => $this->FixupOutput($this->lexer->text),
+						BBCODE_STACK_TAG   => false,
+						BBCODE_STACK_CLASS => $this->current_class,
+					);
+				}
 			}
 			else
 			{

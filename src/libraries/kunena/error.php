@@ -297,11 +297,15 @@ abstract class KunenaError
 				$extension = $file = '';
 			}
 
-			while (@ob_end_clean())
+			if (ob_get_contents())
 			{
+				while (@ob_end_clean())
+				{
+				}
+
+				ob_start();
 			}
 
-			ob_start();
 			header('HTTP/1.1 500 Internal Server Error');
 
 			if (self::$format == 'json')

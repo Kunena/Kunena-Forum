@@ -466,8 +466,11 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 		else
 		{
-			while (@ob_end_clean())
+			if (ob_get_contents())
 			{
+				while (@ob_end_clean())
+				{
+				}
 			}
 
 			header('Content-type: application/json');

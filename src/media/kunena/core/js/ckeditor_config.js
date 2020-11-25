@@ -30,17 +30,17 @@ CKEDITOR.editorConfig = function( config ) {
 	var remove_buttons_url_image = Joomla.getOptions('com_kunena.ckeditor_remove_buttons_url_image');
 	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined && remove_buttons_url_image==!1)
 	{
-		config.removeButtons = 'Anchor,Paste,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
+		config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
 	}
 	else
 	{
 		if (remove_buttons_url_image)
 		{
-			config.removeButtons = 'Anchor,Paste,Image,Link,Unlink';
+			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Image,Link,Unlink';
 		}
 		else
 		{
-			config.removeButtons = 'Anchor,Paste';
+			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor';
 		}
 	}
 

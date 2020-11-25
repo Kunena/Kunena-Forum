@@ -2993,7 +2993,6 @@ $/Dx", $string);
 			{
 				$name    = @$token[BBCODE_STACK_TAG]['_name'];
 				$rule    = @$this->tag_rules[$name];
-				$end_tag = @$rule['end_tag'];
 				if (!isset($rule['end_tag']))
 				{
 					$end_tag = BBCODE_REQUIRED;
@@ -3014,14 +3013,30 @@ $/Dx", $string);
 				}
 				else
 				{
-					if ($end_tag == BBCODE_REQUIRED)
+					$end = 0;
+
+					if ($end_tag == BBCODE_REQUIRED && isset($this->lost_start_tags[$name]))
 					{
 						@$this->lost_start_tags[$name] + 1;
 					}
-					$end = $this->Internal_CleanupWSByIteratingPointer(@$rule['before_endtag'], 0, $output);
-					$this->Internal_CleanupWSByPoppingStack(@$rule['after_tag'], $output);
+
+					if (isset($rule['before_endtag']))
+					{
+						$end = $this->Internal_CleanupWSByIteratingPointer(@$rule['before_endtag'], 0, $output);
+					}
+
+					if (isset($rule['after_tag']))
+					{
+						$this->Internal_CleanupWSByPoppingStack(@$rule['after_tag'], $output);
+					}
+
 					$tag_body = $this->Internal_CollectTextReverse($output, count($output) - 1, $end);
-					$this->Internal_CleanupWSByPoppingStack(@$rule['before_tag'], $this->stack);
+
+					if (isset($rule['before_tag']))
+					{
+						$this->Internal_CleanupWSByPoppingStack(@$rule['before_tag'], $this->stack);
+					}
+
 					$this->Internal_UpdateParamsForMissingEndTag(@$token[BBCODE_STACK_TAG]);
 					$tag_output = $this->DoTag(BBCODE_OUTPUT, $name,
 						@$token[BBCODE_STACK_TAG]['_default'], @$token[BBCODE_STACK_TAG], $tag_body);
@@ -3094,18 +3109,21 @@ $/Dx", $string);
 		{
 			return false;
 		}
-		$newpos = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['after_tag'],
-			$pos + 1, $this->stack);
-		$delta  = $newpos - ($pos + 1);
-		$output = $this->Internal_GenerateOutput($newpos);
-		$newend = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['before_endtag'],
-			0, $output);
-		$output = $this->Internal_CollectTextReverse($output, count($output) - 1, $newend);
-		while ($delta-- > 0)
-			array_pop($this->stack);
-		$this->Internal_ComputeCurrentClass();
+		if (isset($this->tag_rules[$tag_name]['after_tag']) && isset($this->tag_rules[$tag_name]['before_endtag']))
+		{
+			$newpos = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['after_tag'],
+				$pos + 1, $this->stack);
+			$delta  = $newpos - ($pos + 1);
+			$output = $this->Internal_GenerateOutput($newpos);
+			$newend = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['before_endtag'],
+				0, $output);
+			$output = $this->Internal_CollectTextReverse($output, count($output) - 1, $newend);
+			while ($delta-- > 0)
+				array_pop($this->stack);
+			$this->Internal_ComputeCurrentClass();
 
-		return $output;
+			return $output;
+		}
 	}
 
 	public function Internal_ComputeCurrentClass()
@@ -3450,8 +3468,20 @@ $/Dx", $string);
 							break;
 						}
 					}
-					$start = @$tag_rule['plain_start'];
-					$end   = @$tag_rule['plain_end'];
+
+					$start = '';
+					$end = '';
+
+					if (isset($tag_rule['plain_start']))
+					{
+						$start = @$tag_rule['plain_start'];
+					}
+
+					if (isset($tag_rule['plain_end']))
+					{
+						$end   = @$tag_rule['plain_end'];
+					}
+
 					if (isset($tag_rule['plain_link']))
 					{
 						$link = $possible_content = "";
@@ -3735,11 +3765,14 @@ $/Dx", $string);
 
 			return;
 		}
-		if (@$tag_rule['content'] == BBCODE_VERBATIM)
+		if (isset($tag_rule['content']))
 		{
-			$this->Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule);
+			if (@$tag_rule['content'] == BBCODE_VERBATIM)
+			{
+				$this->Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule);
 
-			return;
+				return;
+			}
 		}
 		if (isset($tag_rule['class']))
 		{
@@ -3770,6 +3803,8 @@ $/Dx", $string);
 		$tag_params = $this->lexer->tag;
 		$tag_name   = @$tag_params['_name'];
 		$contents   = $this->Internal_FinishTag($tag_name);
+		$output     = '';
+
 		if ($contents === false)
 		{
 			if (isset($this->lost_start_tags[$tag_name]))
@@ -3803,12 +3838,30 @@ $/Dx", $string);
 		$start_tag_node   = array_pop($this->stack);
 		$start_tag_params = $start_tag_node[BBCODE_STACK_TAG];
 		$this->Internal_ComputeCurrentClass();
-		$this->Internal_CleanupWSByPoppingStack(@$this->tag_rules[$tag_name]['before_tag'], $this->stack);
-		$start_tag_params['_endtag'] = $tag_params['_tag'];
+
+		if (isset($this->tag_rules[$tag_name]['before_tag']))
+		{
+			$this->Internal_CleanupWSByPoppingStack(@$this->tag_rules[$tag_name]['before_tag'], $this->stack);
+		}
+
+		if (isset($start_tag_params['_endtag']))
+		{
+			$start_tag_params['_endtag'] = $tag_params['_tag'];
+		}
+
 		$start_tag_params['_hasend'] = true;
-		$output                      = $this->DoTag(BBCODE_OUTPUT, $tag_name, @$start_tag_params['_default'],
-			$start_tag_params, $contents);
-		$this->Internal_CleanupWSByEatingInput(@$this->tag_rules[$tag_name]['after_endtag']);
+
+		if (isset($start_tag_params['_default']))
+		{
+			$output                      = $this->DoTag(BBCODE_OUTPUT, $tag_name, @$start_tag_params['_default'],
+				$start_tag_params, $contents);
+		}
+
+		if (isset($this->tag_rules[$tag_name]['after_endtag']))
+		{
+			$this->Internal_CleanupWSByEatingInput(@$this->tag_rules[$tag_name]['after_endtag']);
+		}
+
 		$this->stack[] = array(
 			BBCODE_STACK_TOKEN => BBCODE_TEXT,
 			BBCODE_STACK_TEXT  => $output,

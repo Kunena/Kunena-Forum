@@ -63,4 +63,5 @@ CKEDITOR.editorConfig = function( config ) {
 	}
 
 	config.smiley_images = list_emoticons;
+	config.linkDefaultProtocol= 'https://'
 };

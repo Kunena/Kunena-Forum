@@ -107,8 +107,8 @@ class KunenaImage extends Image
 		{
 			$angle  = 0;
 			$exif   = @exif_read_data($filename);
-			$flip   = '';
-			$img    = '';
+			$flip   = 0;
+			$img    = 0;
 
 			if ($exif && isset($exif['Orientation']))
 			{

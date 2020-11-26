@@ -2993,6 +2993,7 @@ $/Dx", $string);
 			{
 				$name    = @$token[BBCODE_STACK_TAG]['_name'];
 				$rule    = @$this->tag_rules[$name];
+				$end_tag = @$rule['end_tag'];
 				if (!isset($rule['end_tag']))
 				{
 					$end_tag = BBCODE_REQUIRED;
@@ -3013,30 +3014,14 @@ $/Dx", $string);
 				}
 				else
 				{
-					$end = 0;
-
-					if ($end_tag == BBCODE_REQUIRED && isset($this->lost_start_tags[$name]))
+					if ($end_tag == BBCODE_REQUIRED)
 					{
 						@$this->lost_start_tags[$name] + 1;
 					}
-
-					if (isset($rule['before_endtag']))
-					{
-						$end = $this->Internal_CleanupWSByIteratingPointer(@$rule['before_endtag'], 0, $output);
-					}
-
-					if (isset($rule['after_tag']))
-					{
-						$this->Internal_CleanupWSByPoppingStack(@$rule['after_tag'], $output);
-					}
-
+					$end = $this->Internal_CleanupWSByIteratingPointer(@$rule['before_endtag'], 0, $output);
+					$this->Internal_CleanupWSByPoppingStack(@$rule['after_tag'], $output);
 					$tag_body = $this->Internal_CollectTextReverse($output, count($output) - 1, $end);
-
-					if (isset($rule['before_tag']))
-					{
-						$this->Internal_CleanupWSByPoppingStack(@$rule['before_tag'], $this->stack);
-					}
-
+					$this->Internal_CleanupWSByPoppingStack(@$rule['before_tag'], $this->stack);
 					$this->Internal_UpdateParamsForMissingEndTag(@$token[BBCODE_STACK_TAG]);
 					$tag_output = $this->DoTag(BBCODE_OUTPUT, $name,
 						@$token[BBCODE_STACK_TAG]['_default'], @$token[BBCODE_STACK_TAG], $tag_body);
@@ -3109,21 +3094,18 @@ $/Dx", $string);
 		{
 			return false;
 		}
-		if (isset($this->tag_rules[$tag_name]['after_tag']) && isset($this->tag_rules[$tag_name]['before_endtag']))
-		{
-			$newpos = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['after_tag'],
-				$pos + 1, $this->stack);
-			$delta  = $newpos - ($pos + 1);
-			$output = $this->Internal_GenerateOutput($newpos);
-			$newend = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['before_endtag'],
-				0, $output);
-			$output = $this->Internal_CollectTextReverse($output, count($output) - 1, $newend);
-			while ($delta-- > 0)
-				array_pop($this->stack);
-			$this->Internal_ComputeCurrentClass();
+		$newpos = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['after_tag'],
+			$pos + 1, $this->stack);
+		$delta  = $newpos - ($pos + 1);
+		$output = $this->Internal_GenerateOutput($newpos);
+		$newend = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['before_endtag'],
+			0, $output);
+		$output = $this->Internal_CollectTextReverse($output, count($output) - 1, $newend);
+		while ($delta-- > 0)
+			array_pop($this->stack);
+		$this->Internal_ComputeCurrentClass();
 
-			return $output;
-		}
+		return $output;
 	}
 
 	public function Internal_ComputeCurrentClass()
@@ -3392,53 +3374,44 @@ $/Dx", $string);
 								{
 									$value = $params[$param];
 								}
-								elseif (isset($tag_rule['default']))
+								else
 								{
 									$value = @$tag_rule['default'][$param];
 								}
 							}
 						}
-
-						if (isset($value))
+						if (!preg_match($pattern, $value))
 						{
-							if (!preg_match($pattern, $value))
-							{
-								return false;
-							}
+							return false;
 						}
 					}
 
 					return true;
 				}
-
-				if (isset($tag_rule['mode']))
+				switch (@$tag_rule['mode'])
 				{
-					switch (@$tag_rule['mode'])
-					{
-						default:
-						case BBCODE_MODE_SIMPLE:
-							$result = true;
-							break;
-						case BBCODE_MODE_ENHANCED:
-							$result = true;
-							break;
-						case BBCODE_MODE_INTERNAL:
-							$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_CHECK,
-								$tag_name, $default_value, $params, $contents);
-							break;
-						case BBCODE_MODE_LIBRARY:
-							$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_CHECK,
-								$tag_name, $default_value, $params, $contents);
-							break;
-						case BBCODE_MODE_CALLBACK:
-							$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_CHECK,
-								$tag_name, $default_value, $params, $contents);
-							break;
-					}
-
-					return $result;
+					default:
+					case BBCODE_MODE_SIMPLE:
+						$result = true;
+						break;
+					case BBCODE_MODE_ENHANCED:
+						$result = true;
+						break;
+					case BBCODE_MODE_INTERNAL:
+						$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_CHECK,
+							$tag_name, $default_value, $params, $contents);
+						break;
+					case BBCODE_MODE_LIBRARY:
+						$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_CHECK,
+							$tag_name, $default_value, $params, $contents);
+						break;
+					case BBCODE_MODE_CALLBACK:
+						$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_CHECK,
+							$tag_name, $default_value, $params, $contents);
+						break;
 				}
 
+				return $result;
 			case BBCODE_OUTPUT:
 				if ($this->plain_mode)
 				{
@@ -3468,20 +3441,8 @@ $/Dx", $string);
 							break;
 						}
 					}
-
-					$start = '';
-					$end = '';
-
-					if (isset($tag_rule['plain_start']))
-					{
-						$start = @$tag_rule['plain_start'];
-					}
-
-					if (isset($tag_rule['plain_end']))
-					{
-						$end   = @$tag_rule['plain_end'];
-					}
-
+					$start = @$tag_rule['plain_start'];
+					$end   = @$tag_rule['plain_end'];
 					if (isset($tag_rule['plain_link']))
 					{
 						$link = $possible_content = "";
@@ -3515,34 +3476,30 @@ $/Dx", $string);
 
 					return $start . $result . $end;
 				}
-
-				if (isset($tag_rule['mode']))
+				switch (@$tag_rule['mode'])
 				{
-					switch (@$tag_rule['mode'])
-					{
-						default:
-						case BBCODE_MODE_SIMPLE:
-							$result = @$tag_rule['simple_start'] . $contents . @$tag_rule['simple_end'];
-							break;
-						case BBCODE_MODE_ENHANCED:
-							$result = $this->Internal_DoEnhancedTag($tag_rule, $params, $contents);
-							break;
-						case BBCODE_MODE_INTERNAL:
-							$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_OUTPUT,
-								$tag_name, $default_value, $params, $contents);
-							break;
-						case BBCODE_MODE_LIBRARY:
-							$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_OUTPUT,
-								$tag_name, $default_value, $params, $contents);
-							break;
-						case BBCODE_MODE_CALLBACK:
-							$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_OUTPUT,
-								$tag_name, $default_value, $params, $contents);
-							break;
-					}
-
-					return $result;
+					default:
+					case BBCODE_MODE_SIMPLE:
+						$result = @$tag_rule['simple_start'] . $contents . @$tag_rule['simple_end'];
+						break;
+					case BBCODE_MODE_ENHANCED:
+						$result = $this->Internal_DoEnhancedTag($tag_rule, $params, $contents);
+						break;
+					case BBCODE_MODE_INTERNAL:
+						$result = @call_user_func(array($this, @$tag_rule['method']), BBCODE_OUTPUT,
+							$tag_name, $default_value, $params, $contents);
+						break;
+					case BBCODE_MODE_LIBRARY:
+						$result = @call_user_func(array($this->defaults, @$tag_rule['method']), $this, BBCODE_OUTPUT,
+							$tag_name, $default_value, $params, $contents);
+						break;
+					case BBCODE_MODE_CALLBACK:
+						$result = @call_user_func(@$tag_rule['method'], $this, BBCODE_OUTPUT,
+							$tag_name, $default_value, $params, $contents);
+						break;
 				}
+
+				return $result;
 			default:
 				return false;
 		}
@@ -3765,14 +3722,11 @@ $/Dx", $string);
 
 			return;
 		}
-		if (isset($tag_rule['content']))
+		if (@$tag_rule['content'] == BBCODE_VERBATIM)
 		{
-			if (@$tag_rule['content'] == BBCODE_VERBATIM)
-			{
-				$this->Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule);
+			$this->Internal_ProcessVerbatimTag($tag_name, $tag_params, $tag_rule);
 
-				return;
-			}
+			return;
 		}
 		if (isset($tag_rule['class']))
 		{
@@ -3803,25 +3757,11 @@ $/Dx", $string);
 		$tag_params = $this->lexer->tag;
 		$tag_name   = @$tag_params['_name'];
 		$contents   = $this->Internal_FinishTag($tag_name);
-		$output     = '';
-
 		if ($contents === false)
 		{
-			if (isset($this->lost_start_tags[$tag_name]))
+			if (@$this->lost_start_tags[$tag_name] > 0)
 			{
-				if ($this->lost_start_tags[$tag_name] > 0)
-				{
-					$this->lost_start_tags[$tag_name]--;
-				}
-				else
-				{
-					$this->stack[] = array(
-						BBCODE_STACK_TOKEN => BBCODE_TEXT,
-						BBCODE_STACK_TEXT  => $this->FixupOutput($this->lexer->text),
-						BBCODE_STACK_TAG   => false,
-						BBCODE_STACK_CLASS => $this->current_class,
-					);
-				}
+				$this->lost_start_tags[$tag_name]--;
 			}
 			else
 			{
@@ -3838,30 +3778,12 @@ $/Dx", $string);
 		$start_tag_node   = array_pop($this->stack);
 		$start_tag_params = $start_tag_node[BBCODE_STACK_TAG];
 		$this->Internal_ComputeCurrentClass();
-
-		if (isset($this->tag_rules[$tag_name]['before_tag']))
-		{
-			$this->Internal_CleanupWSByPoppingStack(@$this->tag_rules[$tag_name]['before_tag'], $this->stack);
-		}
-
-		if (isset($start_tag_params['_endtag']))
-		{
-			$start_tag_params['_endtag'] = $tag_params['_tag'];
-		}
-
+		$this->Internal_CleanupWSByPoppingStack(@$this->tag_rules[$tag_name]['before_tag'], $this->stack);
+		$start_tag_params['_endtag'] = $tag_params['_tag'];
 		$start_tag_params['_hasend'] = true;
-
-		if (isset($start_tag_params['_default']))
-		{
-			$output                      = $this->DoTag(BBCODE_OUTPUT, $tag_name, @$start_tag_params['_default'],
-				$start_tag_params, $contents);
-		}
-
-		if (isset($this->tag_rules[$tag_name]['after_endtag']))
-		{
-			$this->Internal_CleanupWSByEatingInput(@$this->tag_rules[$tag_name]['after_endtag']);
-		}
-
+		$output                      = $this->DoTag(BBCODE_OUTPUT, $tag_name, @$start_tag_params['_default'],
+			$start_tag_params, $contents);
+		$this->Internal_CleanupWSByEatingInput(@$this->tag_rules[$tag_name]['after_endtag']);
 		$this->stack[] = array(
 			BBCODE_STACK_TOKEN => BBCODE_TEXT,
 			BBCODE_STACK_TEXT  => $output,

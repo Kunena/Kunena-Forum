@@ -431,7 +431,7 @@ class KunenaBbcode extends Nbbc\BBCode
 					$invalid |= !$this->IsValidURL($url, true);
 
 					// We have a full, complete, and properly-formatted URL, with protocol.
-					// Now we need to apply the $this->url_pattern template to turn it into HTML.
+					// Now we need to apply the $this->getURLPattern() template to turn it into HTML.
 					$params = Joomla\Uri\UriHelper::parse_url($url);
 
 					if (!$invalid && substr($url, 0, 7) == 'mailto:')
@@ -457,7 +457,7 @@ class KunenaBbcode extends Nbbc\BBCode
 						$params['url']  = $url;
 						$params['link'] = $url;
 						$params['text'] = $token;
-						$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+						$output[$index] = $this->FillTemplate($this->getURLPattern(), $params);
 					}
 				}
 				else
@@ -1288,14 +1288,14 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
 
-		if ($bbcode->url_targetable !== false && isset($params['target']))
+		if ($bbcode->getURLTargetable() !== false && isset($params['target']))
 		{
 			$target = $params['target'];
 			$class  = $params['class'];
 		}
-		elseif ($bbcode->url_target !== false)
+		elseif ($bbcode->getURLTargetable() !== false)
 		{
-			$target = $bbcode->url_target;
+			$target = $bbcode->getURLTargetable();
 			$class  = $params['class'];
 		}
 		else

@@ -299,24 +299,26 @@ class KunenaBbcode extends Nbbc\BBCode
 				$internal = true;
 			}
 
-			if ($layout->getPath())
-			{
-				return (string) $layout
-					->set('content', $text)
-					->set('url', $url)
-					->set('target', $this->url_target)
-					->set('internal', $internal);
-			}
-
 			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
 
-			if (strpos($url, '/index.php') !== 0)
+			if (!$internal)
 			{
-				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+				$rel = ' rel="nofollow noopener noreferrer"';
+				$target = '_blank';
 			}
 			else
 			{
-				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
+				$rel = '';
+				$target = '_self';
+			}
+
+			if (strpos($url, '/index.php') !== 0)
+			{
+				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"{$target}\"{$rel}>{$text}</a>";
+			}
+			else
+			{
+				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"{$target}\">{$text}</a>";
 			}
 		}
 

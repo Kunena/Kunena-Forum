@@ -10,6 +10,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Class pkg_kunena_languagesInstallerScript
@@ -74,7 +75,7 @@ class pkg_kunena_languagesInstallerScript
 		foreach ($languages as $language)
 		{
 			$name   = "com_kunena_{$language['tag']}";
-			$search = JFolder::files($source, $name);
+			$search = Folder::files($source, $name);
 
 			if (empty($search))
 			{

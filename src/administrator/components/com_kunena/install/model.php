@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\Archive\Archive;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -536,7 +537,7 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 
 				// Those files need to be removed to bring language up to date!
 				jimport('joomla.filesystem.folder');
-				$files = JFolder::files($installdir, '\.ini$');
+				$files = Folder::files($installdir, '\.ini$');
 
 				foreach ($files as $filename)
 				{
@@ -830,9 +831,9 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::files($path, '.', false, true, $ignore) as $file)
+			foreach (Folder::files($path, '.', false, true, $ignore) as $file)
 			{
 				if (JFile::exists($file))
 				{
@@ -852,13 +853,13 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
 
-		if (JFolder::exists($path))
+		if (Folder::exists($path))
 		{
-			foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder)
+			foreach (Folder::folders($path, '.', false, true, $ignore) as $folder)
 			{
-				if (JFolder::exists($folder))
+				if (Folder::exists($folder))
 				{
-					JFolder::delete($folder);
+					Folder::delete($folder);
 				}
 			}
 		}

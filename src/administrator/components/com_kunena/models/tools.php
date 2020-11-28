@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -797,7 +798,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		elseif (is_dir($path))
 		{
 			// Get an array of all the XML files from the directory
-			$xmlfiles = KunenaFolder::files($path, '\.xml$', 1, true);
+			$xmlfiles = Folder::files($path, '\.xml$', 1, true);
 		}
 
 		$version = null;

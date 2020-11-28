@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -144,7 +145,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		}
 
 		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
-		$this->files = JFolder::files($this->dir, '\.less$', false, false);
+		$this->files = Folder::files($this->dir, '\.less$', false, false);
 
 		$this->display();
 	}
@@ -214,7 +215,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
 		jimport('joomla.filesystem.folder');
-		$this->files = JFolder::files($this->dir, '\.css$', false, false);
+		$this->files = Folder::files($this->dir, '\.css$', false, false);
 		$this->display();
 	}
 

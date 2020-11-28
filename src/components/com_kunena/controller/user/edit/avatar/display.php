@@ -10,6 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -126,7 +127,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		}
 
 		// TODO: Allow recursive paths.
-		$folders = KunenaFolder::folders($path);
+		$folders = Folder::folders($path);
 
 		foreach ($folders as $folder)
 		{
@@ -154,7 +155,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 */
 	protected function getGallery($path)
 	{
-		return KunenaFolder::files($path, $this->imageFilter);
+		return Folder::files($path, $this->imageFilter);
 	}
 
 	/**

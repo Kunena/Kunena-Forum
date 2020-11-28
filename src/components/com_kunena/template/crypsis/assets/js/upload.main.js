@@ -234,8 +234,11 @@ jQuery(function ($) {
 
 			insertInMessage(file_id, filename, $this);
 
+			var files_id = [];
+			files_id.push(file_id);
+
 			$.ajax({
-				url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + file_id,
+				url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + JSON.stringify(files_id),
 				type: 'POST'
 			})
 				.done(function (data) {

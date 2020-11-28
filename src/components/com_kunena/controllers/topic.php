@@ -118,7 +118,14 @@ class KunenaControllerTopic extends KunenaController
 		$attach_ids_final = array();
 		foreach($attachs_id as $attach)
 		{
-			$attach_ids_final[] = $attach['0'];
+			if (is_array($attach))
+			{
+				$attach_ids_final[] = $attach['0'];
+			}
+			else
+			{
+				$attach_ids_final[] = $attach;
+			}
 		}
 
 		$instances  = KunenaAttachmentHelper::getById($attach_ids_final, 'none');

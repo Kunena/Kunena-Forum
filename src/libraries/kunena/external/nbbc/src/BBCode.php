@@ -344,6 +344,17 @@ class BBCode
 	}
 
 
+	/**
+	 * Define the path of log file - Added by KUNENA TEAM
+	 *
+	 * @param string $logfilepath
+	 */
+	public function setLogFile($logfile = '')
+	{
+		Debugger::$log_file = $logfile;
+	}
+
+
 	public function setAllowAmpersand($enable = true)
 	{
 		$this->allow_ampersand = $enable;
@@ -1865,6 +1876,15 @@ REGEX;
 				$pos + 1,
 				$this->stack
 			);
+
+			/* MOVED THERE BY KUNENA > */
+			if ($this->debug)
+			{
+				Debugger::debug("<b>Internal_FinishTag:</b> whitespace cleanup (rule was \""
+					. @$this->tag_rules[$tag_name]['after_tag']
+					. "\") ");
+			}
+			/* < MOVED THERE BY KUNENA */
 		}
 		else
 		{
@@ -1872,12 +1892,12 @@ REGEX;
 		}
 		$delta = $newpos - ($pos + 1);
 
+		/* CHANGED THERE BY KUNENA > */
 		if ($this->debug)
 		{
-			Debugger::debug("<b>Internal_FinishTag:</b> whitespace cleanup (rule was \""
-				. @$this->tag_rules[$tag_name]['after_tag']
-				. "\") moved pointer to " . ($newpos) . "<br>\n");
+			Debugger::debug("<b>Internal_FinishTag: moved pointer to " . ($newpos) . "<br>\n");
 		}
+		/* < CHANGED THERE BY KUNENA */
 
 		// Output everything on the stack from $pos to the top, inclusive, as
 		// plain text, and then return it as a string, leaving the start tag on

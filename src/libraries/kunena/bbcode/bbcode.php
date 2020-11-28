@@ -68,6 +68,12 @@ class KunenaBbcode extends Nbbc\BBCode
 			$this->SetEnableSmileys(false);
 		}
 
+		if (JDEBUG && KunenaFactory::getConfig()->debug && KunenaForum::isDev())
+		{
+			$this->setDebug(true);
+			$this->setLogFile(Factory::getApplication()->get('log_path'). '/kunena.NBBC_BBCODE.php');
+		}
+
 		$this->SetSmileyDir(JPATH_ROOT);
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
@@ -1290,7 +1296,14 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if (!$bbcode->IsValidURL($url, false, true))
 		{
-			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+			if (KunenaFactory::getConfig()->autoembedyoutube)
+			{
+				return $content;
+			}
+			else 
+			{
+				return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
+			}
 		}
 
 		if ($bbcode->getURLTargetable() !== false && isset($params['target']))

@@ -1428,6 +1428,10 @@ REGEX;
 	// these flags are mutually-exclusive.
 	public function fillTemplate($template, $insert_array, $default_array = [])
 	{
+		/*HACK BY KUNENA >*/
+		if (is_array($template)) return call_user_func($template, $insert_array);
+		/*< HACK BY KUNENA*/
+
 		$pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 		// Special (common) high-speed case:  No inserts found in the template.

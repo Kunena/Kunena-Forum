@@ -71,7 +71,8 @@ class KunenaBbcode extends Nbbc\BBCode
 		$this->SetSmileyDir(JPATH_ROOT);
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
-		//$this->SetURLPattern(array($this, 'parseUrl'));
+		// The following call works with a hack in Nbbc\BBCode class in he method fillTemplate
+		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
 		\Joomla\CMS\Plugin\PluginHelper::importPlugin('kunena');

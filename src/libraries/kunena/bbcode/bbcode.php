@@ -1988,8 +1988,10 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 				\Joomla\CMS\Plugin\PluginHelper::importPlugin('content');
 
 				Factory::getApplication()->triggerEvent('onContentPrepare', array('text', &$article, &$params, 0));
-				$article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
-				$bbcode->text_length += strlen($article->text);
+				$article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->getLimit() - $bbcode->getTextLength());
+				$textlength = $bbcode->getTextLength();
+				$textlength += strlen($article->text);
+				$bbcode->setTextLength($textlength);
 				$html                = $article->text;
 			}
 

@@ -252,6 +252,8 @@ class BBCode
 		$this->debug             = false;
 		$this->ignore_newlines   = false;
 		$this->output_limit      = 0;
+		// $this->text_length = 0; - Added by KUNENA TEAM
+		$this->text_length = 0;
 		$this->plain_mode        = false;
 		$this->was_limited       = false;
 		$this->limit_tail        = "...";
@@ -285,6 +287,28 @@ class BBCode
 		return $this->pre_trim;
 	}
 
+
+	/**
+	 * Get the length of text - Added by KUNENA TEAM
+	 *
+	 */
+	public function getTextLength()
+	{
+		return $this->text_length;
+	}
+
+
+	/**
+	 * Set the length of text - Added by KUNENA TEAM
+	 *
+	 * @param int $textlength
+	 */
+	public function setTextLength($textlength)
+	{
+		$this->text_length = $textlength;
+
+		return $this;
+	}
 
 	public function setPostTrim($trim = "a")
 	{
@@ -347,7 +371,7 @@ class BBCode
 	/**
 	 * Define the path of log file - Added by KUNENA TEAM
 	 *
-	 * @param string $logfilepath
+	 * @param string $logfile
 	 */
 	public function setLogFile($logfile = '')
 	{

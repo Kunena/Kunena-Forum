@@ -27,7 +27,7 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
-			'8.0' => '8.8.0',
+			'8.0' => '8.0.0',
 			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',

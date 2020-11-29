@@ -27,6 +27,7 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
+			'8.0' => '8.8.0',
 			'7.4' => '7.4.0',
 			'7.3' => '7.3.0',
 			'7.2' => '7.2.0',
@@ -42,8 +43,8 @@ class Pkg_KunenaInstallerScript
 		),
 		'Joomla!' => array(
 			'3.10' => '3.10.0-alpha3',
-			'3.9'  => '3.9.22',
-			'0'    => '3.9.22', // Preferred version
+			'3.9'  => '3.9.23',
+			'0'    => '3.9.23', // Preferred version
 		),
 	);
 

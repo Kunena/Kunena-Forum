@@ -954,16 +954,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.4.16",
+            "version": "v4.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "e74b873395b7213d44d1397bd4a605cd1632a68a"
+                "reference": "17b83e36a911aefa2cfe04bbf6328ec4c040c1b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/e74b873395b7213d44d1397bd4a605cd1632a68a",
-                "reference": "e74b873395b7213d44d1397bd4a605cd1632a68a",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/17b83e36a911aefa2cfe04bbf6328ec4c040c1b2",
+                "reference": "17b83e36a911aefa2cfe04bbf6328ec4c040c1b2",
                 "shasum": ""
             },
             "require": {
@@ -1009,7 +1009,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T11:50:19+00:00"
+            "time": "2020-11-11T22:20:15+00:00"
         },
         {
             "name": "symfony/finder",
@@ -2442,12 +2442,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "d5a1e284fccc271121bfc096bc72e34ea61293a7"
+                "reference": "fe66c81aa83ecd7cade4b305b71e59fc5a0114e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/d5a1e284fccc271121bfc096bc72e34ea61293a7",
-                "reference": "d5a1e284fccc271121bfc096bc72e34ea61293a7",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/fe66c81aa83ecd7cade4b305b71e59fc5a0114e2",
+                "reference": "fe66c81aa83ecd7cade4b305b71e59fc5a0114e2",
                 "shasum": ""
             },
             "require": {
@@ -2485,7 +2485,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2020-09-18T20:24:29+00:00"
+            "time": "2020-11-28T02:24:42+00:00"
         },
         {
             "name": "joomla/cms-coding-standards",

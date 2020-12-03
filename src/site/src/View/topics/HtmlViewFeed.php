@@ -15,6 +15,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -238,7 +239,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($config->board_title);
+		$this->document->setGenerator(KunenaConfig::getInstance()->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -286,7 +287,7 @@ class KunenaViewTopics extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($config->board_title);
+		$this->document->setGenerator(KunenaConfig::getInstance()->board_title);
 
 		switch ($this->state->get('list.mode'))
 		{

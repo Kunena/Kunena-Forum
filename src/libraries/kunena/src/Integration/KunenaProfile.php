@@ -143,7 +143,7 @@ class KunenaProfile
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return bool|void
+	 * @return boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -167,7 +167,7 @@ class KunenaProfile
 	 * @param   integer  $userid  userid
 	 * @param   bool     $xhtml   xhtml
 	 *
-	 * @return bool|void
+	 * @return boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */

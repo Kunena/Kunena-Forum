@@ -380,7 +380,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -390,7 +390,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -209,7 +209,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * Save changes in the relations.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   Kunena 6.0
 	 *

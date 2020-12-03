@@ -117,10 +117,10 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string  $user   user
-	 * @param   string  $class  class
-	 * @param   int     $sizex  sizex
-	 * @param   int     $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   string      $class  class
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string|void
 	 *
@@ -128,7 +128,7 @@ class KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	public function getLink(string $user, $class = 'kavatar', $sizex = 90, $sizey = 90)
+	public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
 		$size   = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
@@ -197,9 +197,9 @@ class KunenaAvatar
 	}
 
 	/**
-	 * @param   string  $user   user
-	 * @param   int     $sizex  sizex
-	 * @param   int     $sizey  sizey
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string|void
 	 *
@@ -207,7 +207,7 @@ class KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	public function getURL(string $user, $sizex = 90, $sizey = 90)
+	public function getURL(KunenaUser $user, int $sizex = 90, int $sizey = 90): string
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$size = $this->getSize($sizex, $sizey);

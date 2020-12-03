@@ -428,7 +428,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   Kunena 6.0
 	 *

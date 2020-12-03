@@ -12,7 +12,8 @@
 	 * @param {Function} callback The optional callback to run after set rating
 	 * @return {Object} Some public methods
 	 */
-	function rating(el, currentRating, maxRating, callback) {
+	function rating(el, currentRating, maxRating, callback)
+	{
 
 		/**
 		 * stars
@@ -27,7 +28,8 @@
 		 *
 		 * @description Initializes the rating widget. Returns nothing.
 		 */
-		(function init() {
+		(function init()
+		{
 			if (!el) {
 				throw Error('No element supplied.');
 			}
@@ -66,7 +68,8 @@
 		 * @param {Array} collection The collection to be iterated
 		 * @param {Function} callback The callback to run on items in the collection
 		 */
-		function iterate(collection, callback) {
+		function iterate(collection, callback)
+		{
 			for (let i = 0; i < collection.length; i++) {
 				const item = collection[i];
 				callback(item, i);
@@ -80,7 +83,8 @@
 		 *   nothing.
 		 * @param {HTMLElement} star The star element
 		 */
-		function attachStarEvents(star) {
+		function attachStarEvents(star)
+		{
 			starMouseOver(star);
 			starMouseOut(star);
 			starClick(star);
@@ -92,7 +96,8 @@
 		 * @description The mouseover event for the star. Returns nothing.
 		 * @param {HTMLElement} star The star element
 		 */
-		function starMouseOver(star) {
+		function starMouseOver(star)
+		{
 			star.addEventListener('mouseover', function (e) {
 				iterate(stars, function (item, index) {
 					if (index <= parseInt(star.getAttribute('data-index'))) {
@@ -101,8 +106,10 @@
 					else {
 						item.classList.remove('is-active');
 					}
-				});
-			});
+                    }
+				);
+                }
+			);
 		}
 
 		/**
@@ -111,12 +118,14 @@
 		 * @description The mouseout event for the star. Returns nothing.
 		 * @param {HTMLElement} star The star element
 		 */
-		function starMouseOut(star) {
+		function starMouseOut(star)
+		{
 			star.addEventListener('mouseout', function (e) {
 				if (stars.indexOf(e.relatedTarget) === -1) {
 					setRating(null, false);
 				}
-			});
+                }
+			);
 		}
 
 		/**
@@ -125,11 +134,13 @@
 		 * @description The click event for the star. Returns nothing.
 		 * @param {HTMLElement} star The star element
 		 */
-		function starClick(star) {
+		function starClick(star)
+		{
 			star.addEventListener('click', function (e) {
 				e.preventDefault();
 				setRating(parseInt(star.getAttribute('data-index')) + 1, true);
-			});
+                }
+			);
 		}
 
 		/**
@@ -141,7 +152,8 @@
 		 * @param {Boolean} doCallback A boolean to determine whether to run the
 		 *   callback or not
 		 */
-		function setRating(value, doCallback) {
+		function setRating(value, doCallback)
+		{
 			if (value && value < 0 || value > maxRating) {
 				return;
 			}
@@ -159,7 +171,8 @@
 				else {
 					star.classList.remove('is-active');
 				}
-			});
+                }
+			);
 
 			if (callback && doCallback) {
 				callback(getRating());
@@ -172,7 +185,8 @@
 		 * @description Gets the current rating.
 		 * @return {Number} The current rating
 		 */
-		function getRating() {
+		function getRating()
+		{
 			return currentRating;
 		}
 

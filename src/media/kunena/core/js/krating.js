@@ -12,7 +12,8 @@ jQuery(document).ready(function ($) {
 	const krating = document.querySelector('#krating');
 
 	// Initialize
-	(function init() {
+	(function init()
+	{
 		const topic_id = $("#topic_id").val();
 
 		if ($('#krating').length > 0) {
@@ -20,16 +21,20 @@ jQuery(document).ready(function ($) {
 				dataType: "json",
 				url: $('#krating_url').val(),
 				data: 'topic_id=' + topic_id
-			}).done(function (response) {
-				addRatingWidget(buildItem(), response, topic_id);
-			}).fail(function (reponse) {
-				//TODO: handle the error of ajax request
-			});
+				}
+			).done(function (response) {
+					addRatingWidget(buildItem(), response, topic_id);
+                }
+			).fail(function (reponse) {
+					//TODO: handle the error of ajax request
+                }
+			);
 		}
 	})();
 
 	// Build krating item
-	function buildItem() {
+	function buildItem()
+	{
 		const ratingItem = document.createElement('div');
 		ratingItem.innerHTML = '<ul class="c-rating"></ul>';
 		krating.appendChild(ratingItem);
@@ -37,7 +42,8 @@ jQuery(document).ready(function ($) {
 	}
 
 	// Add krating widget
-	function addRatingWidget(ratingItem, rate, topicid) {
+	function addRatingWidget(ratingItem, rate, topicid)
+	{
 		const ratingElement = ratingItem.querySelector('.c-rating');
 		const currentRating = rate;
 		const maxRating = 5;
@@ -46,16 +52,21 @@ jQuery(document).ready(function ($) {
 				dataType: "json",
 				url: $('#krating_submit_url').val(),
 				data: 'starid=' + rating + '&topic_id=' + topicid
-			}).done(function (response) {
+				}
+			).done(function (response) {
 				if (response.success) {
 					$('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_SUCCESS_LABEL') + '</h4>' + Joomla.Text._(response.message) + '</div>').appendTo('#system-message-container');
-				} else {
-					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + Joomla.Text._(response.message) + '</div>').appendTo('#system-message-container');
 				}
-			}).fail(function (reponse) {
-				$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + reponse + '</div>').appendTo('#system-message-container');
-			});
+				else {
+									$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + Joomla.Text._(response.message) + '</div>').appendTo('#system-message-container');
+				}
+			}
+			).fail(function (reponse) {
+					$('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + reponse + '</div>').appendTo('#system-message-container');
+                }
+			);
 		};
 		const r = rating(ratingElement, currentRating, maxRating, callback);
 	}
-});
+    }
+);

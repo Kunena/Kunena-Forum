@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 namespace Kunena\Forum\Site;
 
@@ -38,23 +38,23 @@ $this->addScript('assets/js/search.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post"
-      xmlns="http://www.w3.org/1999/html"
-      xmlns="http://www.w3.org/1999/html">
+	  xmlns="http://www.w3.org/1999/html"
+	  xmlns="http://www.w3.org/1999/html">
 	<input type="hidden" name="task" value="results"/>
 	<?php if ($this->me->exists())
 		:
 		?>
 		<input type="hidden" id="kurl_users" name="kurl_users"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo HTMLHelper::_('form.token'); ?>
 
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<button class="btn btn-outline-primary border btn-sm" type="button"
-			        data-toggle="collapse"
-			        data-target="#search" aria-expanded="false"
-			        aria-controls="search"><?php echo Icons::collapse(); ?></button>
+					data-toggle="collapse"
+					data-target="#search" aria-expanded="false"
+					aria-controls="search"><?php echo Icons::collapse(); ?></button>
 		</div>
 	</div>
 	<h1>
@@ -71,8 +71,8 @@ $this->addScript('assets/js/search.js');
 					<div class="col-md-6">
 						<div class="form-group">
 							<input type="text" name="query" class="form-control"
-							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
-							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
+								   value="<?php echo $this->escape($this->state->get('searchwords')); ?>"
+								   placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>"/>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -91,8 +91,8 @@ $this->addScript('assets/js/search.js');
 						</legend>
 						<div class="form-group">
 							<input id="kusersearch" type="text" name="searchuser" class="form-control"
-							       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
-							       placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
+								   value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
+								   placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="exactname" value="1"
@@ -110,9 +110,9 @@ $this->addScript('assets/js/search.js');
 		</div>
 
 		<button type="button" class="btn btn-outline-primary border btn-sm float-right"
-		        data-toggle="collapse"
-		        data-target="#search-options" aria-expanded="false"
-		        aria-controls="search-options"><?php echo Icons::collapse(); ?></button>
+				data-toggle="collapse"
+				data-target="#search-options" aria-expanded="false"
+				aria-controls="search-options"><?php echo Icons::collapse(); ?></button>
 		<h2>
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
@@ -162,7 +162,7 @@ $this->addScript('assets/js/search.js');
 							</legend>
 							<div class="col-md-6">
 								<input type="text" name="limitstart" class="form-control"
-								       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
+									   value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							</div>
 							<div class="col-md-6">
 								<?php $this->displayLimitlist('limit'); ?>

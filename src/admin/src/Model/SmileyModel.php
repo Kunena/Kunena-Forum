@@ -130,11 +130,14 @@ class SmileyModel extends AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @param   null  $ordering
+	 * @param   null  $direction
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

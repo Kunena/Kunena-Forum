@@ -585,6 +585,8 @@ class KunenaBBCode extends BBCode
 	/**
 	 * @see     BBCode::SetSmileyDir()
 	 *
+	 * @param $JPATH_ROOT
+	 *
 	 * @return  void
 	 * @since   Kunena 6.0
 	 */

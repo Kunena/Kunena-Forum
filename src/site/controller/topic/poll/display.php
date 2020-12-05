@@ -63,6 +63,36 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $users_voted_morelist;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $users_voted_list;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $show_title;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $userhasvoted;
+	/**
+	 * @var array|bool
+	 * @since version
+	 */
+	private $usersvoted;
+	/**
+	 * @var bool|int
+	 * @since version
+	 */
+	private $usercount;
 
 	/**
 	 * Prepare poll display.

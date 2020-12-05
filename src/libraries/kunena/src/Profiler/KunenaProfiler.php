@@ -165,6 +165,26 @@ class KunenaProfilerItem
 	 * @since   Kunena 6.0
 	 */
 	public $start = [];
+	/**
+	 * @var float
+	 * @since version
+	 */
+	private $external;
+	/**
+	 * @var float
+	 * @since version
+	 */
+	private $total;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $calls;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $name;
 
 	/**
 	 * @param   string  $name  name

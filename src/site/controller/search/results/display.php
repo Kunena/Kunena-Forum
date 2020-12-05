@@ -55,6 +55,46 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Results';
+	/**
+	 * @var false|string
+	 * @since version
+	 */
+	private $error;
+	/**
+	 * @var KunenaPagination
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $results;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $isModerator;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $searchwords;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $message_ordering;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
 
 	/**
 	 * Prepare search results display.

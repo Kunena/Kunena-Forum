@@ -78,6 +78,16 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $more = [];
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $categorylist;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
 
 	/**
 	 * Prepare category index display.

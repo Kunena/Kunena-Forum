@@ -33,6 +33,33 @@ use stdClass;
 class TemplatesModel extends AdminModel
 {
 	/**
+	 * @var array
+	 * @since version
+	 */
+	private $template;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $app;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $context;
+	private $cache;
+	/**
+	 * @var \Kunena\Forum\Libraries\Config\KunenaConfig
+	 * @since version
+	 */
+	private $config;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * @param   array  $config  config
 	 *
 	 * @since   Kunena 6.0

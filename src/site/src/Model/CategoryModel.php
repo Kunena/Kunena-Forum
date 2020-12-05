@@ -72,6 +72,9 @@ class CategoryModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $total;
+	private $config;
+	private $app;
+	private $me;
 
 	/**
 	 * @return  boolean

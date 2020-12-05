@@ -38,6 +38,40 @@ use function defined;
  */
 class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 {
+	private $headerText;
+	private $pagination;
+	private $actions;
+	/**
+	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
+	 * @since version
+	 */
+	private $topics;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	private $embedded;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $moreUri;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var TopicsModel
+	 * @since version
+	 */
+	private $model;
+
 	/**
 	 * Prepare recent topics list.
 	 *

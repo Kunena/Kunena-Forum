@@ -55,6 +55,11 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Report';
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
 
 	/**
 	 * Prepare report message form.

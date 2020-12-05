@@ -41,6 +41,16 @@ class HtmlView extends BaseHtmlView
 	 * @since  6.0
 	 */
 	protected $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $moderators;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $options;
 
 	/**
 	 * @return  void

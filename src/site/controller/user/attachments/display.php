@@ -65,6 +65,31 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Attachments';
+	/**
+	 * @var KunenaPagination
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $total;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	private $embedded;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $moreUri;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $template;
 
 	/**
 	 * Prepare user attachments list.

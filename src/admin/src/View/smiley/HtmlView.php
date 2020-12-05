@@ -28,6 +28,24 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listsmileys;
+	private $ktemplate;
+	private $smileypath;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $smiley_selected;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  mixed|void

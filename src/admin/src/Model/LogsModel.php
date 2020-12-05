@@ -33,6 +33,12 @@ use function defined;
 class LogsModel extends ListModel
 {
 	/**
+	 * @var \Joomla\CMS\User\User|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Constructor.
 	 *
 	 * @see     JController

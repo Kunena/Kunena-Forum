@@ -87,6 +87,22 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 * @since   Kunena 6.0
 	 */
 	protected $version = null;
+	private $tables;
+	/**
+	 * @var DOMDocument|null
+	 * @since version
+	 */
+	private $usingschema;
+	/**
+	 * @var DOMDocument|null
+	 * @since version
+	 */
+	private $toschema;
+	/**
+	 * @var bool|DOMDocument|null
+	 * @since version
+	 */
+	private $fromschema;
 
 	/**
 	 * @throws  Exception

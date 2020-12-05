@@ -567,6 +567,16 @@ class KunenaUser extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	public $timestamp;
+	/**
+	 * @var KunenaConfig
+	 * @since version
+	 */
+	private $_config;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $_app;
 
 	/**
 	 * @internal

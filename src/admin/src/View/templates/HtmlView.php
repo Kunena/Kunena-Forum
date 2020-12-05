@@ -31,6 +31,69 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	public $templates = [];
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $ftp;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $css_path;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $content;
+	private $app;
+	private $filename;
+	private $templatename;
+	/**
+	 * @var array|false
+	 * @since version
+	 */
+	private $files;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $dir;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $less_path;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $templatefile;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $details;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $params;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $form;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $templatesxml;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
 
 	/**
 	 * @return  void

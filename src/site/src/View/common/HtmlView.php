@@ -55,6 +55,225 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $offline = false;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $privateMessagesLink;
+	private $me;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $announcementsLink;
+	private $me;
+	private $me;
+	/**
+	 * @var KunenaDate
+	 * @since version
+	 */
+	private $lastvisitDate;
+	/**
+	 * @var bool|KunenaLogin
+	 * @since version
+	 */
+	private $logout;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $remember;
+	/**
+	 * @var bool|null
+	 * @since version
+	 */
+	private $lostUsernameUrl;
+	/**
+	 * @var bool|null
+	 * @since version
+	 */
+	private $lostPasswordUrl;
+	/**
+	 * @var bool|null
+	 * @since version
+	 */
+	private $registerUrl;
+	/**
+	 * @var bool|KunenaLogin
+	 * @since version
+	 */
+	private $login;
+	private $moduleHtml;
+	private $ktemplate;
+	private $app;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $class_sfx;
+	/**
+	 * @var mixed|stdClass
+	 * @since version
+	 */
+	private $showAll;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $path;
+	private $active_id;
+	private $active;
+	private $app;
+	private $menu;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $list;
+	private $ktemplate;
+	private $ktemplate;
+	/**
+	 * @var Registry
+	 * @since version
+	 */
+	private $parameters;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $announcesListLink;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $pm_link;
+	private $state;
+	private $params;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $rss;
+	private $config;
+	private $memberCount;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $moreLink;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $userlistLink;
+	private $memberCount;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $usercountLink;
+	private $config;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $statisticsLink;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $statisticsUrl;
+	private $lastUserId;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $latestMemberLink;
+	/**
+	 * @var KunenaStatistics|null
+	 * @since version
+	 */
+	private $kunena_stats;
+	private $ktemplate;
+	/**
+	 * @var string|void
+	 * @since version
+	 */
+	private $usersUrl;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $hiddenList;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $onlineList;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $membersOnline;
+	private $ktemplate;
+	private $me;
+	private $me;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $pathway;
+	private $app;
+	private $app;
+	private $breadcrumb;
+	private $app;
+	private $app;
+	private $app;
+	private $app;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $categorylist;
+	private $ktemplate;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $showdate;
+	/**
+	 * @var Uri
+	 * @since version
+	 */
+	private $annListUrl;
+	private $ktemplate;
+	private $ktemplate;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement
+	 * @since version
+	 */
+	private $announcement;
+	private $config;
+	private $body;
+	/**
+	 * @var false|mixed|string|void
+	 * @since version
+	 */
+	private $body;
+	private $header;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $header;
+	private $app;
+	private $me;
+	private $config;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
 
 	/**
 	 * @param   null  $layout  layout

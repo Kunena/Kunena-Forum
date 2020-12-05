@@ -29,6 +29,28 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $templatefile;
+	private $templatename;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $details;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $params;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $form;
+
+	/**
 	 * @param   null  $tpl
 	 *
 	 * @return  void

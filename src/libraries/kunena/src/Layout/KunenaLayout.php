@@ -52,6 +52,91 @@ class KunenaLayout extends KunenaBase
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy;
+	/**
+	 * @var false|mixed|string|void
+	 * @since version
+	 */
+	private $personalText;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $usermedals;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userpoints;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userthankyou;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userposts;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userranktitle;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userrankimage;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $usermedals;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	private $userpoints;
+	/**
+	 * @var int|mixed|void|null
+	 * @since version
+	 */
+	private $userthankyou;
+	/**
+	 * @var int|mixed|void|null
+	 * @since version
+	 */
+	private $userposts;
+	/**
+	 * @var false|mixed|\stdClass|string|void|null
+	 * @since version
+	 */
+	private $userranktitle;
+	/**
+	 * @var false|mixed|\stdClass|string|void|null
+	 * @since version
+	 */
+	private $userrankimage;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	private $userkarma;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	private $userkarma_plus;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	private $userkarma_minus;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	private $userkarma_title;
 
 	/**
 	 * Append HTML after the layout content.

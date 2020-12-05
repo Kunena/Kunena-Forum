@@ -70,6 +70,7 @@ class KunenaSession extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $allreadtime;
+	private $userid;
 
 	/**
 	 * @param   mixed|null  $identifier  identifier

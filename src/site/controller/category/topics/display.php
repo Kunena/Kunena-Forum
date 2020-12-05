@@ -82,6 +82,21 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $actionMove;
+	/**
+	 * @var array|void|null
+	 * @since version
+	 */
+	private $topicActions;
+	/**
+	 * @var CategoryModel
+	 * @since version
+	 */
+	private $model;
 
 	/**
 	 * Prepare category display.

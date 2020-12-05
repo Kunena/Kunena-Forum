@@ -32,6 +32,17 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $sampledata;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $count;
+
+	/**
 	 * @param   null  $tpl  tmpl
 	 *
 	 * @return  void

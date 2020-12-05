@@ -226,6 +226,16 @@ class KunenaTemplate extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $category_iconset = '';
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $xml_path;
 
 	/**
 	 * Constructor

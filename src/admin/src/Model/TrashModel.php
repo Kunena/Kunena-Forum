@@ -49,6 +49,11 @@ class TrashModel extends KunenaModel
 	 * @since   Kunena 6.0
 	 */
 	protected $_object = false;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $context;
 
 	/**
 	 *

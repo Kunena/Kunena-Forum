@@ -51,6 +51,11 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Actions';
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $template;
 
 	/**
 	 * Prepare topic actions display.

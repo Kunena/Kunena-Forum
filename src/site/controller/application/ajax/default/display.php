@@ -36,6 +36,17 @@ use function defined;
 class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $template;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Return true if layout exists.
 	 *
 	 * @return  boolean

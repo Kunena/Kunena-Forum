@@ -33,6 +33,12 @@ use stdClass;
 class StatisticsModel extends ListModel
 {
 	/**
+	 * @var KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Constructor.
 	 *
 	 * @see     JController

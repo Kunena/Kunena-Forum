@@ -78,6 +78,36 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Moderate';
+	/**
+	 * @var KunenaBan|null
+	 * @since version
+	 */
+	private $banInfo;
+	/**
+	 * @var mixed|null
+	 * @since version
+	 */
+	private $replies;
+	/**
+	 * @var \Joomla\CMS\User\User|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $banHistory;
+	/**
+	 * @var KunenaTemplate|\KunenaTemplateaurelia
+	 * @since version
+	 */
+	private $template;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
 
 	/**
 	 * Prepare topic moderate display.

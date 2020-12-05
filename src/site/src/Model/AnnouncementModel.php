@@ -35,6 +35,7 @@ class AnnouncementModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
+	private $me;
 
 	/**
 	 * @return  KunenaAnnouncement

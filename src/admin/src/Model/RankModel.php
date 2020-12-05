@@ -31,6 +31,12 @@ use function defined;
 class RankModel extends AdminModel
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $context;
+
+	/**
 	 * @inheritDoc
 	 *
 	 * @param   array    $data     data

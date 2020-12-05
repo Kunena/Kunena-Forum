@@ -39,6 +39,12 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Settings';
+	private $headerText;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
 
 	/**
 	 * Prepare Kunena user settings.

@@ -104,6 +104,12 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $cat_topic_subscribers = [];
+	private $isTFAEnabled;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $app;
 
 	/**
 	 * @param   null  $tpl

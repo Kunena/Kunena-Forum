@@ -49,6 +49,8 @@ class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/User';
+	private $headerText;
+	private $user;
 
 	/**
 	 * Load user form.

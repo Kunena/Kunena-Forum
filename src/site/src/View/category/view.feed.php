@@ -34,6 +34,22 @@ use function defined;
 class feed extends KunenaView
 {
 	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $topics;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $category;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void

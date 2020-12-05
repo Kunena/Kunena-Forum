@@ -37,6 +37,8 @@ require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
+	private $params;
+
 	/**
 	 * plgKunenaEasySocial constructor.
 	 *

@@ -67,6 +67,17 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/List';
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $title;
+	private $topic;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $categorylist;
 
 	/**
 	 * Prepare topics by pre-loading needed information.

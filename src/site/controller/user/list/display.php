@@ -70,6 +70,11 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/List';
+	/**
+	 * @var UserModel
+	 * @since version
+	 */
+	private $model;
 
 	/**
 	 * Load user list.

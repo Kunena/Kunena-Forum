@@ -34,6 +34,19 @@ class ComponentUserControllerEditProfileDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Profile';
+	private $headerText;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $social;
+	private $profile;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $genders;
+	private $birthdate;
 
 	/**
 	 * Prepare profile form items.

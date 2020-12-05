@@ -37,6 +37,21 @@ class KunenaBBCodeEditor
 	 * @since   Kunena 6.0
 	 */
 	public $editor_elements = [];
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $isHMVC;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $template;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $config;
 
 	/**
 	 * @param   array  $config  config

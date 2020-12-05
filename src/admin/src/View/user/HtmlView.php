@@ -58,6 +58,31 @@ class HtmlView extends BaseHtmlView
 	protected $selectRank;
 
 	protected $modCats;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $subscatslist;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $user;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $users;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $catslist;
 
 	/**
 	 * @return  void

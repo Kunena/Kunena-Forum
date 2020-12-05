@@ -83,6 +83,11 @@ class KunenaGravatar
 	 * @since   Kunena 6.0
 	 */
 	protected $extra = "";
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $params_cache;
 
 	/**
 	 * @param   string  $email  email

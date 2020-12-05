@@ -30,6 +30,83 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	private $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterMinPostCount;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSpecial;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTitle;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var KunenaTemplate|\KunenaTemplateaurelia
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $items;
+
+	/**
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return  array  The HTML code for the select tag

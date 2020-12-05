@@ -85,6 +85,11 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $state = null;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $lists;
 
 	/**
 	 * Prepare category display.

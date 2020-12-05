@@ -28,6 +28,12 @@ use function defined;
 class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var \Kunena\Forum\Libraries\Layout\KunenaLayout
+	 * @since version
+	 */
+	private $page;
+
+	/**
 	 * Return true if layout exists.
 	 *
 	 * @return  boolean

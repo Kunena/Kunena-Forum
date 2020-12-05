@@ -95,6 +95,18 @@ class KunenaView extends HtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var KunenaProfiler
+	 * @since version
+	 */
+	private $profiler;
+	private $state;
+	private $common;
 
 	/**
 	 * @param   array  $config  config

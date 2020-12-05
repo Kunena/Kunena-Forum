@@ -43,6 +43,26 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Form';
+	/**
+	 * @var false|string
+	 * @since version
+	 */
+	private $error;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $isModerator;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
 
 	/**
 	 * Prepare search form display.

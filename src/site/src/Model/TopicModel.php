@@ -60,6 +60,10 @@ class TopicModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $topic = false;
+	private $config;
+	private $me;
+	private $app;
+	private $threaded;
 
 	/**
 	 * @return  array|boolean|KunenaMessage[]

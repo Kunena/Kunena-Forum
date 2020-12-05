@@ -49,6 +49,75 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
+	private $headerText;
+	private $topic;
+	private $me;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $canSubscribe;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $subscriptionschecked;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $post_anonymous;
+	/**
+	 * @var KunenaPrivateMessage
+	 * @since version
+	 */
+	private $privateMessage;
+	private $poll;
+	/**
+	 * @var array|bool
+	 * @since version
+	 */
+	private $allowedExtensions;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $action;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $selectcatlist;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $captchaEnabled;
+	/**
+	 * @var string|void
+	 * @since version
+	 */
+	private $captchaDisplay;
+	/**
+	 * @var array|\SimpleXMLElement
+	 * @since version
+	 */
+	private $topicIcons;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $message;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $template;
 
 	/**
 	 * Prepare topic creation form.

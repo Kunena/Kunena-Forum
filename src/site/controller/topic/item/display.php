@@ -88,6 +88,24 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item';
+	private $userTopic;
+	private $messages;
+	private $threaded;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $message;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $quickReply;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $categorylist;
 
 	/**
 	 * Prepare topic display.

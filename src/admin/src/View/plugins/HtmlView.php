@@ -89,6 +89,26 @@ class HtmlView extends BaseHtmlView
 	protected $filterName;
 
 	protected $filterAccess;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var \Joomla\CMS\User\User|null
+	 * @since version
+	 */
+	private $user;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
 
 	/**
 	 * Display the view

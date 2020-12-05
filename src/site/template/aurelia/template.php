@@ -76,6 +76,11 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
 	];
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
 
 	/**
 	 * Logic to load language strings for the template.

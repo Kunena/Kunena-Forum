@@ -41,6 +41,21 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * @since   Kunena 6.0
 	 */
 	public $usersUrl;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $hiddenList;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $onlineList;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $membersOnline;
 
 	/**
 	 * Prepare Who is online display.

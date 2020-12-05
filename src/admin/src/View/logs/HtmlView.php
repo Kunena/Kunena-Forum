@@ -32,6 +32,118 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterUsertypes;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterOperation;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTimeStop;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTimeStart;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterIp;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTargetUser;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTopic;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterCategory;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterUser;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterType;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $filterOperationFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $filterTypeFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $filterUserFields;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $items;
+	private $group;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+
+	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

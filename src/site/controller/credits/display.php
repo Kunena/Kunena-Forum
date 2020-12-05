@@ -60,6 +60,11 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $thanks;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $baseurl;
 
 	/**
 	 * Prepare credits display.

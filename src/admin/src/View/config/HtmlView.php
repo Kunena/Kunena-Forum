@@ -31,6 +31,11 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	public $config;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $lists;
 
 	/**
 	 * @param   null  $tpl  tmpl

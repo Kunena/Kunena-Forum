@@ -37,6 +37,11 @@ class PluginsController extends AdminController
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $baseurl2;
 
 	/**
 	 * Construct

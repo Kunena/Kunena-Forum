@@ -39,6 +39,53 @@ use function defined;
 class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $headerText;
+	private $actions;
+	/**
+	 * @var KunenaPagination
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $count;
+	/**
+	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
+	 * @since version
+	 */
+	private $topics;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	private $embedded;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $moreUri;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var TopicsModel
+	 * @since version
+	 */
+	private $model;
+
+	/**
 	 * Prepare topic list for moderators.
 	 *
 	 * @return  void

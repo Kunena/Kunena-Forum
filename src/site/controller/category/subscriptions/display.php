@@ -58,6 +58,31 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $headerText;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $actions;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $user;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var CategoryModel
+	 * @since version
+	 */
+	private $model;
 
 	/**
 	 * Prepare category subscriptions display.

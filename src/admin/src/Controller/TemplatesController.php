@@ -46,6 +46,7 @@ class TemplatesController extends FormController
 	 * @since   Kunena 2.0
 	 */
 	protected $locked = ['aurelia'];
+	private $config;
 
 	/**
 	 * Construct

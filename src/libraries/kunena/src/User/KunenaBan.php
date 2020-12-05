@@ -118,6 +118,11 @@ class KunenaBan extends parentAlias
 	 * @since version
 	 */
 	private $identifier;
+	/**
+	 * @var array|mixed
+	 * @since version
+	 */
+	private $params;
 
 	/**
 	 * Constructor

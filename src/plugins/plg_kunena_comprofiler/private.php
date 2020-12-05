@@ -32,6 +32,11 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $pmCount;
 
 	/**
 	 * KunenaPrivateComprofiler constructor.

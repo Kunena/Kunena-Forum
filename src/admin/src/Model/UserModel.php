@@ -37,6 +37,12 @@ use function defined;
 class UserModel extends KunenaModel
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $context;
+
+	/**
 	 * @param   array    $data     data
 	 * @param   boolean  $loadData load data
 	 *

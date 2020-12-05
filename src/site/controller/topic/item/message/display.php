@@ -83,6 +83,51 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Message';
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $thankyou_delete;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $more_thankyou;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $total_thankyou;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $thankyou;
+	/**
+	 * @var string|void
+	 * @since version
+	 */
+	private $captchaDisplay;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $captchaEnabled;
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $detail;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $location;
 
 	/**
 	 * Prepare displaying message.

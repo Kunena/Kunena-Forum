@@ -30,6 +30,11 @@ class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisp
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Description';
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
 
 	/**
 	 * Prepare category display.

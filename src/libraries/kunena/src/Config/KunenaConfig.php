@@ -1594,6 +1594,7 @@ class KunenaConfig extends CMSObject
 	 * @since  Kunena 6.0
 	 */
 	public $emailheadersizex = 560;
+	private $moderator_id;
 
 	/**
 	 * @since   Kunena 6.0

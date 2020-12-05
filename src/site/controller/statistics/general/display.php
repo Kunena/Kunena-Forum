@@ -38,6 +38,17 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Statistics/General';
+	/**
+	 * @var string|void
+	 * @since version
+	 */
+	private $userlistUrl;
+	private $lastUserId;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $latestMemberLink;
 
 	/**
 	 * Prepare general statistics display.

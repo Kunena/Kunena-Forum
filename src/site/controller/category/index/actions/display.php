@@ -51,6 +51,11 @@ class ComponentCategoryControllerIndexActionsDisplay extends KunenaControllerDis
 	 * @since   Kunena 6.0
 	 */
 	public $categoryButtons;
+	/**
+	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @since version
+	 */
+	private $template;
 
 	/**
 	 * Prepare message actions display.

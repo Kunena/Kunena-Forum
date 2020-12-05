@@ -29,6 +29,12 @@ use stdClass;
 class TemplateModel extends AdminModel
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $context;
+
+	/**
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
 	 * @param   array  $data      data

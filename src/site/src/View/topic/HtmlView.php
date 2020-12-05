@@ -92,6 +92,218 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $cache = true;
+	private $topic;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $title;
+	private $state;
+	private $total;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $headerText;
+	private $app;
+	/**
+	 * @var mixed|string
+	 * @since version
+	 */
+	private $modified_reason;
+	private $config;
+	/**
+	 * @var bool|mixed
+	 * @since version
+	 */
+	private $subscriptionschecked;
+	/**
+	 * @var bool|mixed
+	 * @since version
+	 */
+	private $post_anonymous;
+	/**
+	 * @var array|bool
+	 * @since version
+	 */
+	private $allowedExtensions;
+	/**
+	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
+	 * @since version
+	 */
+	private $attachments;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $action;
+	private $ktemplate;
+	private $topicIcons;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
+	/**
+	 * @var KunenaMessage
+	 * @since version
+	 */
+	private $message;
+	private $catid;
+	private $mesid;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $selectcatlist;
+	private $inLayout;
+	private $me;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $numLink;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $replycount;
+	/**
+	 * @var int|void
+	 * @since version
+	 */
+	private $historycount;
+	/**
+	 * @var KunenaMessage[]
+	 * @since version
+	 */
+	private $history;
+	private $messages;
+	private $replynum;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $msgsuffix;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $class;
+	/**
+	 * @var false|mixed|string|void
+	 * @since version
+	 */
+	private $signatureHtml;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $ipLink;
+	/**
+	 * @var array|\StdClass
+	 * @since version
+	 */
+	private $attachs;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $reportMessageLink;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $more_thankyou;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $total_thankyou;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $thankyou;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser
+	 * @since version
+	 */
+	private $profile;
+	private $quickreply;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $message_closed;
+	private $layout;
+	private $usertopic;
+	/**
+	 * @var false|string|void
+	 * @since version
+	 */
+	private $personalText;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $usermedals;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $userpoints;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $userthankyou;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $userposts;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $userranktitle;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $userrankimage;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $userkarma;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $userkarma_plus;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $userkarma_minus;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $userkarma_title;
+	private $keywords;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $moderators;
 
 	/**
 	 * @param   null  $tpl  tpl

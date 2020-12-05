@@ -33,6 +33,12 @@ use RuntimeException;
 class UsersModel extends ListModel
 {
 	/**
+	 * @var KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Constructor.
 	 *
 	 * @see     JController

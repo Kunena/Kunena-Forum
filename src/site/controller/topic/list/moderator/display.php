@@ -35,6 +35,38 @@ use function defined;
 class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $headerText;
+	private $actions;
+	/**
+	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
+	 * @since version
+	 */
+	private $topics;
+	/**
+	 * @var KunenaPagination
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	private $embedded;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $moreUri;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Prepare topic list for moderators.
 	 *
 	 * @return  void

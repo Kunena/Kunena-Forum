@@ -42,6 +42,79 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
+	private $me;
+	private $message;
+	private $headerText;
+	/**
+	 * @var mixed|string
+	 * @since version
+	 */
+	private $modified_reason;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $canSubscribe;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $subscriptionschecked;
+	/**
+	 * @var bool|mixed
+	 * @since version
+	 */
+	private $post_anonymous;
+	/**
+	 * @var \Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage|mixed
+	 * @since version
+	 */
+	private $privateMessage;
+	/**
+	 * @var array|bool
+	 * @since version
+	 */
+	private $allowedExtensions;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll
+	 * @since version
+	 */
+	private $poll;
+	/**
+	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
+	 * @since version
+	 */
+	private $attachments;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $action;
+	/**
+	 * @var array|\SimpleXMLElement
+	 * @since version
+	 */
+	private $topicIcons;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic|null
+	 * @since version
+	 */
+	private $topic;
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $template;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $catid;
 
 	/**
 	 * Prepare topic edit form.

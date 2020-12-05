@@ -33,6 +33,12 @@ use function defined;
 class KunenaPage extends KunenaLayout
 {
 	/**
+	 * @var mixed|void
+	 * @since version
+	 */
+	private $breadcrumb;
+
+	/**
 	 * Returns layout class.
 	 *
 	 * <code>

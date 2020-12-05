@@ -201,6 +201,28 @@ class ToolsModel extends AdminModel
 	 * @since   Kunena 6.0
 	 */
 	protected $integration_settings = null;
+	private $ktemplateparams;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $app;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $ktemplateparams;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $app;
+	private $ktemplateparams;
+	/**
+	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @since version
+	 */
+	private $app;
 
 	/**
 	 * @inheritDoc

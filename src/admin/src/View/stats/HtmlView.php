@@ -30,6 +30,13 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var KunenaStatistics|null
+	 * @since version
+	 */
+	private $kunena_stats;
+	private $config;
+
+	/**
 	 * @internal param null $tpl
 	 *
 	 * @param   null  $tpl

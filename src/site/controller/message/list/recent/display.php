@@ -50,6 +50,40 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
+	private $headerText;
+	private $state;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $title;
+	private $pagination;
+	private $actions;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
+	 * @since version
+	 */
+	private $topics;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	private $embedded;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $moreUri;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var TopicsModel
+	 * @since version
+	 */
+	private $model;
 
 	/**
 	 * Prepare category list display.

@@ -87,6 +87,8 @@ abstract class KunenaTableObject
 	 * @since   Kunena 4.0
 	 */
 	protected static $_locked = false;
+	private static $tbl_key;
+	private static $locked;
 
 	/**
 	 * Flag whether the object exists in the database or not.

@@ -31,6 +31,92 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class HtmlView extends BaseHtmlView
 {
+	private $topic;
+	private $position;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $spacing;
+	private $config;
+	/**
+	 * @var false|float
+	 * @since version
+	 */
+	private $pages;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $message_position;
+	private $module;
+	private $lastUserName;
+	private $lastPostTime;
+	private $lastPostAuthor;
+	private $firstUserName;
+	private $firstPostTime;
+	private $firstPostAuthor;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $categoryLink;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $cache;
+	private $me;
+	private $category;
+	private $topics;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser
+	 * @since version
+	 */
+	private $postAuthor;
+	private $message;
+	private $messages;
+	private $layout;
+	private $state;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $moreUri;
+	private $embedded;
+	/**
+	 * @var bool|string
+	 * @since version
+	 */
+	private $URL;
+	private $message_ordering;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $actionMove;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $postActions;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $total;
+	private $params;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $topicActions;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $Itemid;
+
 	/**
 	 * @param   null  $tpl  tpl
 	 *

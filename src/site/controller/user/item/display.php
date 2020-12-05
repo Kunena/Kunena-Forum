@@ -74,6 +74,38 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Item';
+	/**
+	 * @var KunenaBan|null
+	 * @since version
+	 */
+	private $banInfo;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $avatar;
+	/**
+	 * @var object
+	 * @since version
+	 */
+	private $socials;
+	/**
+	 * @var \Kunena\Forum\Libraries\Integration\KunenaPrivate
+	 * @since version
+	 */
+	private $private;
+	private $medals;
+	private $points;
+	/**
+	 * @var \Joomla\CMS\Object\CMSObject|mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var UserModel
+	 * @since version
+	 */
+	private $model;
 
 	/**
 	 * Load user profile.

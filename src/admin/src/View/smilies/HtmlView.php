@@ -30,6 +30,78 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	private $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterLocation;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterCode;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var KunenaTemplate|\KunenaTemplateaurelia
+	 * @since version
+	 */
+	private $ktemplate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $items;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  mixed|void

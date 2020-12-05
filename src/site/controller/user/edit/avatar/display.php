@@ -74,6 +74,11 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $galleryUri;
 
 	/**
 	 * Prepare avatar form.

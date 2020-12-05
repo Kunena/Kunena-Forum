@@ -64,6 +64,9 @@ class TopicsModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
+	private $config;
+	private $me;
+	private $app;
 
 	/**
 	 * @return  boolean

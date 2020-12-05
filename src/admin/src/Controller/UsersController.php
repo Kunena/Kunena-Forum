@@ -51,6 +51,7 @@ class UsersController extends AdminController
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
+	private $me;
 
 	/**
 	 * Constructor.

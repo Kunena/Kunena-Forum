@@ -53,6 +53,131 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $batch_categories;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterLevels;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $saveOrderingUrl;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $saveOrder;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterAnonymous;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterAllow_polls;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterReview;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterLocked;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterAccess;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterType;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTitle;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterPublished;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $userId;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+	/**
+	 * @var \Joomla\CMS\User\User|null
+	 * @since version
+	 */
+	private $user;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $ordering;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $pagesTotal;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
 
 	/**
 	 * @return  void

@@ -1343,6 +1343,11 @@ class ConfigModel extends AdminModel
 	 * @since  Kunena 1.0.5
 	 */
 	public $utm_source = 0;
+	/**
+	 * @var KunenaConfig|mixed|null
+	 * @since version
+	 */
+	private $config;
 
 	/**
 	 * @inheritDoc

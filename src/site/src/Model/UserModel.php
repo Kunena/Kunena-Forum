@@ -30,6 +30,9 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class UserModel extends ListModel
 {
+	private $app;
+	private $config;
+
 	/**
 	 * @return  integer
 	 *

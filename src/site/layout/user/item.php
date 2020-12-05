@@ -59,6 +59,11 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	public $user;
+	/**
+	 * @var mixed|void
+	 * @since version
+	 */
+	private $state;
 
 	/**
 	 * Method to get tabs for user profile

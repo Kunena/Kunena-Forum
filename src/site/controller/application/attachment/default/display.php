@@ -37,6 +37,12 @@ use function defined;
 class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
+	 * @var KunenaUser|null
+	 * @since version
+	 */
+	private $me;
+
+	/**
 	 * Return true if layout exists.
 	 *
 	 * @return  boolean

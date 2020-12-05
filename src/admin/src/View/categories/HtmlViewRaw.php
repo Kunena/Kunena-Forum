@@ -26,6 +26,8 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	private $app;
+
 	/**
 	 * @return  void
 	 *

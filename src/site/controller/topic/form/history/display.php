@@ -41,6 +41,51 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit/History';
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $headerText;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $inline_attachments;
+	/**
+	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
+	 * @since version
+	 */
+	private $attachments;
+	/**
+	 * @var int|void
+	 * @since version
+	 */
+	private $historycount;
+	/**
+	 * @var int
+	 * @since version
+	 */
+	private $replycount;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Message\KunenaMessage[]
+	 * @since version
+	 */
+	private $history;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic
+	 * @since version
+	 */
+	private $topic;
+	/**
+	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @since version
+	 */
+	private $me;
 
 	/**
 	 * Prepare reply history display.

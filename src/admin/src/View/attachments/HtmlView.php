@@ -29,6 +29,82 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterPost;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterUsername;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterDimensions;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSize;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterType;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTitle;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $items;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void|mixed

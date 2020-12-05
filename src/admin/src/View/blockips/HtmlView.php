@@ -30,6 +30,23 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $items;
+	private $group;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $state;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void

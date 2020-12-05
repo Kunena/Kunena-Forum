@@ -29,6 +29,12 @@ use function defined;
 class raw extends KunenaView
 {
 	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $category;
+
+	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void

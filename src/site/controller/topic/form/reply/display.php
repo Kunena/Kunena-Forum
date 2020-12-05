@@ -48,6 +48,69 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
+	private $headerText;
+	private $topic;
+	private $me;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $canSubscribe;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $subscriptionschecked;
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	private $post_anonymous;
+	/**
+	 * @var array|bool
+	 * @since version
+	 */
+	private $allowedExtensions;
+	/**
+	 * @var KunenaMessage
+	 * @since version
+	 */
+	private $privateMessage;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $action;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $message;
+	/**
+	 * @var array|\SimpleXMLElement
+	 * @since version
+	 */
+	private $topicIcons;
+	/**
+	 * @var false
+	 * @since version
+	 */
+	private $captchaEnabled;
+	/**
+	 * @var string|void
+	 * @since version
+	 */
+	private $captchaDisplay;
+	/**
+	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
+	 * @since version
+	 */
+	private $category;
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	private $template;
 
 	/**
 	 * Prepare topic reply form.

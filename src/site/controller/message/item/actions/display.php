@@ -62,6 +62,16 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @since   Kunena 6.0
 	 */
 	public $messageButtons;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $quickreply;
+	/**
+	 * @var null
+	 * @since version
+	 */
+	private $message_closed;
 
 	/**
 	 * Prepare message actions display.

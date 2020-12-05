@@ -35,6 +35,91 @@ class HtmlView extends BaseHtmlView
 	 * @since  6.0
 	 */
 	protected $state;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listDirection;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $listOrdering;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterActive;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterDate;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterAuthor;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterIp;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterCategory;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTopic;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterTitle;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $filterSearch;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortDirectionFields;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	private $sortFields;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $view_options_list;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $pagination;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $trash_items;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $md5Calculated;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	private $purgeitems;
 
 	/**
 	 * @return  void

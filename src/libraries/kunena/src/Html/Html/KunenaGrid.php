@@ -297,13 +297,13 @@ abstract class KunenaGrid
 		if (is_array($prefix))
 		{
 			$options        = $prefix;
-			$text           = array_key_exists('text', $options) ? $options['text'] : $text;
-			$active_title   = array_key_exists('active_title', $options) ? $options['active_title'] : $active_title;
-			$inactive_title = array_key_exists('inactive_title', $options) ? $options['inactive_title'] : $inactive_title;
-			$active_class   = array_key_exists('active_class', $options) ? $options['active_class'] : $active_class;
-			$inactive_class = array_key_exists('inactive_class', $options) ? $options['inactive_class'] : $inactive_class;
-			$enabled        = array_key_exists('enabled', $options) ? $options['enabled'] : $enabled;
-			$translate      = array_key_exists('translate', $options) ? $options['translate'] : $translate;
+			$text           = array_key_exists('text', $options) ? $options['text'] : '';
+			$active_title   = array_key_exists('active_title', $options) ? $options['active_title'] : '';
+			$inactive_title = array_key_exists('inactive_title', $options) ? $options['inactive_title'] : '';
+			$active_class   = array_key_exists('active_class', $options) ? $options['active_class'] : '';
+			$inactive_class = array_key_exists('inactive_class', $options) ? $options['inactive_class'] : '';
+			$enabled        = array_key_exists('enabled', $options) ? $options['enabled'] : '';
+			$translate      = array_key_exists('translate', $options) ? $options['translate'] : '';
 			$checkbox       = array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
 			$prefix         = array_key_exists('prefix', $options) ? $options['prefix'] : '';
 		}

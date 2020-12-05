@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						foreach ($this->cat_subscribers_users as $user) : ?>
 							<tr>
 								<td class="hidden-phone center">
-									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
+									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($user->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>
@@ -52,7 +52,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						foreach ($this->topic_subscribers_users as $user) : ?>
 							<tr>
 								<td class="hidden-phone center">
-									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
+									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($user->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>
@@ -68,7 +68,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						foreach ($this->cat_topic_subscribers as $sub) : ?>
 							<tr>
 								<td class="hidden-phone center">
-									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
+									<input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($sub->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>
 								</td>

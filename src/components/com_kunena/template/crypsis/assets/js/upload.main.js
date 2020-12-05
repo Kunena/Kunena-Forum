@@ -12,8 +12,7 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		var ckeditor_existing_content = CKEDITOR.instances.message.getData();
-		CKEDITOR.instances.message.insertText(ckeditor_existing_content + ' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
 		if (button !== undefined) {
 			button.removeClass('btn-primary');
@@ -95,7 +94,7 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						CKEDITOR.instances.message.insertText(data.text_prepared);
+						CKEDITOR.instances.message.setData(data.text_prepared);
 					}
 				})
 				.fail(function () {
@@ -137,7 +136,7 @@ jQuery(function ($) {
 
 				if (data.text_prepared!==false)
 				{
-					CKEDITOR.instances.message.insertText(data.text_prepared);
+					CKEDITOR.instances.message.setData(data.text_prepared);
 				}
 			})
 			.fail(function () {
@@ -305,7 +304,7 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						CKEDITOR.instances.message.insertText(data.text_prepared);
+						CKEDITOR.instances.message.setData(data.text_prepared);
 					}
 				})
 				.fail(function () {

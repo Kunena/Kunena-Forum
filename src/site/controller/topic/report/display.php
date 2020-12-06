@@ -55,11 +55,6 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Report';
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
 
 	/**
 	 * Prepare report message form.
@@ -103,9 +98,9 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 			$this->topic = $this->message->getTopic();
 		}
 
-		$this->category = $this->topic->getCategory();
+		$category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
+		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$category->id}" .
 			"&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
 	}
 

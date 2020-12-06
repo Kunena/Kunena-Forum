@@ -22,6 +22,8 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+
+$count = KunenaStatistics::getInstance()->loadCategoryCount();
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -159,7 +161,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 										</a>
 									</h6>
 									<h3 class="fw-700 text-cyan">
-										<?php echo $this->count['sections'] . ' / ' . $this->count['categories']; ?>
+										<?php echo $count['sections'] . ' / ' . $count['categories']; ?>
 									</h3>
 									<p class="mb-0">Last Edit: Welcome</p>
 								</div>

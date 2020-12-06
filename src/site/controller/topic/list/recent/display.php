@@ -40,37 +40,6 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 {
 	private $headerText;
 	private $pagination;
-	private $actions;
-	/**
-	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
-	 * @since version
-	 */
-	private $topics;
-	/**
-	 * @var mixed|\stdClass
-	 * @since version
-	 */
-	private $embedded;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $moreUri;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var TopicsModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Prepare recent topics list.
@@ -86,16 +55,16 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->model = new TopicsModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state    = $this->model->getState();
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->moreUri  = null;
-		$holding        = $this->getOptions()->get('topics_deletedtopics');
-		$this->embedded = $this->getOptions()->get('embedded', true);
+		$model = new TopicsModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$state    = $model->getState();
+		$me       = KunenaUserHelper::getMyself();
+		$moreUri  = null;
+		$holding  = $this->getOptions()->get('topics_deletedtopics');
+		$embedded = $this->getOptions()->get('embedded', true);
 
-		$start = $this->state->get('list.start');
-		$limit = $this->state->get('list.limit');
+		$start = $state->get('list.start');
+		$limit = $state->get('list.limit');
 
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
@@ -109,7 +78,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$state->get('list.mode')}"));
 				$itemidfix = $getid->id;
 			}
 
@@ -119,12 +88,12 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$state->get('list.mode')}&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 
 		// Handle &sel=x parameter.
-		$time = $this->state->get('list.time');
+		$time = $state->get('list.time');
 
 		if ($time < 0)
 		{
@@ -149,15 +118,15 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		}
 
 		// Get categories for the filter.
-		$categoryIds = $this->state->get('list.categories');
-		$reverse     = !$this->state->get('list.categories.in');
+		$categoryIds = $state->get('list.categories');
+		$reverse     = !$state->get('list.categories.in');
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
 		$finder = new KunenaTopicFinder;
 		$finder->filterByMoved(false);
 
-		switch ($this->state->get('list.mode'))
+		switch ($state->get('list.mode'))
 		{
 			case 'topics' :
 				$order = 'first_post_time';
@@ -245,18 +214,18 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		if ($this->moreUri)
+		if ($moreUri)
 		{
-			$this->pagination->setUri($this->moreUri);
+			$this->pagination->setUri($moreUri);
 		}
 
-		$this->topics = $finder
+		$topics = $finder
 			->order($order, -1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
 
-		if ($this->topics)
+		if ($topics)
 		{
 			$this->prepareTopics();
 		}
@@ -267,7 +236,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
-		switch ($this->state->get('list.mode'))
+		switch ($state->get('list.mode'))
 		{
 			case 'topics' :
 				if (!empty($title) && $pageheading)
@@ -374,7 +343,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->actions = $this->getTopicActions($this->topics, $actions);
+		$actions1 = $this->getTopicActions($topics, $actions);
 	}
 
 	/**

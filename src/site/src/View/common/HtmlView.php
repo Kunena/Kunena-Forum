@@ -55,166 +55,21 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $offline = false;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $privateMessagesLink;
-	private $me;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $announcementsLink;
 	private $me;
 	private $me;
-	/**
-	 * @var KunenaDate
-	 * @since version
-	 */
-	private $lastvisitDate;
-	/**
-	 * @var bool|KunenaLogin
-	 * @since version
-	 */
-	private $logout;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $remember;
-	/**
-	 * @var bool|null
-	 * @since version
-	 */
-	private $lostUsernameUrl;
-	/**
-	 * @var bool|null
-	 * @since version
-	 */
-	private $lostPasswordUrl;
-	/**
-	 * @var bool|null
-	 * @since version
-	 */
-	private $registerUrl;
-	/**
-	 * @var bool|KunenaLogin
-	 * @since version
-	 */
-	private $login;
-	private $moduleHtml;
+	private $me;
 	private $ktemplate;
 	private $app;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $class_sfx;
-	/**
-	 * @var mixed|stdClass
-	 * @since version
-	 */
-	private $showAll;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $path;
-	private $active_id;
-	private $active;
 	private $app;
-	private $menu;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $list;
 	private $ktemplate;
 	private $ktemplate;
-	/**
-	 * @var Registry
-	 * @since version
-	 */
-	private $parameters;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $announcesListLink;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $pm_link;
 	private $state;
-	private $params;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $rss;
 	private $config;
 	private $memberCount;
-	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $moreLink;
-	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $userlistLink;
 	private $memberCount;
-	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $usercountLink;
 	private $config;
-	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $statisticsLink;
-	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $statisticsUrl;
 	private $lastUserId;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $latestMemberLink;
-	/**
-	 * @var KunenaStatistics|null
-	 * @since version
-	 */
-	private $kunena_stats;
 	private $ktemplate;
-	/**
-	 * @var string|void
-	 * @since version
-	 */
-	private $usersUrl;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $hiddenList;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $onlineList;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $membersOnline;
 	private $ktemplate;
 	private $me;
 	private $me;
@@ -225,34 +80,13 @@ class HtmlView extends BaseHtmlView
 	private $pathway;
 	private $app;
 	private $app;
-	private $breadcrumb;
 	private $app;
 	private $app;
 	private $app;
 	private $app;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $categorylist;
-	private $ktemplate;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $showdate;
-	/**
-	 * @var Uri
-	 * @since version
-	 */
-	private $annListUrl;
 	private $ktemplate;
 	private $ktemplate;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement
-	 * @since version
-	 */
-	private $announcement;
+	private $ktemplate;
 	private $config;
 	private $body;
 	/**
@@ -346,10 +180,10 @@ class HtmlView extends BaseHtmlView
 
 		if ($this->config->showannouncement > 0)
 		{
-			$items              = KunenaAnnouncementHelper::getAnnouncements();
-			$this->announcement = array_pop($items);
+			$items        = KunenaAnnouncementHelper::getAnnouncements();
+			$announcement = array_pop($items);
 
-			if (!$this->announcement)
+			if (!$announcement)
 			{
 				echo ' ';
 
@@ -369,10 +203,10 @@ class HtmlView extends BaseHtmlView
 				return;
 			}
 
-			if ($this->announcement && $this->announcement->isAuthorised('read'))
+			if ($announcement && $announcement->isAuthorised('read'))
 			{
-				$this->annListUrl = KunenaAnnouncementHelper::getUri('list');
-				$this->showdate   = $this->announcement->showdate;
+				$annListUrl = KunenaAnnouncementHelper::getUri('list');
+				$showdate   = $announcement->showdate;
 
 				$result = $this->loadTemplateFile($tpl);
 
@@ -383,7 +217,7 @@ class HtmlView extends BaseHtmlView
 				echo ' ';
 			}
 
-			$cache->store($this->announcement->id, 'announcement', 'global');
+			$cache->store($announcement->id, 'announcement', 'global');
 			$cache->end();
 		}
 		else
@@ -420,8 +254,8 @@ class HtmlView extends BaseHtmlView
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$cat_params         = ['sections' => 1, 'catid' => 0];
-		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
+		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
 
@@ -452,8 +286,8 @@ class HtmlView extends BaseHtmlView
 		$view   = $this->app->input->getWord('view', 'default');
 		$layout = $this->app->input->getWord('layout', 'default');
 
-		$this->breadcrumb = $pathway = $this->app->getPathway();
-		$active           = $this->app->getMenu()->getActive();
+		$breadcrumb = $pathway = $this->app->getPathway();
+		$active     = $this->app->getMenu()->getActive();
 
 		if (empty($this->pathway))
 		{
@@ -592,11 +426,11 @@ class HtmlView extends BaseHtmlView
 			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
-		$this->membersOnline = $who;
+		$who           .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$membersOnline = $who;
 
-		$this->onlineList = [];
-		$this->hiddenList = [];
+		$onlineList = [];
+		$hiddenList = [];
 
 		foreach ($users as $userid => $usertime)
 		{
@@ -606,19 +440,19 @@ class HtmlView extends BaseHtmlView
 			{
 				if ($moderator)
 				{
-					$this->hiddenList[$user->getName()] = $user;
+					$hiddenList[$user->getName()] = $user;
 				}
 			}
 			else
 			{
-				$this->onlineList[$user->getName()] = $user;
+				$onlineList[$user->getName()] = $user;
 			}
 		}
 
-		ksort($this->onlineList);
-		ksort($this->hiddenList);
+		ksort($onlineList);
+		ksort($hiddenList);
 
-		$this->usersUrl = $this->getUserlistURL('');
+		$usersUrl = $this->getUserlistURL('');
 
 		// Fall back to old template file.
 		$result = $this->loadTemplateFile($tpl);
@@ -672,13 +506,13 @@ class HtmlView extends BaseHtmlView
 		$kunena_stats = KunenaStatistics::getInstance();
 		$kunena_stats->loadGeneral();
 
-		$this->kunena_stats     = $kunena_stats;
-		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
-		$this->statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
-		$this->usercountLink    = $this->getUserlistLink('', $this->memberCount);
-		$this->userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
-		$this->moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
+		$kunena_stats1    = $kunena_stats;
+		$latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
+		$statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
+		$usercountLink    = $this->getUserlistLink('', $this->memberCount);
+		$userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
+		$moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
 
 		$result = $this->loadTemplateFile($tpl);
 
@@ -790,7 +624,7 @@ class HtmlView extends BaseHtmlView
 			{
 				$document = Factory::getApplication()->getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
-				$this->rss = $this->getRSSLink($this->getIcon('krss', Text::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
+				$rss = $this->getRSSLink($this->getIcon('krss', Text::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
 		}
 
@@ -873,11 +707,11 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$this->params            = $this->state->get('params');
-		$private                 = KunenaFactory::getPrivateMessaging();
-		$this->pm_link           = $private->getInboxURL();
-		$this->announcesListLink = KunenaAnnouncementHelper::getUrl('list');
-		$result                  = $this->loadTemplateFile($tpl);
+		$params            = $this->state->get('params');
+		$private           = KunenaFactory::getPrivateMessaging();
+		$pm_link           = $private->getInboxURL();
+		$announcesListLink = KunenaAnnouncementHelper::getUrl('list');
+		$result            = $this->loadTemplateFile($tpl);
 
 		echo $result;
 	}
@@ -898,21 +732,21 @@ class HtmlView extends BaseHtmlView
 			return ' ';
 		}
 
-		$this->parameters = new Registry;
-		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
-		$this->parameters->set('menutype', $basemenu->menutype);
-		$this->parameters->set('startLevel', $basemenu->level + 1);
-		$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
+		$parameters = new Registry;
+		$parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
+		$parameters->set('menutype', $basemenu->menutype);
+		$parameters->set('startLevel', $basemenu->level + 1);
+		$parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 
-		$this->list      = KunenaMenuHelper::getList($this->parameters);
-		$this->menu      = $this->app->getMenu();
-		$this->active    = $this->menu->getActive();
-		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
-		$this->path      = isset($this->active) ? $this->active->tree : [];
-		$this->showAll   = $this->parameters->get('showAllChildren');
-		$this->class_sfx = htmlspecialchars($this->parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
+		$list      = KunenaMenuHelper::getList($parameters);
+		$menu      = $this->app->getMenu();
+		$active    = $menu->getActive();
+		$active_id = isset($active) ? $active->id : $menu->getDefault()->id;
+		$path      = isset($active) ? $active->tree : [];
+		$showAll   = $parameters->get('showAllChildren');
+		$class_sfx = htmlspecialchars($parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
-		return count($this->list) ? $this->loadTemplateFile('menu') : '';
+		return count($list) ? $this->loadTemplateFile('menu') : '';
 	}
 
 	/**
@@ -942,7 +776,7 @@ class HtmlView extends BaseHtmlView
 
 		if (!$contents)
 		{
-			$this->moduleHtml = $this->getModulePosition('kunena_profilebox');
+			$moduleHtml = $this->getModulePosition('kunena_profilebox');
 
 			$login = KunenaLogin::getInstance();
 
@@ -952,11 +786,11 @@ class HtmlView extends BaseHtmlView
 
 				if ($login)
 				{
-					$this->login           = $login;
-					$this->registerUrl     = $login->getRegistrationUrl();
-					$this->lostPasswordUrl = $login->getResetUrl();
-					$this->lostUsernameUrl = $login->getRemindUrl();
-					$this->remember        = $login->getRememberMe();
+					$login1          = $login;
+					$registerUrl     = $login->getRegistrationUrl();
+					$lostPasswordUrl = $login->getResetUrl();
+					$lostUsernameUrl = $login->getRemindUrl();
+					$remember        = $login->getRememberMe();
 				}
 			}
 			else
@@ -965,10 +799,10 @@ class HtmlView extends BaseHtmlView
 
 				if ($login)
 				{
-					$this->logout = $login;
+					$logout = $login;
 				}
 
-				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
+				$lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages
 				$this->getPrivateMessageLink();
@@ -979,7 +813,7 @@ class HtmlView extends BaseHtmlView
 				// Announcements
 				if ($this->me->isModerator())
 				{
-					$this->announcementsLink = '<a href="' . KunenaAnnouncementHelper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
+					$announcementsLink = '<a href="' . KunenaAnnouncementHelper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
 				}
 			}
 
@@ -1008,8 +842,8 @@ class HtmlView extends BaseHtmlView
 
 		if ($private)
 		{
-			$count                     = $private->getUnreadCount($this->me->userid);
-			$this->privateMessagesLink = $private->getInboxLink($count ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : Text::_('COM_KUNENA_PMS_INBOX'));
+			$count               = $private->getUnreadCount($this->me->userid);
+			$privateMessagesLink = $private->getInboxLink($count ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : Text::_('COM_KUNENA_PMS_INBOX'));
 		}
 	}
 

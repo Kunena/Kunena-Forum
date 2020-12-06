@@ -18,7 +18,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
@@ -32,7 +31,7 @@ $wa->useScript('multiselect');
 	  const direction = document.getElementById("directionTable");
 	  const order = table.options[table.selectedIndex].value;
 
-	  if (order !== '<?php echo $this->listOrdering; ?>') {
+	  if (order !== '<?php echo $this->list->Ordering; ?>') {
 			var dirn = 'asc';
 		} else {
 			var dirn = direction.options[direction.selectedIndex].value;
@@ -63,7 +62,7 @@ $wa->useScript('multiselect');
 								   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_INPUT_SEARCH') ?></label>
 							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
 								   placeholder="<?php echo Text::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>"
-								   value="<?php echo $this->filterSearch; ?>"
+								   value="<?php echo $this->filter->Search; ?>"
 								   title="<?php echo Text::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
@@ -88,7 +87,7 @@ $wa->useScript('multiselect');
 							<select name="directionTable" id="directionTable" class="input-medium"
 									onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
@@ -96,7 +95,7 @@ $wa->useScript('multiselect');
 								   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
 							</select>
 						</div>
 						<div class="clearfix"></div>
@@ -134,7 +133,7 @@ $wa->useScript('multiselect');
 									   name="filter_username"
 									   id="filter_username"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterUsername; ?>"
+									   value="<?php echo $this->filter->Username; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -144,7 +143,7 @@ $wa->useScript('multiselect');
 									   name="filter_email"
 									   id="filter_email"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterEmail; ?>"
+									   value="<?php echo $this->filter->Email; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -154,7 +153,7 @@ $wa->useScript('multiselect');
 									   name="filter_ip"
 									   id="filter_ip"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterIp; ?>"
+									   value="<?php echo $this->filter->Ip; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -163,7 +162,7 @@ $wa->useScript('multiselect');
 								<select name="filter_rank" id="filter_rank" class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filterRank); ?>
+									<?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filter->Rank); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -173,7 +172,7 @@ $wa->useScript('multiselect');
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
+									<?php echo HTMLHelper::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filter->Signature); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -182,7 +181,7 @@ $wa->useScript('multiselect');
 								<select name="filter_block" id="filter_block" class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
+									<?php echo HTMLHelper::_('select.options', $this->blockOptions(), 'value', 'text', $this->filter->Block, true); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -192,7 +191,7 @@ $wa->useScript('multiselect');
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
+									<?php echo HTMLHelper::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filter->Banned); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -202,7 +201,7 @@ $wa->useScript('multiselect');
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
+									<?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filter->Moderator); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">

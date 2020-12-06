@@ -29,22 +29,6 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $items;
-	private $group;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -57,10 +41,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function displayDefault($tpl = null)
 	{
-		$this->state      = $this->get('state');
-		$this->group      = $this->state->get('group');
-		$this->items      = $this->get('items');
-		$this->pagination = $this->get('Pagination');
+		$state      = $this->get('state');
+		$group      = $state->get('group');
+		$items      = $this->get('items');
+		$pagination = $this->get('Pagination');
 
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('COM_KUNENA_A_EMAIL_MANAGER'));

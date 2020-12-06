@@ -36,11 +36,6 @@ use function defined;
 class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $template;
-	/**
 	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
 	 * @since version
 	 */
@@ -140,8 +135,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
 		$this->document = Factory::getApplication()->getDocument();
-		$this->template = KunenaFactory::getTemplate();
-		$this->template->initialize();
+		$template       = KunenaFactory::getTemplate();
+		$template->initialize();
 	}
 
 	/**

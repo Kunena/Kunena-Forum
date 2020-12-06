@@ -16,7 +16,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
@@ -26,7 +25,7 @@ $wa->addInlineScript('Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
-		if (order != ' . $this->listOrdering . ') {
+		if (order != ' . $this->list->Ordering . ') {
 dirn = "asc";
 } else {
 dirn = direction.options[direction.selectedIndex].value;
@@ -45,18 +44,18 @@ Joomla.tableOrdering(order, dirn, "");
 					  name="adminForm">
 					<input type="hidden" name="task" value=""/>
 					<input type="hidden" name="boxchecked" value="0"/>
-					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
-					<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
+					<input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
+					<input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
 							<label for="filter_search"
-								   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+							 class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
-								   placeholder="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
-								   value="<?php echo $this->filterSearch; ?>"
-								   title="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"/>
+							 placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
+							 value="<?php echo $this->filter->Search; ?>"
+							 title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
 							<button class="btn btn-outline-primary tip" type="submit"
@@ -80,7 +79,7 @@ Joomla.tableOrdering(order, dirn, "");
 							<select name="directionTable" id="directionTable" class="input-medium"
 									onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
@@ -88,7 +87,7 @@ Joomla.tableOrdering(order, dirn, "");
 								   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
 							</select>
 						</div>
 						<div class="clearfix"></div>
@@ -100,13 +99,13 @@ Joomla.tableOrdering(order, dirn, "");
 							<th width="1%"><input type="checkbox" name="toggle" value=""
 												  onclick="Joomla.checkAll(this)"/>
 							</th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering); ?>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->list->Direction, $this->list->Ordering); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->list->Direction, $this->list->Ordering); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->list->Direction, $this->list->Ordering); ?>
 							<th><?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?></th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering); ?></th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering); ?></th>
-							<th><?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->list->Direction, $this->list->Ordering); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->list->Direction, $this->list->Ordering); ?></th>
+							<th><?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?></th>
 						</tr>
 						<tr>
 							<td class="hidden-phone">
@@ -118,7 +117,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   name="filter_title"
 									   id="filter_title"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterTitle; ?>"
+									   value="<?php echo $this->filter->Title; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -128,7 +127,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   name="filter_type"
 									   id="filter_type"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterType; ?>"
+									   value="<?php echo $this->filter->Type; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -138,7 +137,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   name="filter_size"
 									   id="filter_size"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterSize; ?>"
+									   value="<?php echo $this->filter->Size; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -154,7 +153,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   name="filter_username"
 									   id="filter_username"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterUsername; ?>"
+									   value="<?php echo $this->filter->Username; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
@@ -164,7 +163,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   name="filter_post"
 									   id="filter_post"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterPost; ?>"
+									   value="<?php echo $this->filter->Post; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -212,7 +211,7 @@ Joomla.tableOrdering(order, dirn, "");
 												?>
 												<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR');</a>
 												?>
-												<?php if ($this->filterActive || $this->pagination->total > 0)
+												<?php if ($this->filter->Active || $this->pagination->total > 0)
 													:
 													?>
 													<button class="btn btn-outline-primary" type="button"

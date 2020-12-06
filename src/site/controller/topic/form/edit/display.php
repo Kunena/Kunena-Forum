@@ -45,76 +45,6 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 	private $me;
 	private $message;
 	private $headerText;
-	/**
-	 * @var mixed|string
-	 * @since version
-	 */
-	private $modified_reason;
-	/**
-	 * @var false
-	 * @since version
-	 */
-	private $canSubscribe;
-	/**
-	 * @var false
-	 * @since version
-	 */
-	private $subscriptionschecked;
-	/**
-	 * @var bool|mixed
-	 * @since version
-	 */
-	private $post_anonymous;
-	/**
-	 * @var \Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage|mixed
-	 * @since version
-	 */
-	private $privateMessage;
-	/**
-	 * @var array|bool
-	 * @since version
-	 */
-	private $allowedExtensions;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll
-	 * @since version
-	 */
-	private $poll;
-	/**
-	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
-	 * @since version
-	 */
-	private $attachments;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $action;
-	/**
-	 * @var array|\SimpleXMLElement
-	 * @since version
-	 */
-	private $topicIcons;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic|null
-	 * @since version
-	 */
-	private $topic;
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $template;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $catid;
 
 	/**
 	 * Prepare topic edit form.
@@ -130,23 +60,23 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->catid = $this->input->getInt('catid');
-		$mesid       = $this->input->getInt('mesid');
-		$saved       = $this->app->getUserState('com_kunena.postfields');
+		$catid = $this->input->getInt('catid');
+		$mesid = $this->input->getInt('mesid');
+		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->template = KunenaFactory::getTemplate();
-		$this->message  = KunenaMessageHelper::get($mesid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$template      = KunenaFactory::getTemplate();
+		$this->message = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
-		$this->topic    = $this->message->getTopic();
-		$this->category = $this->topic->getCategory();
+		$topic     = $this->message->getTopic();
+		$category1 = $topic->getCategory();
 
-		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+		$template->setCategoryIconset($topic->getCategory()->iconset);
 
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
+		if ($this->config->topicicons && $topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $topic->icon_id);
 		}
 
 		if ($this->config->read_only)
@@ -188,7 +118,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl               = $this->topic->getUrl();
+						$canonicalUrl               = $topic->getUrl();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;
@@ -205,22 +135,22 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$topic, &$params, 0]);
 
-		$this->action = 'edit';
+		$action = 'edit';
 
 		// Get attachments.
-		$this->attachments = $this->message->getAttachments();
+		$attachments = $this->message->getAttachments();
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')
+			&& $topic->isAuthorised(!$topic->poll_id ? 'poll.create' : 'poll.edit')
 		)
 		{
-			$this->poll = $this->topic->getPoll();
+			$poll = $topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category1);
 
 		if ($saved)
 		{
@@ -235,38 +165,38 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 			->where('author_id', '=', $this->message->userid)
 			->order('id')
 			->limit(1);
-		$this->privateMessage       = $finder->firstOrNew();
-		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
+		$privateMessage       = $finder->firstOrNew();
+		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = false;
-		$this->canSubscribe         = false;
-		$usertopic                  = $this->topic->getUserTopic();
+		$post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($category1->post_anonymous);
+		$subscriptionschecked = false;
+		$canSubscribe         = false;
+		$usertopic            = $topic->getUserTopic();
 
 		if ($this->config->allowsubscriptions)
 		{
-			$this->canSubscribe = true;
+			$canSubscribe = true;
 		}
 
-		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
+		if ($topic->isAuthorised('subscribe') && $topic->exists())
 		{
 			if ($usertopic->subscribed == 1)
 			{
-				$this->subscriptionschecked = true;
+				$subscriptionschecked = true;
 			}
 		}
 		else
 		{
 			if ($this->config->subscriptionschecked)
 			{
-				$this->subscriptionschecked = true;
+				$subscriptionschecked = true;
 			}
 		}
 
-		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
+		$modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $topic->subject;
 	}
 
 	/**

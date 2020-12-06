@@ -184,7 +184,7 @@ class KunenaProfilerItem
 	 * @var string
 	 * @since version
 	 */
-	private $name;
+	public $name;
 
 	/**
 	 * @param   string  $name  name

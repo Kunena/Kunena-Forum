@@ -65,31 +65,6 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Attachments';
-	/**
-	 * @var KunenaPagination
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $total;
-	/**
-	 * @var mixed|\stdClass
-	 * @since version
-	 */
-	private $embedded;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $moreUri;
-	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $template;
 
 	/**
 	 * Prepare user attachments list.
@@ -108,39 +83,39 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 30);
 
-		$this->template = KunenaFactory::getTemplate();
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->profile  = KunenaUserHelper::get($userid);
-		$this->moreUri  = null;
+		$template      = KunenaFactory::getTemplate();
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->profile = KunenaUserHelper::get($userid);
+		$moreUri       = null;
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$embedded = $this->getOptions()->get('embedded', false);
 
-		if ($this->embedded)
+		if ($embedded)
 		{
-			$this->moreUri = new Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
-			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+			$moreUri = new Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
+			$moreUri->setVar('Itemid', KunenaRoute::getItemID($moreUri));
 		}
 
 		$finder = new KunenaFinder;
 		$finder->where('userid', '=', $userid);
 
-		$this->total      = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+		$total      = $finder->count();
+		$pagination = new KunenaPagination($total, $start, $limit);
 
 		if (!$this->config->show_imgfiles_manage_profile || !$this->me->exists() && !$this->config->pubprofile)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		if ($this->moreUri)
+		if ($moreUri)
 		{
-			$this->pagination->setUri($this->moreUri);
+			$pagination->setUri($moreUri);
 		}
 
 		$this->attachments = $finder
 			->order('id', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
+			->start($pagination->limitstart)
+			->limit($pagination->limit)
 			->find();
 
 		// Pre-load messages.

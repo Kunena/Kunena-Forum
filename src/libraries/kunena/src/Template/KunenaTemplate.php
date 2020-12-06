@@ -226,16 +226,6 @@ class KunenaTemplate extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $category_iconset = '';
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $ktemplate;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $xml_path;
 
 	/**
 	 * Constructor
@@ -492,7 +482,7 @@ class KunenaTemplate extends CMSObject
 
 		if (!is_file($xml_path))
 		{
-			$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
+			$xml_path1 = KPATH_SITE . "/template/{$this->name}/config/template.xml";
 
 			return false;
 		}
@@ -1407,8 +1397,8 @@ HTML;
 	public function getTopicIcon(KunenaTopic $topic): string
 	{
 		$config           = KunenaFactory::getConfig();
-		$this->ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $this->ktemplate->params->get('topicicontype');
+		$ktemplate        = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
 		$category_iconset = $topic->getCategory()->iconset;
 
 		if ($config->topicicons)

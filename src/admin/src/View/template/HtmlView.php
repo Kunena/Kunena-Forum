@@ -28,27 +28,6 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $templatefile;
-	private $templatename;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $details;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $params;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $form;
 
 	/**
 	 * @param   null  $tpl
@@ -61,18 +40,18 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->form         = $this->get('Form');
-		$this->params       = $this->get('editparams');
-		$this->details      = $this->get('templatedetails');
-		$this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template           = Template::getInstance($this->templatename);
+		$form         = $this->get('Form');
+		$params       = $this->get('editparams');
+		$details      = $this->get('templatedetails');
+		$templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
+		$template     = Template::getInstance($templatename);
 		$template->initializeBackend();
 
-		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+		$templatefile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';
 
-		if (!file_exists($this->templatefile))
+		if (!file_exists($templatefile))
 		{
-			$ourFileHandle = @fopen($this->templatefile, 'w');
+			$ourFileHandle = @fopen($templatefile, 'w');
 
 			if ($ourFileHandle)
 			{

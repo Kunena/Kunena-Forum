@@ -30,7 +30,7 @@ use function defined;
 	$lastlevel  = 4;
 	$extrastyle = '';
 
-	foreach ($this->list as $i => &$item)
+	foreach ($this->list as $i => $item)
 	{
 		// Exclude item with menu item option set to exclude from menu modules
 		if ($item->getParams()->get('menu_show', 1) == 0)

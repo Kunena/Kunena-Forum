@@ -51,11 +51,6 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Actions';
-	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $template;
 
 	/**
 	 * Prepare topic actions display.
@@ -82,11 +77,11 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
 		$userTopic          = $this->topic->getUserTopic();
-		$this->template     = KunenaFactory::getTemplate();
+		$template           = KunenaFactory::getTemplate();
 		$this->topicButtons = new CMSObject;
 
-		$fullactions   = $this->template->params->get('fullactions');
-		$topicicontype = $this->template->params->get('topicicontype');
+		$fullactions   = $template->params->get('fullactions');
+		$topicicontype = $template->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 

@@ -78,36 +78,6 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Moderate';
-	/**
-	 * @var KunenaBan|null
-	 * @since version
-	 */
-	private $banInfo;
-	/**
-	 * @var mixed|null
-	 * @since version
-	 */
-	private $replies;
-	/**
-	 * @var \Joomla\CMS\User\User|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $banHistory;
-	/**
-	 * @var KunenaTemplate|\KunenaTemplateaurelia
-	 * @since version
-	 */
-	private $template;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
 
 	/**
 	 * Prepare topic moderate display.
@@ -144,18 +114,18 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$this->category = $this->topic->getCategory();
+		$category = $this->topic->getCategory();
 
 		$this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
-			. "&catid={$this->category->id}&id={$this->topic->id}"
+			. "&catid={$category->id}&id={$this->topic->id}"
 			. ($this->message ? "&mesid={$this->message->id}" : '');
 		$this->title = !$this->message ?
 			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
 			Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
-		$this->template = KunenaTemplate::getInstance();
-		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
-		$this->topicIcons = $this->template->getTopicIcons(false);
+		$template = KunenaTemplate::getInstance();
+		$template->setCategoryIconset($this->topic->getCategory()->iconset);
+		$this->topicIcons = $template->getTopicIcons(false);
 
 		// Have a link to moderate user as well.
 		if (isset($this->message))
@@ -175,8 +145,8 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 		if ($this->message)
 		{
-			$this->banHistory = KunenaBan::getUserHistory($this->message->userid);
-			$this->me         = Factory::getApplication()->getIdentity();
+			$banHistory = KunenaBan::getUserHistory($this->message->userid);
+			$me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
 			$db    = Factory::getDbo();
@@ -191,7 +161,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 			try
 			{
-				$this->replies = $db->loadResult();
+				$replies = $db->loadResult();
 			}
 			catch (ExecutionFailureException $e)
 			{
@@ -201,7 +171,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
+		$banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
 	}
 
 	/**

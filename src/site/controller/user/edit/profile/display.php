@@ -35,11 +35,6 @@ class ComponentUserControllerEditProfileDisplay extends KunenaControllerDisplay
 	 */
 	protected $name = 'User/Edit/Profile';
 	private $headerText;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $social;
 	private $profile;
 	/**
 	 * @var array
@@ -79,12 +74,12 @@ class ComponentUserControllerEditProfileDisplay extends KunenaControllerDisplay
 
 		if ($config->social)
 		{
-			$this->social = $this->profile->socialButtons();
-			$this->social = ArrayHelper::toObject($this->social);
+			$social = $this->profile->socialButtons();
+			$social = ArrayHelper::toObject($social);
 		}
 		else
 		{
-			$this->social = null;
+			$social = null;
 		}
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');

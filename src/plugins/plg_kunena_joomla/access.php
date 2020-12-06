@@ -441,7 +441,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function authoriseCategories(int $userid, array &$categories): array
+	public function authoriseCategories(int $userid, array $categories): array
 	{
 		$user = Factory::getUser($userid);
 
@@ -493,7 +493,7 @@ class AccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
+	public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
 	{
 		$allow = $deny = [];
 

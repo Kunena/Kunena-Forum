@@ -35,91 +35,6 @@ class HtmlView extends BaseHtmlView
 	 * @since  6.0
 	 */
 	protected $state;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterDate;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterAuthor;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterIp;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterCategory;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTopic;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTitle;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $view_options_list;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $trash_items;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $md5Calculated;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $purgeitems;
 
 	/**
 	 * @return  void
@@ -130,8 +45,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function displayPurge(): void
 	{
-		$this->purgeitems    = $this->get('PurgeItems');
-		$this->md5Calculated = $this->get('Md5');
+		$purgeitems    = $this->get('PurgeItems');
+		$md5Calculated = $this->get('Md5');
 
 		$this->setToolBarPurge();
 		$this->display();
@@ -176,16 +91,20 @@ class HtmlView extends BaseHtmlView
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->filterSearch   = $this->escape($this->state->get('list.search'));
-		$this->filterTitle    = $this->escape($this->state->get('filter.title'));
-		$this->filterTopic    = $this->escape($this->state->get('filter.topic'));
-		$this->filterCategory = $this->escape($this->state->get('filter.category'));
-		$this->filterIp       = $this->escape($this->state->get('filter.ip'));
-		$this->filterAuthor   = $this->escape($this->state->get('filter.author'));
-		$this->filterDate     = $this->escape($this->state->get('filter.date'));
-		$this->filterActive   = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering   = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection  = $this->escape($this->state->get('list.direction'));
+		$this->filter             = new \stdClass;
+		$this->filter->Search     = $this->escape($this->state->get('list.search'));
+		$this->filter->Title      = $this->escape($this->state->get('filter.title'));
+		$this->filter->Category   = $this->escape($this->state->get('filter.category'));
+		$this->filter->Topic      = $this->escape($this->state->get('filter.topic'));
+		$this->filter->Active     = $this->escape($this->state->get('filter.active'));
+		$this->filter->TargetUser = $this->escape($this->state->get('filter.target_user'));
+		$this->filter->Ip         = $this->escape($this->state->get('filter.ip'));
+		$this->filter->Author     = $this->escape($this->state->get('filter.author'));
+		$this->filter->Date       = $this->escape($this->state->get('filter.date'));
+
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		$this->addToolbar();
 

@@ -27,7 +27,7 @@ $wa->addInlineScript('Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
-		if (order != ' . $this->listOrdering . ') {
+		if (order != ' . $this->list->Ordering . ') {
 dirn = "asc";
 } else {
 dirn = direction.options[direction.selectedIndex].value;
@@ -36,12 +36,10 @@ Joomla.tableOrdering(order, dirn, "");
 }'
 );
 
-if ($this->saveOrder)
+if ($this->list->saveOrder)
 {
-	HTMLHelper::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
+	HTMLHelper::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->list->Direction, $this->list->saveOrderingUrl, false, true);
 }
-
-$filterItem = $this->escape($this->state->get('item.id'));
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -52,10 +50,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 					  method="post" name="adminForm"
 					  id="adminForm">
 					<input type="hidden" name="task" value=""/>
-					<input type="hidden" name="catid" value="<?php echo $filterItem; ?>"/>
+					<input type="hidden" name="catid" value="<?php echo $this->filter->Item; ?>"/>
 					<input type="hidden" name="boxchecked" value="0"/>
-					<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
-					<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
+					<input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
+					<input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
 					<div id="filter-bar" class="btn-toolbar">
@@ -64,7 +62,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
 								   placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
-								   value="<?php echo $this->filterSearch; ?>"
+								   value="<?php echo $this->filter->Search; ?>"
 								   title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
@@ -89,7 +87,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<select name="directionTable" id="directionTable" class="input-medium"
 									onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+								<?php echo HTMLHelper::_('select.options', $this->getSortDirectionFields(), 'value', 'text', $this->list->Direction); ?>
 							</select>
 						</div>
 						<div class="btn-group pull-right">
@@ -97,7 +95,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
 							<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 								<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
 							</select>
 						</div>
 						<!-- TODO: not implemented
@@ -123,31 +121,31 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									   onclick="Joomla.checkAll(this)"/>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="1%" class="nowrap">
 								<?php echo Text::_('COM_KUNENA_GO'); ?>
 							</th>
 							<th width="51%" class="nowrap">
-								<?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="20%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="center">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 						</tr>
 						<tr>
@@ -162,7 +160,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
+									<?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filter->Published, true); ?>
 								</select>
 							</td>
 							<td>
@@ -174,7 +172,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									   name="filter_title"
 									   id="filter_title"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-									   value="<?php echo $this->filterTitle; ?>"
+									   value="<?php echo $this->filter->Title; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -184,7 +182,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
+									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filter->Access); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -194,7 +192,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
+									<?php echo HTMLHelper::_('select.options', $this->lockOptions(), 'value', 'text', $this->filter->Locked); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -204,7 +202,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+									<?php echo HTMLHelper::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filter->Review); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -214,7 +212,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
+									<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filter->Allow_polls); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
@@ -224,7 +222,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
+									<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filter->Anonymous); ?>
 								</select>
 							</td>
 							<td class="nowrap center hidden-phone">
@@ -319,7 +317,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 									</td>
 									<td class="center">
-										<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id))
+										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parent_id))
 											:
 											?>
 											<button class="btn btn-micro"
@@ -414,7 +412,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									<div class="card card-block bg-faded p-2 center filter-state">
 											<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
 												<?php
-												if ($this->filterActive)
+												if ($this->filter->Active)
 													:
 													?>
 													<button class="btn btn-outline-primary" type="button"

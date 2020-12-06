@@ -37,11 +37,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	private $ftp;
 	/**
-	 * @var string
-	 * @since version
-	 */
-	private $css_path;
-	/**
 	 * @var mixed
 	 * @since version
 	 */
@@ -59,41 +54,6 @@ class HtmlView extends BaseHtmlView
 	 * @since version
 	 */
 	private $dir;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $less_path;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $templatefile;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $details;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $params;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $form;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $templatesxml;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
 
 	/**
 	 * @return  void
@@ -134,8 +94,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->templates  = $this->get('templates');
-		$this->pagination = $this->get('Pagination');
+		$this->templates    = $this->get('templates');
+		$this->pagination   = $this->get('Pagination');
 		$this->templatesxml = $this->get('templatesxml');
 
 		$this->addToolbar();
@@ -180,18 +140,18 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setToolBarEdit();
 
-		$this->form         = $this->get('Form');
-		$this->params       = $this->get('editparams');
-		$this->details      = $this->get('templatedetails');
+		$form               = $this->get('Form');
+		$params             = $this->get('editparams');
+		$details            = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
 		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
-		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+		$templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!File::exists($this->templatefile))
+		if (!File::exists($templatefile))
 		{
-			$ourFileHandle = @fopen($this->templatefile, 'w');
+			$ourFileHandle = @fopen($templatefile, 'w');
 
 			if ($ourFileHandle)
 			{
@@ -280,8 +240,8 @@ class HtmlView extends BaseHtmlView
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
 
-		$this->less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
-		$this->ftp       = $this->get('FTPcredentials');
+		$less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
+		$this->ftp = $this->get('FTPcredentials');
 		$this->display();
 	}
 
@@ -363,7 +323,7 @@ class HtmlView extends BaseHtmlView
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
 		$this->content      = $this->get('FileContentParsed');
-		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
+		$css_path           = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}

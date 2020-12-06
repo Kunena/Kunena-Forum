@@ -55,46 +55,6 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Results';
-	/**
-	 * @var false|string
-	 * @since version
-	 */
-	private $error;
-	/**
-	 * @var KunenaPagination
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $results;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $isModerator;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $searchwords;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $message_ordering;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
 
 	/**
 	 * Prepare search results display.
@@ -112,17 +72,17 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 
 		$this->model = new SearchModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+		$state = $this->model->getState();
 
-		$this->me               = KunenaUserHelper::getMyself();
-		$this->message_ordering = $this->me->getMessageOrdering();
+		$me               = KunenaUserHelper::getMyself();
+		$message_ordering = $me->getMessageOrdering();
 
-		$this->searchwords = $this->model->getSearchWords();
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$searchwords = $this->model->getSearchWords();
+		$isModerator = ($me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
-		$this->results = [];
-		$this->total   = $this->model->getTotal();
-		$this->results = $this->model->getResults();
+		$results     = [];
+		$this->total = $this->model->getTotal();
+		$results     = $this->model->getResults();
 
 		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
@@ -144,13 +104,13 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->pagination = new KunenaPagination(
+		$pagination = new KunenaPagination(
 			$this->total,
-			$this->state->get('list.start'),
-			$this->state->get('list.limit')
+			$state->get('list.start'),
+			$state->get('list.limit')
 		);
 
-		$this->error = $this->model->getError();
+		$error = $this->model->getError();
 	}
 
 	/**

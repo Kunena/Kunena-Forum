@@ -33,78 +33,13 @@ class HtmlView extends BaseHtmlView
 	 * @var mixed
 	 * @since version
 	 */
-	private $pagination;
-	private $state;
+	protected $pagination;
+	protected $state;
 	/**
 	 * @var mixed
 	 * @since version
 	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterMinPostCount;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSpecial;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTitle;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var KunenaTemplate|\KunenaTemplateaurelia
-	 * @since version
-	 */
-	private $ktemplate;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $items;
+	protected $filterActive;
 
 	/**
 	 * Returns an array of standard published state filter options.
@@ -139,16 +74,19 @@ class HtmlView extends BaseHtmlView
 		$this->pagination = $this->get('Pagination');
 		$this->ktemplate  = KunenaTemplate::getInstance();
 
-		$this->sortFields          = $this->getSortFields();
-		$this->sortDirectionFields = $this->getSortDirectionFields();
+		$sortFields          = $this->getSortFields();
+		$sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->filterSearch       = $this->escape($this->state->get('filter.search'));
-		$this->filterTitle        = $this->escape($this->state->get('filter.title'));
-		$this->filterSpecial      = $this->escape($this->state->get('filter.special'));
-		$this->filterMinPostCount = $this->escape($this->state->get('filter.min'));
-		$this->filterActive       = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering       = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection      = $this->escape($this->state->get('list.direction'));
+		$this->filter               = new \stdClass;
+		$this->filter->Search       = $this->escape($this->state->get('filter.search'));
+		$this->filter->Title        = $this->escape($this->state->get('filter.title'));
+		$this->filter->Special      = $this->escape($this->state->get('filter.special'));
+		$this->filter->Active       = $this->escape($this->state->get('filter.active'));
+		$this->filter->MinPostCount = $this->escape($this->state->get('filter.min'));
+
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		$this->addToolbar();
 

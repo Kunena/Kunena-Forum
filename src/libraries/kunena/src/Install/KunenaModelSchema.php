@@ -88,21 +88,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 */
 	protected $version = null;
 	private $tables;
-	/**
-	 * @var DOMDocument|null
-	 * @since version
-	 */
-	private $usingschema;
-	/**
-	 * @var DOMDocument|null
-	 * @since version
-	 */
-	private $toschema;
-	/**
-	 * @var bool|DOMDocument|null
-	 * @since version
-	 */
-	private $fromschema;
 
 	/**
 	 * @throws  Exception
@@ -211,9 +196,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 				$using = $this->getUpgradeSchema();
 			}
 
-			$this->fromschema  = $from;
-			$this->toschema    = $to;
-			$this->usingschema = $using;
+			$fromschema  = $from;
+			$toschema    = $to;
+			$usingschema = $using;
 			$this->upgradeSchema($from, $using);
 			$this->diffschema = $this->getSchemaDiff($from, $to);
 

@@ -31,16 +31,6 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $sampledata;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $count;
 
 	/**
 	 * @param   null  $tpl  tmpl
@@ -55,11 +45,11 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->addToolbar();
 
-		$this->count = KunenaStatistics::getInstance()->loadCategoryCount();
+		$count = KunenaStatistics::getInstance()->loadCategoryCount();
 
-		$this->sampledata = KunenaStatistics::getTotalEmoticons() == 0 && $this->count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
+		$sampledata = KunenaStatistics::getTotalEmoticons() == 0 && $count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
 
-		if ($this->sampledata)
+		if ($sampledata)
 		{
 			Factory::getApplication()->getDocument()->getWebAssetManager()
 				->registerAndUseScript('mod_sampledata', 'mod_sampledata/sampledata-process.js', [], ['defer' => true], ['core']);

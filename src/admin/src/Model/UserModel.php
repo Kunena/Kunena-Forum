@@ -36,11 +36,6 @@ use function defined;
  */
 class UserModel extends KunenaModel
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $context;
 
 	/**
 	 * @param   array    $data     data
@@ -330,17 +325,17 @@ class UserModel extends KunenaModel
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
-		$this->context = 'com_kunena.admin.user';
+		$context = 'com_kunena.admin.user';
 
 		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		$layout        = $app->input->get('layout');
-		$this->context = 'com_kunena.admin.user';
+		$layout  = $app->input->get('layout');
+		$context = 'com_kunena.admin.user';
 
 		if ($layout)
 		{
-			$this->context .= '.' . $layout;
+			$context .= '.' . $layout;
 		}
 
 		$value = Factory::getApplication()->input->getInt('userid');

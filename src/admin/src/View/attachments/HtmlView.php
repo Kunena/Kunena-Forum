@@ -28,81 +28,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterPost;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterUsername;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterDimensions;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSize;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterType;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTitle;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $items;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -115,12 +40,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->items      = $this->get('Items');
+		$items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
-		$this->sortFields          = $this->getSortFields();
-		$this->sortDirectionFields = $this->getSortDirectionFields();
+		$sortFields          = $this->getSortFields();
+		$sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -128,16 +53,19 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		$this->filterSearch     = $this->escape($this->state->get('list.search'));
-		$this->filterTitle      = $this->escape($this->state->get('filter.title'));
-		$this->filterType       = $this->escape($this->state->get('filter.type'));
-		$this->filterSize       = $this->escape($this->state->get('filter.size'));
-		$this->filterDimensions = $this->escape($this->state->get('filter.dims'));
-		$this->filterUsername   = $this->escape($this->state->get('filter.username'));
-		$this->filterPost       = $this->escape($this->state->get('filter.post'));
-		$this->filterActive     = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering     = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection    = $this->escape($this->state->get('list.direction'));
+		$this->filter             = new \stdClass;
+		$this->filter->Search     = $this->escape($this->state->get('filter.search'));
+		$this->filter->Username   = $this->escape($this->state->get('filter.username'));
+		$this->filter->Title      = $this->escape($this->state->get('filter.title'));
+		$this->filter->Type       = $this->escape($this->state->get('filter.type'));
+		$this->filter->Size       = $this->escape($this->state->get('filter.size'));
+		$this->filter->Dimensions = $this->escape($this->state->get('filter.dims'));
+		$this->filter->Post       = $this->escape($this->state->get('filter.post'));
+		$this->filter->Active     = $this->escape($this->state->get('filter.active'));
+
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		$this->addToolbar();
 

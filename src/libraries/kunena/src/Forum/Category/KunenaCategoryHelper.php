@@ -206,7 +206,7 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected static function buildTree(array &$instances): void
+	protected static function buildTree(array $instances): void
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		self::$_tree = [];

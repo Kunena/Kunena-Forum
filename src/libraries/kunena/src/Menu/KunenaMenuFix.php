@@ -131,7 +131,7 @@ abstract class KunenaMenuFix
 			throw new KunenaException(Text::sprintf('JERROR_LOADING_MENUS', $e->getMessage()), 500);
 		}
 
-		foreach (self::$items as &$item)
+		foreach (self::$items as $item)
 		{
 			// Get parent information.
 			$parent_tree = [];

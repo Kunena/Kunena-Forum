@@ -74,38 +74,6 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Item';
-	/**
-	 * @var KunenaBan|null
-	 * @since version
-	 */
-	private $banInfo;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $avatar;
-	/**
-	 * @var object
-	 * @since version
-	 */
-	private $socials;
-	/**
-	 * @var \Kunena\Forum\Libraries\Integration\KunenaPrivate
-	 * @since version
-	 */
-	private $private;
-	private $medals;
-	private $points;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var UserModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Load user profile.
@@ -131,9 +99,9 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->model = new UserModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+		$model = new UserModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$state = $model->getState();
 
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->user    = Factory::getUser($userid);
@@ -141,14 +109,14 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		$this->profile->tryAuthorise('read');
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$this->points        = $activityIntegration->getUserPoints($this->profile->userid);
-		$this->medals        = $activityIntegration->getUserMedals($this->profile->userid);
-		$this->private       = KunenaFactory::getPrivateMessaging();
+		$points              = $activityIntegration->getUserPoints($this->profile->userid);
+		$medals              = $activityIntegration->getUserMedals($this->profile->userid);
+		$private             = KunenaFactory::getPrivateMessaging();
 		$socials             = $this->profile->socialButtons();
-		$this->socials       = ArrayHelper::toObject($socials);
+		$socials1            = ArrayHelper::toObject($socials);
 
-		$this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-		$this->banInfo = $this->config->showbannedreason
+		$avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+		$banInfo = $this->config->showbannedreason
 			? KunenaBan::getInstanceByUserid($this->profile->userid)
 			: null;
 

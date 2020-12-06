@@ -76,11 +76,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
 	];
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $ktemplate;
 
 	/**
 	 * Logic to load language strings for the template.
@@ -126,8 +121,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$this->compileLess('assets/less/aurelia.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$storage         = $this->ktemplate->params->get('storage');
+		$ktemplate = KunenaFactory::getTemplate();
+		$storage   = $ktemplate->params->get('storage');
 
 		if ($storage)
 		{
@@ -149,7 +144,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$fontawesome = $ktemplate->params->get('fontawesome');
 		$doc         = Factory::getApplication()->getDocument();
 
 		if ($fontawesome)
@@ -158,7 +153,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			$this->addScript('https://use.fontawesome.com/releases/v5.13.0/js/v4-shims.js', [], ['defer' => true]);
 		}
 
-		$icons = $this->ktemplate->params->get('icons');
+		$icons = $ktemplate->params->get('icons');
 
 		if ($icons)
 		{
@@ -169,7 +164,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
-		$iconcolor = $this->ktemplate->params->get('IconColor');
+		$iconcolor = $ktemplate->params->get('IconColor');
 
 		if ($iconcolor)
 		{
@@ -181,7 +176,7 @@ EOF;
 EOF;
 		}
 
-		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
+		$iconcolornew = $ktemplate->params->get('IconColorNew');
 
 		if ($iconcolornew)
 		{

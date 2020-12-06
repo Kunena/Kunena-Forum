@@ -83,51 +83,6 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item/Message';
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $thankyou_delete;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $more_thankyou;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $total_thankyou;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $thankyou;
-	/**
-	 * @var string|void
-	 * @since version
-	 */
-	private $captchaDisplay;
-	/**
-	 * @var false
-	 * @since version
-	 */
-	private $captchaEnabled;
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $ktemplate;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $detail;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $location;
 
 	/**
 	 * Prepare displaying message.
@@ -145,39 +100,39 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 
 		$mesid = $this->input->getInt('mesid', 0);
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->location = $this->input->getInt('location', 0);
-		$this->detail   = $this->input->get('detail', false);
-		$this->message  = KunenaMessageHelper::get($mesid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$location      = $this->input->getInt('location', 0);
+		$detail        = $this->input->get('detail', false);
+		$this->message = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
-		$this->topic     = $this->message->getTopic();
-		$this->category  = $this->topic->getCategory();
-		$this->profile   = $this->message->getAuthor();
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->topic    = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
+		$this->profile  = $this->message->getAuthor();
+		$ktemplate      = KunenaFactory::getTemplate();
 
 		if ($this->topic->unread)
 		{
 			$this->setMetaData('robots', 'noindex, follow');
 		}
 
-		$this->captchaEnabled = false;
+		$captchaEnabled = false;
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && $this->config->quickreply)
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$this->captchaEnabled = true;
+			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$captchaEnabled = true;
 		}
 		else
 		{
-			$this->captchaEnabled = false;
+			$captchaEnabled = false;
 		}
 
 		// Thank you info and buttons.
-		$this->thankyou        = [];
-		$this->total_thankyou  = 0;
-		$this->more_thankyou   = 0;
-		$this->thankyou_delete = [];
+		$thankyou        = [];
+		$total_thankyou  = 0;
+		$more_thankyou   = 0;
+		$thankyou_delete = [];
 
 		if (isset($this->message->thankyou))
 		{
@@ -189,11 +144,11 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 
 				if (count($this->message->thankyou) > $this->config->thankyou_max)
 				{
-					$this->more_thankyou = count($this->message->thankyou) - $this->config->thankyou_max;
+					$more_thankyou = count($this->message->thankyou) - $this->config->thankyou_max;
 				}
 
-				$this->total_thankyou = count($this->message->thankyou);
-				$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
+				$total_thankyou = count($this->message->thankyou);
+				$thankyous      = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
 
 				$userids_thankyous = [];
 
@@ -208,10 +163,10 @@ class ComponentTopicControllerItemMessageDisplay extends KunenaControllerDisplay
 				{
 					if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 					{
-						$this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+						$thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
 					}
 
-					$this->thankyou[$userid] = $loaded_users[$userid]->getLink();
+					$thankyou[$userid] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

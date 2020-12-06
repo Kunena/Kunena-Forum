@@ -34,37 +34,6 @@ use function defined;
  */
 class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $headerText;
-	private $actions;
-	/**
-	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
-	 * @since version
-	 */
-	private $topics;
-	/**
-	 * @var KunenaPagination
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed|\stdClass
-	 * @since version
-	 */
-	private $embedded;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $moreUri;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
 
 	/**
 	 * Prepare topic list for moderators.
@@ -80,10 +49,10 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 	{
 		parent::before();
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$access         = KunenaAccess::getInstance();
-		$this->moreUri  = null;
-		$this->embedded = $this->getOptions()->get('embedded', true);
+		$me       = KunenaUserHelper::getMyself();
+		$access   = KunenaAccess::getInstance();
+		$moreUri  = null;
+		$embedded = $this->getOptions()->get('embedded', true);
 
 		$params = ComponentHelper::getParams('com_kunena');
 		$start  = $this->input->getInt('limitstart', 0);
@@ -142,27 +111,27 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 			->filterByMoved(false)
 			->where('locked', '=', 0);
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		if ($this->moreUri)
+		if ($moreUri)
 		{
-			$this->pagination->setUri($this->moreUri);
+			$pagination->setUri($moreUri);
 		}
 
-		$this->topics = $finder
+		$topics = $finder
 			->order('last_post_time', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
+			->start($pagination->limitstart)
+			->limit($pagination->limit)
 			->find();
 
-		if ($this->topics)
+		if ($topics)
 		{
 			$this->prepareTopics();
 		}
 
-		$actions       = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions = $this->getTopicActions($this->topics, $actions);
+		$actions  = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+		$actions1 = $this->getTopicActions($topics, $actions);
 
-		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
+		$headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}
 }

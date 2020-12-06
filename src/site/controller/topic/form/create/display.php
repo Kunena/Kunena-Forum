@@ -53,71 +53,10 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	private $topic;
 	private $me;
 	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $canSubscribe;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $subscriptionschecked;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $post_anonymous;
-	/**
-	 * @var KunenaPrivateMessage
-	 * @since version
-	 */
-	private $privateMessage;
-	private $poll;
-	/**
-	 * @var array|bool
-	 * @since version
-	 */
-	private $allowedExtensions;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $action;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $selectcatlist;
-	/**
-	 * @var false
-	 * @since version
-	 */
-	private $captchaEnabled;
-	/**
-	 * @var string|void
-	 * @since version
-	 */
-	private $captchaDisplay;
-	/**
-	 * @var array|\SimpleXMLElement
-	 * @since version
-	 */
-	private $topicIcons;
-	/**
 	 * @var mixed
 	 * @since version
 	 */
 	private $message;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $template;
 
 	/**
 	 * Prepare topic creation form.
@@ -171,8 +110,8 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->template = KunenaFactory::getTemplate();
+		$this->me = KunenaUserHelper::getMyself();
+		$template = KunenaFactory::getTemplate();
 
 		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
@@ -203,25 +142,25 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$this->category = KunenaCategoryHelper::get($catid);
-		list($this->topic, $this->message) = $this->category->newTopic($saved);
+		$category1 = KunenaCategoryHelper::get($catid);
+		list($this->topic, $this->message) = $category1->newTopic($saved);
 
-		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+		$template->setCategoryIconset($this->topic->getCategory()->iconset);
 
 		// Get topic icons if they are enabled.
 		if ($this->config->topicicons)
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$this->captchaEnabled = true;
+			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$captchaEnabled = true;
 		}
 		else
 		{
-			$this->captchaEnabled = false;
+			$captchaEnabled = false;
 		}
 
 		if (!$this->topic->category_id)
@@ -253,27 +192,27 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 			'action'      => 'topic.create',
 		];
 
-		$this->selectcatlist = HTMLHelper::_(
+		$selectcatlist = HTMLHelper::_(
 			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
 			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
-		$this->action = 'post';
+		$action = 'post';
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category1);
 
 		if ($arraypollcatid)
 		{
-			$this->poll = $this->topic->getPoll();
+			$poll = $this->topic->getPoll();
 		}
 
-		$this->privateMessage       = new KunenaPrivateMessage;
-		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
+		$privateMessage       = new KunenaPrivateMessage;
+		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$post_anonymous       = $saved ? $saved['anonymous'] : !empty($category1->post_anonymous);
+		$subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->canSubscribe = $this->canSubscribe();
+		$canSubscribe = $this->canSubscribe();
 
 		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
 

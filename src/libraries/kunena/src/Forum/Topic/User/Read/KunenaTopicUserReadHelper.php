@@ -239,7 +239,7 @@ abstract class KunenaTopicUserReadHelper
 				unset(self::$_topics [$old->id]);
 			}
 
-			foreach (self::$_topics [$new->id] as &$instance)
+			foreach (self::$_topics [$new->id] as $instance)
 			{
 				$instance->topic_id    = $new->id;
 				$instance->category_id = $new->category_id;

@@ -191,7 +191,7 @@ class KunenaModel extends BaseDatabaseModel
 		// If we are not in embedded mode, get variable from application
 		if (!$this->embedded)
 		{
-			return $this->app->getUserStateFromRequest($key, $request, $default, $type);
+			return (object) $this->app->getUserStateFromRequest($key, $request, $default, $type);
 		}
 
 		// Embedded models/views do not have user state -- all variables come from parameters

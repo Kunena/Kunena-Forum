@@ -52,65 +52,10 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	private $topic;
 	private $me;
 	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $canSubscribe;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $subscriptionschecked;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $post_anonymous;
-	/**
-	 * @var array|bool
-	 * @since version
-	 */
-	private $allowedExtensions;
-	/**
-	 * @var KunenaMessage
-	 * @since version
-	 */
-	private $privateMessage;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $action;
-	/**
 	 * @var mixed
 	 * @since version
 	 */
 	private $message;
-	/**
-	 * @var array|\SimpleXMLElement
-	 * @since version
-	 */
-	private $topicIcons;
-	/**
-	 * @var false
-	 * @since version
-	 */
-	private $captchaEnabled;
-	/**
-	 * @var string|void
-	 * @since version
-	 */
-	private $captchaDisplay;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	private $template;
 
 	/**
 	 * Prepare topic reply form.
@@ -132,8 +77,8 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->template = KunenaFactory::getTemplate();
+		$this->me = KunenaUserHelper::getMyself();
+		$template = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
@@ -173,16 +118,16 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		$uri = trim(strtok($this->topic->getUrl(), '?'));
 		$doc->addHeadLink($uri, 'canonical');
 
-		$this->category = $this->topic->getCategory();
+		$category = $this->topic->getCategory();
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$this->captchaEnabled = true;
+			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$captchaEnabled = true;
 		}
 		else
 		{
-			$this->captchaEnabled = false;
+			$captchaEnabled = false;
 		}
 
 		$parent->tryAuthorise('reply');
@@ -205,22 +150,22 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		// Can user edit topic icons?
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
-		$this->action = 'post';
+		$action = 'post';
 
-		$this->privateMessage       = new KunenaMessage;
-		$this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
+		$privateMessage       = new KunenaMessage;
+		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
+		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category);
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$post_anonymous       = $saved ? $saved['anonymous'] : !empty($category->post_anonymous);
+		$subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->canSubscribe = $this->canSubscribe();
+		$canSubscribe = $this->canSubscribe();
 	}
 
 	/**

@@ -40,11 +40,6 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 	 */
 	protected $name = 'User/Edit/Settings';
 	private $headerText;
-	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $ktemplate;
 
 	/**
 	 * Prepare Kunena user settings.
@@ -126,8 +121,8 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 		);
 		$this->settings[] = $item;
 
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$social          = $this->ktemplate->params->get('socialshare');
+		$ktemplate = KunenaFactory::getTemplate();
+		$social    = $ktemplate->params->get('socialshare');
 
 		if ($social != 0)
 		{

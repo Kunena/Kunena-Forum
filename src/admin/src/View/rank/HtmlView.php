@@ -27,23 +27,7 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listranks;
 	private $ktemplate;
-	private $rankpath;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $rank_selected;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -58,10 +42,10 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setLayout('edit');
 
-		$this->state         = $this->get('state');
-		$this->rank_selected = $this->get('rank');
-		$this->rankpath      = $this->ktemplate->getRankPath();
-		$this->listranks     = $this->get('Rankspaths');
+		$state         = $this->get('state');
+		$rank_selected = $this->get('rank');
+		$rankpath      = $this->ktemplate->getRankPath();
+		$listranks     = $this->get('Rankspaths');
 
 		$this->addToolbar();
 

@@ -29,11 +29,6 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var KunenaStatistics|null
-	 * @since version
-	 */
-	private $kunena_stats;
 	private $config;
 
 	/**
@@ -56,7 +51,7 @@ class HtmlView extends BaseHtmlView
 
 		$kunena_stats = KunenaStatistics::getInstance();
 		$kunena_stats->loadAll(true);
-		$this->kunena_stats = $kunena_stats;
+		$kunena_stats1 = $kunena_stats;
 
 		return parent::display($tpl);
 	}

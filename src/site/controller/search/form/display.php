@@ -43,26 +43,6 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Search/Form';
-	/**
-	 * @var false|string
-	 * @since version
-	 */
-	private $error;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $isModerator;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
 
 	/**
 	 * Prepare search form display.
@@ -80,7 +60,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 
 		$this->model = new SearchModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+		$state = $this->model->getState();
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
@@ -107,10 +87,10 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me = KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$this->error       = $this->model->getError();
+		$isModerator = ($me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$error       = $this->model->getError();
 	}
 
 	/**

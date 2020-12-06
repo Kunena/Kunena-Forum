@@ -30,11 +30,6 @@ use function defined;
  */
 class SmileyModel extends AdminModel
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $context;
 
 	/**
 	 * @inheritDoc
@@ -147,7 +142,7 @@ class SmileyModel extends AdminModel
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
-		$this->context = 'com_kunena.admin.smiley';
+		$context = 'com_kunena.admin.smiley';
 
 		$app = Factory::getApplication();
 
@@ -156,7 +151,7 @@ class SmileyModel extends AdminModel
 
 		if ($layout)
 		{
-			$this->context .= '.' . $layout;
+			$context .= '.' . $layout;
 		}
 
 		$value = Factory::getApplication()->input->getInt('id');

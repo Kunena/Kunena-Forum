@@ -30,11 +30,6 @@ use function defined;
  */
 class RankModel extends AdminModel
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $context;
 
 	/**
 	 * @inheritDoc
@@ -147,7 +142,7 @@ class RankModel extends AdminModel
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
-		$this->context = 'com_kunena.admin.rank';
+		$context = 'com_kunena.admin.rank';
 
 		$app = Factory::getApplication();
 
@@ -156,7 +151,7 @@ class RankModel extends AdminModel
 
 		if ($layout)
 		{
-			$this->context .= '.' . $layout;
+			$context .= '.' . $layout;
 		}
 
 		$value = Factory::getApplication()->input->getInt('id');

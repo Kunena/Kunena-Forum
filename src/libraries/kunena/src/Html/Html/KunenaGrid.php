@@ -205,7 +205,7 @@ abstract class KunenaGrid
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected static function _checkedOut(&$row, $overlib = 1): string
+	protected static function _checkedOut($row, $overlib = 1): string
 	{
 		$hover = '';
 

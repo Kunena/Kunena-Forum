@@ -27,23 +27,7 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listsmileys;
 	private $ktemplate;
-	private $smileypath;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $smiley_selected;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -58,10 +42,10 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setLayout('edit');
 
-		$this->state           = $this->get('state');
-		$this->smiley_selected = $this->get('smiley');
-		$this->smileypath      = $this->ktemplate->getSmileyPath();
-		$this->listsmileys     = $this->get('Smileyspaths');
+		$state           = $this->get('state');
+		$smiley_selected = $this->get('smiley');
+		$smileypath      = $this->ktemplate->getSmileyPath();
+		$listsmileys     = $this->get('Smileyspaths');
 
 		$this->addToolbar();
 

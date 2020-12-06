@@ -89,26 +89,6 @@ class HtmlView extends BaseHtmlView
 	protected $filterName;
 
 	protected $filterAccess;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var \Joomla\CMS\User\User|null
-	 * @since version
-	 */
-	private $user;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
 
 	/**
 	 * Display the view
@@ -128,21 +108,24 @@ class HtmlView extends BaseHtmlView
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
-		$this->sortFields          = $this->getSortFields();
-		$this->sortDirectionFields = $this->getSortDirectionFields();
+		$sortFields          = $this->getSortFields();
+		$sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->user = Factory::getApplication()->getIdentity();
 
 		$this->filterForm = $model->getFilterForm();
 
-		$this->filterSearch  = $this->escape($this->state->get('filter.search'));
-		$this->filterEnabled = $this->escape($this->state->get('filter.enabled'));
-		$this->filterName    = $this->escape($this->state->get('filter.name'));
-		$this->filterElement = $this->escape($this->state->get('filter.element'));
-		$this->filterAccess  = $this->escape($this->state->get('filter.access'));
-		$this->filterActive  = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering  = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection = $this->escape($this->state->get('list.direction'));
+		$this->filter          = new \stdClass;
+		$this->filter->Search  = $this->escape($this->state->get('filter.search'));
+		$this->filter->Enabled = $this->escape($this->state->get('filter.enabled'));
+		$this->filter->Name    = $this->escape($this->state->get('filter.name'));
+		$this->filter->Element = $this->escape($this->state->get('filter.element'));
+		$this->filter->Access  = $this->escape($this->state->get('filter.access'));
+		$this->filter->Active  = $this->escape($this->state->get('filter.active'));
+
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))

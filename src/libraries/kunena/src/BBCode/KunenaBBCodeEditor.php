@@ -38,11 +38,6 @@ class KunenaBBCodeEditor
 	 */
 	public $editor_elements = [];
 	/**
-	 * @var bool|string
-	 * @since version
-	 */
-	private $isHMVC;
-	/**
 	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
 	 * @since version
 	 */
@@ -179,8 +174,8 @@ class KunenaBBCodeEditor
 	 */
 	public function initialize(): void
 	{
-		$template     = KunenaFactory::getTemplate();
-		$this->isHMVC = $template->isHmvc();
+		$template = KunenaFactory::getTemplate();
+		$isHMVC   = $template->isHmvc();
 	}
 
 	/**

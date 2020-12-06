@@ -38,17 +38,7 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Statistics/General';
-	/**
-	 * @var string|void
-	 * @since version
-	 */
-	private $userlistUrl;
 	private $lastUserId;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $latestMemberLink;
 
 	/**
 	 * Prepare general statistics display.
@@ -88,8 +78,8 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 
-		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
-		$this->userlistUrl      = KunenaFactory::getProfile()->getUserListUrl();
+		$latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
+		$userlistUrl      = KunenaFactory::getProfile()->getUserListUrl();
 	}
 
 	/**

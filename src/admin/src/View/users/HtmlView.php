@@ -36,91 +36,6 @@ class HtmlView extends BaseHtmlView
 	 * @since  6.0
 	 */
 	protected $state;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterIp;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterModerator;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterBanned;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterBlock;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSignature;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterRank;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterEmail;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterUsername;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $modcatlist;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $users;
 
 	/**
 	 * DisplayDefault
@@ -138,23 +53,26 @@ class HtmlView extends BaseHtmlView
 		$this->users      = $this->get('items');
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-		$this->modcatlist = $this->get('Modcatslist');
+		$modcatlist       = $this->get('Modcatslist');
 
-		$this->sortFields          = $this->getSortFields();
-		$this->sortDirectionFields = $this->getSortDirectionFields();
+		$sortFields          = $this->getSortFields();
+		$sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->filterSearch    = $this->escape($this->state->get('filter.search'));
-		$this->filterUsername  = $this->escape($this->state->get('filter.username'));
-		$this->filterEmail     = $this->escape($this->state->get('filter.email'));
-		$this->filterRank      = $this->escape($this->state->get('filter.rank'));
-		$this->filterSignature = $this->escape($this->state->get('filter.signature'));
-		$this->filterBlock     = $this->escape($this->state->get('filter.block'));
-		$this->filterBanned    = $this->escape($this->state->get('filter.banned'));
-		$this->filterModerator = $this->escape($this->state->get('filter.moderator'));
-		$this->filterActive    = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection   = $this->escape($this->state->get('list.direction'));
-		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
+		$this->filter            = new \stdClass;
+		$this->filter->Search    = $this->escape($this->state->get('filter.search'));
+		$this->filter->Username  = $this->escape($this->state->get('filter.username'));
+		$this->filter->Email     = $this->escape($this->state->get('filter.email'));
+		$this->filter->Rank      = $this->escape($this->state->get('filter.rank'));
+		$this->filter->Signature = $this->escape($this->state->get('filter.signature'));
+		$this->filter->Block     = $this->escape($this->state->get('filter.block'));
+		$this->filter->Banned    = $this->escape($this->state->get('filter.banned'));
+		$this->filter->Moderator = $this->escape($this->state->get('filter.moderator'));
+		$this->filter->Active    = $this->escape($this->state->get('filter.active'));
+		$this->filter->Ip        = $this->escape($this->state->get('filter.ip'));
+
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		$this->addToolbar();
 

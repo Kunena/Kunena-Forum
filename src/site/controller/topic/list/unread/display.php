@@ -38,52 +38,6 @@ use function defined;
  */
 class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $headerText;
-	private $actions;
-	/**
-	 * @var KunenaPagination
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $count;
-	/**
-	 * @var array|\Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
-	 * @since version
-	 */
-	private $topics;
-	/**
-	 * @var mixed|\stdClass
-	 * @since version
-	 */
-	private $embedded;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $moreUri;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var TopicsModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Prepare topic list for moderators.
@@ -99,20 +53,20 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->model = new TopicsModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state    = $this->model->getState();
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->moreUri  = null;
-		$access         = KunenaAccess::getInstance();
-		$start          = $this->state->get('list.start');
-		$limit          = $this->state->get('list.limit');
-		$params         = ComponentHelper::getParams('com_kunena');
-		$Itemid         = $this->input->getInt('Itemid');
-		$this->embedded = $this->getOptions()->get('embedded', true);
+		$model = new TopicsModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$state    = $model->getState();
+		$me       = KunenaUserHelper::getMyself();
+		$moreUri  = null;
+		$access   = KunenaAccess::getInstance();
+		$start    = $state->get('list.start');
+		$limit    = $state->get('list.limit');
+		$params   = ComponentHelper::getParams('com_kunena');
+		$Itemid   = $this->input->getInt('Itemid');
+		$embedded = $this->getOptions()->get('embedded', true);
 
 		// Handle &sel=x parameter.
-		$time = $this->state->get('list.time');
+		$time = $state->get('list.time');
 
 		if ($time < 0)
 		{
@@ -152,48 +106,48 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 
 		$finder = new KunenaTopicFinder;
 
-		$this->topics = $finder
+		$topics = $finder
 			->start($start)
 			->limit($limit)
 			->filterByTime($time)
 			->order('id', 0)
-			->filterByUserAccess($this->me)
-			->filterByUserUnread($this->me)
+			->filterByUserAccess($me)
+			->filterByUserUnread($me)
 			->find();
 
 		$mesIds = [];
 
-		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+		$mesIds += KunenaTopicHelper::fetchNewStatus($topics, $me->userid);
 
 		$list = [];
 
-		$this->count = 0;
+		$count = 0;
 
-		foreach ($this->topics as $topic)
+		foreach ($topics as $topic)
 		{
 			if ($topic->unread)
 			{
 				$list[] = $topic;
-				$this->count++;
+				$count++;
 			}
 		}
 
-		$this->topics = $list;
+		$topics = $list;
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		if ($this->moreUri)
+		if ($moreUri)
 		{
-			$this->pagination->setUri($this->moreUri);
+			$pagination->setUri($moreUri);
 		}
 
-		if ($this->topics)
+		if ($topics)
 		{
 			$this->prepareTopics();
 		}
 
-		$actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions    = $this->getTopicActions($this->topics, $actions);
-		$this->headerText = Text::_('COM_KUNENA_UNREAD');
+		$actions    = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+		$actions1   = $this->getTopicActions($topics, $actions);
+		$headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

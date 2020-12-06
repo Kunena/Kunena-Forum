@@ -28,11 +28,6 @@ use stdClass;
  */
 class TemplateModel extends AdminModel
 {
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $context;
 
 	/**
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
@@ -101,7 +96,7 @@ class TemplateModel extends AdminModel
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// List state information.
-		$this->context = 'com_kunena.admin.templates';
+		$context = 'com_kunena.admin.templates';
 
 		$app = Factory::getApplication();
 
@@ -110,11 +105,11 @@ class TemplateModel extends AdminModel
 
 		if ($layout)
 		{
-			$this->context .= '.' . $layout;
+			$context .= '.' . $layout;
 		}
 
 		// Edit state information
-		$value = $this->getUserStateFromRequest($this->context . '.edit', 'name', '', 'cmd');
+		$value = $this->getUserStateFromRequest($context . '.edit', 'name', '', 'cmd');
 		$this->setState('template', $value);
 
 		if (empty($app->getUserState('kunena.edit.templatename')))

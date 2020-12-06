@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
@@ -104,12 +105,6 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $cat_topic_subscribers = [];
-	private $isTFAEnabled;
-	/**
-	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
-	 * @since version
-	 */
-	private $app;
 
 	/**
 	 * @param   null  $tpl
@@ -170,19 +165,20 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($layout == 'subscriptions')
 		{
-			$this->app = Factory::getApplication();
-			$id = $this->app->input->get('id', 0, 'int');
+			$app = Factory::getApplication();
+			$id  = $app->input->get('id', 0, 'int');
 
 			if ($id)
 			{
-				$topic           = TopicHelper::get($id);
-				$acl             = Access::getInstance();
-				$cat_subscribers = $acl->loadSubscribers($topic, Access::CATEGORY_SUBSCRIPTION);
+				$topic           = KunenaTopicHelper::get($id);
+				$acl             = KunenaAccess::getInstance();
+				$cat_subscribers = $acl->loadSubscribers($topic, KunenaAccess::CATEGORY_SUBSCRIPTION);
 
 				$this->cat_subscribers_users   = KunenaUserHelper::loadUsers($cat_subscribers);
-				$topic_subscribers             = $acl->loadSubscribers($topic, Access::TOPIC_SUBSCRIPTION);
+				$topic_subscribers             = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
 				$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
-				$this->cat_topic_subscribers   = $acl->getSubscribers($topic->getCategory()->id, $id, Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION, 1, 1);
+				$this->cat_topic_subscribers   = $acl->getSubscribers($topic->getCategory()->id, $id,
+					KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1);
 			}
 
 			$this->setToolBarSubscriptions();
@@ -193,8 +189,8 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($layout == 'uninstall')
 		{
-			$login              = Login::getInstance();
-			$this->isTFAEnabled = $login->isTFAEnabled();
+			$login        = KunenaLogin::getInstance();
+			$isTFAEnabled = $login->isTFAEnabled();
 
 			$this->setToolBarUninstall();
 		}

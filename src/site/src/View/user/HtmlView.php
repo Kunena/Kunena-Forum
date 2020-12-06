@@ -34,11 +34,6 @@ class HtmlView extends BaseHtmlView
 {
 	private $topic;
 	private $position;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $spacing;
 	private $config;
 	/**
 	 * @var false|float
@@ -51,9 +46,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	private $message_position;
 	private $module;
-	private $lastUserName;
-	private $lastPostTime;
-	private $lastPostAuthor;
 	private $firstUserName;
 	private $firstPostTime;
 	private $firstPostAuthor;
@@ -70,12 +62,6 @@ class HtmlView extends BaseHtmlView
 	private $me;
 	private $category;
 	private $topics;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser
-	 * @since version
-	 */
-	private $postAuthor;
-	private $message;
 	private $messages;
 	private $layout;
 	private $state;
@@ -100,11 +86,6 @@ class HtmlView extends BaseHtmlView
 	 * @var mixed
 	 * @since version
 	 */
-	private $postActions;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
 	private $total;
 	private $params;
 	/**
@@ -112,11 +93,6 @@ class HtmlView extends BaseHtmlView
 	 * @since version
 	 */
 	private $topicActions;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $Itemid;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -132,7 +108,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->layout           = 'default';
 		$this->params           = $this->state->get('params');
-		$this->Itemid           = $this->get('Itemid');
+		$Itemid                 = $this->get('Itemid');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
 		$this->topicActions     = $this->get('TopicActions');
@@ -221,7 +197,7 @@ class HtmlView extends BaseHtmlView
 		$this->messages         = $this->get('Messages');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
-		$this->postActions      = $this->get('PostActions');
+		$postActions            = $this->get('PostActions');
 		$this->actionMove       = false;
 		$this->message_ordering = $this->me->getMessageOrdering();
 
@@ -284,17 +260,17 @@ class HtmlView extends BaseHtmlView
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
-		foreach ($this->messages as $this->message)
+		foreach ($this->messages as $message)
 		{
 			$this->position++;
-			$this->topic    = $this->message->getTopic();
+			$this->topic    = $message->getTopic();
 			$this->category = $this->topic->getCategory();
 			$usertype       = $this->me->getType($this->category->id, true);
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
 			$cache       = Factory::getCache('com_kunena', 'output');
-			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
+			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$message->id}";
 			$cachegroup  = 'com_kunena.posts';
 
 			// FIXME: enable caching after fixing the issues
@@ -303,7 +279,7 @@ class HtmlView extends BaseHtmlView
 			if (!$contents)
 			{
 				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-				$this->postAuthor       = KunenaFactory::getUser($this->message->userid);
+				$postAuthor             = KunenaFactory::getUser($message->userid);
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
@@ -380,9 +356,9 @@ class HtmlView extends BaseHtmlView
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
-				$this->lastPostAuthor   = $this->topic->getLastPostAuthor();
-				$this->lastPostTime     = $this->topic->last_post_time;
-				$this->lastUserName     = $this->topic->last_post_guest_name;
+				$lastPostAuthor         = $this->topic->getLastPostAuthor();
+				$lastPostTime           = $this->topic->last_post_time;
+				$lastUserName           = $this->topic->last_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
@@ -394,11 +370,11 @@ class HtmlView extends BaseHtmlView
 
 				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
 				{
-					$this->spacing = 1;
+					$spacing = 1;
 				}
 				else
 				{
-					$this->spacing = 0;
+					$spacing = 0;
 				}
 
 				$contents = $this->loadTemplateFile('row');

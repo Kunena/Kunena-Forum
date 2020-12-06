@@ -67,17 +67,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/List';
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $title;
 	private $topic;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $categorylist;
 
 	/**
 	 * Prepare topics by pre-loading needed information.
@@ -139,8 +129,8 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		$options    = [];
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		// Todo: fix params
-		$cat_params         = ['sections' => 1, 'catid' => 0];
-		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
 		$params = new Registry;
@@ -203,7 +193,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 			}
 			else
 			{
-				$this->title = $this->headerText;
+				$title1 = $this->headerText;
 				$this->setTitle($headerText);
 			}
 

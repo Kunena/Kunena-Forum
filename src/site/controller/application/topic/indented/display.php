@@ -27,11 +27,6 @@ use function defined;
  */
 class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var \Kunena\Forum\Libraries\Layout\KunenaLayout
-	 * @since version
-	 */
-	private $page;
 
 	/**
 	 * Return true if layout exists.
@@ -44,9 +39,9 @@ class ComponentKunenaControllerApplicationTopicIndentedDisplay extends KunenaCon
 	 */
 	public function exists()
 	{
-		$this->page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
+		$page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
 
-		return (bool) $this->page->getPath();
+		return (bool) $page->getPath();
 	}
 
 	/**

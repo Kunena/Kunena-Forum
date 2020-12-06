@@ -16,7 +16,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
@@ -30,7 +29,7 @@ $wa->useScript('multiselect');
 	  const direction = document.getElementById("directionTable");
 	  const order = table.options[table.selectedIndex].value;
 
-	  if (order !== '<?php echo $this->listOrdering; ?>') {
+	  if (order !== '<?php echo $this->list->Ordering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -62,9 +61,9 @@ $wa->useScript('multiselect');
 									<input type="hidden" name="task" value=""/>
 									<input type="hidden" name="boxchecked" value="0"/>
 									<input type="hidden" name="filter_order"
-										   value="<?php echo $this->listOrdering; ?>"/>
+										   value="<?php echo $this->list->Ordering; ?>"/>
 									<input type="hidden" name="filter_order_Dir"
-										   value="<?php echo $this->listDirection; ?>"/>
+										   value="<?php echo $this->list->Direction; ?>"/>
 									<?php echo HTMLHelper::_('form.token'); ?>
 
 									<div id="filter-bar" class="btn-toolbar">
@@ -74,7 +73,7 @@ $wa->useScript('multiselect');
 											<input type="text" name="filter_search" id="filter_search"
 												   class="filter form-control"
 												   placeholder="<?php echo Text::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
-												   value="<?php echo $this->escape($this->state->get('list.search')); ?>"
+												   value="<?php echo $this->filter->Search; ?>"
 												   title="<?php echo Text::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>"/>
 										</div>
 										<div class="btn-group pull-left">
@@ -97,7 +96,7 @@ $wa->useScript('multiselect');
 											<select name="directionTable" id="directionTable" class="input-medium"
 													onchange="Joomla.orderTable()">
 												<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-												<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
 											</select>
 										</div>
 										<div class="btn-group pull-right">
@@ -106,7 +105,7 @@ $wa->useScript('multiselect');
 											<select name="sortTable" id="sortTable" class="input-medium"
 													onchange="Joomla.orderTable()">
 												<option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-												<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
 											</select>
 										</div>
 									</div>
@@ -120,10 +119,10 @@ $wa->useScript('multiselect');
 											</th>
 											<th width="5%"
 												class="center"><?php echo Text::_('COM_KUNENA_EMOTICON'); ?></th>
-											<th width="8%"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
-											<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering); ?></th>
+											<th width="8%"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->list->Direction, $this->list->Ordering); ?></th>
+											<th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->list->Direction, $this->list->Ordering); ?></th>
 											<th width="1%" class="nowrap center hidden-phone">
-												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
+												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?>
 											</th>
 										</tr>
 										<tr>
@@ -138,7 +137,7 @@ $wa->useScript('multiselect');
 													   type="text"
 													   name="filter_code" id="filter_code"
 													   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-													   value="<?php echo $this->filterCode; ?>"
+													   value="<?php echo $this->filter->Code; ?>"
 													   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 											</td>
 											<td class="nowrap center">
@@ -149,7 +148,7 @@ $wa->useScript('multiselect');
 													   name="filter_location"
 													   id="filter_location"
 													   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-													   value="<?php echo $this->filterLocation; ?>"
+													   value="<?php echo $this->filter->Location; ?>"
 													   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 											</td>
 											<td class="hidden-phone center">
@@ -204,7 +203,7 @@ $wa->useScript('multiselect');
 													<div class="card card-block bg-faded p-2 center filter-state">
 															<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
 																<?php
-																if ($this->filterActive)
+																if ($this->filter->Active)
 																	:
 																	?>
 																	<button class="btn btn-outline-primary"

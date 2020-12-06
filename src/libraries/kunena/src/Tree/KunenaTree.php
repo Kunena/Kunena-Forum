@@ -102,7 +102,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function add(&$items): void
+	public function add($items): void
 	{
 		// Prepare tree
 		foreach ($items as $item)

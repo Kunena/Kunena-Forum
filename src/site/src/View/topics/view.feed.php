@@ -46,7 +46,6 @@ class feed extends KunenaView
 	 * @since version
 	 */
 	private $layout;
-	private $params;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -85,7 +84,7 @@ class feed extends KunenaView
 		}
 
 		$this->layout = 'default';
-		$this->params = $this->state->get('params');
+		$params       = $this->state->get('params');
 		$this->topics = $this->get('Topics');
 		$this->total  = $this->get('Total');
 

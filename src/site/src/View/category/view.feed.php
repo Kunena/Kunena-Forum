@@ -38,16 +38,6 @@ class feed extends KunenaView
 	 * @since version
 	 */
 	private $ktemplate;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $topics;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $category;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -67,19 +57,19 @@ class feed extends KunenaView
 
 		KunenaParser::$relative = false;
 
-		$this->category = $this->get('Category');
+		$category1 = $this->get('Category');
 
-		if (!$this->category->isAuthorised('read'))
+		if (!$category1->isAuthorised('read'))
 		{
-			throw new Exception($this->category->getError(), 404);
+			throw new Exception($category1->getError(), 404);
 		}
 
-		$this->topics = $this->get('Topics');
+		$topics = $this->get('Topics');
 
-		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $category1->name;
 		$this->setTitle($title);
 
-		$metaDesc = $this->document->getDescription() . '. ' . $this->escape("{$this->category->name} - {$this->config->board_title}");
+		$metaDesc = $this->document->getDescription() . '. ' . $this->escape("{$category1->name} - {$this->config->board_title}");
 		$this->document->setDescription($metaDesc);
 
 		// Create image for feed
@@ -89,7 +79,7 @@ class feed extends KunenaView
 		$image->description    = $this->document->getDescription();
 		$this->document->image = $image;
 
-		foreach ($this->topics as $topic)
+		foreach ($topics as $topic)
 		{
 			$description = $topic->last_post_message;
 			$date        = new Date($topic->last_post_time);

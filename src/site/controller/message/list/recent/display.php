@@ -52,38 +52,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	public $messages;
 	private $headerText;
 	private $state;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $title;
 	private $pagination;
-	private $actions;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic[]
-	 * @since version
-	 */
-	private $topics;
-	/**
-	 * @var mixed|\stdClass
-	 * @since version
-	 */
-	private $embedded;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $moreUri;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var TopicsModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Prepare category list display.
@@ -99,20 +68,20 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 	{
 		parent::before();
 
-		$this->model = new TopicsModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state   = $this->model->getState();
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->moreUri = null;
+		$model = new TopicsModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state = $model->getState();
+		$me          = KunenaUserHelper::getMyself();
+		$moreUri     = null;
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+		$embedded = $this->getOptions()->get('embedded', false);
 
-		if ($this->embedded)
+		if ($embedded)
 		{
-			$this->moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+			$moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
 				. '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
-			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+			$moreUri->setVar('Itemid', KunenaRoute::getItemID($moreUri));
 		}
 
 		$start = $this->state->get('list.start');
@@ -246,9 +215,9 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			}
 		}
 
-		if ($this->moreUri)
+		if ($moreUri)
 		{
-			$this->pagination->setUri($this->moreUri);
+			$this->pagination->setUri($moreUri);
 		}
 
 		$this->messages = $finder
@@ -265,7 +234,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
 
-		$this->topics = KunenaTopicHelper::getTopics($topicIds, 'none');
+		$topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = [];
 
@@ -275,7 +244,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			$mesIds[(int) $message->id]      = (int) $message->id;
 		}
 
-		if ($this->topics)
+		if ($topics)
 		{
 			$this->prepareTopics($userIds, $mesIds);
 		}
@@ -324,7 +293,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 				$actions = ['approve', 'delete', 'move', 'permdelete'];
 		}
 
-		$this->actions = $this->getMessageActions($this->messages, $actions);
+		$actions1 = $this->getMessageActions($this->messages, $actions);
 	}
 
 	/**
@@ -382,8 +351,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends KunenaController
 			}
 			else
 			{
-				$this->title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
-				$this->setTitle($this->title);
+				$title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
+				$this->setTitle($title);
 			}
 
 			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))

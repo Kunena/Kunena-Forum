@@ -62,16 +62,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 * @since   Kunena 6.0
 	 */
 	public $messageButtons;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $quickreply;
-	/**
-	 * @var null
-	 * @since version
-	 */
-	private $message_closed;
 
 	/**
 	 * Prepare message actions display.
@@ -101,7 +91,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new CMSObject;
-		$this->message_closed = null;
+		$message_closed       = null;
 
 		$ktemplate     = KunenaFactory::getTemplate();
 		$fullactions   = $ktemplate->params->get('fullactions');
@@ -109,7 +99,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$button = $fullactions ? true : false;
 
-		$this->quickreply = null;
+		$quickreply = null;
 
 		if ($this->config->read_only)
 		{
@@ -119,7 +109,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
-			$this->quickreply = $this->config->quickreply;
+			$quickreply = $this->config->quickreply;
 
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
@@ -238,13 +228,13 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		elseif (!$me->isModerator($this->topic->getCategory()))
 		{
 			// User is not allowed to write a post.
-			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
+			$message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
 				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
 		}
 
 		$login = KunenaLogin::getInstance();
 
-		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold
+		if (!$this->message->isAuthorised('reply') && !$message_closed && $login->enabled() && !$this->message->hold
 			&& !$this->config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$this->config->read_only
 		)
@@ -397,7 +387,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			if ($me->userid == $this->message->userid && $this->config->useredit)
 			{
 				// Allow edit message when enabled.
-				$this->message_closed = null;
+				$message_closed = null;
 			}
 
 			if ($topicicontype == 'B2' && !$fullactions)

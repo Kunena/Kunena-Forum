@@ -82,21 +82,6 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $me;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $actionMove;
-	/**
-	 * @var array|void|null
-	 * @since version
-	 */
-	private $topicActions;
-	/**
-	 * @var CategoryModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Prepare category display.
@@ -111,7 +96,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->model = new CategoryModel;
+		$model = new CategoryModel;
 
 		$this->me = KunenaUserHelper::getMyself();
 
@@ -211,10 +196,10 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		if (!$this->config->read_only)
 		{
-			$this->topicActions = $this->model->getTopicActions();
+			$topicActions = $model->getTopicActions();
 		}
 
-		$this->actionMove = $this->model->getActionMove();
+		$actionMove = $model->getActionMove();
 
 		$this->pagination = new Pagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);

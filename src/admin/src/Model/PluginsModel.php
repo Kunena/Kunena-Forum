@@ -207,7 +207,7 @@ class PluginsModel extends ListModel
 	{
 		$lang = Factory::getLanguage();
 
-		foreach ($items as &$item)
+		foreach ($items as $item)
 		{
 			$source    = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
 			$extension = 'plg_' . $item->folder . '_' . $item->element;

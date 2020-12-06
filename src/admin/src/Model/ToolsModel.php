@@ -207,22 +207,6 @@ class ToolsModel extends AdminModel
 	 * @since version
 	 */
 	private $app;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $ktemplateparams;
-	/**
-	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
-	 * @since version
-	 */
-	private $app;
-	private $ktemplateparams;
-	/**
-	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
-	 * @since version
-	 */
-	private $app;
 
 	/**
 	 * @inheritDoc

@@ -49,11 +49,6 @@ class TrashModel extends KunenaModel
 	 * @since   Kunena 6.0
 	 */
 	protected $_object = false;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $context;
 
 	/**
 	 *
@@ -424,7 +419,7 @@ class TrashModel extends KunenaModel
 	 */
 	protected function populateState(): void
 	{
-		$this->context = 'com_kunena.admin.trash';
+		$context = 'com_kunena.admin.trash';
 
 		$layout = $this->getUserStateFromRequest("com_kunena.admin.trash.layout", 'layout', 'messages', 'cmd');
 
@@ -438,7 +433,7 @@ class TrashModel extends KunenaModel
 
 		if ($layout)
 		{
-			$this->context .= '.' . $layout;
+			$context .= '.' . $layout;
 		}
 
 		// List state information

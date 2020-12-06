@@ -24,7 +24,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
-use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -53,131 +52,18 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $batch_categories;
+
 	/**
 	 * @var mixed
 	 * @since version
 	 */
-	private $pagination;
+	protected $pagination;
+
 	/**
 	 * @var mixed
 	 * @since version
 	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterLevels;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $saveOrderingUrl;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $saveOrder;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterAnonymous;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterAllow_polls;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterReview;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterLocked;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterAccess;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterType;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTitle;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterPublished;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $userId;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
-	/**
-	 * @var \Joomla\CMS\User\User|null
-	 * @since version
-	 */
-	private $user;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $ordering;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $pagesTotal;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
+	protected $filterActive;
 
 	/**
 	 * @return  void
@@ -200,22 +86,22 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->categories = $this->get('AdminCategories');
-		$this->pagination = $this->get('AdminNavigation');
-		$this->state      = $this->get('State');
-		$this->pagesTotal = 100;
+		$this->categories       = $this->get('AdminCategories');
+		$this->pagination       = $this->get('AdminNavigation');
+		$this->state            = $this->get('State');
+		$pagesTotal             = 100;
 		$this->batch_categories = $this->get('BatchCategories');
 
 		// Preprocess the list of items to find ordering divisions.
-		$this->ordering = [];
+		$ordering = [];
 
-		foreach ($this->categories as &$item)
+		foreach ($this->categories as $item)
 		{
-			$this->ordering[$item->parent_id][] = $item->id;
+			$ordering[$item->parent_id][] = $item->id;
 		}
 
-		$this->sortFields          = $this->getSortFields();
-		$this->sortDirectionFields = $this->getSortDirectionFields();
+		$sortFields          = $this->getSortFields();
+		$sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -223,24 +109,28 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		$this->user              = Factory::getApplication()->getIdentity();
-		$this->me                = KunenaUserHelper::getMyself();
-		$this->userId            = $this->user->get('id');
-		$this->filterSearch      = $this->escape($this->state->get('filter.search'));
-		$this->filterPublished   = $this->escape($this->state->get('filter.published'));
-		$this->filterTitle       = $this->escape($this->state->get('filter.title'));
-		$this->filterType        = $this->escape($this->state->get('filter.type'));
-		$this->filterAccess      = $this->escape($this->state->get('filter.access'));
-		$this->filterLocked      = $this->escape($this->state->get('filter.locked'));
-		$this->filterReview      = $this->escape($this->state->get('filter.review'));
-		$this->filterAllow_polls = $this->escape($this->state->get('filter.allow_polls'));
-		$this->filterAnonymous   = $this->escape($this->state->get('filter.anonymous'));
-		$this->filterActive      = $this->escape($this->state->get('filter.active'));
-		$this->listOrdering      = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection     = $this->escape($this->state->get('list.direction'));
-		$this->saveOrder         = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
-		$this->saveOrderingUrl   = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
-		$this->filterLevels      = $this->escape($this->state->get('filter.levels'));
+		$user = Factory::getApplication()->getIdentity();
+		$me   = KunenaUserHelper::getMyself();
+
+		$this->filter              = new \stdClass;
+		$this->filter->Item        = $this->escape($this->state->get('item.id'));
+		$this->filter->Search      = $this->escape($this->state->get('filter.search'));
+		$this->filter->Published   = $this->escape($this->state->get('filter.published'));
+		$this->filter->Title       = $this->escape($this->state->get('filter.title'));
+		$this->filter->Type        = $this->escape($this->state->get('filter.type'));
+		$this->filter->Access      = $this->escape($this->state->get('filter.access'));
+		$this->filter->Locked      = $this->escape($this->state->get('filter.locked'));
+		$this->filter->Review      = $this->escape($this->state->get('filter.review'));
+		$this->filter->Allow_polls = $this->escape($this->state->get('filter.allow_polls'));
+		$this->filter->Anonymous   = $this->escape($this->state->get('filter.anonymous'));
+		$this->filter->Active      = $this->escape($this->state->get('filter.active'));
+		$this->filter->Levels      = $this->escape($this->state->get('filter.levels'));
+
+		$this->list                  = new \stdClass;
+		$this->list->Ordering        = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction       = $this->escape($this->state->get('list.direction'));
+		$this->list->saveOrder       = ($this->list->Ordering == 'a.ordering' && $this->list->Direction == 'asc');
+		$this->list->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
 
 		$this->addToolbar();
 

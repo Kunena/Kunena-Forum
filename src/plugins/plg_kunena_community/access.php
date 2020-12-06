@@ -325,7 +325,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws  Exception
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
+	public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
 	{
 		if (empty($userids))
 		{

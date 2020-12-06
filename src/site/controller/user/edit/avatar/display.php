@@ -74,11 +74,6 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $galleryUri;
 
 	/**
 	 * Prepare avatar form.
@@ -107,7 +102,7 @@ class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
-		$this->galleryUri     = Uri::root(true) . '/media/kunena/avatars/gallery';
+		$galleryUri           = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}

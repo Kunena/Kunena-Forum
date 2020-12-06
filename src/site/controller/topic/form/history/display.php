@@ -41,51 +41,6 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit/History';
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $headerText;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $inline_attachments;
-	/**
-	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
-	 * @since version
-	 */
-	private $attachments;
-	/**
-	 * @var int|void
-	 * @since version
-	 */
-	private $historycount;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $replycount;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Message\KunenaMessage[]
-	 * @since version
-	 */
-	private $history;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic
-	 * @since version
-	 */
-	private $topic;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $me;
 
 	/**
 	 * Prepare reply history display.
@@ -100,34 +55,34 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$id       = $this->input->getInt('id');
-		$this->me = KunenaUserHelper::getMyself();
+		$id = $this->input->getInt('id');
+		$me = KunenaUserHelper::getMyself();
 
-		$this->topic    = KunenaTopicHelper::get($id);
-		$this->category = $this->topic->getCategory();
-		$this->history  = KunenaMessageHelper::getMessagesByTopic(
-			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
+		$topic    = KunenaTopicHelper::get($id);
+		$category = $topic->getCategory();
+		$history  = KunenaMessageHelper::getMessagesByTopic(
+			$topic, 0, (int) $this->config->historylimit, 'DESC'
 		);
 
-		$this->replycount   = $this->topic->getReplies();
-		$this->historycount = count($this->history);
-		KunenaAttachmentHelper::getByMessage($this->history);
+		$replycount   = $topic->getReplies();
+		$historycount = count($history);
+		KunenaAttachmentHelper::getByMessage($history);
 		$userlist = [];
 
-		foreach ($this->history as $message)
+		foreach ($history as $message)
 		{
 			$messages[$message->id]           = $message;
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
 
-		if ($this->me->exists())
+		if ($me->exists())
 		{
 			$pmFinder = new KunenaFinder;
 			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
-			if (!$this->me->isModerator($this->category))
+			if (!$me->isModerator($category))
 			{
-				$pmFinder->filterByUser($this->me);
+				$pmFinder->filterByUser($me);
 			}
 
 			$pms = $pmFinder->find();
@@ -149,7 +104,7 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$this->history = $messages;
+		$history = $messages;
 
 		KunenaUserHelper::loadUsers($userlist);
 
@@ -161,13 +116,13 @@ class ComponentTopicControllerFormHistoryDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
-		$this->inline_attachments = [];
+		$attachments        = KunenaAttachmentHelper::getByMessage($history);
+		$inline_attachments = [];
 
-		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+		$headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $topic->subject;
 	}
 
 	/**

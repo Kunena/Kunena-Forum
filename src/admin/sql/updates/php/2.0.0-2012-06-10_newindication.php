@@ -99,7 +99,7 @@ function kunena_200_2012_06_10_newindication($parent)
 			$chunks = array_chunk($values, 1000);
 			unset($values);
 
-			foreach ($chunks as &$chunk)
+			foreach ($chunks as $chunk)
 			{
 				$values = implode(',', $chunk);
 				$query  = "REPLACE INTO `#__kunena_user_read` (`user_id`, `topic_id`, `category_id`, `message_id`, `time`) VALUES {$values}";

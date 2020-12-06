@@ -320,7 +320,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws  Exception
 	 */
-	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids): array
+	public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
 	{
 		$allow = $deny = [];
 

@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use ReflectionClass;
-use ReflectionException;
 use function defined;
 
 /**
@@ -31,117 +30,7 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listDirection;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $listOrdering;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterUsertypes;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterActive;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterOperation;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTimeStop;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTimeStart;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterIp;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTargetUser;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterTopic;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterCategory;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterUser;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterType;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $filterSearch;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $filterOperationFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $filterTypeFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortDirectionFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $sortFields;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $filterUserFields;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $pagination;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $items;
-	private $group;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
+	protected $group;
 
 	/**
 	 * @return  void
@@ -191,24 +80,25 @@ class HtmlView extends BaseHtmlView
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-		$this->filterTypeFields      = $this->getFilterTypeFields();
-		$this->filterOperationFields = $this->getFilterOperationFields();
+		$this->filter                  = new \stdClass;
+		$this->filter->TypeFields      = $this->getFilterTypeFields();
+		$this->filter->OperationFields = $this->getFilterOperationFields();
+		$this->filter->Search          = $this->escape($this->state->get('filter.search'));
+		$this->filter->Type            = $this->escape($this->state->get('filter.type'));
+		$this->filter->User            = $this->escape($this->state->get('filter.user'));
+		$this->filter->Category        = $this->escape($this->state->get('filter.category'));
+		$this->filter->Topic           = $this->escape($this->state->get('filter.topic'));
+		$this->filter->Active          = $this->escape($this->state->get('filter.active'));
+		$this->filter->TargetUser      = $this->escape($this->state->get('filter.target_user'));
+		$this->filter->Ip              = $this->escape($this->state->get('filter.ip'));
+		$this->filter->TimeStart       = $this->escape($this->state->get('filter.time_start'));
+		$this->filter->TimeStop        = $this->escape($this->state->get('filter.time_stop'));
+		$this->filter->Operation       = $this->escape($this->state->get('filter.operation'));
+		$this->filter->Usertypes       = $this->escape($this->state->get('filter.usertypes'));
 
-		$this->filterSearch     = $this->escape($this->state->get('filter.search'));
-		$this->filterType       = $this->escape($this->state->get('filter.type'));
-		$this->filterUser       = $this->escape($this->state->get('filter.user'));
-		$this->filterCategory   = $this->escape($this->state->get('filter.category'));
-		$this->filterTopic      = $this->escape($this->state->get('filter.topic'));
-		$this->filterTargetUser = $this->escape($this->state->get('filter.target_user'));
-		$this->filterIp         = $this->escape($this->state->get('filter.ip'));
-		$this->filterTimeStart  = $this->escape($this->state->get('filter.time_start'));
-		$this->filterTimeStop   = $this->escape($this->state->get('filter.time_stop'));
-		$this->filterOperation  = $this->escape($this->state->get('filter.operation'));
-		$this->filterActive     = $this->escape($this->state->get('filter.active'));
-
-		$this->filterUsertypes = $this->escape($this->state->get('filter.usertypes'));
-		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
-		$this->listDirection   = $this->escape($this->state->get('list.direction'));
+		$this->list            = new \stdClass;
+		$this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
+		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('Forum Logs'));

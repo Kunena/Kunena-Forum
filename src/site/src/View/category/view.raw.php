@@ -28,11 +28,6 @@ use function defined;
  */
 class raw extends KunenaView
 {
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $category;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -50,11 +45,11 @@ class raw extends KunenaView
 
 		if ($this->me->exists())
 		{
-			$this->category = $this->get('Category');
+			$category = $this->get('Category');
 
-			if (!$this->category->isAuthorised('read'))
+			if (!$category->isAuthorised('read'))
 			{
-				$response['error'] = $this->category->getError();
+				$response['error'] = $category->getError();
 			}
 			else
 			{

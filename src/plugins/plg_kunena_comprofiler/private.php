@@ -32,11 +32,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 * @since   Kunena 6.0
 	 */
 	protected $params = null;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $pmCount;
 
 	/**
 	 * KunenaPrivateComprofiler constructor.
@@ -118,9 +113,9 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		if ($userid == $myid)
 		{
-			$this->pmCount = $this->getUnreadCount($myid);
-			$text          = $this->pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
-			$url           = $this->getInboxURL();
+			$pmCount = $this->getUnreadCount($myid);
+			$text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
+			$url     = $this->getInboxURL();
 
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}

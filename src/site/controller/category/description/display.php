@@ -30,11 +30,6 @@ class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisp
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Description';
-	/**
-	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-	 * @since version
-	 */
-	private $category;
 
 	/**
 	 * Prepare category display.
@@ -51,7 +46,7 @@ class ComponentCategoryControllerDescriptionDisplay extends KunenaControllerDisp
 
 		$catid = $this->input->getInt('catid');
 
-		$this->category = KunenaCategoryHelper::get($catid);
-		$this->category->tryAuthorise();
+		$category = KunenaCategoryHelper::get($catid);
+		$category->tryAuthorise();
 	}
 }

@@ -51,11 +51,6 @@ class ComponentCategoryControllerIndexActionsDisplay extends KunenaControllerDis
 	 * @since   Kunena 6.0
 	 */
 	public $categoryButtons;
-	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $template;
 
 	/**
 	 * Prepare message actions display.
@@ -81,7 +76,7 @@ class ComponentCategoryControllerIndexActionsDisplay extends KunenaControllerDis
 		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
 
-		$this->template        = KunenaFactory::getTemplate();
+		$template              = KunenaFactory::getTemplate();
 		$this->categoryButtons = new CMSObject;
 
 		// Is user allowed to post new topic?

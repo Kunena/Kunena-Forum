@@ -85,11 +85,6 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $state = null;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $lists;
 
 	/**
 	 * Prepare category display.
@@ -229,7 +224,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		$lists ['category_iconset'] = HTMLHelper::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox form-control" size="1"', 'value', 'text', $value);
 
-		$this->lists = $lists;
+		$lists1 = $lists;
 	}
 
 	/**

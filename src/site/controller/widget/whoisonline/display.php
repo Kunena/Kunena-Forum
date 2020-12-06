@@ -41,21 +41,6 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 	 * @since   Kunena 6.0
 	 */
 	public $usersUrl;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $hiddenList;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $onlineList;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $membersOnline;
 
 	/**
 	 * Prepare Who is online display.
@@ -107,11 +92,11 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
-		$this->membersOnline = $who;
+		$who           .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$membersOnline = $who;
 
-		$this->onlineList = [];
-		$this->hiddenList = [];
+		$onlineList = [];
+		$hiddenList = [];
 
 		foreach ($users as $userid => $usertime)
 		{
@@ -121,17 +106,17 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 			{
 				if ($moderator)
 				{
-					$this->hiddenList[$user->getName()] = $user;
+					$hiddenList[$user->getName()] = $user;
 				}
 			}
 			else
 			{
-				$this->onlineList[$user->getName()] = $user;
+				$onlineList[$user->getName()] = $user;
 			}
 		}
 
-		ksort($this->onlineList);
-		ksort($this->hiddenList);
+		ksort($onlineList);
+		ksort($hiddenList);
 
 		$profile        = KunenaFactory::getProfile();
 		$this->usersUrl = $profile->getUserListURL();

@@ -60,11 +60,6 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $thanks;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $baseurl;
 
 	/**
 	 * Prepare credits display.
@@ -82,8 +77,8 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 
 		if (PluginHelper::isEnabled('kunena', 'powered'))
 		{
-			$this->baseurl = 'index.php?option=com_kunena';
-			$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+			$baseurl = 'index.php?option=com_kunena';
+			$this->app->redirect(KunenaRoute::_($baseurl, false));
 		}
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');

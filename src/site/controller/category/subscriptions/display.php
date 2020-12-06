@@ -58,31 +58,6 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
-	/**
-	 * @var string
-	 * @since version
-	 */
-	private $headerText;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $actions;
-	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-	 * @since version
-	 */
-	private $user;
-	/**
-	 * @var \Joomla\CMS\Object\CMSObject|mixed
-	 * @since version
-	 */
-	private $state;
-	/**
-	 * @var CategoryModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Prepare category subscriptions display.
@@ -98,9 +73,9 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 	{
 		parent::before();
 
-		$this->model = new CategoryModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+		$model = new CategoryModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$state = $model->getState();
 
 		$me = KunenaUserHelper::getMyself();
 
@@ -109,7 +84,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
-		$this->user = KunenaUserHelper::get($this->state->get('user'));
+		$user = KunenaUserHelper::get($state->get('user'));
 
 		$limit = $this->input->getInt('limit', 0);
 
@@ -125,7 +100,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			$limitstart = 0;
 		}
 
-		list($total, $this->categories) = KunenaCategoryHelper::getLatestSubscriptions($this->state->get('user'));
+		list($total, $this->categories) = KunenaCategoryHelper::getLatestSubscriptions($state->get('user'));
 
 		$topicIds = [];
 		$userIds  = [];
@@ -160,11 +135,11 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			KunenaCategoryHelper::getNewTopics(array_keys($this->categories));
 		}
 
-		$this->actions = $this->getActions();
+		$actions = $this->getActions();
 
 		$this->pagination = new Pagination($total, $limitstart, $limit);
 
-		$this->headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+		$headerText = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}
 
 	/**

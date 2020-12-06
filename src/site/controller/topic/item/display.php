@@ -96,16 +96,6 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 	 * @since version
 	 */
 	private $message;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $quickReply;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $categorylist;
 
 	/**
 	 * Prepare topic display.
@@ -157,8 +147,8 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$cat_params         = ['sections' => 1, 'catid' => 0];
-		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Load topic and message.
 		if ($mesid)
@@ -286,8 +276,8 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		// Get user data, captcha & quick reply.
-		$this->userTopic  = $this->topic->getUserTopic();
-		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickreply;
+		$this->userTopic = $this->topic->getUserTopic();
+		$quickReply      = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickreply;
 
 		$this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 

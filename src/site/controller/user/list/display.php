@@ -70,11 +70,6 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/List';
-	/**
-	 * @var UserModel
-	 * @since version
-	 */
-	private $model;
 
 	/**
 	 * Load user list.
@@ -95,9 +90,9 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$this->model = new UserModel([], $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+		$model = new UserModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state = $model->getState();
 
 		$this->me = KunenaUserHelper::getMyself();
 

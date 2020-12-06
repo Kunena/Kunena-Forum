@@ -63,36 +63,6 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $uri;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $users_voted_morelist;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $users_voted_list;
-	/**
-	 * @var bool
-	 * @since version
-	 */
-	private $show_title;
-	/**
-	 * @var int
-	 * @since version
-	 */
-	private $userhasvoted;
-	/**
-	 * @var array|bool
-	 * @since version
-	 */
-	private $usersvoted;
-	/**
-	 * @var bool|int
-	 * @since version
-	 */
-	private $usercount;
 
 	/**
 	 * Prepare poll display.
@@ -116,17 +86,17 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 		// Need to check if poll is allowed in this category.
 		$this->topic->tryAuthorise('poll.read');
 
-		$this->poll       = $this->topic->getPoll();
-		$this->usercount  = $this->poll->getUserCount();
-		$this->usersvoted = $this->poll->getUsers();
+		$this->poll = $this->topic->getPoll();
+		$usercount  = $this->poll->getUserCount();
+		$usersvoted = $this->poll->getUsers();
 
 		if (is_object($this->poll->getMyVotes()))
 		{
-			$this->userhasvoted = $this->poll->getMyVotes();
+			$userhasvoted = $this->poll->getMyVotes();
 		}
 		else
 		{
-			$this->userhasvoted = 0;
+			$userhasvoted = 0;
 		}
 
 		if (!empty($this->alwaysVote))
@@ -136,7 +106,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 			$this->topic->tryAuthorise('reply');
 			$this->name = 'Topic/Poll/Vote';
 		}
-		elseif (!$this->userhasvoted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
+		elseif (!$userhasvoted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
 			$this->name = 'Topic/Poll/Vote';
 		}
@@ -144,16 +114,16 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 		{
 			$this->name = 'Topic/Poll/Results';
 
-			$this->show_title = true;
+			$show_title = true;
 
-			$this->users_voted_list     = [];
-			$this->users_voted_morelist = [];
+			$users_voted_list     = [];
+			$users_voted_morelist = [];
 
-			if ($this->config->pollresultsuserslist && !empty($this->usersvoted))
+			if ($this->config->pollresultsuserslist && !empty($usersvoted))
 			{
 				$userids_votes = [];
 
-				foreach ($this->usersvoted as $userid => $vote)
+				foreach ($usersvoted as $userid => $vote)
 				{
 					$userids_votes[] = $userid;
 				}
@@ -166,11 +136,11 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 				{
 					if ($i <= '4')
 					{
-						$this->users_voted_list[] = $loaded_users[$userid]->getLink();
+						$users_voted_list[] = $loaded_users[$userid]->getLink();
 					}
 					else
 					{
-						$this->users_voted_morelist[] = $loaded_users[$userid]->getLink();
+						$users_voted_morelist[] = $loaded_users[$userid]->getLink();
 					}
 
 					$i++;

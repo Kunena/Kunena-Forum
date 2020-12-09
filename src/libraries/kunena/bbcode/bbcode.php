@@ -1441,7 +1441,8 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if (!$default)
 		{
-			$default = $bbcode->tag_rules [$name] ['default'] ['_default'];
+			$tag_rule = $bbcode->getRule($name);
+			$default = $tag_rule ['default'] ['_default'];
 		}
 
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)

@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Crypsisb4
+ * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
  * @copyright       Copyright (C) 2008 - 2020 Kunena Team. All rights reserved.

@@ -126,11 +126,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		}
 
 		// Close all output buffers, just in case.
-		if (ob_get_contents())
+		if (ob_get_length())
 		{
-			while (@ob_end_clean())
-			{
-			}
+			ob_end_clean();
 		}
 
 		// Handle 304 Not Modified

@@ -1159,11 +1159,9 @@ class KunenaControllerUser extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		if (ob_get_contents())
+		if (ob_get_length())
 		{
-			while (@ob_end_clean())
-			{
-			}
+			ob_end_clean();
 		}
 
 		echo $upload->ajaxResponse($response);
@@ -1213,11 +1211,9 @@ class KunenaControllerUser extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		if (ob_get_contents())
+		if (ob_get_length())
 		{
-			while (@ob_end_clean())
-			{
-			}
+			ob_end_clean();
 		}
 
 		echo json_encode($success);
@@ -1267,11 +1263,9 @@ class KunenaControllerUser extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		if (ob_get_contents())
+		if (ob_get_length())
 		{
-			while (@ob_end_clean())
-			{
-			}
+			ob_end_clean();
 		}
 
 		echo json_encode($avatar);

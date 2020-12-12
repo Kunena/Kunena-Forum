@@ -297,14 +297,12 @@ abstract class KunenaError
 				$extension = $file = '';
 			}
 
-			if (ob_get_contents())
+			if (ob_get_length())
 			{
-				while (@ob_end_clean())
-				{
-				}
-
-				ob_start();
+				ob_end_clean();
 			}
+
+			ob_start();
 
 			header('HTTP/1.1 500 Internal Server Error');
 

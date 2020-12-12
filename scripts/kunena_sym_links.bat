@@ -33,14 +33,16 @@ echo You need to have a Joomla! installation to run this script
 
 :WHATTODO
 echo 1 : Make the symbolic links
-echo 2 : Delete the symbolic links
-echo 3 : Exit
+echo 2 : Make the symbolic links for blue eagle
+echo 3 : Delete the symbolic links
+echo 4 : Exit
 
 set /p choice=What do-you want to do ? :
 (
 if %choice%==1 goto MKLINK
-if %choice%==2 goto DELETESYM
-if %choice%==3 exit
+if %choice%==2 goto MKLINKBLUEEAGLE
+if %choice%==3 goto DELETESYM
+if %choice%==4 exit
 )
 goto:eof
 
@@ -58,6 +60,23 @@ Md %GitTarget%\administrator\components\com_kunena
 Copy %GitSource%\src\administrator\components\com_kunena\kunena.xml %GitTarget%\administrator\components\com_kunena
 echo Removed development tree from your web site.
 echo Please install Kunena Package to fix your site!
+echo:
+echo:
+pause
+goto:eof
+
+:MKLINKBLUEEAGLE
+echo Make symbolic links for Blue Eagle template
+echo:
+SET /p GitBlueEagleSource=Blue Eagle GIT repository in ........:
+pause
+echo:
+echo You have set the Blue Eagles GIT repository in ........:  %GitBlueEagleSource%
+echo:
+echo Delete existing directories
+IF exist %GitTarget%\components\com_kunena\template\blue_eagle5 ( rmdir /S/q %GitTarget%\components\com_kunena\template\blue_eagle5 )
+echo Make symbolic links
+mklink /d %GitTarget%\components\com_kunena\template\blue_eagle5 %GitBlueEagleSource%\
 echo:
 echo:
 pause

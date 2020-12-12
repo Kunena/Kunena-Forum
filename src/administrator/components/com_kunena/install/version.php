@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
  * Class KunenaVersion
  * @since Kunena
  */
-class KunenaVersion
+class KunenaAdminVersion
 {
 	/**
 	 * Get warning for unstable releases

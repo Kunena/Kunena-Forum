@@ -361,7 +361,7 @@ class KunenaController extends \Joomla\CMS\MVC\Controller\BaseController
 
 			// Version warning, disable J4 for now.
 			require_once KPATH_ADMIN . '/install/version.php';
-			$version         = new KunenaVersion;
+			$version         = new KunenaAdminVersion;
 			$version_warning = $version->getVersionWarning();
 
 			if (!empty($version_warning))

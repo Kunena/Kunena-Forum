@@ -103,7 +103,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$signature    = $this->app->input->getString('signature', '');
 		$deleteSig    = $this->app->input->getInt('deleteSig');
 		$moderator    = $this->app->input->getInt('moderator');
 		$uid          = $this->app->input->getInt('uid');
@@ -191,7 +191,7 @@ class KunenaAdminControllerUsers extends KunenaController
 
 		$newview      = $this->app->input->getString('newview');
 		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$signature    = $this->app->input->getString('signature', '');
 		$deleteSig    = $this->app->input->getInt('deleteSig');
 		$moderator    = $this->app->input->getInt('moderator');
 		$uid          = $this->app->input->getInt('uid');

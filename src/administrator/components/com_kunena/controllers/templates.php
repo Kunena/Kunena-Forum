@@ -487,8 +487,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename    = $this->app->input->get('filename', '', 'post');
+		$filecontent = $this->app->input->get('filecontent', '', 'post');
 
 		if (!Session::checkToken('post'))
 		{
@@ -566,8 +566,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'post');
+		$filecontent  = $this->app->input->get('filecontent', '', 'post');
 
 		if (!Session::checkToken('post'))
 		{
@@ -611,8 +611,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template     = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent  = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filename     = $this->app->input->get('filename', '', 'post');
+		$filecontent  = $this->app->input->get('filecontent', '', 'post');
 
 		if (!Session::checkToken('post'))
 		{
@@ -811,7 +811,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 				$editorButtons = implode(',', $editorButtons);
 				$params['editorButtons'] = $editorButtons;
 			}
-			else 
+			else
 			{
 				$params['editorButtons'] = '';
 			}

@@ -338,7 +338,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 		} 
 		catch (Exception $e) 
 		{
-			$this->app->enqueueMessage($e->getMessage(), 'error')
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 
 			return false;
 		}

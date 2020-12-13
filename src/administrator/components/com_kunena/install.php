@@ -28,7 +28,7 @@ if ($view != 'install' && class_exists('KunenaForum') && KunenaForum::isDev())
 	// Developer version found: Check if latest version of Kunena has been installed. If not, prepare installation.
 	require_once __DIR__ . '/install/version.php';
 
-	$kversion = new KunenaVersion;
+	$kversion = new KunenaAdminVersion;
 
 	if (!$kversion->checkVersion())
 	{

@@ -130,5 +130,5 @@ if (Factory::getLanguage()->isRTL())
 
 
 <div class="pull-right small">
-	<?php echo KunenaVersion::getLongVersionHTML(); ?>
+	<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 </div>

@@ -54,6 +54,6 @@ HTMLHelper::_('bootstrap.popover');
 		</div>
 	</div>
 	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 	</div>
 </div>

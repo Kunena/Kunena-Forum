@@ -271,6 +271,6 @@ HTMLHelper::_('behavior.tabstate');
 	</div>
 
 	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 	</div>
 </div>

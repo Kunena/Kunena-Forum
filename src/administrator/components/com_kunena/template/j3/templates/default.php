@@ -166,7 +166,7 @@ HTMLHelper::_('dropdown.init');
 							<?php endforeach; ?>
 						<?php else : ?>
 							<tr>
-								<td style="width: 30%;"><?php echo Text::_('COM_KUNENA_ADMIN_TEMPLATE_MANAGER_ERROR_CANNOT_CONNECT_TO_KUNENA_SERVER'); ?> 
+								<td style="width: 30%;"><?php echo Text::_('COM_KUNENA_ADMIN_TEMPLATE_MANAGER_ERROR_CANNOT_CONNECT_TO_KUNENA_SERVER'); ?>
 								</td>
 							</tr>
 						<?php endif; ?>
@@ -176,6 +176,6 @@ HTMLHelper::_('dropdown.init');
 		</div>
 	</div>
 	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 	</div>
 </div>

@@ -77,6 +77,6 @@ use Joomla\CMS\Language\Text;
 		</div>
 	</div>
 	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 	</div>
 </div>

@@ -301,7 +301,7 @@ HTMLHelper::_('dropdown.init');
 										   href="javascript: void(0);"
 										   onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
 											<?php echo $img_no; ?>
-										</a>									
+										</a>
 									<?php endif; ?>
 								</td>
 								<td class="center"><?php echo $this->escape($user->userid); ?></td>
@@ -332,6 +332,6 @@ HTMLHelper::_('dropdown.init');
 		</div>
 	</div>
 	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<?php echo KunenaAdminVersion::getLongVersionHTML(); ?>
 	</div>
 </div>

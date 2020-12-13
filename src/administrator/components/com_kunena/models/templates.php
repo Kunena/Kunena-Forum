@@ -332,7 +332,16 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 
 		$options = new Joomla\Registry\Registry;
 
-		$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+		try
+		{
+			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
+		} 
+		catch (Exception $e) 
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error')
+
+			return false;
+		}
 
 		// Create a 'stream' transport.
 		$http = new Joomla\CMS\Http\Http($options, $transport);

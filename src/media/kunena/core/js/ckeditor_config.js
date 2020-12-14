@@ -64,4 +64,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.smiley_images = list_emoticons;
 	config.linkDefaultProtocol= 'https://'
+
+	// Define font sizes in percent values.
+	config.fontSize_sizes= "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%";
 };

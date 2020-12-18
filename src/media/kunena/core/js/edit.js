@@ -322,5 +322,23 @@ jQuery(document).ready(function ($) {
 				}
 			}
 		});
+
+		CKEDITOR.on( 'dialogDefinition', function( ev )
+		{
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+
+			if(dialogName=='link')
+			{
+				var linkType = dialogDefinition.getContents('info').get('linkType');
+				// Remove the 'anchor' link option.	 
+				linkType.items.splice(1,1);
+				// Remove the 'phone' link option.	 
+				linkType.items.splice(2,2);
+
+				var protocol = dialogDefinition.getContents('info').get('protocol');
+				protocol.items.splice(2,4);
+			}
+		});
 	}
 });

@@ -12,7 +12,8 @@ CKEDITOR.plugins.add( 'instagram', {
 	init: function( editor ) {
 		editor.addCommand( 'insertInstagram', {
 			exec: function( editor ) {
-				editor.insertHtml( '[instagram][/instagram]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[instagram]' + selectedtext + '[/instagram]' );
 			}
 		});
 		editor.ui.addButton( 'Instagram', {

@@ -12,7 +12,8 @@ CKEDITOR.plugins.add( 'confidential', {
 	init: function( editor ) {
 		editor.addCommand( 'insertConfidential', {
 			exec: function( editor ) {
-				editor.insertHtml( '[confidential][/confidential]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[confidential]' + selectedtext + '[/confidential]' );
 			}
 		});
 		editor.ui.addButton( 'Confidential', {

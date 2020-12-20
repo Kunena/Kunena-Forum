@@ -12,7 +12,8 @@
 	init: function( editor ) {
 		editor.addCommand( 'insertSpoiler', {
 			exec: function( editor ) {
-				editor.insertHtml( '[spoiler][/spoiler]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[spoiler]' + selectedtext + '[/spoiler]' );
 			}
 		});
 		editor.ui.addButton( 'Spoiler', {

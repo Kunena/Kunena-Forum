@@ -12,7 +12,8 @@ CKEDITOR.plugins.add( 'twitter', {
 	init: function( editor ) {
 		editor.addCommand( 'insertTwitter', {
 			exec: function( editor ) {
-				editor.insertHtml( '[tweet][/tweet]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[tweet]' + selectedtext + '[/tweet]' );
 			}
 		});
 		editor.ui.addButton( 'Twitter', {

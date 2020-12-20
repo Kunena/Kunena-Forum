@@ -12,7 +12,8 @@ CKEDITOR.plugins.add( 'code', {
 	init: function( editor ) {
 		editor.addCommand( 'insertCode', {
 			exec: function( editor ) {
-				editor.insertHtml( '[code][/code]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[code]' + selectedtext + '[/code]' );
 			}
 		});
 		editor.ui.addButton( 'Code', {

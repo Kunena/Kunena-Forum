@@ -13,7 +13,8 @@ CKEDITOR.plugins.add( 'soundcloud', {
 	init: function( editor ) {
 		editor.addCommand( 'insertSoundcloud', {
 			exec: function( editor ) {
-				editor.insertHtml( '[soundcloud][/soundcloud]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[soundcloud]' + selectedtext + '[/soundcloud]' );
 			}
 		});
 		editor.ui.addButton( 'Soundcloud', {

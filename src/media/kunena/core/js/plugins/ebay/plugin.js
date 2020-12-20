@@ -12,7 +12,8 @@ CKEDITOR.plugins.add( 'ebay', {
 	init: function( editor ) {
 		editor.addCommand( 'insertEbay', {
 			exec: function( editor ) {
-				editor.insertHtml( '[ebay][/ebay]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[ebay]' + selectedtext + '[/ebay]' );
 			}
 		});
 		editor.ui.addButton( 'Ebay', {

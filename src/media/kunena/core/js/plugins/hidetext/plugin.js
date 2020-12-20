@@ -12,7 +12,8 @@
 	init: function( editor ) {
 		editor.addCommand( 'insertHidetext', {
 			exec: function( editor ) {
-				editor.insertHtml( '[hide][/hide]' );
+				var selectedtext = editor.getSelection().getSelectedText();
+				editor.insertHtml( '[hide]' + selectedtext + '[/hide]' );
 			}
 		});
 		editor.ui.addButton( 'Hidetext', {

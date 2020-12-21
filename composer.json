@@ -5,7 +5,7 @@
     "require": {
         "php": "7.4.11",
         "consolidation/robo": "^2",
-        "symfony/console": "~3|~4",
+        "symfony/console": "^5.1.10",
         "symfony/filesystem": "~3|~4",
         "symfony/finder": "~3|~4",
         "symfony/process": "^5.2.1",

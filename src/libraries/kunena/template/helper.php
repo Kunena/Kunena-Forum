@@ -120,6 +120,11 @@ abstract class KunenaTemplateHelper
 			return false;
 		}
 
+		if ($data->name == "Blue Eagle5" && $data->kversion <= '5.2')
+		{
+			return false;
+		}
+
 		$data->sourcedir = basename($templateDir);
 		$data->directory = basename($templateDir);
 

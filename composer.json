@@ -6,7 +6,7 @@
         "php": "7.4.11",
         "consolidation/robo": "^2",
         "symfony/console": "^5.1.10",
-        "symfony/filesystem": "~3|~4",
+        "symfony/filesystem": "^5.2.1",
         "symfony/finder": "^5.2.1",
         "symfony/process": "^5.2.1",
         "symfony/yaml": "~3|~4"

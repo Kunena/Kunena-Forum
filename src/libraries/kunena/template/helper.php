@@ -120,7 +120,7 @@ abstract class KunenaTemplateHelper
 			return false;
 		}
 
-		if ($data->name == "Blue Eagle5" && $data->kversion <= '5.2')
+		if ($data->name == "Blue Eagle5" && $data->kversion < '5.2')
 		{
 			return false;
 		}

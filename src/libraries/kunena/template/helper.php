@@ -145,7 +145,11 @@ abstract class KunenaTemplateHelper
 
 		$data               = new stdClass;
 		$data->name         = (string) $xml->name;
-		$data->targetversion = (string) $xml->targetversion->attributes()->version;
+		if ($xml->targetversion->attributes()!==null)
+		{
+			$data->targetversion = (string) $xml->targetversion->attributes()->version;
+		}
+
 		$data->type         = (string) $xml->attributes()->type;
 		$data->creationdate = (string) $xml->creationDate;
 		$data->author       = (string) $xml->author;
@@ -193,8 +197,13 @@ abstract class KunenaTemplateHelper
 	 * @return boolean
 	 * @since Kunena 5.2
 	 */
-	public static function templateIsKunenaCompatible($targetversion)
+	public static function templateIsKunenaCompatible($targetversion = null)
 	{
+		if ($targetversion === null)
+		{
+			return true;
+		}
+
 		// Get the Kunena version family (e.g. 5.2)
 		$kVersion = KunenaForum::version();
 		$kVersionParts = explode('.', $kVersion);
@@ -215,6 +224,8 @@ abstract class KunenaTemplateHelper
 		{
 			return false;
 		}
+
+		return true;
 	}
 
 	/**

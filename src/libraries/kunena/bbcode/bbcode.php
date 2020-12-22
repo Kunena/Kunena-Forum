@@ -127,7 +127,7 @@ class KunenaBbcode extends Nbbc\BBCode
 			if (preg_match('#^mailto:#ui', $url))
 			{
 				// Cloak email addresses
-				$email = substr($text, 7);
+				$email = $text;
 
 				$layout = KunenaLayout::factory('BBCode/Email');
 

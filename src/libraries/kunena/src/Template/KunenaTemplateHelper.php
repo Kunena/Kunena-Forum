@@ -198,23 +198,4 @@ abstract class KunenaTemplateHelper
 
 		return $data;
 	}
-
-	/**
-	 * Check if aurelia template can be used on Joomla! version used
-	 *
-	 * @param   string  $templatename  The name of template which needs to be checked
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function templateCanBeUsed(string $templatename): bool
-	{
-		if ($templatename == 'aurelia')
-		{
-			return false;
-		}
-
-		return true;
-	}
 }

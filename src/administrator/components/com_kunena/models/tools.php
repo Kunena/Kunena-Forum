@@ -404,6 +404,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		// Get Kunena default template
 		$ktemplate              = KunenaFactory::getTemplate();
 		$this->ktemplatedetails = $ktemplate->getTemplateDetails();
+
 		$this->ktemplateparams  = $this->getKunenaTemplateParams($ktemplate->params);
 
 		$this->jtemplatedetails = $this->_getJoomlaTemplate();
@@ -879,6 +880,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 	{
 		$kunena_db = Factory::getDBO();
 
+		$this->getPhpExtensions();
 		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('

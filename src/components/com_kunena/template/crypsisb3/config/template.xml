@@ -11,4 +11,5 @@
     <license>GNU/GPL</license>
     <description>COM_KUNENA_TEMPLATE_CRYPSISB3_DESC</description>
     <thumbnail>template_thumbnail.png</thumbnail>
+    <targetversion version="5.[2]" />
 </kinstall>

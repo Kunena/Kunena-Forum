@@ -120,11 +120,6 @@ abstract class KunenaTemplateHelper
 			return false;
 		}
 
-		if ($data->name == "Blue Eagle5" && $data->kversion < '5.2')
-		{
-			return false;
-		}
-
 		$data->sourcedir = basename($templateDir);
 		$data->directory = basename($templateDir);
 
@@ -150,6 +145,7 @@ abstract class KunenaTemplateHelper
 
 		$data               = new stdClass;
 		$data->name         = (string) $xml->name;
+		$data->targetversion = (string) $xml->targetversion->attributes()->version;
 		$data->type         = (string) $xml->attributes()->type;
 		$data->creationdate = (string) $xml->creationDate;
 		$data->author       = (string) $xml->author;
@@ -190,12 +186,46 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
+	 * Check with the field targetversion in xml file of template zip if it's compatible with kunena
+	 * 
+	 * @param string $targetversion The versions of Kunena compatible with the template
+	 * 
+	 * @return boolean
+	 * @since Kunena 5.2
+	 */
+	public static function templateIsKunenaCompatible($targetversion)
+	{
+		// Get the Kunena version family (e.g. 5.2)
+		$kVersion = KunenaForum::version();
+		$kVersionParts = explode('.', $kVersion);
+		$kVersionShort = $kVersionParts[0] . '.' . $kVersionParts[1];
+
+		$targetKunenaVersion = $targetversion;
+		$targetVersionParts = explode('.', $targetKunenaVersion);
+		$targetVersionShort = $targetVersionParts[0] . '.' . $targetVersionParts[1];
+
+		// The target version MUST be in the same Kunena branch
+		if ($kVersionShort == $targetVersionShort)
+		{
+			return false;
+		}
+
+		// If the target version is major.minor.revision we must make sure our current Kunena version is AT LEAST equal to that.
+		if (version_compare($targetKunenaVersion, KunenaForum::version(), 'gt'))
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * Check if crypsis template can be used on Joomla! version used
 	 *
 	 * @param   string $templatename The name of template which needs to be checked
 	 *
 	 * @return boolean
 	 * @since Kunena
+	 * 
+	 * @deprecated 5.2
 	 */
 	public static function templateCanBeUsed($templatename)
 	{

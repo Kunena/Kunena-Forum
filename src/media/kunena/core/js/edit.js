@@ -101,6 +101,22 @@ jQuery(document).ready(function ($) {
 		localStorage.removeItem('copyKunenaeditor');
 	});
 
+	// Needed to open and close quickreply from on blue Eagle5
+	$('.Kreplyclick').click(function () {
+			console.log('click');
+		var name = '#' + $(this).attr('data-related');
+		if ($(name).is(":visible")) {
+			$(name).hide();
+		} else {
+			$(name).show();
+		}
+	});
+
+	$('.kreply-cancel').click(function () {
+		var name = '#' + $(this).attr('data-related');
+		$(name).hide();
+	});
+
 	var category_template_text;
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();

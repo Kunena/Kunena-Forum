@@ -745,6 +745,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'JustifyCenter';
 		}
 
+		if (!$params['RemoveFormat'])
+		{
+			$editorButtons[] = 'RemoveFormat';
+		}
+
+		if (!$params['FontSize'])
+		{
+			$editorButtons[] = 'FontSize';
+		}
+
 		if (!$params['Image'])
 		{
 			$editorButtons[] = 'Image';

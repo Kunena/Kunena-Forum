@@ -770,21 +770,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'NumberedList';
 		}
 
-		if (!$params['colors'])
-		{
-			$editorButtons[] = 'fontcolor';
-		}
-
-		if (!$params['fontsize'])
-		{
-			$editorButtons[] = 'fontsize';
-		}
-
-		if (!$params['fontfamily'])
-		{
-			$editorButtons[] = 'fontfamily';
-		}
-
 		if (!$params['Blockquote'])
 		{
 			$editorButtons[] = 'Blockquote';
@@ -793,16 +778,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (!$params['Code'])
 		{
 			$editorButtons[] = 'Code';
-		}
-
-		if (!$params['Table'])
-		{
-			$editorButtons[] = 'Table';
-		}
-
-		if (!$params['RemoveFormat'])
-		{
-			$editorButtons[] = 'RemoveFormat';
 		}
 
 		// Set FTP credentials, if given

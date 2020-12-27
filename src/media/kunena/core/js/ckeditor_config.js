@@ -28,7 +28,8 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 
 	var remove_buttons_url_image = Joomla.getOptions('com_kunena.ckeditor_remove_buttons_url_image');
-	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined && remove_buttons_url_image==!1)
+
+	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined && remove_buttons_url_image===undefined)
 	{
 		config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Table,HorizontalRule,Copy,Outdent,Indent,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
 	}

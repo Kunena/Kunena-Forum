@@ -200,6 +200,11 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="RemoveFormat" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_REMOVEFORMAT"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_REMOVEFORMAT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="BulletedList" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_BULLETS_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -277,6 +282,11 @@
         </field>
         <field name="Soundcloud" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD"
                description="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="FontSize" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>

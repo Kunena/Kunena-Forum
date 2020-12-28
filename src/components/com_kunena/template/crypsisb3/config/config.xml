@@ -215,13 +215,23 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="JustifyBlock" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT"
-               description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
+        <field name="JustifyLeft" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
         <field name="JustifyCenter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER"
                description="COM_KUNENA_TEMPLATE_DISPLAY_CENTER_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="JustifyRight" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="JustifyBlock" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_JUSTIFIYTEXT"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_JUSTIFIYTEXT_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
@@ -285,7 +295,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="Textcolor" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TEXTCOLOR"
+        <field name="TextColor" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TEXTCOLOR"
                description="COM_KUNENA_TEMPLATE_DISPLAY_TEXTCOLOR_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>

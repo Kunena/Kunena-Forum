@@ -240,7 +240,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="emoticons" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS"
+        <field name="Smiley" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -250,7 +250,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="Hide" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HIDE"
+        <field name="Hidetext" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_HIDE"
                description="COM_KUNENA_TEMPLATE_DISPLAY_HIDE_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -290,6 +290,16 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="Textcolor" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_TEXTCOLOR"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_TEXTCOLOR_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="Maximize" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAXIMIZE"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_MAXIMIZE_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>Maximize
         <field name="Maps" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>

@@ -750,9 +750,64 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'RemoveFormat';
 		}
 
+		if (!$params['Confidential'])
+		{
+			$editorButtons[] = 'Confidential';
+		}
+
+		if (!$params['Hidetext'])
+		{
+			$editorButtons[] = 'Hidetext';
+		}
+
+		if (!$params['Spoiler'])
+		{
+			$editorButtons[] = 'Spoiler';
+		}
+
+		if (!$params['Smiley'])
+		{
+			$editorButtons[] = 'Smiley';
+		}
+
+		if (!$params['Ebay'])
+		{
+			$editorButtons[] = 'Ebay';
+		}
+
+		if (!$params['Twitter'])
+		{
+			$editorButtons[] = 'Twitter';
+		}
+
+		if (!$params['Instagram'])
+		{
+			$editorButtons[] = 'Instagram';
+		}
+
+		if (!$params['Soundcloud'])
+		{
+			$editorButtons[] = 'Soundcloud';
+		}
+
+		if (!$params['Map'])
+		{
+			$editorButtons[] = 'Map';
+		}
+
 		if (!$params['FontSize'])
 		{
 			$editorButtons[] = 'FontSize';
+		}
+
+		if (!$params['Textcolor'])
+		{
+			$editorButtons[] = 'Textcolor';
+		}
+
+		if (!$params['Maximize'])
+		{
+		    $editorButtons[] = 'Maximize';
 		}
 
 		if (!$params['Image'])

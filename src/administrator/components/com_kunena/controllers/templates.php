@@ -735,6 +735,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'Subscript';
 		}
 
+		if (!$params['JustifyRight'])
+		{
+			$editorButtons[] = 'JustifyRight';
+		}
+
+		if (!$params['JustifyLeft'])
+		{
+			$editorButtons[] = 'JustifyLeft';
+		}
+
 		if (!$params['JustifyBlock'])
 		{
 			$editorButtons[] = 'JustifyBlock';
@@ -800,9 +810,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'FontSize';
 		}
 
-		if (!$params['Textcolor'])
+		if (!$params['TextColor'])
 		{
-			$editorButtons[] = 'Textcolor';
+			$editorButtons[] = 'TextColor';
 		}
 
 		if (!$params['Maximize'])

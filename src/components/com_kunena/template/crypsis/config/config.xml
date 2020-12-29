@@ -310,7 +310,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>Maximize
-        <field name="Maps" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
+        <field name="Map" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>

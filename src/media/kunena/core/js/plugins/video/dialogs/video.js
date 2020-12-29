@@ -79,11 +79,19 @@ CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 			else
 			{
 				videosize = dialog.getValueOf( 'tab-basic', 'videosize' );
-				videosize = 'size='+videosize;
+				if (videosize.length > 0)
+				{
+					videosize = 'size='+videosize;
+				}
+
 				width = dialog.getValueOf( 'tab-basic', 'width' );
-				width = 'width='+width;
 				height = dialog.getValueOf( 'tab-basic', 'height' );
-				height = 'height='+height;
+				if (width.length> 0 && height.length > 0)
+				{
+					width = 'width='+width;
+					height = 'height='+height;
+				}
+
 				videourl = dialog.getValueOf( 'tab-basic', 'videoid' );
 				videoprovider = dialog.getValueOf( 'tab-basic', 'provider' );
 				videoprovider = 'type='+videoprovider;

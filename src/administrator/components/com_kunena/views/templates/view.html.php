@@ -94,9 +94,9 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!JFile::exists($this->templatefile))
+		if (!JFile::exists($this->templatefile) && JFolder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/'))
 		{
-			$ourFileHandle = @fopen($this->templatefile, 'w');
+			$ourFileHandle = fopen($this->templatefile, 'w');
 
 			if ($ourFileHandle)
 			{
@@ -137,7 +137,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
 
-		if (!file_exists($file))
+		if (!file_exists($file) && JFolder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/less/'))
 		{
 			$fp = fopen($file, "w");
 			fwrite($fp, "");
@@ -206,7 +206,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
 
-		if (!file_exists($file))
+		if (!file_exists($file) && JFolder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
 		{
 			$fp = fopen($file, "w");
 			fwrite($fp, "");

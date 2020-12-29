@@ -2188,7 +2188,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('video'))
+		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('Video'))
 		{
 			return '';
 		}

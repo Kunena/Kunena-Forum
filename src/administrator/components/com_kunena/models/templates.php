@@ -335,7 +335,7 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 		try
 		{
 			$transport = new Joomla\CMS\Http\Transport\StreamTransport($options);
-		} 
+		}
 		catch (Exception $e) 
 		{
 			$this->app->enqueueMessage($e->getMessage(), 'error');
@@ -346,7 +346,16 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 		// Create a 'stream' transport.
 		$http = new Joomla\CMS\Http\Http($options, $transport);
 
-		$response = $http->get($url);
+		try
+		{
+			$response = $http->get($url);
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+
+			return false;
+		}
 
 		if ($response->code == '200')
 		{

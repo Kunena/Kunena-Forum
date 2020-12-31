@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package         Kunena.Template.Crypsisb3b3
+ * @package         Kunena.Template.Crypsisb3
  * @subpackage      Pages.User
  *
  * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.

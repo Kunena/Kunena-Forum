@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Crypsisb3b3
+ * @package         Kunena.Template.Crypsisb3
  * @subpackage      BBCode
  *
  * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.

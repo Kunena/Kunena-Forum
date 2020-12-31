@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package         Kunena.Template.Crypsis
+ * @package         Kunena.Template.Crypsisb3
  * @subpackage      Layout.BBCode
  *
  * @copyright   (C) 2008 - 2020 Kunena Team. All rights reserved.

@@ -652,13 +652,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 * Apply
+	 * Apply changes on template parameters
 	 *
 	 * @return  void
 	 *
 	 * @throws Exception
 	 * @since    2.0
-	 * @throws null
 	 */
 	public function apply()
 	{
@@ -817,7 +816,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!$params['Maximize'])
 		{
-		    $editorButtons[] = 'Maximize';
+			$editorButtons[] = 'Maximize';
 		}
 
 		if (!$params['Image'])
@@ -855,9 +854,15 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$editorButtons[] = 'Code';
 		}
 
-		// Set FTP credentials, if given
-		\Joomla\CMS\Client\ClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = \Joomla\CMS\Client\ClientHelper::getCredentials('ftp');
+		if (!empty($params['nameskinckeditor']))
+		{
+			if (!JFolder::exists(KPATH_MEDIA . '/kunena/core/js/skins/' . $params['nameskinckeditor']))
+			{
+				$params['nameskinckeditor'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'),'error');
+			}
+		}
+
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (count($params) > 0)
@@ -886,13 +891,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 * Save
+	 * Save template parameters
 	 *
 	 * @return void
 	 *
 	 * @throws Exception
 	 * @since    2.0
-	 * @throws null
 	 */
 	public function save()
 	{

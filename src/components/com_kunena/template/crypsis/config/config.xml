@@ -321,6 +321,8 @@
             <option value="1">COM_KUNENA_YES</option>
         </field>
         <field name="editorButtons" type="hidden" default=""/>
+        <field name="nameskinckeditor" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR"
+               description="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR_DESC"/>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_AVATAR">

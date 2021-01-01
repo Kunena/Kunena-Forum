@@ -3,7 +3,7 @@
     "description": "Kunena forum for joomla",
     "license"    : "GPL-3.0-or-later",
     "require": {
-        "php": "7.4.11",
+        "php": "7.4.13",
         "consolidation/robo": "^2",
         "symfony/console": "^5.1.10",
         "symfony/filesystem": "^5.2.1",

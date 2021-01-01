@@ -73,26 +73,45 @@ class Debugger
 	// File to log messages to
 	public static $log_file = '';
 
-	public static function log($level, $string)
+	/**
+	 * Store log information to a file - Modified method by Kunena team
+	 * 
+	 * @param int     $level
+	 * @param string  $string
+	 * @param boolean $logAll
+	 */
+	public static function log($level, $string, $logAll = false)
 	{
-		if ($level >= static::$level)
+		if ($level >= static::$level && $logAll === false)
 		{
-			if (strpos($string, "\n") === false)
-			{
-				$string .= "\n";
-			}
+			SELF::storeLog($string);
+		}
+		else
+		{
+			SELF::storeLog($string);
+		}
+	}
 
-			$date   = new DateTime;
-			$string = '[' . $date->format('Y-m-d H:i:s.u') . '] ' . $string;
+	/**
+	 * Added by Kunena Team
+	 */
+	protected static function storeLog($string)
+	{
+		if (strpos($string, "\n") === false)
+		{
+			$string .= "\n";
+		}
 
-			if (static::$log_file)
-			{
-				file_put_contents(static::$log_file, $string, FILE_APPEND);
-			}
-			else
-			{
-				echo $string;
-			}
+		$date   = new DateTime;
+		$string = '[' . $date->format('Y-m-d H:i:s.u') . '] ' . $string;
+
+		if (static::$log_file)
+		{
+			file_put_contents(static::$log_file, $string, FILE_APPEND);
+		}
+		else
+		{
+			echo $string;
 		}
 	}
 

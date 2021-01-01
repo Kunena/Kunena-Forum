@@ -83,13 +83,13 @@ namespace Nbbc;
 class BBCode
 {
 	/**
-	 * Current version number
+	 * Current version number - HACK by Kunena team : set correct version number
 	 */
-	const BBCODE_VERSION = '2.0.0-alpha1';
+	const BBCODE_VERSION = '2.2.3';
 	/**
-	 * Current release date
+	 * Current release date  - HACK by Kunena team : set correct release date
 	 */
-	const BBCODE_RELEASE = '2016-01-07';
+	const BBCODE_RELEASE = '2019-03-15';
 
 	/**
 	 * Content type:  Content may not be provided by user.

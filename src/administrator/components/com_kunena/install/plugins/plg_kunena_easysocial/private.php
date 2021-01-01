@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -16,7 +21,7 @@ use Joomla\CMS\Language\Text;
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since       Kunena 5.0
  */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
@@ -28,7 +33,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * KunenaPrivateEasySocial constructor.
 	 *
 	 * @param $params
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function __construct($params)
 	{
@@ -42,7 +47,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	protected function getOnClick($userid)
 	{
@@ -55,7 +60,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $userid
 	 *
 	 * @return string
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	protected function getURL($userid)
 	{
@@ -66,7 +71,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 	 * @param $text
 	 *
 	 * @return string
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function getInboxLink($text)
 	{
@@ -82,7 +87,7 @@ class KunenaPrivateEasySocial extends KunenaPrivate
 
 	/**
 	 * @return mixed
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function getInboxURL()
 	{

@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -11,11 +16,11 @@
  */
 defined('_JEXEC') or die('Unauthorized Access');
 
-jimport('joomla.filesystem.file');
+use Joomla\CMS\Filesystem\File;
 
 $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
 
-if (!JFile::exists($file))
+if (!File::exists($file))
 {
 	return;
 }
@@ -26,7 +31,7 @@ require_once(JPATH_ROOT . '/components/com_content/helpers/route.php');
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since       Kunena 5.0
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
@@ -36,27 +41,27 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @param $subject
 	 * @param $config
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('5.0') && KunenaForum::installed()))
 		{
 			return true;
 		}
 
 		parent::__construct($subject, $config);
 
-		$this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_community.sys', KPATH_ADMIN);
+		$this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', KPATH_ADMIN);
 	}
 
 	/**
 	 * Get Kunena login integration object.
 	 *
 	 * @return KunenaLogin
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -74,7 +79,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -92,7 +97,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function onKunenaGetProfile()
@@ -111,7 +116,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena private message integration object.
 	 *
 	 * @return KunenaPrivate
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function onKunenaGetPrivate()
 	{
@@ -129,7 +134,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function onKunenaGetActivity()
 	{

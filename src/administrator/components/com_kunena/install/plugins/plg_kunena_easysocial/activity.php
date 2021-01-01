@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -18,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since       Kunena 5.0
  */
 class KunenaActivityEasySocial extends KunenaActivity
 {
@@ -28,7 +33,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * KunenaActivityEasySocial constructor.
 	 *
 	 * @param $params
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function __construct($params)
@@ -42,7 +47,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target target
 	 *
 	 * @return mixed
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function assignBadge($command, $message, $target = null)
@@ -58,7 +63,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   null $target target
 	 *
 	 * @return mixed
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function assignPoints($command, $target = null)
 	{
@@ -71,7 +76,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	/**
 	 * @param $message
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 */
 	public function onAfterPost($message)
 	{
@@ -100,7 +105,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * After a person replies a topic
 	 *
-	 * @since     1.3
+	 * @since       Kunena 5.0
 	 * @access    public
 	 *
 	 * @param $message
@@ -244,7 +249,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   int $target target
 	 * @param   int $message message
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function onAfterThankyou($actor, $target, $message)
@@ -270,7 +275,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * @param $target
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function onBeforeDeleteTopic($target)
@@ -281,7 +286,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * @param $topic
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function onAfterDeleteTopic($topic)

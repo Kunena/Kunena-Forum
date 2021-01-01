@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -13,7 +18,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 /**
  * Class KunenaAvatarEasySocial
- * @since       Kunena
+ * @since       Kunena 5.0
  */
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
@@ -24,7 +29,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 *
 	 * @param $params
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function __construct($params)
@@ -35,7 +40,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	/**
 	 * @param $userlist
 	 *
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function load($userlist)
@@ -52,7 +57,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 
 	/**
 	 * @return mixed
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 *
 	 */
 	public function getEditURL()
@@ -66,7 +71,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @return mixed
-	 * @since       Kunena
+	 * @since       Kunena 5.0
 	 * @throws Exception
 	 */
 	protected function _getURL($user, $sizex, $sizey)

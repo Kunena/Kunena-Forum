@@ -1274,8 +1274,12 @@ class BBCode
      * @param string $string The string to detect the URLs in.
      * @return  array Returns an array in the form `[text, anchor, text, anchor, ...]`.
      */
-	protected function autoDetectURLs($string)
+	public function autoDetectURLs($string)
 	{
+		/*HACK BY KUNENA >
+		The method autoDetectURLs has been set to public instead of protected to be extended in KunenaBbcode class
+		< HACK BY KUNENA*/
+
 		$hostRegex = /** @lang RegExp */
 			<<<REGEX
 (?: # host
@@ -1318,10 +1322,6 @@ REGEX;
 (?=$|[\s)]|[.!?;]($|[\s])) # url ends at the end, before space, within parentheses, before punctuation
 `Dx
 REGEX;
-
-		/*HACK BY KUNENA >*/
-		$string = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',  $string);
-		/*< HACK BY KUNENA*/
 
 		$parts  = preg_split($regex, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 		$result = [];

@@ -1319,6 +1319,10 @@ REGEX;
 `Dx
 REGEX;
 
+		/*HACK BY KUNENA >*/
+		$string = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',  $string);
+		/*< HACK BY KUNENA*/
+
 		$parts  = preg_split($regex, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 		$result = [];
 		$isURL  = false;

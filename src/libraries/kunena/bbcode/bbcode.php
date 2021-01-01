@@ -70,8 +70,12 @@ class KunenaBbcode extends Nbbc\BBCode
 
 		if (JDEBUG && KunenaFactory::getConfig()->debug && KunenaForum::isDev())
 		{
-			$this->setDebug(true);
-			$this->setLogFile(Factory::getApplication()->get('log_path'). '/kunena.NBBC_BBCODE.php');
+			/*
+			 * Uncomment the two lines only whne need to have the log of debug else it's too way slow
+			 * 
+			 * $this->setDebug(true);
+			 * $this->setLogFile(Factory::getApplication()->get('log_path'). '/kunena.NBBC_BBCODE.php');
+			 */
 		}
 
 		$this->SetSmileyDir(JPATH_ROOT);

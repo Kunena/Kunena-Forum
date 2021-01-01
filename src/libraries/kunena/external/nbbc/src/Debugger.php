@@ -82,11 +82,7 @@ class Debugger
 	 */
 	public static function log($level, $string, $logAll = false)
 	{
-		if ($level >= static::$level && $logAll === false)
-		{
-			SELF::storeLog($string);
-		}
-		else
+		if ($level >= static::$level)
 		{
 			SELF::storeLog($string);
 		}

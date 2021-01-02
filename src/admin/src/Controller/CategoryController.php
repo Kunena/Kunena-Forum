@@ -122,7 +122,7 @@ class CategoryController extends FormController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
+			return false;
 		}
 
 		$input      = $this->app->input;

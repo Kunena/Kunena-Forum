@@ -108,7 +108,7 @@ class UsersController extends AdminController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
+			return false;
 		}
 
 		$cid    = $this->input->get('cid', [], 'array');
@@ -120,7 +120,7 @@ class UsersController extends AdminController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
+			return false;
 		}
 
 		$this->app->setUserState('kunena.user.userid', $userid);

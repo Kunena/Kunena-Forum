@@ -77,7 +77,7 @@ class UserModel extends KunenaModel
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage());
 
-			return;
+			return false;
 		}
 
 		$topic_list = [];
@@ -136,7 +136,7 @@ class UserModel extends KunenaModel
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage());
 
-			return;
+			return false;
 		}
 
 		$list = [];
@@ -160,7 +160,7 @@ class UserModel extends KunenaModel
 			{
 				Factory::getApplication()->enqueueMessage($e->getMessage());
 
-				return;
+				return false;
 			}
 		}
 
@@ -248,7 +248,7 @@ class UserModel extends KunenaModel
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage());
 
-			return;
+			return false;
 		}
 
 		$yesnoRank [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));

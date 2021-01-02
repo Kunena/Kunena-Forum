@@ -70,7 +70,7 @@ class InstallController extends FormController
 		{
 			$this->setRedirect('index.php?option=com_kunena');
 
-			return;
+			return false;
 		}
 
 		$app = Factory::getApplication();
@@ -108,7 +108,7 @@ class InstallController extends FormController
 
 			$this->setRedirect('index.php?option=com_installer');
 
-			return;
+			return true;
 		}
 	}
 }

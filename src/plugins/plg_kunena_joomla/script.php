@@ -89,7 +89,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function postflight(string $type, ComponentAdapter $parent): void
+	public function postflight($type, $parent)
 	{
 		$type = strtolower($type);
 

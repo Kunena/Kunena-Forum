@@ -113,10 +113,15 @@ if ($show)
 		</li>
 	<?php endif; ?>
 
-	<?php if ($canseekarma && $config->showkarma) : ?>
+	<?php if ($canseekarma && $config->showkarma) : 
+		if ($user->karma > 0) :
+			$karmanumber = $user->karma;
+		else :
+			$karmanumber = '';
+		endif;?>
 		<li>
-			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
-			<span> <?php $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown').$this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> </span>
+			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>: <?php echo $karmanumber; ?></strong>
+			<span> <?php $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> </span>
 		</li>
 	<?php endif; ?>
 

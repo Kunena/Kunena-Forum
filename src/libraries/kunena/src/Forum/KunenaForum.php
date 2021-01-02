@@ -327,7 +327,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function version(): bool
+	public static function version()
 	{
 		if (self::$version === false)
 		{
@@ -459,7 +459,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionSampleData(): bool
+	public static function versionSampleData()
 	{
 		if (self::$version_sampledata === false)
 		{

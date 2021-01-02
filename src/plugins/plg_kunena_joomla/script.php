@@ -77,74 +77,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
 	 * @since   4.0.0
 	 */
 	protected $db;
-
-	/**
-	 *  Constructor
-	 *
-	 * @param   string  $type  'install', 'update' or 'discover_install'
-	 *
-	 * @since   Kunena 6.0
-	 * @throws Exception
-	 */
-	public function __construct(string $type)
-	{
-		$this->app = Factory::getApplication();
-	}
-
-	/**
-	 * method to run before an install/update/uninstall method
-	 *
-	 * @param   string            $type    'install', 'update' or 'discover_install'
-	 * @param   InstallerAdapter  $parent  Installer object
-	 *
-	 * @return  boolean  false will terminate the installation
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function preflight(string $type, InstallerAdapter $parent): bool
-	{
-	}
-
-	/**
-	 * Method to install the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installer object
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function install(ComponentAdapter $parent): void
-	{
-		// Notice $parent->getParent() returns JInstaller object
-	}
-
-	/**
-	 * Method to uninstall the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installer object
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function uninstall(ComponentAdapter $parent): void
-	{
-	}
-
-	/**
-	 * method to update the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installer object
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function update(ComponentAdapter $parent): void
-	{
-	}
-
+	
 	/**
 	 * method to run after an install/update/uninstall method
 	 *

@@ -718,7 +718,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		if (!$old || !$new)
 		{
-			return;
+			return false;
 		}
 
 		// $old->validate();

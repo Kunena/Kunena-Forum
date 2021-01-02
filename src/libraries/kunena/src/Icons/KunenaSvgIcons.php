@@ -40,7 +40,7 @@ class KunenaSvgIcons
 	{
 		if (empty($svgname))
 		{
-			return;
+			return false;
 		}
 
 		if ($group == 'default')

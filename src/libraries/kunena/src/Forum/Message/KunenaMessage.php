@@ -1804,7 +1804,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -1822,7 +1822,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -1849,7 +1849,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -1881,7 +1881,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2009,7 +2009,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($user->isAdmin() || $user->isModerator())
 		{
-			return;
+			return false;
 		}
 
 		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getTopic()->getCategory()))
@@ -2017,7 +2017,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2064,7 +2064,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2111,7 +2111,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2131,6 +2131,6 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
-		return;
+		return true;
 	}
 }

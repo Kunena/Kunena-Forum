@@ -286,7 +286,7 @@ class KunenaTopicUser extends CMSObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				return;
+				return false;
 			}
 
 			if ($info)

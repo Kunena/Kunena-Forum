@@ -124,7 +124,7 @@ abstract class KunenaForum
 
 			if ($hide_lonely && count($categories) + count($channels) <= 1)
 			{
-				return;
+				return false;
 			}
 		}
 

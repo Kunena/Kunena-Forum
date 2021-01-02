@@ -64,7 +64,7 @@ class KunenaInstaller
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**

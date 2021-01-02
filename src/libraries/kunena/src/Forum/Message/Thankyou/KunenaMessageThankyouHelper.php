@@ -71,7 +71,7 @@ abstract class KunenaMessageThankyouHelper
 		// TODO: why this returns null? Does it have side effect?
 		if ($id < 1)
 		{
-			return;
+			return false;
 		}
 
 		if ($reload || empty(self::$_instances [$id]))

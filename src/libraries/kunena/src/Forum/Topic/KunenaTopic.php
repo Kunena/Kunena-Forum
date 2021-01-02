@@ -2097,7 +2097,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2134,7 +2134,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2152,7 +2152,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2170,7 +2170,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2190,7 +2190,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_TOPIC_LOCKED'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2218,7 +2218,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2240,7 +2240,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2316,7 +2316,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2338,7 +2338,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2358,7 +2358,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
 		if ($user->isAdmin() || $user->isModerator())
 		{
-			return;
+			return false;
 		}
 
 		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
@@ -2366,7 +2366,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -2386,6 +2386,6 @@ class KunenaTopic extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
-		return;
+		return true;
 	}
 }

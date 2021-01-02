@@ -715,7 +715,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return;
+			return false;
 		}
 
 		// Load user if not given.
@@ -824,7 +824,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($action == 'create')
 		{
-			return;
+			return false;
 		}
 
 		// Need to load private message (for now allow only one private message per KunenaAttachment).
@@ -841,7 +841,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		if (in_array($user->userid, $private->users()->getMapped()))
 		{
 			// Yes, I have access..
-			return;
+			return true;
 		}
 		else
 		{
@@ -852,7 +852,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 				if ($user->isModerator($message->getCategory()))
 				{
 					// Yes, I have access..
-					return;
+					return true;
 				}
 			}
 		}
@@ -1104,7 +1104,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -1139,7 +1139,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**
@@ -1159,6 +1159,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 }

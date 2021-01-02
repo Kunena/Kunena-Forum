@@ -3041,7 +3041,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @throws KunenaInstallerException
 	 * @throws Exception
 	 */
-	public function buildMenu(array $menu): bool
+	public function buildMenu(array $menu)
 	{
 		$config = KunenaFactory::getConfig();
 

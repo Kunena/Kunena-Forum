@@ -1553,7 +1553,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		if ($oldtable == $newtable || !isset($oldtables [$oldtable]) || isset($tables [$newtable]))
 		{
-			return;
+			return false;
 		}
 
 		// Make identical copy from the table with new name
@@ -1578,7 +1578,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		if (!$create)
 		{
-			return;
+			return false;
 		}
 
 		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
@@ -3355,7 +3355,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		if (isset($tables ['kunena_version']))
 		{
 			// Nothing to migrate
-			return;
+			return false;
 		}
 
 		$collation = $this->db->getCollation();

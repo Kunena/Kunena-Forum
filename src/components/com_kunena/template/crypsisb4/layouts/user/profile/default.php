@@ -124,7 +124,13 @@ if ($user->userid > 1)
 				:
 					?>
 					<li>
-						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown').$this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?>
+						<?php if ($user->karma > 0) :
+							$karmanumber = $user->karma;
+						else :
+							$karmanumber = '';
+						endif; 
+						
+						echo Text::_('COM_KUNENA_KARMA') . ': ' . $karmanumber . $this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', $template->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?>
 					</li>
 				<?php endif; ?>
 

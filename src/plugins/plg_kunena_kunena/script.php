@@ -105,7 +105,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
 	 * @return void|boolean
 	 * @since version
 	 */
-	public function enablePlugin($pluginName): bool
+	public function enablePlugin($pluginName)
 	{
 		// Create a new db object.
 		$db    = Factory::getDbo();

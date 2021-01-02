@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Plugin\Kunena\Joomla\Login;
 use RuntimeException;
 use StdClass;
 use function defined;
@@ -954,7 +955,7 @@ class ToolsController extends FormController
 		$password = $this->app->input->getString('password');
 		$code     = $this->app->input->getInt('secretkey');
 
-		$login = Login::getInstance();
+		$login = KunenaLogin::getInstance();
 
 		if ($login->isTFAEnabled())
 		{

@@ -14,7 +14,7 @@
     <namespace path="src">Kunena\Forum\Libraries</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
-        <folder>external</folder>
+        <folder>External</folder>
         <folder>src</folder>
         <filename>kunena.xml</filename>
     </files>

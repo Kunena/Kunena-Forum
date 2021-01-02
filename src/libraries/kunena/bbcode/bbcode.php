@@ -394,7 +394,7 @@ class KunenaBbcode extends Nbbc\BBCode
 	 * @return array
 	 * @since Kunena
 	 */
-	public function autoDetectURLs($string)
+	protected function autoDetectURLs($string)
 	{
 		$search = preg_split('/(?xi)
 		\b

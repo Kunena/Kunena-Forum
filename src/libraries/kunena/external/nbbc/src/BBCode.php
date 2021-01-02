@@ -1274,12 +1274,8 @@ class BBCode
      * @param string $string The string to detect the URLs in.
      * @return  array Returns an array in the form `[text, anchor, text, anchor, ...]`.
      */
-	public function autoDetectURLs($string)
+	protected function autoDetectURLs($string)
 	{
-		/*HACK BY KUNENA >
-		The method autoDetectURLs has been set to public instead of protected to be extended in KunenaBbcode class
-		< HACK BY KUNENA*/
-
 		$hostRegex = /** @lang RegExp */
 			<<<REGEX
 (?: # host

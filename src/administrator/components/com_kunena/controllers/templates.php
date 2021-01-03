@@ -856,7 +856,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!empty($params['nameskinckeditor']))
 		{
-			if (!JFolder::exists(KPATH_MEDIA . '/kunena/core/js/skins/' . $params['nameskinckeditor']))
+			if (!JFolder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
 			{
 				$params['nameskinckeditor'] = '';
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'),'error');

@@ -350,8 +350,9 @@ abstract class KunenaForum
 
 			if (file_exists($file))
 			{
-				$manifest      = simplexml_load_file($file);
-				self::$version = (string) $manifest->version . '-GIT';
+				$manifest            = simplexml_load_file($file);
+				self::$version       = (string) $manifest->version . '-GIT';
+				self::$version_date  = (string) $manifest->creationDate;
 			}
 			else
 			{
@@ -361,16 +362,17 @@ abstract class KunenaForum
 				$query->setLimit(1);
 				$db->setQuery($query);
 
-				self::$version = $db->loadResult();
+				self::$version       = $db->loadResult();
+				self::$version_date  = Factory::getDate()->format('Y-m-d');
 			}
 		}
 		else
 		{
 			self::$version = strtoupper('@kunenaversion@');
+			self::$version_date  = strtoupper('@kunenaversiondate@');
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date  = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? Factory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 
 		$db    = Factory::getDbo();
@@ -425,7 +427,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionDate(): bool
+	public static function versionDate(): string
 	{
 		if (self::$version_date === false)
 		{
@@ -442,7 +444,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionName(): bool
+	public static function versionName(): string
 	{
 		if (self::$version_name === false)
 		{

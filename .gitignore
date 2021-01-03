@@ -7,6 +7,12 @@ src/media/kunena/cache
 src/media/kunena/attachments/
 src/media/cache/*
 src/site/template/aurelia/assets/js/**-min.js
+src/admin/templates.xml
+src/admin/kunena.xml
+src/libraries/kunena/External
+src/libraries/kunena/kunena.xml
+src/site/template/aurelia/config/kunena_tmpl_aurelia.xml
+src/site/template/aurelia/config/template.xml
 
 # Builds
 build/tmp

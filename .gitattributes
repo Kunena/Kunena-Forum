@@ -16,6 +16,8 @@
 *.txt     text eol=lf
 *.xml     text eol=lf
 *.yml     text eol=lf
+CHANGELOG text eol=lf
+LICENSE   text eol=lf
 
 # Define binary file attributes.
 # - Do not treat them as text.

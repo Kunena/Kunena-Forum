@@ -1,11 +1,18 @@
 #Kunena
 .externalToolBuilders/build.kunena.2.0.launch
-src/components/com_kunena/template/**/params.ini
+src/site/template/**/params.ini
 src/site/template/blue_eagle5
 src/media/kunena/avatars
 src/media/kunena/cache
 src/media/kunena/attachments/
 src/media/cache/*
+src/admin/templates.xml
+src/admin/kunena.xml
+src/libraries/kunena/External
+src/libraries/kunena/kunena.xml
+src/site/template/aurelia/config/kunena_tmpl_aurelia.xml
+src/site/template/aurelia/config/template.xml
+src/site/template/aurelia/assets/js/**-min.js
 
 # Builds
 build/tmp
@@ -68,15 +75,3 @@ selenium-server-standalone.jar
 codecept.phar
 selenium.log
 tests/cache
-
-#K6.0
-src/admin/templates.xml
-src/admin/kunena.xml
-*-min.js
-src/libraries/kunena/External
-src/libraries/kunena/kunena.xml
-src/libraries/kunena/External/nbbc/CHANGELOG
-src/libraries/kunena/External/nbbc/LICENSE
-src/libraries/kunena/External/scss/bin/pscss
-src/site/template/aurelia/config/kunena_tmpl_aurelia.xml
-src/site/template/aurelia/config/template.xml

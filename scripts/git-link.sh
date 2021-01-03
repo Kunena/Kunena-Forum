@@ -10,22 +10,18 @@ echo "GIT repository in ........: $GIT_SOURCE"
 echo "Joomla installation in ...: $GIT_TARGET"
 echo
 
-while getopts ":d" optname
-	do
-		case "$optname" in
-			"d")
-				OPT_DELETE=1
+while getopts ":d:f:" o; do
+    case "$o" in
+        d)  OPT_DELETE=1
 				;;
-			"f")
-				OPT_DELETE_ALL=1
+        f)  OPT_DELETE_ALL=1
 				;;
-			"?")
-				echo "Unknown option $OPTARG"
+        ?)
+				echo "Unknown option ${OPTARG}"
 				exit 1
 				;;
-
-		esac
-	done
+    esac
+done
 
 [ -f $GIT_TARGET/configuration.php ] || {
 	echo "ERROR: Joomla installation was not found!"
@@ -42,9 +38,9 @@ while getopts ":d" optname
 }
 
 sources=(
-	"src/administrator/components/com_kunena"
-	"src/components/com_kunena"
-	"src/libraries/kunena"
+	"src/admin"
+	"src/site"
+	"src/libraries"
 	"src/plugins/plg_finder_kunena"
 	"src/plugins/plg_kunena_altauserpoints"
 	"src/plugins/plg_kunena_community"
@@ -59,7 +55,7 @@ sources=(
 	"src/plugins/plg_quickicon_kunena"
 	"src/plugins/plg_system_kunena"
 	"src/plugins/plg_sampledata_kunena"
-	"pkg_kunena.xml"
+	"src/pkg_kunena.xml"
 	"src/libraries/kunena/kunena.xml"
 	"src/media/kunena/kunena_media.xml"
 )
@@ -109,7 +105,7 @@ else
 		rm -rf "$GIT_TARGET/src/media/kunena"
 	fi
 	mkdir "$GIT_TARGET/administrator/components/com_kunena"
-	cp -r "$GIT_SOURCE/src/administrator/components/com_kunena/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
+	cp -r "$GIT_SOURCE/src/admin/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
 	echo "Removed development tree from your web site."
 	echo "Please install Kunena Package to fix your site!"
 fi

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE extension>
+<extension type="component" version="4.0" method="upgrade">
+    <name>com_kunena</name>
+    <version>@kunenaversion@</version>
+    <versionname>@kunenaversionname@</versionname>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>(C) 2008 - 2020 Kunena Team. All rights reserved.</copyright>
+    <license>GNU/GPLv3 or later</license>
+    <description>COM_KUNENA_XML_DESCRIPTION</description>
+    <namespace path="src">Kunena\Forum</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>
+        </sql>
+    </install>
+    <files folder="site">
+        <filename>jomsocial_rule.xml</filename>
+        <filename>kunena.php</filename>
+        <folder>controller</folder>
+        <folder>language</folder>
+        <folder>layout</folder>
+        <folder>src</folder>
+        <folder>template</folder>
+    </files>
+    <administration>
+        <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA
+        </menu>
+        <submenu>
+            <menu view="cpanel">COM_KUNENA_DASHBOARD</menu>
+            <menu view="categories">COM_KUNENA_CATEGORY_MANAGER</menu>
+            <menu view="users">COM_KUNENA_USER_MANAGER</menu>
+            <menu view="attachments">COM_KUNENA_FILE_MANAGER</menu>
+            <menu view="smilies">COM_KUNENA_EMOTICON_MANAGER</menu>
+            <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
+            <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
+            <menu view="config">COM_KUNENA_CONFIGURATION</menu>
+            <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
+            <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
+            <menu view="statistics">COM_KUNENA_MENU_STATISTICS</menu>
+            <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
+            <menu view="trash">COM_KUNENA_TRASH_MANAGER</menu>
+        </submenu>
+        <files>
+            <filename>kunena.xml</filename>
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>api</folder>
+            <folder>forms</folder>
+            <folder>language</folder>
+            <folder>media</folder>
+            <folder>services</folder>
+            <folder>src</folder>
+            <folder>sql</folder>
+            <folder>tmpl</folder>
+        </files>
+    </administration>
+</extension>

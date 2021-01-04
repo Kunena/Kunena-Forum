@@ -68,7 +68,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.linkDefaultProtocol= 'https://'
 
 	// Define font sizes in percent values.
-	config.fontSize_sizes= "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%";
+	config.fontSize_sizes= "50/50%;85/85%;100/100%;150/150%;200/200%";
 
 	// Set the skin if it's defined in the params settings of the template
 	if (Joomla.getOptions('com_kunena.ckeditor_skiname') !== null)

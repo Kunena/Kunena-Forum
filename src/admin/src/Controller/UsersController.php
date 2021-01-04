@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-
+use Kunena\Forum\Libraries\User\KunenaUser;
 /**
  * Kunena Users Controller
  *
@@ -832,7 +832,7 @@ class UsersController extends AdminController
 			// Global moderator is a special case
 			if ($this->me->isAdmin() && in_array(0, $catids))
 			{
-				KunenaAccess::getInstance()->setModerator(0, $user, true);
+				KunenaAccess::getInstance()->setModerator((object) [], $user, true);
 			}
 		}
 
@@ -1006,5 +1006,36 @@ class UsersController extends AdminController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Set moderator rights on the user given
+	 *
+	 * @param   KunenaUser  $user       user
+	 * @param   array       $modCatids  modCatids
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 5.1
+	 *
+	 * @throws Exception
+	 */
+	protected function setModerate(KunenaUser $user, array $modCatids): bool
+	{
+		// Update moderator rights
+		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
+
+		foreach ($categories as $category)
+		{
+			$category->setModerator($user, in_array($category->id, $modCatids, true));
+		}
+
+		// Global moderator is a special case
+		if (KunenaUserHelper::getMyself()->isAdmin())
+		{
+			KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
+		}
+
+		return true;
 	}
 }

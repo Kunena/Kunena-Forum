@@ -335,13 +335,13 @@ class CategoriesModel extends KunenaModel
 	}
 
 	/**
-	 * @param   array  $table  table
+	 * @param   Table|bool  $table  table
 	 *
-	 * @return  array
+	 * @return  Table|bool
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getReorderConditions(array $table): array
+	protected function getReorderConditions(Table $table): array
 	{
 		$condition   = [];
 		$condition[] = 'parent_id = ' . (int) $table->parent_id;

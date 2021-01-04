@@ -44,7 +44,7 @@ class HtmlView extends BaseHtmlView
 		$params       = $this->get('editparams');
 		$details      = $this->get('templatedetails');
 		$templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template     = Template::getInstance($templatename);
+		$template     = KunenaTemplate::getInstance($templatename);
 		$template->initializeBackend();
 
 		$templatefile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';

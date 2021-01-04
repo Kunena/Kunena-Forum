@@ -76,6 +76,52 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @since Kunena
+	 */
+	public function displayEdit()
+	{
+		$this->category = $this->get('AdminCategory');
+
+		// FIXME: better access control and gracefully handle no rights
+		// Prevent fatal error if no rights:
+		if (!$this->category)
+		{
+			return;
+		}
+
+		$this->options    = $this->get('AdminOptions');
+		$this->moderators = $this->get('AdminModerators');
+		$this->setToolBarEdit();
+		$this->display();
+	}
+
+	/**
+	 * @since Kunena
+	 */
+	protected function setToolBarEdit()
+	{
+		// Get the toolbar object instance
+		$bar = Toolbar::getInstance('toolbar');
+
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('apply');
+		ToolbarHelper::save('save');
+		ToolbarHelper::save2new('save2new');
+
+		// If an existing item, can save to a copy.
+		if ($this->category->exists())
+		{
+			ToolbarHelper::save2copy('save2copy');
+		}
+
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
 	 * @param   null  $tpl
 	 *
 	 * @return  void

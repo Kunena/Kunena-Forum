@@ -60,10 +60,10 @@ class KunenaTemplate extends CMSObject
 	public $name = null;
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	public $params = null;
+	public $params = [];
 
 	/**
 	 * @var     boolean|integer

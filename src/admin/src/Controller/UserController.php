@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
@@ -184,7 +185,7 @@ class UserController extends FormController
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
+					KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -195,14 +196,14 @@ class UserController extends FormController
 	/**
 	 * Clean social items
 	 *
-	 * @param   KunenaUser  $user  user
-	 * @param   Factory     $app   app
+	 * @param   KunenaUser      $user  user
+	 * @param   CMSApplication  $app   app
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function cleanSocial(KunenaUser $user, Factory $app): void
+	protected function cleanSocial(KunenaUser $user, CMSApplication $app): void
 	{
 		foreach ($user->socialButtons() as $key => $social)
 		{
@@ -235,7 +236,7 @@ class UserController extends FormController
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
 		}
 
 		return true;

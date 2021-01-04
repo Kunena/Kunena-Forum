@@ -36,7 +36,7 @@ use function defined;
 class KunenaModel extends BaseDatabaseModel
 {
 	/**
-	 * @var     string JSite|JAdministrator
+	 * @var     object JSite|JAdministrator
 	 * @since   Kunena 6.0
 	 */
 	public $app = null;
@@ -54,10 +54,10 @@ class KunenaModel extends BaseDatabaseModel
 	public $config = null;
 
 	/**
-	 * @var     string Registry
+	 * @var     object Registry
 	 * @since   Kunena 6.0
 	 */
-	public $params = null;
+	public $params = [];
 
 	/**
 	 * @var     Input

@@ -41,167 +41,173 @@ use function defined;
 class ToolsModel extends AdminModel
 {
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $jconfig_smtpuser = null;
+	protected $jconfig_smtpuser = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $jconfig_ftp = null;
+	protected $jconfig_ftp = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $jconfig_sef = null;
+	protected $jconfig_sef = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $jconfig_sef_rewrite = null;
+	protected $jconfig_sef_rewrite = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $htaccess = null;
+	protected $htaccess = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $mbstring = null;
+	protected $mbstring = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $gd_info = null;
+	protected $gd_info = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $gd_support = null;
+	protected $gd_support = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $openssl = null;
+	protected $openssl = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $json = null;
+	protected $json = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $fileinfo = null;
+	protected $fileinfo = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $maxExecTime = null;
+	protected $maxExecTime = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $maxExecMem = null;
+	protected $maxExecMem = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $fileuploads = null;
+	protected $fileuploads = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $kunenaVersionInfo = null;
+	protected $kunenaVersionInfo = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $ktemplate = null;
+	protected $ktemplate = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $ktemplatedetails = null;
+	protected $ktemplatedetails = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $jtemplatedetails = null;
+	protected $jtemplatedetails = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $joomlamenudetails = null;
+	protected $joomlamenudetails = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $collation = null;
+	protected $collation = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $kconfigsettings = null;
+	protected $kconfigsettings = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $joomlalanguages = null;
+	protected $joomlalanguages = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $plgtext = null;
+	protected $plgtext = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $modtext = null;
+	protected $modtext = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $thirdpartytext = null;
+	protected $thirdpartytext = [];
 
 	/**
-	 * @var     null
+	 * @var     object
 	 * @since   Kunena 6.0
 	 */
-	protected $seftext = null;
+	protected $seftext = [];
 
 	/**
-	 * @var     null
+	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $integration_settings = null;
-	private $ktemplateparams;
+	protected $integration_settings = [];
+	
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	private $ktemplateparams = [];
+	
 	/**
 	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
 	 * @since version

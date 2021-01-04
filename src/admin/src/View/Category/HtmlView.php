@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 
@@ -50,6 +51,54 @@ class HtmlView extends BaseHtmlView
 	public function displayCreate(): void
 	{
 		$this->displayEdit();
+	}
+
+	/**
+	 * @since Kunena
+	 */
+	public function displayEdit()
+	{
+		$this->category = $this->get('AdminCategory');
+
+		// FIXME: better access control and gracefully handle no rights
+		// Prevent fatal error if no rights:
+		if (!$this->category)
+		{
+			return;
+		}
+
+		$this->options    = $this->get('AdminOptions');
+		$this->moderators = $this->get('AdminModerators');
+		$this->setToolBarEdit();
+		$this->display();
+	}
+
+	/**
+	 * @since Kunena
+	 */
+	protected function setToolBarEdit()
+	{
+		$this->category = $this->get('AdminCategory');
+
+		// Get the toolbar object instance
+		$bar = Toolbar::getInstance('toolbar');
+
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('apply');
+		ToolbarHelper::save('save');
+		ToolbarHelper::save2new('save2new');
+
+		// If an existing item, can save to a copy.
+		if ($this->category->exists())
+		{
+			ToolbarHelper::save2copy('save2copy');
+		}
+
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		ToolbarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -90,6 +139,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
+		$this->category = $this->get('AdminCategory');
+
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
 		ToolbarHelper::apply('category.apply');

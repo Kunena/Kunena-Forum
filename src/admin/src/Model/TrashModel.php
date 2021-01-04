@@ -90,14 +90,14 @@ class TrashModel extends KunenaModel
 	/**
 	 * Method to get all deleted topics.
 	 *
-	 * @return  object
+	 * @return  array
 	 *
 	 * @since   Kunena 1.6
 	 *
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	protected function _getTopics(): object
+	protected function _getTopics(): array
 	{
 		$finder = new KunenaMessageFinder;
 		$finder->filterByHold([2, 3]);

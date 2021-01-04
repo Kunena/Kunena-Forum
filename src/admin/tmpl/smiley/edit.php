@@ -55,7 +55,7 @@ $wa->useScript('multiselect');
 							<td width="80%">
 								<input class="col-md-2" type="text" name="smiley_code"
 									   value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
-								<img loading="lazy" name="smiley_image"
+								<img loading=lazy name="smiley_image"
 									 src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
 									 border="0"
 									 alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>

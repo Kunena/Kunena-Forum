@@ -42,7 +42,7 @@ if ($config->lightbox == 1)
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img loading="lazy" src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?>
+		<img loading=lazy src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?>
 			 width="<?php echo $attachment->width; ?>"
 			 height="<?php echo $attachment->height; ?>"
 			 alt="<?php echo $attachment->getFilename(); ?>"/>
@@ -54,7 +54,7 @@ else
 	?>
 	<a href="<?php echo $name; ?>"
 	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>">
-		<img loading="lazy" class="kmsimage" src="<?php echo $name; ?>"
+		<img loading=lazy class="kmsimage" src="<?php echo $name; ?>"
 			 width="<?php echo $config->thumbwidth; ?>"
 			 height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>

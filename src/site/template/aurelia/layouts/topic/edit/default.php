@@ -331,7 +331,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 										<?php else : ?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-													loading="lazy"
+													loading=lazy
 													src="<?php echo $icon->relpath; ?>"
 													alt="<?php echo $icon->name; ?>"
 													border="0"/>

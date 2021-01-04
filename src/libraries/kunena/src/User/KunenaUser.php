@@ -1969,7 +1969,7 @@ class KunenaUser extends CMSObject
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img loading="lazy" src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" />';
+				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" />';
 			}
 
 			if ($config->rankimages == 2)
@@ -1983,7 +1983,7 @@ class KunenaUser extends CMSObject
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img loading="lazy" src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" /><br>
+				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 

@@ -72,7 +72,7 @@ $wa->useScript('multiselect');
 								<td>
 									<?php $img_path = Uri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>
 									<span class="editlinktip hasTip"
-										  title="<?php echo $this->escape($row->name . '::<img loading="lazy" border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+										  title="<?php echo $this->escape($row->name . '::<img loading=lazy border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 										<a href="<?php echo Route::_('index.php?option=com_kunena&view=template&layout=edit&name=' . $this->escape($row->directory)); ?>"
 										   title="<?php echo $this->escape($row->name); ?>">
 													<?php echo $this->escape($row->name); ?></a>
@@ -142,7 +142,7 @@ $wa->useScript('multiselect');
 									</td>
 									<td style="width: 15%;">
 									<span class="editlinktip hasTip"
-										  title="<?php echo $row->name . $this->escape('::<img loading="lazy" border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+										  title="<?php echo $row->name . $this->escape('::<img loading=lazy border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 										<a href="<?php echo $row->detailsurl;?>" target="_blank"
 										   rel="noopener noreferrer"><?php echo $row->name;?></a>
 									</span>

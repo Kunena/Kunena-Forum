@@ -53,7 +53,7 @@ $topicicontype = $ktemplate->params->get('topicicontype');
 
 		:
 			?>
-			<img loading="lazy" src="<?php echo Uri::root(); ?>/media/kunena/core/svg/<?php echo $icon;?>.svg" />
+			<img loading=lazy src="<?php echo Uri::root(); ?>/media/kunena/core/svg/<?php echo $icon;?>.svg" />
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $label; ?>

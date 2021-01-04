@@ -197,7 +197,7 @@ $wa->useScript('multiselect');
 													<td>
 														<a href="#edit"
 														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
-															<img loading="lazy" src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
+															<img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
 																 alt="<?php echo $this->escape($row->rank_image); ?>"/>
 														</a>
 													</td>

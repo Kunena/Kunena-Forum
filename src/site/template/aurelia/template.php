@@ -270,6 +270,6 @@ HTML;
 	 */
 	public function getImage($image, $alt = ''): string
 	{
-		return '<img loading="lazy" src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
+		return '<img loading=lazy src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
 }

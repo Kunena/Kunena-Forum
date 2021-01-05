@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\SearchController;
@@ -95,18 +96,20 @@ class KunenaView extends HtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;
+
 	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @var KunenaTemplate
 	 * @since version
 	 */
-	private $ktemplate;
+	protected $ktemplate;
+
 	/**
 	 * @var KunenaProfiler
 	 * @since version
 	 */
 	private $profiler;
-	private $state;
-	private $common;
+	protected $state;
+	public $common;
 
 	/**
 	 * @param   array  $config  config

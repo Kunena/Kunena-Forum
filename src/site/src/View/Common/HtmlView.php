@@ -56,58 +56,20 @@ class HtmlView extends BaseHtmlView
 	 */
 	public $offline = false;
 	private $me;
-	private $me;
-	private $me;
 	private $ktemplate;
 	private $app;
-	private $app;
-	private $ktemplate;
-	private $ktemplate;
 	private $state;
 	private $config;
 	private $memberCount;
-	private $memberCount;
-	private $config;
 	private $lastUserId;
-	private $ktemplate;
-	private $ktemplate;
-	private $me;
-	private $me;
 	/**
 	 * @var array
 	 * @since version
 	 */
 	private $pathway;
-	private $app;
-	private $app;
-	private $app;
-	private $app;
-	private $app;
-	private $app;
-	private $ktemplate;
-	private $ktemplate;
-	private $ktemplate;
-	private $config;
-	private $body;
-	/**
-	 * @var false|mixed|string|void
-	 * @since version
-	 */
-	private $body;
+
 	private $header;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $header;
-	private $app;
-	private $me;
-	private $config;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $state;
+
 
 	/**
 	 * @param   null  $layout  layout

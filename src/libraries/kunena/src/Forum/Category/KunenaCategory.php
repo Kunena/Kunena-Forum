@@ -358,17 +358,24 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $allowRatings;
+
 	/**
 	 * @var array
 	 * @since version
 	 */
 	private $moderators;
-	private $parent;
+
 	/**
 	 * @var bool|string|void
 	 * @since version
 	 */
-	private $rssURL;
+	public $parent;
+
+	/**
+	 * @var bool|string|void
+	 * @since version
+	 */
+	public $rssURL;
 
 	/**
 	 * @param   mixed|array  $properties  properties

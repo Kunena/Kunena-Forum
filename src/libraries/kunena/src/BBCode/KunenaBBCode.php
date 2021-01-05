@@ -89,25 +89,25 @@ class KunenaBBCode extends BBCode
 	 * @var     KunenaBBCodeLibrary
 	 * @since   Kunena 6.0
 	 */
-	private $defaults;
+	protected $defaults;
 
 	/**
 	 * @var     array|array[]
 	 * @since   Kunena 6.0
 	 */
-	private $tag_rules;
+	protected $tag_rules;
 
 	/**
 	 * @var     array|string[]
 	 * @since   Kunena 6.0
 	 */
-	private $smileys;
+	protected $smileys;
 
 	/**
 	 * @var     array|string[]
 	 * @since   Kunena 6.0
 	 */
-	private $url_pattern;
+	protected $url_pattern;
 
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
@@ -578,7 +578,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	private function SetEnableSmileys($enable = false)
+	public function SetEnableSmileys($enable = false)
 	{
 	}
 
@@ -590,7 +590,7 @@ class KunenaBBCode extends BBCode
 	 * @return  void
 	 * @since   Kunena 6.0
 	 */
-	private function SetSmileyDir($JPATH_ROOT)
+	public function SetSmileyDir($JPATH_ROOT)
 	{
 	}
 
@@ -603,7 +603,7 @@ class KunenaBBCode extends BBCode
 	 *
 	 * @return void
 	 */
-	private function SetSmileyURL(string $param): void
+	public function SetSmileyURL(string $param): void
 	{
 	}
 
@@ -616,7 +616,7 @@ class KunenaBBCode extends BBCode
 	 *
 	 * @return void
 	 */
-	private function SetDetectURLs(bool $true): void
+	public function SetDetectURLs(bool $true): void
 	{
 	}
 
@@ -629,7 +629,7 @@ class KunenaBBCode extends BBCode
 	 *
 	 * @return void
 	 */
-	private function SetURLPattern($url_pattern): void
+	public function SetURLPattern($url_pattern): void
 	{
 	}
 
@@ -642,7 +642,7 @@ class KunenaBBCode extends BBCode
 	 *
 	 * @return void
 	 */
-	private function SetURLTarget(string $string): void
+	public function SetURLTarget(string $string): void
 	{
 	}
 
@@ -655,7 +655,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	private function IsValidEmail(string $email): string
+	public function IsValidEmail(string $email): string
 	{
 	}
 
@@ -668,7 +668,7 @@ class KunenaBBCode extends BBCode
 	 * @return  string|void
 	 * @since   Kunena 6.0
 	 */
-	private function FillTemplate(array $url_pattern, ?bool $params): string
+	public function FillTemplate(array $url_pattern, ?bool $params): string
 	{
 	}
 }

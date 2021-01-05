@@ -15,13 +15,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Update value of type datetime in all tables to changes default value
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_600_2019_07_21_datetimeupdatevalue($parent)
 {

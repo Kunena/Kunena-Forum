@@ -31,7 +31,7 @@ ALTER TABLE `#__kunena_categories`
 ALTER TABLE `#__kunena_categories`
     ADD KEY `parent` (`parent`);
 ALTER TABLE `#__kunena_categories`
-    ADD KEY `published_pubaccess_id` (`published`, `pub_access`, `id`);
+    ADD KEY `published_pubaccess_id` (`published`, `pubAccess`, `id`);
 ALTER TABLE `#__kunena_categories`
     ADD KEY `msg_id` (`id_last_msg`);
 
@@ -216,19 +216,19 @@ CREATE TABLE `#__kunena_groups`
 
 CREATE TABLE `#__kunena_ranks`
 (
-    `rank_id`      mediumint(8) unsigned NOT NULL auto_increment,
-    `rank_title`   varchar(255)          NOT NULL default '',
-    `rank_min`     mediumint(8) unsigned NOT NULL default '0',
-    `rank_special` tinyint(1) unsigned   NOT NULL default '0',
-    `rank_image`   varchar(255)          NOT NULL default '',
-    PRIMARY KEY (`rank_id`)
+    `rankId`      mediumint(8) unsigned NOT NULL auto_increment,
+    `rankTitle`   varchar(255)          NOT NULL default '',
+    `rankMin`     mediumint(8) unsigned NOT NULL default '0',
+    `rankSpecial` tinyint(1) unsigned   NOT NULL default '0',
+    `rankImage`   varchar(255)          NOT NULL default '',
+    PRIMARY KEY (`rankId`)
 )
     DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `#__kunena_groups`
 VALUES ('1', 'Registered User');
 
-INSERT INTO `#__kunena_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`)
+INSERT INTO `#__kunena_ranks` (`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`)
 VALUES (1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
        (2, 'Junior Boarder', 20, 0, 'rank2.gif'),
        (3, 'Senior Boarder', 40, 0, 'rank3.gif'),

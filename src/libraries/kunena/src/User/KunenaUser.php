@@ -742,7 +742,7 @@ class KunenaUser extends CMSObject
 		switch ($action)
 		{
 			case 'read' :
-				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubprofile))
+				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubProfile))
 				{
 					$exception = new KunenaAuthorise(Text::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 404);
 				}
@@ -1000,7 +1000,7 @@ class KunenaUser extends CMSObject
 
 		if (is_null($default))
 		{
-			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
+			$default = KunenaFactory::getConfig()->get('defaultSort') == 'desc' ? 'desc' : 'asc';
 		}
 
 		if ($this->exists())
@@ -1032,7 +1032,7 @@ class KunenaUser extends CMSObject
 			$ktemplate     = KunenaFactory::getTemplate();
 			$topicicontype = $ktemplate->params->get('topicicontype');
 
-			if (KunenaFactory::getConfig()->avatar_type && $avatars->css)
+			if (KunenaFactory::getConfig()->avatarType && $avatars->css)
 			{
 				if ($sizex == 20)
 				{
@@ -1193,7 +1193,7 @@ class KunenaUser extends CMSObject
 		$config = KunenaFactory::getConfig();
 		$me     = KunenaUserHelper::getMyself();
 
-		if (!$config->pubprofile && !$me->exists())
+		if (!$config->pubProfile && !$me->exists())
 		{
 			return false;
 		}
@@ -1287,7 +1287,7 @@ class KunenaUser extends CMSObject
 			$layout = $this->getTopicLayout($layout);
 		}
 
-		$this->_app->setUserState('com_kunena.topic_layout', $layout);
+		$this->_app->setUserState('com_kunena.topicLayout', $layout);
 
 		if ($this->userid && $this->view != $layout)
 		{
@@ -1312,7 +1312,7 @@ class KunenaUser extends CMSObject
 
 		if (!$layout)
 		{
-			$layout = $this->_app->getUserState('com_kunena.topic_layout');
+			$layout = $this->_app->getUserState('com_kunena.topicLayout');
 		}
 
 		if (!$layout)
@@ -1327,7 +1327,7 @@ class KunenaUser extends CMSObject
 			case 'indented':
 				break;
 			default:
-				$layout = $this->_config->topic_layout;
+				$layout = $this->_config->topicLayout;
 		}
 
 		return $layout;
@@ -1501,7 +1501,7 @@ class KunenaUser extends CMSObject
 			return true;
 		}
 
-		if ($config->showemail && $profile->email)
+		if ($config->showEmail && $profile->email)
 		{
 			if ($profile->hideEmail == 0)
 			{
@@ -1535,7 +1535,7 @@ class KunenaUser extends CMSObject
 
 			$this->_email = '';
 
-			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
+			if ($this->email && (($config->showEmail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
 			{
 				$this->_email = HTMLHelper::_('email.cloak', $this->email);
 			}
@@ -1656,7 +1656,7 @@ class KunenaUser extends CMSObject
 
 		if (!isset($this->_signature))
 		{
-			$this->_signature = KunenaParser::parseBBCode($this->signature, $this, KunenaFactory::getConfig()->maxsig);
+			$this->_signature = KunenaParser::parseBBCode($this->signature, $this, KunenaFactory::getConfig()->maxSig);
 		}
 
 		return $this->_signature;
@@ -1678,7 +1678,7 @@ class KunenaUser extends CMSObject
 			$config = KunenaFactory::getConfig();
 			$me     = KunenaUserHelper::getMyself();
 
-			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
+			if ($config->showKarma && $me->userid && $me->userid != $this->userid)
 			{
 				return true;
 			}
@@ -1706,7 +1706,7 @@ class KunenaUser extends CMSObject
 		$view->config          = $config;
 		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
 
-		if ($view->config->showkarma && $this->userid)
+		if ($view->config->showKarma && $this->userid)
 		{
 			$view->userkarma_title = Text::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
 
@@ -1742,7 +1742,7 @@ class KunenaUser extends CMSObject
 
 		$view->userkarma = "{$view->userkarma_title} {$view->userkarma_minus} {$view->userkarma_plus}";
 
-		if ($view->config->showuserstats)
+		if ($view->config->showUserStats)
 		{
 			$view->userrankimage = $this->getRank($layout->category->id, 'image');
 			$view->userranktitle = $this->getRank($layout->category->id, 'title');
@@ -1791,7 +1791,7 @@ class KunenaUser extends CMSObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->showranking)
+		if (!$config->showRanking)
 		{
 			return;
 		}
@@ -1812,7 +1812,7 @@ class KunenaUser extends CMSObject
 
 			try
 			{
-				self::$_ranks = $this->_db->loadObjectList('rank_id');
+				self::$_ranks = $this->_db->loadObjectList('rankId');
 			}
 			catch (ExecutionFailureException $e)
 			{
@@ -1831,21 +1831,21 @@ class KunenaUser extends CMSObject
 		{
 			// Generate user rank.
 			$rank               = new stdClass;
-			$rank->rank_id      = 0;
-			$rank->rank_title   = Text::_('COM_KUNENA_RANK_USER');
-			$rank->rank_min     = 0;
-			$rank->rank_special = 0;
-			$rank->rank_image   = 'rank0.gif';
+			$rank->rankId      = 0;
+			$rank->rankTitle   = Text::_('COM_KUNENA_RANK_USER');
+			$rank->rankMin     = 0;
+			$rank->rankSpecial = 0;
+			$rank->rankImage   = 'rank0.gif';
 
 			switch ($userType)
 			{
 				case 'guest' :
-					$rank->rank_title   = Text::_('COM_KUNENA_RANK_VISITOR');
-					$rank->rank_special = 1;
+					$rank->rankTitle   = Text::_('COM_KUNENA_RANK_VISITOR');
+					$rank->rankSpecial = 1;
 
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'guest'))
+						if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'guest'))
 						{
 							$rank = $cur;
 							break;
@@ -1854,13 +1854,13 @@ class KunenaUser extends CMSObject
 					break;
 
 				case 'blocked' :
-					$rank->rank_title   = Text::_('COM_KUNENA_RANK_BLOCKED');
-					$rank->rank_special = 1;
-					$rank->rank_image   = 'rankdisabled.gif';
+					$rank->rankTitle   = Text::_('COM_KUNENA_RANK_BLOCKED');
+					$rank->rankSpecial = 1;
+					$rank->rankImage   = 'rankdisabled.gif';
 
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'disabled'))
+						if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'disabled'))
 						{
 							$rank = $cur;
 							break;
@@ -1869,13 +1869,13 @@ class KunenaUser extends CMSObject
 					break;
 
 				case 'banned' :
-					$rank->rank_title   = Text::_('COM_KUNENA_RANK_BANNED');
-					$rank->rank_special = 1;
-					$rank->rank_image   = 'rankbanned.gif';
+					$rank->rankTitle   = Text::_('COM_KUNENA_RANK_BANNED');
+					$rank->rankSpecial = 1;
+					$rank->rankImage   = 'rankbanned.gif';
 
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'banned'))
+						if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'banned'))
 						{
 							$rank = $cur;
 							break;
@@ -1885,13 +1885,13 @@ class KunenaUser extends CMSObject
 
 				case 'admin' :
 				case 'localadmin' :
-					$rank->rank_title   = Text::_('COM_KUNENA_RANK_ADMINISTRATOR');
-					$rank->rank_special = 1;
-					$rank->rank_image   = 'rankadmin.gif';
+					$rank->rankTitle   = Text::_('COM_KUNENA_RANK_ADMINISTRATOR');
+					$rank->rankSpecial = 1;
+					$rank->rankImage   = 'rankadmin.gif';
 
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'admin'))
+						if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'admin'))
 						{
 							$rank = $cur;
 							break;
@@ -1901,14 +1901,14 @@ class KunenaUser extends CMSObject
 
 				case 'globalmod' :
 				case 'moderator' :
-					$rank->rank_title   = Text::_('COM_KUNENA_RANK_MODERATOR');
-					$rank->rank_special = 1;
-					$rank->rank_image   = 'rankmod.gif';
+					$rank->rankTitle   = Text::_('COM_KUNENA_RANK_MODERATOR');
+					$rank->rankSpecial = 1;
+					$rank->rankImage   = 'rankmod.gif';
 
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 1
-							&& (strstr($cur->rank_image, 'rankmod') || strstr($cur->rank_image, 'moderator'))
+						if ($cur->rankSpecial == 1
+							&& (strstr($cur->rankImage, 'rankmod') || strstr($cur->rankImage, 'moderator'))
 						)
 						{
 							$rank = $cur;
@@ -1921,7 +1921,7 @@ class KunenaUser extends CMSObject
 				case 'count' :
 					foreach (self::$_ranks as $cur)
 					{
-						if ($cur->rank_special == 0 && $cur->rank_min <= $this->posts && $cur->rank_min >= $rank->rank_min)
+						if ($cur->rankSpecial == 0 && $cur->rankMin <= $this->posts && $cur->rankMin >= $rank->rankMin)
 						{
 							$rank = $cur;
 						}
@@ -1930,24 +1930,24 @@ class KunenaUser extends CMSObject
 			}
 		}
 
-		if ($special === true && !$rank->rank_special)
+		if ($special === true && !$rank->rankSpecial)
 		{
 			return;
 		}
 
 		if ($type == 'title')
 		{
-			return Text::_($rank->rank_title);
+			return Text::_($rank->rankTitle);
 		}
 
-		if (!$config->rankimages)
+		if (!$config->rankImages)
 		{
-			$rank->rank_image = null;
+			$rank->rankImage = null;
 		}
 
 		if ($type == 'image')
 		{
-			if (!$rank->rank_image)
+			if (!$rank->rankImage)
 			{
 				return;
 			}
@@ -1958,36 +1958,36 @@ class KunenaUser extends CMSObject
 			 *             2 = Usergroup
 			 *             3 = Both Rank image and Usergroup
 			 */
-			if ($config->rankimages == 0)
+			if ($config->rankImages == 0)
 			{
 				return false;
 			}
 
-			if ($config->rankimages == 1)
+			if ($config->rankImages == 1)
 			{
-				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
+				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
 				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" />';
+				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rankTitle) . '" />';
 			}
 
-			if ($config->rankimages == 2)
+			if ($config->rankImages == 2)
 			{
 				return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 
-			if ($config->rankimages == 3)
+			if ($config->rankImages == 3)
 			{
-				$url             = Template::getInstance()->getRankPath($rank->rank_image, true);
-				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
+				$url             = Template::getInstance()->getRankPath($rank->rankImage, true);
+				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
 				$imageProperties = Image::getImageFileProperties($location);
 
-				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rank_title) . '" /><br>
+				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rankTitle) . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 
-			if ($config->rankimages == 4)
+			if ($config->rankImages == 4)
 			{
 				return self::rankCss($rank, $catid);
 			}
@@ -2165,27 +2165,27 @@ class KunenaUser extends CMSObject
 		{
 			$rank_string = '';
 
-			if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
+			if ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK1')
 			{
 				$rank_string = '<i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK2')
 			{
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK3')
 			{
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4')
 			{
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK5')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK5')
 			{
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK6')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK6')
 			{
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
 			}
@@ -2194,7 +2194,7 @@ class KunenaUser extends CMSObject
 				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
 			}
 
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rankTitle) . '">
 				<i class="fas fa-circle"></i>' . $rank_string . '</li>';
 		}
 		elseif ($topicicontype == 'B2' || $topicicontype == 'B3')
@@ -2210,27 +2210,27 @@ class KunenaUser extends CMSObject
 
 			$rank_string = '';
 
-			if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
+			if ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK1')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK2')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK3')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK5')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK5')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span>';
 			}
-			elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK6')
+			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK6')
 			{
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span>';
 			}
@@ -2239,7 +2239,7 @@ class KunenaUser extends CMSObject
 				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span';
 			}
 
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rank_title) . '">' . $rank_string . '</li>';
+			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rankTitle) . '">' . $rank_string . '</li>';
 		}
 	}
 
@@ -2729,7 +2729,7 @@ class KunenaUser extends CMSObject
 
 		if ($this->exists() && !$this->isModerator() && $config->captcha >= 0)
 		{
-			if ($config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+			if ($config->captchaPostLimit > 0 && $this->posts < $config->captchaPostLimit)
 			{
 				return true;
 			}

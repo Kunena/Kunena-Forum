@@ -26,7 +26,7 @@ use function defined;
 
 $markAllReadUrl = CategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
-$status         = $config->user_status;
+$status         = $config->userStatus;
 $config         = KunenaFactory::getTemplate()->params;
 ?>
 
@@ -74,7 +74,7 @@ $config         = KunenaFactory::getTemplate()->params;
 							<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 							<p>
 								<?php echo Icons::clock(); ?>
-								<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
+								<?php echo $this->me->getLastVisitDate()->toKunena('config_postDateFormat'); ?>
 							</p>
 						</div>
 						<div class="dropdown-divider"></div>

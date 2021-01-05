@@ -15,13 +15,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  KunenaInstallerException
  * @since   Kunena 6.0
  *
- * @throws  KunenaInstallerException
  */
 function kunena_160_2010_05_30_attachments($parent)
 {

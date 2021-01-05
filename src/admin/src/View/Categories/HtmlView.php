@@ -51,7 +51,7 @@ class HtmlView extends BaseHtmlView
 	 * @var     array|KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
-	public $batch_categories;
+	public $batchCategories;
 
 	/**
 	 * @var mixed
@@ -68,6 +68,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function displayCreate(): void
@@ -76,7 +77,10 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return void
+	 * @throws Exception
 	 * @since Kunena
+	 *
 	 */
 	public function displayEdit()
 	{
@@ -96,12 +100,14 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return void
 	 * @since Kunena
+	 *
 	 */
 	protected function setToolBarEdit()
 	{
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance('toolbar');
+		$bar = Toolbar::getInstance();
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
@@ -117,33 +123,33 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void|mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
-		$this->categories       = $this->get('AdminCategories');
-		$this->pagination       = $this->get('AdminNavigation');
-		$this->state            = $this->get('State');
-		$pagesTotal             = 100;
-		$this->batch_categories = $this->get('BatchCategories');
+		$this->categories      = $this->get('AdminCategories');
+		$this->pagination      = $this->get('AdminNavigation');
+		$this->state           = $this->get('State');
+		$pagesTotal            = 100;
+		$this->batchCategories = $this->get('BatchCategories');
 
 		// Preprocess the list of items to find ordering divisions.
 		$ordering = [];
 
 		foreach ($this->categories as $item)
 		{
-			$ordering[$item->parent_id][] = $item->id;
+			$ordering[$item->parentId][] = $item->id;
 		}
 
 		$sortFields          = $this->getSortFields();
@@ -167,7 +173,7 @@ class HtmlView extends BaseHtmlView
 		$this->filter->Access      = $this->escape($this->state->get('filter.access'));
 		$this->filter->Locked      = $this->escape($this->state->get('filter.locked'));
 		$this->filter->Review      = $this->escape($this->state->get('filter.review'));
-		$this->filter->Allow_polls = $this->escape($this->state->get('filter.allow_polls'));
+		$this->filter->Allow_polls = $this->escape($this->state->get('filter.allowPolls'));
 		$this->filter->Anonymous   = $this->escape($this->state->get('filter.anonymous'));
 		$this->filter->Active      = $this->escape($this->state->get('filter.active'));
 		$this->filter->Levels      = $this->escape($this->state->get('filter.levels'));
@@ -176,7 +182,7 @@ class HtmlView extends BaseHtmlView
 		$this->list->Ordering        = $this->escape($this->state->get('list.ordering'));
 		$this->list->Direction       = $this->escape($this->state->get('list.direction'));
 		$this->list->saveOrder       = ($this->list->Ordering == 'a.ordering' && $this->list->Direction == 'asc');
-		$this->list->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
+		$this->list->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderajax&tmpl=component';
 
 		$this->addToolbar();
 
@@ -199,7 +205,7 @@ class HtmlView extends BaseHtmlView
 		$sortFields[] = HTMLHelper::_('select.option', 'p.access', Text::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.locked', Text::_('COM_KUNENA_LOCKED'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.review', Text::_('COM_KUNENA_REVIEW'));
-		$sortFields[] = HTMLHelper::_('select.option', 'p.allow_polls', Text::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'p.allowPolls', Text::_('COM_KUNENA_CATEGORIES_LABEL_POLL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.anonymous', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
 		$sortFields[] = HTMLHelper::_('select.option', 'p.id', Text::_('JGRID_HEADING_ID'));
 
@@ -235,7 +241,7 @@ class HtmlView extends BaseHtmlView
 		$this->pagination   = $this->get('AdminNavigation');
 
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance('toolbar');
+		$bar = Toolbar::getInstance();
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
@@ -256,8 +262,8 @@ class HtmlView extends BaseHtmlView
 		$bar->appendButton('Custom', $dhtml, 'confirmdelete');
 
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/setup/sections-categories';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 
 		$title = Text::_('JTOOLBAR_BATCH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
@@ -324,7 +330,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function allowpollsOptions(): array
+	public function allowPollsOptions(): array
 	{
 		// Build the active state filter options.
 		$options   = [];

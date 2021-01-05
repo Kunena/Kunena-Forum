@@ -76,7 +76,7 @@ class UserModel extends ListModel
 		$where = '';
 
 		// Hide super admins from the list
-		if (KunenaFactory::getConfig()->superadmin_userlist)
+		if (KunenaFactory::getConfig()->superAdminUserlist)
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
@@ -94,15 +94,15 @@ class UserModel extends ListModel
 			$where = ' u.id NOT IN (' . $this->getState('list.exclude') . ') AND ';
 		}
 
-		if ($this->config->userlist_count_users == '1')
+		if ($this->config->userlistCountUsers == '1')
 		{
 			$where .= '(u.block=0 OR u.activation="")';
 		}
-		elseif ($this->config->userlist_count_users == '2')
+		elseif ($this->config->userlistCountUsers == '2')
 		{
 			$where .= '(u.block=0 AND u.activation="")';
 		}
-		elseif ($this->config->userlist_count_users == '3')
+		elseif ($this->config->userlistCountUsers == '3')
 		{
 			$where .= 'u.block=0';
 		}
@@ -287,11 +287,11 @@ class UserModel extends ListModel
 		$config = KunenaFactory::getConfig();
 
 		// List state information
-		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int');
+		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlistRows'), 'int');
 
 		if ($limit < 1 || $limit > 100)
 		{
-			$limit = $config->get('userlist_rows');
+			$limit = $config->get('userlistRows');
 		}
 
 		if ($limit < 1)

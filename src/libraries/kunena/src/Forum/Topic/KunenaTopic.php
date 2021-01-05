@@ -59,7 +59,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  * @property int    $id
- * @property int    $category_id
+ * @property int    $categoryId
  * @property string $subject
  * @property int    $icon_id
  * @property int    $locked
@@ -1007,7 +1007,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		{
 			$uri->delVar('action');
 			$mesid = 0;
-			$limit = max(1, intval(KunenaFactory::getConfig()->messages_per_page));
+			$limit = max(1, intval(KunenaFactory::getConfig()->messagesPerPage));
 
 			if (isset($message))
 			{
@@ -1407,7 +1407,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	{
 		$user = KunenaUserHelper::get($user);
 
-		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
+		if (!KunenaFactory::getConfig()->showNew || !$user->exists())
 		{
 			return false;
 		}
@@ -1449,7 +1449,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	{
 		$user = KunenaUserHelper::get($user);
 
-		if (!KunenaFactory::getConfig()->shownew || !$user->exists() || Factory::getApplication()->getIdentity()->guest)
+		if (!KunenaFactory::getConfig()->showNew || !$user->exists() || Factory::getApplication()->getIdentity()->guest)
 		{
 			return false;
 		}
@@ -1476,7 +1476,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
-		if (KunenaFactory::getConfig()->read_only)
+		if (KunenaFactory::getConfig()->readOnly)
 		{
 			// Special case to ignore authorisation.
 			if ($action != 'read')
@@ -2274,7 +2274,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		$poll   = $this->getPoll();
 		$votes  = $poll->getMyVotes($user);
 
-		if (!$config->pollallowvoteone && $votes)
+		if (!$config->pollAllowVoteOne && $votes)
 		{
 			$time_zone   = CMSApplication::getInstance('site')->get('offset');
 			$objTimeZone = new DateTimeZone($time_zone);
@@ -2285,23 +2285,23 @@ class KunenaTopic extends KunenaDatabaseObject
 
 			$interval = date_diff($date_a, $date_b);
 
-			if ($interval->format('%H:%I:%S') < $config->polltimebtvotes)
+			if ($interval->format('%H:%I:%S') < $config->pollTimeBtVotes)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 403);
 			}
 		}
 
-		if ($votes && $config->pollallowvoteone)
+		if ($votes && $config->pollAllowVoteOne)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
 		}
 
-		if ($votes >= $config->pollnbvotesbyuser && $config->pollallowvoteone)
+		if ($votes >= $config->pollNbVotesByUser && $config->pollAllowVoteOne)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
 
-		if ($config->polltimebtvotes && (int) $poll->getMyTime($user) + (int) $config->polltimebtvotes > Factory::getDate()->toUnix())
+		if ($config->pollTimeBtVotes && (int) $poll->getMyTime($user) + (int) $config->pollTimeBtVotes > Factory::getDate()->toUnix())
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
 		}
@@ -2333,7 +2333,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		$poll   = $this->getPoll();
 		$config = KunenaFactory::getConfig();
 
-		if ($poll->exists() && $poll->getUserCount() && !$config->allow_edit_poll)
+		if ($poll->exists() && $poll->getUserCount() && !$config->allowEditPoll)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}
@@ -2361,7 +2361,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			return false;
 		}
 
-		if ($user->isModerator($this->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getCategory()))
+		if ($user->isModerator($this->getCategory()) && !$config->moderatorPermDelete || !$user->isModerator($this->getCategory()))
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
@@ -2381,7 +2381,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	protected function authoriseGuestWrite(KunenaUser $user): KunenaAuthorise
 	{
 		// Check if user is guest and they can create or reply topics
-		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}

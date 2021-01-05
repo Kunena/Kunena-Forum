@@ -109,7 +109,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 			$this->topic = $this->message->getTopic();
 		}
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}

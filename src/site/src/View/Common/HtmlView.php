@@ -123,7 +123,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->state = $this->get('State');
 
-		if ($this->config->board_offline && !$this->me->isAdmin())
+		if ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			$this->offline = true;
 		}
@@ -178,7 +178,7 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		if ($this->config->showannouncement > 0)
+		if ($this->config->showAnnouncement > 0)
 		{
 			$items        = KunenaAnnouncementHelper::getAnnouncements();
 			$announcement = array_pop($items);
@@ -254,7 +254,7 @@ class HtmlView extends BaseHtmlView
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$catParams   = ['sections' => 1, 'catid' => 0];
 		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
@@ -503,13 +503,13 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$kunena_stats = KunenaStatistics::getInstance();
-		$kunena_stats->loadGeneral();
+		$kunenaStats = KunenaStatistics::getInstance();
+		$kunenaStats->loadGeneral();
 
-		$kunena_stats1    = $kunena_stats;
+		$kunenaStats1    = $kunenaStats;
 		$latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
-		$statisticsLink   = $this->getStatsLink($this->config->board_title . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
+		$statisticsLink   = $this->getStatsLink($this->config->boardTitle . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
 		$usercountLink    = $this->getUserlistLink('', $this->memberCount);
 		$userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
 		$moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
@@ -536,7 +536,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$my = KunenaFactory::getUser();
 
-		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
+		if (KunenaFactory::getConfig()->statsLinkAllowed == 0 && $my->userid == 0)
 		{
 			return false;
 		}
@@ -573,7 +573,7 @@ class HtmlView extends BaseHtmlView
 				return $name;
 			}
 		}
-		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlist_allowed)
+		elseif ($my->userid == 0 && !KunenaFactory::getConfig()->userlistAllowed)
 		{
 			return false;
 		}
@@ -604,13 +604,13 @@ class HtmlView extends BaseHtmlView
 
 		$catid = 0;
 
-		if ($this->config->enablerss)
+		if ($this->config->enableRss)
 		{
 			if ($catid > 0)
 			{
 				$category = KunenaCategoryHelper::get($catid);
 
-				if ($category->pub_access == 0 && $category->parent)
+				if ($category->pubAccess == 0 && $category->parent)
 				{
 					$rss_params = '&catid=' . (int) $catid;
 				}
@@ -648,28 +648,28 @@ class HtmlView extends BaseHtmlView
 	 */
 	private function getRSSURL($params = '', $xhtml = true)
 	{
-		$mode = KunenaFactory::getConfig()->rss_type;
+		$mode = KunenaFactory::getConfig()->rssType;
 
-		if (!empty(KunenaFactory::getConfig()->rss_feedburner_url))
+		if (!empty(KunenaFactory::getConfig()->rssFeedBurnerUrl))
 		{
-			return KunenaFactory::getConfig()->rss_feedburner_url;
+			return KunenaFactory::getConfig()->rssFeedBurnerUrl;
 		}
 		else
 		{
 			switch ($mode)
 			{
 				case 'topic' :
-					$rss_type = 'mode=topics';
+					$rssType = 'mode=topics';
 					break;
 				case 'recent' :
-					$rss_type = 'mode=replies';
+					$rssType = 'mode=replies';
 					break;
 				case 'post' :
-					$rss_type = 'layout=posts';
+					$rssType = 'layout=posts';
 					break;
 			}
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}{$params}?format=feed&type=rss", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}?format=feed&type=rss", $xhtml);
 		}
 	}
 

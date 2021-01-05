@@ -50,7 +50,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 		parent::__construct();
 
 		$this->config = KunenaConfig::getInstance();
-		$this->limit  = $this->config->userlist_rows;
+		$this->limit  = $this->config->userlistRows;
 
 		$this->query->leftJoin($this->db->quoteName('#__kunena_users', 'ku') . ' ON ' . $this->db->quoteName('ku.userid') . ' = ' . $this->db->quoteName('a.id'));
 	}
@@ -95,23 +95,23 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	 */
 	public function filterByConfiguration(array $ignore = []): KunenaFinder
 	{
-		if ($this->config->userlist_count_users == '1')
+		if ($this->config->userlistCountUsers == '1')
 		{
 			$this->query->where('(a.block=0 OR a.activation="")');
 		}
-		elseif ($this->config->userlist_count_users == '2')
+		elseif ($this->config->userlistCountUsers == '2')
 		{
 			$this->query
 				->where($this->db->quoteName('a.block') . ' = 0')
 				->where($this->db->quoteName('a.activation') . '=""');
 		}
-		elseif ($this->config->userlist_count_users == '3')
+		elseif ($this->config->userlistCountUsers == '3')
 		{
 			$this->query->where($this->db->quoteName('a.block') . ' = 0');
 		}
 
 		// Hide super admins from the list
-		if ($this->config->superadmin_userlist && $ignore)
+		if ($this->config->superAdminUserlist && $ignore)
 		{
 			$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $ignore) . ')');
 		}

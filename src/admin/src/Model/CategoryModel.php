@@ -31,14 +31,14 @@ class CategoryModel extends CategoriesModel
 	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
-	protected $_admincategory = false;
+	protected $internalAdminCategory = false;
 
 	/**
 	 * @return  boolean|KunenaCategory|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -49,7 +49,7 @@ class CategoryModel extends CategoriesModel
 			return false;
 		}
 
-		if ($this->_admincategory === false)
+		if ($this->internalAdminCategory === false)
 		{
 			if ($category->exists())
 			{
@@ -66,7 +66,7 @@ class CategoryModel extends CategoriesModel
 				$query = $db->getQuery(true)
 					->select('a.id, a.name')
 					->from("{$db->quoteName('#__kunena_categories')} AS a")
-					->where("parent_id={$db->quote('0')}")
+					->where("parentId={$db->quote('0')}")
 					->where("id!={$db->quote($category->id)}")
 					->order('ordering');
 
@@ -83,21 +83,21 @@ class CategoryModel extends CategoriesModel
 					return;
 				}
 
-				$category->parent_id     = $this->getState('item.parent_id');
-				$category->published     = 0;
-				$category->ordering      = 9999;
-				$category->pub_recurse   = 1;
-				$category->admin_recurse = 1;
-				$category->accesstype    = 'joomla.level';
-				$category->access        = 1;
-				$category->pub_access    = 1;
-				$category->admin_access  = 8;
+				$category->parentId     = $this->getState('item.parentId');
+				$category->published    = 0;
+				$category->ordering     = 9999;
+				$category->pubRecurse   = 1;
+				$category->adminRecurse = 1;
+				$category->accesstype   = 'joomla.level';
+				$category->access       = 1;
+				$category->pubAccess    = 1;
+				$category->adminAccess  = 8;
 			}
 
-			$this->_admincategory = $category;
+			$this->internalAdminCategory = $category;
 		}
 
-		return $this->_admincategory;
+		return $this->internalAdminCategory;
 	}
 
 	/**
@@ -108,9 +108,9 @@ class CategoryModel extends CategoriesModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

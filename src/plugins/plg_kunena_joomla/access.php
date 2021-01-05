@@ -85,18 +85,18 @@ class AccessJoomla
 
 		if ($category->accesstype == 'joomla.group')
 		{
-			$groupname  = $this->getGroupName($category->accesstype, $category->pub_access);
-			$accessname = Text::sprintf($category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_($groupname) : Text::_('COM_KUNENA_NOBODY'));
+			$groupname  = $this->getGroupName($category->accesstype, $category->pubAccess);
+			$accessname = Text::sprintf($category->pubRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_($groupname) : Text::_('COM_KUNENA_NOBODY'));
 
-			$list["joomla.group.{$category->pub_access}"] = ['type'  => 'joomla.group', 'id' => $category->pub_access, 'alias' => $accessname,
+			$list["joomla.group.{$category->pubAccess}"] = ['type'  => 'joomla.group', 'id' => $category->pubAccess, 'alias' => $accessname,
 															 'title' => $accessname, ];
 
-			$groupname = $this->getGroupName($category->accesstype, $category->admin_access);
+			$groupname = $this->getGroupName($category->accesstype, $category->adminAccess);
 
-			if ($groupname && $category->pub_access != $category->admin_access)
+			if ($groupname && $category->pubAccess != $category->adminAccess)
 			{
-				$accessname                                     = Text::sprintf($category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_($groupname));
-				$list["joomla.group.{$category->admin_access}"] = ['type'  => 'joomla.group', 'id' => $category->admin_access, 'alias' => $accessname,
+				$accessname                                     = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_($groupname));
+				$list["joomla.group.{$category->adminAccess}"] = ['type'  => 'joomla.group', 'id' => $category->adminAccess, 'alias' => $accessname,
 																   'title' => $accessname, ];
 			}
 		}
@@ -204,31 +204,31 @@ class AccessJoomla
 			$yesno [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 			$yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
-			$html ['joomla-group']['pub_access'] = [
+			$html ['joomla-group']['pubAccess'] = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
-				'input' => HTMLHelper::_('access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox form-control" size="10"', false),
+				'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="inputbox form-control" size="10"', false),
 			];
 
-			$html ['joomla-group']['pub_recurse']  = [
+			$html ['joomla-group']['pubRecurse']  = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $yesno, 'pub_recurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->pub_recurse),
+				'input' => HTMLHelper::_('select.genericlist', $yesno, 'pubRecurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->pubRecurse),
 			];
-			$html ['joomla-group']['admin_access'] = [
+			$html ['joomla-group']['adminAccess'] = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
-				'input' => HTMLHelper::_('access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox form-control" size="10"', false),
+				'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="inputbox form-control" size="10"', false),
 			];
 
-			$html ['joomla-group']['admin_recurse'] = [
+			$html ['joomla-group']['adminRecurse'] = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $yesno, 'admin_recurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->admin_recurse),
+				'input' => HTMLHelper::_('select.genericlist', $yesno, 'adminRecurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->adminRecurse),
 			];
 
 			if (!$category->isSection())
@@ -470,10 +470,10 @@ class AccessJoomla
 			// Check against Joomla user group
 			elseif ($category->accesstype == 'joomla.group')
 			{
-				$pub_access   = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
-				$admin_access = in_array($category->admin_access, $category->admin_recurse ? $groups_r : $groups);
+				$pubAccess   = in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
+				$adminAccess = in_array($category->adminAccess, $category->adminRecurse ? $groups_r : $groups);
 
-				if ($pub_access || $admin_access)
+				if ($pubAccess || $adminAccess)
 				{
 					$catlist[$category->id] = $category->id;
 				}
@@ -512,15 +512,15 @@ class AccessJoomla
 		}
 		elseif ($category->accesstype == 'joomla.group')
 		{
-			if ($category->pub_access <= 0)
+			if ($category->pubAccess <= 0)
 			{
 				return [$allow, $deny];
 			}
 
 			// Check against Joomla user groups
-			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
-			$admin  = $category->admin_access && $category->admin_access != $category->pub_access ? $this->getUsersByGroup($category->admin_access,
-				$category->admin_recurse, $userids
+			$public = $this->getUsersByGroup($category->pubAccess, $category->pubRecurse, $userids);
+			$admin  = $category->adminAccess && $category->adminAccess != $category->pubAccess ? $this->getUsersByGroup($category->adminAccess,
+				$category->adminRecurse, $userids
 			) : [];
 			$allow  = array_merge($public, $admin);
 		}

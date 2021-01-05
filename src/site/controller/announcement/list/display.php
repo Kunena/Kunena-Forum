@@ -67,7 +67,7 @@ class ComponentAnnouncementControllerListDisplay extends KunenaControllerDisplay
 
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\Model;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -23,6 +24,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
 
 /**
@@ -33,23 +36,31 @@ use stdClass;
 class TemplatesModel extends AdminModel
 {
 	/**
-	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
+	 * @var CMSApplicationInterface|null
 	 * @since version
 	 */
 	private $app;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	private $context;
-	private $cache;
+
 	/**
-	 * @var \Kunena\Forum\Libraries\Config\KunenaConfig
+	 * @var string
+	 * @since version
+	 */
+	private $cache;
+
+	/**
+	 * @var KunenaConfig
 	 * @since version
 	 */
 	private $config;
+
 	/**
-	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
+	 * @var KunenaUser|null
 	 * @since version
 	 */
 	private $me;
@@ -57,9 +68,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -70,16 +81,16 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
 	 * @param   array  $data      data
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @return  boolean|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -101,9 +112,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTemplates(): array
 	{
@@ -131,7 +142,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTemplatedetails()
+	public function getTemplateDetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
 		$details  = KunenaTemplateHelper::parseXmlFile($template);
@@ -174,7 +185,7 @@ class TemplatesModel extends AdminModel
 	public function getFileContentParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
-		$filename = $this->app->getUserState('kunena.editcss.filename');
+		$filename = $this->app->getUserState('kunena.editCss.filename');
 		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/css/' . $filename);
 
 		if ($content === false)
@@ -182,7 +193,7 @@ class TemplatesModel extends AdminModel
 			return;
 		}
 
-		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+		$content = htmlspecialchars($content, ENT_COMPAT);
 
 		return $content;
 	}
@@ -192,7 +203,7 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getFTPcredentials()
+	public function getFTPCredentials()
 	{
 		// Set FTP credentials, if given
 		return ClientHelper::setCredentialsFromRequest('ftp');
@@ -265,14 +276,14 @@ class TemplatesModel extends AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
@@ -317,44 +328,44 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		$app       = Factory::getApplication();
-		$input     = $app->input;
-		$old_state = $app->getUserState($key);
-		$cur_state = ($old_state !== null) ? $old_state : $default;
-		$new_state = $input->get($request, null, $type);
+		$app      = Factory::getApplication();
+		$input    = $app->input;
+		$oldState = $app->getUserState($key);
+		$curState = ($oldState !== null) ? $oldState : $default;
+		$newState = $input->get($request, null, $type);
 
-		if (($cur_state != $new_state) && ($resetPage))
+		if (($curState != $newState) && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}
 
 		// Save the new value only if it is set in this request.
-		if ($new_state !== null)
+		if ($newState !== null)
 		{
-			$app->setUserState($key, $new_state);
+			$app->setUserState($key, $newState);
 		}
 		else
 		{
-			$new_state = $cur_state;
+			$newState = $curState;
 		}
 
-		return $new_state;
+		return $newState;
 	}
 
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
-	 *
 	 * @return  array|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 *
 	 */
 	protected function loadFormData(): array
 	{
@@ -383,8 +394,8 @@ class TemplatesModel extends AdminModel
 		$context   = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 		$url       = 'https://update.kunena.org/templates.xml';
 
-		$xml                                = file_get_contents($url, false, $context);
-		$xml                                = simplexml_load_string($xml);
+		$xml = file_get_contents($url, false, $context);
+		$xml = simplexml_load_string($xml);
 
 		if ($xml)
 		{
@@ -392,9 +403,9 @@ class TemplatesModel extends AdminModel
 			{
 				foreach ($template as $temp)
 				{
-					$attributes                  = $temp->attributes();
-					$temp                        = new stdClass;
-					$temp->name                  = (string) $attributes->name;
+					$attributes             = $temp->attributes();
+					$temp                   = new stdClass;
+					$temp->name             = (string) $attributes->name;
 					$temp->type             = (string) $attributes->element;
 					$temp->created          = (string) $attributes->created;
 					$temp->author           = (string) $attributes->author;
@@ -418,10 +429,10 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @return array
 	 *
-	 * @since Kunena
 	 * @throws Exception
+	 * @since Kunena
 	 */
-	public function getTemplatesxml()
+	public function getTemplatesXml()
 	{
 		// Get template xml file info
 		return self::loadTemplatesXml();

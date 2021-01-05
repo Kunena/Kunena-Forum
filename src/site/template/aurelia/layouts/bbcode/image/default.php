@@ -32,7 +32,7 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
-$attributesImg  = ' style="max-height: ' . (int) $config->imageheight . 'px;' . ' max-width:' . $width . '"';
+$attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
 <div class="kmsgimage">

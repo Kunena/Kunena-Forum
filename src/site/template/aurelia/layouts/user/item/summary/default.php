@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Template\Template;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
-if ($this->config->showuserstats)
+if ($this->config->showUserStats)
 {
 	$rankImage = $this->profile->getRank(0, 'image');
 	$rankTitle = $this->profile->getRank(0, 'title');
@@ -31,10 +31,10 @@ if ($this->config->showuserstats)
 <div class="row">
 	<div class="col-md-3">
 		<div class="center kwho-<?php echo $this->profile->getType(0, true); ?>">
-			<?php echo $this->profile->getLink($this->avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', Template::getInstance()->tooltips(), null, $this->config->avataredit); ?>
+			<?php echo $this->profile->getLink($this->avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->profile->getName()), '', '', Template::getInstance()->tooltips(), null, $this->config->avatarEdit); ?>
 		</div>
 
-		<?php if ($this->config->user_status)
+		<?php if ($this->config->userStatus)
 		:
 			?>
 			<div class="center">
@@ -57,7 +57,7 @@ if ($this->config->showuserstats)
 				</li>
 			<?php endif ?>
 
-			<?php if ($this->config->showuserstats && $this->config->showranking)
+			<?php if ($this->config->showUserStats && $this->config->showRanking)
 			:
 				?>
 				<li class="list-group-item">
@@ -72,7 +72,7 @@ if ($this->config->showuserstats)
 	</div>
 	<div class="col-md-3">
 		<ul class="list-group list-group-flush">
-			<?php if ($this->config->userlist_joindate || $this->me->isModerator())
+			<?php if ($this->config->userlistJoinDate || $this->me->isModerator())
 			:
 				?>
 				<li class="list-group-item">
@@ -82,13 +82,13 @@ if ($this->config->showuserstats)
 				</li>
 			<?php endif; ?>
 
-			<?php if ($this->config->userlist_lastvisitdate || $this->me->isModerator())
+			<?php if ($this->config->userlistLastVisitDate || $this->me->isModerator())
 			:
 				?>
 				<li class="list-group-item">
 					<strong><?php echo Text::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
 					<span
-							title="<?php echo $this->profile->getLastVisitDate()->toKunena('ago'); ?>"><?php echo $this->profile->getLastVisitDate()->toKunena('config_post_dateformat'); ?></span>
+							title="<?php echo $this->profile->getLastVisitDate()->toKunena('ago'); ?>"><?php echo $this->profile->getLastVisitDate()->toKunena('config_postDateFormat'); ?></span>
 				</li>
 			<?php endif; ?>
 
@@ -113,7 +113,7 @@ if ($this->config->showuserstats)
 				</li>
 			<?php endif; ?>
 
-			<?php if ($this->config->showuserstats && !empty($this->profile->karma) && $this->config->showkarma)
+			<?php if ($this->config->showUserStats && !empty($this->profile->karma) && $this->config->showKarma)
 			:
 				?>
 				<li class="list-group-item">
@@ -131,7 +131,7 @@ if ($this->config->showuserstats)
 				</li>
 			<?php endif; ?>
 
-			<?php if (!empty($this->profile->thankyou) && $this->config->showthankyou)
+			<?php if (!empty($this->profile->thankyou) && $this->config->showThankYou)
 			:
 				?>
 				<li class="list-group-item">
@@ -206,7 +206,7 @@ if ($this->config->showuserstats)
 			<?php if ($this->private)
 			:
 				?>
-				<?php echo $this->private->shownewIcon($this->profile->userid, 'btn btn-outline-primary border btn-sm', 'glyphicon glyphicon-comment'); ?>
+				<?php echo $this->private->showNewIcon($this->profile->userid, 'btn btn-outline-primary border btn-sm', 'glyphicon glyphicon-comment'); ?>
 			<?php endif; ?>
 			<?php
 			if (KunenaUser::getInstance()->getEmail($this->profile))

@@ -82,11 +82,11 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		// Decide which tabs to display.
 		$showPosts         = true;
-		$showSubscriptions = $this->config->allowsubscriptions && ($myProfile || $moderator);
-		$showFavorites     = $this->config->allowfavorites && $myProfile;
-		$showThankYou      = $this->config->showthankyou && $this->me->exists();
+		$showSubscriptions = $this->config->allowSubscriptions && ($myProfile || $moderator);
+		$showFavorites     = $this->config->allowFavorites && $myProfile;
+		$showThankYou      = $this->config->showThankYou && $this->me->exists();
 		$showUnapproved    = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$showAttachments   = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
+		$showAttachments   = $this->config->showImgFilesManageProfile && ($moderator || $myProfile);
 		$showBanManager    = $moderator && $myProfile;
 
 		try
@@ -131,7 +131,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tab->title   = Text::_('COM_KUNENA_SUBSCRIPTIONS');
 			$tab->content = '';
 
-			if ($this->config->category_subscriptions != 'disabled')
+			if ($this->config->categorySubscriptions != 'disabled')
 			{
 				$params       = [
 					'embedded' => 1,
@@ -145,7 +145,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				$tab->content .= $this->subRequest('Category/Subscriptions', new Input($params), $params);
 			}
 
-			if ($this->config->topic_subscriptions != 'disabled')
+			if ($this->config->topicSubscriptions != 'disabled')
 			{
 				$params       = [
 					'embedded'            => 1,
@@ -446,7 +446,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displaySubscriptions()
 	{
-		if ($this->config->topic_subscriptions == 'disabled')
+		if ($this->config->topicSubscriptions == 'disabled')
 		{
 			return;
 		}
@@ -477,7 +477,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 	 */
 	public function displayCategoriesSubscriptions()
 	{
-		if ($this->config->category_subscriptions == 'disabled')
+		if ($this->config->categorySubscriptions == 'disabled')
 		{
 			return;
 		}

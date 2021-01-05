@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -41,7 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							</tr>
 							<tr>
 								<td width="20%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP') ?></td>
-								<td width="10%"><input type="checkbox" name="deleteipusers" value="1"/></td>
+								<td width="10%"><input type="checkbox" name="deleteIpUsers" value="1"/></td>
 								<td width="79%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP_DESC'); ?></td>
 							</tr>
 						</table>

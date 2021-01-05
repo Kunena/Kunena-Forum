@@ -299,7 +299,7 @@ if (!empty($codeTypes)) : ?>
 						}
 						?>
 						<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-							   value="<?php echo $this->config->pollnboptions; ?>"/>
+							   value="<?php echo $this->config->pollNbOptions; ?>"/>
 						<input type="hidden" name="number_total_options" id="numbertotal"
 							   value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
 					</div>
@@ -347,6 +347,6 @@ if (!empty($codeTypes)) : ?>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-			   value="<?php echo $this->config->disemoticons ?>"/>
+			   value="<?php echo $this->config->disableEmoticons ?>"/>
 	</div>
 </div>

@@ -338,7 +338,7 @@ abstract class KunenaDiagnostics
 	 */
 	protected static function delete_categoryOrphaned(): string
 	{
-		return "DELETE a FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS c ON a.parent_id=c.id WHERE a.parent_id>0 AND c.id IS NULL";
+		return "DELETE a FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS c ON a.parentId=c.id WHERE a.parentId>0 AND c.id IS NULL";
 	}
 
 	/**
@@ -351,7 +351,7 @@ abstract class KunenaDiagnostics
 		// Query to find orphaned categories
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parent_id=c.id")->where("a.parent_id>0 AND c.id IS NULL");
+		$query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parentId=c.id")->where("a.parentId>0 AND c.id IS NULL");
 
 		return $query;
 	}
@@ -367,10 +367,10 @@ abstract class KunenaDiagnostics
 	{
 		if ($query)
 		{
-			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
+			$query->select('a.id, a.parentId, a.name, a.alias, a.description');
 		}
 
-		return ['name' => 'link', 'parent_id' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
+		return ['name' => 'link', 'parentId' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
 	}
 
 	/**
@@ -429,7 +429,7 @@ abstract class KunenaDiagnostics
 	{
 		if ($query)
 		{
-			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
+			$query->select('a.id, a.parentId, a.name, a.alias, a.description');
 		}
 
 		return ['name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
@@ -461,7 +461,7 @@ abstract class KunenaDiagnostics
 	{
 		if ($query)
 		{
-			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
+			$query->select('a.id, a.parentId, a.name, a.alias, a.description');
 		}
 
 		return ['name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}'];
@@ -617,7 +617,7 @@ abstract class KunenaDiagnostics
 	 */
 	protected static function delete_topicInSection(): string
 	{
-		return "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE c.parent_id=0";
+		return "DELETE a FROM #__kunena_topics AS a LEFT JOIN #__kunena_categories AS c ON c.id=a.category_id WHERE c.parentId=0";
 	}
 
 	/**
@@ -630,7 +630,7 @@ abstract class KunenaDiagnostics
 		// Query to find topics which are located in section, not in category
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parent_id=0");
+		$query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parentId=0");
 
 		return $query;
 	}

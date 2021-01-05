@@ -45,17 +45,17 @@ class UserController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @see     BaseController
-	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     BaseController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -72,13 +72,13 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -98,20 +98,20 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function saveInternal(string $type): void
 	{
-		$newview      = $this->app->input->getString('newview');
-		$newrank      = $this->app->input->getString('newrank');
-		$signature    = $this->app->input->getString('signature', '');
+		$newView      = $this->app->input->getString('newView');
+		$newRank      = $this->app->input->getString('newRank');
+		$signature    = $this->app->input->getString('signature');
 		$deleteSig    = $this->app->input->getInt('deleteSig');
 		$moderator    = $this->app->input->getInt('moderator');
 		$uid          = $this->app->input->getInt('uid');
 		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
-		$neworder     = $this->app->input->getInt('neworder');
+		$newOrder     = $this->app->input->getInt('newOrder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
 		$modCatids    = ArrayHelper::toInteger($modCatids);
 
@@ -129,7 +129,7 @@ class UserController extends FormController
 				$user->signature = $signature;
 			}
 
-			$user->personalText = $this->app->input->getString('personaltext', '');
+			$user->personalText = $this->app->input->getString('personalText');
 			$birthdate          = $this->app->input->getString('birthdate');
 
 			if ($birthdate)
@@ -140,19 +140,19 @@ class UserController extends FormController
 			}
 
 			$user->birthdate = $birthdate;
-			$user->location  = trim($this->app->input->getString('location', ''));
+			$user->location  = trim($this->app->input->getString('location'));
 			$user->gender    = $this->app->input->getInt('gender', '');
 			$this->cleanSocial($user, $this->app);
-			$user->websitename  = $this->app->input->getString('websitename', '');
-			$user->websiteurl   = $this->app->input->getString('websiteurl', '');
+			$user->websitename  = $this->app->input->getString('websitename');
+			$user->websiteurl   = $this->app->input->getString('websiteurl');
 			$user->hideEmail    = $this->app->input->getInt('hidemail');
 			$user->showOnline   = $this->app->input->getInt('showonline');
 			$user->canSubscribe = $this->app->input->getInt('cansubscribe');
 			$user->userListtime = $this->app->input->getInt('userlisttime');
 			$user->socialshare  = $this->app->input->getInt('socialshare');
-			$user->view         = $newview;
-			$user->ordering     = $neworder;
-			$user->rank         = $newrank;
+			$user->view         = $newView;
+			$user->ordering     = $newOrder;
+			$user->rank         = $newRank;
 
 			if ($deleteAvatar === 1)
 			{
@@ -185,7 +185,7 @@ class UserController extends FormController
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
+					KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -219,9 +219,9 @@ class UserController extends FormController
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws Exception
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -236,7 +236,7 @@ class UserController extends FormController
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
 		}
 
 		return true;
@@ -247,9 +247,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function apply(): void
 	{

@@ -32,14 +32,14 @@ class PluginsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
-	 * @param   array                     $config  An optional associative array of configuration settings.
-	 * @param   MVCFactoryInterface|null  $factory
-	 *
-	 * @since   Kunena 1.6
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface|null  $factory  mvc
 	 *
 	 * @throws Exception
+	 * @since   Kunena 1.6
+	 *
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
@@ -90,25 +90,25 @@ class PluginsModel extends ListModel
 	{
 		$this->context = 'com_kunena.admin.plugins';
 
-		$filter_active = '';
+		$filterActive = '';
 
 		// Load the filter state.
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '', 'string');
 		$this->setState('filter.enabled', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.name', 'filter_name', null, 'cmd');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.name', 'filter_name', null, 'cmd');
 		$this->setState('filter.name', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.element', 'filter_element', '');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.element', 'filter_element', '');
 		$this->setState('filter.element', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', null, 'int');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.access', 'filterAccess', null, 'int');
 		$this->setState('filter.access', $value !== '' ? $value : null);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// Load the parameters.
 		$params = ComponentHelper::getParams('com_plugins');
@@ -129,7 +129,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function _getList($query, $limitstart = 0, $limit = 0)
+	protected function internalGetList(JDatabaseQuery $query, $limitstart = 0, $limit = 0): array
 	{
 		$search   = $this->getState('filter.name') ? $this->getState('filter.name') : $this->getState('filter.search');
 		$ordering = $this->getState('list.ordering', 'ordering');
@@ -188,7 +188,7 @@ class PluginsModel extends ListModel
 				$query->order('a.extension_id ' . $direction);
 		}
 
-		$result = parent::_getList($query, $limitstart, $limit);
+		$result = self::internalGetList($query, $limitstart, $limit);
 		$this->translate($result);
 
 		return $result;

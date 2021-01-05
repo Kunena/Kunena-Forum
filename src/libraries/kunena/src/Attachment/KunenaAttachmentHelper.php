@@ -376,7 +376,7 @@ abstract class KunenaAttachmentHelper
 	{
 		if (is_null($protected))
 		{
-			$protected = (bool) KunenaConfig::getInstance()->attachment_protection;
+			$protected = (bool) KunenaConfig::getInstance()->attachmentProtection;
 		}
 
 		if ($protected)
@@ -429,15 +429,15 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function getExtensions($category, $user = null)
 	{
-		$imagetypes = self::getImageExtensions($category, $user);
-		$filetypes  = self::getFileExtensions($category, $user);
+		$imageTypes = self::getImageExtensions($category, $user);
+		$fileTypes  = self::getFileExtensions($category, $user);
 
-		if ($imagetypes === false && $filetypes === false)
+		if ($imageTypes === false && $fileTypes === false)
 		{
 			return false;
 		}
 
-		return (array) array_merge((array) $imagetypes, (array) $filetypes);
+		return (array) array_merge((array) $imageTypes, (array) $fileTypes);
 	}
 
 	/**
@@ -459,7 +459,7 @@ abstract class KunenaAttachmentHelper
 
 		$user   = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
-		$types  = explode(',', $config->imagetypes);
+		$types  = explode(',', $config->imageTypes);
 
 		foreach ($types as &$type)
 		{
@@ -472,12 +472,12 @@ abstract class KunenaAttachmentHelper
 		}
 
 		// Check if attachments are allowed at all
-		if (!$config->image_upload)
+		if (!$config->imageUpload)
 		{
 			return false;
 		}
 
-		if ($config->image_upload == 'everybody')
+		if ($config->imageUpload == 'everybody')
 		{
 			return $types;
 		}
@@ -488,7 +488,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->image_upload == 'registered')
+		if ($config->imageUpload == 'registered')
 		{
 			return $types;
 		}
@@ -499,7 +499,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->image_upload == 'moderator')
+		if ($config->imageUpload == 'moderator')
 		{
 			return $types;
 		}
@@ -510,7 +510,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->image_upload == 'admin')
+		if ($config->imageUpload == 'admin')
 		{
 			return $types;
 		}
@@ -533,7 +533,7 @@ abstract class KunenaAttachmentHelper
 		$category = KunenaCategoryHelper::get($category);
 		$user     = KunenaUserHelper::get($user);
 		$config   = KunenaFactory::getConfig();
-		$types    = explode(',', $config->filetypes);
+		$types    = explode(',', $config->fileTypes);
 
 		foreach ($types as &$type)
 		{
@@ -546,12 +546,12 @@ abstract class KunenaAttachmentHelper
 		}
 
 		// Check if attachments are allowed at all
-		if (!$config->file_upload)
+		if (!$config->fileUpload)
 		{
 			return false;
 		}
 
-		if ($config->file_upload == 'everybody')
+		if ($config->fileUpload == 'everybody')
 		{
 			return $types;
 		}
@@ -562,7 +562,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->file_upload == 'registered')
+		if ($config->fileUpload == 'registered')
 		{
 			return $types;
 		}
@@ -573,7 +573,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->file_upload == 'moderator')
+		if ($config->fileUpload == 'moderator')
 		{
 			return $types;
 		}
@@ -584,7 +584,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ($config->file_upload == 'admin')
+		if ($config->fileUpload == 'admin')
 		{
 			return $types;
 		}

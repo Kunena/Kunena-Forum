@@ -52,7 +52,7 @@ $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
 // Prevent direct access to the component if the option has been disabled.
-if (!KunenaConfig::getInstance()->access_component)
+if (!KunenaConfig::getInstance()->accessComponent)
 {
 	$active = Factory::getApplication()->getMenu()->getActive();
 

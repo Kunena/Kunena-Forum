@@ -28,13 +28,13 @@ class IconsModel extends AdminModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -44,8 +44,8 @@ class IconsModel extends AdminModel
 	/**
 	 * @inheritDoc
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *

@@ -30,25 +30,48 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	public $templates = [];
+
 	/**
 	 * @var mixed
 	 * @since version
 	 */
 	private $ftp;
+
 	/**
 	 * @var mixed
 	 * @since version
 	 */
 	private $content;
+
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	private $app;
+
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	private $filename;
+
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	private $templatename;
+
 	/**
 	 * @var array|false
 	 * @since version
 	 */
 	private $files;
+
 	/**
 	 * @var string
 	 * @since version
@@ -58,9 +81,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayAdd(): void
 	{
@@ -79,18 +102,18 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::back();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -121,20 +144,20 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::divider();
 		ToolbarHelper::custom('template.uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('template.choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		ToolbarHelper::custom('template.chooseCss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('template.chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::custom('template.chooseLess', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		ToolbarHelper::divider();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayEdit(): void
 	{
@@ -147,11 +170,11 @@ class HtmlView extends BaseHtmlView
 		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
-		$templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+		$templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!File::exists($templatefile))
+		if (!File::exists($templateFile))
 		{
-			$ourFileHandle = @fopen($templatefile, 'w');
+			$ourFileHandle = @fopen($templateFile, 'w');
 
 			if ($ourFileHandle)
 			{
@@ -179,20 +202,20 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function displayChooseless(): void
+	public function displayChooseLess(): void
 	{
-		$this->setToolBarChooseless();
+		$this->setToolBarChooseLess();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
@@ -215,7 +238,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarChooseless(): void
+	protected function setToolBarChooseLess(): void
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
@@ -229,13 +252,13 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function displayEditless(): void
+	public function displayEditLess(): void
 	{
-		$this->setToolBarEditless();
+		$this->setToolBarEditLess();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
@@ -250,13 +273,13 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEditless(): void
+	protected function setToolBarEditLess(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('applyless');
+		ToolbarHelper::apply('applyLess');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('saveless');
+		ToolbarHelper::save('saveLess');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
@@ -266,13 +289,13 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function displayChoosecss(): void
+	public function displayChooseCss(): void
 	{
-		$this->setToolBarChoosecss();
+		$this->setToolBarChooseCss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
@@ -299,11 +322,11 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarChoosecss(): void
+	protected function setToolBarChooseCss(): void
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		ToolbarHelper::custom('editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
@@ -313,17 +336,17 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function displayEditcss(): void
+	public function displayEditCss(): void
 	{
-		$this->setToolBarEditcss();
+		$this->setToolBarEditCss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
-		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
+		$this->filename     = $this->app->getUserState('kunena.editCss.filename');
 		$this->content      = $this->get('FileContentParsed');
-		$css_path           = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
+		$cssPath            = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}
@@ -333,13 +356,13 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEditcss(): void
+	protected function setToolBarEditCss(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('applycss');
+		ToolbarHelper::apply('applyCss');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('savecss');
+		ToolbarHelper::save('saveCss');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();

@@ -149,7 +149,7 @@ class ComponentSearchControllerResultsDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 		}

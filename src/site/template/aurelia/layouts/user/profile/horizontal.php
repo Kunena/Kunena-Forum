@@ -24,12 +24,12 @@ $user              = $this->user;
 $this->ktemplate   = KunenaFactory::getTemplate();
 $avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $config            = KunenaConfig::getInstance();
-$show              = $config->showuserstats;
+$show              = $config->showUserStats;
 $optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
 
 if ($show)
 {
-	if ($config->showkarma)
+	if ($config->showKarma)
 	{
 		$canseekarma = $user->canSeeKarma();
 	}
@@ -58,7 +58,7 @@ if ($show)
 			:
 			?>
 			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avataredit); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
 			</li>
 			<?php if (isset($this->topic_starter) && $this->topic_starter)
 			:
@@ -74,7 +74,7 @@ if ($show)
 			?>
 
 		<?php endif; ?>
-		<?php if ($user->exists() && $config->user_status) : ?>
+		<?php if ($user->exists() && $config->userStatus) : ?>
 			<li>
 				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>
@@ -120,14 +120,14 @@ if ($show)
 		</li>
 	<?php endif; ?>
 
-	<?php if ($canseekarma && $config->showkarma) : ?>
+	<?php if ($canseekarma && $config->showKarma) : ?>
 		<li>
 			<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>:</strong>
 			<span> <?php $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid) . $this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?> </span>
 		</li>
 	<?php endif; ?>
 
-	<?php if ($show && isset($user->thankyou) && $config->showthankyou) : ?>
+	<?php if ($show && isset($user->thankyou) && $config->showThankYou) : ?>
 		<li>
 			<strong> <?php echo Text::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 			<span> <?php echo Text::sprintf((int) $user->thankyou); ?> </span>

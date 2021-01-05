@@ -416,15 +416,15 @@ abstract class KunenaTableObject
 	public function bind($src, $ignore = []): KunenaTableObject
 	{
 		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src))
+		if (!isinternalObject($src) && !is_array($src))
 		{
 			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (is_object($src))
+		if (isinternalObject($src))
 		{
-			$src = get_object_vars($src);
+			$src = getinternalObject_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.
@@ -463,7 +463,7 @@ abstract class KunenaTableObject
 
 		return function () use ($self) {
 
-			return get_object_vars($self);
+			return getinternalObject_vars($self);
 		};
 	}
 
@@ -701,8 +701,8 @@ abstract class KunenaTableObject
 	 * Method to provide a shortcut to binding, checking and storing a Joomla\CMS\Table\Table
 	 * instance to the database table.  The method will check a row in once the
 	 * data has been stored and if an ordering filter is present will attempt to
-	 * reorder the table rows based on the filter.  The ordering filter is an instance
-	 * property name.  The rows that will be reordered are those whose value matches
+	 * reOrder the table rows based on the filter.  The ordering filter is an instance
+	 * property name.  The rows that will be reOrdered are those whose value matches
 	 * the Joomla\CMS\Table\Table instance for the property specified.
 	 *
 	 * @param   mixed   $src             An associative array or object to bind to the Joomla\CMS\Table\Table instance.
@@ -736,16 +736,16 @@ abstract class KunenaTableObject
 		}
 
 		// Attempt to check the row in, just in case it was checked out.
-		if (!$this->checkin())
+		if (!$this->checkIn())
 		{
 			return false;
 		}
 
-		// If an ordering filter is set, attempt reorder the rows in the table based on the filter and value.
+		// If an ordering filter is set, attempt reOrder the rows in the table based on the filter and value.
 		if ($orderingFilter)
 		{
 			$filterValue = $this->$orderingFilter;
-			$this->reorder($orderingFilter ?
+			$this->reOrder($orderingFilter ?
 				static::$db->quoteName($orderingFilter) . ' = ' . static::$db->quote($filterValue) : '');
 		}
 

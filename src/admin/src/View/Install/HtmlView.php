@@ -30,13 +30,13 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void|mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -58,9 +58,9 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar(): void
 	{
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance('toolbar');
+		$bar = Toolbar::getInstance();
 
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_ICONS_MANAGER'));
 	}
 }

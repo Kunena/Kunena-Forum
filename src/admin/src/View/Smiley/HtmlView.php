@@ -27,6 +27,10 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var object
+	 * @since version
+	 */
 	private $ktemplate;
 
 	/**
@@ -34,18 +38,18 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
 
-		$state           = $this->get('state');
-		$smiley_selected = $this->get('smiley');
-		$smileypath      = $this->ktemplate->getSmileyPath();
-		$listsmileys     = $this->get('Smileyspaths');
+		$state          = $this->get('state');
+		$smileySelected = $this->get('smiley');
+		$smileyPath     = $this->ktemplate->getSmileyPath();
+		$listSmileys    = $this->get('SmileysPaths');
 
 		$this->addToolbar();
 
@@ -66,7 +70,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::save('save');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

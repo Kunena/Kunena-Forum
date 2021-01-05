@@ -297,7 +297,7 @@ abstract class KunenaTopicHelper
 
 		if ($limit < 1 && empty($params['nolimit']))
 		{
-			$limit = $config->threads_per_page;
+			$limit = $config->threadsPerPage;
 		}
 
 		$reverse   = isset($params['reverse']) ? (int) $params['reverse'] : 0;
@@ -769,7 +769,7 @@ abstract class KunenaTopicHelper
 	{
 		$user = KunenaUserHelper::get($user);
 
-		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists())
+		if (!KunenaFactory::getConfig()->showNew || empty($topics) || !$user->exists())
 		{
 			return [];
 		}

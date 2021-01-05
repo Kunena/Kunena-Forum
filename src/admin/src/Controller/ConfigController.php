@@ -48,9 +48,9 @@ class ConfigController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -64,10 +64,10 @@ class ConfigController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function apply(): void
 	{
@@ -82,13 +82,13 @@ class ConfigController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
@@ -96,10 +96,10 @@ class ConfigController extends FormController
 			return;
 		}
 
-		$properties  = KunenaConfig::getInstance()->getProperties();
-		$post_config = $this->app->input->post->getArray();
+		$properties = KunenaConfig::getInstance()->getProperties();
+		$postConfig = $this->app->input->post->getArray();
 
-		foreach ($post_config as $postsetting => $postvalue)
+		foreach ($postConfig as $postsetting => $postvalue)
 		{
 			if (StringHelper::strpos($postsetting, 'cfg_') === 0)
 			{
@@ -112,7 +112,7 @@ class ConfigController extends FormController
 
 				$postname = StringHelper::strtolower(StringHelper::substr($postsetting, 4));
 
-				if ($postname == 'imagewidth' || $postname == 'imageheight')
+				if ($postname == 'imageWidth' || $postname == 'imageHeight')
 				{
 					if (empty($postvalue))
 					{
@@ -151,14 +151,14 @@ class ConfigController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
-	public function setdefault(): void
+	public function setDefault(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

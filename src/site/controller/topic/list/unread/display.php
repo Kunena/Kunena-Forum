@@ -81,7 +81,7 @@ class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
 			$time = new Date(Factory::getDate()->toUnix() - ($time * 3600));
 		}
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
 			if ($this->config->moderator_id)
 			{

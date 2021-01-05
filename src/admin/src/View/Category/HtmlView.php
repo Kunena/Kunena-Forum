@@ -46,6 +46,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function displayCreate(): void
@@ -54,7 +55,11 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return  void
+	 * @throws Exception
 	 * @since Kunena
+	 *
+	 *
 	 */
 	public function displayEdit()
 	{
@@ -74,31 +79,33 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return  void
 	 * @since Kunena
+	 *
 	 */
 	protected function setToolBarEdit()
 	{
 		$this->category = $this->get('AdminCategory');
 
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance('toolbar');
+		$bar = Toolbar::getInstance();
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('apply');
-		ToolbarHelper::save('save');
-		ToolbarHelper::save2new('save2new');
+		ToolbarHelper::apply();
+		ToolbarHelper::save();
+		ToolbarHelper::save2new();
 
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())
 		{
-			ToolbarHelper::save2copy('save2copy');
+			ToolbarHelper::save2copy();
 		}
 
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
@@ -106,9 +113,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -155,7 +162,7 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::cancel('category.cancel');
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

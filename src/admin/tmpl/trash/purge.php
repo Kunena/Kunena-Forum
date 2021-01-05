@@ -21,10 +21,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect')
+		->useScript('formbehavior.chosen');
 
-	->useScript('formbehavior.chosen');
-
-$count = count($this->purgeitems);
+$count = count($this->purgeItems);
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -45,7 +44,7 @@ $count = count($this->purgeitems);
 						:
 						?>
 						<table class="table table-striped">
-							<?php foreach ($this->purgeitems as $item)
+							<?php foreach ($this->purgeItems as $item)
 								:
 								?>
 								<tr>

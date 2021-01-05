@@ -45,9 +45,9 @@ class SmiliesController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -60,14 +60,14 @@ class SmiliesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function add(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -81,18 +81,18 @@ class SmiliesController extends FormController
 	/**
 	 * Edit
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -119,20 +119,20 @@ class SmiliesController extends FormController
 	/**
 	 * Save
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
 		$db = Factory::getDbo();
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -140,15 +140,19 @@ class SmiliesController extends FormController
 			return;
 		}
 
-		$smiley_code        = $this->app->input->getString('smiley_code');
-		$smiley_location    = basename($this->app->input->getString('smiley_url'));
-		$smiley_emoticonbar = $this->app->input->getInt('smiley_emoticonbar', 0);
-		$smileyid           = $this->app->input->getInt('smileyid', 0);
+		$smileyCode        = $this->app->input->getString('smileyCode');
+		$smileyLocation    = basename($this->app->input->getString('smiley_url'));
+		$smileyEmoticonBar = $this->app->input->getInt('smileyEmoticonBar', 0);
+		$smileyId          = $this->app->input->getInt('smileyId', 0);
 
-		if (!$smileyid)
+		if (!$smileyId)
 		{
 			$query = $db->getQuery(true)
-				->insert("{$db->quoteName('#__kunena_smileys')}")->set("code={$db->quote($smiley_code)}, location={$db->quote($smiley_location)}, emoticonbar={$db->quote($smiley_emoticonbar)}");
+				->insert("{$db->quoteName('#__kunena_smileys')}")
+				->set("code={$db->quote($smileyCode)}")
+				->set("location={$db->quote($smileyLocation)}")
+				->set("location={$db->quote($smileyLocation)}")
+				->set("emoticonbar={$db->quote($smileyEmoticonBar)}");
 
 			$db->setQuery($query);
 
@@ -166,8 +170,12 @@ class SmiliesController extends FormController
 		else
 		{
 			$query = $db->getQuery(true)
-				->update("{$db->quoteName('#__kunena_smileys')}")->set("code={$db->quote($smiley_code)}, location={$db->quote($smiley_location)}, emoticonbar={$db->quote($smiley_emoticonbar)}")
-				->where("id = {$db->quote($smileyid)}");
+				->update("{$db->quoteName('#__kunena_smileys')}")
+				->set("code={$db->quote($smileyCode)}")
+				->set("location={$db->quote($smileyLocation)}")
+				->set("location={$db->quote($smileyLocation)}")
+				->set("emoticonbar={$db->quote($smileyEmoticonBar)}")
+				->where("id={$db->quote($smileyId)}");
 
 			$db->setQuery($query);
 
@@ -192,14 +200,14 @@ class SmiliesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function smileyupload(): void
+	public function smileyUpload(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -229,10 +237,10 @@ class SmiliesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function remove(): void
 	{
@@ -254,7 +262,8 @@ class SmiliesController extends FormController
 		if ($cids)
 		{
 			$query = $db->getQuery(true)
-				->delete()->from("{$db->quoteName('#__kunena_smileys')}")->where("id IN ($cids)");
+				->delete()->from("{$db->quoteName('#__kunena_smileys')}")
+				->where("id IN ($cids)");
 
 			$db->setQuery($query);
 
@@ -277,13 +286,13 @@ class SmiliesController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @param   null  $key key
+	 * @param   null  $key  key
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null): void
 	{

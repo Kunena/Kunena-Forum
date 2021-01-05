@@ -460,7 +460,7 @@ class KunenaLayout extends KunenaBase
 
 		if (!$content)
 		{
-			if (KunenaConfig::getInstance()->disable_re)
+			if (KunenaConfig::getInstance()->disableRe)
 			{
 				$content = KunenaParser::parseText($lastTopic->subject, $length);
 			}

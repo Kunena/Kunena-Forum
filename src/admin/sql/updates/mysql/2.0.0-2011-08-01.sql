@@ -2,7 +2,7 @@
 
 ALTER TABLE `#__kunena_categories`
   MODIFY `ordering` smallint(6) NOT NULL default '0'
-  AFTER `admin_recurse`; -- Also new in Kunena 1.6.4
+  AFTER `adminRecurse`; -- Also new in Kunena 1.6.4
 ALTER TABLE `#__kunena_categories`
   DROP `alert_admin`;
 ALTER TABLE `#__kunena_categories`
@@ -18,7 +18,7 @@ ALTER TABLE `#__kunena_categories`
 ALTER TABLE `#__kunena_categories`
   DROP INDEX `msg_id`;
 ALTER TABLE `#__kunena_categories`
-  CHANGE `parent` `parent_id` INT(11) NULL DEFAULT '0';
+  CHANGE `parent` `parentId` INT(11) NULL DEFAULT '0';
 ALTER TABLE `#__kunena_categories`
   CHANGE `cat_emoticon` `icon_id` TINYINT(4) NOT NULL DEFAULT '0';
 ALTER TABLE `#__kunena_categories`
@@ -37,10 +37,10 @@ ALTER TABLE `#__kunena_categories`
   ADD `channels` TEXT NULL DEFAULT NULL
   AFTER `published`;
 ALTER TABLE `#__kunena_categories`
-  ADD `topic_ordering` VARCHAR(16) NOT NULL default 'lastpost'
-  AFTER `allow_polls`;
+  ADD `topicOrdering` VARCHAR(16) NOT NULL default 'lastpost'
+  AFTER `allowPolls`;
 ALTER TABLE `#__kunena_categories`
-  ADD KEY `parent_id` (parent_id);
+  ADD KEY `parentId` (parentId);
 
 ALTER TABLE `#__kunena_topics`
   ADD INDEX `posts` (`posts`);

@@ -74,12 +74,12 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 
 		$template->setCategoryIconset($topic->getCategory()->iconset);
 
-		if ($this->config->topicicons && $topic->isAuthorised('edit'))
+		if ($this->config->topicIcons && $topic->isAuthorised('edit'))
 		{
 			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $topic->icon_id);
 		}
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -90,14 +90,14 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 
 		foreach ($categories as $category)
 		{
-			if (!$category->isSection() && $category->allow_anonymous)
+			if (!$category->isSection() && $category->allowAnonymous)
 			{
-				$arrayanynomousbox[$category->id] = $category->post_anonymous;
+				$arrayanynomousbox[$category->id] = $category->postAnonymous;
 			}
 
-			if ($this->config->pollenabled)
+			if ($this->config->pollEnabled)
 			{
-				if (!$category->isSection() && $category->allow_polls)
+				if (!$category->isSection() && $category->allowPolls)
 				{
 					$arraypollcatid[$category->id] = 1;
 				}
@@ -161,19 +161,19 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 		$finder = new KunenaFinder;
 		$finder
 			->filterByMessage($this->message)
-			->where('parent_id', '=', 0)
+			->where('parentId', '=', 0)
 			->where('author_id', '=', $this->message->userid)
 			->order('id')
 			->limit(1);
 		$privateMessage       = $finder->firstOrNew();
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($category1->post_anonymous);
-		$subscriptionschecked = false;
+		$postAnonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($category1->postAnonymous);
+		$subscriptionsChecked = false;
 		$canSubscribe         = false;
 		$usertopic            = $topic->getUserTopic();
 
-		if ($this->config->allowsubscriptions)
+		if ($this->config->allowSubscriptions)
 		{
 			$canSubscribe = true;
 		}
@@ -182,14 +182,14 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 		{
 			if ($usertopic->subscribed == 1)
 			{
-				$subscriptionschecked = true;
+				$subscriptionsChecked = true;
 			}
 		}
 		else
 		{
-			if ($this->config->subscriptionschecked)
+			if ($this->config->subscriptionsChecked)
 			{
-				$subscriptionschecked = true;
+				$subscriptionsChecked = true;
 			}
 		}
 
@@ -258,8 +258,8 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 	 */
 	protected function canSubscribe()
 	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
+		if (!$this->me->userid || !$this->config->allowSubscriptions
+			|| $this->config->topicSubscriptions == 'disabled'
 		)
 		{
 			return false;

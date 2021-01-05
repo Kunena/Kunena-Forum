@@ -32,7 +32,7 @@ $k = 0;
 
 <div id="history" class="collapse">
 	<p>
-		<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historylimit) . ' ' . Text::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
+		<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historyLimit) . ' ' . Text::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
 	</p>
 	<?php foreach ($this->history as $this->message)
 		:
@@ -59,7 +59,7 @@ $k = 0;
 			</div>
 			<div class="col-md-10">
 				<small class="text-muted float-right hidden-xs-down" style="margin-top:-5px;">
-					<?php echo Icons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+					<?php echo Icons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory"
 					 data-badger="<?php echo $this->message->displayField('subject'); ?>">

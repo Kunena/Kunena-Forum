@@ -561,7 +561,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true): string
 	{
-		$protect = (bool) KunenaConfig::getInstance()->attachment_protection;
+		$protect = (bool) KunenaConfig::getInstance()->attachmentProtection;
 
 		// Use direct URLs to the KunenaAttachments if protection is turned off and file wasn't protected.
 		if (!$protect)
@@ -928,10 +928,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 			{
 				$imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
 
-				if (number_format($file->size / 1024, 2) > $config->imagesize || $imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
+				if (number_format($file->size / 1024, 2) > $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight)
 				{
 					// Calculate quality for both JPG and PNG.
-					$quality = $config->imagequality;
+					$quality = $config->imageQuality;
 
 					if ($quality < 1 || $quality > 100)
 					{
@@ -948,7 +948,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 					try
 					{
 						$image = new KunenaImage($uploadBasePath . $fileNameWithExt);
-						$image = $image->resize($config->imagewidth, $config->imagewidth, false);
+						$image = $image->resize($config->imageWidth, $config->imageWidth, false);
 						$image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
 						unset($image);
 					}
@@ -963,7 +963,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 				$this->filetype = $imageInfo->mime;
 			}
 
-			$this->protected     = (bool) $config->attachment_protection;
+			$this->protected     = (bool) $config->attachmentProtection;
 			$this->hash          = md5_file($uploadBasePath . $fileNameWithExt);
 			$this->size          = $file->size;
 			$this->folder        = 'media/kunena/attachments/' . $this->userid;
@@ -1128,12 +1128,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 		{
 			$config = KunenaConfig::getInstance();
 
-			if ($this->isImage() && !$config->showimgforguest)
+			if ($this->isImage() && !$config->showImgForGuest)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'), 401);
 			}
 
-			if (!$this->isImage() && !$config->showfileforguest)
+			if (!$this->isImage() && !$config->showFileForGuest)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'), 401);
 			}

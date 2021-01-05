@@ -256,7 +256,7 @@ abstract class KunenaGrid
 	 */
 	public static function published(int $i, $value, $prefix = '', $bootstrap = false): string
 	{
-		if (is_object($value))
+		if (isinternalObject($value))
 		{
 			$value = $value->published;
 		}
@@ -434,9 +434,9 @@ abstract class KunenaGrid
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function order($rows, $image = 'filesave.png', $task = 'saveorder'): string
+	public static function order($rows, $image = 'filesave.png', $task = 'saveOrder'): string
 	{
-		return '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
+		return '<a href="javascript:saveOrder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 	}
 
 	/**

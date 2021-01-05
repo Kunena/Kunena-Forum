@@ -36,7 +36,7 @@ Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 Text::script('COM_KUNENA_EDITOR_INSERT');
 Text::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 Text::script('COM_KUNENA_GEN_REMOVE_FILE');
-Text::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, ['script' => true]);
+Text::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachmentLimit, ['script' => true]);
 Text::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 Text::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
@@ -92,8 +92,8 @@ Text::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
 Text::script('COM_KUNENA_EDITOR_SIZE_BIG');
 Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 
-$this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
-$this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);
+$this->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
+$this->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 
 HTMLHelper::_('jquery.ui');
 $this->addScript('load-image.min.js');
@@ -113,7 +113,7 @@ $this->k = 0;
 $this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
+$this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
 $this->addScriptOptions('com_kunena.icons.upload', Icons::upload());
 $this->addScriptOptions('com_kunena.icons.trash', Icons::delete());
@@ -129,7 +129,7 @@ $editor          = $this->ktemplate->params->get('editor');
 $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // If polls are enabled, load also poll JavaScript.
-if ($this->config->pollenabled)
+if ($this->config->pollEnabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
@@ -138,7 +138,7 @@ if ($this->config->pollenabled)
 
 $this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
-$this->addScriptOptions('com_kunena.allow_edit_poll', $this->config->allow_edit_poll);
+$this->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
 
 $this->addScript('assets/js/edit.js');
 
@@ -181,13 +181,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		  id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic"/>
 		<input id="kurl_topicons_request" type="hidden"
-			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
+			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicIcons&format=raw', false); ?>"/>
 		<input id="kurl_category_template_text" type="hidden"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
 		<input id="kpreview_url" type="hidden" name="kpreview_url"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
-		<?php if (!$this->config->allow_change_subject)
+		<?php if (!$this->config->allowChangeSubject)
 			:
 			?>
 			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
@@ -251,7 +251,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				</div>
 			<?php endif; ?>
 
-			<?php if ($this->category->allow_anonymous && !$this->me->userid) : ?>
+			<?php if ($this->category->allowAnonymous && !$this->me->userid) : ?>
 				<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 				<div class="form-group row" id="kanynomous-check-name">
 					<label for="kauthorname"
@@ -271,7 +271,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				</div>
 			<?php endif; ?>
 
-			<?php if ($this->config->askemail && !$this->me->userid) : ?>
+			<?php if ($this->config->askEmail && !$this->me->userid) : ?>
 				<div class="form-group row">
 					<!-- Material input -->
 					<label for="email"
@@ -284,7 +284,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								   value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"
 								   required/>
 							<br/>
-							<?php echo $this->config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+							<?php echo $this->config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 						</div>
 					</div>
 				</div>
@@ -294,7 +294,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<label for="subject"
 					   class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 				<div class="col-md-10">
-					<?php if (!$this->config->allow_change_subject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
+					<?php if (!$this->config->allowChangeSubject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
 						<input class="form-control" type="text" name="subject" id="subject"
 							   value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
 					<?php else : ?>
@@ -308,25 +308,25 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 
 			<?php if (!empty($this->topicIcons)) : ?>
-				<div class="form-group row" id="kpost-topicicons">
+				<div class="form-group row" id="kpost-topicIcons">
 					<!-- Material input -->
 					<label for="inputIcon"
 						   class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 					<div class="col-md-10">
 						<div id="iconset_inject" class="controls controls-select">
-							<div id="iconset_topic_list">
+							<div id="iconset_topicList">
 								<?php foreach ($this->topicIcons as $id => $icon) : ?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
 									   value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicicons && $topicicontype == 'B3') : ?>
+								<?php if ($this->config->topicIcons && $topicicontype == 'B3') : ?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
 											aria-hidden="true"></span>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'B4') : ?>
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
 										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<?php echo SvgIcons::loadsvg($icon->b4, 'usertopicicons', $this->category->iconset);?>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
+										<?php echo SvgIcons::loadsvg($icon->b4, 'usertopicIcons', $this->category->iconset);?>
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'fa') : ?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
 												class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 										<?php else : ?>
@@ -350,11 +350,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			}
 			else
 			{
-				echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('privateMessage', $this->privateMessage)->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allow_polls', $this->topic->getCategory()->allow_polls);
+				echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('privateMessage', $this->privateMessage)->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allowPolls', $this->topic->getCategory()->allowPolls);
 			} ?>
 		</div>
 
-		<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
+		<?php if ($this->message->exists() && $this->config->editMarkup) : ?>
 			<h2>
 				<?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
 			</h2>
@@ -385,8 +385,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<span class="label label-info"><?php echo Text::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
 								: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br/><br/>
 							<span class="label label-info"><?php echo Text::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
-								: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo Text::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
-								: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?>
+								: <?php echo $this->config->fileSize != 0 ? round($this->config->fileSize / 1024, 1) : $this->config->fileSize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo Text::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
+								: <?php echo $this->config->imageSize != 0 ? round($this->config->imageSize / 1024, 1) : $this->config->imageSize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?>
 							</span>
 							<br/>
 							<br/>
@@ -443,7 +443,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<div class="controls">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-								   value="1" <?php if ($this->config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $me->canSubscribe == 1 || $this->category->getSubscribed($me->userid))
+								   value="1" <?php if ($this->config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $this->category->getSubscribed($me->userid))
 							{
 								echo 'checked="checked"';
 							} ?>/>
@@ -455,7 +455,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		<?php endif; ?>
 
-		<?php if ($this->message->userid && $this->message->getCategory()->allow_anonymous): ?>
+		<?php if ($this->message->userid && $this->message->getCategory()->allowAnonymous): ?>
 			<h2>
 				<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?>
 			</h2>
@@ -464,7 +464,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<div class="controls">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" id="kanonymous" name="anonymous"
-								   value="1" <?php if ($this->post_anonymous)
+								   value="1" <?php if ($this->postAnonymous)
 							{
 								echo 'checked="checked"';
 							} ?>/>
@@ -519,7 +519,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		{
 			if (!$this->topic->subject)
 			{
-				if ($this->config->allow_change_subject)
+				if ($this->config->allowChangeSubject)
 				{
 					echo '<script type="text/javascript">document.postform.subject.focus();</script>';
 				}
@@ -533,7 +533,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<div id="kattach-list"></div>
 	</form>
 <?php
-if ($this->config->showhistory && $this->topic->exists())
+if ($this->config->showHistory && $this->topic->exists())
 {
 	echo $this->subRequest('Topic/Form/History', new Input(['id' => $this->topic->id]));
 }

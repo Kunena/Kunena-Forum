@@ -283,9 +283,9 @@ abstract class KunenaRoute
 		}
 
 		// Support legacy URIs
-		$legacy_urls = self::$config->get('legacy_urls', 1);
+		$legacyUrls = self::$config->get('legacyUrls', 1);
 
-		if ($legacy_urls && $uri->getVar('func'))
+		if ($legacyUrls && $uri->getVar('func'))
 		{
 			$result = KunenaLegacy::convert($uri);
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -302,7 +302,7 @@ abstract class KunenaRoute
 		switch ($uri->getVar('view', 'home'))
 		{
 			case 'announcement':
-				if ($legacy_urls)
+				if ($legacyUrls)
 				{
 					KunenaLegacy::convert($uri);
 				}
@@ -323,7 +323,7 @@ abstract class KunenaRoute
 				break;
 
 			default:
-				if (!$legacy_urls || !KunenaLegacy::convert($uri))
+				if (!$legacyUrls || !KunenaLegacy::convert($uri))
 				{
 					KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -543,7 +543,7 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				$parentId          = $item->parent_id;
+				$parentId          = $item->parentId;
 				$parent            = isset(self::$menu[$parentId]) ? self::$menu[$parentId] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}

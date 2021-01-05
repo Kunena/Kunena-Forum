@@ -15,19 +15,19 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Update menu items
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
-function kunena_200_2012_06_10_pubwrite($parent)
+function kunena_200_2012_06_10_pubWrite($parent)
 {
 	$config = KunenaFactory::getConfig();
 
-	if ($config->pubwrite)
+	if ($config->pubWrite)
 	{
 		$db     = Factory::getDbo();
 		$params = '{"access_post":["1"],"access_reply":["1"]}';

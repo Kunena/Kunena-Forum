@@ -167,7 +167,7 @@ class TableKunenaAttachments extends KunenaTable
 
 		if (!$this->size)
 		{
-			$this->size = filesize($file);
+			$this->size = fileSize($file);
 		}
 
 		if (!$this->filetype)

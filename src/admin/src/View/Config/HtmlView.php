@@ -30,16 +30,23 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
+	 * @var object
+	 *
+	 */
 	public $config;
 
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -82,7 +89,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::back('JTOOLBAR_CANCEL', 'index.php?option=com_kunena');
 
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/configuration';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/configuration';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

@@ -119,7 +119,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getInt('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
@@ -129,7 +129,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 
 		if ($limit < 1 || $limit > 100)
 		{
-			$limit = $this->config->messages_per_page;
+			$limit = $this->config->messagesPerPage;
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
@@ -147,7 +147,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$catParams   = ['sections' => 1, 'catid' => 0];
 		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Load topic and message.
@@ -277,7 +277,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 
 		// Get user data, captcha & quick reply.
 		$this->userTopic = $this->topic->getUserTopic();
-		$quickReply      = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickreply;
+		$quickReply      = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickReply;
 
 		$this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
@@ -307,7 +307,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$data->publisher                = [];
 		$tmp4                           = new CMSObject;
 		$tmp4->{'@type'}                = "Organization";
-		$tmp4->{'name'}                 = $this->config->board_title;
+		$tmp4->{'name'}                 = $this->config->boardTitle;
 		$tmp4->{'logo'}                 = $tmp3;
 		$data->publisher                = $tmp4;
 		$data->mainEntityOfPage         = [];
@@ -316,7 +316,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		$tmp5->{'name'}                 = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
 		$data->mainEntityOfPage         = $tmp5;
 
-		if ($this->category->allow_ratings && $this->config->ratingenabled && KunenaRateHelper::getCount($this->topic->id) > 0)
+		if ($this->category->allowRatings && $this->config->ratingEnabled && KunenaRateHelper::getCount($this->topic->id) > 0)
 		{
 			$data->aggregateRating  = [];
 			$tmp3                   = new CMSObject;
@@ -520,9 +520,9 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 		}
 		elseif ($this->topic->getAuthor()->avatar == null)
 		{
-			if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+			if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 			{
-				$image = Uri::base() . $this->config->emailheader;
+				$image = Uri::base() . $this->config->emailHeader;
 			}
 			else
 			{
@@ -615,7 +615,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 				{
 					if ($attach->image)
 					{
-						if ($this->config->attachment_protection)
+						if ($this->config->attachmentProtection)
 						{
 							$url      = $attach->path;
 							$protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';

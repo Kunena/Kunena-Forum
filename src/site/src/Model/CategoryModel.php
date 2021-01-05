@@ -155,7 +155,7 @@ class CategoryModel extends ListModel
 
 			foreach ($allsubcats as $subcat)
 			{
-				if ($flat || isset($categories [0] [$subcat->parent_id]))
+				if ($flat || isset($categories [0] [$subcat->parentId]))
 				{
 					$last = $subcat->getLastCategory();
 
@@ -165,7 +165,7 @@ class CategoryModel extends ListModel
 						$topiclist[$last->last_topic_id] = $last->last_topic_id;
 					}
 
-					if ($this->config->listcat_show_moderators)
+					if ($this->config->listCatShowModerators)
 					{
 						// Get list of moderators
 						$subcat->moderators = $subcat->getModerators(false, false);
@@ -178,7 +178,7 @@ class CategoryModel extends ListModel
 					}
 				}
 
-				$categories [$subcat->parent_id] [] = $subcat;
+				$categories [$subcat->parentId] [] = $subcat;
 			}
 
 			// Prefetch topics
@@ -193,11 +193,11 @@ class CategoryModel extends ListModel
 
 			if ($this->me->ordering != 0)
 			{
-				$topic_ordering = $this->me->ordering == 1;
+				$topicOrdering = $this->me->ordering == 1;
 			}
 			else
 			{
-				$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+				$topicOrdering = $this->config->defaultSort == 'asc' ? false : true;
 			}
 
 			$this->pending = [];
@@ -231,7 +231,7 @@ class CategoryModel extends ListModel
 			}
 
 			// Fix last post position when user can see unapproved or deleted posts
-			if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))
+			if ($lastpostlist && !$topicOrdering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))
 			{
 				KunenaMessageHelper::getMessages($lastpostlist);
 				KunenaMessageHelper::loadLocation($lastpostlist);
@@ -298,7 +298,7 @@ class CategoryModel extends ListModel
 			$limit      = $this->getState('list.limit');
 			$format     = $this->getState('format');
 
-			$topic_ordering = $this->getCategory()->topic_ordering;
+			$topicOrdering = $this->getCategory()->topicOrdering;
 
 			$access = KunenaAccess::getInstance();
 			$hold   = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
@@ -307,7 +307,7 @@ class CategoryModel extends ListModel
 				'hold'  => $hold,
 				'moved' => $moved, ];
 
-			switch ($topic_ordering)
+			switch ($topicOrdering)
 			{
 				case 'alpha':
 					$params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
@@ -551,7 +551,7 @@ class CategoryModel extends ListModel
 
 		// List state information
 		$value        = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int');
-		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
+		$defaultlimit = $format != 'feed' ? $this->config->threadsPerPage : $this->config->rssLimit;
 
 		if ($value < 1 || $value > 100)
 		{

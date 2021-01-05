@@ -14,13 +14,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Set Aurelia as default template in config when update
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_600_2019_05_18_configuration($parent)
 {

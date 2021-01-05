@@ -45,7 +45,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->time_to_create_page)
+		if (!$config->timeToCreatePage)
 		{
 			return;
 		}
@@ -70,20 +70,20 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ($config->enablerss)
+		if ($config->enableRss)
 		{
-			$mode = $config->rss_type;
+			$mode = $config->rssType;
 
 			switch ($mode)
 			{
 				case 'topic' :
-					$rss_type = 'mode=topics';
+					$rssType = 'mode=topics';
 					break;
 				case 'recent' :
-					$rss_type = 'mode=replies';
+					$rssType = 'mode=replies';
 					break;
 				case 'post' :
-					$rss_type = 'layout=posts';
+					$rssType = 'layout=posts';
 					break;
 			}
 
@@ -91,11 +91,11 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 			if (CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rss_type}") . '?format=feed&type=rss';
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}") . '?format=feed&type=rss';
 			}
 			else
 			{
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rss_type}&Itemid={$itemid}", true);
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rssType}&Itemid={$itemid}", true);
 			}
 
 			$doc = Factory::getApplication()->getDocument();

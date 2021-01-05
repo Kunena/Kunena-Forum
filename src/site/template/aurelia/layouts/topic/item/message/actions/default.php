@@ -21,15 +21,15 @@ $message = $this->message;
 
 $dateText = $dateHover = '';
 
-if ($this->config->editmarkup && $this->message->modified_time)
+if ($this->config->editMarkup && $this->message->modified_time)
 {
-	$dateText  = $message->getModifiedTime()->toKunena('config_post_dateformat') . ' ';
-	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_post_dateformat_hover') . '"';
+	$dateText  = $message->getModifiedTime()->toKunena('config_postDateFormat') . ' ';
+	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_postDateFormatHover') . '"';
 }
 ?>
 	<div>
 
-		<?php if ($this->config->editmarkup && $this->message->modified_by)
+		<?php if ($this->config->editMarkup && $this->message->modified_by)
 			:
 			?>
 			<span class="alert" <?php echo $dateTitle; ?>>
@@ -63,4 +63,4 @@ if ($this->config->editmarkup && $this->message->modified_time)
 	</div>
 
 
-<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply');
+<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickReply');

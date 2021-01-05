@@ -154,7 +154,7 @@ class TopicsController extends KunenaController
 
 		if ($message)
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{
@@ -221,7 +221,7 @@ class TopicsController extends KunenaController
 
 		if ($message)
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{
@@ -288,7 +288,7 @@ class TopicsController extends KunenaController
 
 		if ($message)
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{
@@ -356,7 +356,7 @@ class TopicsController extends KunenaController
 
 		if ($message)
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{
@@ -461,7 +461,7 @@ class TopicsController extends KunenaController
 
 		if (!empty($message))
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{
@@ -510,7 +510,7 @@ class TopicsController extends KunenaController
 
 		if (KunenaTopicHelper::favorite(array_keys($topics), 0))
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				foreach ($topics as $topic)
 				{

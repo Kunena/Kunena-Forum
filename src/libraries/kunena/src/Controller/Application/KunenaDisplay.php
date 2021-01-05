@@ -113,7 +113,7 @@ class KunenaDisplay extends KunenaControllerDisplay
 			->set('me', $this->me)
 			->setOptions($this->getOptions());
 
-		if ($this->config->board_offline && !$this->me->isAdmin())
+		if ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
 			$this->setResponseStatus(503);
@@ -121,9 +121,9 @@ class KunenaDisplay extends KunenaControllerDisplay
 
 			$this->content = KunenaLayout::factory('Widget/Custom')
 				->set('header', Text::_('COM_KUNENA_FORUM_IS_OFFLINE'))
-				->set('body', $this->config->offline_message);
+				->set('body', $this->config->offlineMessage);
 		}
-		elseif ($this->config->regonly && !$this->me->exists())
+		elseif ($this->config->regOnly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
 			$this->setResponseStatus(403);
@@ -271,7 +271,7 @@ class KunenaDisplay extends KunenaControllerDisplay
 		if ($this->me->isAdmin())
 		{
 			// Display warnings to the administrator if forum is either offline or debug has been turned on.
-			if ($this->config->board_offline)
+			if ($this->config->boardOffline)
 			{
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
 			}
@@ -282,7 +282,7 @@ class KunenaDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_WARNING_READONLY'), 'notice');
 		}

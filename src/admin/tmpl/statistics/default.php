@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+
 ?>
 
 <script type="text/javascript">

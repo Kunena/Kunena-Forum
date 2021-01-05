@@ -27,7 +27,7 @@ use function defined;
  * Private message.
  *
  * @since   Kunena 6.0
- * @property int      $parent_id
+ * @property int      $parentId
  * @property int      $author_id
  * @property int      $created_at
  * @property int      $attachments

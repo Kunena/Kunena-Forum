@@ -36,9 +36,9 @@ class CloseController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

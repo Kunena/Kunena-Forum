@@ -53,7 +53,7 @@ class KunenaProfile
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!isinternalObject($class))
 				{
 					continue;
 				}
@@ -84,7 +84,7 @@ class KunenaProfile
 	{
 		if (!$limit)
 		{
-			$limit = KunenaFactory::getConfig()->popusercount;
+			$limit = KunenaFactory::getConfig()->popUserCount;
 		}
 
 		return (array) $this->_getTopHits($limit);
@@ -118,7 +118,7 @@ class KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
 
-		if ($config->statslink_allowed == 0 && $my->id == 0)
+		if ($config->statsLinkAllowed == 0 && $my->id == 0)
 		{
 			return false;
 		}

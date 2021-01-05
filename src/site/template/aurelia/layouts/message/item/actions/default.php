@@ -33,7 +33,7 @@ $quick           = $this->ktemplate->params->get('quick');
 	:
 		?>
 		<div class="kmessagepadding">
-			<?php if ($this->quickreply && $quick != 2)
+			<?php if ($this->quickReply && $quick != 2)
 			:
 				?>
 				<a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
@@ -87,7 +87,7 @@ endif; ?>
 	:
 		?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if ($this->quickreply && $quick != 2)
+			<?php if ($this->quickReply && $quick != 2)
 		:
 				?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
@@ -108,7 +108,7 @@ endif; ?>
 					<li><?php echo $this->messageButtons->get('quote'); ?></li>
 					<li><?php echo $this->messageButtons->get('edit'); ?></li>
 					<?php
-					if ($config->userdeletetmessage > 0)
+					if ($config->userDeleteMessage > 0)
 		:
 						?>
 						<li><?php echo $this->messageButtons->get('delete'); ?></li>

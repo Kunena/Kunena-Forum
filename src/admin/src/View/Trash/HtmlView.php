@@ -39,13 +39,13 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayPurge(): void
 	{
-		$purgeitems    = $this->get('PurgeItems');
+		$purgeItems    = $this->get('PurgeItems');
 		$md5Calculated = $this->get('Md5');
 
 		$this->setToolBarPurge();
@@ -59,7 +59,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function setToolBarPurge(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('trash.purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
@@ -67,26 +67,26 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
 
-		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
-		$this->state       = $this->get('State');
-		$this->trash_items = $this->get('Trashitems');
+		$this->state              = $this->get('State');
+		$this->trashInternalItems = $this->get('Trashitems');
 		$this->setLayout($this->state->get('layout'));
-		$this->pagination        = $this->get('Navigation');
-		$this->view_options_list = $this->get('ViewOptions');
+		$this->pagination      = $this->get('Navigation');
+		$this->viewOptionsList = $this->get('ViewOptions');
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
@@ -165,7 +165,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('trash.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
@@ -173,7 +173,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::custom('trash.purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		ToolbarHelper::spacer();
 
-		$help_url = 'https://docs.kunena.org/en/manual/backend/trashbin';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

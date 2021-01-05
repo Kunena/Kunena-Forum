@@ -74,7 +74,7 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 
 		$me = KunenaUserHelper::getMyself();
 
-		if (!$this->config->reportmsg)
+		if (!$this->config->reportMsg)
 		{
 			// Deny access if report feature has been disabled.
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);

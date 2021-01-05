@@ -34,7 +34,13 @@ class HtmlView extends BaseHtmlView
 	 * @since version
 	 */
 	protected $pagination;
+
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $state;
+
 	/**
 	 * @var mixed
 	 * @since version
@@ -63,9 +69,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -143,7 +149,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::divider();
 		ToolbarHelper::deleteList();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

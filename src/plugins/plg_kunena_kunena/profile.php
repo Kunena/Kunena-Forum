@@ -66,7 +66,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
 
-		if ($config->userlist_allowed == 0 && $my->id == 0)
+		if ($config->userlistAllowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -93,7 +93,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 		$query->where($db->quoteName('ku.uhits') . ' > 0');
 		$query->order($db->quoteName('ku.uhits') . ' DESC');
 
-		if (KunenaFactory::getConfig()->superadmin_userlist)
+		if (KunenaFactory::getConfig()->superAdminUserlist)
 		{
 			$filter = Access::getUsersByGroup(8);
 			$query->andwhere('u.id NOT IN (' . implode(',', $filter) . ')');

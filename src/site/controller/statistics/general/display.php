@@ -56,7 +56,7 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
@@ -64,12 +64,12 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 			$controller->redirect();
 		}
 
-		if (!$this->config->get('showstats'))
+		if (!$this->config->get('showStats'))
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		if (!$this->config->statslink_allowed && Factory::getApplication()->getIdentity()->guest)
+		if (!$this->config->statsLinkAllowed && Factory::getApplication()->getIdentity()->guest)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -137,7 +137,7 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 

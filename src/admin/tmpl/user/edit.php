@@ -25,7 +25,7 @@ $wa->useScript('multiselect');
 
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
-	' var max_count = ' . (int) $this->config->maxsig . '
+		' var max_count = ' . (int) $this->config->maxSig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {
 		var len = jQuery(this).val().length;
@@ -119,8 +119,8 @@ jQuery(function($) {
 												</div>
 												<div>
 													<?php echo Text::sprintf(
-														'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-														'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+															'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxSig),
+															'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
 													); ?>
 												</div>
 											</fieldset>
@@ -131,15 +131,15 @@ jQuery(function($) {
 													<tbody>
 													<tr>
 														<td class="col-md-3">
-															<label for="personaltext">
+															<label for="personalText">
 																<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
 															</label>
 														</td>
 														<td>
-															<input id="personaltext" type="text"
+															<input id="personalText" type="text"
 																   class="inputbox form-control"
-																   maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-																   name="personaltext"
+																   maxlength="<?php echo (int) $this->config->maxPersonalText; ?>"
+																   name="personalText"
 																   value="<?php echo $this->escape($this->user->personalText); ?>"/>
 														</td>
 													</tr>
@@ -185,8 +185,8 @@ jQuery(function($) {
 															$gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 															// Build the html select list
 															echo HTMLHelper::_(
-																'select.genericlist', $gender, 'gender', 'class="inputbox form-control" size="1"', 'value', 'text',
-																$this->escape($this->user->gender), 'gender');
+																	'select.genericlist', $gender, 'gender', 'class="inputbox form-control" size="1"', 'value', 'text',
+																	$this->escape($this->user->gender), 'gender');
 															?>
 														</td>
 													</tr>
@@ -199,7 +199,7 @@ jQuery(function($) {
 														<td>
 															<span class="hasTooltip"
 																  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-																	  . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+																		  . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 																<input id="social-site" type="text" name="websitename"
 																	   class="inputbox form-control"
 																	   value="<?php echo $this->escape($this->user->websitename); ?>"/>
@@ -234,7 +234,7 @@ jQuery(function($) {
 																	<?php if ($key != 'qq') : ?>
 																	<span class="hasTooltip"
 																		  title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
-																			  . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
+																				  . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 																	<?php endif; ?>
 																		<input id="social-<?php echo $key; ?>"
 																			   type="text" class="inputbox form-control"
@@ -283,9 +283,9 @@ jQuery(function($) {
 													</tr>
 													</thead>
 													<?php
-													if (!empty($this->subscatslist))
+													if (!empty($this->subsCatsList))
 														:
-														foreach ($this->subscatslist as $cat)
+														foreach ($this->subsCatsList as $cat)
 															:
 															?>
 															<tr>

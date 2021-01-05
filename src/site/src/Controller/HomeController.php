@@ -40,15 +40,15 @@ class HomeController extends KunenaController
 	public $home = 1;
 
 	/**
-	 * @param   bool  $cachable   cachable
+	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @since   Kunena 1.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 *@since   Kunena 1.0
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{

@@ -57,9 +57,9 @@ class ToolsController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -71,14 +71,14 @@ class ToolsController extends FormController
 	}
 
 	/**
-	 * Diagnotics
+	 * Diagnostics
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function diagnostics(): void
 	{
@@ -120,14 +120,14 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function prune(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -149,45 +149,45 @@ class ToolsController extends FormController
 		}
 
 		// Convert days to seconds for timestamp functions...
-		$prune_days = $this->app->input->getInt('prune_days', 36500);
-		$prune_date = Factory::getDate()->toUnix() - ($prune_days * 86400);
+		$pruneDays = $this->app->input->getInt('pruneDays', 36500);
+		$pruneDate = Factory::getDate()->toUnix() - ($pruneDays * 86400);
 
-		$trashdelete = $this->app->input->getInt('trashdelete', 0);
+		$trashDelete = $this->app->input->getInt('trashDelete', 0);
 
 		$where   = [];
-		$where[] = " AND tt.last_post_time < {$prune_date}";
+		$where[] = " AND tt.last_post_time < {$pruneDate}";
 
-		$controloptions = $this->app->input->getString('controloptions', 0);
+		$controlOptions = $this->app->input->getString('controlOptions', 0);
 
-		if ($controloptions == 'answered')
+		if ($controlOptions == 'answered')
 		{
 			$where[] = 'AND tt.posts>1';
 		}
-		elseif ($controloptions == 'unanswered')
+		elseif ($controlOptions == 'unanswered')
 		{
 			$where[] = 'AND tt.posts=1';
 		}
-		elseif ($controloptions == 'locked')
+		elseif ($controlOptions == 'locked')
 		{
 			$where[] = 'AND tt.locked>0';
 		}
-		elseif ($controloptions == 'deleted')
+		elseif ($controlOptions == 'deleted')
 		{
 			$where[] = 'AND tt.hold IN (2,3)';
 		}
-		elseif ($controloptions == 'unapproved')
+		elseif ($controlOptions == 'unapproved')
 		{
 			$where[] = 'AND tt.hold=1';
 		}
-		elseif ($controloptions == 'shadow')
+		elseif ($controlOptions == 'shadow')
 		{
 			$where[] = 'AND tt.moved_id>0';
 		}
-		elseif ($controloptions == 'normal')
+		elseif ($controlOptions == 'normal')
 		{
 			$where[] = 'AND tt.locked=0';
 		}
-		elseif ($controloptions == 'all')
+		elseif ($controlOptions == 'all')
 		{
 			// No filtering
 			$where[] = '';
@@ -213,25 +213,25 @@ class ToolsController extends FormController
 
 		foreach ($categories as $category)
 		{
-			if ($trashdelete)
+			if ($trashDelete)
 			{
-				$count += $category->purge($prune_date, $params);
+				$count += $category->purge($pruneDate, $params);
 			}
 			else
 			{
-				$count += $category->trash($prune_date, $params);
+				$count += $category->trash($pruneDate, $params);
 			}
 		}
 
-		if ($trashdelete)
+		if ($trashDelete)
 		{
-			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
+			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
 				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
 			);
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
+			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
 				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
 			);
 		}
@@ -244,21 +244,21 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function syncusers(): void
+	public function syncUsers(): void
 	{
-		$useradd     = $this->app->input->getBool('useradd', 0);
-		$userdel     = $this->app->input->getBool('userdel', 0);
-		$userrename  = $this->app->input->getBool('userrename', 0);
-		$userdellife = $this->app->input->getBool('userdellife', 0);
+		$userAdd     = $this->app->input->getBool('userAdd', 0);
+		$userDel     = $this->app->input->getBool('userDel', 0);
+		$userRename  = $this->app->input->getBool('userRename', 0);
+		$userDelLife = $this->app->input->getBool('userDelLife', 0);
 
 		$db = Factory::getDBO();
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -266,7 +266,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		if ($useradd)
+		if ($userAdd)
 		{
 			$query = $db->getQuery(true);
 
@@ -293,7 +293,7 @@ class ToolsController extends FormController
 			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_ADD_DONE', $db->getAffectedRows()));
 		}
 
-		if ($userdel)
+		if ($userDel)
 		{
 			$query = $db->getQuery(true);
 
@@ -319,7 +319,7 @@ class ToolsController extends FormController
 			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
 
-		if ($userdellife)
+		if ($userDelLife)
 		{
 			$query = $db->getQuery(true);
 
@@ -357,7 +357,7 @@ class ToolsController extends FormController
 			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
 
-		if ($userrename)
+		if ($userRename)
 		{
 			$queryName = KunenaConfig::getInstance()->username ? "username" : "name";
 
@@ -393,10 +393,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function recount(): void
 	{
@@ -418,7 +418,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$state = $this->app->getUserState('com_kunena.admin.recount', null);
+		$state = $this->app->getUserState('com_kunena.admin.recount');
 
 		if ($state === null)
 		{
@@ -454,7 +454,7 @@ class ToolsController extends FormController
 		}
 
 		$token    = Session::getFormToken() . '=1';
-		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
+		$redirect = KunenaRoute::_("{$this->baseurl}&task=doRecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
 			[
 				'success' => true,
@@ -509,12 +509,12 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function dorecount(): void
+	public function doRecount(): void
 	{
 		$ajax = $this->input->getWord('format', 'html') == 'json';
 
@@ -655,7 +655,7 @@ class ToolsController extends FormController
 		}
 
 		$token    = Session::getFormToken() . '=1';
-		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
+		$redirect = KunenaRoute::_("{$this->baseurl}&task=doRecount&i={$state->reload}&{$token}", false);
 		$this->setResponse(
 			[
 				'success' => true,
@@ -707,12 +707,12 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function trashmenu(): void
+	public function trashMenu(): void
 	{
 		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
@@ -727,14 +727,14 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function fixlegacy(): void
+	public function fixLegacy(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -762,14 +762,14 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function purgeReStatements(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -777,16 +777,16 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$re_string = $this->app->input->getString('re_string', null);
+		$reString = $this->app->input->getString('reString');
 
-		if ($re_string != null)
+		if ($reString != null)
 		{
 			$db = Factory::getDbo();
 
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_messages'))
-				->set("subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject))")
-				->where("subject LIKE {$db->quote($re_string . '%')}");
+				->set("subject=TRIM(TRIM(LEADING {$db->quote($reString)} FROM subject))")
+				->where("subject LIKE {$db->quote($reString . '%')}");
 
 			$db->setQuery($query);
 
@@ -805,12 +805,12 @@ class ToolsController extends FormController
 
 			if ($count > 0)
 			{
-				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $re_string));
+				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $reString));
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $re_string));
+				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $reString));
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}
@@ -826,14 +826,14 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function cleanupIP(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -841,13 +841,13 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$cleanup_days = $this->app->input->getInt('cleanup_ip_days', 365);
-		$where        = '';
+		$cleanupDays = $this->app->input->getInt('cleanup_ip_days', 365);
+		$where       = '';
 
-		if ($cleanup_days)
+		if ($cleanupDays)
 		{
-			$clean_date = Factory::getDate()->toUnix() - ($cleanup_days * 86400);
-			$where      = 'time < ' . $clean_date;
+			$cleanDate = Factory::getDate()->toUnix() - ($cleanupDays * 86400);
+			$where     = 'time < ' . $cleanDate;
 		}
 
 		$db = Factory::getDbo();
@@ -878,9 +878,9 @@ class ToolsController extends FormController
 
 		$count = $db->getAffectedRows();
 
-		$deleteipusers = $this->app->input->getBool('deleteipusers', 0);
+		$deleteIpUsers = $this->app->input->getBool('deleteIpUsers', 0);
 
-		if ($deleteipusers)
+		if ($deleteIpUsers)
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
@@ -917,13 +917,13 @@ class ToolsController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @param   null  $key key
+	 * @param   null  $key  key
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{
@@ -935,14 +935,14 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 4.0
+	 *
 	 */
 	public function uninstall(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -966,13 +966,13 @@ class ToolsController extends FormController
 			}
 		}
 
-		$error = $login->loginUser($username, $password, 0, null);
+		$error = $login->loginUser($username, $password);
 
 		$user = Factory::getUser(UserHelper::getUserId($username));
 
-		$isroot = $user->authorise('core.admin');
+		$isRoot = $user->authorise('core.admin');
 
-		if (!$error && $isroot)
+		if (!$error && $isRoot)
 		{
 			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 
@@ -990,12 +990,12 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function systemreport(): void
+	public function systemReport(): void
 	{
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

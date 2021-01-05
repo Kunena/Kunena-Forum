@@ -106,7 +106,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		$Itemid     = $this->input->getInt('Itemid');
 		$format     = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
@@ -116,7 +116,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		if ($limit < 1 || $limit > 100)
 		{
-			$limit = $this->config->threads_per_page;
+			$limit = $this->config->threadsPerPage;
 		}
 
 		// TODO:
@@ -127,7 +127,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		$this->headerText = $this->category->name;
 
-		$topic_ordering = $this->category->topic_ordering;
+		$topicOrdering = $this->category->topicOrdering;
 
 		$access = KunenaAccess::getInstance();
 		$hold   = $access->getAllowedHold($this->me, $catid);
@@ -137,7 +137,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			'moved' => $moved,
 		];
 
-		switch ($topic_ordering)
+		switch ($topicOrdering)
 		{
 			case 'alpha':
 				$params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
@@ -194,7 +194,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		if (!$this->config->read_only)
+		if (!$this->config->readOnly)
 		{
 			$topicActions = $model->getTopicActions();
 		}
@@ -253,9 +253,9 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 		$config    = Factory::getApplication();
 		$robots    = $config->get('robots');
 
-		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{
-			$image = Uri::base() . $this->config->emailheader;
+			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -349,7 +349,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->boardTitle}";
 				$description = substr($description, 0, 140) . '...';
 				$this->setDescription($description);
 			}

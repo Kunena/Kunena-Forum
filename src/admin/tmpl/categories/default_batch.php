@@ -31,7 +31,7 @@ use Joomla\CMS\Language\Text;
 							<?php echo Text::_('COM_KUNENA_BATCH_CATEGORY_LABEL'); ?>
 						</label>
 						<fieldset id="batch-choose-action" class="combo">
-							<?php echo $this->batch_categories; ?>
+							<?php echo $this->batchCategories; ?>
 							<div id="batch-move-copy" class="control-group radio">
 								<div class="controls">
 									<input type="radio" name="move_copy" value="move"/>
@@ -51,7 +51,7 @@ use Joomla\CMS\Language\Text;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('categories.batch_categories');">
+						onclick="Joomla.submitbutton('categories.batchCategories');">
 					<?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
 				</button>
 			</div>

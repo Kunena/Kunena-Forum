@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
 CREATE TABLE IF NOT EXISTS `#__kunena_categories`
 (
     `id`               int(11)      NOT NULL auto_increment,
-    `parent_id`        int(11)      NULL     default '0',
+    `parentId`         int(11)      NULL     default '0',
     `name`             tinytext     NULL,
     `alias`            varchar(255) NOT NULL,
     `icon`             varchar(20)  NOT NULL,
@@ -63,25 +63,25 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `locked`           tinyint(4)   NOT NULL default '0',
     `accesstype`       varchar(20)  NOT NULL default 'joomla.level',
     `access`           int(11)      NOT NULL default '0',
-    `pub_access`       int(11)      NOT NULL default '1',
-    `pub_recurse`      tinyint(4)   NULL     default '1',
-    `admin_access`     int(11)      NOT NULL default '0',
-    `admin_recurse`    tinyint(4)   NULL     default '1',
+    `pubAccess`       int(11)      NOT NULL default '1',
+    `pubRecurse`      tinyint(4)   NULL     default '1',
+    `adminAccess`     int(11)      NOT NULL default '0',
+    `adminRecurse`    tinyint(4)   NULL     default '1',
     `ordering`         int(11)      NOT NULL default '0',
     `published`        tinyint(4)   NOT NULL default '0',
     `channels`         text         NULL,
     `checked_out`      int(11)      NOT NULL default '0',
     `checked_out_time` datetime     NULL     DEFAULT NULL,
     `review`           tinyint(4)   NOT NULL default '0',
-    `allow_anonymous`  tinyint(4)   NOT NULL default '0',
-    `post_anonymous`   tinyint(4)   NOT NULL default '0',
+    `allowAnonymous`   tinyint(4)   NOT NULL default '0',
+    `postAnonymous`   tinyint(4)   NOT NULL default '0',
     `hits`             int(11)      NOT NULL default '0',
     `description`      text         NOT NULL,
     `headerdesc`       text         NOT NULL,
     `topictemplate`    text         NOT NULL,
     `class_sfx`        varchar(20)  NOT NULL,
-    `allow_polls`      tinyint(4)   NOT NULL default '0',
-    `topic_ordering`   varchar(16)  NOT NULL default 'lastpost',
+    `allowPolls`       tinyint(4)   NOT NULL default '0',
+    `topicOrdering`   varchar(16)  NOT NULL default 'lastpost',
     `iconset`          varchar(255) NULL     DEFAULT NULL,
     `numTopics`        mediumint(8) NOT NULL default '0',
     `numPosts`         mediumint(8) NOT NULL default '0',
@@ -89,11 +89,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `last_post_id`     int(11)      NOT NULL default '0',
     `last_post_time`   int(11)      NOT NULL default '0',
     `params`           text         NOT NULL,
-    `allow_ratings`    tinyint(4)   NOT NULL default '0',
+    `allowRatings`    tinyint(4)   NOT NULL default '0',
     PRIMARY KEY (id),
-    KEY `parent_id` (parent_id),
+    KEY `parentId` (parentId),
     KEY `category_access` (accesstype, access),
-    KEY `published_pubaccess_id` (published, pub_access, id)
+    KEY `published_pubaccess_id` (published, pubAccess, id)
 )
     ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE=utf8_general_ci;
 
@@ -222,12 +222,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
 
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
-    `rank_id`      mediumint(8) unsigned NOT NULL auto_increment,
-    `rank_title`   varchar(255)          NOT NULL default '',
-    `rank_min`     mediumint(8) unsigned NOT NULL default '0',
-    `rank_special` tinyint(1) unsigned   NOT NULL default '0',
-    `rank_image`   varchar(255)          NOT NULL default '',
-    PRIMARY KEY (rank_id)
+    `rankId`      mediumint(8) unsigned NOT NULL auto_increment,
+    `rankTitle`   varchar(255)          NOT NULL default '',
+    `rankMin`     mediumint(8) unsigned NOT NULL default '0',
+    `rankSpecial` tinyint(1) unsigned   NOT NULL default '0',
+    `rankImage`   varchar(255)          NOT NULL default '',
+    PRIMARY KEY (rankId)
 )
     ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE=utf8_general_ci;
 
@@ -445,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     `installdate` date        NOT NULL,
     `build`       varchar(20) NOT NULL,
     `versionname` varchar(40) NULL,
-    `sampledata`  tinyint(4)  NOT NULL default '0',
+    `sampleData`  tinyint(4)  NOT NULL default '0',
     `state`       text        NOT NULL,
     PRIMARY KEY (id)
 )

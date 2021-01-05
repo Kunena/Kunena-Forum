@@ -8,6 +8,9 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
+use Kunena\Forum\Libraries\KunenaInstaller;
+
 defined('_JEXEC') or die();
 
 /**
@@ -30,7 +33,7 @@ class KunenaMigratorJoomlaboard
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function getInstance()
+	public static function getInstance(): ?KunenaMigratorJoomlaboard
 	{
 		static $instance = null;
 
@@ -49,7 +52,7 @@ class KunenaMigratorJoomlaboard
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function detect()
+	public function detect(): string
 	{
 		foreach ($this->versions as $version)
 		{
@@ -59,6 +62,6 @@ class KunenaMigratorJoomlaboard
 			}
 		}
 
-		return;
+		return true;
 	}
 }

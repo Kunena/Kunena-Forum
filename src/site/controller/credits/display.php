@@ -83,7 +83,7 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");

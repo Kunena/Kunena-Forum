@@ -27,8 +27,8 @@ class CloseModel extends AdminModel
 	/**
 	 * @inheritDoc
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *

@@ -50,7 +50,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	 */
 	public function getNumLink($mesid, $replycnt)
 	{
-		if ($this->config->ordering_system == 'replyid')
+		if ($this->config->orderingSystem == 'replyid')
 		{
 			$this->numLink = $this->getSamePageAnchorLink($mesid, '#' . $replycnt);
 		}

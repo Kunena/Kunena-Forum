@@ -76,7 +76,7 @@ class KunenaAvatar
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!isinternalObject($class))
 				{
 					continue;
 				}

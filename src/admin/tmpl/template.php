@@ -26,8 +26,8 @@ class KunenaAdminTemplate
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function initialize()
 	{

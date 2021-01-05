@@ -37,7 +37,7 @@ use function defined;
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
- * @property int    $category_id
+ * @property int    $categoryId
  */
 class KunenaCategoryUser extends CMSObject
 {
@@ -208,7 +208,7 @@ class KunenaCategoryUser extends CMSObject
 	/**
 	 * Method to load a \Kunena\Forum\Libraries\Forum\Category\CategoryUser object by id.
 	 *
-	 * @param   null|int  $category_id  The category id to be loaded.
+	 * @param   null|int  $categoryId  The category id to be loaded.
 	 * @param   mixed     $user         The user to be loaded.
 	 *
 	 * @return  boolean
@@ -217,11 +217,11 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	public function load($category_id = null, $user = null): bool
+	public function load($categoryId = null, $user = null): bool
 	{
-		if ($category_id === null)
+		if ($categoryId === null)
 		{
-			$category_id = $this->category_id;
+			$categoryId = $this->category_id;
 		}
 
 		if ($user === null && $this->user_id !== null)
@@ -235,7 +235,7 @@ class KunenaCategoryUser extends CMSObject
 		$table = $this->getTable();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $category_id]);
+		$this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $categoryId]);
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());

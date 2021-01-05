@@ -76,7 +76,7 @@ class PlgSampledataKunena extends CMSPlugin
 	protected $adminId;
 
 	/**
-	 * Get an overview of the proposed sampledata.
+	 * Get an overview of the proposed sampleData.
 	 *
 	 * @return  boolean  True on success.
 	 *

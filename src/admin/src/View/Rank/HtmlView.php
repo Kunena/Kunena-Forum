@@ -27,6 +27,12 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * An array of items
+	 *
+	 * @var  object
+	 * @since  4.0.0
+	 */
 	private $ktemplate;
 
 	/**
@@ -34,18 +40,18 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
 
-		$state         = $this->get('state');
-		$rank_selected = $this->get('rank');
-		$rankpath      = $this->ktemplate->getRankPath();
-		$listranks     = $this->get('Rankspaths');
+		$state        = $this->get('state');
+		$rankSelected = $this->get('rank');
+		$rankPath     = $this->ktemplate->getRankPath();
+		$listRanks    = $this->get('RanksPaths');
 
 		$this->addToolbar();
 
@@ -66,7 +72,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::save('save');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

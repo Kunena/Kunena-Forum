@@ -33,14 +33,14 @@ $this->addScript('assets/js/profile.js');
 		?>
 		<tr>
 			<td class="col-md-3">
-				<label for="personaltext">
+				<label for="personalText">
 					<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
 				</label>
 			</td>
 			<td>
-				<input class="form-control hasTooltip" id="personaltext" type="text"
-					   maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-					   name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"
+				<input class="form-control hasTooltip" id="personalText" type="text"
+					   maxlength="<?php echo (int) $this->config->maxPersonalText; ?>"
+					   name="personalText" value="<?php echo $this->escape($this->profile->personalText); ?>"
 					   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
@@ -163,7 +163,7 @@ $this->addScript('assets/js/profile.js');
 			<td>
 			<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
 				. '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
-				<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
+				<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxSig; ?>"
 						  name="signature" id="signature" rows="10"
 						  cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
 			</span>

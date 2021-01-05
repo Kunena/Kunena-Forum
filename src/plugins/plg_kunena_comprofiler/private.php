@@ -95,7 +95,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function shownewIcon(int $userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2'): string
+	public function showNewIcon(int $userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2'): string
 	{
 		global $_CB_framework, $_CB_PMS;
 

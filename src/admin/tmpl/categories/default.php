@@ -139,7 +139,7 @@ if ($this->list->saveOrder)
 								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="center">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->list->Direction, $this->list->Ordering); ?>
+								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allowPolls', $this->list->Direction, $this->list->Ordering); ?>
 							</th>
 							<th width="5%" class="nowrap center">
 								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->list->Direction, $this->list->Ordering); ?>
@@ -166,19 +166,19 @@ if ($this->list->saveOrder)
 							<td>
 							</td>
 							<td class="nowrap">
-								<label for="filter_title"
+								<label for="filterTitle"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-									   name="filter_title"
-									   id="filter_title"
+									   name="filterTitle"
+									   id="filterTitle"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									   value="<?php echo $this->filter->Title; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap center hidden-phone">
-								<label for="filter_access"
+								<label for="filterAccess"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_access" id="filter_access"
+								<select name="filterAccess" id="filterAccess"
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
@@ -186,9 +186,9 @@ if ($this->list->saveOrder)
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_locked"
+								<label for="filterLocked"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_locked" id="filter_locked"
+								<select name="filterLocked" id="filterLocked"
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
@@ -196,9 +196,9 @@ if ($this->list->saveOrder)
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_review"
+								<label for="filterReview"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_review" id="filter_review"
+								<select name="filterReview" id="filterReview"
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
@@ -206,19 +206,19 @@ if ($this->list->saveOrder)
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_allow_polls"
+								<label for="filterAllowPolls"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_allow_polls" id="filter_allow_polls"
+								<select name="filterAllowPolls" id="filterAllowPolls"
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filter->Allow_polls); ?>
+									<?php echo HTMLHelper::_('select.options', $this->allowPollsOptions(), 'value', 'text', $this->filter->Allow_polls); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_anonymous"
+								<label for="filterAnonymous"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-								<select name="filter_anonymous" id="filter_anonymous"
+								<select name="filterAnonymous" id="filterAnonymous"
 										class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
@@ -249,8 +249,8 @@ if ($this->list->saveOrder)
 						if ($this->pagination->total >= 0)
 							:
 							foreach ($this->categories as $item) :
-								$canEdit    = $this->me->isAdmin($item);
-								$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
+								$canEdit = $this->me->isAdmin($item);
+								$canCheckin = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
 								$canEditOwn = $canEdit;
 								$canChange  = $canEdit && $canCheckin;
 
@@ -258,7 +258,7 @@ if ($this->list->saveOrder)
 								if ($item->level > 0)
 								{
 									$parentsStr       = "";
-									$_currentParentId = $item->parent_id;
+									$_currentParentId = $item->parentId;
 									$parentsStr       = " " . $_currentParentId;
 
 									for ($i2 = 0; $i2 < $item->level; $i2++)
@@ -282,7 +282,7 @@ if ($this->list->saveOrder)
 									$parentsStr = "";
 								}
 								?>
-								<tr sortable-group-id="<?php echo $item->parent_id; ?>"
+								<tr sortable-group-id="<?php echo $item->parentId; ?>"
 									item-id="<?php echo $item->id ?>"
 									parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 									<td class="order nowrap center hidden-phone">
@@ -290,7 +290,7 @@ if ($this->list->saveOrder)
 											:
 											$disableClassName = '';
 											$disabledLabel = '';
-											$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
+											$orderkey = array_search($item->id, $this->ordering[$item->parentId]);
 
 											if (!$this->saveOrder)
 												:
@@ -317,7 +317,7 @@ if ($this->list->saveOrder)
 										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 									</td>
 									<td class="center">
-										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parent_id))
+										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentId))
 											:
 											?>
 											<button class="btn btn-micro"
@@ -329,7 +329,7 @@ if ($this->list->saveOrder)
 											?>
 											<button class="btn btn-micro"
 													title="Display only this item and its children"
-													onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
+													onclick="jQuery('input[name=catid]').val(<?php echo $item->parentId ?>);this.form.submit()">
 												<i class="icon-arrow-up"></i>
 											</button>
 										<?php endif; ?>
@@ -340,7 +340,7 @@ if ($this->list->saveOrder)
 
 										if ($item->checked_out)
 										{
-											$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
+											$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkIn');
 											$editor     = KunenaFactory::getUser($item->editor)->getName();
 											echo HTMLHelper::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 										}
@@ -383,17 +383,17 @@ if ($this->list->saveOrder)
 											</a>
 										</td>
 										<td class="center hidden-phone">
-											<a class="btn btn-micro <?php echo $item->allow_polls ? 'active' : ''; ?>"
+											<a class="btn btn-micro <?php echo $item->allowPolls ? 'active' : ''; ?>"
 											   href="javascript: void(0);"
-											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
-												<?php echo $item->allow_polls == 1 ? $img_yes : $img_no; ?>
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowPolls ? 'deny' : 'allow') . '_polls'; ?>')">
+												<?php echo $item->allowPolls == 1 ? $img_yes : $img_no; ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">
-											<a class="btn btn-micro <?php echo $item->allow_anonymous ? 'active' : ''; ?>"
+											<a class="btn btn-micro <?php echo $item->allowAnonymous ? 'active' : ''; ?>"
 											   href="javascript: void(0);"
-											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
-												<?php echo $item->allow_anonymous == 1 ? $img_yes : $img_no; ?>
+											   onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowAnonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+												<?php echo $item->allowAnonymous == 1 ? $img_yes : $img_no; ?>
 											</a>
 										</td>
 									<?php endif; ?>

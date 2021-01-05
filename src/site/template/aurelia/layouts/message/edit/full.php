@@ -56,7 +56,7 @@ $template = Template::getInstance();
 $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
 
-if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
+if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 {
 	$this->captchaDisplay = $template->recaptcha($message->id);
 	$this->captchaEnabled = true;
@@ -71,7 +71,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		<input type="hidden" name="parentid" value="<?php echo $topic->last_post_id; ?>"/>
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>"/>
 		<?php
-		if (!$config->allow_change_subject)
+		if (!$config->allowChangeSubject)
 			:
 			?>
 			<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>"/>
@@ -104,11 +104,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				</div>
 			<?php endif; ?>
 
-			<?php if ($config->askemail && !$me->exists())
+			<?php if ($config->askEmail && !$me->exists())
 				:
 				?>
 				<div class="form-group">
-					<?php echo $config->showemail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+					<?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 					<input type="text" id="email" name="email"
 						   placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
 						   class="inputbox col-md-12 form-control" maxlength="35" value="" required/>
@@ -122,7 +122,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				<input type="text" id="subject" name="subject" class="form-control"
 					   maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
 					   <?php
-					   if (!$config->allow_change_subject && !$me->isModerator())
+					   if (!$config->allowChangeSubject && !$me->isModerator())
 					   :
 					   ?>disabled<?php
 				endif; ?>
@@ -150,7 +150,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 					<div class="controls">
 						<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
 							   id="subscribeMe"
-							   value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid))
+							   value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid))
 						{
 							echo 'checked="checked"';
 						} ?> />
@@ -160,7 +160,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 				</div>
 			<?php endif; ?>
 			<?php
-			if ($me->exists() && $category->allow_anonymous)
+			if ($me->exists() && $category->allowAnonymous)
 				:
 				?>
 				<div class="control-group">
@@ -168,7 +168,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 						<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>"
 							   name="anonymous"
 							   value="1" class="kinputbox postinput form-control" <?php
-						if ($category->post_anonymous)
+						if ($category->postAnonymous)
 						{
 							echo 'checked="checked"';
 						} ?> />
@@ -202,6 +202,6 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 		</div>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>"/>
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disableEmoticons ?>"/>
 	</form>
 </div>

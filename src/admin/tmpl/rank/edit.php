@@ -21,8 +21,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
-	"function update_rank(newimage) {
-	document.rank_image.src = {$iconPath} + newimage;
+		"function update_rank(newimage) {
+	document.rankImage.src = {$iconPath} + newimage;
 }"
 );
 
@@ -54,8 +54,8 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_RANKS'); ?>
 							</td>
 							<td width="80%">
-								<input class="post" type="text" name="rank_title"
-									   value="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
+								<input class="post" type="text" name="rankTitle"
+									   value="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : '' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -63,20 +63,20 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_RANKSIMAGE'); ?>
 							</td>
 							<td>
-								<?php echo $this->listranks; ?>
+								<?php echo $this->listRanks; ?>
 								<?php
 								if (!$this->state->get('item.id'))
 									:
 									?>
-									<img loading=lazy name="rank_image" src="" border="0"
-										 alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : '' ?>"/>
+									<img loading=lazy name="rankImage" src="" border="0"
+										 alt="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : '' ?>"/>
 								<?php else
 									:
 									?>
-									<img loading=lazy name="rank_image"
-										 src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
+									<img loading=lazy name="rankImage"
+										 src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rankImage, true)); ?>"
 										 border="0"
-										 alt="<?php echo isset($this->rank_selected->rank_title) ? $this->rank_selected->rank_title : 'rank' ?>"/>
+										 alt="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : 'rank' ?>"/>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -85,8 +85,8 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_RANKSMIN'); ?>
 							</td>
 							<td>
-								<input class="post" type="text" name="rank_min"
-									   value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>"/>
+								<input class="post" type="text" name="rankMin"
+									   value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rankMin : '1' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -95,8 +95,8 @@ $wa->useScript('multiselect');
 							</td>
 							<td>
 								<input
-										type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?>
-										name="rank_special" value="1"/>
+										type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rankSpecial ? 'checked="checked"' : '' ?>
+										name="rankSpecial" value="1"/>
 							</td>
 						</tr>
 					</table>

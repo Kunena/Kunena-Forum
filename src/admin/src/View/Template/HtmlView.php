@@ -30,13 +30,13 @@ class HtmlView extends BaseHtmlView
 {
 
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -47,11 +47,11 @@ class HtmlView extends BaseHtmlView
 		$template     = KunenaTemplate::getInstance($templatename);
 		$template->initializeBackend();
 
-		$templatefile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';
+		$templateFile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';
 
-		if (!file_exists($templatefile))
+		if (!file_exists($templateFile))
 		{
-			$ourFileHandle = @fopen($templatefile, 'w');
+			$ourFileHandle = @fopen($templateFile, 'w');
 
 			if ($ourFileHandle)
 			{
@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

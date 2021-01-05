@@ -34,8 +34,8 @@ class SmileyModel extends AdminModel
 	/**
 	 * @inheritDoc
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -49,53 +49,53 @@ class SmileyModel extends AdminModel
 	/**
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getSmileyspaths()
+	public function getSmileysPaths()
 	{
 		$template = KunenaFactory::getTemplate();
 
 		$selected = $this->getSmiley();
 
-		$smileypath = $template->getSmileyPath();
-		$files1     = (array) Folder::Files(JPATH_SITE . '/' . $smileypath, false, false, false, ['index.php', 'index.html']);
+		$smileyPath = $template->getSmileyPath();
+		$files1     = (array) Folder::Files(JPATH_SITE . '/' . $smileyPath, false, false, false, ['index.php', 'index.html']);
 		$files1     = (array) array_flip($files1);
 
 		foreach ($files1 as $key => &$path)
 		{
-			$path = $smileypath . $key;
+			$path = $smileyPath . $key;
 		}
 
-		$smileypath = 'media/kunena/emoticons/';
-		$files2     = (array) Folder::Files(JPATH_SITE . '/' . $smileypath, false, false, false, ['index.php', 'index.html']);
+		$smileyPath = 'media/kunena/emoticons/';
+		$files2     = (array) Folder::Files(JPATH_SITE . '/' . $smileyPath, false, false, false, ['index.php', 'index.html']);
 		$files2     = (array) array_flip($files2);
 
 		foreach ($files2 as $key => &$path)
 		{
-			$path = $smileypath . $key;
+			$path = $smileyPath . $key;
 		}
 
-		$smiley_images = $files1 + $files2;
-		ksort($smiley_images);
+		$smileyImages = $files1 + $files2;
+		ksort($smileyImages);
 
-		$smiley_list = [];
+		$smileyList = [];
 
-		foreach ($smiley_images as $file => $path)
+		foreach ($smileyImages as $file => $path)
 		{
-			$smiley_list[] = HTMLHelper::_('select.option', $path, $file);
+			$smileyList[] = HTMLHelper::_('select.option', $path, $file);
 		}
 
-		return HTMLHelper::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox form-control" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smiley_images[$selected->location] : '');
+		return HTMLHelper::_('select.genericlist', $smileyList, 'smiley_url', 'class="inputbox form-control" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smileyImages[$selected->location] : '');
 	}
 
 	/**
 	 * @return  mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getSmiley()
 	{
@@ -131,14 +131,14 @@ class SmileyModel extends AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

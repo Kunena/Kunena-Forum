@@ -215,21 +215,21 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['allow_anonymous']; ?></td>
+															<td><?php echo $this->options ['allowAnonymous']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 														</tr>
 														<tr>
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['post_anonymous']; ?></td>
+															<td><?php echo $this->options ['postAnonymous']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 														</tr>
 														<tr>
 															<td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['allow_polls']; ?></td>
+															<td><?php echo $this->options ['allowPolls']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 														</tr>
 														<tr>
@@ -242,21 +242,21 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['topic_ordering']; ?></td>
+															<td><?php echo $this->options ['topicOrdering']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 														</tr>
 														<tr>
 															<td><?php echo Text::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['category_iconset']; ?></td>
+															<td><?php echo $this->options ['categoryIconset']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 														</tr>
 														<tr>
 															<td><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>
 																:
 															</td>
-															<td><?php echo $this->options ['allow_ratings']; ?></td>
+															<td><?php echo $this->options ['allowRatings']; ?></td>
 															<td><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED_DESC'); ?></td>
 														</tr>
 													</table>

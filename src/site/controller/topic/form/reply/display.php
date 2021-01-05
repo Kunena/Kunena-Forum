@@ -91,7 +91,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 			$this->topic = $parent->getTopic();
 		}
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -148,7 +148,7 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		$this->headerText = Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 
 		// Can user edit topic icons?
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
+		if ($this->config->topicIcons && $this->topic->isAuthorised('edit'))
 		{
 			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -161,8 +161,8 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category);
 
-		$post_anonymous       = $saved ? $saved['anonymous'] : !empty($category->post_anonymous);
-		$subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$postAnonymous       = $saved ? $saved['anonymous'] : !empty($category->postAnonymous);
+		$subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$canSubscribe = $this->canSubscribe();
@@ -177,8 +177,8 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	 */
 	protected function canSubscribe()
 	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
+		if (!$this->me->userid || !$this->config->allowSubscriptions
+			|| $this->config->topicSubscriptions == 'disabled'
 		)
 		{
 			return false;

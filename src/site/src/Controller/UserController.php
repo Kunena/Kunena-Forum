@@ -61,15 +61,15 @@ use function defined;
 class UserController extends KunenaController
 {
 	/**
-	 * @param   bool  $cachable   cachable
+	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 *@since   Kunena 6.0
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{
@@ -113,7 +113,7 @@ class UserController extends KunenaController
 
 		if ($layout == 'list')
 		{
-			if (!KunenaFactory::getConfig()->userlist_allowed && $this->app->getIdentity()->guest)
+			if (!KunenaFactory::getConfig()->userlistAllowed && $this->app->getIdentity()->guest)
 			{
 				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
@@ -177,7 +177,7 @@ class UserController extends KunenaController
 			return;
 		}
 
-		$layout = $this->app->input->getString('topic_layout', 'default');
+		$layout = $this->app->input->getString('topicLayout', 'default');
 		$this->me->setTopicLayout($layout);
 		$this->setRedirectBack();
 	}
@@ -222,7 +222,7 @@ class UserController extends KunenaController
 
 		$target = KunenaFactory::getUser($userid);
 
-		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0)
+		if (!$this->config->showKarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
 			$this->setRedirectBack();
@@ -399,7 +399,7 @@ class UserController extends KunenaController
 			$edited_by_moderator = 1;
 		}
 
-		if ($this->config->log_moderation)
+		if ($this->config->logModeration)
 		{
 			$log = KunenaLog::LOG_USER_EDIT;
 
@@ -641,7 +641,7 @@ class UserController extends KunenaController
 			$user->signature = $input->$method->get('signature', '', 'raw');
 		}
 
-		$user->personalText = $input->$method->get('personaltext', '', 'string');
+		$user->personalText = $input->$method->get('personalText', '', 'string');
 		$birthdate          = $input->$method->get('birthdate', '', 'string');
 
 		if ($birthdate)
@@ -817,7 +817,7 @@ class UserController extends KunenaController
 
 		if ($success)
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1146,8 +1146,8 @@ class UserController extends KunenaController
 			];
 
 			// Upload!
-			$this->config->avatartypes = strtolower($this->config->avatartypes);
-			$upload->addExtensions(explode(',', $this->config->avatartypes));
+			$this->config->avatarTypes = strtolower($this->config->avatarTypes);
+			$upload->addExtensions(explode(',', $this->config->avatarTypes));
 			$response = (object) $upload->ajaxUpload($options);
 
 			if (!empty($response->completed))
@@ -1317,7 +1317,7 @@ class UserController extends KunenaController
 		}
 		else
 		{
-			$avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultavatar;
+			$avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultAvatar;
 		}
 
 		header('Content-type: application/json');
@@ -1429,7 +1429,7 @@ class UserController extends KunenaController
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{
-		if (!$this->config->stopforumspam_key || !$userid)
+		if (!$this->config->stopForumSpamKey || !$userid)
 		{
 			return false;
 		}
@@ -1447,7 +1447,7 @@ class UserController extends KunenaController
 			$data['username']          = $spammer->username;
 			$data['ip']                = $ip;
 			$data['email']             = $spammer->email;
-			$data['stopforumspam_key'] = $this->config->stopforumspam_key;
+			$data['stopForumSpamKey'] = $this->config->stopForumSpamKey;
 			$data['evidence']          = $evidence;
 
 			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');

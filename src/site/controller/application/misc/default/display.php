@@ -90,7 +90,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 			else
 			{
-				$title = $this->config->board_title;
+				$title = $this->config->boardTitle;
 				$this->setTitle($title);
 			}
 
@@ -101,7 +101,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 			else
 			{
-				$description = $this->config->board_title;
+				$description = $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 

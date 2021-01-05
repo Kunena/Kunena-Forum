@@ -85,7 +85,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		if (!$this->config->userlist_allowed && Factory::getApplication()->getIdentity()->guest)
+		if (!$this->config->userlistAllowed && Factory::getApplication()->getIdentity()->guest)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -102,7 +102,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
@@ -111,7 +111,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 		}
 
 		// Exclude super admins.
-		if ($this->config->superadmin_userlist)
+		if ($this->config->superAdminUserlist)
 		{
 			$filter = Access::getUsersByGroup(8);
 		}
@@ -184,7 +184,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title . $pagesText;
+				$description = Text::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->boardTitle . $pagesText;
 				$this->setDescription($description);
 			}
 		}

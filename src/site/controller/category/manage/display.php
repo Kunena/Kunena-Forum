@@ -138,36 +138,36 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		$yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
 		// Anonymous posts default
-		$post_anonymous    = [];
-		$post_anonymous [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
-		$post_anonymous [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
+		$postAnonymous    = [];
+		$postAnonymous [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG'));
+		$postAnonymous [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO'));
 
-		$cat_params                = [];
-		$cat_params['ordering']    = 'ordering';
-		$cat_params['toplevel']    = Text::_('COM_KUNENA_TOPLEVEL');
-		$cat_params['sections']    = 1;
-		$cat_params['unpublished'] = 1;
-		$cat_params['catid']       = $category->id;
-		$cat_params['action']      = 'admin';
+		$catParams                = [];
+		$catParams['ordering']    = 'ordering';
+		$catParams['toplevel']    = Text::_('COM_KUNENA_TOPLEVEL');
+		$catParams['sections']    = 1;
+		$catParams['unpublished'] = 1;
+		$catParams['catid']       = $category->id;
+		$catParams['action']      = 'admin';
 
-		$channels_params           = [];
-		$channels_params['catid']  = $category->id;
-		$channels_params['action'] = 'admin';
-		$channels_options          = [];
-		$channels_options []       = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
-		$channels_options []       = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
+		$channelsParams           = [];
+		$channelsParams['catid']  = $category->id;
+		$channelsParams['action'] = 'admin';
+		$channelsOptions          = [];
+		$channelsOptions []       = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
+		$channelsOptions []       = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));
 
 		if (empty($category->channels))
 		{
 			$category->channels = 'THIS';
 		}
 
-		$topic_ordering_options   = [];
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'lastpost', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'creation', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'alpha', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'views', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_VIEWS'));
-		$topic_ordering_options[] = HTMLHelper::_('select.option', 'posts', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_POSTS'));
+		$topicOrderingOptions   = [];
+		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'lastpost', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
+		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'creation', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION'));
+		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'alpha', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA'));
+		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'views', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_VIEWS'));
+		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'posts', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_POSTS'));
 
 		$aliases = array_keys($category->getAliases());
 
@@ -177,22 +177,22 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		$yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-		$cat_params = ['sections' => 1, 'catid' => 0];
+		$catParams = ['sections' => 1, 'catid' => 0];
 
 		$lists                     = [];
 		$lists ['accesstypes']     = Access::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists']     = Access::getInstance()->getAccessOptions($category);
-		$lists ['categories']      = HTMLHelper::_('select.genericlist', $cat_params, 'parent_id', 'class="inputbox form-control"', 'value', 'text', $category->parent_id);
-		$lists ['channels']        = HTMLHelper::_('select.genericlist', $channels_options, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['categories']      = HTMLHelper::_('select.genericlist', $catParams, 'parentId', 'class="inputbox form-control"', 'value', 'text', $category->parentId);
+		$lists ['channels']        = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']       = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
 		$lists ['forumLocked']     = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
 		$lists ['forumReview']     = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-control" size="1"', 'value', 'text', $category->review);
-		$lists ['allow_polls']     = HTMLHelper::_('select.genericlist', $yesno, 'allow_polls', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allow_polls);
-		$lists ['allow_anonymous'] = HTMLHelper::_('select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allow_anonymous);
-		$lists ['post_anonymous']  = HTMLHelper::_('select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->post_anonymous);
-		$lists ['topic_ordering']  = HTMLHelper::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox form-control" size="1"', 'value', 'text', $category->topic_ordering);
-		$lists ['allow_ratings']   = HTMLHelper::_('select.genericlist', $yesno, 'allow_ratings', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allow_ratings);
+		$lists ['allowPolls']     = HTMLHelper::_('select.genericlist', $yesno, 'allowPolls', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allowPolls);
+		$lists ['allowAnonymous'] = HTMLHelper::_('select.genericlist', $yesno, 'allowAnonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allowAnonymous);
+		$lists ['postAnonymous']  = HTMLHelper::_('select.genericlist', $postAnonymous, 'postAnonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->postAnonymous);
+		$lists ['topicOrdering']  = HTMLHelper::_('select.genericlist', $topicOrderingOptions, 'topicOrdering', 'class="inputbox form-control" size="1"', 'value', 'text', $category->topicOrdering);
+		$lists ['allowRatings']   = HTMLHelper::_('select.genericlist', $yesno, 'allowRatings', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allowRatings);
 
 		$options                 = [];
 		$options[0]              = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
@@ -205,12 +205,12 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		$lists['display_children'] = HTMLHelper::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox form-control" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-		$topicicons     = [];
-		$topiciconslist = Folder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
+		$topicIcons     = [];
+		$topicIconslist = Folder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 
-		foreach ($topiciconslist as $icon)
+		foreach ($topicIconslist as $icon)
 		{
-			$topicicons[] = HTMLHelper::_('select.option', $icon, $icon);
+			$topicIcons[] = HTMLHelper::_('select.option', $icon, $icon);
 		}
 
 		if (empty($category->iconset))
@@ -222,7 +222,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 			$value = $category->iconset;
 		}
 
-		$lists ['category_iconset'] = HTMLHelper::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox form-control" size="1"', 'value', 'text', $value);
+		$lists ['categoryIconset'] = HTMLHelper::_('select.genericlist', $topicIcons, 'iconset', 'class="inputbox form-control" size="1"', 'value', 'text', $value);
 
 		$lists1 = $lists;
 	}

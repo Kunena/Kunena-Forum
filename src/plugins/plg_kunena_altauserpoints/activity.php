@@ -108,12 +108,12 @@ class ActivityAltaUserPoints extends KunenaActivity
 			return true;
 		}
 
-		if ($category->pub_access == 1 || $category->pub_access == 2)
+		if ($category->pubAccess == 1 || $category->pubAccess == 2)
 		{
 			return true;
 		}
 
-		if ($category->admin_access == 1 || $category->admin_access == 2)
+		if ($category->adminAccess == 1 || $category->adminAccess == 2)
 		{
 			return true;
 		}

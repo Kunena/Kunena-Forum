@@ -98,7 +98,7 @@ Text::script('COM_KUNENA_WYSIBB_EDITOR_SM9');
 
 $this->ktemplate  = KunenaFactory::getTemplate();
 $templatesettings = $this->ktemplate->params;
-$topictemplate    = !KunenaConfig::getInstance()->pickup_category;
+$topictemplate    = !KunenaConfig::getInstance()->pickupCategory;
 $settings         = $templatesettings->get('wysibb');
 ?>
 <script>
@@ -378,7 +378,7 @@ if (!empty($codeTypes))
 						}
 						?>
 						<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-							   value="<?php echo $this->config->pollnboptions; ?>"/>
+							   value="<?php echo $this->config->pollNbOptions; ?>"/>
 						<input type="hidden" name="number_total_options" id="numbertotal"
 							   value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>"/>
 					</div>
@@ -425,7 +425,7 @@ if (!empty($codeTypes))
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
 			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-			   value="<?php echo $this->config->disemoticons ?>"/>
+			   value="<?php echo $this->config->disableEmoticons ?>"/>
 	</div>
 </div>
 

@@ -418,7 +418,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$this->uninstallPlugin('kunena', 'joomla');
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'finder');
-		$this->uninstallPlugin('sampledata', 'kunena');
+		$this->uninstallPlugin('sampleData', 'kunena');
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('quickicon', 'kunena');
 		$this->uninstallPlugin('content', 'kunena');
@@ -2448,7 +2448,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 */
 	public function installSampleData(): bool
 	{
-		require_once KUNENA_INSTALLER_PATH . '/sql/install/php/sampledata.php';
+		require_once KUNENA_INSTALLER_PATH . '/sql/install/php/sampleData.php';
 
 		if (installSampleData())
 		{
@@ -3111,7 +3111,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			'link'         => $menu ['link'],
 			'type'         => 'component',
 			'published'    => 1,
-			'parent_id'    => 1,
+			'parentId'    => 1,
 			'component_id' => $component_id,
 			'access'       => $menu ['access'],
 			'params'       => (string) $params,
@@ -3174,7 +3174,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 					'link'         => $menuitem ['link'],
 					'type'         => 'component',
 					'published'    => 1,
-					'parent_id'    => $parent->id,
+					'parentId'    => $parent->id,
 					'component_id' => $component_id,
 					'access'       => $menuitem ['access'],
 					'params'       => (string) $params,
@@ -3189,7 +3189,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 					throw new KunenaInstallerException($table->getError());
 				}
 
-				if (!$defaultmenu || (isset($menuitem ['default']) && $config->defaultpage == $menuitem ['default']))
+				if (!$defaultmenu || (isset($menuitem ['default']) && $config->defaultPage == $menuitem ['default']))
 				{
 					$defaultmenu = $table->id;
 				}
@@ -3224,7 +3224,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 				'link'         => 'index.php?Itemid=' . $parent->id,
 				'type'         => 'alias',
 				'published'    => 0,
-				'parent_id'    => 1,
+				'parentId'    => 1,
 				'component_id' => 0,
 				'access'       => 1,
 				'params'       => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',

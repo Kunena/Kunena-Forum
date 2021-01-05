@@ -103,13 +103,13 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		$defaultmenu = $this->input->getInt('defaultmenu');
 		$layout      = $this->input->getInt('layout');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
 			$controller = BaseController::getInstance("kunena");
 
-			if ($this->config->index_id)
+			if ($this->config->indexId)
 			{
-				$itemidfix = $this->config->index_id;
+				$itemidfix = $this->config->indexId;
 			}
 			else
 			{
@@ -163,8 +163,8 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 		$options      = [];
 		$options []   = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$cat_params   = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$catParams   = ['sections' => 1, 'catid' => 0];
+		$categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $catParams, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		if ($catid)
 		{
@@ -207,7 +207,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->more[$category->parent_id]++;
+				$this->more[$category->parentId]++;
 				unset($sections[$key]);
 				continue;
 			}
@@ -272,7 +272,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				}
 				else
 				{
-					$this->more[$category->parent_id]++;
+					$this->more[$category->parentId]++;
 					unset($categories[$key]);
 					continue;
 				}
@@ -286,7 +286,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				$topicIds[$last->last_topic_id] = $last->last_topic_id;
 			}
 
-			$this->categories[$category->parent_id][] = $category;
+			$this->categories[$category->parentId][] = $category;
 
 			$rssURL = $category->getRSSUrl();
 
@@ -312,11 +312,11 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			// Display only categories which are supposed to show up.
 			if ($catid || $params->get('display.index.parent', 3) > 2)
 			{
-				$this->categories[$category->parent_id][] = $category;
+				$this->categories[$category->parentId][] = $category;
 			}
 			else
 			{
-				$this->more[$category->parent_id]++;
+				$this->more[$category->parentId]++;
 			}
 		}
 
@@ -387,15 +387,15 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 
 				if ($this->me->ordering != 0)
 				{
-					$topic_ordering = $this->me->ordering == 1;
+					$topicOrdering = $this->me->ordering == 1;
 				}
 				else
 				{
-					$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+					$topicOrdering = $this->config->defaultSort == 'asc' ? false : true;
 				}
 
 				// Fix last post position when user can see unapproved or deleted posts.
-				if (!$topic_ordering)
+				if (!$topicOrdering)
 				{
 					KunenaMessageHelper::loadLocation($postIds);
 				}
@@ -442,9 +442,9 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 		$robots = $config->get('robots');
 		$image  = null;
 
-		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{
-			$image = Uri::base() . $this->config->emailheader;
+			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -497,7 +497,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 

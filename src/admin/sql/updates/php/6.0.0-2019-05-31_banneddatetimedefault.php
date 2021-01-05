@@ -15,13 +15,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 6.0.0: Update default value for banned users
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_600_2019_05_31_banneddatetimedefault($parent)
 {

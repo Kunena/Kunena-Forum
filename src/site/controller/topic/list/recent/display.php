@@ -69,11 +69,11 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
-			if ($this->config->topiclist_id)
+			if ($this->config->topicListId)
 			{
-				$itemidfix = $this->config->topiclist_id;
+				$itemidfix = $this->config->topicListId;
 			}
 			else
 			{
@@ -368,9 +368,9 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
-		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{
-			$image = Uri::base() . $this->config->emailheader;
+			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -415,7 +415,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 

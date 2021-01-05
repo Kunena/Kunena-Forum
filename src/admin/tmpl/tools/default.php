@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -33,7 +34,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 						<span><?php echo Text::_('COM_KUNENA_C_PRUNETAB'); ?></span>
 					</a>
 					<a class="btn btn-outline-primary"
-					   href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=syncusers') ?>">
+					   href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=syncUsers') ?>">
 						<i class="icon-big icon-shuffle"></i><br/>
 						<span><?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?></span>
 					</a>

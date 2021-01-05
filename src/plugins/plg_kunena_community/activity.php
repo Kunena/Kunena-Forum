@@ -98,7 +98,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (is_object($table))
+		if (isinternalObject($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();
@@ -147,14 +147,14 @@ class KunenaActivityCommunity extends KunenaActivity
 
 		// FIXME: Joomla 2.5 can mix up groups and access levels
 		if (($accesstype == 'joomla.level' && $category->access == 1)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))
+			|| ($accesstype == 'joomla.group' && ($category->pubAccess == 1 || $category->adminAccess == 1))
 		)
 		{
 			// Public
 			$access = 0;
 		}
 		elseif (($accesstype == 'joomla.level' && $category->access == 2)
-			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))
+			|| ($accesstype == 'joomla.group' && ($category->pubAccess == 2 || $category->adminAccess == 2))
 		)
 		{
 			// Registered
@@ -236,7 +236,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (is_object($table))
+		if (isinternalObject($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();
@@ -298,7 +298,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (is_object($table))
+		if (isinternalObject($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();

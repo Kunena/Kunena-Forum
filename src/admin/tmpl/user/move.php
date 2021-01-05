@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -44,7 +45,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							</td>
 							<td>
 								<?php
-								echo $this->catslist;
+								echo $this->catsList;
 								?>
 							</td>
 							<td>

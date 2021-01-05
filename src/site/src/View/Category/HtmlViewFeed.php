@@ -39,7 +39,7 @@ class KunenaViewCategory extends KunenaView
 	 */
 	public function displayDefault($tpl = null)
 	{
-		if (!$this->config->enablerss)
+		if (!$this->config->enableRss)
 		{
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
@@ -58,7 +58,7 @@ class KunenaViewCategory extends KunenaView
 		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
 		$this->setTitle($title);
 
-		$metaDesc = $this->document->getDescription() . '. ' . $this->escape("{$this->category->name} - {$this->config->board_title}");
+		$metaDesc = $this->document->getDescription() . '. ' . $this->escape("{$this->category->name} - {$this->config->boardTitle}");
 		$this->document->setDescription($metaDesc);
 
 		// Create image for feed
@@ -100,13 +100,13 @@ class KunenaViewCategory extends KunenaView
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
-		if ($this->config->rss_author_in_title)
+		if ($this->config->rssAuthorInTitle)
 		{
 			// We want author in item titles
 			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
 		}
 
-		if ((int) $this->config->rss_word_count === -1)
+		if ((int) $this->config->rssWordCount === -1)
 		{
 			$description = '';
 		}
@@ -117,13 +117,13 @@ class KunenaViewCategory extends KunenaView
 			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
 			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
 
-			if ((bool) $this->config->rss_allow_html)
+			if ((bool) $this->config->rssAllowHtml)
 			{
-				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rssWordCount);
 			}
 			else
 			{
-				$description = KunenaParser::parseText($description, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseText($description, (int) $this->config->rssWordCount);
 			}
 		}
 
@@ -136,7 +136,7 @@ class KunenaViewCategory extends KunenaView
 		$item->author      = $username;
 
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
-		if ($this->config->rss_author_format != 'name')
+		if ($this->config->rssAuthorFormat != 'name')
 		{
 			$item->authorEmail = Factory::getUser($userid)->email;
 		}

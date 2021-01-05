@@ -25,10 +25,10 @@ $wa->useScript('multiselect');
 
 <script type="text/javascript">
 	Joomla.orderTable = function () {
-	  const table = document.getElementById("sortTable");
-	  const direction = document.getElementById("directionTable");
-	  const order = table.options[table.selectedIndex].value;
-	  if (order !== '<?php echo $this->list->Ordering; ?>') {
+		const table = document.getElementById("sortTable");
+		const direction = document.getElementById("directionTable");
+		const order = table.options[table.selectedIndex].value;
+		if (order !== '<?php echo $this->list->Ordering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -139,11 +139,11 @@ $wa->useScript('multiselect');
 											<td class="hidden-phone">
 											</td>
 											<td class="nowrap">
-												<label for="filter_title"
+												<label for="filterTitle"
 													   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 												<input class="input-block-level input-filter filter form-control"
 													   type="text"
-													   name="filter_title" id="filter_title"
+													   name="filterTitle" id="filterTitle"
 													   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 													   value="<?php echo $this->filter->Title; ?>"
 													   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
@@ -191,30 +191,31 @@ $wa->useScript('multiselect');
 												<tr>
 													<td>
 														<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-															   value="<?php echo $this->escape($row->rank_id); ?>"
+															   value="<?php echo $this->escape($row->rankId); ?>"
 															   onclick="Joomla.isChecked(this.checked);"/>
 													</td>
 													<td>
 														<a href="#edit"
 														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
-															<img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
-																 alt="<?php echo $this->escape($row->rank_image); ?>"/>
+															<img loading=lazy
+																 src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rankImage, true)) ?>"
+																 alt="<?php echo $this->escape($row->rankImage); ?>"/>
 														</a>
 													</td>
 													<td class="nowrap">
 														<a href="#edit"
 														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
-															<?php echo $this->escape($row->rank_title); ?>
+															<?php echo $this->escape($row->rankTitle); ?>
 														</a>
 													</td>
 													<td class="nowrap center">
-														<?php echo $row->rank_special == 1 ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO'); ?>
+														<?php echo $row->rankSpecial == 1 ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO'); ?>
 													</td>
 													<td class="nowrap center">
-														<?php echo $this->escape($row->rank_min); ?>
+														<?php echo $this->escape($row->rankMin); ?>
 													</td>
 													<td class="nowrap center">
-														<?php echo $this->escape($row->rank_id); ?>
+														<?php echo $this->escape($row->rankId); ?>
 													</td>
 												</tr>
 											<?php
@@ -255,7 +256,7 @@ $wa->useScript('multiselect');
 									  id="uploadForm" method="post"
 									  enctype="multipart/form-data">
 									<input type="hidden" name="view" value="ranks"/>
-									<input type="hidden" name="task" value="rankupload"/>
+									<input type="hidden" name="task" value="rankUpload"/>
 									<input type="hidden" name="boxchecked" value="0"/>
 									<?php echo HTMLHelper::_('form.token'); ?>
 

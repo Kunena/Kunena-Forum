@@ -30,14 +30,19 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var  void
+	 *
+	 * @since   Kunena 6.0
+	 */
 	protected $group;
 
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayClean(): void
 	{
@@ -52,7 +57,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function setToolbarClean(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
@@ -63,11 +68,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void|mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -211,11 +216,11 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
 
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
+		ToolbarHelper::custom('cleanEntries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
 	}
 
 	/**

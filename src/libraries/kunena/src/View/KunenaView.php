@@ -76,7 +76,7 @@ class KunenaView extends HtmlView
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	public $templatefiles = [];
+	public $templateFiles = [];
 
 	/**
 	 * @var     null
@@ -206,20 +206,20 @@ class KunenaView extends HtmlView
 
 		if (!$this->embedded && isset($this->common))
 		{
-			if ($this->config->board_offline && !$this->me->isAdmin())
+			if ($this->config->boardOffline && !$this->me->isAdmin())
 			{
 				// Forum is offline
 				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				Factory::getApplication()->sendHeaders();
 				$this->common->header = Text::_('COM_KUNENA_FORUM_IS_OFFLINE');
-				$this->common->body   = $this->config->offline_message;
+				$this->common->body   = $this->config->offlineMessage;
 				$this->common->html   = true;
 				$this->common->display('default');
 				KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 				return;
 			}
-			elseif ($this->config->regonly && !$this->me->exists() && !$this->teaser)
+			elseif ($this->config->regOnly && !$this->me->exists() && !$this->teaser)
 			{
 				// Forum is for registered users only
 				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
@@ -338,22 +338,22 @@ class KunenaView extends HtmlView
 
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->boardTitle);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				if ($this->config->board_title == $this->app->get('sitename'))
+				if ($this->config->boardTitle == $this->app->get('sitename'))
 				{
-					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle);
 				}
 				else
 				{
-					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
 				}
 			}
 			else
 			{
-				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
+				$title = $title . ' - ' . KunenaFactory::getConfig()->boardTitle;
 			}
 
 			$this->document->setTitle($title);
@@ -451,14 +451,14 @@ class KunenaView extends HtmlView
 	{
 		if ($this instanceof SearchController)
 		{
-			$parent_object = $parent;
+			$parentinternalObject = $parent;
 		}
 		else
 		{
-			$parent_object = $this;
+			$parentinternalObject = $this;
 		}
 
-		return KunenaParser::parseBBCode($text, $parent_object, $len);
+		return KunenaParser::parseBBCode($text, $parentinternalObject, $len);
 	}
 
 	/**
@@ -549,7 +549,7 @@ class KunenaView extends HtmlView
 		// Create the template file name based on the layout
 		$file = isset($tpl) ? $layout . '_' . $tpl : $layout;
 
-		if (!isset($this->templatefiles[$file]))
+		if (!isset($this->templateFiles[$file]))
 		{
 			// Clean the file name
 			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
@@ -557,14 +557,14 @@ class KunenaView extends HtmlView
 
 			// Load the template script
 			$filetofind                 = $this->_createFileName('template', ['name' => $file]);
-			$this->templatefiles[$file] = KunenaPath::find($this->_path['template'], $filetofind);
+			$this->templateFiles[$file] = KunenaPath::find($this->_path['template'], $filetofind);
 		}
 
-		$this->_template = $this->templatefiles[$file];
+		$this->_template = $this->templateFiles[$file];
 
 		if ($this->_template != false)
 		{
-			$templatefile = preg_replace('%' . KunenaPath::clean(JPATH_ROOT, '/') . '/%', '', KunenaPath::clean($this->_template, '/'));
+			$templateFile = preg_replace('%' . KunenaPath::clean(JPATH_ROOT, '/') . '/%', '', KunenaPath::clean($this->_template, '/'));
 
 			// Unset so as not to introduce into template scope
 			unset($tpl);
@@ -591,7 +591,7 @@ class KunenaView extends HtmlView
 			if (JDEBUG || $this->config->get('debug'))
 			{
 				$output = trim($output);
-				$output = "\n<!-- START {$templatefile} -->\n{$output}\n<!-- END {$templatefile} -->\n";
+				$output = "\n<!-- START {$templateFile} -->\n{$output}\n<!-- END {$templateFile} -->\n";
 			}
 
 			return $output;

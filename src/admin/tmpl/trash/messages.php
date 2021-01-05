@@ -26,11 +26,11 @@ $wa->useScript('multiselect');
 
 <script type="text/javascript">
 	orderTable = function () {
-	  const table = document.getElementById("sortTable");
-	  const direction = document.getElementById("directionTable");
-	  const order = table.options[table.selectedIndex].value;
+		const table = document.getElementById("sortTable");
+		const direction = document.getElementById("directionTable");
+		const order = table.options[table.selectedIndex].value;
 
-	  if (order !== '<?php echo $this->listOrdering; ?>') {
+		if (order !== '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -60,7 +60,7 @@ $wa->useScript('multiselect');
 					<fieldset>
 						<legend><?php echo Text::_('COM_KUNENA_TRASH_VIEW') . ' ' . Text::_('COM_KUNENA_TRASH_MESSAGES') ?>
 							<span
-									class="pull-right"><?php echo $this->view_options_list; ?></span></legend>
+									class="pull-right"><?php echo $this->viewOptionsList; ?></span></legend>
 
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
@@ -144,11 +144,11 @@ $wa->useScript('multiselect');
 								<td class="hidden-phone">
 								</td>
 								<td class="hidden-phone">
-									<label for="filter_title"
+									<label for="filterTitle"
 										   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 									<input class="input-block-level input-filter form-control" type="text"
-										   name="filter_title"
-										   id="filter_title"
+										   name="filterTitle"
+										   id="filterTitle"
 										   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 										   value="<?php echo $this->filterTitle; ?>"
 										   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
@@ -217,7 +217,7 @@ $wa->useScript('multiselect');
 
 							if ($this->pagination->total > 0)
 								:
-								foreach ($this->trash_items as $id => $row)
+								foreach ($this->trashInternalItems as $id => $row)
 									:
 									?>
 									<tr>

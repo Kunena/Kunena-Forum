@@ -35,9 +35,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');
 
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_BLOCKIP_MANAGER'));
 	}
 }

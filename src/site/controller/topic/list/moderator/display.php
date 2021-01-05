@@ -59,11 +59,11 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
-			if ($this->config->moderators_id)
+			if ($this->config->moderatorsId)
 			{
-				$itemidfix = $this->config->moderators_id;
+				$itemidfix = $this->config->moderatorsId;
 			}
 			else
 			{
@@ -84,7 +84,7 @@ class ComponentTopicControllerListModeratorDisplay extends KunenaControllerDispl
 
 		if ($limit < 1 || $limit > 100)
 		{
-			$limit = $this->config->threads_per_page;
+			$limit = $this->config->threadsPerPage;
 		}
 
 		// Get configuration from menu item.

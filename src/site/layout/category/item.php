@@ -134,7 +134,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 		$topicicontype   = $this->ktemplate->params->get('topicicontype');
 		$config          = KunenaConfig::getInstance();
 
-		if ($config->read_only)
+		if ($config->readOnly)
 		{
 			return false;
 		}
@@ -323,7 +323,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			if (KunenaConfig::getInstance()->disable_re)
+			if (KunenaConfig::getInstance()->disableRe)
 			{
 				$content = KunenaParser::parseText($category->getLastTopic()->subject, $length);
 			}

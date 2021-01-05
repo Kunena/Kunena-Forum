@@ -408,7 +408,7 @@ class TopicModel extends ListModel
 
 		if ($value < 1 || $value > 100)
 		{
-			$value = $this->config->messages_per_page;
+			$value = $this->config->messagesPerPage;
 		}
 
 		$this->setState('list.limit', $value);
@@ -435,7 +435,7 @@ class TopicModel extends ListModel
 			}
 			else
 			{
-				$value = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
+				$value = $this->config->defaultSort == 'asc' ? 'asc' : 'desc';
 			}
 		}
 

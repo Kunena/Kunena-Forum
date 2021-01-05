@@ -99,9 +99,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$button = $fullactions ? true : false;
 
-		$quickreply = null;
+		$quickReply = null;
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			return false;
 		}
@@ -109,7 +109,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
-			$quickreply = $this->config->quickreply;
+			$quickReply = $this->config->quickReply;
 
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
@@ -148,42 +148,42 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				);
 			}
 
-			if ($me->exists() && $this->config->quickreply)
+			if ($me->exists() && $this->config->quickReply)
 			{
 				if ($topicicontype == 'B2')
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'icon icon-undo')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'icon icon-undo')
 					);
 				}
 				elseif ($topicicontype == 'B3')
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-share-alt')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-share-alt')
 					);
 				}
 				elseif ($topicicontype == 'B4')
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'reply')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'reply')
 					);
 				}
 				elseif ($topicicontype == 'fa')
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'fa fa-reply')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'fa fa-reply')
 					);
 				}
 				elseif ($topicicontype == 'image')
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply', 'kicon-reply')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'kicon-reply')
 					);
 				}
 				else
 				{
-					$this->messageButtons->set('quickreply',
-						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", 'reply')
+					$this->messageButtons->set('quickReply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply')
 					);
 				}
 			}
@@ -235,8 +235,8 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$login = KunenaLogin::getInstance();
 
 		if (!$this->message->isAuthorised('reply') && !$message_closed && $login->enabled() && !$this->message->hold
-			&& !$this->config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
-			&& !$me->userid && !$this->message->hold && !$this->config->read_only
+			&& !$this->config->readOnly || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
+			&& !$me->userid && !$this->message->hold && !$this->config->readOnly
 		)
 		{
 			$loginurl  = Route::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance()));
@@ -301,7 +301,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		// Unthank you
 
-		if ($this->config->showthankyou)
+		if ($this->config->showThankYou)
 		{
 			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 			{
@@ -345,10 +345,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		// Report this.
-		if ($this->config->reportmsg && $me->exists())
+		if ($this->config->reportMsg && $me->exists())
 		{
-			if ($me->isModerator($this->topic->getCategory()) || $this->config->user_report
-				|| !$this->config->user_report && $me->userid != $this->message->userid)
+			if ($me->isModerator($this->topic->getCategory()) || $this->config->userReport
+				|| !$this->config->userReport && $me->userid != $this->message->userid)
 			{
 				if ($topicicontype == 'B2')
 				{
@@ -384,7 +384,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Moderation and own post actions.
 		if ($this->message->isAuthorised('edit'))
 		{
-			if ($me->userid == $this->message->userid && $this->config->useredit)
+			if ($me->userid == $this->message->userid && $this->config->userEdit)
 			{
 				// Allow edit message when enabled.
 				$message_closed = null;

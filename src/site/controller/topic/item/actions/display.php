@@ -85,7 +85,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 
 		$button = $fullactions ? true : false;
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -313,9 +313,9 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 		}
 
 		// Add buttons for changing between different layout modes.
-		if ($this->config->enable_threaded_layouts)
+		if ($this->config->enableThreadedLayouts)
 		{
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&{$token}=1";
+			$url = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&{$token}=1";
 
 			if ($this->layout != 'default')
 			{

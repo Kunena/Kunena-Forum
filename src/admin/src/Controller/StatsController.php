@@ -36,9 +36,9 @@ class StatsController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

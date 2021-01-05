@@ -37,6 +37,7 @@ class PluginsController extends AdminController
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
+
 	/**
 	 * @var string
 	 * @since version
@@ -44,23 +45,35 @@ class PluginsController extends AdminController
 	private $baseurl2;
 
 	/**
+	 * @var string
+	 * @since version
+	 */
+	private $textPrefix = 'COM_PLUGINS';
+
+	/**
+	 * @var string
+	 * @since version
+	 */
+	private $viewList = 'plugins';
+
+	/**
 	 * Construct
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
 		$this->option = 'com_kunena';
 
 		parent::__construct($config);
-		$this->baseurl     = 'administrator/index.php?option=com_kunena&view=plugins';
-		$this->baseurl2    = 'administrator/index.php?option=com_kunena&view=plugins';
-		$this->view_list   = 'plugins';
-		$this->text_prefix = 'COM_PLUGINS';
+		$this->baseurl    = 'administrator/index.php?option=com_kunena&view=plugins';
+		$this->baseurl2   = 'administrator/index.php?option=com_kunena&view=plugins';
+		$this->viewList   = 'plugins';
+		$this->textPrefix = 'COM_PLUGINS';
 
 		// Value = 0
 		$this->registerTask('unpublish', 'publish');
@@ -73,8 +86,8 @@ class PluginsController extends AdminController
 
 		// Value = -3
 		$this->registerTask('report', 'publish');
-		$this->registerTask('orderup', 'reorder');
-		$this->registerTask('orderdown', 'reorder');
+		$this->registerTask('orderup', 'reOrder');
+		$this->registerTask('orderdown', 'reOrder');
 
 		Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
@@ -84,9 +97,9 @@ class PluginsController extends AdminController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   12.2
 	 *
-	 * @throws  Exception
 	 */
 	public function publish()
 	{
@@ -102,7 +115,7 @@ class PluginsController extends AdminController
 
 		if (empty($cid))
 		{
-			Log::add(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), Log::WARNING, 'jerror');
+			Log::add(Text::_($this->textPrefix . '_NO_ITEM_SELECTED'), Log::WARNING, 'jerror');
 		}
 		else
 		{
@@ -121,19 +134,19 @@ class PluginsController extends AdminController
 			{
 				if ($value == 1)
 				{
-					$ntext = $this->text_prefix . '_N_ITEMS_PUBLISHED';
+					$ntext = $this->textPrefix . '_N_ITEMS_PUBLISHED';
 				}
 				elseif ($value == 0)
 				{
-					$ntext = $this->text_prefix . '_N_ITEMS_UNPUBLISHED';
+					$ntext = $this->textPrefix . '_N_ITEMS_UNPUBLISHED';
 				}
 				elseif ($value == 2)
 				{
-					$ntext = $this->text_prefix . '_N_ITEMS_ARCHIVED';
+					$ntext = $this->textPrefix . '_N_ITEMS_ARCHIVED';
 				}
 				else
 				{
-					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
+					$ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
 				}
 
 				$this->setMessage(Text::plural($ntext, count($cid)));
@@ -145,7 +158,7 @@ class PluginsController extends AdminController
 
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
 	}
 
 	/**
@@ -169,11 +182,11 @@ class PluginsController extends AdminController
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   12.2
 	 *
-	 * @throws  Exception
 	 */
-	public function reorder(): bool
+	public function reOrder(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -184,20 +197,22 @@ class PluginsController extends AdminController
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
 		$model  = $this->getModel();
-		$return = $model->reorder($ids, $inc);
+		$return = $model->reOrder($ids, $inc);
 
 		if ($return === false)
 		{
 			// Reorder failed.
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message,
+				'error'
+			);
 
 			return false;
 		}
 
 		// Reorder succeeded.
 		$message = Text::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 
 		return true;
 	}
@@ -209,7 +224,7 @@ class PluginsController extends AdminController
 	 *
 	 * @since   12.2
 	 */
-	public function saveorder(): bool
+	public function saveOrder(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -225,20 +240,22 @@ class PluginsController extends AdminController
 		$model = $this->getModel();
 
 		// Save the ordering
-		$return = $model->saveorder($pks, $order);
+		$return = $model->saveOrder($pks, $order);
 
 		if ($return === false)
 		{
 			// Reorder failed
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+				$message, 'error'
+			);
 
 			return false;
 		}
 
 		// Reorder succeeded.
 		$this->setMessage(Text::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false));
 
 		return true;
 	}
@@ -248,11 +265,11 @@ class PluginsController extends AdminController
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   12.2
 	 *
-	 * @throws  Exception
 	 */
-	public function checkin(): bool
+	public function checkIn(): bool
 	{
 		// Check for request forgeries.
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -261,13 +278,15 @@ class PluginsController extends AdminController
 		$ids = ArrayHelper::toInteger($cid, []);
 
 		$model  = $this->getModel();
-		$return = $model->checkin($ids);
+		$return = $model->checkIn($ids);
 
 		if ($return === false)
 		{
 			// Checkin failed.
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+				$message, 'error'
+			);
 
 			return false;
 		}
@@ -276,8 +295,8 @@ class PluginsController extends AdminController
 		$editor->initializeHMVC();
 
 		// Checkin succeeded.
-		$message = Text::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+		$message = Text::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', count($ids));
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 
 		return true;
 	}
@@ -287,9 +306,9 @@ class PluginsController extends AdminController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0.2
 	 *
-	 * @throws  Exception
 	 */
 	public function resync(): void
 	{
@@ -297,6 +316,6 @@ class PluginsController extends AdminController
 		$editor->initializeHMVC();
 
 		$message = 'Sync done';
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 	}
 }

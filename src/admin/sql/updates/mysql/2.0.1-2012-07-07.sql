@@ -5,8 +5,8 @@ ALTER TABLE `#__kunena_announcement`
   AFTER `title`;
 
 ALTER TABLE `#__kunena_categories`
-  MODIFY `admin_access` int(11) NOT NULL default '0'
-  AFTER `pub_recurse`;
+  MODIFY `adminAccess` int(11) NOT NULL default '0'
+  AFTER `pubRecurse`;
 
 ALTER TABLE `#__kunena_user_read`
   MODIFY `time` int(11) NOT NULL

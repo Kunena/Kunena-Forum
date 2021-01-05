@@ -31,12 +31,18 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var \stdClass
+	 * @since version
+	 */
 	protected $group;
+
 	/**
 	 * @var \stdClass
 	 * @since version
 	 */
 	protected $filter;
+
 	/**
 	 * @var \stdClass
 	 * @since version
@@ -46,11 +52,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -194,7 +200,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
 	}
 

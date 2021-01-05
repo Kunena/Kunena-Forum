@@ -22,7 +22,7 @@ use function defined;
  * @var \Kunena\Forum\Libraries\Forum\Topic\Topic $topic
  */
 $topic  = $this->category->getLastTopic();
-$avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
+$avatar = $this->config->avatarOnCategory ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 ?>
 
 <tr>
@@ -69,7 +69,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 				<?php echo $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $this->category->id); ?>
 			</div>
 			<div>
-				<?php echo $topic->getLastPostTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+				<?php echo $topic->getLastPostTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
 			</div>
 		</td>
 	<?php endif; ?>

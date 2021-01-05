@@ -103,7 +103,7 @@ class AnnouncementController extends KunenaController
 
 			if ($announcement->isAuthorised('edit') || $announcement->save())
 			{
-				if ($this->config->log_moderation)
+				if ($this->config->logModeration)
 				{
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
@@ -171,7 +171,7 @@ class AnnouncementController extends KunenaController
 
 			if ($announcement->isAuthorised('edit') || !$announcement->save())
 			{
-				if ($this->config->log_moderation)
+				if ($this->config->logModeration)
 				{
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
@@ -249,7 +249,7 @@ class AnnouncementController extends KunenaController
 
 			if ($announcement->isAuthorised('delete') || $announcement->delete())
 			{
-				if ($this->config->log_moderation)
+				if ($this->config->logModeration)
 				{
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
 				}
@@ -334,7 +334,7 @@ class AnnouncementController extends KunenaController
 			return;
 		}
 
-		if ($this->config->log_moderation)
+		if ($this->config->logModeration)
 		{
 			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
 		}

@@ -327,15 +327,15 @@ abstract class KunenaUserHelper
 			$db     = Factory::getDBO();
 			$config = KunenaFactory::getConfig();
 
-			if ($config->userlist_count_users == '1')
+			if ($config->userlistCountUsers == '1')
 			{
 				$where = '(' . $db->quoteName('block') . ' = 0 OR activation="")';
 			}
-			elseif ($config->userlist_count_users == '2')
+			elseif ($config->userlistCountUsers == '2')
 			{
 				$where = '(' . $db->quoteName('block') . ' = 0 AND activation="")';
 			}
-			elseif ($config->userlist_count_users == '3')
+			elseif ($config->userlistCountUsers == '3')
 			{
 				$where = $db->quoteName('block') . ' = 0';
 			}
@@ -402,7 +402,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function getTopPosters($limit = 0): ?array
 	{
-		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
+		$limit = $limit ? $limit : KunenaFactory::getConfig()->popUserCount;
 
 		if (self::$_topposters < $limit)
 		{
@@ -414,7 +414,7 @@ abstract class KunenaUserHelper
 			$query->where($db->quoteName('ku.posts') . ' > 0');
 			$query->order($db->quoteName('ku.posts') . ' DESC');
 
-			if (KunenaFactory::getConfig()->superadmin_userlist)
+			if (KunenaFactory::getConfig()->superAdminUserlist)
 			{
 				$filter = Access::getUsersByGroup(8);
 				$query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
@@ -532,13 +532,13 @@ abstract class KunenaUserHelper
 				->where($db->quoteName('client_id') . ' = 0')
 				->where($db->quoteName('userid') . ' = 0');
 
-			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
+			if ($config->showSessionType == 2 && $config->showSessionStartTime != 0)
 			{
 				// Calculate x minutes by using Kunena setting.
-				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
+				$time = Factory::getDate()->toUnix() - $config->showSessionStartTime;
 				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
-			elseif ($config->show_session_type > 0)
+			elseif ($config->showSessionType > 0)
 			{
 				// Calculate Joomla session expiration point.
 				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
@@ -588,13 +588,13 @@ abstract class KunenaUserHelper
 				->group($db->quoteName('userid'))
 				->order($db->quoteName('time') . ' DESC');
 
-			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
+			if ($config->showSessionType == 2 && $config->showSessionStartTime != 0)
 			{
 				// Calculate x minutes by using Kunena setting.
-				$time = Factory::getDate()->toUnix() - $config->show_session_starttime;
+				$time = Factory::getDate()->toUnix() - $config->showSessionStartTime;
 				$query->where($db->quoteName('time') . ' > ' . $db->quote($time));
 			}
-			elseif ($config->show_session_type > 0)
+			elseif ($config->showSessionType > 0)
 			{
 				// Calculate Joomla session expiration point.
 				$time = Factory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
@@ -630,7 +630,7 @@ abstract class KunenaUserHelper
 	public static function getStatus($user)
 	{
 		$config = KunenaFactory::getConfig();
-		$status = $config->user_status;
+		$status = $config->userStatus;
 
 		if (!$status)
 		{
@@ -830,7 +830,7 @@ abstract class KunenaUserHelper
 		// TODO : prevent to do a request with a private or local IP
 		if ($type == 'add')
 		{
-			$datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopforumspam_key'], 'evidence' => $data['evidence']];
+			$datatosend = ['username' => $data['username'], 'ip_addr' => $data['ip'], 'email' => $data['email'], 'api_key' => $data['stopForumSpamKey'], 'evidence' => $data['evidence']];
 
 			$response = $http->post('https://www.stopforumspam.com/add', $datatosend);
 		}
@@ -847,7 +847,7 @@ abstract class KunenaUserHelper
 
 		if ($response->code == '200')
 		{
-			if (KunenaFactory::getConfig()->log_moderation)
+			if (KunenaFactory::getConfig()->logModeration)
 			{
 				$log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
 

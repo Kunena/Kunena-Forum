@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+
 ?>
 <div class="modal hide fade" id="subscribecatsusersModal">
 	<div class="modal-dialog">
@@ -33,7 +34,7 @@ use Joomla\CMS\Language\Text;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('users.subscribeuserstocategories');">
+						onclick="Joomla.submitbutton('users.subscribeUsersToCategories');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

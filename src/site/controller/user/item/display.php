@@ -116,7 +116,7 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		$socials1            = ArrayHelper::toObject($socials);
 
 		$avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-		$banInfo = $this->config->showbannedreason
+		$banInfo = $this->config->showBannedReason
 			? KunenaBan::getInstanceByUserid($this->profile->userid)
 			: null;
 
@@ -130,13 +130,13 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
 			$controller = BaseController::getInstance("kunena");
 
-			if ($this->config->profile_id)
+			if ($this->config->profileId)
 			{
-				$itemidfix = $this->config->profile_id;
+				$itemidfix = $this->config->profileId;
 			}
 			else
 			{
@@ -202,11 +202,11 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 		{
 			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
 		}
-		elseif ($this->profile->avatar == null || $this->config->avatar_type && KunenaFactory::getUser($this->profile->id)->avatar == null)
+		elseif ($this->profile->avatar == null || $this->config->avatarType && KunenaFactory::getUser($this->profile->id)->avatar == null)
 		{
-			if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+			if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 			{
-				$image = Uri::base() . $this->config->emailheader;
+				$image = Uri::base() . $this->config->emailHeader;
 			}
 		}
 		else
@@ -262,7 +262,7 @@ class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
 			else
 			{
 				$description = Text::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
-					$this->config->board_title, $this->profile->getName(), $this->config->board_title
+					$this->config->boardTitle, $this->profile->getName(), $this->config->boardTitle
 				);
 				$this->setDescription($description);
 			}

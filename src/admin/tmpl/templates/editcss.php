@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 <div id="kunena" class="container-fluid">
 	<div class="row">
@@ -35,7 +36,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						<table class="table table-bordered table-striped">
 							<tr>
 								<th>
-									<?php echo $this->escape($this->css_path); ?>
+									<?php echo $this->escape($this->cssPath); ?>
 								</th>
 							</tr>
 							<tr>

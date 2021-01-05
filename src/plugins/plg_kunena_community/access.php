@@ -124,7 +124,7 @@ class KunenaAccessCommunity
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select('id, CONCAT(\'c\', categoryid) AS parent_id, name')
+			$query->select('id, CONCAT(\'c\', categoryid) AS parentId, name')
 				->update($db->quoteName('#__community_groups'))
 				->order('categoryid, name');
 			$db->setQuery($query);
@@ -201,7 +201,7 @@ class KunenaAccessCommunity
 		{
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parent_id, name')
+			$query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentId, name')
 				->update($db->quoteName('#__community_groups_category'))
 				->order('parent, name');
 			$db->setQuery($query);

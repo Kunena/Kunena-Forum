@@ -64,11 +64,11 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
-		if (!$Itemid && $this->config->sef_redirect)
+		if (!$Itemid && $this->config->sefRedirect)
 		{
-			if ($this->config->search_id)
+			if ($this->config->searchId)
 			{
-				$itemidfix = $this->config->search_id;
+				$itemidfix = $this->config->searchId;
 			}
 			else
 			{
@@ -150,7 +150,7 @@ class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 

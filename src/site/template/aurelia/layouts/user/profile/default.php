@@ -24,7 +24,7 @@ $user            = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $config          = KunenaConfig::getInstance();
-$show            = $config->showuserstats;
+$show            = $config->showUserStats;
 
 $activityIntegration = KunenaFactory::getActivityIntegration();
 $points              = $activityIntegration->getUserPoints($user->userid);
@@ -33,7 +33,7 @@ $optional_username   = KunenaFactory::getTemplate()->params->get('optional_usern
 
 if ($show)
 {
-	if ($config->showkarma)
+	if ($config->showKarma)
 	{
 		$canseekarma = $user->canSeeKarma();
 	}
@@ -59,7 +59,7 @@ if ($show)
 		:
 			?>
 			<li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avataredit); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
 				:
@@ -73,7 +73,7 @@ if ($show)
 			</li>
 		<?php endif; ?>
 
-		<?php if ($user->exists() && $config->user_status)
+		<?php if ($user->exists() && $config->userStatus)
 		:
 			?>
 			<li>
@@ -127,7 +127,7 @@ if ($user->userid > 1)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($canseekarma && $config->showkarma)
+				<?php if ($canseekarma && $config->showKarma)
 				:
 					?>
 					<li>
@@ -135,7 +135,7 @@ if ($user->userid > 1)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($show && isset($user->thankyou) && $config->showthankyou)
+				<?php if ($show && isset($user->thankyou) && $config->showThankYou)
 				:
 					?>
 					<li>
@@ -199,7 +199,7 @@ if ($user->userid > 1)
 					</li>
 				<?php endif; ?>
 
-				<?php if ($user->email && !$user->hideEmail && $config->showemail)
+				<?php if ($user->email && !$user->hideEmail && $config->showEmail)
 				:
 					?>
 					<li>

@@ -226,11 +226,11 @@ jQuery(document).ready(function ($) {
 			data: {catid: catid}
 		})
 			.done(function (data) {
-				$('#iconset_topic_list').remove();
+				$('#iconset_topicList').remove();
 
-				const div_object = $('<div>', {'id': 'iconset_topic_list'});
+				const divinternalObject = $('<div>', {'id': 'iconset_topicList'});
 
-				$('#iconset_inject').append(div_object);
+				$('#iconset_inject').append(divinternalObject);
 
 				$.each(data, function (index, value) {
 					if (value.type !== 'system') {
@@ -251,7 +251,7 @@ jQuery(document).ready(function ($) {
 							});
 						}
 
-						const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
+						const spaninternalObject = $('<span>', {'class': 'kiconsel'}).append(input);
 
 						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
 							var label = $('<label>', {
@@ -280,9 +280,9 @@ jQuery(document).ready(function ($) {
 							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
 						}
 
-						span_object.append(label);
+						spaninternalObject.append(label);
 
-						$('#iconset_topic_list').append(span_object);
+						$('#iconset_topicList').append(spaninternalObject);
 					}
 				});
 			})
@@ -346,7 +346,7 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	const test = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
+	const test = Joomla.getOptions('com_kunena.kunena_quickReplymesid');
 	$('#gotoeditor'+test).click(function () {
 		localStorage.setItem("copyKunenaeditor", $(".test" + test).val());
 	});

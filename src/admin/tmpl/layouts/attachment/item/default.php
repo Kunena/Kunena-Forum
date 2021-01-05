@@ -17,7 +17,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 $attachment = $this->attachment;
 $config     = KunenaFactory::getConfig();
 
-if ($config->attachment_protection)
+if ($config->attachmentProtection)
 {
 	$url = $attachment->getUrl(true);
 	$src = $attachment->getUrl();
@@ -28,17 +28,17 @@ else
 	$src = $url;
 }
 
-if ($config->access_component)
+if ($config->accessComponent)
 {
 	?>
 	<a href="<?php echo $url; ?>" title="<?php echo $attachment->getFilename(); ?>">
 		<?php
 		if ($attachment->isImage())
-	{
+		{
 			echo '<img loading=lazy src="' . $src . ' " height="40" width="40" />';
 		}
 		else
-	{
+		{
 			echo '<i class="icon-flag-2 icon-big"></i>';
 		}
 		?>

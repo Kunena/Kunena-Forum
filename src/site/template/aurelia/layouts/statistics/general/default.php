@@ -62,7 +62,7 @@ use function defined;
 		</table>
 	<?php endforeach; ?>
 	<?php
-	if ($this->config->showgenstats)
+	if ($this->config->showGenStats)
 	:
 		?>
 		<div class="card">

@@ -141,7 +141,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of mark read button
 	 *
-	 * @param   int  $category_id  The category Id
+	 * @param   int  $categoryId  The category Id
 	 * @param   int  $numTopics    The number of topics
 	 *
 	 * @return  string|void
@@ -151,14 +151,14 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getMarkReadButtonURL($category_id, $numTopics)
+	public function getMarkReadButtonURL($categoryId, $numTopics)
 	{
 		// Is user allowed to mark forums as read?
 		if (KunenaUserHelper::getMyself()->exists() && $numTopics)
 		{
 			$token = '&' . Session::getFormToken() . '=1';
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$categoryId}{$token}");
 		}
 
 		return;
@@ -179,7 +179,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
-		if (KunenaConfig::getInstance()->enablerss)
+		if (KunenaConfig::getInstance()->enableRss)
 		{
 			$params = '&catid=' . (int) $catid;
 

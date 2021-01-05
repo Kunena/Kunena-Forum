@@ -95,7 +95,7 @@ abstract class KunenaModule
 			$cache = Factory::getCache('com_kunena', 'output');
 
 			$me = Factory::getApplication()->getIdentity();
-			$cache->setLifeTime($this->params->get('cache_time', 180));
+			$cache->setLifeTime($this->params->get('cacheTime', 180));
 			$hash = md5(serialize($this->params));
 
 			// Disable Cache for now: FIXME

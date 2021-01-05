@@ -35,7 +35,7 @@ $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $me              = KunenaUserHelper::getMyself();
 
-if (KunenaConfig::getInstance()->ratingenabled)
+if (KunenaConfig::getInstance()->ratingEnabled)
 {
 	$this->addStyleSheet('rating.css');
 }
@@ -77,7 +77,7 @@ if (KunenaConfig::getInstance()->ratingenabled)
 </div>
 
 <?php
-if ($this->config->enableforumjump && !$this->embedded && $this->topics)
+if ($this->config->enableForumJump && !$this->embedded && $this->topics)
 {
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 } ?>

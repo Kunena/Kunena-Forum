@@ -41,13 +41,13 @@ class UsersModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = array())
 	{
@@ -75,8 +75,8 @@ class UsersModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -90,11 +90,11 @@ class UsersModel extends ListModel
 	/**
 	 * Method to get User objects of data items.
 	 *
-	 * @return  boolean|KunenaUser
-	 *
-	 * @since   Kunena 3.0
+	 * @return  boolean|KunenaUser|array
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
 	public function getItems()
 	{
@@ -170,11 +170,11 @@ class UsersModel extends ListModel
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getModcatslist(): string
+	public function getModCatsList(): string
 	{
 		$options = [];
 		$me      = KunenaUserHelper::getMyself();
@@ -195,9 +195,9 @@ class UsersModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -214,36 +214,36 @@ class UsersModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filter_active = '';
+		$filterActive = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
 		$this->setState('filter.search', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
 		$this->setState('filter.username', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.email', 'filter_email', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.email', 'filter_email', '', 'string');
 		$this->setState('filter.email', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
 		$this->setState('filter.ip', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '', 'string');
 		$this->setState('filter.rank', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.signature', 'filter_signature', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.signature', 'filter_signature', '', 'string');
 		$this->setState('filter.signature', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.block', 'filter_block', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.block', 'filter_block', '', 'string');
 		$this->setState('filter.block', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.banned', 'filter_banned', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.banned', 'filter_banned', '', 'string');
 		$this->setState('filter.banned', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.moderator', 'filter_moderator', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.moderator', 'filter_moderator', '', 'string');
 		$this->setState('filter.moderator', $value);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// List state information.
 		parent::populateState('username', 'asc');

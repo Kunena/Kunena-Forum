@@ -62,13 +62,13 @@ $this->addScript('assets/js/search.js');
 				</a>
 			</th>
 
-			<?php if ($config->userlist_online && $config->user_status) : $cols++; ?>
+			<?php if ($config->userlistOnline && $config->userStatus) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo Text::_('COM_KUNENA_USRL_ONLINE'); ?>
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_avatar) : $cols++; ?>
+			<?php if ($config->userlistAvatar) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo Text::_('COM_KUNENA_USRL_AVATAR'); ?>
 				</th>
@@ -90,7 +90,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_posts) : $cols++; ?>
+			<?php if ($config->userlistPosts) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
@@ -99,7 +99,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_karma) : $cols++; ?>
+			<?php if ($config->userlistKarma) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
@@ -108,7 +108,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_email) : $cols++; ?>
+			<?php if ($config->userlistEmail) : $cols++; ?>
 				<th class="col-md-1 hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
@@ -117,7 +117,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_joindate) : $cols++; ?>
+			<?php if ($config->userlistJoinDate) : $cols++; ?>
 				<th class="col-md-2 hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
@@ -126,7 +126,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
+			<?php if ($config->userlistLastVisitDate) : $cols++; ?>
 				<th class="col-md-2 hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
@@ -135,7 +135,7 @@ $this->addScript('assets/js/search.js');
 				</th>
 			<?php endif; ?>
 
-			<?php if ($config->userlist_userhits) : $cols++; ?>
+			<?php if ($config->userlistUserHits) : $cols++; ?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
 						'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
@@ -151,14 +151,14 @@ $this->addScript('assets/js/search.js');
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		foreach ($this->users as $user) :
-			$avatar = $config->userlist_avatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
+			$avatar = $config->userlistAvatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 			?>
 			<tr>
 				<td class="col-md-1 center">
 					<?php echo ++$i; ?>
 				</td>
 
-				<?php if ($config->userlist_online && $config->user_status) : ?>
+				<?php if ($config->userlistOnline && $config->userStatus) : ?>
 					<td class="col-md-1 center hidden-xs-down">
 						<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 					</td>
@@ -176,39 +176,39 @@ $this->addScript('assets/js/search.js');
 					<?php echo $user->getLink(null, null, ''); ?>
 				</td>
 
-				<?php if ($config->userlist_posts) : ?>
+				<?php if ($config->userlistPosts) : ?>
 					<td class="col-md-1 center hidden-xs-down">
 						<?php echo (int) $user->posts; ?>
 					</td>
 				<?php endif; ?>
 
-				<?php if ($config->userlist_karma) : ?>
+				<?php if ($config->userlistKarma) : ?>
 					<td class="col-md-1 center hidden-xs-down">
 						<?php echo (int) $user->karma; ?>
 					</td>
 				<?php endif; ?>
 
-				<?php if ($config->userlist_email) : ?>
+				<?php if ($config->userlistEmail) : ?>
 					<td class="col-md-1 hidden-xs-down">
 						<?php echo $user->email ? HTMLHelper::_('email.cloak', $user->email) : '' ?>
 					</td>
 				<?php endif; ?>
 
-				<?php if ($config->userlist_joindate) : ?>
+				<?php if ($config->userlistJoinDate) : ?>
 					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>"
 						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>
 
-				<?php if ($config->userlist_lastvisitdate) : ?>
+				<?php if ($config->userlistLastVisitDate) : ?>
 					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>"
 						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
 					</td>
 				<?php endif; ?>
 
-				<?php if ($config->userlist_userhits) : ?>
+				<?php if ($config->userlistUserHits) : ?>
 					<td class="col-md-1 center hidden-xs-down">
 						<?php echo (int) $user->uhits; ?>
 					</td>

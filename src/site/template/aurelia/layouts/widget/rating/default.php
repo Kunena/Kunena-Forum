@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use function defined;
 
-if ($this->config->ratingenabled && $this->category->allow_ratings)
+if ($this->config->ratingEnabled && $this->category->allowRatings)
 :
 	$this->addStyleSheet('rating.css');
 	$this->addScript('rating.js');

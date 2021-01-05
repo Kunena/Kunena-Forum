@@ -53,7 +53,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		'emoticons'     => 'media/kunena/emoticons',
 		'ranks'         => 'media/kunena/ranks',
 		'icons'         => 'media/kunena/icons',
-		'categoryicons' => 'media/kunena/category_icons',
+		'categoryIcons' => 'media/kunena/category_icons',
 		'images'        => 'media/kunena/core/images',
 		'js'            => 'media/kunena/core/js',
 		'css'           => 'media/kunena/core/css',
@@ -131,7 +131,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		$filenameless = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/less/custom.less';
 
-		if (file_exists($filenameless) && 0 != filesize($filenameless))
+		if (file_exists($filenameless) && 0 != fileSize($filenameless))
 		{
 			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
 			$this->addStyleSheet('kunena-custom.css');
@@ -210,7 +210,7 @@ EOF;
 	public function getButton($link, $name, $scope, $type, $id = null): string
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod'];
-		$names = ['unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply'];
+		$names = ['unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickReply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply'];
 
 		// Need special style for buttons in drop-down list
 		$buttonsDropdown = ['reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented'];

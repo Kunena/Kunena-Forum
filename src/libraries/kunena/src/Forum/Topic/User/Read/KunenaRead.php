@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena
  * @property int $topic_id
- * @property int $category_id
+ * @property int $categoryId
  * @property int $message_id
  * @property int $time
  * @property int $user_id

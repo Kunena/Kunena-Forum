@@ -102,7 +102,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 		$total      = $finder->count();
 		$pagination = new KunenaPagination($total, $start, $limit);
 
-		if (!$this->config->show_imgfiles_manage_profile || !$this->me->exists() && !$this->config->pubprofile)
+		if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}

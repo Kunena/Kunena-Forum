@@ -216,7 +216,7 @@ class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDi
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+				$description = Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->boardTitle;
 				$this->setDescription($description);
 			}
 

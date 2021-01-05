@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -34,7 +35,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td colspan="4"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_ISSUES') ?></td>
 							</tr>
-							<?php if ($this->legacy) :?>
+							<?php if ($this->legacy) : ?>
 								<tr>
 									<th width="20%"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
 									<th colspan="3"><?php echo count($this->legacy) ?></th>
@@ -49,8 +50,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
-							<?php endif;?>
-							<?php if ($this->conflicts) :?>
+							<?php endif; ?>
+							<?php if ($this->conflicts) : ?>
 								<tr>
 									<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></th>
 									<th colspan="2"><?php echo count($this->conflicts) ?></th>
@@ -65,8 +66,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
-							<?php endif;?>
-							<?php if ($this->invalid) :?>
+							<?php endif; ?>
+							<?php if ($this->invalid) : ?>
 								<tr>
 									<th><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></th>
 									<th colspan="2"><?php echo count($this->invalid) ?></th>
@@ -81,7 +82,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
 									</tr>
 								<?php endforeach ?>
-							<?php endif;?>
+							<?php endif; ?>
 						</table>
 					</fieldset>
 				</form>

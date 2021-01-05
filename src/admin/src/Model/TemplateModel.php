@@ -30,16 +30,16 @@ class TemplateModel extends AdminModel
 {
 
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
 	 * @param   array  $data      data
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @return  boolean|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -61,11 +61,11 @@ class TemplateModel extends AdminModel
 	/**
 	 * @return  boolean|stdClass
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getTemplatedetails()
+	public function getTemplateDetails()
 	{
 		$app = Factory::getApplication();
 
@@ -89,9 +89,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -127,33 +127,33 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		$app       = Factory::getApplication();
-		$input     = $app->input;
-		$old_state = $app->getUserState($key);
-		$cur_state = ($old_state !== null) ? $old_state : $default;
-		$new_state = $input->get($request, null, $type);
+		$app      = Factory::getApplication();
+		$input    = $app->input;
+		$oldState = $app->getUserState($key);
+		$curState = ($oldState !== null) ? $oldState : $default;
+		$newState = $input->get($request, null, $type);
 
-		if (($cur_state != $new_state) && ($resetPage))
+		if (($curState != $newState) && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}
 
 		// Save the new value only if it is set in this request.
-		if ($new_state !== null)
+		if ($newState !== null)
 		{
-			$app->setUserState($key, $new_state);
+			$app->setUserState($key, $newState);
 		}
 		else
 		{
-			$new_state = $cur_state;
+			$newState = $curState;
 		}
 
-		return $new_state;
+		return $newState;
 	}
 }

@@ -183,7 +183,7 @@ abstract class KunenaMessageHelper
 
 		if ($limit < 1)
 		{
-			$limit = KunenaFactory::getConfig()->messages_per_page;
+			$limit = KunenaFactory::getConfig()->messagesPerPage;
 		}
 
 		// If out of range, use last page
@@ -287,15 +287,15 @@ abstract class KunenaMessageHelper
 		{
 			if ($view == 'search')
 			{
-				$limit = KunenaFactory::getConfig()->messages_per_page_search;
+				$limit = KunenaFactory::getConfig()->messagesPerPageSearch;
 			}
 			elseif ($view == 'topics')
 			{
-				$limit = KunenaFactory::getConfig()->threads_per_page;
+				$limit = KunenaFactory::getConfig()->threadsPerPage;
 			}
 			else
 			{
-				$limit = KunenaFactory::getConfig()->messages_per_page;
+				$limit = KunenaFactory::getConfig()->messagesPerPage;
 			}
 		}
 

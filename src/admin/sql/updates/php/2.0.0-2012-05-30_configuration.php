@@ -14,13 +14,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Convert deprecated configuration options
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_200_2012_05_30_configuration($parent)
 {
@@ -39,16 +39,16 @@ function kunena_200_2012_05_30_configuration($parent)
 
 	if (isset($config->allowimageupload))
 	{
-		$config->set('image_upload', 'nobody');
+		$config->set('imageUpload', 'nobody');
 
 		if ($config->get('allowimageregupload') == 1)
 		{
-			$config->set('image_upload', 'registered');
+			$config->set('imageUpload', 'registered');
 		}
 
 		if ($config->get('allowimageupload') == 1)
 		{
-			$config->set('image_upload', 'everybody');
+			$config->set('imageUpload', 'everybody');
 		}
 
 		unset($config->allowimageupload, $config->allowimageregupload);
@@ -56,31 +56,31 @@ function kunena_200_2012_05_30_configuration($parent)
 
 	if (isset($config->allowfileupload))
 	{
-		$config->set('file_upload', 'nobody');
+		$config->set('fileUpload', 'nobody');
 
 		if ($config->get('allowfileregupload') == 1)
 		{
-			$config->set('file_upload', 'registered');
+			$config->set('fileUpload', 'registered');
 		}
 
 		if ($config->get('allowfileupload') == 1)
 		{
-			$config->set('file_upload', 'everybody');
+			$config->set('fileUpload', 'everybody');
 		}
 
 		unset($config->allowfileupload, $config->allowfileregupload);
 	}
 
-	if (isset($config->fbsessiontimeout))
+	if (isset($config->fbsessionTimeOut))
 	{
-		$config->set('sessiontimeout', $config->get('fbsessiontimeout', 1800));
-		unset($config->fbsessiontimeout);
+		$config->set('sessionTimeOut', $config->get('fbsessionTimeOut', 1800));
+		unset($config->fbsessionTimeOut);
 	}
 
-	if (isset($config->fbdefaultpage))
+	if (isset($config->fbdefaultPage))
 	{
-		$config->set('defaultpage', $config->get('fbdefaultpage', 'recent'));
-		unset($config->fbdefaultpage);
+		$config->set('defaultPage', $config->get('fbdefaultPage', 'recent'));
+		unset($config->fbdefaultPage);
 	}
 
 	// Move integration settings into plugins

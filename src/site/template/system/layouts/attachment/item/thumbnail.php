@@ -27,10 +27,10 @@ echo $this->subLayout('Widget/Lightbox');
 $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
-$attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
+$attributesImg  = ' style="max-height: ' . (int) $config->thumbHeight . 'px;"';
 $name           = preg_replace('/.html/', '', $attachment->getUrl());
 
-if (CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachment_protection)
+if (CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachmentProtection)
 {
 	$name = preg_replace('/.html/', '', $attachment->getUrl());
 }
@@ -43,9 +43,9 @@ if ($attachment->isImage())
 {
 	?>
 	<a href="<?php echo $name; ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbwidth; ?>"
-			 height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+	   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		<img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbWidth; ?>"
+			 height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
 	<?php
 }
@@ -53,7 +53,7 @@ else
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+	   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<?php echo KunenaIcons::file(); ?>
 	</a>
 	<?php

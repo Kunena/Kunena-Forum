@@ -304,15 +304,15 @@ class KunenaTableMap
 	public function bind($src, $ignore = []): bool
 	{
 		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src))
+		if (!isinternalObject($src) && !is_array($src))
 		{
 			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (is_object($src))
+		if (isinternalObject($src))
 		{
-			$src = get_object_vars($src);
+			$src = getinternalObject_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.

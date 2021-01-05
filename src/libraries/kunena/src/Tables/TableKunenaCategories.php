@@ -42,7 +42,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $parent_id = null;
+	public $parentId = null;
 
 	/**
 	 * @var     null
@@ -90,25 +90,25 @@ class TableKunenaCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $pub_access = null;
+	public $pubAccess = null;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $pub_recurse = null;
+	public $pubRecurse = null;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $admin_access = null;
+	public $adminAccess = null;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $admin_recurse = null;
+	public $adminRecurse = null;
 
 	/**
 	 * @var     null
@@ -150,13 +150,13 @@ class TableKunenaCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $allow_anonymous = null;
+	public $allowAnonymous = null;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $post_anonymous = null;
+	public $postAnonymous = null;
 
 	/**
 	 * @var     null
@@ -186,13 +186,13 @@ class TableKunenaCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $allow_polls = null;
+	public $allowPolls = null;
 
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $topic_ordering = null;
+	public $topicOrdering = null;
 
 	/**
 	 * @var     null
@@ -330,9 +330,9 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function bind($array, $ignore = ''): bool
 	{
-		if (is_object($array))
+		if (isinternalObject($array))
 		{
-			$array = get_object_vars($array);
+			$array = getinternalObject_vars($array);
 		}
 
 		if (isset($array['params']) && !is_string($array['params']))
@@ -366,14 +366,14 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function check(): bool
 	{
-		if ($this->id && $this->parent_id)
+		if ($this->id && $this->parentId)
 		{
-			if ($this->id == $this->parent_id)
+			if ($this->id == $this->parentId)
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
 
-			if ($this->isChild($this->parent_id))
+			if ($this->isChild($this->parentId))
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
@@ -411,7 +411,7 @@ class TableKunenaCategories extends KunenaTable
 		if ($id > 0)
 		{
 			$query = $this->_db->getQuery(true)
-				->select(['id', 'parent_id'])
+				->select(['id', 'parentId'])
 				->from($this->_db->quoteName('#__kunena_categories'));
 			$this->_db->setQuery($query);
 
@@ -446,7 +446,7 @@ class TableKunenaCategories extends KunenaTable
 					return 0;
 				}
 
-				$id = $list [$id]->parent_id;
+				$id = $list [$id]->parentId;
 
 				if ($id != 0 && $id == $this->id)
 				{
@@ -465,28 +465,28 @@ class TableKunenaCategories extends KunenaTable
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function reorder($where = ''): bool
+	public function reOrder($where = ''): bool
 	{
 		if (!$where)
 		{
 			$query = $this->_db->getQuery(true)
-				->select($this->_db->quoteName('parent_id'))
+				->select($this->_db->quoteName('parentId'))
 				->from($this->_db->quoteName('#__kunena_categories'))
-				->group($this->_db->quoteName('parent_id'));
+				->group($this->_db->quoteName('parentId'));
 			$this->_db->setQuery($query);
 
 			$parents = $this->_db->loadColumn();
 			$success = true;
 
-			foreach ($parents as $parent_id)
+			foreach ($parents as $parentId)
 			{
-				$success &= parent::reorder("parent_id={$this->_db->quote($parent_id)}");
+				$success &= parent::reOrder("parentId={$this->_db->quote($parentId)}");
 			}
 
 			return $success;
 		}
 
-		return parent::reorder($where);
+		return parent::reOrder($where);
 	}
 
 	/**

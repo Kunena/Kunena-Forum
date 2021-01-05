@@ -29,29 +29,33 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var \stdClass
+	 * @since version
+	 */
 	private $config;
 
 	/**
-	 * @internal param null $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @param   null  $tpl
-	 *
-	 * @return  void
-	 *
-	 * @since    Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since    Kunena 6.0
+	 *
+	 * @internal param null $tpl
+	 *
 	 */
 	public function displayDefault($tpl = null)
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 
 		$document = Factory::getApplication()->getDocument();
-		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
+		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->boardTitle);
 
-		$kunena_stats = KunenaStatistics::getInstance();
-		$kunena_stats->loadAll(true);
-		$kunena_stats1 = $kunena_stats;
+		$kunenaStats = KunenaStatistics::getInstance();
+		$kunenaStats->loadAll(true);
+		$kunenaStats1 = $kunenaStats;
 
 		return parent::display($tpl);
 	}

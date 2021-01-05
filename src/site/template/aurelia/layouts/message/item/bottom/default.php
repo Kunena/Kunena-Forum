@@ -35,7 +35,7 @@ $topicStarter         = $this->topic->first_post_userid == $this->message->useri
 $config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
-if ($config->ordering_system == 'mesid')
+if ($config->orderingSystem == 'mesid')
 {
 	$this->numLink = $this->location;
 }
@@ -53,11 +53,11 @@ else
 		<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<?php endif; ?>
 	<?php echo Icons::clock(); ?>
-	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+	<?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
 	<?php
 	if ($message->modified_time)
 		:
-		?> - <?php echo Icons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+		?> - <?php echo Icons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
 	endif; ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
 	   rel="canonical">#<?php echo $this->numLink; ?></a>
@@ -95,14 +95,14 @@ else
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
-	<?php if ($this->config->reportmsg && $this->me->exists()) : ?>
+	<?php if ($this->config->reportMsg && $this->me->exists()) : ?>
 		<div class="report pb-5">
 			<?php echo Layout::factory('Widget/Button')
 	->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
 								 'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => Icons::reportname(),
 								 'modal' => 'modal', 'pullright' => 'pullright', ]); ?>
 		</div>
-		<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->user_report || !$this->config->user_report && $this->me->userid != $this->message->userid) : ?>
+		<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
 			<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
 				 aria-hidden="true" data-backdrop="false" style="display: none;">
 				<div class="modal-dialog" role="document">
@@ -151,7 +151,7 @@ else
 		<div class="clearfix"></div>
 	<?php elseif ($attachs->total > 0 && !$this->me->exists()) :
 
-	if ($attachs->image > 0 && !$this->config->showimgforguest)
+	if ($attachs->image > 0 && !$this->config->showImgForGuest)
 	{
 		if ($attachs->image > 1)
 		{
@@ -163,7 +163,7 @@ else
 		}
 	}
 
-	if ($attachs->file > 0 && !$this->config->showfileforguest)
+	if ($attachs->file > 0 && !$this->config->showFileForGuest)
 	{
 		if ($attachs->file > 1)
 		{
@@ -176,13 +176,13 @@ else
 	}
 endif; ?>
 
-<?php if ($message->modified_by && $this->config->editmarkup) :
+<?php if ($message->modified_by && $this->config->editMarkup) :
 	$dateshown = $datehover = '';
 
 	if ($message->modified_time)
 	{
-		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormatHover') . '"';
+		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormat') . ' ';
 	}
 	?>
 	<div class="alert alert-info hidden-xs-down" <?php echo $datehover ?>>

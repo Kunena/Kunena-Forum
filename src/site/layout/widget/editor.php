@@ -51,7 +51,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
 
-		if (!$templatesettings->get('highlightcode'))
+		if (!$templatesettings->get('highlightCode'))
 		{
 			return;
 		}
@@ -147,7 +147,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			}
 			elseif ($item == 'emoticons')
 			{
-				if (!$config->disemoticons && $templatesettings->get($item))
+				if (!$config->disableEmoticons && $templatesettings->get($item))
 				{
 					$option = 1;
 				}

@@ -41,13 +41,13 @@ class StatisticsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -68,8 +68,8 @@ class StatisticsModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -85,9 +85,9 @@ class StatisticsModel extends ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
+	 * @throws  Exception
 	 * @since   3.1
 	 *
-	 * @throws  Exception
 	 */
 	public function getTotal(): int
 	{
@@ -141,9 +141,9 @@ class StatisticsModel extends ListModel
 	 *
 	 * @return  KunenaFinder
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function getFinder($field = 'user_id'): KunenaFinder
 	{
@@ -204,9 +204,9 @@ class StatisticsModel extends ListModel
 	 *
 	 * @return  KunenaUser  List of \Kunena\Forum\Libraries\User\KunenaUser objects found.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 3.1
 	 *
-	 * @throws  Exception
 	 */
 	public function getItems()
 	{
@@ -326,9 +326,9 @@ class StatisticsModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -345,18 +345,18 @@ class StatisticsModel extends ListModel
 		$now   = new Date;
 		$month = new Date('-1 month');
 
-		$filter_active = '';
+		$filterActive = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
 		$this->setState('filter.user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
 		$this->setState('filter.time_start', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
 		$this->setState('filter.time_stop', $value);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// List state information.
 		parent::populateState('user_id', 'asc');

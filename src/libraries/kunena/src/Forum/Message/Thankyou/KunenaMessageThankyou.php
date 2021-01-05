@@ -147,7 +147,7 @@ class KunenaMessageThankyou extends CMSObject
 			return false;
 		}
 
-		$this->_savethankyou($message);
+		$this->internalSavethankyou($message);
 
 		return true;
 	}
@@ -175,7 +175,7 @@ class KunenaMessageThankyou extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function _savethankyou(KunenaMessage $message): bool
+	protected function internalSavethankyou(KunenaMessage $message): bool
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);

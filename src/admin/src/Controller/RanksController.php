@@ -45,9 +45,9 @@ class RanksController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -60,10 +60,10 @@ class RanksController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function add()
 	{
@@ -81,18 +81,18 @@ class RanksController extends FormController
 	/**
 	 * Edit
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -119,20 +119,20 @@ class RanksController extends FormController
 	/**
 	 * Save
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{
 		$db = Factory::getDbo();
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -140,17 +140,20 @@ class RanksController extends FormController
 			return;
 		}
 
-		$rank_title   = $this->app->input->getString('rank_title');
-		$rank_image   = basename($this->app->input->getString('rank_image'));
-		$rank_special = $this->app->input->getInt('rank_special');
-		$rank_min     = $this->app->input->getInt('rank_min');
-		$rankid       = $this->app->input->getInt('rankid', 0);
+		$rankTitle   = $this->app->input->getString('rankTitle');
+		$rankImage   = basename($this->app->input->getString('rankImage'));
+		$rankSpecial = $this->app->input->getInt('rankSpecial');
+		$rankMin     = $this->app->input->getInt('rankMin');
+		$rankid      = $this->app->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
 			$query = $db->getQuery(true)
 				->insert("{$db->quoteName('#__kunena_ranks')}")
-				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}");
+				->set("rankTitle={$db->quote($rankTitle)}")
+				->set("rankImage={$db->quote($rankImage)}")
+				->set("rankSpecial={$db->quote($rankSpecial)}")
+				->set("rankMin={$db->quote($rankMin)}");
 
 			$db->setQuery($query);
 
@@ -169,8 +172,11 @@ class RanksController extends FormController
 		{
 			$query = $db->getQuery(true)
 				->update("{$db->quoteName('#__kunena_ranks')}")
-				->set("rank_title={$db->quote($rank_title)}, rank_image={$db->quote($rank_image)}, rank_special={$db->quote($rank_special)}, rank_min={$db->quote($rank_min)}")
-				->where("rank_id={$db->quote($rankid)}");
+				->set("rankTitle={$db->quote($rankTitle)}")
+				->set("rankImage={$db->quote($rankImage)}")
+				->set("rankSpecial={$db->quote($rankSpecial)}")
+				->set("rankMin={$db->quote($rankMin)}")
+				->where("rankId={$db->quote($rankid)}");
 
 			$db->setQuery($query);
 
@@ -195,14 +201,14 @@ class RanksController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
-	public function rankupload(): void
+	public function rankUpload(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -232,16 +238,16 @@ class RanksController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function remove(): void
 	{
 		$db = Factory::getDbo();
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -259,7 +265,7 @@ class RanksController extends FormController
 			$query = $db->getQuery(true)
 				->delete()
 				->from("{$db->quoteName('#__kunena_ranks')}")
-				->where("rank_id IN ($cids)");
+				->where("rankId IN ($cids)");
 
 			$db->setQuery($query);
 
@@ -282,14 +288,14 @@ class RanksController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{

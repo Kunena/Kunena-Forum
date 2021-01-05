@@ -112,7 +112,7 @@ class KunenaAccess
 
 		foreach ($classes as $class)
 		{
-			if (!is_object($class))
+			if (!isinternalObject($class))
 			{
 				continue;
 			}
@@ -328,7 +328,7 @@ class KunenaAccess
 			Factory::getApplication()->getDocument()->addScriptDeclaration(
 				"function kShowAccessType(htmlclass, el) {
 	var selectedvalue = el.find(\":selected\").val();
-	
+
 	name = selectedvalue.replace(/[^\\w\\d]+/, '-');
 
 $('.'+htmlclass).each(function() {
@@ -338,7 +338,7 @@ $('.'+htmlclass).each(function() {
 $('.'+htmlclass+'-'+name).each(function() {
   $( this ).show();
 });
-	
+
 }
 jQuery(document).ready(function ($) {
 	var item = $('#accesstype');
@@ -500,7 +500,7 @@ jQuery(document).ready(function ($) {
 			return false;
 		}
 
-		$category_id = $category ? $category->id : 0;
+		$categoryId = $category ? $category->id : 0;
 		$status      = intval($status);
 
 		// Check if user exists
@@ -515,18 +515,18 @@ jQuery(document).ready(function ($) {
 		}
 
 		$success      = true;
-		$usercategory = KunenaCategoryUserHelper::get($category_id, $user);
+		$userCategory = KunenaCategoryUserHelper::get($categoryId, $user);
 
-		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status))
+		if (($userCategory->role == 0 && $status) || ($userCategory->role == 1 && !$status))
 		{
-			$usercategory->role = $status;
+			$userCategory->role = $status;
 
-			if (!$usercategory->params)
+			if (!$userCategory->params)
 			{
-				$usercategory->params = '';
+				$userCategory->params = '';
 			}
 
-			$success = $usercategory->save();
+			$success = $userCategory->save();
 
 			// Clear role cache
 			$this->clearCache();
@@ -803,8 +803,8 @@ jQuery(document).ready(function ($) {
 			$hold [1] = 1;
 		}
 
-		if (($config->mod_see_deleted == '0' && $this->isAdmin($user, $catid))
-			|| ($config->mod_see_deleted == '1' && $this->isModerator($user, $catid))
+		if (($config->modSeeDeleted == '0' && $this->isAdmin($user, $catid))
+			|| ($config->modSeeDeleted == '1' && $this->isModerator($user, $catid))
 		)
 		{
 			$hold [2] = 2;
@@ -895,11 +895,11 @@ jQuery(document).ready(function ($) {
 				}
 			}
 
-			$subslist = array_diff($allow, $deny);
+			$subsList = array_diff($allow, $deny);
 
 			// Category administrators and moderators override ACL
-			$subslist += array_intersect_key($adminlist, array_flip($subscribers));
-			$subslist += array_intersect_key($modlist, array_flip($subscribers));
+			$subsList += array_intersect_key($adminlist, array_flip($subscribers));
+			$subsList += array_intersect_key($modlist, array_flip($subscribers));
 		}
 
 		if (!$moderators)
@@ -927,11 +927,11 @@ jQuery(document).ready(function ($) {
 			->where("u.block=0");
 		$userlist = [];
 
-		if (!empty($subslist))
+		if (!empty($subsList))
 		{
-			$userlist += $subslist;
-			$subslist = implode(',', array_keys($subslist));
-			$query->select("IF( u.id IN ({$subslist}), 1, 0 ) AS subscription");
+			$userlist += $subsList;
+			$subsList = implode(',', array_keys($subsList));
+			$query->select("IF( u.id IN ({$subsList}), 1, 0 ) AS subscription");
 		}
 		else
 		{
@@ -985,7 +985,7 @@ jQuery(document).ready(function ($) {
 			$query->where("u.id IN ({$userlist})");
 
 			// Only send to users whose Joomla account is enabled to Receive System Emails
-			if (KunenaConfig::getInstance()->get('use_system_emails'))
+			if (KunenaConfig::getInstance()->get('useSystemEmails'))
 			{
 				$query->where("u.sendEmail = 1");
 			}

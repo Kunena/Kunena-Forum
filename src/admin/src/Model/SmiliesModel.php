@@ -29,9 +29,9 @@ class SmiliesModel extends ListModel
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -52,8 +52,8 @@ class SmiliesModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -72,9 +72,9 @@ class SmiliesModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -91,18 +91,18 @@ class SmiliesModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filter_active = '';
+		$filterActive = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
 		$this->setState('filter.search', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.code', 'filter_code', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.code', 'filter_code', '', 'string');
 		$this->setState('filter.code', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.location', 'filter_location', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.location', 'filter_location', '', 'string');
 		$this->setState('filter.location', $value !== '' ? $value : null);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// List state information.
 		parent::populateState('id', 'asc');

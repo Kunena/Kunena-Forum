@@ -36,7 +36,7 @@ use function defined;
  * @since   Kunena 6.0
  * @property int    $user_id
  * @property int    $topic_id
- * @property int    $category_id
+ * @property int    $categoryId
  * @property int    $posts
  * @property int    $last_post_id
  * @property int    $owner

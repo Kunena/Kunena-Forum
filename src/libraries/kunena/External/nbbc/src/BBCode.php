@@ -1474,7 +1474,7 @@ REGEX;
 						{
 							$value = isset($value[$index]) ? $value[$index] : null;
 						}
-						elseif (is_object($value))
+						elseif (isinternalObject($value))
 						{
 							$value = isset($value->$index) ? $value->$index : null;
 						}

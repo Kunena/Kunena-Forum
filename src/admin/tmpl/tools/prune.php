@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -38,14 +39,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 								<td width="20%"><?php echo Text::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
 								<td>
 									<div class="input-append">
-										<input class="col-md-3" type="text" name="prune_days" value="30"/>
+										<input class="col-md-3" type="text" name="pruneDays" value="30"/>
 										<span class="add-on"><?php echo Text::_('COM_KUNENA_A_PRUNE_DAYS') ?></span>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td><?php echo Text::_('COM_KUNENA_PRUNE_DELETEORTRASH') ?></td>
-								<td><?php echo $this->listtrashdelete ?></td>
+								<td><?php echo $this->listTrashDelete ?></td>
 							</tr>
 							<tr>
 								<td><?php echo Text::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
@@ -53,7 +54,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							</tr>
 							<tr>
 								<td><?php echo Text::_('COM_KUNENA_A_PRUNE_CONTROL_OPTIONS') ?></td>
-								<td><?php echo $this->controloptions ?></td>
+								<td><?php echo $this->controlOptions ?></td>
 							</tr>
 							<tr>
 								<td><?php echo Text::_('COM_KUNENA_A_PRUNE_KEEP_STICKY') ?></td>

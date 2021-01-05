@@ -26,6 +26,11 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var mixed
+	 *
+	 * @since   Kunena 6.0
+	 */
 	private $app;
 
 	/**

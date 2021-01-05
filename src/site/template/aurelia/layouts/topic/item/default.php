@@ -134,7 +134,7 @@ if ($topic->locked)
 
 	echo '</div>';
 
-	if ($quick == 2 && KunenaConfig::getInstance()->quickreply)
+	if ($quick == 2 && KunenaConfig::getInstance()->quickReply)
 	{
 		echo $this->subLayout('Message/Edit')
 			->set('message', $this->message)
@@ -161,7 +161,7 @@ if ($topic->locked)
 	<?php endif; ?>
 
 	<?php
-	if ($this->config->enableforumjump)
+	if ($this->config->enableForumJump)
 	{
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>

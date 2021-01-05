@@ -40,20 +40,20 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * DisplayDefault
 	 *
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
 		$this->users      = $this->get('items');
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
-		$modcatlist       = $this->get('Modcatslist');
+		$modCatList       = $this->get('ModcatsList');
 
 		$sortFields          = $this->getSortFields();
 		$sortDirectionFields = $this->getSortDirectionFields();
@@ -130,7 +130,7 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$bar = Toolbar::getInstance('toolbar');
 
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
 		ToolbarHelper::spacer();
 		ToolbarHelper::editList('users.edit');
@@ -147,12 +147,12 @@ class HtmlView extends BaseHtmlView
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('users.trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		ToolbarHelper::custom('users.trashUserMessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('users.removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removeCatSubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('users.removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removeTopicSubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
 
 		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
@@ -163,8 +163,8 @@ class HtmlView extends BaseHtmlView
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
-		$help_url = 'https://docs.kunena.org/en/manual/backend/users';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**

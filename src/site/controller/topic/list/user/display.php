@@ -157,9 +157,9 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 		{
 			$controller = BaseController::getInstance("kunena");
 
-			if ($this->config->profile_id)
+			if ($this->config->profileId)
 			{
-				$itemidfix = $this->config->profile_id;
+				$itemidfix = $this->config->profileId;
 			}
 			else
 			{
@@ -324,9 +324,9 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 	{
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
-		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{
-			$image = Uri::base() . $this->config->emailheader;
+			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -341,9 +341,9 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
-		if (File::exists(JPATH_SITE . '/' . $this->config->emailheader))
+		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{
-			$image = Uri::base() . $this->config->emailheader;
+			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
 		}
 
@@ -389,7 +389,7 @@ class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = Text::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 

@@ -29,7 +29,7 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
 	 * @var    string
 	 * @since  5.4.0
 	 */
-	protected $extension = 'plg_sampledata_kunena';
+	protected $extension = 'plg_sampleData_kunena';
 
 	/**
 	 * Minimum PHP version required to install the extension
@@ -95,7 +95,7 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
 
 		if ($type == 'install' || $type == 'discover_install')
 		{
-			$this->enablePlugin('plg_sampledata_kunena');
+			$this->enablePlugin('plg_sampleData_kunena');
 		}
 	}
 

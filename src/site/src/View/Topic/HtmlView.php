@@ -101,12 +101,12 @@ class HtmlView extends BaseHtmlView
 	 * @var bool|mixed
 	 * @since version
 	 */
-	private $subscriptionschecked;
+	private $subscriptionsChecked;
 	/**
 	 * @var bool|mixed
 	 * @since version
 	 */
-	private $post_anonymous;
+	private $postAnonymous;
 	/**
 	 * @var array|bool
 	 * @since version
@@ -149,7 +149,7 @@ class HtmlView extends BaseHtmlView
 	 * @since version
 	 */
 	private $profile;
-	private $quickreply;
+	private $quickReply;
 	private $layout;
 	private $usertopic;
 
@@ -394,7 +394,7 @@ class HtmlView extends BaseHtmlView
 			// Karma points and buttons
 			$userkarma_title = $userkarma_minus = $userkarma_plus = '';
 
-			if ($this->config->showkarma && $this->profile->userid)
+			if ($this->config->showKarma && $this->profile->userid)
 			{
 				$userkarma_title = Text::_('COM_KUNENA_KARMA') . ": " . $this->profile->karma;
 
@@ -427,7 +427,7 @@ class HtmlView extends BaseHtmlView
 				$userkarma = "{$userkarma_title} {$userkarma_minus} {$userkarma_plus}";
 
 				// Use kunena profile
-				if ($this->config->showuserstats)
+				if ($this->config->showUserStats)
 				{
 					$userrankimage       = $this->profile->getRank($this->topic->category_id, 'image');
 					$userranktitle       = $this->profile->getRank($this->topic->category_id, 'title');
@@ -560,9 +560,9 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 
-		if ($this->config->enable_threaded_layouts)
+		if ($this->config->enableThreadedLayouts)
 		{
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . Session::getFormToken() . '=1';
+			$url = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&" . Session::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
 			{
@@ -622,7 +622,7 @@ class HtmlView extends BaseHtmlView
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
-			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
+			$this->quickReply ? $this->messageButtons->set('quickReply', $this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
 			$this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
 		}
@@ -645,7 +645,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Report this
-		if ($this->config->reportmsg && $this->me->exists())
+		if ($this->config->reportMsg && $this->me->exists())
 		{
 			$this->messageButtons->set('report', $this->getButton(sprintf($layout, 'report'), 'report', 'message', 'user'));
 		}
@@ -716,17 +716,17 @@ class HtmlView extends BaseHtmlView
 
 		if (isset($message->thankyou))
 		{
-			if ($this->config->showthankyou && $this->profile->userid)
+			if ($this->config->showThankYou && $this->profile->userid)
 			{
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . Session::getFormToken() . '=1';
 
-				if (count($message->thankyou) > $this->config->thankyou_max)
+				if (count($message->thankyou) > $this->config->thankYouMax)
 				{
-					$more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
+					$more_thankyou = count($message->thankyou) - $this->config->thankYouMax;
 				}
 
 				$total_thankyou = count($message->thankyou);
-				$thankyous      = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				$thankyous      = array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
 
 				if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
@@ -764,9 +764,9 @@ class HtmlView extends BaseHtmlView
 		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
-		if ($this->config->reportmsg && $this->me->exists())
+		if ($this->config->reportMsg && $this->me->exists())
 		{
-			if (!$this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
+			if (!$this->config->userReport && $this->me->userid == $this->message->userid && !$this->me->isModerator())
 			{
 				$reportMessageLink = null;
 			}
@@ -784,7 +784,7 @@ class HtmlView extends BaseHtmlView
 		if (!$contents)
 		{
 			// Show admins the IP address of the user:
-			if ($this->category->isAuthorised('admin') || ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+			if ($this->category->isAuthorised('admin') || ($this->category->isAuthorised('moderate') && !$this->config->hideIp))
 			{
 				if ($this->message->ip)
 				{
@@ -803,11 +803,11 @@ class HtmlView extends BaseHtmlView
 				}
 			}
 
-			$signatureHtml     = KunenaParser::parseBBCode($this->profile->signature, null, $this->config->maxsig);
+			$signatureHtml     = KunenaParser::parseBBCode($this->profile->signature, null, $this->config->maxSig);
 			$this->attachments = $this->message->getAttachments();
 
 			// Link to individual message
-			if ($this->config->ordering_system == 'replyid')
+			if ($this->config->orderingSystem == 'replyid')
 			{
 				$this->numLink = $this->getSamePageAnkerLink($message->id, '#[K=REPLYNO]');
 			}
@@ -881,7 +881,7 @@ class HtmlView extends BaseHtmlView
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 
-				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+				return $date->toSpan('config_postDateFormat', 'config_postDateFormatHover');
 			case 'NEW':
 				return $this->message->isNew() ? 'new' : 'old';
 			case 'REPLYNO':
@@ -959,7 +959,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function hasThreadHistory()
 	{
-		if (!$this->config->showhistory || !$this->topic->exists())
+		if (!$this->config->showHistory || !$this->topic->exists())
 		{
 			return false;
 		}
@@ -981,7 +981,7 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$history      = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering = 'DESC');
+		$history      = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, $ordering = 'DESC');
 		$historycount = count($history);
 		$replycount   = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($history);
@@ -1017,7 +1017,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function getNumLink($mesid, $replycnt)
 	{
-		if ($this->config->ordering_system == 'replyid')
+		if ($this->config->orderingSystem == 'replyid')
 		{
 			$this->numLink = $this->getSamePageAnkerLink($mesid, '#' . $replycnt);
 		}
@@ -1074,7 +1074,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function canSubscribe()
 	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
+		if (!$this->me->userid || !$this->config->allowSubscriptions || $this->config->topicSubscriptions == 'disabled')
 		{
 			return false;
 		}
@@ -1120,15 +1120,15 @@ class HtmlView extends BaseHtmlView
 
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->boardTitle . ' - ' . $title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
 			}
 			else
 			{
-				$title = KunenaFactory::getConfig()->board_title . ': ' . $title;
+				$title = KunenaFactory::getConfig()->boardTitle . ': ' . $title;
 			}
 
 			$this->document->setTitle($title);
@@ -1222,7 +1222,7 @@ class HtmlView extends BaseHtmlView
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
 		// Get topic icons if allowed
-		if ($this->config->topicicons)
+		if ($this->config->topicIcons)
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
@@ -1233,12 +1233,12 @@ class HtmlView extends BaseHtmlView
 
 		foreach ($categories as $category)
 		{
-			if (!$category->isSection() && $category->allow_anonymous)
+			if (!$category->isSection() && $category->allowAnonymous)
 			{
-				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->post_anonymous;
+				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->postAnonymous;
 			}
 
-			if (!$category->isSection() && $category->allow_polls)
+			if (!$category->isSection() && $category->allowPolls)
 			{
 				$arraypollcatid[] = '"' . $category->id . '":1';
 			}
@@ -1249,7 +1249,7 @@ class HtmlView extends BaseHtmlView
 		$this->document->addScriptDeclaration('var arrayanynomousbox={' . $arrayanynomousbox . '}');
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
-		$cat_params = ['ordering'    => 'ordering',
+		$catParams = ['ordering'    => 'ordering',
 					   'toplevel'    => 0,
 					   'sections'    => 0,
 					   'direction'   => 1,
@@ -1271,7 +1271,7 @@ class HtmlView extends BaseHtmlView
 		$options  = [];
 		$selected = $this->topic->category_id;
 
-		if ($this->config->pickup_category)
+		if ($this->config->pickupCategory)
 		{
 			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
@@ -1282,7 +1282,7 @@ class HtmlView extends BaseHtmlView
 			$selected = $saved['catid'];
 		}
 
-		$selectcatlist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$selectcatlist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $catParams, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 
@@ -1295,8 +1295,8 @@ class HtmlView extends BaseHtmlView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
@@ -1356,7 +1356,7 @@ class HtmlView extends BaseHtmlView
 		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null))
+		if ($this->config->topicIcons && $this->topic->isAuthorised('edit', null))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -1367,8 +1367,8 @@ class HtmlView extends BaseHtmlView
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
@@ -1407,7 +1407,7 @@ class HtmlView extends BaseHtmlView
 		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit', null))
+		if ($this->config->topicIcons && $this->topic->isAuthorised('edit', null))
 		{
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
@@ -1442,8 +1442,8 @@ class HtmlView extends BaseHtmlView
 			$this->message->edit($saved);
 		}
 
-		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
-		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->postAnonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->subscriptionsChecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$modified_reason            = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 

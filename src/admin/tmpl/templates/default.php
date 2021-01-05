@@ -60,7 +60,7 @@ $wa->useScript('multiselect');
 						</tfoot>
 						<tbody>
 						<?php foreach ($this->templates as $id => $row)
-						:
+							:
 							?>
 							<tr>
 								<td>
@@ -80,13 +80,13 @@ $wa->useScript('multiselect');
 								</td>
 								<td class="center">
 									<?php if ($row->published == 1)
-									:
+										:
 										?>
 										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span
 													class="icon-featured"></span></a>
 									<?php else
 
-									:
+										:
 										?>
 										<a href="javascript: void(0);"
 										   onclick="return Joomla.listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
@@ -134,31 +134,32 @@ $wa->useScript('multiselect');
 						<?php if ($this->templatesxml) : ?>
 							<?php foreach ($this->templatesxml as $row) : ?>
 								<tr>
-									<td style="width: 5%;"><?php echo $row->price;?>
+									<td style="width: 5%;"><?php echo $row->price; ?>
 									</td>
-									<td style="width: 5%;"><?php echo $row->type == 'paid-template' ? Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_PAID') : Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FREE');?>
+									<td style="width: 5%;"><?php echo $row->type == 'paid-template' ? Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_PAID') : Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FREE'); ?>
 									</td>
-									<td style="width: 5%;"><?php echo $row->version;?>
+									<td style="width: 5%;"><?php echo $row->version; ?>
 									</td>
 									<td style="width: 15%;">
 									<span class="editlinktip hasTip"
 										  title="<?php echo $row->name . $this->escape('::<img loading=lazy border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-										<a href="<?php echo $row->detailsurl;?>" target="_blank"
-										   rel="noopener noreferrer"><?php echo $row->name;?></a>
+										<a href="<?php echo $row->detailsurl; ?>" target="_blank"
+										   rel="noopener noreferrer"><?php echo $row->name; ?></a>
 									</span>
 									</td>
 									<td style="width: 10%;">
-										<?php echo $row->created;?>
+										<?php echo $row->created; ?>
 									</td>
 									<td style="width: 10%;">
-										<a href="mailto:<?php echo $row->authoremail;?>"><?php echo $row->author;?></a>
+										<a href="mailto:<?php echo $row->authoremail; ?>"><?php echo $row->author; ?></a>
 									</td>
 									<td style="width: 10%;">
-										<a href="<?php echo $row->detailsurl;?>" target="_blank"
+										<a href="<?php echo $row->detailsurl; ?>" target="_blank"
 										   rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
 									</td>
 									<td style="width: 25%;">
-										<a href="<?php echo $row->authorurl;?>" target="_blank" rel="noopener noreferrer"><?php echo $row->authorurl;?></a>
+										<a href="<?php echo $row->authorurl; ?>" target="_blank"
+										   rel="noopener noreferrer"><?php echo $row->authorurl; ?></a>
 									</td>
 									<td style="width: 30%;">
 									</td>

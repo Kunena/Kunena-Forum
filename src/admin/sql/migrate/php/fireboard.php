@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\KunenaInstaller;
 
 /**
  * Class KunenaMigratorFireboard
@@ -36,7 +37,7 @@ class KunenaMigratorFireboard
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function getInstance()
+	public static function getInstance(): ?KunenaMigratorFireboard
 	{
 		static $instance = null;
 
@@ -55,7 +56,7 @@ class KunenaMigratorFireboard
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function detect()
+	public function detect(): string
 	{
 		// Check if FireBoard can be found from the Joomla installation.
 		if (KunenaInstaller::detectTable('fb_version'))
@@ -68,7 +69,7 @@ class KunenaMigratorFireboard
 			// Do not detect Kunena 1.x.
 			if ($version && version_compare($version->version, '1.0.5', '>'))
 			{
-				return;
+				return false;
 			}
 
 			// Return FireBoard version.
@@ -86,6 +87,6 @@ class KunenaMigratorFireboard
 			}
 		}
 
-		return;
+		return true;
 	}
 }

@@ -60,7 +60,7 @@ $this->addScript('poll.js');
 				</ul>
 
 				<input id="kpoll-button-vote" class="btn btn-outline-success" type="submit"
-					   value="<?php echo $this->userhasvoted && !$this->config->pollallowvoteone
+					   value="<?php echo $this->userhasvoted && !$this->config->pollAllowVoteOne
 						   ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
 						   : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
 				<input id="kpoll_go_results" type="button" class="btn btn-outline-success"

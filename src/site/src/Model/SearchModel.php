@@ -220,7 +220,7 @@ class SearchModel extends ListModel
 			}
 		}
 
-		if (!$this->config->pubprofile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubprofile)
+		if (!$this->config->pubProfile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubProfile)
 		{
 			// User searching
 			$username = $this->getState('query.searchuser');
@@ -419,7 +419,7 @@ class SearchModel extends ListModel
 			$limitstr .= "&limitstart=$limitstart";
 		}
 
-		if ($limit > 0 && $limit != $config->messages_per_page_search)
+		if ($limit > 0 && $limit != $config->messagesPerPageSearch)
 		{
 			$limitstr .= "&limit=$limit";
 		}
@@ -463,7 +463,7 @@ class SearchModel extends ListModel
 		$value = Factory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);
 
-		if (!$this->config->pubprofile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubprofile)
+		if (!$this->config->pubProfile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubProfile)
 		{
 			$value = Factory::getApplication()->input->getInt('exactname', 0);
 			$this->setState('query.exactname', $value);
@@ -475,7 +475,7 @@ class SearchModel extends ListModel
 		$value = Factory::getApplication()->input->getInt('replylimit', 0);
 		$this->setState('query.replylimit', $value);
 
-		$value = Factory::getApplication()->input->getString('searchdate', $this->config->searchtime);
+		$value = Factory::getApplication()->input->getString('searchdate', $this->config->searchTime);
 		$this->setState('query.searchdate', $value);
 
 		$value = Factory::getApplication()->input->getString('searchatdate', null);
@@ -548,7 +548,7 @@ class SearchModel extends ListModel
 
 		if ($value < 1 || $value > 100)
 		{
-			$value = $this->config->messages_per_page_search;
+			$value = $this->config->messagesPerPageSearch;
 		}
 
 		$this->setState('list.limit', $value);

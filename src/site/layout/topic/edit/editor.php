@@ -53,7 +53,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 */
 	public function getCodeTypes()
 	{
-		if (!$this->config->highlightcode)
+		if (!$this->config->highlightCode)
 		{
 			return false;
 		}
@@ -148,7 +148,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			}
 			elseif ($item == 'emoticons')
 			{
-				if (!$this->config->disemoticons && $templatesettings->get($item))
+				if (!$this->config->disableEmoticons && $templatesettings->get($item))
 				{
 					$option = 1;
 				}

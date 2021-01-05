@@ -33,44 +33,96 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $config;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $avatar;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $editavatar;
 
-	protected $maxsig = '';
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected $maxSig = '';
 
-	protected $maxpersotext = '';
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected $maxPersonalText = '';
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $social;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $selectMod;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $sub;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $ipslist;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $selectOrder;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $settings;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $selectRank;
 
+	/**
+	 * @var mixed
+	 * @since version
+	 */
 	protected $modCats;
 
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayMove(): void
 	{
 		$this->setToolBarMove();
-		$catslist = $this->get('movecatslist');
-		$users    = $this->get('moveuser');
+		$catsList = $this->get('moveCatsList');
+		$users    = $this->get('moveUser');
 		$this->display();
 	}
 
@@ -81,34 +133,34 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function setToolBarMove(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
 	}
 
 	/**
-	 * @param   null  $tpl
+	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  mixed
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
 		$user          = $this->get('user');
 		$this->sub     = $this->get('subscriptions');
-		$subscatslist  = $this->get('catsubcriptions');
+		$subsCatsList  = $this->get('catSubscriptions');
 		$this->ipslist = $this->get('IPlist');
 
-		$avatarint        = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof KunenaAvatar) && $user->avatar;
-		$this->avatar     = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+		$avatarIntegration = KunenaFactory::getAvatarIntegration();
+		$this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $user->avatar;
+		$this->avatar      = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
@@ -194,7 +246,7 @@ class HtmlView extends BaseHtmlView
 			$this->settings[] = $item;
 		}
 
-		$this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox form-control" size="2"', 'value', 'text', $user->ordering);
+		$this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="2"', 'value', 'text', $user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');
 		$this->social      = $user->socialButtons();
@@ -216,7 +268,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
-		// Set the titlebar text
+		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		ToolbarHelper::spacer();
 		ToolbarHelper::apply('user.apply');
@@ -225,7 +277,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

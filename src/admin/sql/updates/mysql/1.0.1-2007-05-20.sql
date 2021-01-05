@@ -24,7 +24,7 @@ ALTER TABLE `#__kunena_categories`
 ALTER TABLE `#__kunena_categories`
   ADD KEY `parent`(`parent`);
 ALTER TABLE `#__kunena_categories`
-  ADD KEY `published_pubaccess_id`(`published`, `pub_access`, `id`);
+  ADD KEY `published_pubaccess_id`(`published`, `pubAccess`, `id`);
 
 ALTER TABLE `#__kunena_messages`
   DROP KEY `id`;

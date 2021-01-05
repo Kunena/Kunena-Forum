@@ -96,11 +96,11 @@ class KunenaIntegrationAvatar extends KunenaAvatar
 			// If avatar does not exist use default image.
 			if ($sizex <= 90)
 			{
-				$avatar = KunenaConfig::getInstance()->defaultavatarsmall;
+				$avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
 			}
 			else
 			{
-				$avatar = KunenaConfig::getInstance()->defaultavatar;
+				$avatar = KunenaConfig::getInstance()->defaultAvatar;
 			}
 
 			// Search from the template.
@@ -133,7 +133,7 @@ class KunenaIntegrationAvatar extends KunenaAvatar
 		if (!is_file("{$path}/{$resized}/{$file}"))
 		{
 			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex,
-				$sizey, intval($config->avatarquality), KunenaImage::SCALE_INSIDE, intval($config->avatarcrop)
+				$sizey, intval($config->avatarQuality), KunenaImage::SCALE_INSIDE, intval($config->avatarCrop)
 			);
 
 			if ($user->timestamp)

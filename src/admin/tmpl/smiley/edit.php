@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
-	"function update_smiley(newimage) {
+		"function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;
 }"
 );
@@ -40,7 +40,7 @@ $wa->useScript('multiselect');
 				<input type="hidden" name="task" value="save"/>
 				<?php if ($this->state->get('item.id'))
 					:
-					?><input type="hidden" name="smileyid"
+					?><input type="hidden" name="smileyId"
 							 value="<?php echo $this->state->get('item.id') ?>" /><?php
 				endif; ?>
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -53,12 +53,12 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_EMOTICONS_CODE'); ?>
 							</td>
 							<td width="80%">
-								<input class="col-md-2" type="text" name="smiley_code"
-									   value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
+								<input class="col-md-2" type="text" name="smileyCode"
+									   value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
 								<img loading=lazy name="smiley_image"
-									 src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
+									 src="<?php echo isset($this->smileySelected) ? $this->escape($this->ktemplate->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
 									 border="0"
-									 alt="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : 'smiley' ?>"/>
+									 alt="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : 'smiley' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -66,7 +66,7 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_EMOTICONS_URL'); ?>
 							</td>
 							<td>
-								<?php echo $this->listsmileys; ?>
+								<?php echo $this->listSmileys; ?>
 							</td>
 						</tr>
 						<tr>
@@ -74,8 +74,8 @@ $wa->useScript('multiselect');
 								<?php echo Text::_('COM_KUNENA_EMOTICONS_EMOTICONBAR'); ?>
 							</td>
 							<td>
-								<input type="checkbox" name="smiley_emoticonbar" value="1"
-									<?php echo $this->state->get('item.id') && $this->smiley_selected->emoticonbar == 1 ? 'checked="checked"' : ''; ?> />
+								<input type="checkbox" name="smileyEmoticonBar" value="1"
+										<?php echo $this->state->get('item.id') && $this->smileySelected->emoticonbar == 1 ? 'checked="checked"' : ''; ?> />
 							</td>
 						</tr>
 					</table>

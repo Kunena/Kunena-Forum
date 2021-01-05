@@ -50,7 +50,7 @@ class raw extends KunenaView
 		$body     = Factory::getApplication()->input->post->get('body', '', 'raw');
 		$response = [];
 
-		if ($this->me->exists() || $this->config->pubwrite)
+		if ($this->me->exists() || $this->config->pubWrite)
 		{
 			$msgbody              = KunenaParser::parseBBCode($body, $this);
 			$response ['preview'] = $msgbody;
@@ -133,10 +133,10 @@ class raw extends KunenaView
 		$catid = $this->app->input->getInt('catid', 0);
 
 		$category         = KunenaCategoryHelper::get($catid);
-		$category_iconset = $category->iconset;
+		$categoryIconset = $category->iconset;
 		$app              = Factory::getApplication();
 
-		if (empty($category_iconset))
+		if (empty($categoryIconset))
 		{
 			$response = [];
 
@@ -152,7 +152,7 @@ class raw extends KunenaView
 
 		$template = KunenaFactory::getTemplate();
 
-		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/topicicons.xml';
+		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicIcons.xml';
 
 		if (is_file($xmlfile))
 		{
@@ -177,7 +177,7 @@ class raw extends KunenaView
 						$icon->id = $icon->type . '_' . $icon->name;
 					}
 
-					$icon->iconset   = $category_iconset;
+					$icon->iconset   = $categoryIconset;
 					$icon->published = (int) $attributes->published;
 					$icon->title     = (string) $attributes->title;
 					$icon->b2        = (string) $attributes->b2;
@@ -186,7 +186,7 @@ class raw extends KunenaView
 					$icon->filename  = (string) $attributes->src;
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
 					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path      = Uri::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->path      = Uri::root() . 'media/kunena/topic_icons/' . $categoryIconset . '/' . $icon->filename;
 					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false);
 					$topicIcons[]    = $icon;
 				}
@@ -254,7 +254,7 @@ class raw extends KunenaView
 		$app      = Factory::getApplication();
 		$user     = UserHelper::getMyself();
 
-		if ($user->exists() || $this->config->ratingenabled)
+		if ($user->exists() || $this->config->ratingEnabled)
 		{
 			$rate           = KunenaRateHelper::get($topicid);
 			$rate->stars    = $starid;

@@ -111,7 +111,7 @@ abstract class KunenaFactory
 	 */
 	public static function getSession($update = false): ?KunenaSession
 	{
-		if (!is_object(self::$session))
+		if (!isinternalObject(self::$session))
 		{
 			self::$session = KunenaSession::getInstance($update);
 		}
@@ -234,7 +234,7 @@ abstract class KunenaFactory
 			$english = false;
 
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-				&& !self::getConfig()->get('debug') && self::getConfig()->get('fallback_english')
+				&& !self::getConfig()->get('debug') && self::getConfig()->get('fallbackEnglish')
 			)
 			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);

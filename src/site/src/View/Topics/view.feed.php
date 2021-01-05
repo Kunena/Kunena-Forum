@@ -58,7 +58,7 @@ class feed extends KunenaView
 	 */
 	public function displayDefault($tpl = null)
 	{
-		if (!$this->config->enablerss)
+		if (!$this->config->enableRss)
 		{
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
@@ -72,10 +72,10 @@ class feed extends KunenaView
 		}
 		else
 		{
-			if ($this->config->rss_cache >= 1)
+			if ($this->config->rssCache >= 1)
 			{
 				$cache->setCaching(1);
-				$cache->setLifeTime($this->config->rss_cache);
+				$cache->setLifeTime($this->config->rssCache);
 			}
 			else
 			{
@@ -89,7 +89,7 @@ class feed extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$this->document->setGenerator($this->config->board_title);
+		$this->document->setGenerator($this->config->boardTitle);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -187,13 +187,13 @@ class feed extends KunenaView
 	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
-		if ($this->config->rss_author_in_title)
+		if ($this->config->rssAuthorInTitle)
 		{
 			// We want author in item titles
 			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
 		}
 
-		if ((int) $this->config->rss_word_count === -1)
+		if ((int) $this->config->rssWordCount === -1)
 		{
 			$description = '';
 		}
@@ -204,13 +204,13 @@ class feed extends KunenaView
 			$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
 			$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
 
-			if ((bool) $this->config->rss_allow_html)
+			if ((bool) $this->config->rssAllowHtml)
 			{
-				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseBBCode($description, null, (int) $this->config->rssWordCount);
 			}
 			else
 			{
-				$description = KunenaParser::parseText($description, (int) $this->config->rss_word_count);
+				$description = KunenaParser::parseText($description, (int) $this->config->rssWordCount);
 			}
 		}
 
@@ -223,7 +223,7 @@ class feed extends KunenaView
 		$item->author      = $username;
 
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
-		if ($this->config->rss_author_format != 'name')
+		if ($this->config->rssAuthorFormat != 'name')
 		{
 			$item->authorEmail = Factory::getUser($userid)->email;
 		}
@@ -245,7 +245,7 @@ class feed extends KunenaView
 	 */
 	public function displayUser($tpl = null)
 	{
-		if (!$this->config->enablerss)
+		if (!$this->config->enableRss)
 		{
 			throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
@@ -256,7 +256,7 @@ class feed extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($this->config->board_title);
+		$this->document->setGenerator($this->config->boardTitle);
 
 		switch ($this->state->get('list.mode'))
 		{
@@ -292,7 +292,7 @@ class feed extends KunenaView
 	 */
 	public function displayPosts($tpl = null)
 	{
-		if (!$this->config->enablerss)
+		if (!$this->config->enableRss)
 		{
 			throw new KunenaException(Text::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
@@ -304,7 +304,7 @@ class feed extends KunenaView
 
 		// TODO: if start != 0, add information from it into description
 		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->document->setGenerator($this->config->board_title);
+		$this->document->setGenerator($this->config->boardTitle);
 
 		switch ($this->state->get('list.mode'))
 		{

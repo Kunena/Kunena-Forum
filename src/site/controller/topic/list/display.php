@@ -129,7 +129,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		$options    = [];
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		// Todo: fix params
-		$cat_params   = ['sections' => 1, 'catid' => 0];
+		$catParams   = ['sections' => 1, 'catid' => 0];
 		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
@@ -138,7 +138,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'list');
 		PluginHelper::importPlugin('kunena');
-		KunenaParser::prepareContent($content, 'topic_list_default');
+		KunenaParser::prepareContent($content, 'topicList_default');
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
 	}
 
@@ -204,7 +204,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 			}
 			else
 			{
-				$description = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$description = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 

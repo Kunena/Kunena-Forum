@@ -126,7 +126,7 @@ class KunenaVersion
 			$version = $db->loadObject();
 		}
 
-		if (!isset($version) || !is_object($version) || !isset($version->state))
+		if (!isset($version) || !isinternalObject($version) || !isset($version->state))
 		{
 			$version        = new stdClass;
 			$version->state = '';

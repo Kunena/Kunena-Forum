@@ -41,17 +41,17 @@ class TemplateController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @see     BaseController
-	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     BaseController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -68,17 +68,17 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{
-		$template = $this->app->input->get('templatename', '', 'cmd');
+		$template = $this->app->input->get('templatename', '');
 		$menus    = $this->app->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -88,13 +88,17 @@ class TemplateController extends FormController
 
 		if (!$template)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED')
+			);
+
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
-		$this->_saveParamFile($template);
+		$this->internalSaveParamFile($template);
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -107,12 +111,12 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws null
 	 * @throws Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
-	protected function _saveParamFile(string $template): void
+	protected function internalSaveParamFile(string $template): void
 	{
 		$params = $this->app->input->get('jform', [], 'array');
 
@@ -257,7 +261,11 @@ class TemplateController extends FormController
 
 			if (!$return)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
+				$this->app->enqueueMessage(
+					Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
+					Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file)
+				);
+
 				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}
@@ -268,18 +276,18 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function apply(): void
 	{
-		$template = $this->app->input->get('templatename', '', 'cmd');
+		$template = $this->app->input->get('templatename', '');
 		$menus    = $this->app->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -289,13 +297,17 @@ class TemplateController extends FormController
 
 		if (!$template)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED')
+			);
+
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
 		}
 
-		$this->_saveParamFile($template);
+		$this->internalSaveParamFile($template);
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=edit&cid[]=' . $template, false));
@@ -306,13 +318,13 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function restore(): void
 	{
-		$template = $this->app->input->get('templatename', '', 'cmd');
+		$template = $this->app->input->get('templatename');
 		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (file_exists($file))

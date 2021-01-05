@@ -32,10 +32,10 @@ $isReply         = $message->id != $topic->first_post_id;
 $category        = $message->getCategory();
 $this->ktemplate = KunenaFactory::getTemplate();
 $config          = KunenaFactory::getConfig();
-$avatar          = $config->avataroncat ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
+$avatar          = $config->avatarOnCategory ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 $cols            = empty($this->checkbox) ? 5 : 6;
 $txt             = $topic->getActions();
-$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
+$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3);
 
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
@@ -97,7 +97,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 							title="<?php echo Text::_('COM_KUNENA_ATTACH'); ?>"><?php echo Icons::attach(); ?></span>
 			<?php endif; ?>
 
-			<?php if ($topic->poll_id && $category->allow_polls)
+			<?php if ($topic->poll_id && $category->allowPolls)
 			:
 				?>
 				<span <?php echo Template::getInstance()->tooltips(true); ?>
@@ -107,10 +107,10 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 
 		<div class="started">
 			<?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
-			<?php if ($config->post_dateformat != 'none')
+			<?php if ($config->postDateFormat != 'none')
 			:
 				?>
-				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
+				<?php echo $topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?>,
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') ?>
 			<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getFirstPostAuthor()->getName()), '', '', Template::getInstance()->tooltips(), $category->id); ?>
@@ -133,10 +133,10 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 		<div id="klastpostphone" class="visible-xs">
 			<?php echo $this->getTopicLink($topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, null, $category, false, true); ?>
 			<?php
-			if ($config->post_dateformat != 'none')
+			if ($config->postDateFormat != 'none')
 			:
 				?>
-				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
+				<?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?> <br>
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
 		</div>
@@ -155,11 +155,11 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 
 	<td class="hidden-xs-down">
 		<div class="row">
-			<?php if ($config->avataroncat)
+			<?php if ($config->avatarOnCategory)
 			:
 				?>
 			<div class="col-xs-6 col-md-3">
-				<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', Template::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
+				<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', Template::getInstance()->tooltips(), $category->id, $config->avatarEdit); ?>
 			</div>
 			<div class="col-xs-6 col-md-9">
 			<?php else
@@ -172,7 +172,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 						<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', Template::getInstance()->tooltips(), $category->id); ?>
 						</span>
 					<br>
-					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
 				</div>
 			</div>
 		</div>

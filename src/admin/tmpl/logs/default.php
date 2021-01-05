@@ -152,8 +152,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<td>
 							</td>
 							<td>
-								<label for="filter_type" class="element-invisible"><?php echo 'Type'; ?></label>
-								<select name="filter_type" id="filter_type" class="select-filter filter form-control"
+								<label for="filterType" class="element-invisible"><?php echo 'Type'; ?></label>
+								<select name="filterType" id="filterType" class="select-filter filter form-control"
 										onchange="Joomla.orderTable()">
 									<option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 									<?php echo HTMLHelper::_('select.options', $this->filter->TypeFields, 'value', 'text', $this->filter->Type); ?>

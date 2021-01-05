@@ -17,6 +17,7 @@ use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -34,7 +35,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 				<?php
 				if (!empty($task))
-				:
+					:
 					$rows = KunenaDiagnostics::getItems($task);
 					$info = KunenaDiagnostics::getFieldInfo($task);
 					$fields = array_keys((array) reset($rows));
@@ -47,24 +48,24 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						</tr>
 						</thead>
 						<?php if ($rows)
-						:
+							:
 							?>
 							<tr>
 								<?php foreach ($fields as $field)
-								:
+									:
 									?>
 									<th><?php echo $this->escape($field) ?></th>
 								<?php endforeach ?>
 							</tr>
 							<?php foreach (KunenaDiagnostics::getItems($task) as $row)
 							:
-								?>
-								<tr>
-									<?php foreach ($row as $field => $value)
+							?>
+							<tr>
+								<?php foreach ($row as $field => $value)
 									:
-										?>
-										<?php $special = isset($info[$field]) ? $info[$field] : '' ?>
-										<td<?php echo $special && $special[0] != '_' ? ' class="' . $special . '"' : '' ?>><?php
+									?>
+									<?php $special = isset($info[$field]) ? $info[$field] : '' ?>
+									<td<?php echo $special && $special[0] != '_' ? ' class="' . $special . '"' : '' ?>><?php
 										if ($special && $special[0] == '_')
 										{
 											echo $info[$special] . $this->escape($value);
@@ -74,12 +75,12 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 											echo $this->escape($value);
 										}
 										?></td>
-									<?php endforeach ?>
-								</tr>
-							<?php endforeach ?>
+								<?php endforeach ?>
+							</tr>
+						<?php endforeach ?>
 						<?php else
 
-						:
+							:
 							?>
 							<tr>
 								<td><?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td>
@@ -89,7 +90,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 				<?php else
 
-				:
+					:
 					?>
 					<table class="table table-striped">
 						<thead>
@@ -98,13 +99,13 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						</tr>
 						</thead>
 						<?php foreach (KunenaDiagnostics::getList() as $item)
-						:
+							:
 							?>
 							<?php $count = KunenaDiagnostics::count($item) ?>
 							<tr>
 								<td><?php echo $item ?></td>
 								<?php if ($count)
-								:
+									:
 									?>
 									<td style="color:red;"><?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_FAILED') ?></td>
 									<td><?php echo Text::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></td>
@@ -114,7 +115,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 										<?php echo KunenaDiagnostics::canNotice($item) ? KunenaDiagnostics::canNotice($item) : '' ?></td>
 								<?php else
 
-								:
+									:
 									?>
 									<td style="color:green;"><?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_PASSED') ?></td>
 									<td><?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td>

@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+
 /**
  * Kunena Users Controller
  *
@@ -44,19 +45,22 @@ class UsersController extends AdminController
 	 * @var    string  The prefix to use with controller messages.
 	 * @since  1.6
 	 */
-	protected $text_prefix = 'COM_KUNENA_USERS';
+	protected $textPrefix = 'COM_KUNENA_USERS';
 
 	/**
 	 * @var     null|string
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
 	private $me;
 
 	/**
 	 * Constructor.
-	 *
-	 * @see     BaseController
 	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
@@ -64,9 +68,11 @@ class UsersController extends AdminController
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     BaseController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -96,14 +102,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function edit(): bool
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -133,14 +139,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function trashusermessages(): void
+	public function trashUserMessages(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -180,14 +186,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function move(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -216,14 +222,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function movemessages(): void
+	public function moveMessages(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -287,14 +293,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function logout(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -326,14 +332,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function remove(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -406,14 +412,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function ban(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -437,7 +443,7 @@ class UsersController extends AdminController
 
 		if (!$ban->id)
 		{
-			$ban->ban($userid, null, 0);
+			$ban->ban($userid);
 			$success = $ban->save();
 		}
 		else
@@ -466,14 +472,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function unban(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -497,7 +503,7 @@ class UsersController extends AdminController
 
 		if (!$ban->id)
 		{
-			$ban->ban($userid, null, 0);
+			$ban->ban($userid);
 			$success = $ban->save();
 		}
 		else
@@ -526,13 +532,13 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  null
 	 */
 	public function moderate(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -577,14 +583,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 5.1
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 5.1
+	 *
 	 */
 	public function unmoderate(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -614,18 +620,18 @@ class UsersController extends AdminController
 
 		$category = intval($category);
 
-		$usercategory = KunenaUserHelper::get($category, $user);
+		$userCategory = KunenaUserHelper::get($category, $user);
 
-		if ($usercategory->role == 1)
+		if ($userCategory->role == 1)
 		{
-			$usercategory->role = false;
+			$userCategory->role = false;
 
-			if (!$usercategory->params)
+			if (!$userCategory->params)
 			{
-				$usercategory->params = '';
+				$userCategory->params = '';
 			}
 
-			$success = $usercategory->save();
+			$success = $userCategory->save();
 
 			// Clear role cache
 			KunenaAccess::getInstance()->clearCache();
@@ -659,14 +665,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function block()
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -719,14 +725,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function unblock(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -779,14 +785,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function batch_moderators(): void
+	public function batchModerators(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -845,10 +851,10 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 4.0
+	 *
 	 */
 	public function cancel(): void
 	{
@@ -860,14 +866,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
-	public function removecatsubscriptions(): void
+	public function removeCatSubscriptions(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -895,7 +901,9 @@ class UsersController extends AdminController
 				}
 				catch (Exception $e)
 				{
-					$e->getMessage();
+					$this->app->enqueueMessage($e->getMessage());
+
+					return;
 				}
 			}
 		}
@@ -909,14 +917,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
-	public function removetopicsubscriptions(): void
+	public function removeTopicSubscriptions(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -944,7 +952,9 @@ class UsersController extends AdminController
 				}
 				catch (Exception $e)
 				{
-					$e->getMessage();
+					$this->app->enqueueMessage($e->getMessage(), 'notice');
+
+					return;
 				}
 			}
 		}
@@ -958,14 +968,14 @@ class UsersController extends AdminController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
-	public function subscribeuserstocategories(): void
+	public function subscribeUsersToCategories(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -1016,9 +1026,9 @@ class UsersController extends AdminController
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws Exception
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -1033,7 +1043,7 @@ class UsersController extends AdminController
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			KunenaAccess::getInstance()->setModerator((object)[], $user, in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
 		}
 
 		return true;

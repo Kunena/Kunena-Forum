@@ -268,8 +268,8 @@ class TopicsModel extends ListModel
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
 
-		$latestcategory    = $this->getState('list.categories');
-		$latestcategory_in = $this->getState('list.categories.in');
+		$latestCategory    = $this->getState('list.categories');
+		$latestCategoryIn = $this->getState('list.categories.in');
 
 		$started       = false;
 		$posts         = false;
@@ -303,7 +303,7 @@ class TopicsModel extends ListModel
 		}
 
 		$params = [
-			'reverse'    => !$latestcategory_in,
+			'reverse'    => !$latestCategoryIn,
 			'orderby'    => $orderby,
 			'hold'       => 0,
 			'user'       => $this->getState('user'),
@@ -312,7 +312,7 @@ class TopicsModel extends ListModel
 			'favorited'  => $favorites,
 			'subscribed' => $subscriptions, ];
 
-		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}
@@ -345,8 +345,8 @@ class TopicsModel extends ListModel
 			$time = Factory::getDate()->toUnix() - ($time * 3600);
 		}
 
-		$latestcategory    = $this->getState('list.categories');
-		$latestcategory_in = $this->getState('list.categories.in');
+		$latestCategory    = $this->getState('list.categories');
+		$latestCategoryIn = $this->getState('list.categories.in');
 
 		$hold     = 0;
 		$where    = '';
@@ -400,14 +400,14 @@ class TopicsModel extends ListModel
 		}
 
 		$params = [
-			'reverse'   => !$latestcategory_in,
+			'reverse'   => !$latestCategoryIn,
 			'exclude'   => $this->setState('list.categories.exclude', 0),
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
 			'where'     => $where, ];
 
-		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
+		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
 		$this->_common();
 	}
@@ -636,18 +636,18 @@ class TopicsModel extends ListModel
 
 		if ($catid)
 		{
-			$latestcategory    = [$catid];
-			$latestcategory_in = true;
+			$latestCategory    = [$catid];
+			$latestCategoryIn = true;
 
 			// Check if the category is in excluded list
-			if (!empty($this->config->rss_excluded_categories))
+			if (!empty($this->config->rssExcludedCategories))
 			{
-				$cat_excluded = explode(',', $this->config->rss_excluded_categories);
+				$cat_excluded = explode(',', $this->config->rssExcludedCategories);
 
 				if (in_array($catid, $cat_excluded))
 				{
-					$latestcategory    = $this->config->rss_excluded_categories;
-					$latestcategory_in = 0;
+					$latestCategory    = $this->config->rssExcludedCategories;
+					$latestCategoryIn = 0;
 					$this->setState('list.categories.exclude', 1);
 				}
 			}
@@ -657,54 +657,54 @@ class TopicsModel extends ListModel
 			if (Factory::getApplication()->getDocument()->getType() != 'feed')
 			{
 				// Get configuration from menu item.
-				$latestcategory    = $params->get('topics_categories', '');
-				$latestcategory_in = $params->get('topics_catselection', '');
+				$latestCategory    = $params->get('topics_categories', '');
+				$latestCategoryIn = $params->get('topics_catselection', '');
 
 				// Make sure that category list is an array.
-				if (!is_array($latestcategory))
+				if (!is_array($latestCategory))
 				{
-					$latestcategory = explode(',', $latestcategory);
+					$latestCategory = explode(',', $latestCategory);
 				}
 
 				// Default to global configuration.
-				if (in_array('', $latestcategory, true))
+				if (in_array('', $latestCategory, true))
 				{
-					$latestcategory = $this->config->latestcategory;
+					$latestCategory = $this->config->latestCategory;
 				}
 
-				if ($latestcategory_in == '')
+				if ($latestCategoryIn == '')
 				{
-					$latestcategory_in = $this->config->latestcategory_in;
+					$latestCategoryIn = $this->config->latestCategoryIn;
 				}
 			}
 			else
 			{
 				// Use RSS configuration.
-				if (!empty($this->config->rss_excluded_categories))
+				if (!empty($this->config->rssExcludedCategories))
 				{
-					$latestcategory    = $this->config->rss_excluded_categories;
-					$latestcategory_in = 0;
+					$latestCategory    = $this->config->rssExcludedCategories;
+					$latestCategoryIn = 0;
 				}
 				else
 				{
-					$latestcategory    = $this->config->rss_included_categories;
-					$latestcategory_in = 1;
+					$latestCategory    = $this->config->rssIncludedCategories;
+					$latestCategoryIn = 1;
 				}
 			}
 
-			if (!is_array($latestcategory))
+			if (!is_array($latestCategory))
 			{
-				$latestcategory = explode(',', $latestcategory);
+				$latestCategory = explode(',', $latestCategory);
 			}
 
-			if (empty($latestcategory) || in_array(0, $latestcategory))
+			if (empty($latestCategory) || in_array(0, $latestCategory))
 			{
-				$latestcategory = false;
+				$latestCategory = false;
 			}
 		}
 
-		$this->setState('list.categories', $latestcategory);
-		$this->setState('list.categories.in', $latestcategory_in);
+		$this->setState('list.categories', $latestCategory);
+		$this->setState('list.categories.in', $latestCategoryIn);
 
 		// Selection time.
 		if (Factory::getApplication()->getDocument()->getType() != 'feed')
@@ -712,7 +712,7 @@ class TopicsModel extends ListModel
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)
 			{
-				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int');
+				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->showListTime), 'int');
 				$this->setState('list.time', (int) $value);
 			}
 
@@ -725,13 +725,13 @@ class TopicsModel extends ListModel
 		else
 		{
 			// Selection time.
-			$value = $this->getInt('sel', $this->config->rss_timelimit);
+			$value = $this->getInt('sel', $this->config->rssTimeLimit);
 			$this->setState('list.time', $value);
 		}
 
 		// List state information
 		$value        = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int');
-		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
+		$defaultlimit = $format != 'feed' ? $this->config->threadsPerPage : $this->config->rssLimit;
 
 		if ($value < 1 || $value > 100)
 		{

@@ -329,7 +329,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setProperties($properties): KunenaControllerDisplay
 	{
-		if (!is_array($properties) && !is_object($properties))
+		if (!is_array($properties) && !isinternalObject($properties))
 		{
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}
@@ -380,22 +380,22 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Obey Joomla configuration.
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->boardTitle);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				if ($this->config->board_title == $this->app->get('sitename'))
+				if ($this->config->boardTitle == $this->app->get('sitename'))
 				{
 					$title = Text::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
 				}
 				else
 				{
-					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
 				}
 			}
 			else
 			{
-				$title = $title . ' - ' . $this->config->board_title;
+				$title = $title . ' - ' . $this->config->boardTitle;
 			}
 		}
 

@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Log\KunenaFinder;
@@ -33,7 +34,7 @@ use function defined;
 class LogsModel extends ListModel
 {
 	/**
-	 * @var \Joomla\CMS\User\User|null
+	 * @var User|null
 	 * @since version
 	 */
 	private $me;
@@ -41,13 +42,13 @@ class LogsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -77,8 +78,8 @@ class LogsModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -94,9 +95,9 @@ class LogsModel extends ListModel
 	 *
 	 * @return  integer  The total number of items available in the data set.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTotal(): int
 	{
@@ -157,9 +158,9 @@ class LogsModel extends ListModel
 	 *
 	 * @return  KunenaFinder
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function getFinder(): KunenaFinder
 	{
@@ -340,12 +341,14 @@ class LogsModel extends ListModel
 	 * Method to get User objects of data items.
 	 *
 	 *
-	 * @since   Kunena 5.0
+	 * @return array
+	 * @throws  Exception
 	 *
 	 * @throws  null
-	 * @throws  Exception
+	 * @since   Kunena 5.0
+	 *
 	 */
-	public function getItems()
+	public function getItems(): array
 	{
 		// Get a storage key.
 		$store = $this->getStoreId();
@@ -378,9 +381,9 @@ class LogsModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -394,42 +397,42 @@ class LogsModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filter_active = '';
+		$filterActive = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.id', 'filter_id', '', 'string');
 		$this->setState('filter.id', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filterType', '', 'string');
 		$this->setState('filter.type', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.user', 'filter_user', '', 'string');
 		$this->setState('filter.user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '', 'string');
 		$this->setState('filter.category', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.topic', 'filter_topic', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.topic', 'filter_topic', '', 'string');
 		$this->setState('filter.topic', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.target_user', 'filter_target_user', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.target_user', 'filter_target_user', '', 'string');
 		$this->setState('filter.target_user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
 		$this->setState('filter.ip', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_start', 'filter_time_start', '', 'string');
 		$this->setState('filter.time_start', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.time_stop', 'filter_time_stop', '', 'string');
 		$this->setState('filter.time_stop', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.operation', 'filter_operation', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.operation', 'filter_operation', '', 'string');
 		$this->setState('filter.operation', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
 		$this->setState('filter.usertypes', $value);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		$group = [];
 

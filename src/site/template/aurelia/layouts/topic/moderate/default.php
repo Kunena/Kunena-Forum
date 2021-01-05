@@ -89,24 +89,24 @@ $labels          = $this->ktemplate->params->get('labels');
 								<dd><strong> <?php echo $this->userLink; ?></strong></dd>
 							<?php endif; ?>
 						</dl>
-						<?php if ($this->config->topicicons)
+						<?php if ($this->config->topicIcons)
 :
 							?>
 							<div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 							<br/>
-							<div class="kmoderate-topicicons">
+							<div class="kmoderate-topicIcons">
 								<?php foreach ($this->topicIcons as $id => $icon)
 	:
 									?>
 								<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
 									   value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-									<?php if ($this->config->topicicons && $topicicontype == 'B3')
+									<?php if ($this->config->topicIcons && $topicicontype == 'B3')
 		:
 										?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 											class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
 											aria-hidden="true"></span>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'B4')
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4')
 		:
 										?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>">
@@ -117,7 +117,7 @@ $labels          = $this->ktemplate->params->get('labels');
 										endif; ?>
 										<img loading=lazy src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
 											 alt="<?php echo $icon->name; ?>" width="32" height="32"/>
-									<?php elseif ($this->config->topicicons && $topicicontype == 'fa')
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'fa')
 		:
 										?>
 									<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
@@ -133,12 +133,12 @@ $labels          = $this->ktemplate->params->get('labels');
 										</label>
 								<?php endforeach; ?>
 							</div>
-						<?php elseif ($labels && !$this->config->topicicons)
+						<?php elseif ($labels && !$this->config->topicIcons)
 :
 							?>
 							<div><strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
 							<br/>
-							<div class="kmoderate-topicicons">
+							<div class="kmoderate-topicIcons">
 								<?php foreach ($this->topicIcons as $id => $icon)
 	:
 									?>
@@ -194,7 +194,7 @@ $labels          = $this->ktemplate->params->get('labels');
 								<br/>
 								<small>
 									<?php echo Text::_('COM_KUNENA_POSTED_AT') ?>
-									<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+									<?php echo $this->message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
 									<?php echo Text::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?>
 								</small>
 								<div class="clearfix"></div>
@@ -276,7 +276,7 @@ $labels          = $this->ktemplate->params->get('labels');
 							<div class="control-group">
 								<div class="controls">
 									<label class="checkbox">
-										<input type="checkbox" <?php if ($this->config->boxghostmessage)
+										<input type="checkbox" <?php if ($this->config->boxGhostMessage)
 	{
 											echo ' checked="checked"';
 															   } ?>

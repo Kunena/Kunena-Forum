@@ -87,12 +87,12 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 			// Invalid access token.
 			$content = new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
-		elseif ($this->config->board_offline && !$this->me->isAdmin())
+		elseif ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
 			$content = new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
-		elseif ($this->config->regonly && !$this->me->exists())
+		elseif ($this->config->regOnly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
 			$content = new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);

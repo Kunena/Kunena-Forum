@@ -15,13 +15,13 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 2.0.0: Convert new indication into new format
 /**
- * @param   string  $parent parent
+ * @param   string  $parent  parent
  *
  * @return  array
  *
+ * @throws  Exception
  * @since   Kunena 6.0
  *
- * @throws  Exception
  */
 function kunena_200_2012_06_10_newindication($parent)
 {
@@ -29,7 +29,7 @@ function kunena_200_2012_06_10_newindication($parent)
 	$now = Factory::getDate()->toUnix();
 
 	// First remove old session information (not used anyway, speeds up conversion)
-	$lasttime = $now - max(intval(Factory::getApplication()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout)) - 60;
+	$lasttime = $now - max(intval(Factory::getApplication()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessionTimeOut)) - 60;
 	$query    = "UPDATE `#__kunena_sessions` SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery($query);
 
@@ -136,8 +136,7 @@ function kunena_200_2012_06_10_newindication($parent)
 		}
 
 		unset($users);
-	}
-	while ($sessions);
+	} while ($sessions);
 
 	// Update missing information
 	$query = "UPDATE `#__kunena_user_read` AS ur

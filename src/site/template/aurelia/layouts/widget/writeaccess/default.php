@@ -70,23 +70,23 @@ $config = KunenaFactory::getConfig();
 
 				if ($topic->isAuthorised('edit') || $topic->isAuthorised('reply'))
 				{
-					if ($config->image_upload == '')
+					if ($config->imageUpload == '')
 					{
 						?>
 						<li>
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->image_upload == 'everybody')
+					elseif ($config->imageUpload == 'everybody')
 					{
 						?>
 						<li>
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->image_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
-						$config->image_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
-						$config->image_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					elseif ($config->imageUpload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
+						$config->imageUpload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
+						$config->imageUpload == 'registered' && KunenaUserHelper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -101,23 +101,23 @@ $config = KunenaFactory::getConfig();
 						</li> <?php
 					}
 
-					if ($config->file_upload == '')
+					if ($config->fileUpload == '')
 					{
 						?>
 						<li>
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->file_upload == 'everybody')
+					elseif ($config->fileUpload == 'everybody')
 					{
 						?>
 						<li>
 							<b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
 						</li> <?php
 					}
-					elseif ($config->file_upload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
-						$config->file_upload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
-						$config->file_upload == 'registered' && KunenaUserHelper::getMyself()->exists())
+					elseif ($config->fileUpload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
+						$config->fileUpload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
+						$config->fileUpload == 'registered' && KunenaUserHelper::getMyself()->exists())
 					{
 						?>
 						<li>
@@ -133,9 +133,9 @@ $config = KunenaFactory::getConfig();
 					}
 				}
 
-				if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->useredit)
+				if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->userEdit)
 				{
-					if ($config->useredit == 3 && $topic->getLastPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					if ($config->userEdit == 3 && $topic->getLastPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
 					{
 						?>
 						<li>
@@ -143,7 +143,7 @@ $config = KunenaFactory::getConfig();
 						</li>
 						<?php
 					}
-					elseif ($config->useredit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
+					elseif ($config->userEdit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid)
 					{
 						if (KunenaUserHelper::getMyself()->isAdmin())
 						{

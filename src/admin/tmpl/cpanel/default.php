@@ -45,7 +45,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 								</div>
 								<div>
 									<ul id="sample-data-wrapper" class="list-group list-group-flush">
-										<li class="list-group-item sampledata-kunena">
+										<li class="list-group-item sampleData-kunena">
 											<div class="d-flex justify-content-between align-items-center">
 												<div class="mr-2">
 													<span class="fas fa-comments" aria-hidden="true"></span>
@@ -59,13 +59,13 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 											</div>
 											<p class="small mt-1">Install Sample Data - Kunena Forum</p>
 										</li>
-										<li class="list-group-item sampledata-progress-kunena d-none">
+										<li class="list-group-item sampleData-progress-kunena d-none">
 											<div class="progress">
 												<div class="progress-bar progress-bar-striped progress-bar-animated"
 													 role="progressbar"></div>
 											</div>
 										</li>
-										<li class="list-group-item sampledata-progress-kunena d-none">
+										<li class="list-group-item sampleData-progress-kunena d-none">
 											<ul class="list-unstyled"></ul>
 										</li>
 									</ul>

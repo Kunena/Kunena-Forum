@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 	<div class="modal hide fade" id="settingModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<input type="hidden" name="task" value="setdefault"/>
+				<input type="hidden" name="task" value="setDefault"/>
 				<?php echo HTMLHelper::_('form.token') ?>
 
 				<div class="modal-header">

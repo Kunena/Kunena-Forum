@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -33,7 +34,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td>
 									<p><?php echo Text::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
-									<input type="text" name="re_string" value=""/>
+									<input type="text" name="reString" value=""/>
 								</td>
 							</tr>
 						</table>

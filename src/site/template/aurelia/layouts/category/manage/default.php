@@ -219,21 +219,21 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 													<td width="20%"><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['allow_anonymous']; ?></td>
+													<td width="30%"><?php echo $this->lists['allowAnonymous']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td width="20%"><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['post_anonymous']; ?></td>
+													<td width="30%"><?php echo $this->lists['postAnonymous']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td width="20%"><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['allow_polls']; ?></td>
+													<td width="30%"><?php echo $this->lists['allowPolls']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 												</tr>
 												<tr>
@@ -247,21 +247,21 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 													<td width="20%"><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['topic_ordering']; ?></td>
+													<td width="30%"><?php echo $this->lists['topicOrdering']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td width="20%"><?php echo Text::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['category_iconset']; ?></td>
+													<td width="30%"><?php echo $this->lists['categoryIconset']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 												</tr>
 												<tr>
 													<td width="20%"><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>
 														:
 													</td>
-													<td width="30%"><?php echo $this->lists['allow_ratings']; ?></td>
+													<td width="30%"><?php echo $this->lists['allowRatings']; ?></td>
 													<td width="50%"><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED_DESC'); ?></td>
 												</tr>
 											</table>

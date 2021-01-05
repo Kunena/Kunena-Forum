@@ -72,8 +72,8 @@ div.kadmin-functitle.icon-ranks {
 	background: url(../icons/large/ranks.png) 5px 5px no-repeat;
 }
 
-div.kadmin-functitle.icon-topicicons {
-	background: url(../icons/large/topicicons.png) 5px 5px no-repeat;
+div.kadmin-functitle.icon-topicIcons {
+	background: url(../icons/large/topicIcons.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-files {
@@ -88,8 +88,8 @@ div.kadmin-functitle.icon-prune {
 	background: url(../icons/large/prune.png) 5px 5px no-repeat;
 }
 
-div.kadmin-functitle.icon-syncusers {
-	background: url(../icons/large/syncusers.png) 5px 5px no-repeat;
+div.kadmin-functitle.icon-syncUsers {
+	background: url(../icons/large/syncUsers.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-recount {
@@ -108,7 +108,7 @@ div.kadmin-functitle.icon-support {
 	background: url(../icons/large/support.png) 5px 5px no-repeat;
 }
 
-div.kadmin-functitle.icon-editcss {
+div.kadmin-functitle.icon-editCss {
 	background: url(../icons/large/css.png) 5px 5px no-repeat;
 }
 

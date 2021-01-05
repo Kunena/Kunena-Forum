@@ -25,11 +25,11 @@ $wa->useScript('multiselect');
 
 <script type="text/javascript">
 	Joomla.orderTable = function () {
-	  const table = document.getElementById("sortTable");
-	  const direction = document.getElementById("directionTable");
-	  const order = table.options[table.selectedIndex].value;
+		const table = document.getElementById("sortTable");
+		const direction = document.getElementById("directionTable");
+		const order = table.options[table.selectedIndex].value;
 
-	  if (order !== '<?php echo $this->list->Ordering; ?>') {
+		if (order !== '<?php echo $this->list->Ordering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -180,7 +180,8 @@ $wa->useScript('multiselect');
 													<td class="hidden-phone center">
 														<a href="#edit"
 														   onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
-															<img loading=lazy src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
+															<img loading=lazy
+																 src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
 																 alt="<?php echo $this->escape($row->location); ?>"/>
 														</a>
 													</td>
@@ -232,7 +233,7 @@ $wa->useScript('multiselect');
 									  id="uploadForm" method="post"
 									  enctype="multipart/form-data">
 									<input type="hidden" name="view" value="smilies"/>
-									<input type="hidden" name="task" value="smileyupload"/>
+									<input type="hidden" name="task" value="smileyUpload"/>
 									<input type="hidden" name="boxchecked" value="0"/>
 									<?php echo HTMLHelper::_('form.token'); ?>
 

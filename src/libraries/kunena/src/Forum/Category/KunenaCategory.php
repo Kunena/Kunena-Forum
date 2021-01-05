@@ -53,31 +53,31 @@ use function defined;
  *
  * @since   Kunena 6.0
  * @property int     $id
- * @property int     $parent_id
+ * @property int     $parentId
  * @property string  $name
  * @property string  $alias
  * @property int     $icon_id
  * @property int     $locked
  * @property string  $accesstype
  * @property int     $access
- * @property int     $pub_access
- * @property int     $pub_recurse
- * @property int     $admin_access
- * @property int     $admin_recurse
+ * @property int     $pubAccess
+ * @property int     $pubRecurse
+ * @property int     $adminAccess
+ * @property int     $adminRecurse
  * @property int     $ordering
  * @property integer $published
  * @property string  $channels
  * @property int     $checked_out
  * @property string  $checked_out_time
  * @property int     $review
- * @property int     $allow_anonymous
- * @property int     $post_anonymous
+ * @property int     $allowAnonymous
+ * @property int     $postAnonymous
  * @property int     $hits
  * @property string  $description
  * @property string  $headerdesc
  * @property string  $class_sfx
- * @property int     $allow_polls
- * @property string  $topic_ordering
+ * @property int     $allowPolls
+ * @property string  $topicOrdering
  * @property string  $iconset
  * @property int     $numTopics
  * @property int     $numPosts
@@ -87,7 +87,7 @@ use function defined;
  * @property string  $params
  * @property string  $topictemplate
  * @property string  $sectionheaderdesc
- * @property int     $allow_ratings
+ * @property int     $allowRatings
  *
  */
 class KunenaCategory extends KunenaDatabaseObject
@@ -153,7 +153,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
-	public $parent_id;
+	public $parentId;
 
 	/**
 	 * @var     integer
@@ -261,7 +261,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected $_noreorder;
+	protected $_noreOrder;
 
 	/**
 	 * @var     boolean
@@ -333,31 +333,31 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $allow_polls;
+	public $allowPolls;
 
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $allow_anonymous;
+	public $allowAnonymous;
 
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $post_anonymous;
+	public $postAnonymous;
 
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $topic_ordering;
+	public $topicOrdering;
 
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $allow_ratings;
+	public $allowRatings;
 	/**
 	 * @var array
 	 * @since version
@@ -478,17 +478,17 @@ class KunenaCategory extends KunenaDatabaseObject
 	 */
 	public function subscribe($value = true, $user = null): bool
 	{
-		$usercategory             = KunenaCategoryUserHelper::get($this->id, $user);
-		$usercategory->subscribed = (int) $value;
+		$userCategory             = KunenaCategoryUserHelper::get($this->id, $user);
+		$userCategory->subscribed = (int) $value;
 
-		if (!$usercategory->params)
+		if (!$userCategory->params)
 		{
-			$usercategory->params = '';
+			$userCategory->params = '';
 		}
 
 		try
 		{
-			$usercategory->save();
+			$userCategory->save();
 		}
 		catch (Exception $e)
 		{
@@ -685,7 +685,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
-		if (KunenaFactory::getConfig()->read_only)
+		if (KunenaFactory::getConfig()->readOnly)
 		{
 			// Special case to ignore authorisation.
 			if ($action != 'read')
@@ -869,7 +869,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 */
 	public function getRSSUrl($xhtml = true)
 	{
-		if (KunenaFactory::getConfig()->enablerss)
+		if (KunenaFactory::getConfig()->enableRss)
 		{
 			$params = '&catid=' . (int) $this->id;
 
@@ -1207,7 +1207,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 */
 	public function getParent(): KunenaCategory
 	{
-		return KunenaCategoryHelper::get(intval($this->parent_id));
+		return KunenaCategoryHelper::get(intval($this->parentId));
 	}
 
 	/**
@@ -1729,7 +1729,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 1.6
 	 */
-	public function checkin(): bool
+	public function checkIn(): bool
 	{
 		if (!$this->_exists)
 		{
@@ -1740,7 +1740,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		$table = $this->getTable();
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
-		$result = $table->checkin();
+		$result = $table->checkIn();
 
 		// Assuming all is well at this point lets bind the data
 		$params = $this->params;
@@ -1862,7 +1862,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		}
 
 		// TODO: remove this hack...
-		$this->_noreorder = true;
+		$this->_noreOrder = true;
 
 		return $this->save();
 	}
@@ -1890,9 +1890,9 @@ class KunenaCategory extends KunenaDatabaseObject
 			return false;
 		}
 
-		$usercategory = KunenaCategoryUserHelper::get($this->id, $userid);
+		$userCategory = KunenaCategoryUserHelper::get($this->id, $userid);
 
-		return (bool) $usercategory->subscribed;
+		return (bool) $userCategory->subscribed;
 	}
 
 	/**
@@ -1983,11 +1983,11 @@ class KunenaCategory extends KunenaDatabaseObject
 		}
 
 		// TODO: remove this hack...
-		if (!isset($this->_noreorder))
+		if (!isset($this->_noreOrder))
 		{
-			$table->reorder();
+			$table->reOrder();
 			$this->ordering = $table->ordering;
-			unset($this->_noreorder);
+			unset($this->_noreOrder);
 		}
 
 		// Clear cache
@@ -2090,7 +2090,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	protected function authoriseGuestWrite(KunenaUser $user): KunenaAuthorise
 	{
 		// Check if user is guest and they can create or reply topics
-		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
@@ -2110,7 +2110,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->allowsubscriptions || $config->topic_subscriptions == 'disabled')
+		if (!$config->allowSubscriptions || $config->topicSubscriptions == 'disabled')
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
@@ -2135,7 +2135,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->allowsubscriptions || $config->category_subscriptions == 'disabled')
+		if (!$config->allowSubscriptions || $config->categorySubscriptions == 'disabled')
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
@@ -2158,7 +2158,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	protected function authoriseFavorite(KunenaUser $user): KunenaAuthorise
 	{
 		// Check if user is guest and they can create or reply topics
-		if (!KunenaFactory::getConfig()->allowfavorites)
+		if (!KunenaFactory::getConfig()->allowFavorites)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 403);
 		}
@@ -2198,7 +2198,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	{
 		$this->buildInfo();
 
-		return $this->parent_id == 0;
+		return $this->parentId == 0;
 	}
 
 	/**
@@ -2321,13 +2321,13 @@ class KunenaCategory extends KunenaDatabaseObject
 	protected function authorisePoll(KunenaUser $user): KunenaAuthorise
 	{
 		// Check if polls are enabled at all
-		if (!KunenaFactory::getConfig()->pollenabled)
+		if (!KunenaFactory::getConfig()->pollEnabled)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED'), 403);
 		}
 
 		// Check if polls are not enabled in this category
-		if (!$this->allow_polls)
+		if (!$this->allowPolls)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}

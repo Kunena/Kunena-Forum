@@ -234,7 +234,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	{
 		$user = KunenaUserHelper::get($user);
 
-		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
+		if (!KunenaFactory::getConfig()->showNew || !$user->exists())
 		{
 			return false;
 		}
@@ -391,7 +391,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		$message->ip      = KunenaUserHelper::getUserIp();
 
 		// Add IP to user.
-		if (KunenaConfig::getInstance()->iptracking)
+		if (KunenaConfig::getInstance()->ipTracking)
 		{
 			if (empty($user->ip))
 			{
@@ -399,7 +399,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
 			if (isset($fields['subject']))
 			{
@@ -463,7 +463,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->get('send_emails'))
+		if (!$config->get('sendEmails'))
 		{
 			return false;
 		}
@@ -497,14 +497,14 @@ class KunenaMessage extends KunenaDatabaseObject
 		if ($this->hold == 1)
 		{
 			$mailsubs   = 0;
-			$mailmods   = $config->mailmod >= 0;
-			$mailadmins = $config->mailadmin >= 0;
+			$mailModeratorss   = $config->mailModerators >= 0;
+			$mailAdministratorss = $config->mailAdministrators >= 0;
 		}
 		else
 		{
-			$mailsubs   = (bool) $config->allowsubscriptions;
-			$mailmods   = $config->mailmod >= 1;
-			$mailadmins = $config->mailadmin >= 1;
+			$mailsubs   = (bool) $config->allowSubscriptions;
+			$mailModeratorss   = $config->mailModerators >= 1;
+			$mailAdministratorss = $config->mailAdministrators >= 1;
 		}
 
 		$once = false;
@@ -514,24 +514,24 @@ class KunenaMessage extends KunenaDatabaseObject
 			if (!$this->parent)
 			{
 				// New topic: Send email only to category subscribers
-				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
-				$once     = $config->category_subscriptions == 'topic';
+				$mailsubs = $config->categorySubscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
+				$once     = $config->categorySubscriptions == 'topic';
 			}
-			elseif ($config->category_subscriptions != 'post')
+			elseif ($config->categorySubscriptions != 'post')
 			{
 				// Existing topic: Send email only to topic subscribers
-				$mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
-				$once     = $config->topic_subscriptions == 'first';
+				$mailsubs = $config->topicSubscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
+				$once     = $config->topicSubscriptions == 'first';
 			}
 			else
 			{
 				// Existing topic: Send email to both category and topic subscribers
-				$mailsubs = $config->topic_subscriptions == 'disabled'
+				$mailsubs = $config->topicSubscriptions == 'disabled'
 					? KunenaAccess::CATEGORY_SUBSCRIPTION
 					: KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
 				// FIXME: category subscription can override topic
-				$once = $config->topic_subscriptions == 'first';
+				$once = $config->topicSubscriptions == 'first';
 			}
 		}
 
@@ -545,8 +545,8 @@ class KunenaMessage extends KunenaDatabaseObject
 			$this->catid,
 			$this->thread,
 			$mailsubs,
-			$mailmods,
-			$mailadmins,
+			$mailModeratorss,
+			$mailAdministratorss,
 			$this->userid
 		);
 
@@ -586,7 +586,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$sentusers[]                         = $emailTo->id;
 		}
 
-		$mailsender  = MailHelper::cleanAddress($config->board_title);
+		$mailsender  = MailHelper::cleanAddress($config->boardTitle);
 		$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 		$subject     = $this->subject ? $this->subject : $topic->subject;
 
@@ -782,7 +782,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$user = KunenaUserHelper::get($this->userid);
 		}
 
-		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
@@ -1281,7 +1281,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
-		if (KunenaFactory::getConfig()->read_only)
+		if (KunenaFactory::getConfig()->readOnly)
 		{
 			// Special case to ignore authorisation.
 			if ($action != 'read')
@@ -1595,7 +1595,7 @@ class KunenaMessage extends KunenaDatabaseObject
 				return false;
 			}
 		}
-		elseif (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
+		elseif (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askEmail)
 		{
 			$this->setError(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
 
@@ -1651,7 +1651,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		// Flood protection
 		$config = KunenaFactory::getConfig();
 
-		if ($config->floodprotection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists())
+		if ($config->floodProtection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists())
 		{
 			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
 
@@ -1666,9 +1666,9 @@ class KunenaMessage extends KunenaDatabaseObject
 				return false;
 			}
 
-			if ($lastPostTime + $config->floodprotection > Factory::getDate()->toUnix())
+			if ($lastPostTime + $config->floodProtection > Factory::getDate()->toUnix())
 			{
-				$this->setError(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodprotection));
+				$this->setError(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodProtection));
 
 				return false;
 			}
@@ -1864,7 +1864,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	protected function authoriseThankyou(KunenaUser $user): KunenaAuthorise
 	{
 		// Check that message is not your own
-		if (!KunenaFactory::getConfig()->showthankyou)
+		if (!KunenaFactory::getConfig()->showThankYou)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
@@ -1906,43 +1906,43 @@ class KunenaMessage extends KunenaDatabaseObject
 		// User is only allowed to edit post within time specified in the configuration
 		$config = KunenaFactory::getConfig();
 
-		if (intval($config->useredit) != 1)
+		if (intval($config->userEdit) != 1)
 		{
 			// Edit never allowed
-			if (intval($config->useredit) == 0)
+			if (intval($config->userEdit) == 0)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
 
 			// Edit allowed if replies
-			if (intval($config->useredit) == 2 && $this->getTopic()->getReplies())
+			if (intval($config->userEdit) == 2 && $this->getTopic()->getReplies())
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_IF_REPLIES'), 403);
 			}
 
 			// Edit allowed for the first message of the topic
-			if (intval($config->useredit) == 4 && $this->id != $this->getTopic()->first_post_id)
+			if (intval($config->userEdit) == 4 && $this->id != $this->getTopic()->first_post_id)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_FIRST_MESSAGE_OF_TOPIC'), 403);
 			}
 
 			// Edit allowed for the last message of the topic
-			if (intval($config->useredit) == 3 && $this->id != $this->getTopic()->last_post_id)
+			if (intval($config->userEdit) == 3 && $this->id != $this->getTopic()->last_post_id)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
 			}
 		}
 
-		if (intval($config->useredittime) != 0)
+		if (intval($config->userEditTime) != 0)
 		{
 			// Check whether edit is in time
 			$modtime = $this->modified_time ? $this->modified_time : $this->time;
 
-			if ($modtime + intval($config->useredittime) < Factory::getDate()->toUnix() && intval($config->useredittimegrace) == 0)
+			if ($modtime + intval($config->userEditTime) < Factory::getDate()->toUnix() && intval($config->userEditTimeGrace) == 0)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
-			elseif (intval($config->useredittimegrace) != 0 && $modtime + intval($config->useredittime) + intval($config->useredittimegrace) < Factory::getDate()->toUnix())
+			elseif (intval($config->userEditTimeGrace) != 0 && $modtime + intval($config->userEditTime) + intval($config->userEditTimeGrace) < Factory::getDate()->toUnix())
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
@@ -1964,28 +1964,28 @@ class KunenaMessage extends KunenaDatabaseObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$user->isModerator($this->getCategory()) && $config->userdeletetmessage != '2')
+		if (!$user->isModerator($this->getCategory()) && $config->userDeleteMessage != '2')
 		{
 			// Never
-			if ($config->userdeletetmessage == '0')
+			if ($config->userDeleteMessage == '0')
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
 			// When no replies
-			if ($config->userdeletetmessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
+			if ($config->userDeleteMessage == '1' && ($this->getTopic()->first_post_id != $this->id || $this->getTopic()->getReplies()))
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 			}
 
 			// All except the first message of the topic
-			if ($config->userdeletetmessage == '3' && $this->id == $this->getTopic()->first_post_id)
+			if ($config->userDeleteMessage == '3' && $this->id == $this->getTopic()->first_post_id)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_FIRST_MESSAGE'), 403);
 			}
 
 			// Only the last message
-			if ($config->userdeletetmessage == '4' && $this->id != $this->getTopic()->last_post_id)
+			if ($config->userDeleteMessage == '4' && $this->id != $this->getTopic()->last_post_id)
 			{
 				return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_ONLY_LAST_MESSAGE'), 403);
 			}
@@ -2012,7 +2012,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return false;
 		}
 
-		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderator_permdelete || !$user->isModerator($this->getTopic()->getCategory()))
+		if ($user->isModerator($this->getTopic()->getCategory()) && !$config->moderatorPermDelete || !$user->isModerator($this->getTopic()->getCategory()))
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
@@ -2033,12 +2033,12 @@ class KunenaMessage extends KunenaDatabaseObject
 	 */
 	protected function authoriseAttachmentsImage(KunenaUser $user): KunenaAuthorise
 	{
-		if (empty(KunenaFactory::getConfig()->image_upload))
+		if (empty(KunenaFactory::getConfig()->imageUpload))
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
 		}
 
-		if (KunenaFactory::getConfig()->image_upload == 'admin')
+		if (KunenaFactory::getConfig()->imageUpload == 'admin')
 		{
 			if (!$user->isAdmin())
 			{
@@ -2046,7 +2046,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaFactory::getConfig()->image_upload == 'registered')
+		if (KunenaFactory::getConfig()->imageUpload == 'registered')
 		{
 			if (!$user->userid)
 			{
@@ -2054,7 +2054,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaFactory::getConfig()->image_upload == 'moderator')
+		if (KunenaFactory::getConfig()->imageUpload == 'moderator')
 		{
 			$category = $this->getCategory();
 
@@ -2080,12 +2080,12 @@ class KunenaMessage extends KunenaDatabaseObject
 	 */
 	protected function authoriseAttachmentsFile(KunenaUser $user): KunenaAuthorise
 	{
-		if (empty(KunenaFactory::getConfig()->file_upload))
+		if (empty(KunenaFactory::getConfig()->fileUpload))
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
 		}
 
-		if (KunenaFactory::getConfig()->file_upload == 'admin')
+		if (KunenaFactory::getConfig()->fileUpload == 'admin')
 		{
 			if (!$user->isAdmin())
 			{
@@ -2093,7 +2093,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaFactory::getConfig()->file_upload == 'registered')
+		if (KunenaFactory::getConfig()->fileUpload == 'registered')
 		{
 			if (!$user->userid)
 			{
@@ -2101,7 +2101,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (KunenaFactory::getConfig()->file_upload == 'moderator')
+		if (KunenaFactory::getConfig()->fileUpload == 'moderator')
 		{
 			$category = $this->getCategory();
 
@@ -2126,7 +2126,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	protected function authoriseGuestWrite(KunenaUser $user): KunenaAuthorise
 	{
 		// Check if user is guest and they can create or reply topics
-		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite)
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}

@@ -37,9 +37,9 @@ class IconsController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{

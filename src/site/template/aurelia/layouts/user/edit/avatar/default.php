@@ -48,7 +48,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', Icons::delete());
 
 <table class="table table-bordered table-striped">
 
-	<?php if ($this->config->allowavatarupload)
+	<?php if ($this->config->allowAvatarUpload)
 		:
 		?>
 		<tr>
@@ -78,7 +78,7 @@ $this->addScriptOptions('com_kunena.avatar_delete', Icons::delete());
 		</tr>
 	<?php endif; ?>
 
-	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages))
+	<?php if ($this->config->allowAvatarGallery && ($this->galleryOptions || $this->galleryImages))
 		:
 		?>
 		<tr>

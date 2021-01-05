@@ -221,8 +221,8 @@ abstract class KunenaLegacy
 
 				if ($page > 0)
 				{
-					$uri->setVar('limitstart', (int) $config->messages_per_page * ($page - 1));
-					$uri->setVar('limit', (int) $config->messages_per_page);
+					$uri->setVar('limitstart', (int) $config->messagesPerPage * ($page - 1));
+					$uri->setVar('limit', (int) $config->messagesPerPage);
 				}
 
 				$uri->delVar('page');
@@ -309,8 +309,8 @@ abstract class KunenaLegacy
 
 				if ($page > 0)
 				{
-					$uri->setVar('limitstart', (int) $config->threads_per_page * ($page - 1));
-					$uri->setVar('limit', (int) $config->threads_per_page);
+					$uri->setVar('limitstart', (int) $config->threadsPerPage * ($page - 1));
+					$uri->setVar('limit', (int) $config->threadsPerPage);
 				}
 
 				$uri->delVar('page');
@@ -418,7 +418,7 @@ abstract class KunenaLegacy
 			case 'rss' :
 				$changed = true;
 				$uri->setVar('view', 'topics');
-				$mode = $config->rss_type;
+				$mode = $config->rssType;
 
 				switch ($mode)
 				{
@@ -437,7 +437,7 @@ abstract class KunenaLegacy
 						break;
 				}
 
-				switch ($config->rss_timelimit)
+				switch ($config->rssTimeLimit)
 				{
 					case 'week' :
 						$uri->setVar('sel', 168);

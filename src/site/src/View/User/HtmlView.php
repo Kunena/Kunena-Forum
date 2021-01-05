@@ -285,9 +285,9 @@ class HtmlView extends BaseHtmlView
 				$this->firstUserName    = $this->topic->first_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
+				$this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
 
-				if ($this->config->avataroncat)
+				if ($this->config->avatarOnCategory)
 				{
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
@@ -361,14 +361,14 @@ class HtmlView extends BaseHtmlView
 				$lastUserName           = $this->topic->last_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
+				$this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
 
-				if ($this->config->avataroncat)
+				if ($this->config->avatarOnCategory)
 				{
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
 
-				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
+				if (isinternalObject($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
 				{
 					$spacing = 1;
 				}
@@ -421,7 +421,7 @@ class HtmlView extends BaseHtmlView
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 
-				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+				return $date->toSpan('config_postDateFormat', 'config_postDateFormatHover');
 		}
 	}
 }

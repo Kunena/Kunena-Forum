@@ -42,7 +42,7 @@ class TableKunenaTopics extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $category_id = null;
+	public $categoryId = null;
 
 	/**
 	 * @var     null

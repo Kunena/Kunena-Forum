@@ -57,44 +57,44 @@ abstract class KunenaEmail
 
 		$config = KunenaFactory::getConfig();
 
-		if (!empty($config->email_recipient_count))
+		if (!empty($config->emailRecipientCount))
 		{
-			$email_recipient_count = $config->email_recipient_count;
+			$emailRecipientCount = $config->emailRecipientCount;
 		}
 		else
 		{
-			$email_recipient_count = 1;
+			$emailRecipientCount = 1;
 		}
 
-		$email_recipient_privacy = $config->get('email_recipient_privacy', 'bcc');
+		$emailRecipientPrivacy = $config->get('emailRecipientPrivacy', 'bcc');
 
 		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
-		if ($email_recipient_count > 1
-			&& $email_recipient_privacy == 'bcc'
-			&& MailHelper::isEmailAddress($config->get('email_visible_address'))
+		if ($emailRecipientCount > 1
+			&& $emailRecipientPrivacy == 'bcc'
+			&& MailHelper::isEmailAddress($config->get('emailVisibleAddress'))
 		)
 		{
-			$mail->AddAddress($config->email_visible_address, MailHelper::cleanAddress($config->board_title));
+			$mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
-			if ($email_recipient_count > 9)
+			if ($emailRecipientCount > 9)
 			{
-				$email_recipient_count--;
+				$emailRecipientCount--;
 			}
 		}
 
-		$chunks = array_chunk($receivers, $email_recipient_count);
+		$chunks = array_chunk($receivers, $emailRecipientCount);
 
 		$success = true;
 
 		foreach ($chunks as $emails)
 		{
-			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')
+			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
 			{
 				$mail->ClearAddresses();
 				$mail->addRecipient($emails);
 			}
-			elseif ($email_recipient_privacy == 'cc')
+			elseif ($emailRecipientPrivacy == 'cc')
 			{
 				$mail->ClearCCs();
 				$mail->addCC($emails);

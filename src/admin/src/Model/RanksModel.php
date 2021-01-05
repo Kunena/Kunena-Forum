@@ -29,9 +29,9 @@ class RanksModel extends ListModel
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -52,8 +52,8 @@ class RanksModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -72,9 +72,9 @@ class RanksModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -91,23 +91,23 @@ class RanksModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filter_active = '';
+		$filterActive = '';
 
 		// List state information
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
 		$this->setState('filter.search', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filter_title', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filterTitle', '', 'string');
 		$this->setState('filter.title', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.special', 'filter_special', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.special', 'filter_special', '', 'string');
 		$this->setState('filter.special', $value !== '' ? (int) $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.min', 'filter_min', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.min', 'filter_min', '', 'string');
 		$this->setState('filter.min', $value !== '' ? (int) $value : null);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// List state information.
 		parent::populateState('id', 'asc');
@@ -120,7 +120,7 @@ class RanksModel extends ListModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.title');
@@ -143,7 +143,7 @@ class RanksModel extends ListModel
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.rank_id, a.rank_title, a.rank_min, a.rank_special, a.rank_image'
+				'a.rankId, a.rankTitle, a.rankMin, a.rankSpecial, a.rankImage'
 			)
 		);
 
@@ -155,21 +155,21 @@ class RanksModel extends ListModel
 		if (!empty($filter))
 		{
 			$title = $db->quote('%' . $db->escape($filter, true) . '%');
-			$query->where('(a.rank_title LIKE ' . $title . ')');
+			$query->where('(a.rankTitle LIKE ' . $title . ')');
 		}
 
 		$filter = $this->getState('filter.special');
 
 		if (is_numeric($filter))
 		{
-			$query->where('a.rank_special = ' . (int) $filter);
+			$query->where('a.rankSpecial = ' . (int) $filter);
 		}
 
 		$filter = $this->getState('filter.min');
 
 		if (is_numeric($filter))
 		{
-			$query->where('a.rank_min > ' . (int) $filter);
+			$query->where('a.rankMin > ' . (int) $filter);
 		}
 
 		// Add the list ordering clause.
@@ -178,19 +178,19 @@ class RanksModel extends ListModel
 		switch ($this->state->get('list.ordering'))
 		{
 			case 'title':
-				$query->order('a.rank_title ' . $direction);
+				$query->order('a.rankTitle ' . $direction);
 				break;
 			case 'min':
-				$query->order('a.rank_min ' . $direction);
+				$query->order('a.rankMin ' . $direction);
 				break;
 			case 'special':
-				$query->order('a.rank_special ' . $direction);
+				$query->order('a.rankSpecial ' . $direction);
 				break;
 			case 'image':
-				$query->order('a.rank_image ' . $direction);
+				$query->order('a.rankImage ' . $direction);
 				break;
 			default:
-				$query->order('a.rank_id ' . $direction);
+				$query->order('a.rankId ' . $direction);
 		}
 
 		$db->setQuery($query);

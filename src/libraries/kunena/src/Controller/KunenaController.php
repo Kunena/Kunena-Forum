@@ -237,7 +237,7 @@ class KunenaController extends BaseController
 				}
 
 				// If forum is for registered users only, prevent guests from accessing tasks.
-				if ($this->config->regonly && !$this->me->exists())
+				if ($this->config->regOnly && !$this->me->exists())
 				{
 					throw new \Kunena\Forum\Libraries\Exception\Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
@@ -367,10 +367,10 @@ class KunenaController extends BaseController
 	 *
 	 * @return  BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 *@since   Kunena 6.0
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{

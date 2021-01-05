@@ -30,7 +30,7 @@ class KunenaSvgIcons
 	 *
 	 * @param   string  $svgname  load svg name
 	 * @param   string  $group    Load the svg location
-	 * @param   string  $iconset  Load iconset when topicicons
+	 * @param   string  $iconset  Load iconset when topicIcons
 	 *
 	 * @return  string|void
 	 *
@@ -51,11 +51,11 @@ class KunenaSvgIcons
 		{
 			$file = Uri::root() . 'media/kunena/core/images/social/' . $svgname;
 		}
-		elseif ($group == 'systemtopicicons')
+		elseif ($group == 'systemtopicIcons')
 		{
 			$file = Uri::root() . 'media/kunena/topic_icons/' . $iconset . '/system/svg/' . $svgname;
 		}
-		elseif ($group == 'usertopicicons')
+		elseif ($group == 'usertopicIcons')
 		{
 			$file = Uri::root() . 'media/kunena/topic_icons/' . $iconset . '/user/svg/' . $svgname;
 		}

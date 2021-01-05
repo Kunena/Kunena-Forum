@@ -63,7 +63,7 @@ class KunenaSession extends CMSObject
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected $_sessiontimeout = false;
+	protected $_sessionTimeOut = false;
 
 	/**
 	 * @var     integer|string
@@ -218,11 +218,11 @@ class KunenaSession extends CMSObject
 	{
 		// Perform session timeout check
 		$lifetime              = max(intval(Factory::getApplication()->get('config.lifetime')) * 60,
-			intval(KunenaFactory::getConfig()->sessiontimeout)
+			intval(KunenaFactory::getConfig()->sessionTimeOut)
 		);
-		$this->_sessiontimeout = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());
+		$this->_sessionTimeOut = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());
 
-		return $this->_sessiontimeout;
+		return $this->_sessionTimeOut;
 	}
 
 	/**

@@ -38,8 +38,8 @@ class UserModel extends KunenaModel
 {
 
 	/**
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -51,12 +51,12 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|KunenaTopic[]|void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  array|KunenaTopic[]|boolean
 	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getSubscriptions(): array
 	{
@@ -71,7 +71,7 @@ class UserModel extends KunenaModel
 
 		try
 		{
-			$subslist = (array) $db->loadObjectList();
+			$subsList = (array) $db->loadObjectList();
 		}
 		catch (RuntimeException $e)
 		{
@@ -80,29 +80,29 @@ class UserModel extends KunenaModel
 			return false;
 		}
 
-		$topic_list = [];
+		$topicList = [];
 
-		if (!empty($subslist))
+		if (!empty($subsList))
 		{
-			foreach ($subslist as $sub)
+			foreach ($subsList as $sub)
 			{
-				$topic_list[] = $sub->thread;
+				$topicList[] = $sub->thread;
 			}
 
-			$topic_list = KunenaTopicHelper::getTopics($topic_list);
+			$topicList = KunenaTopicHelper::getTopics($topicList);
 		}
 
-		return $topic_list;
+		return $topicList;
 	}
 
 	/**
 	 * @return  KunenaCategory[]
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getCatsubcriptions(): array
+	public function getCatSubscriptions(): array
 	{
 		$userid = $this->getState($this->getName() . '.id');
 
@@ -110,11 +110,11 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  array|boolean
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getIPlist(): array
 	{
@@ -130,7 +130,7 @@ class UserModel extends KunenaModel
 
 		try
 		{
-			$iplist = implode("','", (array) $db->loadColumn());
+			$ipList = implode("','", (array) $db->loadColumn());
 		}
 		catch (RuntimeException $e)
 		{
@@ -141,14 +141,14 @@ class UserModel extends KunenaModel
 
 		$list = [];
 
-		if ($iplist)
+		if ($ipList)
 		{
-			$iplist = "'{$iplist}'";
+			$ipList = "'{$ipList}'";
 			$query  = $db->getQuery(true);
 			$query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
 				->from($db->quoteName('#__kunena_messages', 'm'))
 				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid = u.id')
-				->where('m.ip IN (' . $iplist . ')')
+				->where('m.ip IN (' . $ipList . ')')
 				->group('m.userid,m.ip');
 			$db->setQuery($query);
 
@@ -164,24 +164,24 @@ class UserModel extends KunenaModel
 			}
 		}
 
-		$useripslist = [];
+		$userIpsList = [];
 
 		foreach ($list as $item)
 		{
-			$useripslist[$item->ip][] = $item;
+			$userIpsList[$item->ip][] = $item;
 		}
 
-		return $useripslist;
+		return $userIpsList;
 	}
 
 	/**
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getListmodcats()
+	public function getListModCats()
 	{
 		$user = $this->getUser();
 
@@ -200,9 +200,9 @@ class UserModel extends KunenaModel
 		}
 
 		// Todo: fix params
-		$params  = [
+		$params = [
 			'sections' => false,
-			'action'   => 'read', ];
+			'action'   => 'read',];
 
 		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 	}
@@ -210,9 +210,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -224,11 +224,11 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getListuserranks(): array
+	public function getListUserRanks(): array
 	{
 		$db   = Factory::getDBO();
 		$user = $this->getUser();
@@ -237,7 +237,7 @@ class UserModel extends KunenaModel
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_ranks'))
-			->where('rank_special = \'1\'');
+			->where('rankSpecial = \'1\'');
 		$db->setQuery($query);
 
 		try
@@ -255,11 +255,11 @@ class UserModel extends KunenaModel
 
 		foreach ($specialRanks as $ranks)
 		{
-			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rank_id, $ranks->rank_title);
+			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, $ranks->rankTitle);
 		}
 
 		// Build special ranks select list
-		return HTMLHelper::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
+		return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
 	}
 
 	/**
@@ -267,7 +267,7 @@ class UserModel extends KunenaModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getMovecatslist()
+	public function getMoveCatsList()
 	{
 		return HTMLHelper::_('select.genericlist', '', 'catid', 'class="inputbox form-control"', 'value', 'text');
 	}
@@ -275,11 +275,11 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|string|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getMoveuser()
+	public function getMoveUser()
 	{
 		$db = Factory::getDBO();
 
@@ -314,14 +314,14 @@ class UserModel extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

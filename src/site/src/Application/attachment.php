@@ -48,7 +48,7 @@ require_once JPATH_BASE . '/includes/defines.php';
 
 // Installation check, and check on removal of the install directory.
 if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
-	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10)
+	|| (fileSize(JPATH_CONFIGURATION . '/configuration.php') < 10)
 )
 {
 	echo 'No configuration file found and no installation code available. Exiting...';

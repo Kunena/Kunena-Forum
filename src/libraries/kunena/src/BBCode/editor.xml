@@ -70,8 +70,8 @@
         <wrap-selection/>
     </button>
     <button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">
-        <wrap-selection config="!highlightcode"/>
-        <display name="kbbcode-colorpalette" config="highlightcode"/>
+        <wrap-selection config="!highlightCode"/>
+        <display name="kbbcode-colorpalette" config="highlightCode"/>
     </button>
     <button tag="table" name="table" title="COM_KUNENA_EDITOR_TABLE" alt="COM_KUNENA_EDITOR_HELPLINE_TABLE">
         <wrap-selection empty_before="[table]\n  [tr]\n    [td]"
@@ -82,7 +82,7 @@
                         before="\n[table]\n"
                         after="\n[/table]\n"/>
     </button>
-    <button tag="spoiler" name="spoiler" config="showspoilertag" title="COM_KUNENA_EDITOR_SPOILER"
+    <button tag="spoiler" name="spoiler" config="showSpoilerTag" title="COM_KUNENA_EDITOR_SPOILER"
             alt="COM_KUNENA_EDITOR_HELPLINE_SPOILER">
         <wrap-selection/>
     </button>
@@ -105,11 +105,11 @@
 
     <separator name="external"/>
 
-    <button tag="ebay" name="ebay" config="showebaytag" title="COM_KUNENA_EDITOR_EBAY"
+    <button tag="ebay" name="ebay" config="showEbayTag" title="COM_KUNENA_EDITOR_EBAY"
             alt="COM_KUNENA_EDITOR_HELPLINE_EBAY">
         <wrap-selection/>
     </button>
-    <button tag="video" name="video" config="showvideotag" title="COM_KUNENA_EDITOR_VIDEO"
+    <button tag="video" name="video" config="showVideoTag" title="COM_KUNENA_EDITOR_VIDEO"
             alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
         <display name="kbbcode-video-options"/>
     </button>

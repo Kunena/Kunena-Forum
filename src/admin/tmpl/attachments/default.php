@@ -51,11 +51,11 @@ Joomla.tableOrdering(order, dirn, "");
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
 							<label for="filter_search"
-							 class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+								   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 							<input type="text" name="filter_search" id="filter_search" class="filter form-control"
-							 placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
-							 value="<?php echo $this->filter->Search; ?>"
-							 title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
+								   placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
+								   value="<?php echo $this->filter->Search; ?>"
+								   title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
 						</div>
 						<div class="btn-group pull-left">
 							<button class="btn btn-outline-primary tip" type="submit"
@@ -71,7 +71,7 @@ Joomla.tableOrdering(order, dirn, "");
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-										<?php echo $this->pagination->getLimitBox(); ?>
+							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"
@@ -111,21 +111,21 @@ Joomla.tableOrdering(order, dirn, "");
 							<td class="hidden-phone">
 							</td>
 							<td class="nowrap">
-								<label for="filter_title"
+								<label for="filterTitle"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-									   name="filter_title"
-									   id="filter_title"
+									   name="filterTitle"
+									   id="filterTitle"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									   value="<?php echo $this->filter->Title; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
 							<td class="nowrap">
-								<label for="filter_type"
+								<label for="filterType"
 									   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 								<input class="input-block-level input-filter filter form-control" type="text"
-									   name="filter_type"
-									   id="filter_type"
+									   name="filterType"
+									   id="filterType"
 									   placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
 									   value="<?php echo $this->filter->Type; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>

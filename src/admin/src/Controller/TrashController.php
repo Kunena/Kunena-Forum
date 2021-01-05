@@ -45,9 +45,9 @@ class TrashController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -60,14 +60,14 @@ class TrashController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function purge(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -79,7 +79,7 @@ class TrashController extends FormController
 		$cid = ArrayHelper::toInteger($cid, []);
 
 		$type = $this->input->getCmd('type', 'topics');
-		$md5  = $this->input->getString('md5', null);
+		$md5  = $this->input->getString('md5');
 
 		if (!empty($cid))
 		{
@@ -182,14 +182,14 @@ class TrashController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function restore(): void
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -210,7 +210,7 @@ class TrashController extends FormController
 			return;
 		}
 
-		$nb_items = 0;
+		$nbItems = 0;
 
 		if ($type == 'messages')
 		{
@@ -218,9 +218,9 @@ class TrashController extends FormController
 
 			foreach ($messages as $target)
 			{
-				if ($target->publish(KunenaForum::PUBLISHED))
+				if ($target->publish())
 				{
-					$nb_items++;
+					$nbItems++;
 				}
 				else
 				{
@@ -245,7 +245,7 @@ class TrashController extends FormController
 
 				if ($target->publish($status))
 				{
-					$nb_items++;
+					$nbItems++;
 				}
 				else
 				{
@@ -261,9 +261,9 @@ class TrashController extends FormController
 			return;
 		}
 
-		if ($nb_items > 0)
+		if ($nbItems > 0)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems));
 		}
 
 		KunenaUserHelper::recount();
@@ -276,13 +276,13 @@ class TrashController extends FormController
 	/**
 	 * Method to redirect user on cancel on purge page
 	 *
-	 * @param   null  $key key
+	 * @param   null  $key  key
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{

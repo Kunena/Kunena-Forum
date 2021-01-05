@@ -208,7 +208,7 @@
     </button>
     <button tag="spoiler"
             name="spoiler"
-            config="showspoilertag"
+            config="showSpoilerTag"
             title="COM_KUNENA_EDITOR_SPOILER"
             alt="COM_KUNENA_EDITOR_HELPLINE_SPOILER">
         <wrap-selection class="spoilerbutton"
@@ -256,7 +256,7 @@
 
     <button tag="ebay"
             name="ebay"
-            config="showebaytag"
+            config="showEbayTag"
             title="COM_KUNENA_EDITOR_EBAY"
             alt="COM_KUNENA_EDITOR_HELPLINE_EBAY">
         <wrap-selection class="ebaybutton"
@@ -267,7 +267,7 @@
     </button>
     <button tag="video"
             name="video"
-            config="showvideotag"
+            config="showVideoTag"
             title="COM_KUNENA_EDITOR_VIDEO"
             alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
         <dropdown name="videodropdownbutton"

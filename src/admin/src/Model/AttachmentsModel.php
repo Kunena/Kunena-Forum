@@ -34,9 +34,9 @@ class AttachmentsModel extends ListModel
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -59,8 +59,8 @@ class AttachmentsModel extends ListModel
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -79,9 +79,9 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -97,31 +97,31 @@ class AttachmentsModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filter_active = '';
+		$filterActive = '';
 
 		// List state information
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
 		$this->setState('filter.search', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filter_title', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filterTitle', '', 'string');
 		$this->setState('filter.title', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filterType', '', 'string');
 		$this->setState('filter.type', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.size', 'filter_size', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.size', 'filter_size', '', 'string');
 		$this->setState('filter.size', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.dims', 'filter_dims', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.dims', 'filter_dims', '', 'string');
 		$this->setState('filter.dims', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
 		$this->setState('filter.username', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.post', 'filter_post', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.post', 'filter_post', '', 'string');
 		$this->setState('filter.post', $value);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 
 		// List state information.
 		parent::populateState('filename', 'asc');
@@ -149,17 +149,17 @@ class AttachmentsModel extends ListModel
 
 	/**
 	 * @param   string  $query       query
-	 * @param   int     $limitstart  limitstart
+	 * @param   int     $limitstart  limit start
 	 * @param   int     $limit       limit
 	 *
 	 * @return  KunenaAttachment[]
 	 *
+	 * @throws null
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 */
-	protected function _getList($query, $limitstart = 0, $limit = 0): array
+	protected function internalGetList(string $query, $limitstart = 0, $limit = 0): array
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();

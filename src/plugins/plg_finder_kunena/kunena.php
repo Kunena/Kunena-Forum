@@ -657,9 +657,9 @@ class plgFinderKunena extends Adapter
 		// Check against Joomla user group
 		elseif ($category->accesstype == 'joomla.group')
 		{
-			$pub_access = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
+			$pubAccess = in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
 
-			if ($pub_access)
+			if ($pubAccess)
 			{
 				return 1;
 			}

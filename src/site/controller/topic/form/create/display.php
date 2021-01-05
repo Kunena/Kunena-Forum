@@ -78,11 +78,11 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 		$format = Factory::getApplication()->input->getCmd('format');
 
-		if (!$Itemid && $format != 'feed' && $this->config->sef_redirect)
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
-			if ($this->config->search_id)
+			if ($this->config->searchId)
 			{
-				$itemidfix = $this->config->search_id;
+				$itemidfix = $this->config->searchId;
 			}
 			else
 			{
@@ -119,21 +119,21 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 
 		foreach ($categories as $category)
 		{
-			if (!$category->isSection() && $category->allow_anonymous)
+			if (!$category->isSection() && $category->allowAnonymous)
 			{
-				$arrayanynomousbox[$category->id] = $category->post_anonymous;
+				$arrayanynomousbox[$category->id] = $category->postAnonymous;
 			}
 
-			if ($this->config->pollenabled)
+			if ($this->config->pollEnabled)
 			{
-				if (!$category->isSection() && $category->allow_polls)
+				if (!$category->isSection() && $category->allowPolls)
 				{
 					$arraypollcatid[$category->id] = 1;
 				}
 			}
 		}
 
-		if ($this->config->read_only)
+		if ($this->config->readOnly)
 		{
 			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
@@ -148,7 +148,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		$template->setCategoryIconset($this->topic->getCategory()->iconset);
 
 		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
+		if ($this->config->topicIcons)
 		{
 			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
@@ -172,7 +172,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		$options  = [];
 		$selected = $this->topic->category_id;
 
-		if ($this->config->pickup_category)
+		if ($this->config->pickupCategory)
 		{
 			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
 			$selected  = '';
@@ -183,7 +183,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 			$selected = $saved['catid'];
 		}
 
-		$cat_params = [
+		$catParams = [
 			'ordering'    => 'ordering',
 			'toplevel'    => 0,
 			'sections'    => 0,
@@ -193,7 +193,7 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		];
 
 		$selectcatlist = HTMLHelper::_(
-			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
+			'kunenaforum.categorylist', 'catid', $catid, $options, $catParams,
 			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$action = 'post';
@@ -208,8 +208,8 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 		$privateMessage       = new KunenaPrivateMessage;
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$post_anonymous       = $saved ? $saved['anonymous'] : !empty($category1->post_anonymous);
-		$subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$postAnonymous       = $saved ? $saved['anonymous'] : !empty($category1->postAnonymous);
+		$subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$canSubscribe = $this->canSubscribe();
@@ -228,8 +228,8 @@ class ComponentTopicControllerFormCreateDisplay extends KunenaControllerDisplay
 	 */
 	protected function canSubscribe()
 	{
-		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
+		if (!$this->me->userid || !$this->config->allowSubscriptions
+			|| $this->config->topicSubscriptions == 'disabled'
 		)
 		{
 			return false;

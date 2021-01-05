@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
-	"
+		"
 jQuery(document).ready(function ($) {
 	$('#link_sel_all').click(function(e) {
 		$('#report_final').select();
@@ -78,7 +78,7 @@ $wa->useScript('multiselect');
 										</a>
 									</p>
 									<textarea id="report_final" class="input-block-level" name="report_final" cols="80"
-											  rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+											  rows="15"><?php echo $this->escape($this->systemReport); ?></textarea>
 								</td>
 							</tr>
 						</table>
@@ -100,7 +100,7 @@ $wa->useScript('multiselect');
 									</p>
 									<textarea id="report_final_anonymous" class="input-block-level"
 											  name="report_final_anonymous" cols="80"
-											  rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+											  rows="15"><?php echo $this->escape($this->systemReportAnonymous); ?></textarea>
 								</td>
 							</tr>
 						</table>

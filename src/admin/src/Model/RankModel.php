@@ -34,8 +34,8 @@ class RankModel extends AdminModel
 	/**
 	 * @inheritDoc
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -49,53 +49,53 @@ class RankModel extends AdminModel
 	/**
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getRankspaths()
+	public function getRanksPaths()
 	{
 		$template = KunenaFactory::getTemplate();
 
 		$selected = $this->getRank();
 
-		$rankpath = $template->getRankPath();
-		$files1   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, ['index.php', 'index.html']);
+		$rankPath = $template->getRankPath();
+		$files1   = (array) Folder::Files(JPATH_SITE . '/' . $rankPath, false, false, false, ['index.php', 'index.html']);
 		$files1   = (array) array_flip($files1);
 
 		foreach ($files1 as $key => &$path)
 		{
-			$path = $rankpath . $key;
+			$path = $rankPath . $key;
 		}
 
-		$rankpath = 'media/kunena/ranks/';
-		$files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, ['index.php', 'index.html']);
+		$rankPath = 'media/kunena/ranks/';
+		$files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankPath, false, false, false, ['index.php', 'index.html']);
 		$files2   = (array) array_flip($files2);
 
 		foreach ($files2 as $key => &$path)
 		{
-			$path = $rankpath . $key;
+			$path = $rankPath . $key;
 		}
 
-		$rank_images = $files1 + $files2;
-		ksort($rank_images);
+		$rankImages = $files1 + $files2;
+		ksort($rankImages);
 
-		$rank_list = [];
+		$rankList = [];
 
-		foreach ($rank_images as $file => $path)
+		foreach ($rankImages as $file => $path)
 		{
-			$rank_list[] = HTMLHelper::_('select.option', $path, $file);
+			$rankList[] = HTMLHelper::_('select.option', $path, $file);
 		}
 
-		return HTMLHelper::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox form-control" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rank_image) ? $rank_images[$selected->rank_image] : '');
+		return HTMLHelper::_('select.genericlist', $rankList, 'rankImage', 'class="inputbox form-control" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rankImage) ? $rankImages[$selected->rankImage] : '');
 	}
 
 	/**
 	 * @return  mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getRank()
 	{
@@ -108,7 +108,7 @@ class RankModel extends AdminModel
 			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_ranks'))
-				->where('rank_id=' . $db->quote($id));
+				->where('rankId=' . $db->quote($id));
 			$db->setQuery($query);
 
 			try
@@ -131,14 +131,14 @@ class RankModel extends AdminModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
+	 * @param   null  $ordering   ordering
+	 * @param   null  $direction  direction
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

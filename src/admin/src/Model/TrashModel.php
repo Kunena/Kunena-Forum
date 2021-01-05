@@ -36,25 +36,25 @@ class TrashModel extends KunenaModel
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected $_items = false;
+	protected $internalItems = false;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected $_items_order = false;
+	protected $internalItemsOrder = false;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected $_object = false;
+	protected $internalObject = false;
 
 	/**
 	 *
 	 *
-	 * @param   array    $data     data
-	 * @param   boolean  $loadData load data
+	 * @param   array    $data      data
+	 * @param   boolean  $loadData  load data
 	 *
 	 * @return void
 	 *
@@ -70,21 +70,21 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array|object
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 1.6
+	 *
 	 */
 	public function getTrashItems()
 	{
 		if ($this->state->get('layout') == 'topics')
 		{
 			// Get topics
-			return $this->_getTopics();
+			return $this->internalGetTopics();
 		}
 
 		// Get messages
-		return $this->_getMessages();
+		return $this->internalGetMessages();
 	}
 
 	/**
@@ -92,12 +92,12 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 1.6
+	 *
 	 */
-	protected function _getTopics(): array
+	protected function internalGetTopics(): array
 	{
 		$finder = new KunenaMessageFinder;
 		$finder->filterByHold([2, 3]);
@@ -187,12 +187,12 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 1.6
+	 *
 	 */
-	protected function _getMessages(): array
+	protected function internalGetMessages(): array
 	{
 		$db   = Factory::getDBO();
 		$join = [];
@@ -346,11 +346,11 @@ class TrashModel extends KunenaModel
 	 */
 	public function getViewOptions(): array
 	{
-		$view_options   = [];
-		$view_options[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
-		$view_options[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
+		$viewOptions   = [];
+		$viewOptions[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
+		$viewOptions[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
 
-		return HTMLHelper::_('select.genericlist', $view_options, 'layout',
+		return HTMLHelper::_('select.genericlist', $viewOptions, 'layout',
 			'class="inputbox form-control" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
 		);
 	}
@@ -360,10 +360,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 1.6
+	 *
 	 */
 	public function getPurgeItems(): array
 	{
@@ -385,7 +385,7 @@ class TrashModel extends KunenaModel
 	}
 
 	/**
-	 * Method to hash datas.
+	 * Method to hash data's.
 	 *
 	 * @return  string Hashed value.
 	 *
@@ -455,29 +455,29 @@ class TrashModel extends KunenaModel
 
 		$this->setState('list.direction', $value);
 
-		$filter_active = '';
+		$filterActive = '';
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.search', 'filter_search', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.search', 'filter_search', '', 'string');
 		$this->setState('list.search', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_title', 'filter_title', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filterTitle', 'filterTitle', '', 'string');
 		$this->setState('filter.title', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_topic', 'filter_topic', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_topic', 'filter_topic', '', 'string');
 		$this->setState('filter.topic', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string');
 		$this->setState('filter.category', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string');
 		$this->setState('filter.ip', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string');
 		$this->setState('filter.author', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_date', 'filter_time', '', 'string');
+		$filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_date', 'filter_time', '', 'string');
 		$this->setState('filter.time', $value);
 
-		$this->setState('filter.active', !empty($filter_active));
+		$this->setState('filter.active', !empty($filterActive));
 	}
 }

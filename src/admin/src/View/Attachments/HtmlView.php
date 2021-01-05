@@ -34,13 +34,13 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
-		$items      = $this->get('Items');
+		$items            = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
@@ -117,8 +117,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar(): void
 	{
-		$help_url = 'https://docs.kunena.org/en/manual/backend/attachments';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/attachments';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('attachments.delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');

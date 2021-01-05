@@ -12,6 +12,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+
 ?>
 <div class="modal hide fade" id="moderateModal">
 	<div class="modal-dialog">
@@ -34,7 +35,7 @@ use Joomla\CMS\Language\Text;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('users.batch_moderators');">
+						onclick="Joomla.submitbutton('users.batchModerators');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

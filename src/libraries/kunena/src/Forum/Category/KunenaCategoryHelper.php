@@ -218,7 +218,7 @@ abstract class KunenaCategoryHelper
 				self::$_tree [$instance->id] = [];
 			}
 
-			self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [(int) $instance->id];
+			self::$_tree [$instance->parentId][$instance->id] = &self::$_tree [(int) $instance->id];
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -237,19 +237,19 @@ abstract class KunenaCategoryHelper
 	{
 		if ($instance->exists())
 		{
-			$instance->level                  = isset(self::$_instances [$instance->parent_id]) ? self::$_instances [$instance->parent_id]->level + 1 : 0;
+			$instance->level                  = isset(self::$_instances [$instance->parentId]) ? self::$_instances [$instance->parentId]->level + 1 : 0;
 			self::$_instances [$instance->id] = $instance;
 
 			if (!isset(self::$_tree [(int) $instance->id]))
 			{
 				self::$_tree [$instance->id]                       = [];
-				self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [$instance->id];
+				self::$_tree [$instance->parentId][$instance->id] = &self::$_tree [$instance->id];
 			}
 		}
 		else
 		{
 			unset(self::$_instances [$instance->id]);
-			unset(self::$_tree [$instance->id], self::$_tree [$instance->parent_id][$instance->id]);
+			unset(self::$_tree [$instance->id], self::$_tree [$instance->parentId][$instance->id]);
 		}
 	}
 
@@ -378,21 +378,21 @@ abstract class KunenaCategoryHelper
 		// Pre-load all items
 		$usercategories = KunenaCategoryUserHelper::getCategories($ids, $user);
 
-		foreach ($usercategories as $usercategory)
+		foreach ($usercategories as $userCategory)
 		{
-			if ($usercategory->subscribed != (int) $value)
+			if ($userCategory->subscribed != (int) $value)
 			{
 				$count++;
 			}
 
-			$usercategory->subscribed = (int) $value;
+			$userCategory->subscribed = (int) $value;
 
-			if (!$usercategory->params)
+			if (!$userCategory->params)
 			{
-				$usercategory->params = '';
+				$userCategory->params = '';
 			}
 
-			$usercategory->save();
+			$userCategory->save();
 		}
 
 		return $count;
@@ -420,7 +420,7 @@ abstract class KunenaCategoryHelper
 
 		if ($limit < 1)
 		{
-			$limit = $config->threads_per_page;
+			$limit = $config->threadsPerPage;
 		}
 
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
@@ -514,7 +514,7 @@ abstract class KunenaCategoryHelper
 	{
 		$user = KunenaUserHelper::getMyself();
 
-		if (!KunenaFactory::getConfig()->shownew || !$user->exists())
+		if (!KunenaFactory::getConfig()->showNew || !$user->exists())
 		{
 			return;
 		}
@@ -638,7 +638,7 @@ abstract class KunenaCategoryHelper
 		}
 
 		$list   = [];
-		$parent = self::$_instances [$id]->parent_id;
+		$parent = self::$_instances [$id]->parentId;
 
 		while ($parent && $levels--)
 		{
@@ -658,7 +658,7 @@ abstract class KunenaCategoryHelper
 
 			$list[$parent] = self::$_instances [$parent];
 
-			$parent = self::$_instances [$parent]->parent_id;
+			$parent = self::$_instances [$parent]->parentId;
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -686,7 +686,7 @@ abstract class KunenaCategoryHelper
 			{
 				foreach (self::getChildren($catid, $levels, $params) as $category)
 				{
-					if ($category->parent_id == $catid)
+					if ($category->parentId == $catid)
 					{
 						$category->name = Text::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
 					}
@@ -842,14 +842,14 @@ abstract class KunenaCategoryHelper
 
 				if (!$optimize)
 				{
-					$filtered |= isset($params['filter_title']) && (StringHelper::stristr($instance->name, (string) $params['filter_title']) === false
-							&& StringHelper::stristr($instance->alias, (string) $params['filter_title']) === false);
-					$filtered |= isset($params['filter_type']);
-					$filtered |= isset($params['filter_access']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filter_access']);
-					$filtered |= isset($params['filter_locked']) && $instance->locked != (int) $params['filter_locked'];
-					$filtered |= isset($params['filter_allow_polls']) && $instance->allow_polls != (int) $params['filter_allow_polls'];
-					$filtered |= isset($params['filter_review']) && $instance->review != (int) $params['filter_review'];
-					$filtered |= isset($params['filter_anonymous']) && $instance->allow_anonymous != (int) $params['filter_anonymous'];
+					$filtered |= isset($params['filterTitle']) && (StringHelper::stristr($instance->name, (string) $params['filterTitle']) === false
+							&& StringHelper::stristr($instance->alias, (string) $params['filterTitle']) === false);
+					$filtered |= isset($params['filterType']);
+					$filtered |= isset($params['filterAccess']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filterAccess']);
+					$filtered |= isset($params['filterLocked']) && $instance->locked != (int) $params['filterLocked'];
+					$filtered |= isset($params['filterAllowPolls']) && $instance->allowPolls != (int) $params['filterAllowPolls'];
+					$filtered |= isset($params['filterReview']) && $instance->review != (int) $params['filterReview'];
+					$filtered |= isset($params['filterAnonymous']) && $instance->allowAnonymous != (int) $params['filterAnonymous'];
 				}
 
 				if ($filtered && $params['action'] != 'admin')
@@ -1044,7 +1044,7 @@ abstract class KunenaCategoryHelper
 	/**
 	 * Check in existing categories if the alias is already taken.
 	 *
-	 * @param   mixed  $category_id  category
+	 * @param   mixed  $categoryId  category
 	 * @param   mixed  $alias        alias
 	 *
 	 * @return  boolean|void
@@ -1053,19 +1053,19 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function getAlias($category_id, $alias): bool
+	public static function getAlias($categoryId, $alias): bool
 	{
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_categories'))
-			->where($db->quoteName('id') . ' = ' . $db->quote($category_id))
+			->where($db->quoteName('id') . ' = ' . $db->quote($categoryId))
 			->andWhere($db->quoteName('alias') . ' = ' . $db->quote($alias));
 		$db->setQuery($query);
 
 		try
 		{
-			$category_items = $db->loadAssoc();
+			$categoryinternalItems = $db->loadAssoc();
 		}
 		catch (RuntimeException $e)
 		{
@@ -1074,7 +1074,7 @@ abstract class KunenaCategoryHelper
 			return false;
 		}
 
-		if (is_array($category_items))
+		if (is_array($categoryinternalItems))
 		{
 			return true;
 		}

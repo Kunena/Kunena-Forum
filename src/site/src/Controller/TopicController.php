@@ -401,10 +401,10 @@ class TopicController extends KunenaController
 					$imageInfo = KunenaImage::getImageFileProperties($uploadFile);
 					$config    = KunenaConfig::getInstance();
 
-					if ($imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
+					if ($imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight)
 					{
 						// Calculate quality for both JPG and PNG.
-						$quality = $config->imagequality;
+						$quality = $config->imageQuality;
 
 						if ($quality < 1 || $quality > 100)
 						{
@@ -417,7 +417,7 @@ class TopicController extends KunenaController
 						}
 
 						$image = new KunenaImage($uploadFile);
-						$image = $image->resize($config->imagewidth, $config->imageheight, false);
+						$image = $image->resize($config->imageWidth, $config->imageHeight, false);
 
 						$options = ['quality' => $quality];
 						$image->toFile($uploadFile, $imageInfo->type, $options);
@@ -425,7 +425,7 @@ class TopicController extends KunenaController
 						unset($image);
 
 						$attachment->hash = md5_file($uploadFile);
-						$attachment->size = filesize($uploadFile);
+						$attachment->size = fileSize($uploadFile);
 					}
 				}
 
@@ -586,9 +586,9 @@ class TopicController extends KunenaController
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && !$this->me->isModerator($category) && $isNew)
+		if ($this->config->floodProtection && !$this->me->isModerator($category) && $isNew)
 		{
-			$timelimit = Factory::getDate()->toUnix() - $this->config->floodprotection;
+			$timelimit = Factory::getDate()->toUnix() - $this->config->floodProtection;
 			$ip        = KunenaUserHelper::getUserIp();
 
 			$db    = Factory::getDBO();
@@ -609,7 +609,7 @@ class TopicController extends KunenaController
 
 			if ($count)
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection), 'error');
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodProtection), 'error');
 				$this->setRedirectBack();
 
 				return;
@@ -630,13 +630,13 @@ class TopicController extends KunenaController
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
+		if ($this->config->topicIcons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null, false))
 		{
 			$topic->icon_id = $fields['icon_id'];
 		}
 
 		// Check for guest user if the IP, username or email are blacklisted
-		if ($message->getCategory()->allow_anonymous && !$this->me->userid)
+		if ($message->getCategory()->allowAnonymous && !$this->me->userid)
 		{
 			if ($this->checkIfBlacklisted($message))
 			{
@@ -648,25 +648,25 @@ class TopicController extends KunenaController
 		}
 
 		// Remove IP address
-		if (!$this->config->iptracking)
+		if (!$this->config->ipTracking)
 		{
 			$message->ip = '';
 		}
 
 		// If requested: Make message to be anonymous
-		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous)
+		if ($fields['anonymous'] && $message->getCategory()->allowAnonymous)
 		{
 			$message->makeAnonymous();
 		}
 
 		// If configured: Hold posts from guests
-		if (!$this->me->userid && $this->config->hold_guest_posts)
+		if (!$this->me->userid && $this->config->holdGuestPosts)
 		{
 			$message->hold = 1;
 		}
 
 		// If configured: Hold posts from users
-		if ($this->me->userid && !$this->me->isModerator($category) && $this->me->posts < $this->config->hold_newusers_posts)
+		if ($this->me->userid && !$this->me->isModerator($category) && $this->me->posts < $this->config->holdNewUsersPosts)
 		{
 			$message->hold = 1;
 		}
@@ -696,7 +696,7 @@ class TopicController extends KunenaController
 			}
 		}
 
-		if ($this->config->url_subject_topic)
+		if ($this->config->urlSubjectTopic)
 		{
 			$url_subject = $this->checkURLInSubject($message->subject);
 
@@ -774,18 +774,18 @@ class TopicController extends KunenaController
 		$success = $message->save();
 
 		// Save IP address of user
-		if ($this->config->iptracking)
+		if ($this->config->ipTracking)
 		{
 			$this->me->ip = $message->ip;
 			$this->me->save();
 		}
 
-		if ($this->me->isModerator($category) && $this->config->log_moderation)
+		if ($this->me->isModerator($category) && $this->config->logModeration)
 		{
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-				['mesid' => $message->id, 'parent_id' => $this->id],
+				['mesid' => $message->id, 'parentId' => $this->id],
 				$category,
 				$topic
 			);
@@ -907,7 +907,7 @@ class TopicController extends KunenaController
 	 */
 	protected function checkURLInSubject($subject)
 	{
-		if ($this->config->url_subject_topic)
+		if ($this->config->urlSubjectTopic)
 		{
 			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
@@ -994,7 +994,7 @@ class TopicController extends KunenaController
 				}
 			}
 
-			if (!$topic->isAuthorised('approve') && $countlink >= $this->config->max_links + 1)
+			if (!$topic->isAuthorised('approve') && $countlink >= $this->config->maxLinks + 1)
 			{
 				return false;
 			}
@@ -1061,7 +1061,7 @@ class TopicController extends KunenaController
 		$message->edit($fields);
 
 		// If requested: Make message to be anonymous
-		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous)
+		if ($fields['anonymous'] && $message->getCategory()->allowAnonymous)
 		{
 			$message->makeAnonymous();
 		}
@@ -1099,7 +1099,7 @@ class TopicController extends KunenaController
 
 		$url_subject = $this->checkURLInSubject($message->subject);
 
-		if ($url_subject && $this->config->url_subject_topic)
+		if ($url_subject && $this->config->urlSubjectTopic)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
 			$this->setRedirectBack();
@@ -1108,13 +1108,13 @@ class TopicController extends KunenaController
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null))
+		if ($this->config->topicIcons && isset($fields['icon_id']) && $topic->isAuthorised('edit', null))
 		{
 			$topic->icon_id = $fields['icon_id'];
 		}
 
 		// Check if we are editing first post and update topic if we are!
-		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allow_change_subject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
+		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
 		}
@@ -1127,7 +1127,7 @@ class TopicController extends KunenaController
 			$text = trim(OutputFilter::cleanText($text));
 		}
 
-		if (!$text && $this->config->userdeletetmessage == 1)
+		if (!$text && $this->config->userDeleteMessage == 1)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
 
@@ -1195,7 +1195,7 @@ class TopicController extends KunenaController
 
 		$isMine = $this->me->userid == $message->userid;
 
-		if ($this->config->log_moderation)
+		if ($this->config->logModeration)
 		{
 			KunenaLog::log(
 				$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
@@ -1270,7 +1270,7 @@ class TopicController extends KunenaController
 				}
 				else
 				{
-					if ($this->config->allow_edit_poll || (!$this->config->allow_edit_poll && !$poll->getUserCount()))
+					if ($this->config->allowEditPoll || (!$this->config->allowEditPoll && !$poll->getUserCount()))
 					{
 						// Edit existing poll
 						if (!$topic->isAuthorised('poll.edit'))
@@ -1400,7 +1400,7 @@ class TopicController extends KunenaController
 
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_SUCCESS'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_ACTION,
@@ -1432,7 +1432,7 @@ class TopicController extends KunenaController
 
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1636,7 +1636,7 @@ class TopicController extends KunenaController
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1687,7 +1687,7 @@ class TopicController extends KunenaController
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_UNSET'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1738,7 +1738,7 @@ class TopicController extends KunenaController
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_SET'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1789,7 +1789,7 @@ class TopicController extends KunenaController
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_UNSET'));
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -1852,7 +1852,7 @@ class TopicController extends KunenaController
 
 		if ($target->isAuthorised('delete') && $target->publish($hold))
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
@@ -1924,7 +1924,7 @@ class TopicController extends KunenaController
 
 		if ($target->isAuthorised('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
@@ -1987,7 +1987,7 @@ class TopicController extends KunenaController
 
 		if ($topic->isAuthorised('permdelete') && $target->delete())
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
@@ -2061,7 +2061,7 @@ class TopicController extends KunenaController
 
 		if ($target->isAuthorised('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
@@ -2187,7 +2187,7 @@ class TopicController extends KunenaController
 				$error = $topic->getError();
 			}
 
-			if ($this->config->log_moderation)
+			if ($this->config->logModeration)
 			{
 				KunenaLog::log(
 					KunenaLog::TYPE_MODERATION,
@@ -2241,7 +2241,7 @@ class TopicController extends KunenaController
 			return;
 		}
 
-		if (!$this->me->exists() || $this->config->reportmsg == 0)
+		if (!$this->me->exists() || $this->config->reportMsg == 0)
 		{
 			// Deny access if report feature has been disabled or user is guest
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'notice');
@@ -2250,7 +2250,7 @@ class TopicController extends KunenaController
 			return;
 		}
 
-		if (!$this->config->get('send_emails'))
+		if (!$this->config->get('sendEmails'))
 		{
 			// Emails have been disabled
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'notice');
@@ -2301,7 +2301,7 @@ class TopicController extends KunenaController
 			$template->reportMessage($message, $reason, $text);
 		}
 
-		if ($this->config->log_moderation)
+		if ($this->config->logModeration)
 		{
 			KunenaLog::log(
 				KunenaLog::TYPE_REPORT,
@@ -2335,8 +2335,8 @@ class TopicController extends KunenaController
 
 			if (!empty($emailToList))
 			{
-				$mailsender  = MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
-				$mailsubject = "[" . $this->config->board_title . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
+				$mailsender  = MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
+				$mailsubject = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
 				{
@@ -2442,7 +2442,7 @@ class TopicController extends KunenaController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'));
 			}
 		}
-		elseif (!$this->config->pollallowvoteone)
+		elseif (!$this->config->pollAllowVoteOne)
 		{
 			// Change existing vote
 			$success = $poll->vote($vote, true);
@@ -2481,7 +2481,7 @@ class TopicController extends KunenaController
 		$topic = KunenaTopicHelper::get($this->id);
 		$topic->resetvotes();
 
-		if ($this->config->log_moderation)
+		if ($this->config->logModeration)
 		{
 			KunenaLog::log(
 				KunenaLog::TYPE_MODERATION,
@@ -2688,7 +2688,7 @@ class TopicController extends KunenaController
 		$finder    = new KunenaFinder;
 		$finder
 			->filterByMessage($message)
-			->where('parent_id', '=', 0)
+			->where('parentId', '=', 0)
 			->where('author_id', '=', $message->userid)
 			->order('id')
 			->limit(1);

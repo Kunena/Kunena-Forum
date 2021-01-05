@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
-if ($this->category->allow_ratings && $this->config->ratingenabled)
+if ($this->category->allowRatings && $this->config->ratingEnabled)
 :
 	$this->addStyleSheet('rating.css');
 	$this->addScript('rating.js');

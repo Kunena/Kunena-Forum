@@ -42,9 +42,9 @@ class CpanelController extends FormController
 	 *
 	 * @param   array  $config  construct
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -59,9 +59,9 @@ class CpanelController extends FormController
 	 *
 	 * @return  array|null|string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public static function onGetIcons()
 	{
@@ -113,14 +113,28 @@ class CpanelController extends FormController
 		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates
-			Factory::getApplication()->enqueueMessage(Text::_('Kunena Update Found.  <a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			Factory::getApplication()->enqueueMessage(
+				Text::_('Kunena Update Found.
+					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
+					 Update Now</a><br/> Please backup before updating.'
+				),
+				'Notice'
+			);
+
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
 			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 		}
 		elseif (!empty($updateInfo->addons))
 		{
 			// Has updated add-ons
-			Factory::getApplication()->enqueueMessage(Text::_('Kunena Update Found.  <a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			Factory::getApplication()->enqueueMessage(
+				Text::_('Kunena Update Found.
+					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
+					 Update Now</a><br/> Please backup before updating.'
+				),
+				'Notice'
+			);
+
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
 			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 		}
@@ -131,21 +145,21 @@ class CpanelController extends FormController
 			$link = '#';
 		}
 
-		return '<a href="' . $link . '"><img loading=lazy src="' . Uri::root() . $icon . '"/></a>';
+		return '<a href="' . $link . '"><img loading=lazy alt="" src="' . Uri::root() . $icon . '"/></a>';
 	}
 
 	/**
 	 * Display
 	 *
 	 * @param   bool  $cachable   cachable
-	 * @param   bool  $urlparams  urlparams
+	 * @param   bool  $urlparams  url params
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): void
 	{

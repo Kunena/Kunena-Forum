@@ -27,11 +27,11 @@ $wa->useScript('multiselect');
 
 <script type="text/javascript">
 	Joomla.orderTable = function () {
-	  const table = document.getElementById("sortTable");
-	  const direction = document.getElementById("directionTable");
-	  const order = table.options[table.selectedIndex].value;
+		const table = document.getElementById("sortTable");
+		const direction = document.getElementById("directionTable");
+		const order = table.options[table.selectedIndex].value;
 
-	  if (order !== '<?php echo $this->list->Ordering; ?>') {
+		if (order !== '<?php echo $this->list->Ordering; ?>') {
 			var dirn = 'asc';
 		} else {
 			var dirn = direction.options[direction.selectedIndex].value;
@@ -79,7 +79,7 @@ $wa->useScript('multiselect');
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-									<?php echo $this->pagination->getLimitBox(); ?>
+							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable"

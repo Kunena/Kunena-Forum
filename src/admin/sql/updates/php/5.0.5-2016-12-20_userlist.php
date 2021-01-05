@@ -20,13 +20,13 @@ function kunena_505_2016_12_20_userlist()
 {
 	$config = KunenaFactory::getConfig();
 
-	if ($config->userlist_allowed)
+	if ($config->userlistAllowed)
 	{
-		$config->userlist_allowed = 0;
+		$config->userlistAllowed = 0;
 	}
 	else
 	{
-		$config->userlist_allowed = 1;
+		$config->userlistAllowed = 1;
 	}
 
 	// Save configuration

@@ -37,7 +37,7 @@ if ($direction === "left")
 			if ($quick != 2)
 				:
 				?>
-				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
+				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickReply'); ?>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -52,7 +52,7 @@ if ($direction === "left")
 			if ($quick != 2)
 				:
 				?>
-				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
+				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickReply'); ?>
 			<?php endif; ?>
 		</div>
 		<div class="col-md-2 shadow rounded hidden-xs-down">
@@ -70,7 +70,7 @@ if ($direction === "left")
 			if ($quick != 2)
 				:
 				?>
-				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
+				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickReply'); ?>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -85,7 +85,7 @@ if ($direction === "left")
 			if ($quick != 2)
 				:
 				?>
-				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
+				<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickReply'); ?>
 			<?php endif; ?>
 		</div>
 	</div>

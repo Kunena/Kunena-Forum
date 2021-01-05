@@ -117,13 +117,13 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
-		if ($this->config->board_offline && !$this->me->isAdmin())
+		if ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 
-		if ($this->config->regonly && !$this->me->exists())
+		if ($this->config->regOnly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
 			throw new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
@@ -210,7 +210,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		}
 
 		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . filesize($path));
+		header('Content-Length: ' . fileSize($path));
 		flush();
 
 		// Output the file contents.

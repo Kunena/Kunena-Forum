@@ -114,7 +114,7 @@ abstract class KunenaForum
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	protected static $version_sampledata = false;
+	protected static $version_sampleData = false;
 
 	/**
 	 * Checks if Kunena Forum is safe to be used and online.
@@ -160,7 +160,7 @@ abstract class KunenaForum
 
 		$config = KunenaFactory::getConfig();
 
-		return !$config->board_offline
+		return !$config->boardOffline
 			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
 
@@ -263,7 +263,7 @@ abstract class KunenaForum
 			$cache->setCaching(0);
 		}
 
-		$cache->setLifeTime($config->get('cache_time', 60));
+		$cache->setLifeTime($config->get('cacheTime', 60));
 
 		// Setup error logging.
 		$options    = ['logger' => 'w3c', 'text_file' => 'kunena.php'];
@@ -377,17 +377,17 @@ abstract class KunenaForum
 
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('sampledata')->from('#__kunena_version')->order('id');
+		$query->select('sampleData')->from('#__kunena_version')->order('id');
 		$query->setLimit(1);
 		$db->setQuery($query);
 
-		self::$version_sampledata = $db->loadResult();
+		self::$version_sampleData = $db->loadResult();
 	}
 
 	/**
 	 * Returns all version information together.
 	 *
-	 * @return  object stdClass containing (version, major, date, name, sampledata).
+	 * @return  object stdClass containing (version, major, date, name, sampleData).
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -398,7 +398,7 @@ abstract class KunenaForum
 		$version->major      = self::versionMajor();
 		$version->date       = self::versionDate();
 		$version->name       = self::versionName();
-		$version->sampledata = self::versionSampleData();
+		$version->sampleData = self::versionSampleData();
 
 		return $version;
 	}
@@ -463,12 +463,12 @@ abstract class KunenaForum
 	 */
 	public static function versionSampleData()
 	{
-		if (self::$version_sampledata === false)
+		if (self::$version_sampleData === false)
 		{
 			self::buildVersion();
 		}
 
-		return self::$version_sampledata;
+		return self::$version_sampleData;
 	}
 
 	/**

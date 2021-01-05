@@ -35,11 +35,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void|mixed
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($tpl = null)
 	{
@@ -47,15 +47,15 @@ class HtmlView extends BaseHtmlView
 
 		$count = KunenaStatistics::getInstance()->loadCategoryCount();
 
-		$sampledata = KunenaStatistics::getTotalEmoticons() == 0 && $count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
+		$sampleData = KunenaStatistics::getTotalEmoticons() == 0 && $count['categories'] == 0 && KunenaUserHelper::getTotalRanks() == 0;
 
-		if ($sampledata)
+		if ($sampleData)
 		{
 			Factory::getApplication()->getDocument()->getWebAssetManager()
-				->registerAndUseScript('mod_sampledata', 'mod_sampledata/sampledata-process.js', [], ['defer' => true], ['core']);
+				->registerAndUseScript('mod_sampleData', 'mod_sampleData/sampleData-process.js', [], ['defer' => true], ['core']);
 
 			$lang = Factory::getLanguage();
-			$lang->load('mod_sampledata', JPATH_ADMINISTRATOR);
+			$lang->load('mod_sampleData', JPATH_ADMINISTRATOR);
 
 			Text::script('MOD_SAMPLEDATA_CONFIRM_START');
 			Text::script('MOD_SAMPLEDATA_ITEM_ALREADY_PROCESSED');
@@ -86,7 +86,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
 
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

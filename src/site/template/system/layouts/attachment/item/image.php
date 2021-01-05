@@ -34,10 +34,10 @@ if ($config->lightbox == 1)
 	echo $this->subLayout('Widget/Lightbox');
 
 	$attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
-	$attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
+	$attributesImg  = ' style="max-height:' . (int) $config->imageHeight . 'px;"';
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+	   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<img loading=lazy src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?>
 			 width="<?php echo $attachment->width; ?>"
 			 height="<?php echo $attachment->height; ?>"
@@ -49,10 +49,10 @@ else
 {
 	?>
 	<a href="<?php echo $name; ?>"
-	   title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>">
+	   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>">
 		<img loading=lazy class="kmsimage" src="<?php echo $name; ?>"
-			 width="<?php echo $config->thumbwidth; ?>"
-			 height="<?php echo $config->thumbheight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+			 width="<?php echo $config->thumbWidth; ?>"
+			 height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
 	</a>
 	<?php
 }

@@ -54,7 +54,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 
 		$config = KunenaConfig::getInstance();
 
-		if (!$config->showannouncement)
+		if (!$config->showAnnouncement)
 		{
 			return false;
 		}

@@ -145,31 +145,31 @@ class KunenaStatistics
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showgenstats = true;
+	public $showGenStats = true;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showpopuserstats = false;
+	public $showPopUserStats = false;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showpopsubjectstats = false;
+	public $showPopSubjectStats = false;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showpoppollstats = false;
+	public $showPopPollStats = false;
 
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showpopthankyoustats = false;
+	public $showPopThankYouStats = false;
 
 	/**
 	 * @var     DatabaseDriver|null
@@ -187,7 +187,7 @@ class KunenaStatistics
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
-	public $showstats = true;
+	public $showStats = true;
 
 	/**
 	 * @since   Kunena 6.0
@@ -199,12 +199,12 @@ class KunenaStatistics
 		$this->_db     = Factory::getDBO();
 		$this->_config = KunenaConfig::getInstance();
 
-		$this->showstats            = (bool) $this->_config->showstats;
-		$this->showgenstats         = (bool) $this->_config->showgenstats;
-		$this->showpopuserstats     = (bool) $this->_config->showpopuserstats;
-		$this->showpopsubjectstats  = (bool) $this->_config->showpopsubjectstats;
-		$this->showpoppollstats     = (bool) $this->_config->showpoppollstats;
-		$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
+		$this->showStats            = (bool) $this->_config->showStats;
+		$this->showGenStats         = (bool) $this->_config->showGenStats;
+		$this->showPopUserStats     = (bool) $this->_config->showPopUserStats;
+		$this->showPopSubjectStats  = (bool) $this->_config->showPopSubjectStats;
+		$this->showPopPollStats     = (bool) $this->_config->showPopPollStats;
+		$this->showPopThankYouStats = (bool) $this->_config->showPopThankYouStats;
 	}
 
 	/**
@@ -283,7 +283,7 @@ class KunenaStatistics
 	 */
 	public function loadGeneral($force = false): void
 	{
-		if (!$this->showstats && !$force)
+		if (!$this->showStats && !$force)
 		{
 			return;
 		}
@@ -434,7 +434,7 @@ class KunenaStatistics
 	 */
 	public function loadTopicStats($override = false): void
 	{
-		if ($this->showpopsubjectstats || $override)
+		if ($this->showPopSubjectStats || $override)
 		{
 			$this->top[] = $this->loadTopTopics();
 
@@ -444,7 +444,7 @@ class KunenaStatistics
 			}
 		}
 
-		if ($this->showpoppollstats || $override)
+		if ($this->showPopPollStats || $override)
 		{
 			$this->top[] = $this->loadTopPolls();
 
@@ -467,7 +467,7 @@ class KunenaStatistics
 	 */
 	public function loadTopTopics($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->popsubjectcount;
+		$limit = $limit ? $limit : $this->_config->popSubjectCount;
 
 		if ($this->topTopics < $limit)
 		{
@@ -509,7 +509,7 @@ class KunenaStatistics
 	 */
 	public function loadTopPolls($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->poppollscount;
+		$limit = $limit ? $limit : $this->_config->popPollsCount;
 
 		if ($this->topPolls < $limit)
 		{
@@ -577,7 +577,7 @@ class KunenaStatistics
 	 */
 	public function loadUserStats($override = false): void
 	{
-		if ($this->showpopuserstats || $override)
+		if ($this->showPopUserStats || $override)
 		{
 			$this->top[] = $this->loadTopPosters();
 
@@ -594,7 +594,7 @@ class KunenaStatistics
 			}
 		}
 
-		if ($this->showpopthankyoustats || $override)
+		if ($this->showPopThankYouStats || $override)
 		{
 			$this->top[] = $this->loadTopThankyous();
 
@@ -616,7 +616,7 @@ class KunenaStatistics
 	 */
 	public function loadTopPosters($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->popusercount;
+		$limit = $limit ? $limit : $this->_config->popUserCount;
 
 		if ($this->topPosters < $limit)
 		{
@@ -655,7 +655,7 @@ class KunenaStatistics
 	 */
 	public function loadTopProfiles($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->popusercount;
+		$limit = $limit ? $limit : $this->_config->popUserCount;
 
 		if ($this->topProfiles < $limit)
 		{
@@ -694,7 +694,7 @@ class KunenaStatistics
 	 */
 	public function loadTopThankyous($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->popthankscount;
+		$limit = $limit ? $limit : $this->_config->popThanksCount;
 
 		if ($this->topThanks < $limit)
 		{
@@ -714,7 +714,7 @@ class KunenaStatistics
 				->group($this->_db->quoteName('t.targetuserid'));
 			$query->order($this->_db->quoteName('count') . ' DESC');
 
-			if (KunenaFactory::getConfig()->superadmin_userlist)
+			if (KunenaFactory::getConfig()->superAdminUserlist)
 			{
 				$filter = Access::getUsersByGroup(8);
 				$query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');

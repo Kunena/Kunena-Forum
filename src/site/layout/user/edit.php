@@ -75,7 +75,7 @@ class KunenaLayoutUserEdit extends KunenaLayout
 
 		if ($myProfile)
 		{
-			if (KunenaConfig::getInstance()->allowavatarupload || KunenaConfig::getInstance()->allowavatargallery)
+			if (KunenaConfig::getInstance()->allowAvatarUpload || KunenaConfig::getInstance()->allowAvatarGallery)
 			{
 				$tab            = new stdClass;
 				$tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');

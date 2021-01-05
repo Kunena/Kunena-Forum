@@ -63,7 +63,7 @@ class KunenaTopicFinder extends KunenaFinder
 	{
 		parent::__construct();
 
-		$this->limit = KunenaFactory::getConfig()->threads_per_page;
+		$this->limit = KunenaFactory::getConfig()->threadsPerPage;
 	}
 
 	/**

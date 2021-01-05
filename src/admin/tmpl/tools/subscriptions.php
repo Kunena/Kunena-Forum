@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -33,7 +34,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						</tr>
 
 						<?php
-						foreach ($this->cat_subscribers_users as $user) : ?>
+						foreach ($this->catSubscribersUsers as $user) : ?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
@@ -49,7 +50,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<th><?php echo Text::_('Active Topic Subscriptions'); ?></th>
 						</tr>
 						<?php
-						foreach ($this->topic_subscribers_users as $user) : ?>
+						foreach ($this->topicSubscribersUsers as $user) : ?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
@@ -65,7 +66,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<th><?php echo Text::_('E-mails sent to'); ?></th>
 						</tr>
 						<?php
-						foreach ($this->cat_topic_subscribers as $sub) : ?>
+						foreach ($this->catTopicSubscribers as $sub) : ?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"

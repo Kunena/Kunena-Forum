@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -41,9 +42,9 @@ class AttachmentsController extends FormController
 	 *
 	 * @param   array  $config  Construct
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -56,10 +57,10 @@ class AttachmentsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function delete(): void
 	{
@@ -92,11 +93,11 @@ class AttachmentsController extends FormController
 			$removeList  = ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 
-			$message_text = $attachment->removeBBCodeInMessage($message->message);
+			$messageText = $attachment->removeBBCodeInMessage($message->message);
 
-			if ($message_text !== false)
+			if ($messageText !== false)
 			{
-				$message->message = $message_text;
+				$message->message = $messageText;
 			}
 
 			$message->save();

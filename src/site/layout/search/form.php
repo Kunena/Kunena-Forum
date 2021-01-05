@@ -163,11 +163,11 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		// Limit value list
 		$options = [];
 
-		if ($this->config->messages_per_page_search != 5 && $this->config->messages_per_page_search != 10 &&
-			$this->config->messages_per_page_search != 15 && $this->config->messages_per_page_search != 20)
+		if ($this->config->messagesPerPageSearch != 5 && $this->config->messagesPerPageSearch != 10 &&
+			$this->config->messagesPerPageSearch != 15 && $this->config->messagesPerPageSearch != 20)
 		{
-			$options[] = HTMLHelper::_('select.option', $this->config->messages_per_page_search, Text::sprintf('COM_KUNENA_SEARCH_LIMIT',
-				$this->config->messages_per_page_search
+			$options[] = HTMLHelper::_('select.option', $this->config->messagesPerPageSearch, Text::sprintf('COM_KUNENA_SEARCH_LIMIT',
+				$this->config->messagesPerPageSearch
 			)
 			);
 		}
@@ -196,10 +196,10 @@ class KunenaLayoutSearchForm extends KunenaLayout
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS'));
 
-		$cat_params = ['sections' => true];
+		$catParams = ['sections' => true];
 
 		echo HTMLHelper::_(
-			'kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
+			'kunenaforum.categorylist', 'catids[]', 0, $options, $catParams, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
 		);
 	}
 

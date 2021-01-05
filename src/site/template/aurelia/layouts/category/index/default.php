@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\Template;
 use function defined;
 
-if ($this->config->enableforumjump)
+if ($this->config->enableForumJump)
 {
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 }
@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
 															title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo Icons::shield(); ?></span>
 												<?php endif; ?>
 
-												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
+												<?php if (KunenaFactory::getConfig()->enableRss) : ?>
 													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>"
 													   rel="alternate" type="application/rss+xml">
 														 <?php echo Icons::rss(); ?>
@@ -163,7 +163,7 @@ foreach ($this->sections as $section) :
 												<li>
 													<?php $totaltopics = Category::getInstance()->totalCount($subcategory->getTopics()); ?>
 
-													<?php if (KunenaConfig::getInstance()->showchildcaticon) : ?>
+													<?php if (KunenaConfig::getInstance()->showChildCatIcon) : ?>
 														<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, Template::getInstance()->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
 															. $totaltopics . ')</small>';
 													else : ?>
@@ -193,7 +193,7 @@ foreach ($this->sections as $section) :
 									</div>
 								<?php endif; ?>
 
-								<?php if ($category->getmoderators() && KunenaConfig::getInstance()->listcat_show_moderators) : ?>
+								<?php if ($category->getmoderators() && KunenaConfig::getInstance()->listCatShowModerators) : ?>
 									<br/>
 									<div class="moderators">
 										<?php
@@ -225,14 +225,14 @@ foreach ($this->sections as $section) :
 								$author = $last->getLastPostAuthor();
 								$time = $last->getLastPostTime();
 								$this->ktemplate = KunenaFactory::getTemplate();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
+								$avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 								?>
 
 								<td colspan="5" class="hidden-xs-down">
 									<div class="row">
 										<?php if ($avatar) : ?>
 										<div class="col-xs-6 col-md-3" id="kcat-avatar">
-											<?php echo $author->getLink($avatar, null, '', '', Template::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avataredit); ?>
+											<?php echo $author->getLink($avatar, null, '', '', Template::getInstance()->tooltips(), $category->id, KunenaConfig::getInstance()->avatarEdit); ?>
 										</div>
 										<div class="col-xs-6 col-md-9" id="kcat-last">
 											<?php else : ?>
@@ -242,7 +242,7 @@ foreach ($this->sections as $section) :
 												<br>
 												<span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', Template::getInstance()->tooltips(), $category->id)); ?></span>
 												<br>
-												<span class="datepost"><?php echo $time->toKunena('config_post_dateformat'); ?></span>
+												<span class="datepost"><?php echo $time->toKunena('config_postDateFormat'); ?></span>
 											</div>
 										</div>
 									</div>

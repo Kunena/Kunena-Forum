@@ -52,9 +52,9 @@ class CategoriesController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -66,10 +66,10 @@ class CategoriesController extends FormController
 	 * Lock
 	 *
 	 * @return  void
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function lock(): void
 	{
@@ -89,10 +89,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws Exception
 	 * @throws null
+	 * @since   Kunena 3.0
+	 *
 	 */
 	protected function setVariable(int $cid, string $variable, string $value): void
 	{
@@ -126,7 +126,10 @@ class CategoriesController extends FormController
 
 			if (!$category->isAuthorised('admin'))
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
+					'notice'
+				);
 			}
 			elseif (!$category->isCheckedOut($this->me->userid))
 			{
@@ -139,12 +142,18 @@ class CategoriesController extends FormController
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())), 'notice');
+					$this->app->enqueueMessage(
+						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+						'notice'
+					);
 				}
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)), 'notice');
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+					'notice'
+				);
 			}
 		}
 
@@ -178,10 +187,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function unlock(): void
 	{
@@ -197,10 +206,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function review(): void
 	{
@@ -216,10 +225,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function unreview(): void
 	{
@@ -235,17 +244,17 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
-	public function allow_anonymous(): void
+	public function allowAnonymous(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allow_anonymous', 1);
+		$this->setVariable((int) $cid, 'allowAnonymous', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -254,17 +263,17 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
-	public function deny_anonymous(): void
+	public function denyAnonymous(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allow_anonymous', 0);
+		$this->setVariable((int) $cid, 'allowAnonymous', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -273,17 +282,17 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
-	public function allow_polls(): void
+	public function allowPolls(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allow_polls', 1);
+		$this->setVariable((int) $cid, 'allowPolls', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -292,17 +301,17 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
-	public function deny_polls(): void
+	public function denyPolls(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allow_polls', 0);
+		$this->setVariable((int) $cid, 'allowPolls', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -311,10 +320,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function publish(): void
 	{
@@ -330,10 +339,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function unpublish(): void
 	{
@@ -349,10 +358,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function add()
 	{
@@ -381,9 +390,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -418,10 +427,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
 	public function remove()
 	{
@@ -495,9 +504,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{
@@ -521,7 +530,7 @@ class CategoriesController extends FormController
 		}
 		elseif (!$category->isCheckedOut($this->me->userid))
 		{
-			$category->checkin();
+			$category->checkIn();
 		}
 		else
 		{
@@ -536,12 +545,12 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
-	public function saveorder()
+	public function saveOrder()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -588,12 +597,18 @@ class CategoriesController extends FormController
 
 				if (!$success)
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())), 'notice');
+					$this->app->enqueueMessage(
+						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+						'notice'
+					);
 				}
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)), 'notice');
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+					'notice'
+				);
 			}
 		}
 
@@ -610,10 +625,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 3.0
+	 *
 	 */
 	public function saveOrderAjax(): void
 	{
@@ -633,7 +648,7 @@ class CategoriesController extends FormController
 		$model = $this->getModel('categories');
 
 		// Save the ordering
-		$return = $model->saveorder($pks, $order);
+		$return = $model->saveOrder($pks, $order);
 
 		if ($return)
 		{
@@ -665,10 +680,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
 	public function orderup(): void
 	{
@@ -687,9 +702,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws null
 	 * @since   Kunena 3.0
 	 *
-	 * @throws null
 	 */
 	protected function orderUpDown(int $id, int $direction): void
 	{
@@ -728,8 +743,8 @@ class CategoriesController extends FormController
 		$row->load($id);
 
 		// Ensure that we have the right ordering
-		$where = 'parent_id=' . $db->quote($row->parent_id);
-		$row->reorder();
+		$where = 'parentId=' . $db->quote($row->parentId);
+		$row->reOrder();
 		$row->move($direction, $where);
 	}
 
@@ -738,10 +753,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 3.0
+	 *
 	 */
 	public function orderdown(): void
 	{
@@ -757,10 +772,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function archive(): void
 	{
@@ -778,10 +793,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 4.0
+	 *
 	 */
 	public function trash(): void
 	{
@@ -799,12 +814,12 @@ class CategoriesController extends FormController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 5.1.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 5.1.0
+	 *
 	 */
-	public function batch_categories(): bool
+	public function batchCategories(): bool
 	{
 		if (!Session::checkToken('post'))
 		{
@@ -813,11 +828,11 @@ class CategoriesController extends FormController
 			return false;
 		}
 
-		$cid        = $this->app->input->get('cid', '', 'array');
-		$cat_parent = $this->app->input->getInt('batch_catid_target', 0);
-		$task       = $this->app->input->getString('move_copy');
+		$cid       = $this->app->input->get('cid', '', 'array');
+		$catParent = $this->app->input->getInt('batchCatidTarget', 0);
+		$task      = $this->app->input->getString('move_copy');
 
-		if ($cat_parent == 0 || empty($cid))
+		if ($catParent == 0 || empty($cid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -831,11 +846,11 @@ class CategoriesController extends FormController
 
 			foreach ($cid as $cat)
 			{
-				if ($cat_parent != $cat)
+				if ($catParent != $cat)
 				{
 					$query = $db->getQuery(true);
 					$query->update($db->quoteName('#__kunena_categories'))
-						->set($db->quoteName('parent_id') . " = " . $db->quote(intval($cat_parent)))
+						->set($db->quoteName('parentId') . " = " . $db->quote(intval($catParent)))
 						->where($db->quoteName('id') . " = " . $db->quote($cat));
 					$db->setQuery($query);
 

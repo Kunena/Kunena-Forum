@@ -42,9 +42,9 @@ class LogsController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -59,7 +59,7 @@ class LogsController extends FormController
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function cleanentries(): void
+	public function cleanEntries(): void
 	{
 		$this->setRedirect(Route::_("index.php?option=com_kunena&view=logs&layout=clean", false));
 	}
@@ -69,14 +69,14 @@ class LogsController extends FormController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 5.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 5.0
+	 *
 	 */
 	public function clean(): bool
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -106,11 +106,11 @@ class LogsController extends FormController
 			return false;
 		}
 
-		$num_rows = $db->getAffectedRows();
+		$numRows = $db->getAffectedRows();
 
-		if ($num_rows > 0)
+		if ($numRows > 0)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $num_rows));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $numRows));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 		else
@@ -123,14 +123,14 @@ class LogsController extends FormController
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{

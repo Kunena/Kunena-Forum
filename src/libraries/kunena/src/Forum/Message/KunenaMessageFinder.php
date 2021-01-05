@@ -61,7 +61,7 @@ class KunenaMessageFinder extends KunenaFinder
 	{
 		parent::__construct();
 
-		$this->limit = KunenaFactory::getConfig()->messages_per_page;
+		$this->limit = KunenaFactory::getConfig()->messagesPerPage;
 	}
 
 	/**

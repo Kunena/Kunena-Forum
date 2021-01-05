@@ -54,7 +54,7 @@ class KunenaPrivate
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!isinternalObject($class))
 				{
 					continue;
 				}
@@ -162,7 +162,7 @@ class KunenaPrivate
 	 *
 	 * @throws Exception
 	 */
-	public function shownewIcon(int $userid, $class = '', $icon = ''): string
+	public function showNewIcon(int $userid, $class = '', $icon = ''): string
 	{
 		$my      = Factory::getApplication()->getIdentity();
 		$url     = $this->getURL($userid);

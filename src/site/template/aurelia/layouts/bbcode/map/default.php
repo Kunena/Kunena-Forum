@@ -28,9 +28,9 @@ $params = $this->params;
 // Set google map API key if it filled in Kunena configuration
 $map_key = '';
 
-if (!empty($this->config->google_map_api_key))
+if (!empty($this->config->googleMapApiKey))
 {
-	$map_key = '&key=' . $this->config->google_map_api_key;
+	$map_key = '&key=' . $this->config->googleMapApiKey;
 }
 
 // Load JavaScript API.
@@ -50,7 +50,7 @@ if (!isset($id))
 	$id = 0;
 }
 
-if (!empty($this->config->google_map_api_key))
+if (!empty($this->config->googleMapApiKey))
 {
 	$mapid      = 'kgooglemap' . $this->mapid;
 	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
@@ -71,7 +71,7 @@ if (!empty($this->config->google_map_api_key))
 	// <![CDATA[
 		var geocoder;
 		var {$mapid};
-	
+
 		jQuery(document).ready(function() {
 			geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(60.173602,24.940978);
@@ -82,7 +82,7 @@ if (!empty($this->config->google_map_api_key))
 				mapTypeId: google.maps.MapTypeId.{$map_type}
 			};
 			$mapid = new google.maps.Map(document.getElementById('{$mapid}'), myOptions);
-	
+
 			var address = {$content};
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {

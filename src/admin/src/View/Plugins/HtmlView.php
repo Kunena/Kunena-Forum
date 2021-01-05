@@ -72,22 +72,76 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $state;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $listOrdering;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $listDirection;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $filterElement;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $filterEnabled;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $filterSearch;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $total;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $limit;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $filterName;
 
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 * @since  4.0.0
+	 */
 	protected $filterAccess;
 
 	/**
@@ -97,9 +151,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -187,12 +241,12 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
 		ToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
 		ToolbarHelper::divider();
-		ToolbarHelper::checkin('checkin');
+		ToolbarHelper::checkIn('checkIn');
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 		ToolbarHelper::spacer();
-		$help_url = 'https://docs.kunena.org/en/manual/backend/plugins';
-		ToolbarHelper::help('COM_KUNENA', false, $help_url);
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/plugins';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**

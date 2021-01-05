@@ -46,6 +46,11 @@ class TemplatesController extends FormController
 	 * @since   Kunena 2.0
 	 */
 	protected $locked = ['aurelia'];
+
+	/**
+	 * @var     object
+	 * @since   Kunena 2.0
+	 */
 	private $config;
 
 	/**
@@ -53,9 +58,9 @@ class TemplatesController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -68,17 +73,17 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function publish(): void
 	{
 		$cid = $this->app->input->get('cid', [], 'array');
 		$id  = array_shift($cid);
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -104,14 +109,14 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function add()
 	{
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -125,14 +130,14 @@ class TemplatesController extends FormController
 	/**
 	 * Edit
 	 *
-	 * @param   null  $key    key
-	 * @param   null  $urlVar url var
+	 * @param   null  $key     key
+	 * @param   null  $urlVar  url var
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -166,18 +171,18 @@ class TemplatesController extends FormController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function install(): bool
 	{
-		$tmp_kunena = KunenaPath::tmpdir() . '/kinstall/';
-		$dest       = KPATH_SITE . '/template/';
-		$file       = $this->app->input->files->get('install_package', null, 'raw');
+		$tmpKunena = KunenaPath::tmpdir() . '/kinstall/';
+		$dest      = KPATH_SITE . '/template/';
+		$file      = $this->app->input->files->get('install_package', null, 'raw');
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -201,7 +206,7 @@ class TemplatesController extends FormController
 				try
 				{
 					$archive = new Archive;
-					$archive->extract($dest . $file ['name'], $tmp_kunena);
+					$archive->extract($dest . $file ['name'], $tmpKunena);
 				}
 				catch (Exception $e)
 				{
@@ -212,9 +217,9 @@ class TemplatesController extends FormController
 				}
 			}
 
-			if (is_dir($tmp_kunena))
+			if (is_dir($tmpKunena))
 			{
-				$templates = KunenaTemplateHelper::parseXmlFiles($tmp_kunena);
+				$templates = KunenaTemplateHelper::parseXmlFiles($tmpKunena);
 
 				if (!empty($templates))
 				{
@@ -230,28 +235,28 @@ class TemplatesController extends FormController
 						{
 							if (is_file($dest . $template->directory . '/params.ini'))
 							{
-								if (is_file($tmp_kunena . $template->sourcedir . '/params.ini'))
+								if (is_file($tmpKunena . $template->sourcedir . '/params.ini'))
 								{
-									File::delete($tmp_kunena . $template->sourcedir . '/params.ini');
+									File::delete($tmpKunena . $template->sourcedir . '/params.ini');
 								}
 
-								File::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
+								File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . '/params.ini');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))
 							{
-								File::move($dest . $template->directory . '/assets/less/custom.less', $tmp_kunena . $template->sourcedir . '/assets/less/custom.less');
+								File::move($dest . $template->directory . '/assets/less/custom.less', $tmpKunena . $template->sourcedir . '/assets/less/custom.less');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/css/custom.css'))
 							{
-								File::move($dest . $template->directory . '/assets/css/custom.css', $tmp_kunena . $template->sourcedir . '/assets/css/custom.css');
+								File::move($dest . $template->directory . '/assets/css/custom.css', $tmpKunena . $template->sourcedir . '/assets/css/custom.css');
 							}
 
 							Folder::delete($dest . $template->directory);
 						}
 
-						$success = Folder::move($tmp_kunena . $template->sourcedir, $dest . $template->directory);
+						$success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
 
 						if ($success !== true)
 						{
@@ -264,9 +269,9 @@ class TemplatesController extends FormController
 					}
 
 					// Delete the tmp install directory
-					if (is_dir($tmp_kunena))
+					if (is_dir($tmpKunena))
 					{
-						Folder::delete($tmp_kunena);
+						Folder::delete($tmpKunena);
 					}
 
 					// Clear all cache, just in case.
@@ -291,10 +296,10 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function uninstall(): void
 	{
@@ -302,7 +307,7 @@ class TemplatesController extends FormController
 		$id       = array_shift($cid);
 		$template = $id;
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -342,8 +347,6 @@ class TemplatesController extends FormController
 		// Delete the template directory
 		if (is_dir($tpl))
 		{
-			$retval = Folder::delete($tpl);
-
 			// Clear all cache, just in case.
 			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
@@ -351,7 +354,6 @@ class TemplatesController extends FormController
 		else
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
-			$retval = false;
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -362,12 +364,12 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function chooseless(): void
+	public function chooseLess(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -382,7 +384,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseLess", false));
 	}
 
 	/**
@@ -390,22 +392,22 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function editless(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename', '', 'cmd');
+		$filename = $this->app->input->get('filename');
 
 		if (File::getExt($filename) !== 'less')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'), 'warning');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $template, false));
 		}
 
 		$this->app->setUserState('kunena.templatename', $templatename);
@@ -419,19 +421,19 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function choosecss(): void
+	public function chooseCss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$this->app->setUserState('kunena.templatename', $templatename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 	}
 
 	/**
@@ -439,12 +441,12 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function applyless(): void
+	public function applyLess(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -452,7 +454,7 @@ class TemplatesController extends FormController
 		$filename    = $this->app->input->get('filename', '', 'cmd');
 		$filecontent = $this->app->input->post->get('filecontent', '', 'raw');
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -488,17 +490,17 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function saveless(): void
+	public function saveLess(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename', '', 'cmd');
+		$filename    = $this->app->input->get('filename');
 		$filecontent = $this->app->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
@@ -525,14 +527,14 @@ class TemplatesController extends FormController
 		if ($return)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $templatename, false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file)
 			);
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $templatename, false));
 		}
 	}
 
@@ -541,28 +543,28 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function editcss(): void
+	public function editCss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename', '', 'cmd');
+		$filename = $this->app->input->get('filename');
 
 		if (File::getExt($filename) !== 'css')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseCss&id=' . $templatename, false));
 		}
 
-		$this->app->setUserState('kunena.editcss.tmpl', $templatename);
-		$this->app->setUserState('kunena.editcss.filename', $filename);
+		$this->app->setUserState('kunena.editCss.tmpl', $templatename);
+		$this->app->setUserState('kunena.editCss.filename', $filename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editcss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editCss", false));
 	}
 
 	/**
@@ -570,19 +572,19 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function applycss(): void
+	public function applyCss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'cmd');
+		$filename     = $this->app->input->get('filename');
 		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -616,19 +618,19 @@ class TemplatesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 2.0
+	 *
 	 */
-	public function savecss(): void
+	public function saveCss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename', '', 'cmd');
+		$filename     = $this->app->input->get('filename');
 		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
 
-		if (!Session::checkToken('post'))
+		if (!Session::checkToken())
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -650,25 +652,25 @@ class TemplatesController extends FormController
 		if ($return)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 		}
 	}
 
 	/**
 	 * Method to just redirect to main manager in case of use of cancel button
 	 *
-	 * @param   null  $key key
+	 * @param   null  $key  key
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 3.0.5
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{

@@ -32,14 +32,14 @@ ALTER TABLE `#__kunena_users`
   AFTER `FLICKR`;
 
 ALTER TABLE `#__kunena_categories`
-  ADD `allow_polls` tinyint(4) NOT NULL default '0'
+  ADD `allowPolls` tinyint(4) NOT NULL default '0'
   AFTER `class_sfx`;
 ALTER TABLE `#__kunena_categories`
-  ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0'
+  ADD `allowAnonymous` TINYINT NOT NULL DEFAULT '0'
   AFTER `review`;
 ALTER TABLE `#__kunena_categories`
-  ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0'
-  AFTER `allow_anonymous`;
+  ADD `postAnonymous` TINYINT NOT NULL DEFAULT '0'
+  AFTER `allowAnonymous`;
 
 ALTER TABLE `#__kunena_sessions`
   ADD KEY `currvisit` (`currvisit`);

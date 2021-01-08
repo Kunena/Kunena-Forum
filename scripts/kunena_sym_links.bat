@@ -108,7 +108,7 @@ echo Make symbolic links for plugins
 IF not exist %GitTarget%\plugins\kunena mkdir %GitTarget%\plugins\kunena
 mklink /d %GitTarget%\plugins\kunena\altauserpoints %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_altauserpoints
 mklink /d %GitTarget%\plugins\kunena\community %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_community
-mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\administrator\components\com_kunena\install\plg_kunena_comprofiler
+mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_comprofiler
 mklink /d %GitTarget%\plugins\kunena\easyprofile %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easyprofile
 mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_easysocial
 mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\administrator\components\com_kunena\install\plugins\plg_kunena_finder

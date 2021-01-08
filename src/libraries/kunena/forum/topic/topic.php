@@ -1237,7 +1237,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$message->parent  = $this->first_post_id;
 		$message->thread  = $this->id;
 		$message->catid   = $this->category_id;
-		$message->name    = $user->getName('');
+		$message->name    = KunenaFactory::getProfile()->getprofileName($user, '');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
 		$message->ip      = !empty($_SERVER ["REMOTE_ADDR"]) ? $_SERVER ["REMOTE_ADDR"] : '';
@@ -1257,7 +1257,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		{
 			$user             = KunenaUserHelper::get($this->first_post_userid);
 			$text             = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->first_post_message);
-			$message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" . $text . "[/quote]";
+			$message->message = "[quote=\"{KunenaFactory::getProfile()->getprofileName($user, $this->first_post_guest_name)}\" post={$this->first_post_id}]" . $text . "[/quote]";
 		}
 		else
 		{

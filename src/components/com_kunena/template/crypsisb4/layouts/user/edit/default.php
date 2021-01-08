@@ -20,7 +20,7 @@ $tabs          = $this->getTabsEdit();
 $avatar        = KunenaFactory::getAvatarIntegration();
 ?>
 <h2>
-	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape(KunenaFactory::getProfile()->getProfileName($this->profile)); ?>
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),

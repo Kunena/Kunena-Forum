@@ -126,7 +126,7 @@ class KunenaAvatar
 			$class = ' class="' . $class . '"';
 		}
 
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', KunenaFactory::getProfile()->getProfileName($user)) . '" />';
 
 		return $link;
 	}

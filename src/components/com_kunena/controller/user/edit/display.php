@@ -64,7 +64,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 
-		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', KunenaFactory::getProfile()->getProfileName($this->profile));
 	}
 
 	/**

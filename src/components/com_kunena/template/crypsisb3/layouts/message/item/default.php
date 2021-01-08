@@ -12,16 +12,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 $message              = $this->message;
-$topic                = $message->getTopic();
-$category             = $message->getCategory();
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
 $attachs              = $message->getNbAttachments();
-$avatarname           = $this->profile->getname();
 $config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
-$str_counts           = substr_count($this->topic->subject, 'solved');
 
 if ($config->ordering_system == 'mesid')
 {

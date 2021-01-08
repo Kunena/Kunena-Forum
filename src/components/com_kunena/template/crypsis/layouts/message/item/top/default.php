@@ -13,12 +13,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 $message              = $this->message;
-$topic                = $message->getTopic();
-$category             = $message->getCategory();
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
-$avatarname           = $this->profile->getname();
 $attachs              = $message->getNbAttachments();
 $topicStarter         = $this->topic->first_post_userid == $this->message->userid;
 $config               = KunenaConfig::getInstance();

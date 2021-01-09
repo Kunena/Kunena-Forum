@@ -346,7 +346,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getFilename($escape = true)
 	{
-		$filename = $this->filename;
+	    $filename = $this->protected ? $this->filename_real : $this->filename;
 
 		return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
 	}

@@ -39,10 +39,7 @@ class KunenaAdminViewUser extends KunenaView
 		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) && $this->user->avatar ? true : false;
 		$this->avatar     = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
-		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
-		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.15.1/js/all.js', array(), array('defer' => true));
-		}
+		KunenaFactory::getTemplate()->loadFontawesome();
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));

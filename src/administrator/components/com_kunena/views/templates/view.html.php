@@ -27,9 +27,9 @@ class KunenaAdminViewTemplates extends KunenaView
 	public function displayDefault()
 	{
 		$this->setToolBarDefault();
-		$this->templates    = $this->get('templates');
+		$this->templates    = $this->get('Templates');
 		$this->pagination   = $this->get('Pagination');
-		$this->templatesxml = $this->get('templatesxml');
+		$this->templatesxml = $this->get('Templatesxml');
 		$this->display();
 	}
 

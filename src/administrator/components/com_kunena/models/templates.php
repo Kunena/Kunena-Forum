@@ -318,13 +318,13 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * parseKunenaInstallFile
+	 * Method to retrieve the list of premium templates from kunena.org by loading the xml file and create from xml file a stdClass
 	 *
 	 * @return boolean|stdClass|array
 	 *
-	 * @since Kunena 6.0
+	 * @since Kunena 5.1
 	 */
-	public function loadTemplatesXml()
+	protected function loadTemplatesXml()
 	{
 		$this->template = array();
 
@@ -394,9 +394,11 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 	}
 
 	/**
-	 * @return array
+	 * Method to call loadTemplatesXml() to return the details of premium templates
+	 * 
+	 * @return stdClass
 	 *
-	 * @since Kunena
+	 * @since Kunena 5.1
 	 * @throws Exception
 	 */
 	public function getTemplatesxml()

@@ -49,10 +49,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
 		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
 
-		if (KunenaFactory::getTemplate()->params->get('fontawesome'))
-		{
-			Factory::getDocument()->addScript('https://use.fontawesome.com/releases/v5.15.1/js/all.js', array(), array('defer' => true));
-		}
+		KunenaFactory::getTemplate()->loadFontawesome();
 
 		$this->display();
 	}

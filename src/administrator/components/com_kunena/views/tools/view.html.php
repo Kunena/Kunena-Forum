@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -157,13 +158,30 @@ class KunenaAdminViewTools extends KunenaView
 	{
 		JToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		JToolbarHelper::spacer();
+		
+		// Get the toolbar object instance
+		$bar = \Joomla\CMS\Toolbar\Toolbar::getInstance('toolbar');
 
 		if (!empty($this->legacy))
 		{
 			JToolbarHelper::custom('fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		}
+		
+		if (version_compare(JVERSION, '4.0', '>'))
+		{
+		    HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
+		}
+		else
+		{
+		    HTMLHelper::_('bootstrap.modal', 'trashmenuconfirmationModal');
+		}
+		
+		$title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#trashmenuconfirmationModal\" class=\"btn btn-small\">
+					<i class=\"icon-apply\" title=\"$title\"> </i>
+						$title</button>";
+						$bar->appendButton('Custom', $dhtml, 'batch');
 
-		JToolbarHelper::custom('trashmenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
 		JToolbarHelper::spacer();
 		JToolbarHelper::cancel();
 		JToolbarHelper::spacer();

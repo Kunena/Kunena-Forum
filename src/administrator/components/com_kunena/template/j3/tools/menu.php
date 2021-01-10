@@ -78,6 +78,7 @@ use Joomla\CMS\Language\Text;
 					<?php endforeach ?>
 				</table>
 			</fieldset>
+			<?php echo $this->loadTemplateFile('trashmenuconfirmation'); ?>
 		</form>
 	</div>
 	<div class="pull-right small">

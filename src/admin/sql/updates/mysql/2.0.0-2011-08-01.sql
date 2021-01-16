@@ -18,7 +18,7 @@ ALTER TABLE `#__kunena_categories`
 ALTER TABLE `#__kunena_categories`
   DROP INDEX `msg_id`;
 ALTER TABLE `#__kunena_categories`
-  CHANGE `parent` `parentId` INT(11) NULL DEFAULT '0';
+  CHANGE `parent` `parentid` INT(11) NULL DEFAULT '0';
 ALTER TABLE `#__kunena_categories`
   CHANGE `cat_emoticon` `icon_id` TINYINT(4) NOT NULL DEFAULT '0';
 ALTER TABLE `#__kunena_categories`
@@ -40,7 +40,7 @@ ALTER TABLE `#__kunena_categories`
   ADD `topicOrdering` VARCHAR(16) NOT NULL default 'lastpost'
   AFTER `allowPolls`;
 ALTER TABLE `#__kunena_categories`
-  ADD KEY `parentId` (parentId);
+  ADD KEY `parentid` (parentid);
 
 ALTER TABLE `#__kunena_topics`
   ADD INDEX `posts` (`posts`);

@@ -207,7 +207,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->more[$category->parentId]++;
+				$this->more[$category->parentid]++;
 				unset($sections[$key]);
 				continue;
 			}
@@ -272,7 +272,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				}
 				else
 				{
-					$this->more[$category->parentId]++;
+					$this->more[$category->parentid]++;
 					unset($categories[$key]);
 					continue;
 				}
@@ -286,7 +286,7 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 				$topicIds[$last->last_topic_id] = $last->last_topic_id;
 			}
 
-			$this->categories[$category->parentId][] = $category;
+			$this->categories[$category->parentid][] = $category;
 
 			$rssURL = $category->getRSSUrl();
 
@@ -312,11 +312,11 @@ class ComponentCategoryControllerIndexDisplay extends KunenaControllerDisplay
 			// Display only categories which are supposed to show up.
 			if ($catid || $params->get('display.index.parent', 3) > 2)
 			{
-				$this->categories[$category->parentId][] = $category;
+				$this->categories[$category->parentid][] = $category;
 			}
 			else
 			{
-				$this->more[$category->parentId]++;
+				$this->more[$category->parentid]++;
 			}
 		}
 

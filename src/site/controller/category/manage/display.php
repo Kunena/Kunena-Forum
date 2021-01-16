@@ -182,7 +182,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		$lists                     = [];
 		$lists ['accesstypes']     = Access::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists']     = Access::getInstance()->getAccessOptions($category);
-		$lists ['categories']      = HTMLHelper::_('select.genericlist', $catParams, 'parentId', 'class="inputbox form-control"', 'value', 'text', $category->parentId);
+		$lists ['categories']      = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
 		$lists ['channels']        = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']       = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);

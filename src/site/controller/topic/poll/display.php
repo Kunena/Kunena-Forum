@@ -90,7 +90,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 		$usercount  = $this->poll->getUserCount();
 		$usersvoted = $this->poll->getUsers();
 
-		if (isinternalObject($this->poll->getMyVotes()))
+		if (is_object($this->poll->getMyVotes()))
 		{
 			$userhasvoted = $this->poll->getMyVotes();
 		}

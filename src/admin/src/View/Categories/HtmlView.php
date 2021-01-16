@@ -149,7 +149,7 @@ class HtmlView extends BaseHtmlView
 
 		foreach ($this->categories as $item)
 		{
-			$ordering[$item->parentId][] = $item->id;
+			$ordering[$item->parentid][] = $item->id;
 		}
 
 		$sortFields          = $this->getSortFields();

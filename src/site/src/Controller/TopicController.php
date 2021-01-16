@@ -785,7 +785,7 @@ class TopicController extends KunenaController
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
 				$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-				['mesid' => $message->id, 'parentId' => $this->id],
+				['mesid' => $message->id, 'parentid' => $this->id],
 				$category,
 				$topic
 			);
@@ -2688,7 +2688,7 @@ class TopicController extends KunenaController
 		$finder    = new KunenaFinder;
 		$finder
 			->filterByMessage($message)
-			->where('parentId', '=', 0)
+			->where('parentid', '=', 0)
 			->where('author_id', '=', $message->userid)
 			->order('id')
 			->limit(1);

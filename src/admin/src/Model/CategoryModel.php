@@ -66,7 +66,7 @@ class CategoryModel extends CategoriesModel
 				$query = $db->getQuery(true)
 					->select('a.id, a.name')
 					->from("{$db->quoteName('#__kunena_categories')} AS a")
-					->where("parentId={$db->quote('0')}")
+					->where("parentid={$db->quote('0')}")
 					->where("id!={$db->quote($category->id)}")
 					->order('ordering');
 
@@ -83,7 +83,7 @@ class CategoryModel extends CategoriesModel
 					return;
 				}
 
-				$category->parentId     = $this->getState('item.parentId');
+				$category->parentid     = $this->getState('item.parent_id');
 				$category->published    = 0;
 				$category->ordering     = 9999;
 				$category->pubRecurse   = 1;

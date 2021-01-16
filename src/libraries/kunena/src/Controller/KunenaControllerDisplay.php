@@ -329,7 +329,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setProperties($properties): KunenaControllerDisplay
 	{
-		if (!is_array($properties) && !isinternalObject($properties))
+		if (!is_array($properties) && !is_object($properties))
 		{
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}

@@ -161,7 +161,7 @@ class ComponentTopicControllerFormEditDisplay extends KunenaControllerDisplay
 		$finder = new KunenaFinder;
 		$finder
 			->filterByMessage($this->message)
-			->where('parentId', '=', 0)
+			->where('parentid', '=', 0)
 			->where('author_id', '=', $this->message->userid)
 			->order('id')
 			->limit(1);

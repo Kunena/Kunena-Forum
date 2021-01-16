@@ -743,7 +743,7 @@ class CategoriesController extends FormController
 		$row->load($id);
 
 		// Ensure that we have the right ordering
-		$where = 'parentId=' . $db->quote($row->parentId);
+		$where = 'parentid=' . $db->quote($row->parentid);
 		$row->reOrder();
 		$row->move($direction, $where);
 	}
@@ -850,7 +850,7 @@ class CategoriesController extends FormController
 				{
 					$query = $db->getQuery(true);
 					$query->update($db->quoteName('#__kunena_categories'))
-						->set($db->quoteName('parentId') . " = " . $db->quote(intval($catParent)))
+						->set($db->quoteName('parentid') . " = " . $db->quote(intval($catParent)))
 						->where($db->quoteName('id') . " = " . $db->quote($cat));
 					$db->setQuery($query);
 

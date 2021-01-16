@@ -40,7 +40,7 @@ class TableKunenaPrivate extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $parentId = null;
+	public $parentid = null;
 
 	/**
 	 * @var     null

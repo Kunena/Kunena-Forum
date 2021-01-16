@@ -1986,7 +1986,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			$ebay = self::getEbayItemFromCache($ItemID);
 
-			if (isinternalObject($ebay) && $ebay->Ack == 'Success')
+			if (is_object($ebay) && $ebay->Ack == 'Success')
 			{
 				return (string) $layout
 					->set('content', $ItemID)
@@ -2650,7 +2650,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			$attachments = $bbcode->parent->getAttachments();
 		}
-		elseif (isinternalObject($bbcode->parent) && isset($bbcode->parent->attachments))
+		elseif (is_object($bbcode->parent) && isset($bbcode->parent->attachments))
 		{
 			$attachments = &$bbcode->parent->attachments;
 		}

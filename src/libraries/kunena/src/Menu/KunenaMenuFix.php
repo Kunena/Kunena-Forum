@@ -111,11 +111,11 @@ abstract class KunenaMenuFix
 
 		$query = $db->getQuery(true);
 		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
-		$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parentId');
+		$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
 		$query->select('e.element AS component, m.published')
 			->from($db->quoteName('#__menu', 'm'))
 			->leftJoin($db->quoteName('#__extensions', 'e') . ' ON ' . $db->quoteName('m.component_id') . ' = ' . $db->quoteName('e.extension_id'))
-			->where($db->quoteName('m.parentId') . ' > 0')
+			->where($db->quoteName('m.parent_id') . ' > 0')
 			->andWhere($db->quoteName('m.client_id') . ' = 0')
 			->order($db->quoteName('m.lft'));
 
@@ -136,9 +136,9 @@ abstract class KunenaMenuFix
 			// Get parent information.
 			$parent_tree = [];
 
-			if (isset(self::$items[$item->parentId]))
+			if (isset(self::$items[$item->parentid]))
 			{
-				$parent_tree = self::$items[$item->parentId]->tree;
+				$parent_tree = self::$items[$item->parentid]->tree;
 			}
 
 			// Create tree
@@ -166,7 +166,7 @@ abstract class KunenaMenuFix
 
 			foreach (self::$items as $item)
 			{
-				if (!isinternalObject($item))
+				if (!is_object($item))
 				{
 					continue;
 				}
@@ -178,7 +178,7 @@ abstract class KunenaMenuFix
 				{
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 
-					if (isinternalObject($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
+					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
 					{
 						$itemid                   = $item->query['Itemid'];
 						self::$aliases[$item->id] = $itemid;
@@ -238,7 +238,7 @@ abstract class KunenaMenuFix
 			}
 			else
 			{
-				$parent            = isset(self::$items[$item->parentId]) ? self::$items[$item->parentId] : null;
+				$parent            = isset(self::$items[$item->parentid]) ? self::$items[$item->parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}

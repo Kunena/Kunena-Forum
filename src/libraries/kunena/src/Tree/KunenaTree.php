@@ -85,7 +85,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __construct(&$items, $id = 'id', $parent = 'parentId', $level = 'level')
+	public function __construct(&$items, $id = 'id', $parent = 'parentid', $level = 'level')
 	{
 		$this->_tree[0] = [];
 		$this->_id      = $id;
@@ -264,7 +264,7 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   int    $parentId   parent id
+	 * @param   int    $parentid   parent id
 	 * @param   array  $itemIndent  item indent
 	 * @param   bool   $gap         gap
 	 *
@@ -272,9 +272,9 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function &getIndentation($parentId = 0, $itemIndent = [], $gap = false): array
+	public function &getIndentation($parentid = 0, $itemIndent = [], $gap = false): array
 	{
-		$parent_tree = &$this->_tree[$parentId];
+		$parent_tree = &$this->_tree[$parentid];
 		end($parent_tree);
 		$last_id = key($parent_tree);
 
@@ -320,12 +320,12 @@ class KunenaTree implements Iterator
 			if (empty($this->_tree[$id]))
 			{
 				// No child nodes
-				$list[$id]->indent[] = $parentId ? 'leaf' : 'single';
+				$list[$id]->indent[] = $parentid ? 'leaf' : 'single';
 			}
 			else
 			{
 				// Has child nodes
-				$list[$id]->indent[] = $parentId ? 'node' : 'root';
+				$list[$id]->indent[] = $parentid ? 'node' : 'root';
 				$list                += $this->getIndentation($id, $indent);
 			}
 		}

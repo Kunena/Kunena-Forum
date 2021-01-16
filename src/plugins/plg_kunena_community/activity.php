@@ -98,7 +98,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (isinternalObject($table))
+		if (is_object($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();
@@ -236,7 +236,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (isinternalObject($table))
+		if (is_object($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();
@@ -298,7 +298,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
-		if (isinternalObject($table))
+		if (is_object($table))
 		{
 			$table->like_id = $table->id;
 			$table->store();

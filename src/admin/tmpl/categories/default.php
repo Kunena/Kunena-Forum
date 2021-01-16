@@ -258,8 +258,8 @@ if ($this->list->saveOrder)
 								if ($item->level > 0)
 								{
 									$parentsStr       = "";
-									$_currentParentId = $item->parentId;
-									$parentsStr       = " " . $_currentParentId;
+									$_currentparentid = $item->parentid;
+									$parentsStr       = " " . $_currentparentid;
 
 									for ($i2 = 0; $i2 < $item->level; $i2++)
 									{
@@ -268,10 +268,10 @@ if ($this->list->saveOrder)
 											$v = implode("-", $v);
 											$v = "-" . $v . "-";
 
-											if (strpos($v, "-" . $_currentParentId . "-") !== false)
+											if (strpos($v, "-" . $_currentparentid . "-") !== false)
 											{
 												$parentsStr       .= " " . $k;
-												$_currentParentId = $k;
+												$_currentparentid = $k;
 												break;
 											}
 										}
@@ -282,7 +282,7 @@ if ($this->list->saveOrder)
 									$parentsStr = "";
 								}
 								?>
-								<tr sortable-group-id="<?php echo $item->parentId; ?>"
+								<tr sortable-group-id="<?php echo $item->parentid; ?>"
 									item-id="<?php echo $item->id ?>"
 									parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 									<td class="order nowrap center hidden-phone">
@@ -290,7 +290,7 @@ if ($this->list->saveOrder)
 											:
 											$disableClassName = '';
 											$disabledLabel = '';
-											$orderkey = array_search($item->id, $this->ordering[$item->parentId]);
+											$orderkey = array_search($item->id, $this->ordering[$item->parentid]);
 
 											if (!$this->saveOrder)
 												:
@@ -317,7 +317,7 @@ if ($this->list->saveOrder)
 										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 									</td>
 									<td class="center">
-										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentId))
+										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentid))
 											:
 											?>
 											<button class="btn btn-micro"
@@ -329,7 +329,7 @@ if ($this->list->saveOrder)
 											?>
 											<button class="btn btn-micro"
 													title="Display only this item and its children"
-													onclick="jQuery('input[name=catid]').val(<?php echo $item->parentId ?>);this.form.submit()">
+													onclick="jQuery('input[name=catid]').val(<?php echo $item->parentid ?>);this.form.submit()">
 												<i class="icon-arrow-up"></i>
 											</button>
 										<?php endif; ?>

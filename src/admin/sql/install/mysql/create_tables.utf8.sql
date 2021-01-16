@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
 CREATE TABLE IF NOT EXISTS `#__kunena_categories`
 (
     `id`               int(11)      NOT NULL auto_increment,
-    `parentId`         int(11)      NULL     default '0',
+    `parentid`         int(11)      NULL     default '0',
     `name`             tinytext     NULL,
     `alias`            varchar(255) NOT NULL,
     `icon`             varchar(20)  NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `params`           text         NOT NULL,
     `allowRatings`    tinyint(4)   NOT NULL default '0',
     PRIMARY KEY (id),
-    KEY `parentId` (parentId),
+    KEY `parentid` (parentid),
     KEY `category_access` (accesstype, access),
     KEY `published_pubaccess_id` (published, pubAccess, id)
 )

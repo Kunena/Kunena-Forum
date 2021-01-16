@@ -543,8 +543,8 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				$parentId          = $item->parentId;
-				$parent            = isset(self::$menu[$parentId]) ? self::$menu[$parentId] : null;
+				$parentid          = $item->parentid;
+				$parent            = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}

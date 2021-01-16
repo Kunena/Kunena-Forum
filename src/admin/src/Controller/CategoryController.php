@@ -142,7 +142,7 @@ class CategoryController extends FormController
 		$success        = false;
 
 		$category = KunenaCategoryHelper::get(intval($post ['catid']));
-		$parent   = KunenaCategoryHelper::get(intval($post ['parentId']));
+		$parent   = KunenaCategoryHelper::get(intval($post ['parentid']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
@@ -151,7 +151,7 @@ class CategoryController extends FormController
 		}
 		elseif (!$category->exists() && !$me->isAdmin($parent))
 		{
-			// Category doesn't exist and user is not admin in parent, parentId=0 needs global admin rights
+			// Category doesn't exist and user is not admin in parent, parentid=0 needs global admin rights
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'notice');
 		}
 		elseif (!$category->isCheckedOut($me->userid))
@@ -159,11 +159,11 @@ class CategoryController extends FormController
 			// Nobody can change id or statistics
 			$ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliasesAll'];
 
-			// User needs to be admin in parent (both new and old) in order to move category, parentId=0 needs global admin rights
+			// User needs to be admin in parent (both new and old) in order to move category, parentid=0 needs global admin rights
 			if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent())))
 			{
-				$ignore            = array_merge($ignore, ['parentId', 'ordering']);
-				$post ['parentId'] = $category->parentId;
+				$ignore            = array_merge($ignore, ['parentid', 'ordering']);
+				$post ['parentid'] = $category->parentid;
 			}
 
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
@@ -171,7 +171,7 @@ class CategoryController extends FormController
 			{
 				$access = ['accesstype', 'access', 'pubAccess', 'pubRecurse', 'adminAccess', 'adminRecurse', 'channels', 'class_sfx', 'params'];
 
-				if (!$category->exists() || $parent->id != $category->parentId)
+				if (!$category->exists() || $parent->id != $category->parentid)
 				{
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$category->bind($parent->getProperties(), $access, true);

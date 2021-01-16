@@ -416,13 +416,13 @@ abstract class KunenaTableObject
 	public function bind($src, $ignore = []): KunenaTableObject
 	{
 		// If the source value is not an array or object return false.
-		if (!isinternalObject($src) && !is_array($src))
+		if (!is_object($src) && !is_array($src))
 		{
 			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (isinternalObject($src))
+		if (is_object($src))
 		{
 			$src = getinternalObject_vars($src);
 		}

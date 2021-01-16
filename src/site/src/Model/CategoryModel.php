@@ -155,7 +155,7 @@ class CategoryModel extends ListModel
 
 			foreach ($allsubcats as $subcat)
 			{
-				if ($flat || isset($categories [0] [$subcat->parentId]))
+				if ($flat || isset($categories [0] [$subcat->parentid]))
 				{
 					$last = $subcat->getLastCategory();
 
@@ -178,7 +178,7 @@ class CategoryModel extends ListModel
 					}
 				}
 
-				$categories [$subcat->parentId] [] = $subcat;
+				$categories [$subcat->parentid] [] = $subcat;
 			}
 
 			// Prefetch topics

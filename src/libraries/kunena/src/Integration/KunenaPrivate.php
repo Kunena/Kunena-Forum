@@ -54,7 +54,7 @@ class KunenaPrivate
 
 			foreach ($classes as $class)
 			{
-				if (!isinternalObject($class))
+				if (!is_object($class))
 				{
 					continue;
 				}

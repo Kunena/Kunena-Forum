@@ -1,7 +1,7 @@
 ALTER TABLE `#__kunena_categories` CHANGE `allow_anonymous` `allowAnonymous` tinyint(4);
 ALTER TABLE `#__kunena_categories` CHANGE `post_anonymous` `postAnonymous` tinyint(4);
 ALTER TABLE `#__kunena_categories` CHANGE `allow_polls` `allowPolls` tinyint(4);
-ALTER TABLE `#__kunena_categories` CHANGE `parent_id` `parentId` int(11);
+ALTER TABLE `#__kunena_categories` CHANGE `parent_id` `parentid` int(11);
 ALTER TABLE `#__kunena_categories` CHANGE `pub_recurse` `pubRecurse` tinyint(4);
 ALTER TABLE `#__kunena_categories` CHANGE `admin_recurse` `adminRecurse` tinyint(4);
 ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pubAccess` int(11);

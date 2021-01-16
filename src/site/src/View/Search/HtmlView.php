@@ -372,7 +372,7 @@ class HtmlView extends BaseHtmlView
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
 
-				if (isinternalObject($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
+				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
 				{
 					$spacing = 1;
 				}

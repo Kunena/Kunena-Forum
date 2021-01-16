@@ -210,7 +210,7 @@ class Compiler
 
 		if ($this->sourceMap)
 		{
-			if (isinternalObject($this->sourceMap) && $this->sourceMap instanceof SourceMapGenerator)
+			if (is_object($this->sourceMap) && $this->sourceMap instanceof SourceMapGenerator)
 			{
 				$sourceMapGenerator = $this->sourceMap;
 				$this->sourceMap    = self::SOURCE_MAP_FILE;

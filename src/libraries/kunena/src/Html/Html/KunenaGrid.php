@@ -256,7 +256,7 @@ abstract class KunenaGrid
 	 */
 	public static function published(int $i, $value, $prefix = '', $bootstrap = false): string
 	{
-		if (isinternalObject($value))
+		if (is_object($value))
 		{
 			$value = $value->published;
 		}

@@ -580,7 +580,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function set($key, $value)
 	{
-		$isFactory = isinternalObject($value) && method_exists($value, '__invoke');
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
 
 		if ($isFactory)
 		{
@@ -638,7 +638,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function setProperties($properties)
 	{
-		if (!is_array($properties) && !isinternalObject($properties))
+		if (!is_array($properties) && !is_object($properties))
 		{
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}

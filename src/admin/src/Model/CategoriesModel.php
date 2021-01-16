@@ -134,7 +134,7 @@ class CategoriesModel extends KunenaModel
 		$lists                    = [];
 		$lists ['accesstypes']    = KunenaAccess::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists']    = KunenaAccess::getInstance()->getAccessOptions($category);
-		$lists ['categories']     = HTMLHelper::_('select.genericlist', $catParams, 'parentId', 'class="inputbox form-control"', 'value', 'text', $category->parentId);
+		$lists ['categories']     = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
 		$lists ['channels']       = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']        = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
@@ -212,7 +212,7 @@ class CategoriesModel extends KunenaModel
 				$query = $db->getQuery(true)
 					->select('a.id, a.name')
 					->from("{$db->quoteName('#__kunena_categories')} AS a")
-					->where("parentId={$db->quote('0')}")
+					->where("parentid={$db->quote('0')}")
 					->where("id!={$db->quote($category->id)}")
 					->order('ordering');
 
@@ -229,7 +229,7 @@ class CategoriesModel extends KunenaModel
 					return;
 				}
 
-				$category->parentId     = $this->getState('item.parentId');
+				$category->parentid     = $this->getState('item.parent_id');
 				$category->published    = 0;
 				$category->ordering     = 9999;
 				$category->pubRecurse   = 1;
@@ -345,7 +345,7 @@ class CategoriesModel extends KunenaModel
 	protected function getReorderConditions(Table $table): array
 	{
 		$condition   = [];
-		$condition[] = 'parentId = ' . (int) $table->parentId;
+		$condition[] = 'parentid = ' . (int) $table->parentid;
 
 		return $condition;
 	}
@@ -440,7 +440,7 @@ class CategoriesModel extends KunenaModel
 			{
 				// TODO: Following is needed for J!2.5 only:
 				$parent   = $category->getParent();
-				$siblings = array_keys(KunenaCategoryHelper::getCategoryTree($category->parentId));
+				$siblings = array_keys(KunenaCategoryHelper::getCategoryTree($category->parentid));
 
 				if ($parent)
 				{

@@ -111,7 +111,7 @@ abstract class KunenaFactory
 	 */
 	public static function getSession($update = false): ?KunenaSession
 	{
-		if (!isinternalObject(self::$session))
+		if (!is_object(self::$session))
 		{
 			self::$session = KunenaSession::getInstance($update);
 		}

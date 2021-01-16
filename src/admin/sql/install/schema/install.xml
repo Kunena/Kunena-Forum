@@ -138,7 +138,7 @@
                type="int(11)"
                null="0"
                extra="auto_increment"/>
-        <field name="parentId"
+        <field name="parentid"
                type="int(11)"
                null="1"
                default="0"/>
@@ -273,8 +273,8 @@
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
-        <key name="parentId"
-             columns="parentId"/>
+        <key name="parentid"
+             columns="parentid"/>
         <key name="category_access"
              columns="accesstype,access"/>
         <key name="published_pubaccess_id"

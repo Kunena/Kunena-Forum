@@ -53,7 +53,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  * @property int     $id
- * @property int     $parentId
+ * @property int     $parentid
  * @property string  $name
  * @property string  $alias
  * @property int     $icon_id
@@ -153,7 +153,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
-	public $parentId;
+	public $parentid;
 
 	/**
 	 * @var     integer
@@ -1214,7 +1214,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 */
 	public function getParent(): KunenaCategory
 	{
-		return KunenaCategoryHelper::get(intval($this->parentId));
+		return KunenaCategoryHelper::get(intval($this->parentid));
 	}
 
 	/**
@@ -2205,7 +2205,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	{
 		$this->buildInfo();
 
-		return $this->parentId == 0;
+		return $this->parentid == 0;
 	}
 
 	/**

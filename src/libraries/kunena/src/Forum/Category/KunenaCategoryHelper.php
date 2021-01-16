@@ -218,7 +218,7 @@ abstract class KunenaCategoryHelper
 				self::$_tree [$instance->id] = [];
 			}
 
-			self::$_tree [$instance->parentId][$instance->id] = &self::$_tree [(int) $instance->id];
+			self::$_tree [$instance->parentid][$instance->id] = &self::$_tree [(int) $instance->id];
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -237,19 +237,19 @@ abstract class KunenaCategoryHelper
 	{
 		if ($instance->exists())
 		{
-			$instance->level                  = isset(self::$_instances [$instance->parentId]) ? self::$_instances [$instance->parentId]->level + 1 : 0;
+			$instance->level                  = isset(self::$_instances [$instance->parentid]) ? self::$_instances [$instance->parentid]->level + 1 : 0;
 			self::$_instances [$instance->id] = $instance;
 
 			if (!isset(self::$_tree [(int) $instance->id]))
 			{
 				self::$_tree [$instance->id]                       = [];
-				self::$_tree [$instance->parentId][$instance->id] = &self::$_tree [$instance->id];
+				self::$_tree [$instance->parentid][$instance->id] = &self::$_tree [$instance->id];
 			}
 		}
 		else
 		{
 			unset(self::$_instances [$instance->id]);
-			unset(self::$_tree [$instance->id], self::$_tree [$instance->parentId][$instance->id]);
+			unset(self::$_tree [$instance->id], self::$_tree [$instance->parentid][$instance->id]);
 		}
 	}
 
@@ -638,7 +638,7 @@ abstract class KunenaCategoryHelper
 		}
 
 		$list   = [];
-		$parent = self::$_instances [$id]->parentId;
+		$parent = self::$_instances [$id]->parentid;
 
 		while ($parent && $levels--)
 		{
@@ -658,7 +658,7 @@ abstract class KunenaCategoryHelper
 
 			$list[$parent] = self::$_instances [$parent];
 
-			$parent = self::$_instances [$parent]->parentId;
+			$parent = self::$_instances [$parent]->parentid;
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -686,7 +686,7 @@ abstract class KunenaCategoryHelper
 			{
 				foreach (self::getChildren($catid, $levels, $params) as $category)
 				{
-					if ($category->parentId == $catid)
+					if ($category->parentid == $catid)
 					{
 						$category->name = Text::_('COM_KUNENA_CATEGORY_ORPHAN') . ' : ' . $category->name;
 					}

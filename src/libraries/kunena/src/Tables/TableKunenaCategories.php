@@ -42,7 +42,7 @@ class TableKunenaCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $parentId = null;
+	public $parentid = null;
 
 	/**
 	 * @var     null
@@ -330,7 +330,7 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function bind($array, $ignore = ''): bool
 	{
-		if (isinternalObject($array))
+		if (is_object($array))
 		{
 			$array = getinternalObject_vars($array);
 		}
@@ -366,14 +366,14 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function check(): bool
 	{
-		if ($this->id && $this->parentId)
+		if ($this->id && $this->parentid)
 		{
-			if ($this->id == $this->parentId)
+			if ($this->id == $this->parentid)
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
 
-			if ($this->isChild($this->parentId))
+			if ($this->isChild($this->parentid))
 			{
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
@@ -411,7 +411,7 @@ class TableKunenaCategories extends KunenaTable
 		if ($id > 0)
 		{
 			$query = $this->_db->getQuery(true)
-				->select(['id', 'parentId'])
+				->select(['id', 'parentid'])
 				->from($this->_db->quoteName('#__kunena_categories'));
 			$this->_db->setQuery($query);
 
@@ -446,7 +446,7 @@ class TableKunenaCategories extends KunenaTable
 					return 0;
 				}
 
-				$id = $list [$id]->parentId;
+				$id = $list [$id]->parentid;
 
 				if ($id != 0 && $id == $this->id)
 				{
@@ -470,17 +470,17 @@ class TableKunenaCategories extends KunenaTable
 		if (!$where)
 		{
 			$query = $this->_db->getQuery(true)
-				->select($this->_db->quoteName('parentId'))
+				->select($this->_db->quoteName('parentid'))
 				->from($this->_db->quoteName('#__kunena_categories'))
-				->group($this->_db->quoteName('parentId'));
+				->group($this->_db->quoteName('parentid'));
 			$this->_db->setQuery($query);
 
 			$parents = $this->_db->loadColumn();
 			$success = true;
 
-			foreach ($parents as $parentId)
+			foreach ($parents as $parentid)
 			{
-				$success &= parent::reOrder("parentId={$this->_db->quote($parentId)}");
+				$success &= parent::reOrder("parentid={$this->_db->quote($parentid)}");
 			}
 
 			return $success;

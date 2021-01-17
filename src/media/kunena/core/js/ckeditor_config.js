@@ -77,4 +77,7 @@ CKEDITOR.editorConfig = function( config ) {
 	{
 		config.skin = Joomla.getOptions('com_kunena.ckeditor_skiname');
 	}
+	
+	// Disable SpellChecker from Ckeditor to let the brower handle it
+	config.disableNativeSpellChecker = false;
 };

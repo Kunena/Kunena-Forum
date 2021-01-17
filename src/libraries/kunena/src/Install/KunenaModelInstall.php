@@ -13,6 +13,9 @@ namespace Kunena\Forum\Libraries\Install;
 
 defined('_JEXEC') or die();
 
+use \Exception;
+use \stdClass;
+use const KPATH_ADMIN;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\CacheController;
@@ -42,9 +45,6 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use \Exception;
-use \stdClass;
-use const KPATH_ADMIN;
 
 /**
  *
@@ -862,7 +862,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	{
 		$results = [];
 
-		$this->setVersion(null);
+		$this->setVersion(0);
 		$this->setAvatarStatus();
 		$this->setAttachmentStatus();
 		$this->addStatus(Text::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true);
@@ -1159,7 +1159,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		if ($migrate)
 		{
-			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');
+			$kunena->warning = $this->getActionText((string) $fireboard, 'warn', 'upgrade');
 		}
 		else
 		{
@@ -1193,7 +1193,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 		else
 		{
-			if ($this->detectTable($prefix . 'version'))
+			$test = [$prefix . 'version'];
+
+			if ($this->detectTable($test))
 			{
 				$versionprefix = $prefix;
 			}
@@ -1298,7 +1300,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string  $detectlist  detect list
+	 * @param   array  $detectlist  detect list
 	 *
 	 * @return  array
 	 *
@@ -1306,7 +1308,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 *
 	 * @throws KunenaInstallerException
 	 */
-	protected function detectTable(string $detectlist)
+	protected function detectTable(array $detectlist)
 	{
 		// Cache
 		static $tables = [];
@@ -1440,13 +1442,13 @@ class KunenaModelInstall extends BaseDatabaseModel
 	public function isMigration(object $new, object $old): bool
 	{
 		// If K1.6 not installed: migrate
-		if (!$new->component || !$this->detectTable($new->prefix . 'messages'))
+		if (!$new->component || !$this->detectTable([$new->prefix . 'messages']))
 		{
 			return true;
 		}
 
 		// If old not installed: upgrade
-		if (!$old->component || !$this->detectTable($old->prefix . 'messages'))
+		if (!$old->component || !$this->detectTable([$old->prefix . 'messages']))
 		{
 			return false;
 		}
@@ -1478,7 +1480,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @param   string  $version  version
+	 * @param   object  $version  version
 	 * @param   string  $type     type
 	 * @param   null    $action   action
 	 *
@@ -1486,7 +1488,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getActionText(string $version, $type = '', $action = null): string
+	public function getActionText(object $version, $type = '', $action = null): string
 	{
 		/*
 		 Translations generated:
@@ -2363,13 +2365,13 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string  $action  action
+	 * @param   object  $action  action
 	 *
 	 * @return  array|mixed|null
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function processUpgradeXMLNode(string $action): ?array
+	public function processUpgradeXMLNode(object $action): ?array
 	{
 		$result   = null;
 		$nodeName = $action->getName();

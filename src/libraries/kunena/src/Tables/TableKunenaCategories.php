@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,6 +16,7 @@ namespace Kunena\Forum\Libraries\Tables;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -22,7 +24,6 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Categories
@@ -268,20 +269,17 @@ class TableKunenaCategories extends KunenaTable
 		$k             = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($id !== null)
-		{
+		if ($id !== null) {
 			$this->$k = $id;
 		}
 
 		// Reset the table.
-		if ($reset)
-		{
+		if ($reset) {
 			$this->reset();
 		}
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1)
-		{
+		if ($this->$k === null || intval($this->$k) < 1) {
 			$this->$k = 0;
 
 			return false;
@@ -294,19 +292,15 @@ class TableKunenaCategories extends KunenaTable
 			->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
 		$this->_db->setQuery($query);
 
-		try
-		{
+		try {
 			$data = $this->_db->loadAssoc();
-		}
-		catch (ExecutionFailureException $e)
-		{
+		} catch (ExecutionFailureException $e) {
 			KunenaError::displayDatabaseError($e);
 
 			return false;
 		}
 
-		if (!$data)
-		{
+		if (!$data) {
 			$this->$k = 0;
 
 			return false;
@@ -330,24 +324,17 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function bind($array, $ignore = ''): bool
 	{
-		if (is_object($array))
-		{
-			$array = getinternalObject_vars($array);
+		if (is_object($array)) {
+			$array = get_object_vars($array);
 		}
 
-		if (isset($array['params']) && !is_string($array['params']))
-		{
-			if ($array['params'] instanceof Registry)
-			{
+		if (isset($array['params']) && !is_string($array['params'])) {
+			if ($array['params'] instanceof Registry) {
 				$registry = $array['params'];
-			}
-			elseif (is_array($array['params']))
-			{
+			} elseif (is_array($array['params'])) {
 				$registry = new Registry;
 				$registry->loadArray($array['params']);
-			}
-			else
-			{
+			} else {
 				$registry = new Registry;
 			}
 
@@ -366,28 +353,23 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function check(): bool
 	{
-		if ($this->id && $this->parentid)
-		{
-			if ($this->id == $this->parentid)
-			{
+		if ($this->id && $this->parentid) {
+			if ($this->id == $this->parentid) {
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
 
-			if ($this->isChild($this->parentid))
-			{
+			if ($this->isChild($this->parentid)) {
 				throw new RuntimeException(Text::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
 		}
 
 		$this->name = trim($this->name);
 
-		if (!$this->name)
-		{
+		if (!$this->name) {
 			throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
-		if ($this->params instanceof Registry)
-		{
+		if ($this->params instanceof Registry) {
 			$this->params = $this->params->toString();
 		}
 
@@ -408,19 +390,15 @@ class TableKunenaCategories extends KunenaTable
 	public function isChild(int $id)
 	{
 		// FIXME: when we have category cache, replace this code
-		if ($id > 0)
-		{
+		if ($id > 0) {
 			$query = $this->_db->getQuery(true)
 				->select(['id', 'parentid'])
 				->from($this->_db->quoteName('#__kunena_categories'));
 			$this->_db->setQuery($query);
 
-			try
-			{
+			try {
 				$list = $this->_db->loadObjectList('id');
-			}
-			catch (ExecutionFailureException $e)
-			{
+			} catch (ExecutionFailureException $e) {
 				KunenaError::displayDatabaseError($e);
 
 				return false;
@@ -428,28 +406,24 @@ class TableKunenaCategories extends KunenaTable
 
 			$recurse = [];
 
-			while ($id)
-			{
-				if (in_array($id, $recurse))
-				{
+			while ($id) {
+				if (in_array($id, $recurse)) {
 					$this->setError(get_class($this) . Text::_('COM_KUNENA_RECURSION'));
 
 					return 0;
 				}
 
-				$recurse [] = $id;
+				$recurse[] = $id;
 
-				if (!isset($list [$id]))
-				{
+				if (!isset($list[$id])) {
 					$this->setError(get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
 
 					return 0;
 				}
 
-				$id = $list [$id]->parentid;
+				$id = $list[$id]->parentid;
 
-				if ($id != 0 && $id == $this->id)
-				{
+				if ($id != 0 && $id == $this->id) {
 					return 1;
 				}
 			}
@@ -467,8 +441,7 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function reOrder($where = ''): bool
 	{
-		if (!$where)
-		{
+		if (!$where) {
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('parentid'))
 				->from($this->_db->quoteName('#__kunena_categories'))
@@ -478,8 +451,7 @@ class TableKunenaCategories extends KunenaTable
 			$parents = $this->_db->loadColumn();
 			$success = true;
 
-			foreach ($parents as $parentid)
-			{
+			foreach ($parents as $parentid) {
 				$success &= parent::reOrder("parentid={$this->_db->quote($parentid)}");
 			}
 

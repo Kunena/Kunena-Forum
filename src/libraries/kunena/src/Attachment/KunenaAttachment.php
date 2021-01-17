@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use finfo;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
@@ -40,7 +41,6 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaAttachment
@@ -62,6 +62,7 @@ use function defined;
  * @property string $typeAlias
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
+ * @property string $setLayout
  */
 class KunenaAttachment extends KunenaDatabaseObject
 {
@@ -253,6 +254,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	protected $shortname;
 
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $setLayout = 'default';
+	
 	/**
 	 * @param   mixed  $identifier  identifier
 	 * @param   bool   $reload      reload
@@ -876,7 +883,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$input     = Factory::getApplication()->input;
 		$fileInput = $input->files->get($key, null, 'raw');
 
-		$upload = Upload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
+		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
 
 		$uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
 

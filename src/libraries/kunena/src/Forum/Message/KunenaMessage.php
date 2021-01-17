@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -42,11 +43,12 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
@@ -55,7 +57,6 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
@@ -1160,13 +1161,13 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  KunenaTopicUserHelper
+	 * @return  KunenaTopicUser
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function getUserTopic($user = null): KunenaTopicUserHelper
+	public function getUserTopic($user = null): KunenaTopicUser
 	{
 		return $this->getTopic()->getUserTopic($user);
 	}

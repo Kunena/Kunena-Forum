@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Forum;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -30,7 +31,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaForumStatistics
@@ -472,7 +472,7 @@ class KunenaStatistics
 		if ($this->topTopics < $limit)
 		{
 			$params = ['orderby' => 'posts DESC'];
-			list($this->topTopics) = TopicHelper::getLatestTopics(false, 0, $limit, $params);
+			list($this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
 
 			$top = reset($this->topTopics);
 
@@ -489,7 +489,7 @@ class KunenaStatistics
 			{
 				$item          = clone $item;
 				$item->count   = $item->posts;
-				$item->link    = HTMLHelper::_('link', $item->getUri(), Parser::parseText($item->subject), null, null, '');
+				$item->link    = HTMLHelper::_('link', $item->getUri(), KunenaParser::parseText($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}

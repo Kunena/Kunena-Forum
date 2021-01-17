@@ -403,7 +403,7 @@ abstract class KunenaGrid
 			$html[] = '</a>';
 		}
 
-		return implode($html);
+		return (string) $html;
 	}
 
 	/**

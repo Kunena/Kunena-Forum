@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,6 +16,7 @@ namespace Kunena\Forum\Libraries\Access;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -33,7 +35,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class KunenaAccess
@@ -110,10 +111,8 @@ class KunenaAccess
 
 		$classes = Factory::getApplication()->triggerEvent('onKunenaGetAccessControl');
 
-		foreach ($classes as $class)
-		{
-			if (!is_object($class))
-			{
+		foreach ($classes as $class) {
+			if (!is_object($class)) {
 				continue;
 			}
 
@@ -121,20 +120,17 @@ class KunenaAccess
 			$this->accesstypes['all'][] = $class;
 			unset($types['all']);
 
-			foreach ($types as $type)
-			{
+			foreach ($types as $type) {
 				$this->accesstypes[$type][] = $class;
 			}
 		}
 
-		if (KunenaConfig::getInstance()->get('cache_adm'))
-		{
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
 			// Load administrators and moderators from cache
 			$cache = Factory::getCache('com_kunena', 'output');
 			$data  = $cache->get(self::$cacheKey, 'com_kunena');
 
-			if ($data)
-			{
+			if ($data) {
 				$data                     = unserialize($data);
 				$this->adminsByCatid      = (array) $data['ac'];
 				$this->adminsByUserid     = (array) $data['au'];
@@ -144,8 +140,7 @@ class KunenaAccess
 		}
 
 		// If values were not cached (or users permissions have been changed), force reload
-		if (!isset($this->adminsByCatid))
-		{
+		if (!isset($this->adminsByCatid)) {
 			$this->clearCache();
 		}
 
@@ -172,10 +167,8 @@ class KunenaAccess
 
 		// @var KunenaAccess $access
 
-		foreach ($this->accesstypes['all'] as $access)
-		{
-			if (method_exists($access, 'loadCategoryRoles'))
-			{
+		foreach ($this->accesstypes['all'] as $access) {
+			if (method_exists($access, 'loadCategoryRoles')) {
 				$this->storeRoles((array) $access->loadCategoryRoles());
 			}
 		}
@@ -188,18 +181,14 @@ class KunenaAccess
 			->where($db->quoteName('role') . ' IN (1,2)');
 		$db->setQuery($query);
 
-		try
-		{
+		try {
 			$this->storeRoles((array) $db->loadObjectList());
-		}
-		catch (ExecutionFailureException $e)
-		{
+		} catch (ExecutionFailureException $e) {
 			KunenaError::displayDatabaseError($e);
 		}
 
 		// FIXME: enable caching after fixing the issues
-		if (KunenaConfig::getInstance()->get('cache_adm'))
-		{
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
 			// Store new data into cache
 			$cache = Factory::getCache('com_kunena', 'output');
 			$cache->store(
@@ -210,7 +199,9 @@ class KunenaAccess
 						'mc' => $this->moderatorsByCatid,
 						'mu' => $this->moderatorsByUserid,
 					]
-				), self::$cacheKey, 'com_kunena'
+				),
+				self::$cacheKey,
+				'com_kunena'
 			);
 		}
 	}
@@ -224,30 +215,24 @@ class KunenaAccess
 	 */
 	protected function storeRoles(array $list = null)
 	{
-		if (empty($list))
-		{
+		if (empty($list)) {
 			return;
 		}
 
-		foreach ($list as $item)
-		{
+		foreach ($list as $item) {
 			$userid = intval($item->user_id);
 			$catid  = intval($item->category_id);
 
-			if (!$userid)
-			{
+			if (!$userid) {
 				continue;
 			}
 
-			if ($item->role == KunenaForum::ADMINISTRATOR)
-			{
-				$this->adminsByUserid [$userid] [$catid] = 1;
-				$this->adminsByCatid [$catid] [$userid]  = 1;
-			}
-			elseif ($item->role == KunenaForum::MODERATOR)
-			{
-				$this->moderatorsByUserid [$userid] [$catid] = 1;
-				$this->moderatorsByCatid [$catid] [$userid]  = 1;
+			if ($item->role == KunenaForum::ADMINISTRATOR) {
+				$this->adminsByUserid[$userid][$catid] = 1;
+				$this->adminsByCatid[$catid][$userid]  = 1;
+			} elseif ($item->role == KunenaForum::MODERATOR) {
+				$this->moderatorsByUserid[$userid][$catid] = 1;
+				$this->moderatorsByCatid[$catid][$userid]  = 1;
 			}
 		}
 	}
@@ -263,8 +248,7 @@ class KunenaAccess
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		if (!self::$instance)
-		{
+		if (!self::$instance) {
 			self::$instance = new KunenaAccess;
 		}
 
@@ -286,10 +270,8 @@ class KunenaAccess
 
 		// @var KunenaAccess $access
 
-		foreach ($this->accesstypes['all'] as $access)
-		{
-			if (method_exists($access, 'getAccessOptions'))
-			{
+		foreach ($this->accesstypes['all'] as $access) {
+			if (method_exists($access, 'getAccessOptions')) {
 				$list += $access->getAccessOptions(null, $category);
 			}
 		}
@@ -297,9 +279,8 @@ class KunenaAccess
 		// User has disabled KunenaAccess control
 		$key = preg_replace('/[^\w\d]/', '-', $category->accesstype);
 
-		if (!isset($list [$key]))
-		{
-			$list [$key]['access'] = [
+		if (!isset($list[$key])) {
+			$list[$key]['access'] = [
 				'title' => Text::_('COM_KUNENA_ACCESS_UNKNOWN'),
 				'desc'  => Text::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
 				'input' => $category->access,
@@ -322,8 +303,7 @@ class KunenaAccess
 	{
 		static $enabled = false;
 
-		if (!$enabled)
-		{
+		if (!$enabled) {
 			$enabled = true;
 			Factory::getApplication()->getDocument()->addScriptDeclaration(
 				"function kShowAccessType(htmlclass, el) {
@@ -352,19 +332,15 @@ jQuery(document).ready(function ($) {
 		$exists      = 0;
 		$accesstypes = [];
 
-		foreach ($this->accesstypes as $type => $list)
-		{
-			if ($type == 'all')
-			{
+		foreach ($this->accesstypes as $type => $list) {
+			if ($type == 'all') {
 				continue;
 			}
 
-			foreach ($list as $access)
-			{
-				if (method_exists($access, 'getAccessOptions'))
-				{
+			foreach ($list as $access) {
+				if (method_exists($access, 'getAccessOptions')) {
 					$string                = Text::_('COM_KUNENA_INTEGRATION_TYPE_' . preg_replace('/[^\w\d]/', '_', $type));
-					$accesstypes [$string] = HTMLHelper::_('select.option', $type, $string);
+					$accesstypes[$string] = HTMLHelper::_('select.option', $type, $string);
 					$exists                |= $type == $category->accesstype;
 
 					break;
@@ -375,10 +351,9 @@ jQuery(document).ready(function ($) {
 		ksort($accesstypes);
 
 		// User has disabled KunenaAccess control
-		if (!$exists)
-		{
+		if (!$exists) {
 			$string                = Text::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
-			$accesstypes [$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
+			$accesstypes[$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
 		}
 
 		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox form-control" size="' . count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
@@ -399,15 +374,12 @@ jQuery(document).ready(function ($) {
 
 		$accesstype = $category->accesstype;
 
-		if (!isset($this->accesstypes[$accesstype]))
-		{
+		if (!isset($this->accesstypes[$accesstype])) {
 			return $list;
 		}
 
-		foreach ($this->accesstypes[$accesstype] as $access)
-		{
-			if (method_exists($access, 'getCategoryAccess'))
-			{
+		foreach ($this->accesstypes[$accesstype] as $access) {
+			if (method_exists($access, 'getCategoryAccess')) {
 				$list += $access->getCategoryAccess($category);
 			}
 		}
@@ -429,8 +401,7 @@ jQuery(document).ready(function ($) {
 	{
 		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : [];
 
-		if ($all && !empty($this->adminsByCatid[0]))
-		{
+		if ($all && !empty($this->adminsByCatid[0])) {
 			$list += $this->adminsByCatid[0];
 		}
 
@@ -451,8 +422,7 @@ jQuery(document).ready(function ($) {
 	{
 		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : [];
 
-		if ($all && !empty($this->moderatorsByCatid[0]))
-		{
+		if ($all && !empty($this->moderatorsByCatid[0])) {
 			$list += $this->moderatorsByCatid[0];
 		}
 
@@ -470,8 +440,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getAdminStatus($user = null): array
 	{
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaFactory::getUser($user);
 		}
 
@@ -495,8 +464,7 @@ jQuery(document).ready(function ($) {
 	public function setModerator(object $category, $user = null, $status = true): bool
 	{
 		// Check if category exists
-		if ($category && !$category->exists())
-		{
+		if ($category && !$category->exists()) {
 			return false;
 		}
 
@@ -504,25 +472,21 @@ jQuery(document).ready(function ($) {
 		$status      = intval($status);
 
 		// Check if user exists
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
 
-		if (!$user->exists())
-		{
+		if (!$user->exists()) {
 			return false;
 		}
 
 		$success      = true;
 		$userCategory = KunenaCategoryUserHelper::get($categoryId, $user);
 
-		if (($userCategory->role == 0 && $status) || ($userCategory->role == 1 && !$status))
-		{
+		if (($userCategory->role == 0 && $status) || ($userCategory->role == 1 && !$status)) {
 			$userCategory->role = $status;
 
-			if (!$userCategory->params)
-			{
+			if (!$userCategory->params) {
 				$userCategory->params = '';
 			}
 
@@ -534,8 +498,7 @@ jQuery(document).ready(function ($) {
 			// Change user moderator status
 			$moderator = $this->getModeratorStatus($user);
 
-			if ($user->moderator != !empty($moderator))
-			{
+			if ($user->moderator != !empty($moderator)) {
 				$user->moderator = intval(!empty($moderator));
 				$success         = $user->save();
 			}
@@ -555,8 +518,7 @@ jQuery(document).ready(function ($) {
 	 */
 	public function getModeratorStatus($user = null): array
 	{
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaFactory::getUser($user);
 		}
 
@@ -578,49 +540,40 @@ jQuery(document).ready(function ($) {
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaFactory::getUser($user);
 		}
 
-		if (!isset($read[$user->userid]))
-		{
+		if (!isset($read[$user->userid])) {
 			$id  = $user->userid;
 			$app = Factory::getApplication();
 
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
 
-			if ($read[$id] === null)
-			{
+			if ($read[$id] === null) {
 				$list       = [];
 				$categories = KunenaCategoryHelper::getCategories(false, false, 'none');
 
-				foreach ($categories as $category)
-				{
+				foreach ($categories as $category) {
 					// Remove unpublished categories
-					if ($category->published != 1)
-					{
+					if ($category->published != 1) {
 						unset($categories[$category->id]);
 					}
 
 					// Moderators have always KunenaAccess
-					if (self::isModerator($user, $category->id))
-					{
+					if (self::isModerator($user, $category->id)) {
 						$list[$category->id] = $category->id;
 						unset($categories[$category->id]);
 					}
 				}
 
 				// Get external authorization
-				if (!empty($categories))
-				{
+				if (!empty($categories)) {
 					// @var KunenaAccess $access
 
-					foreach ($this->accesstypes['all'] as $access)
-					{
-						if (method_exists($access, 'authoriseCategories'))
-						{
+					foreach ($this->accesstypes['all'] as $access) {
+						if (method_exists($access, 'authoriseCategories')) {
 							$list += $access->authoriseCategories($id, $categories);
 						}
 					}
@@ -652,34 +605,28 @@ jQuery(document).ready(function ($) {
 	 */
 	public function isModerator($user = null, $catid = 0): bool
 	{
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
 
 		// Guests and banned users cannot be moderators
-		if (!$user->exists() || $user->isBanned())
-		{
+		if (!$user->exists() || $user->isBanned()) {
 			return false;
 		}
 
 		// Administrators are always moderators
-		if ($this->isAdmin($user, $catid))
-		{
+		if ($this->isAdmin($user, $catid)) {
 			return true;
 		}
 
-		if (!empty($this->moderatorsByUserid[$user->userid]))
-		{
+		if (!empty($this->moderatorsByUserid[$user->userid])) {
 			// Is user a global moderator?
-			if (!empty($this->moderatorsByUserid[$user->userid][0]))
-			{
+			if (!empty($this->moderatorsByUserid[$user->userid][0])) {
 				return true;
 			}
 
 			// Is user a category moderator?
-			if (!empty($this->moderatorsByUserid[$user->userid][$catid]))
-			{
+			if (!empty($this->moderatorsByUserid[$user->userid][$catid])) {
 				return true;
 			}
 		}
@@ -699,32 +646,27 @@ jQuery(document).ready(function ($) {
 	 */
 	public function isAdmin($user = null, $catid = 0): bool
 	{
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaFactory::getUser($user);
 		}
 
 		// Guests and banned users cannot be administrators
-		if (!$user->exists() || $user->isBanned())
-		{
+		if (!$user->exists() || $user->isBanned()) {
 			return false;
 		}
 
 		// In backend every logged in user has global admin rights (for now)
-		if (Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid)
-		{
+		if (Factory::getApplication()->isClient('administrator') && $user->userid == KunenaUserHelper::getMyself()->userid) {
 			return true;
 		}
 
 		// Is user a global administrator?
-		if (!empty($this->adminsByUserid[$user->userid][0]))
-		{
+		if (!empty($this->adminsByUserid[$user->userid][0])) {
 			return true;
 		}
 
 		// Is user a category administrator?
-		if (!empty($this->adminsByUserid[$user->userid][$catid]))
-		{
+		if (!empty($this->adminsByUserid[$user->userid][$catid])) {
 			return true;
 		}
 
@@ -747,21 +689,17 @@ jQuery(document).ready(function ($) {
 	{
 		$list = [];
 
-		if (empty($this->accesstypes[$category->accesstype]))
-		{
+		if (empty($this->accesstypes[$category->accesstype])) {
 			return $list;
 		}
 
-		foreach ($this->accesstypes[$category->accesstype] as $access)
-		{
+		foreach ($this->accesstypes[$category->accesstype] as $access) {
 			// @var KunenaAccess $access
 
-			if (method_exists($access, 'getAuthoriseActions'))
-			{
+			if (method_exists($access, 'getAuthoriseActions')) {
 				$sublist = $access->getAuthoriseActions($category, $userid);
 
-				foreach ($sublist as $key => $value)
-				{
+				foreach ($sublist as $key => $value) {
 					$list[$key] = !empty($list[$key]) || $value;
 				}
 			}
@@ -789,30 +727,26 @@ jQuery(document).ready(function ($) {
 		 * Hold = 2: deleted
 		 */
 
-		if (!($user instanceof KunenaUser))
-		{
+		if (!($user instanceof KunenaUser)) {
 			$user = KunenaFactory::getUser($user);
 		}
 
 		$config = KunenaFactory::getConfig();
 
-		$hold [0] = 0;
+		$hold[0] = 0;
 
-		if ($this->isModerator($user, $catid))
-		{
-			$hold [1] = 1;
+		if ($this->isModerator($user, $catid)) {
+			$hold[1] = 1;
 		}
 
 		if (($config->modSeeDeleted == '0' && $this->isAdmin($user, $catid))
 			|| ($config->modSeeDeleted == '1' && $this->isModerator($user, $catid))
-		)
-		{
-			$hold [2] = 2;
-			$hold [3] = 3;
+		) {
+			$hold[2] = 2;
+			$hold[3] = 3;
 		}
 
-		if ($string)
-		{
+		if ($string) {
 			$hold = implode(',', $hold);
 		}
 
@@ -838,57 +772,46 @@ jQuery(document).ready(function ($) {
 		$topic    = KunenaTopicHelper::get($topic);
 		$category = $topic->getCategory();
 
-		if (!$topic->exists())
-		{
+		if (!$topic->exists()) {
 			return [];
 		}
 
 		$modlist = [];
 
-		if (!empty($this->moderatorsByCatid[0]))
-		{
+		if (!empty($this->moderatorsByCatid[0])) {
 			$modlist += $this->moderatorsByCatid[0];
 		}
 
-		if (!empty($this->moderatorsByCatid[$catid]))
-		{
+		if (!empty($this->moderatorsByCatid[$catid])) {
 			$modlist += $this->moderatorsByCatid[$catid];
 		}
 
 		$adminlist = [];
 
-		if (!empty($this->adminsByCatid[0]))
-		{
+		if (!empty($this->adminsByCatid[0])) {
 			$adminlist += $this->adminsByCatid[0];
 		}
 
-		if (!empty($this->adminsByCatid[$catid]))
-		{
+		if (!empty($this->adminsByCatid[$catid])) {
 			$adminlist += $this->adminsByCatid[$catid];
 		}
 
-		if ($type)
-		{
+		if ($type) {
 			$subscribers = $this->loadSubscribers($topic, $type);
 			$allow       = $deny = [];
 
-			if (!empty($subscribers))
-			{
+			if (!empty($subscribers)) {
 				// @var KunenaAccess $access
 
-				foreach ($this->accesstypes[$category->accesstype] as $access)
-				{
-					if (method_exists($access, 'authoriseUsers'))
-					{
+				foreach ($this->accesstypes[$category->accesstype] as $access) {
+					if (method_exists($access, 'authoriseUsers')) {
 						list($a, $d) = $access->authoriseUsers($topic, $subscribers);
 
-						if (!empty($a))
-						{
+						if (!empty($a)) {
 							$allow += array_combine($a, $a);
 						}
 
-						if (!empty($d))
-						{
+						if (!empty($d)) {
 							$deny += array_combine($d, $d);
 						}
 					}
@@ -902,21 +825,16 @@ jQuery(document).ready(function ($) {
 			$subsList += array_intersect_key($modlist, array_flip($subscribers));
 		}
 
-		if (!$moderators)
-		{
+		if (!$moderators) {
 			$modlist = [];
-		}
-		else
-		{
+		} else {
 			// If category has no moderators, send email to admins instead
-			if (empty($modlist))
-			{
+			if (empty($modlist)) {
 				$admins = true;
 			}
 		}
 
-		if (!$admins)
-		{
+		if (!$admins) {
 			$adminlist = [];
 		}
 
@@ -927,51 +845,37 @@ jQuery(document).ready(function ($) {
 			->where("u.block=0");
 		$userlist = [];
 
-		if (!empty($subsList))
-		{
+		if (!empty($subsList)) {
 			$userlist += $subsList;
 			$subsList = implode(',', array_keys($subsList));
 			$query->select("IF( u.id IN ({$subsList}), 1, 0 ) AS subscription");
-		}
-		else
-		{
+		} else {
 			$query->select("0 AS subscription");
 		}
 
-		if (!empty($modlist))
-		{
+		if (!empty($modlist)) {
 			$userlist += $modlist;
 			$modlist  = implode(',', array_keys($modlist));
 			$query->select("IF( u.id IN ({$modlist}), 1, 0 ) AS moderator");
-		}
-		else
-		{
+		} else {
 			$query->select("0 AS moderator");
 		}
 
-		if (!empty($adminlist))
-		{
+		if (!empty($adminlist)) {
 			$userlist  += $adminlist;
 			$adminlist = implode(',', array_keys($adminlist));
 			$query->select("IF( u.id IN ({$adminlist}), 1, 0 ) AS admin");
-		}
-		else
-		{
+		} else {
 			$query->select("0 AS admin");
 		}
 
-		if (empty($excludeList))
-		{
+		if (empty($excludeList)) {
 			// False, null, '', 0 and array(): get all subscribers
 			$excludeList = [];
-		}
-		elseif (is_array($excludeList))
-		{
+		} elseif (is_array($excludeList)) {
 			// Array() needs to be flipped to get userids into keys
 			$excludeList = array_flip($excludeList);
-		}
-		else
-		{
+		} else {
 			// Others: let's assume that we have comma separated list of values (string)
 			$excludeList = array_flip(explode(',', (string) $excludeList));
 		}
@@ -979,26 +883,21 @@ jQuery(document).ready(function ($) {
 		$userlist = array_diff_key($userlist, $excludeList);
 		$userids  = [];
 
-		if (!empty($userlist))
-		{
+		if (!empty($userlist)) {
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
 
 			// Only send to users whose Joomla account is enabled to Receive System Emails
-			if (KunenaConfig::getInstance()->get('useSystemEmails'))
-			{
+			if (KunenaConfig::getInstance()->get('useSystemEmails')) {
 				$query->where("u.sendEmail = 1");
 			}
 
 			$db = Factory::getDBO();
 			$db->setQuery($query);
 
-			try
-			{
+			try {
 				$userids = (array) $db->loadObjectList();
-			}
-			catch (ExecutionFailureException $e)
-			{
+			} catch (ExecutionFailureException $e) {
 				KunenaError::displayDatabaseError($e);
 			}
 		}
@@ -1022,8 +921,7 @@ jQuery(document).ready(function ($) {
 		$db       = Factory::getDBO();
 		$query    = [];
 
-		if ($type && self::TOPIC_SUBSCRIPTION)
-		{
+		if ($type && self::TOPIC_SUBSCRIPTION) {
 			// Get topic subscriptions
 			$querytopic = $db->getQuery(true)
 				->select($db->quoteName('user_id'))
@@ -1040,8 +938,7 @@ jQuery(document).ready(function ($) {
 			$query[] = $querytopic;
 		}
 
-		if ($type && self::CATEGORY_SUBSCRIPTION)
-		{
+		if ($type && self::CATEGORY_SUBSCRIPTION) {
 			// Get category subscriptions
 			$querycat = $db->getQuery(true)
 				->select($db->quoteName('user_id'))
@@ -1060,12 +957,9 @@ jQuery(document).ready(function ($) {
 		$query = implode(' UNION ', $query);
 		$db->setQuery($query);
 
-		try
-		{
+		try {
 			$userids = (array) $db->loadColumn();
-		}
-		catch (ExecutionFailureException $e)
-		{
+		} catch (ExecutionFailureException $e) {
 			KunenaError::displayDatabaseError($e);
 		}
 

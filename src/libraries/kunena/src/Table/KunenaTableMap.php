@@ -14,13 +14,13 @@ namespace Kunena\Forum\Libraries\Table;
 
 defined('_JEXEC') or die();
 
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Class KunenaTableMap
@@ -312,7 +312,7 @@ class KunenaTableMap
 		// If the source value is an object, get its accessible properties.
 		if (is_object($src))
 		{
-			$src = getinternalObject_vars($src);
+			$src = get_object_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.

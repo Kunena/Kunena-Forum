@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Template;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -37,7 +38,6 @@ use Leafo\ScssPhp\Compiler;
 use lessc;
 use SimpleXMLElement;
 use StdClass;
-use function defined;
 
 /**
  * Kunena Users Table Class
@@ -768,25 +768,25 @@ HTML;
 	}
 
 	/**
-	 * @param   string  $item  item
+	 * @param   object  $item  item
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getPaginationItemActive(string $item): string
+	public function getPaginationItemActive(object $item): string
 	{
 		return '<a title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
 	}
 
 	/**
-	 * @param   string  $item  item
+	 * @param   object  $item  item
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getPaginationItemInactive(string $item): string
+	public function getPaginationItemInactive(object $item): string
 	{
 		return '<span class="pagenav">' . $item->text . '</span>';
 	}

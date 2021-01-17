@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\BBCode;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use GeSHi;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
@@ -42,7 +43,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
 use Nbbc\BBCodeLibrary;
 use stdClass;
-use function defined;
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
@@ -2733,7 +2733,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 	/**
 	 * @param   KunenaAttachment  $attachment    attachment
-	 * @param   string      $bbcode        bbcode
+	 * @param   object      $bbcode        bbcode
 	 * @param   bool        $displayImage  display image
 	 *
 	 * @return  string|void
@@ -2743,7 +2743,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @throws null
 	 * @throws Exception
 	 */
-	protected function renderAttachment(KunenaAttachment $attachment, string $bbcode, $displayImage = true): string
+	protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true): string
 	{
 		// Display nothing in subscription mails
 		if (!empty($bbcode->context))
@@ -3098,7 +3098,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @param   int  $tweetid  The tweet ID to query against twitter API
 	 *
-	 * @return  string|void
+	 * @return  object
 	 *
 	 * @since   Kunena 6.0
 	 *

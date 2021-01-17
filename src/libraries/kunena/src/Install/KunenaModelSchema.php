@@ -384,7 +384,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @param   string  $input  input
 	 *
-	 * @return  null
+	 * @return  object
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -468,14 +468,14 @@ class KunenaModelSchema extends BaseDatabaseModel
 	}
 
 	/**
-	 * @param   string  $input  input
+	 * @param   object  $input  input
 	 *
 	 * @return  DOMDocument|DOMNode|mixed|null
 	 *
 	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
 	 */
-	protected function getDOMDocument(string $input)
+	protected function getDOMDocument(object $input)
 	{
 		if (($input instanceof DOMNode))
 		{
@@ -583,7 +583,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 	/**
 	 * @param   object  $schema  schema
-	 * @param   object  $type    type
+	 * @param   string  $type    type
 	 * @param   object  $table   table
 	 * @param   string  $field   field
 	 *
@@ -591,7 +591,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function findNode(object $schema, object $type, object $table, $field = '')
+	protected function findNode(object $schema, string $type, object $table, $field = '')
 	{
 		$rootNode = $schema->documentElement;
 
@@ -779,7 +779,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 	/**
 	 * @param   object  $schema  schema
-	 * @param   object  $tag     tag
+	 * @param   string  $tag     tag
 	 * @param   string  $name    name
 	 * @param   object  $loc     loc
 	 *
@@ -787,7 +787,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getSchemaNodeDiff(object $schema, object $tag, string $name, object $loc)
+	public function getSchemaNodeDiff(object $schema, string $tag, string $name, object $loc)
 	{
 		$node = null;
 

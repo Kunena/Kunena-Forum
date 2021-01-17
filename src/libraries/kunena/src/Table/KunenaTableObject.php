@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Table;
 defined('_JEXEC') or die();
 
 use Closure;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
@@ -23,7 +24,6 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Abstract Table Object class
@@ -424,7 +424,7 @@ abstract class KunenaTableObject
 		// If the source value is an object, get its accessible properties.
 		if (is_object($src))
 		{
-			$src = getinternalObject_vars($src);
+			$src = get_object_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.
@@ -463,7 +463,7 @@ abstract class KunenaTableObject
 
 		return function () use ($self) {
 
-			return getinternalObject_vars($self);
+			return get_object_vars($self);
 		};
 	}
 

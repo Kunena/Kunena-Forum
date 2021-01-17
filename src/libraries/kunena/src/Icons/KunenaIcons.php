@@ -15,12 +15,12 @@ namespace Kunena\Forum\Libraries\Icons;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class KunenaIcons
@@ -975,7 +975,7 @@ class KunenaIcons
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
-		$class         = ' ' . Template::getInstance()->tooltips();
+		$class         = ' ' . KunenaTemplate::getInstance()->tooltips();
 
 		if ($topicicontype == 'fa')
 		{

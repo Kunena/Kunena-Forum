@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Layout;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -27,7 +28,6 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RunTimeException;
-use function defined;
 
 /**
  * implements \Kunena specific functions for all layouts.
@@ -57,36 +57,6 @@ class KunenaLayout extends KunenaBase
 	 * @since version
 	 */
 	private $personalText;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $usermedals;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userpoints;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userthankyou;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userposts;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userranktitle;
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userrankimage;
 	/**
 	 * @var mixed|void|null
 	 * @since version

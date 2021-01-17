@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -14,6 +15,7 @@ namespace Kunena\Forum\Libraries\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -22,18 +24,17 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Exception\KunenaException;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /**
  * Class KunenaController
@@ -86,13 +87,11 @@ class KunenaController extends BaseController
 		$this->me       = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
-		if ($this->me->userid && !$this->me->exists())
-		{
+		if ($this->me->userid && !$this->me->exists()) {
 			$this->me->save();
 		}
 
-		if (empty($this->input))
-		{
+		if (empty($this->input)) {
 			$this->input = $this->app->input;
 		}
 	}
@@ -112,13 +111,11 @@ class KunenaController extends BaseController
 	{
 		static $instance = null;
 
-		if (!$prefix)
-		{
+		if (!$prefix) {
 			$prefix = 'Kunena';
 		}
 
-		if (!empty($instance) && !isset($instance->home))
-		{
+		if (!empty($instance) && !isset($instance->home)) {
 			return $instance;
 		}
 
@@ -128,55 +125,43 @@ class KunenaController extends BaseController
 		$command = $input->get('task', 'display');
 
 		// Check for a controller.task command.
-		if (strpos($command, '.') !== false)
-		{
+		if (strpos($command, '.') !== false) {
 			// Explode the controller.task command.
 			list($view, $task) = explode('.', $command);
 
 			// Reset the task without the controller context.
 			$input->set('task', $task);
-		}
-		else
-		{
+		} else {
 			// Base controller.
 			$view = strtolower(Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
-		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
+		$path = JPATH_COMPONENT . "/src/{ucfirst($view)}Controller.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
-		if (is_file($path))
-		{
+		if (is_file($path)) {
 			require_once $path;
-		}
-		else
-		{
+		} else {
 			throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
 		}
 
 		// Set the name for the controller and instantiate it.
-		if ($app->isClient('administrator'))
-		{
+		if ($app->isClient('administrator')) {
 			$class = $prefix . 'AdminController' . ucfirst($view);
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			KunenaFactory::loadLanguage('com_kunena', 'site');
-		}
-		else
-		{
+		} else {
 			$class = $prefix . 'Controller' . ucfirst($view);
 			KunenaFactory::loadLanguage('com_kunena.controllers');
 			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		}
 
-		if (class_exists($class))
-		{
+		if (class_exists($class)) {
 			$instance = new $class;
-		}
-		else
-		{
+		} else {
 			throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
 		}
 
@@ -216,16 +201,14 @@ class KunenaController extends BaseController
 	 */
 	public function execute($task)
 	{
-		if (!$task)
-		{
+		if (!$task) {
 			$task = 'display';
 		}
 
 		$app          = Factory::getApplication();
 		$this->format = $this->input->getWord('format', 'html');
 
-		try
-		{
+		try {
 			// TODO: This would be great, but we would need to store POST before doing it in here...
 			/*
 			if ($task != 'display')
@@ -246,17 +229,13 @@ class KunenaController extends BaseController
 
 			// Execute the task.
 			$content = static::executeTask($task);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$content = $e;
 		}
 
 		// Legacy view support.
-		if ($task == 'display')
-		{
-			if ($content instanceof Exception)
-			{
+		if ($task == 'display') {
+			if ($content instanceof Exception) {
 				throw $content;
 			}
 
@@ -264,33 +243,27 @@ class KunenaController extends BaseController
 		}
 
 		// Create HTML redirect.
-		if ($this->format == 'html')
-		{
-			if ($content instanceof Exception)
-			{
+		if ($this->format == 'html') {
+			if ($content instanceof Exception) {
 				$app->enqueueMessage($content->getMessage(), 'error');
 
-				if (!$this->redirect)
-				{
+				if (!$this->redirect) {
 					// On exceptions always return back to the referrer page.
 					$this->setRedirect(KunenaRoute::getReferrer());
 				}
 			}
 
 			// The following code gets only called for successful tasks.
-			if (!$this->redirect)
-			{
+			if (!$this->redirect) {
 				// If controller didn't set a new redirect, try if request has return url in it.
 				$return = base64_decode($app->input->getBase64('return'));
 
 				// Only allow internal urls to be used.
-				if ($return && Uri::isInternal($return))
-				{
+				if ($return && Uri::isInternal($return)) {
 					$redirect = Route::_($return, false);
 				}
 				// Otherwise return back to the referrer.
-				else
-				{
+				else {
 					$redirect = KunenaRoute::getReferrer();
 				}
 
@@ -308,8 +281,7 @@ class KunenaController extends BaseController
 		$response->location = $this->redirect;
 
 		// In case of an error we want to set HTTP error code.
-		if ($content instanceof Exception)
-		{
+		if ($content instanceof Exception) {
 			// We want to wrap the exception to be able to display correct HTTP status code.
 			$exception = new KunenaAuthorise($content->getMessage(), $content->getCode(), $content);
 			header('HTTP/1.1 ' . $exception->getResponseStatus(), true);
@@ -339,16 +311,11 @@ class KunenaController extends BaseController
 
 		$task = strtolower($this->task);
 
-		if (isset($this->taskMap[$this->task]))
-		{
+		if (isset($this->taskMap[$this->task])) {
 			$doTask = $this->taskMap[$this->task];
-		}
-		elseif (isset($this->taskMap['__default']))
-		{
+		} elseif (isset($this->taskMap['__default'])) {
 			$doTask = $this->taskMap['__default'];
-		}
-		else
-		{
+		} else {
 			throw new Exception(Text::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
 		}
 
@@ -385,8 +352,7 @@ class KunenaController extends BaseController
 		$lName   = Factory::getApplication()->input->getWord('layout', 'default');
 		$vFormat = $document->getType();
 
-		if ($this->app->isClient('administrator'))
-		{
+		if ($this->app->isClient('administrator')) {
 			// Load admin language files
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
@@ -396,9 +362,7 @@ class KunenaController extends BaseController
 
 			$version         = new KunenaVersion;
 			$version_warning = $version->getVersionWarning();
-		}
-		else
-		{
+		} else {
 			// Load site language files
 			KunenaFactory::loadLanguage('com_kunena.views');
 			KunenaFactory::loadLanguage('com_kunena.templates');
@@ -412,8 +376,7 @@ class KunenaController extends BaseController
 			// Check if menu item was correctly routed
 			$routed = $menu->getItem(KunenaRoute::getItemID());
 
-			if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id))
-			{
+			if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$route    = KunenaRoute::_(null, false);
@@ -438,10 +401,8 @@ class KunenaController extends BaseController
 
 		$view = $this->getView($vName, $vFormat);
 
-		if ($view)
-		{
-			if ($this->app->isClient('site') && $vFormat == 'html')
-			{
+		if ($view) {
+			if ($this->app->isClient('site') && $vFormat == 'html') {
 				$common = $this->getView('common', $vFormat);
 				$model  = $this->getModel('common');
 				$common->setModel($model, true);
@@ -462,15 +423,12 @@ class KunenaController extends BaseController
 			$view->document = $document;
 
 			// Render the view.
-			if ($vFormat == 'html')
-			{
+			if ($vFormat == 'html') {
 				PluginHelper::importPlugin('kunena');
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['start', $view]);
 				$view->displayAll();
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['end', $view]);
-			}
-			else
-			{
+			} else {
 				$view->displayLayout();
 			}
 		}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,6 +16,7 @@ namespace Kunena\Forum\Libraries\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
@@ -24,7 +26,6 @@ use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use function defined;
 
 /**
  * Class KunenaControllerDisplay
@@ -94,29 +95,22 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function __toString(): string
 	{
-		try
-		{
+		try {
 			$output = $this->execute();
-		}
-		catch (KunenaAuthorise $e)
-		{
-			if (!$this->primary)
-			{
-				return (string) Layout::factory('Empty');
+		} catch (KunenaAuthorise $e) {
+			if (!$this->primary) {
+				return (string) KunenaLayout::factory('Empty');
 			}
 
 			$document = Factory::getApplication()->getDocument();
 			$document->setTitle($e->getResponseStatus());
 			Factory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			Factory::getApplication()->sendHeaders();
-			$output = Layout::factory('Misc/Default', 'pages')
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
-		}
-		catch (Exception $e)
-		{
-			if (!$this->primary)
-			{
+		} catch (Exception $e) {
+			if (!$this->primary) {
 				return "<div class=\"alert alert-danger\" role=\"alert\"><b>Exception</b> in layout <b>{$this->name}!</b>" . (JDEBUG ? '<br>' . $e->getMessage() : '') . '</div>';
 			}
 
@@ -125,7 +119,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$document->setTitle($title);
 			Factory::getApplication()->setHeader('Status', $title, true);
 			Factory::getApplication()->sendHeaders();
-			$output = Layout::factory('Misc/Default', 'pages')
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
 		}
@@ -146,13 +140,11 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
-		try
-		{
+		try {
 			// Run before executing action.
 			$result = $this->before();
 
-			if ($result === false)
-			{
+			if ($result === false) {
 				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
@@ -163,16 +155,11 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			// Run after executing action.
 			$this->after();
-		}
-		catch (KunenaAuthorise $e)
-		{
-			if ($this->primary)
-			{
+		} catch (KunenaAuthorise $e) {
+			if ($this->primary) {
 				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 				throw $e;
-			}
-			else
-			{
+			} else {
 				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 		}
@@ -196,8 +183,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->layout = $this->input->getCmd('layout', 'default');
 		$this->config = KunenaConfig::getInstance();
 
-		if ($this->primary)
-		{
+		if ($this->primary) {
 			$this->document = Factory::getApplication()->getDocument();
 		}
 	}
@@ -231,10 +217,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$properties = (array) $this;
 		$list       = [];
 
-		foreach ($properties as $property => $value)
-		{
-			if ($property[0] != "\0")
-			{
+		foreach ($properties as $property => $value) {
+			if ($property[0] != "\0") {
 				$list[$property] = $value;
 			}
 		}
@@ -253,8 +237,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function after()
 	{
-		if ($this->primary)
-		{
+		if ($this->primary) {
 			$this->prepareDocument();
 		}
 	}
@@ -268,13 +251,12 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument(): void
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
 
-		if (!empty($format) && $format != 'html')
-		{
+		if (!empty($format) && $format != 'html') {
 			return false;
 		}
 	}
@@ -304,8 +286,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setLayout(string $layout)
 	{
-		if (!$layout)
-		{
+		if (!$layout) {
 			$layout = 'default';
 		}
 
@@ -329,16 +310,13 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setProperties($properties): KunenaControllerDisplay
 	{
-		if (!is_array($properties) && !is_object($properties))
-		{
+		if (!is_array($properties) && !is_object($properties)) {
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}
 
-		foreach ((array) $properties as $k => $v)
-		{
+		foreach ((array) $properties as $k => $v) {
 			// Use the set function which might be overridden.
-			if ($k[0] != "\0")
-			{
+			if ($k[0] != "\0") {
 				$this->$k = $v;
 			}
 		}
@@ -375,26 +353,17 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setTitle($title, $replace = false): void
 	{
-		if (!$replace)
-		{
+		if (!$replace) {
 			// Obey Joomla configuration.
-			if ($this->app->get('sitename_pagetitles', 0) == 1)
-			{
+			if ($this->app->get('sitename_pagetitles', 0) == 1) {
 				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->boardTitle);
-			}
-			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
-			{
-				if ($this->config->boardTitle == $this->app->get('sitename'))
-				{
+			} elseif ($this->app->get('sitename_pagetitles', 0) == 2) {
+				if ($this->config->boardTitle == $this->app->get('sitename')) {
 					$title = Text::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
-				}
-				else
-				{
+				} else {
 					$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
 				}
-			}
-			else
-			{
+			} else {
 				$title = $title . ' - ' . $this->config->boardTitle;
 			}
 		}

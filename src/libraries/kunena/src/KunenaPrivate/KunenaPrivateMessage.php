@@ -15,13 +15,13 @@ namespace Kunena\Forum\Libraries\KunenaPrivate;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Table\KunenaTableMap;
-use function defined;
 
 /**
  * Private message.
@@ -209,13 +209,13 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	/**
 	 * Save changes in the relations.
 	 *
-	 * @return boolean
+	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws Exception
 	 */
-	protected function saveInternal(): bool
+	protected function saveInternal(): void
 	{
 		if (!is_null($this->_attachments))
 		{

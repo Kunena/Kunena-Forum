@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Error;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -22,7 +23,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use StdClass;
-use function defined;
 
 /**
  * Class KunenaError
@@ -179,7 +179,7 @@ abstract class KunenaError
 			$app->enqueueMessage('Kunena ' . Text::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
 		}
 
-		KunenaLog::log(Log::TYPE_ERROR, Log::LOG_ERROR_FATAL, 'Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage());
+		KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, 'Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage());
 	}
 
 	/**

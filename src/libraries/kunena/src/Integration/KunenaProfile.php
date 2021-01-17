@@ -15,11 +15,12 @@ namespace Kunena\Forum\Libraries\Integration;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class KunenaProfile
@@ -134,7 +135,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL($action = '', $xhtml = true): void
 	{
 	}
 
@@ -147,7 +148,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $user, $task = '', $xhtml = true): void
 	{
 	}
 
@@ -159,7 +160,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params): void
+	public function showProfile(KunenaLayout $view, object $params): void
 	{
 	}
 
@@ -171,7 +172,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, $xhtml = true): void
 	{
 	}
 }

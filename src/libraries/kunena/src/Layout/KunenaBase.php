@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Layout;
 defined('_JEXEC') or die();
 
 use Exception;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\BaseLayout;
@@ -28,7 +29,6 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use RuntimeException;
 use Throwable;
-use function defined;
 
 /**
  * implements \Kunena layouts for the views.
@@ -74,7 +74,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @since   Kunena 6.0
 	 */
 	protected $layout = 'default';
-
+	
 	/**
 	 * The paths queue.
 	 *

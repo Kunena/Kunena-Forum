@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use DateTimeZone;
 use Exception;
+use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
@@ -45,7 +46,6 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use stdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
@@ -72,7 +72,7 @@ use function defined;
  * @property    int    $uhits
  * @property    string $personalText
  * @property    int    $gender
- * @property    string $birthdate
+ * @property    object $birthdate
  * @property    string $location
  * @property    string $websitename
  * @property    string $websiteurl
@@ -1979,7 +1979,7 @@ class KunenaUser extends CMSObject
 
 			if ($config->rankImages == 3)
 			{
-				$url             = Template::getInstance()->getRankPath($rank->rankImage, true);
+				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
 				$imageProperties = Image::getImageFileProperties($location);
 

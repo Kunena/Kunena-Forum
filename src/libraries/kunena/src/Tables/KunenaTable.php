@@ -266,7 +266,7 @@ abstract class KunenaTable extends Table
 		$statement = 'UPDATE ' . $this->_db->quoteName($this->_tbl) . ' SET %s WHERE %s';
 
 		// Iterate over the object variables to build the query fields/value pairs.
-		foreach (getinternalObject_vars($this) as $k => $v)
+		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process scalars that are not internal fields.
 			if (is_array($v) || is_object($v) || $k[0] == '_')
@@ -355,7 +355,7 @@ abstract class KunenaTable extends Table
 		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
 		// Iterate over the object variables to build the query fields and values.
-		foreach (getinternalObject_vars($this) as $k => $v)
+		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process non-null scalars.
 			if (is_array($v) || is_object($v) || $v === null)

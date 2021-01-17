@@ -21,7 +21,7 @@ if ($direction === "left")
 	?>
 	<div class="row message">
 		<div class="col-md-2 shadow rounded hidden-xs-down">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 		<div class="col-md-10 shadow-lg rounded message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
@@ -49,7 +49,7 @@ if ($direction === "left")
 			<?php endif; ?>
 		</div>
 		<div class="col-md-2 shadow rounded hidden-xs-down">
-			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate); ?>
+			<?php echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->set('candisplaymail', $this->candisplaymail)->set('config', $this->config)->set('ktemplate',$this->ktemplate)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top")

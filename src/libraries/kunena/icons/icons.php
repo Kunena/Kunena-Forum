@@ -1211,6 +1211,7 @@ class KunenaIcons
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
+		$bigicon = ' ';
 
 		if ($categoryicon == ' ')
 		{
@@ -1227,8 +1228,8 @@ class KunenaIcons
 		}
 
 		if ($big)
-		{
-			if ($topicicontype == 'fa')
+		{		    
+		    if ($topicicontype == 'fa')
 			{
 				if (!empty($caticon))
 				{
@@ -1297,8 +1298,6 @@ class KunenaIcons
 		}
 		else
 		{
-			$bigicon = ' ';
-
 			if ($topicicontype == 'fa')
 			{
 				if (!$categoryicon)

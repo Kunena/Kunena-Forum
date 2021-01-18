@@ -1596,16 +1596,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "4.1.14",
+            "version": "4.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "bf2d7861cc6cf4e118a21c6945f482a5c822636c"
+                "reference": "9b174d18ba58bb2e8cc4cecce619d6124df1d83a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/bf2d7861cc6cf4e118a21c6945f482a5c822636c",
-                "reference": "bf2d7861cc6cf4e118a21c6945f482a5c822636c",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/9b174d18ba58bb2e8cc4cecce619d6124df1d83a",
+                "reference": "9b174d18ba58bb2e8cc4cecce619d6124df1d83a",
                 "shasum": ""
             },
             "require": {
@@ -1683,7 +1683,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2020-12-28T19:16:28+00:00"
+            "time": "2021-01-17T19:19:40+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -2398,12 +2398,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "679c0cef9cfdb2e71edfae96706f54b8a98a1872"
+                "reference": "ec652951978b62ec1890144a5cd19199b1c7cf1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/679c0cef9cfdb2e71edfae96706f54b8a98a1872",
-                "reference": "679c0cef9cfdb2e71edfae96706f54b8a98a1872",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/ec652951978b62ec1890144a5cd19199b1c7cf1f",
+                "reference": "ec652951978b62ec1890144a5cd19199b1c7cf1f",
                 "shasum": ""
             },
             "require": {
@@ -2441,7 +2441,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2020-12-17T13:00:38+00:00"
+            "time": "2021-01-04T17:04:56+00:00"
         },
         {
             "name": "joomla/cms-coding-standards",

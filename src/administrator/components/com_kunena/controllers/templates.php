@@ -863,6 +863,15 @@ class KunenaAdminControllerTemplates extends KunenaController
 			}
 		}
 
+		if (!empty($params['ckeditorcustomprefixconfigfile']))
+		{
+			if (!JFolder::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile']) . 'ckeditor_config.js')
+			{
+				$params['ckeditorcustomprefixconfigfile'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'),'error');
+			}
+		}
+
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (count($params) > 0)

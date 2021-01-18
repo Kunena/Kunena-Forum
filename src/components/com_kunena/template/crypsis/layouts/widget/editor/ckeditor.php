@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 
 $this->addScript('ckeditor.js');
-$this->addScriptOptions('com_kunena.ckeditor_config', 'ckeditor_config.js');
+$this->addScriptOptions('com_kunena.ckeditor_config', $this->template->params->get('ckeditorcustomprefixconfigfile') . 'ckeditor_config.js');
 $this->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
 $this->addScriptOptions('com_kunena.ckeditor_subfolder', Joomla\CMS\Uri\Uri::root(true));
 $this->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->params->get('nameskinckeditor'));

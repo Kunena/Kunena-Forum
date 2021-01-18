@@ -323,6 +323,8 @@
         <field name="editorButtons" type="hidden" default=""/>
         <field name="nameskinckeditor" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR"
                description="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR_DESC"/>
+        <field name="ckeditorcustomprefixconfigfile" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE"
+               description="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE_DESC"/>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_AVATAR">

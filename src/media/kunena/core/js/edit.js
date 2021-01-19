@@ -103,7 +103,6 @@ jQuery(document).ready(function ($) {
 
 	// Needed to open and close quickreply from on blue Eagle5
 	$('.Kreplyclick').click(function () {
-			console.log('click');
 		var name = '#' + $(this).attr('data-related');
 		if ($(name).is(":visible")) {
 			$(name).hide();

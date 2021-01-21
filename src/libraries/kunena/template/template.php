@@ -1971,7 +1971,7 @@ HTML;
 
 		if ($fontawesome)
 		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.15.1/js/all.js', array(), array('defer' => true));
+			$this->addScript('https://use.fontawesome.com/releases/v5.15.2/js/all.js', array(), array('defer' => true));
 		}
 	}
 }

@@ -188,6 +188,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			:
 			?>
 			<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
+			<input type="hidden" id="poll_catid" value="<?php echo intval($this->message->catid) ?>"/>
 		<?php endif; ?>
 		<?php
 		if ($this->category->id && $this->category->id != $this->message->catid)

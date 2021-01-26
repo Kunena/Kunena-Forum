@@ -2857,7 +2857,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('twitter'))
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('Twitter'))
 		{
 			return false;
 		}

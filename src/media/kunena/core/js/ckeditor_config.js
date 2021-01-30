@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -32,17 +32,17 @@ CKEDITOR.editorConfig = function( config ) {
 
 	if(Joomla.getOptions('com_kunena.ckeditor_buttons_configuration') !== undefined && remove_buttons_url_image===undefined)
 	{
-		config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Table,HorizontalRule,Copy,Outdent,Indent,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
+		config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Copy,Outdent,Indent,' + Joomla.getOptions('com_kunena.ckeditor_buttons_configuration');
 	}
 	else
 	{
 		if (remove_buttons_url_image)
 		{
-			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Image,Link,Unlink,Table,HorizontalRule,Copy,Outdent,Indent';
+			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Image,Link,Unlink,Copy,Outdent,Indent';
 		}
 		else
 		{
-			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Table,HorizontalRule,Copy,Outdent,Indent';
+			config.removeButtons = 'Anchor,Paste,Styles,Format,Font,BGColor,Copy,Outdent,Indent';
 		}
 	}
 

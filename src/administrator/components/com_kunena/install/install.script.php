@@ -433,6 +433,7 @@ class Com_KunenaInstallerScript
 	{
 		$db   = Factory::getDbo();
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
+		$pass &= $this->checkPhpExtensions();
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
 		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
@@ -443,6 +444,30 @@ class Com_KunenaInstallerScript
 	}
 
 	// Internal functions
+
+	/**
+	 * Check that the Php extensions needed for Kunena are right enabled
+	 * 
+	 * @return boolean
+	 * 
+	 * @since Kunena 5.2
+	 */
+	protected function checkPhpExtensions()
+	{
+		$extensions_list = array('gd', 'fileinfo', 'dom', 'mbstring', 'json', 'openssl');
+
+		foreach ($extensions_list as $extension)
+		{
+			if (extension_loaded($extension))
+			{
+				return true;
+			}
+
+			break;
+		}
+
+		return false;
+	}
 
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution

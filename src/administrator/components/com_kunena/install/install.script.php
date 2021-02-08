@@ -51,7 +51,7 @@ class Com_KunenaInstallerScript
 	 * @var array
 	 * @since Kunena
 	 */
-	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
+	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML', 'fileinfo', 'mbstring', 'openssl');
 
 	/**
 	 * @param   string $parent parent
@@ -433,41 +433,16 @@ class Com_KunenaInstallerScript
 	{
 		$db   = Factory::getDbo();
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
-		$pass &= $this->checkPhpExtensions();
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
 		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
-		$pass &= $this->checkExtensions($this->extensions);
+		$pass &= $this->checkPhpExtensions($this->extensions);
 		$pass &= $this->checkKunena($version);
 
 		return $pass;
 	}
 
 	// Internal functions
-
-	/**
-	 * Check that the Php extensions needed for Kunena are right enabled
-	 * 
-	 * @return boolean
-	 * 
-	 * @since Kunena 5.2
-	 */
-	protected function checkPhpExtensions()
-	{
-		$extensions_list = array('gd', 'fileinfo', 'dom', 'mbstring', 'json', 'openssl');
-
-		foreach ($extensions_list as $extension)
-		{
-			if (extension_loaded($extension))
-			{
-				return true;
-			}
-
-			break;
-		}
-
-		return false;
-	}
 
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
@@ -547,6 +522,8 @@ class Com_KunenaInstallerScript
 	}
 
 	/**
+	 * Check that the Php extensions needed for Kunena are right enabled
+	 * 
 	 * @param   array $extensions extensions
 	 *
 	 * @return integer
@@ -554,7 +531,7 @@ class Com_KunenaInstallerScript
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	protected function checkExtensions($extensions)
+	protected function checkPhpExtensions($extensions)
 	{
 		$app = Factory::getApplication();
 

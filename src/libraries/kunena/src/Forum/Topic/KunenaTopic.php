@@ -30,7 +30,6 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -43,12 +42,11 @@ use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
-use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -57,7 +55,6 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\Topic
  *
- * @since   Kunena 6.0
  * @property int    $id
  * @property int    $categoryId
  * @property string $subject
@@ -83,6 +80,7 @@ use function defined;
  * @property string $params
  * @property int    $rating
  * @property int    $count
+ * @since   Kunena 6.0
  */
 class KunenaTopic extends KunenaDatabaseObject
 {
@@ -887,8 +885,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function sendNotification($url = null): void
 	{
@@ -958,8 +956,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = ''): ?KunenaPagination
 	{
@@ -987,8 +985,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getUri($category = null, $action = null): Uri
 	{
@@ -1284,8 +1282,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null): bool
 	{
@@ -1301,8 +1299,8 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null): bool
 	{

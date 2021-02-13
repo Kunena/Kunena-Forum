@@ -70,6 +70,7 @@ class KunenaSession extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $allreadtime;
+
 	private $userid;
 
 	/**
@@ -340,7 +341,7 @@ class KunenaSession extends CMSObject
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months
-		$monthsAgo   = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
+		$monthsAgo = Factory::getDate()->toUnix() - 91 * 24 * 60 * 60;
 
 		return $this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo;
 	}

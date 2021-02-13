@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Forum;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -31,6 +30,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaForumStatistics
@@ -172,6 +172,12 @@ class KunenaStatistics
 	public $showPopThankYouStats = false;
 
 	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	public $showStats = true;
+
+	/**
 	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
@@ -182,12 +188,6 @@ class KunenaStatistics
 	 * @since   Kunena 6.0
 	 */
 	protected $_config = null;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	public $showStats = true;
 
 	/**
 	 * @since   Kunena 6.0
@@ -225,7 +225,7 @@ class KunenaStatistics
 	}
 
 	/**
-	 * @return  int
+	 * @return  integer
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -261,8 +261,8 @@ class KunenaStatistics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function loadAll($force = false): void
 	{
@@ -429,8 +429,8 @@ class KunenaStatistics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loadTopicStats($override = false): void
 	{
@@ -462,8 +462,8 @@ class KunenaStatistics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function loadTopTopics($limit = 0): array
 	{
@@ -504,8 +504,8 @@ class KunenaStatistics
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function loadTopPolls($limit = 0): array
 	{

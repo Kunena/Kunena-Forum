@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use SimpleXMLElement;
 use function defined;
 
@@ -37,11 +38,13 @@ class KunenaBBCodeEditor
 	 * @since   Kunena 6.0
 	 */
 	public $editor_elements = [];
+
 	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
+	 * @var KunenaTemplate
 	 * @since version
 	 */
 	private $template;
+
 	/**
 	 * @var array
 	 * @since version
@@ -496,8 +499,8 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
 					}
 					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_SUB'))
 					{
-						$selection[] = "name: Joomla.JText._('COM_KUNENA_EDITOR_SUB')";
-						$action['key']  = '';
+						$selection[]   = "name: Joomla.JText._('COM_KUNENA_EDITOR_SUB')";
+						$action['key'] = '';
 					}
 					elseif ($action['name'] == Text::_('COM_KUNENA_EDITOR_ULIST'))
 					{

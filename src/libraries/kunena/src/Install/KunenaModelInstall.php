@@ -13,9 +13,7 @@ namespace Kunena\Forum\Libraries\Install;
 
 defined('_JEXEC') or die();
 
-use \Exception;
-use \stdClass;
-use const KPATH_ADMIN;
+use Exception;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\CacheController;
@@ -32,6 +30,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -45,6 +44,8 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use stdClass;
+use const KPATH_ADMIN;
 
 /**
  *
@@ -117,22 +118,27 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @since   Kunena 6.0
 	 */
 	protected $_versionarray = null;
+
 	private $tables;
+
 	/**
-	 * @var \Joomla\Database\DatabaseDriver|null
+	 * @var DatabaseDriver|null
 	 * @since version
 	 */
 	private $db;
+
 	/**
 	 * @var array
 	 * @since version
 	 */
 	private $_sbVersions;
+
 	/**
 	 * @var array
 	 * @since version
 	 */
 	private $_fbVersions;
+
 	/**
 	 * @var \null[][]
 	 * @since version
@@ -1020,10 +1026,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 	/**
 	 * @param   string  $prefix  prefix
 	 *
+	 * @return void
 	 * @since   Kunena 6.0
 	 *
 	 * @throws KunenaInstallerException
-	 * @return void
 	 */
 	public function deleteTables(string $prefix): void
 	{
@@ -3024,8 +3030,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 	public function createMenu(): void
 	{
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-		$menu    = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
-					'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0], ];
+		$menu = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
+				 'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0], ];
 
 		$this->buildMenu($menu);
 		KunenaMenuHelper::cleanCache();
@@ -3053,7 +3059,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$languages = LanguageHelper::getInstalledLanguages(1, true);
 
 		// First fix all broken menu items
-		$db = Factory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->update($db->quoteName('#__menu'))
 			->set($db->quoteName('component_id') . ' = ' . $component_id)
@@ -3113,7 +3119,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			'link'         => $menu ['link'],
 			'type'         => 'component',
 			'published'    => 1,
-			'parentid'    => 1,
+			'parentid'     => 1,
 			'component_id' => $component_id,
 			'access'       => $menu ['access'],
 			'params'       => (string) $params,
@@ -3176,7 +3182,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 					'link'         => $menuitem ['link'],
 					'type'         => 'component',
 					'published'    => 1,
-					'parentid'    => $parent->id,
+					'parentid'     => $parent->id,
 					'component_id' => $component_id,
 					'access'       => $menuitem ['access'],
 					'params'       => (string) $params,
@@ -3226,7 +3232,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 				'link'         => 'index.php?Itemid=' . $parent->id,
 				'type'         => 'alias',
 				'published'    => 0,
-				'parentid'    => 1,
+				'parentid'     => 1,
 				'component_id' => 0,
 				'access'       => 1,
 				'params'       => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',

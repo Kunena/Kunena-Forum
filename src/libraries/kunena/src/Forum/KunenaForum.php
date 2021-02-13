@@ -139,17 +139,17 @@ abstract class KunenaForum
 	 * }
 	 * </code>
 	 *
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
+	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
 	 * @return  boolean True if online.
 	 *
-	 * @throws  Exception
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @since   Kunena 6.0
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
-	 *
+	 * @throws  Exception
 	 */
 	public static function enabled($checkAdmin = true): bool
 	{
@@ -183,12 +183,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @return  boolean True if Kunena has been fully installed.
-	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
 	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::enabled()
+	 * @return  boolean True if Kunena has been fully installed.
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function installed(): bool
@@ -238,15 +238,15 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 2.0.0-BETA2
+	 *
+	 * @throws  Exception
 	 */
 	public static function setup(): void
 	{
@@ -350,9 +350,9 @@ abstract class KunenaForum
 
 			if (file_exists($file))
 			{
-				$manifest            = simplexml_load_file($file);
-				self::$version       = (string) $manifest->version . '-GIT';
-				self::$version_date  = (string) $manifest->creationDate;
+				$manifest           = simplexml_load_file($file);
+				self::$version      = (string) $manifest->version . '-GIT';
+				self::$version_date = (string) $manifest->creationDate;
 			}
 			else
 			{
@@ -362,14 +362,14 @@ abstract class KunenaForum
 				$query->setLimit(1);
 				$db->setQuery($query);
 
-				self::$version       = $db->loadResult();
-				self::$version_date  = Factory::getDate()->format('Y-m-d');
+				self::$version      = $db->loadResult();
+				self::$version_date = Factory::getDate()->format('Y-m-d');
 			}
 		}
 		else
 		{
-			self::$version = strtoupper('@kunenaversion@');
-			self::$version_date  = strtoupper('@kunenaversiondate@');
+			self::$version      = strtoupper('@kunenaversion@');
+			self::$version_date = strtoupper('@kunenaversiondate@');
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);

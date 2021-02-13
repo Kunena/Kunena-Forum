@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -39,8 +38,9 @@ abstract class KunenaRateHelper
 	 *
 	 * @internal  param The $identifier rate object to load - Can be only an integer.
 	 *
-	 * @param   null  $identifier  identifier
 	 * @param   bool  $reload      reload
+	 *
+	 * @param   null  $identifier  identifier
 	 *
 	 * @return  KunenaRate The rate object.
 	 *

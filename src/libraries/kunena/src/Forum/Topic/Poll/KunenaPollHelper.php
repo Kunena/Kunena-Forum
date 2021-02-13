@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**

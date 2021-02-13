@@ -15,18 +15,17 @@ namespace Kunena\Forum\Libraries\KunenaPrivate;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Table\KunenaTableMap;
+use function defined;
 
 /**
  * Private message.
  *
- * @since   Kunena 6.0
  * @property int      $parentid
  * @property int      $author_id
  * @property int      $created_at
@@ -36,6 +35,7 @@ use Kunena\Forum\Libraries\Table\KunenaTableMap;
  * @property Registry $params
  *
  * @property int      $id
+ * @since   Kunena 6.0
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
 {

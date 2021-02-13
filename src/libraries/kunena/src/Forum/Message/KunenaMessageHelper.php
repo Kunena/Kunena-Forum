@@ -19,11 +19,9 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 use function defined;
@@ -55,8 +53,8 @@ abstract class KunenaMessageHelper
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getMessages($ids = false, $authorise = 'read'): array
 	{
@@ -269,8 +267,8 @@ abstract class KunenaMessageHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = []): array
 	{
@@ -281,7 +279,7 @@ abstract class KunenaMessageHelper
 		$user        = isset($params['user']) ? $params['user'] : false;
 		$where       = isset($params['where']) ? (string) $params['where'] : '';
 		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
-		$view = Factory::getApplication()->input->getCmd('view');
+		$view        = Factory::getApplication()->input->getCmd('view');
 
 		if ($limit < 1 && empty($params['nolimit']))
 		{

@@ -20,7 +20,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
@@ -85,8 +84,8 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getUrl($layout = null, $xhtml = true): bool
 	{

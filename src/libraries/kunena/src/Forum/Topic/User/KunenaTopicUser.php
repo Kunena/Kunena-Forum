@@ -26,14 +26,12 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Table\KunenaTableObject;
 use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicUser
  *
- * @since   Kunena 6.0
  * @property int    $user_id
  * @property int    $topic_id
  * @property int    $categoryId
@@ -44,6 +42,7 @@ use function defined;
  * @property int    $subscribed
  * @property string $params
  *
+ * @since   Kunena 6.0
  */
 class KunenaTopicUser extends CMSObject
 {
@@ -62,8 +61,9 @@ class KunenaTopicUser extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   mixed  $topic  topic
 	 * @param   mixed  $user   user
+	 *
+	 * @param   mixed  $topic  topic
 	 *
 	 * @since   Kunena 6.0
 	 *

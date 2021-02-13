@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -37,7 +36,6 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -47,21 +45,19 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
+use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
  *
- * @since   Kunena 6.0
  * @property int    $parent
  * @property int    $thread
  * @property int    $catid
@@ -82,6 +78,7 @@ use StdClass;
  * @property string $modified_reason
  * @property string $params
  * @property string $message
+ * @since   Kunena 6.0
  */
 class KunenaMessage extends KunenaDatabaseObject
 {
@@ -341,8 +338,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getUrl($category = null, $xhtml = true): bool
 	{
@@ -356,8 +353,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getUri($category = null)
 	{
@@ -452,8 +449,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function sendNotification($url = null): bool
 	{
@@ -497,14 +494,14 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($this->hold == 1)
 		{
-			$mailsubs   = 0;
-			$mailModeratorss   = $config->mailModerators >= 0;
+			$mailsubs            = 0;
+			$mailModeratorss     = $config->mailModerators >= 0;
 			$mailAdministratorss = $config->mailAdministrators >= 0;
 		}
 		else
 		{
-			$mailsubs   = (bool) $config->allowSubscriptions;
-			$mailModeratorss   = $config->mailModerators >= 1;
+			$mailsubs            = (bool) $config->allowSubscriptions;
+			$mailModeratorss     = $config->mailModerators >= 1;
 			$mailAdministratorss = $config->mailAdministrators >= 1;
 		}
 
@@ -698,8 +695,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getPermaUrl($category = null, $xhtml = true): bool
 	{
@@ -749,8 +746,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function publish($value = KunenaForum::PUBLISHED)
 	{
@@ -771,8 +768,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function save(): bool
 	{
@@ -974,8 +971,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{
@@ -1043,8 +1040,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getAttachments($ids = false, $action = 'read'): array
 	{
@@ -1459,8 +1456,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function addAttachments(array $ids): void
 	{
@@ -1558,8 +1555,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function check(): bool
 	{

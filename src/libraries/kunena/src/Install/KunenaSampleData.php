@@ -41,10 +41,10 @@ class KunenaSampleData
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-		$db        = Factory::getDBO();
-		$posttime  = new Date;
-		$my        = Factory::getApplication()->getIdentity();
-		$queries   = [];
+		$db       = Factory::getDBO();
+		$posttime = new Date;
+		$my       = Factory::getApplication()->getIdentity();
+		$queries  = [];
 
 		$query = "INSERT INTO `#__kunena_ranks`
 		(`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`) VALUES

@@ -14,7 +14,6 @@ namespace Kunena\Forum\Libraries\Factory;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
@@ -27,6 +26,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaAdminTemplate;
+use function defined;
 
 /**
  * Class KunenaFactory

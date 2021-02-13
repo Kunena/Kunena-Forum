@@ -8,6 +8,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
 namespace Kunena\Forum\Libraries\Version;
 
 defined('_JEXEC') or die();
@@ -25,6 +26,46 @@ use stdClass;
  */
 class KunenaVersion
 {
+	/**
+	 * Retrieve installed Kunena version, copyright and license as string.
+	 *
+	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
+	 *                License: GNU General Public License"
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function getLongVersionHTML(): string
+	{
+		return self::getVersionHTML() . ' | ' . self::getCopyrightHTML();
+	}
+
+	/**
+	 * Retrieve installed Kunena version as string.
+	 *
+	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function getVersionHTML(): string
+	{
+		return 'Kunena ' . strtoupper(KunenaForum::version()) . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
+	}
+
+	/**
+	 * Retrieve copyright information as string.
+	 *
+	 * @return  string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function getCopyrightHTML(): string
+	{
+		return ': &copy; 2008 - 2020 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
+			. Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
+			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
+			. Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
+	}
+
 	/**
 	 * Get warning for unstable releases
 	 *
@@ -140,46 +181,6 @@ class KunenaVersion
 		}
 
 		return $version;
-	}
-
-	/**
-	 * Retrieve installed Kunena version as string.
-	 *
-	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function getVersionHTML(): string
-	{
-		return 'Kunena ' . strtoupper(KunenaForum::version()) . ' | ' . KunenaForum::versionDate() . ' [ ' . KunenaForum::versionName() . ' ]';
-	}
-
-	/**
-	 * Retrieve copyright information as string.
-	 *
-	 * @return  string "© 2008 - 2020 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function getCopyrightHTML(): string
-	{
-		return ': &copy; 2008 - 2020 ' . Text::_('COM_KUNENA_VERSION_COPYRIGHT') . ': <a href = "https://www.kunena.org/team" target = "_blank">'
-			. Text::_('COM_KUNENA_VERSION_TEAM') . '</a>  | ' . Text::_('COM_KUNENA_VERSION_LICENSE')
-			. ': <a href = "https://www.gnu.org/copyleft/gpl.html" target = "_blank">'
-			. Text::_('COM_KUNENA_VERSION_GPL') . '</a>';
-	}
-
-	/**
-	 * Retrieve installed Kunena version, copyright and license as string.
-	 *
-	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2020 Copyright: Kunena Team. All rights reserved. |
-	 *                License: GNU General Public License"
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function getLongVersionHTML(): string
-	{
-		return self::getVersionHTML() . ' | ' . self::getCopyrightHTML();
 	}
 }
 

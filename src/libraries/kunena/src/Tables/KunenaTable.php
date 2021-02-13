@@ -250,8 +250,8 @@ abstract class KunenaTable extends Table
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  RuntimeException
+	 * @throws  Exception
 	 */
 	public function updateObject($nulls = false): bool
 	{
@@ -342,8 +342,8 @@ abstract class KunenaTable extends Table
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  RuntimeException
+	 * @throws  Exception
 	 */
 	protected function insertObject(): bool
 	{

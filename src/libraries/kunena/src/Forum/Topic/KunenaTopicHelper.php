@@ -18,12 +18,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -158,8 +156,8 @@ abstract class KunenaTopicHelper
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getTopics($ids = false, $authorise = 'read'): array
 	{
@@ -286,8 +284,8 @@ abstract class KunenaTopicHelper
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = []): array
 	{

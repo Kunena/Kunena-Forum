@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Template;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -38,6 +37,7 @@ use Leafo\ScssPhp\Compiler;
 use lessc;
 use SimpleXMLElement;
 use StdClass;
+use function defined;
 
 /**
  * Kunena Users Table Class
@@ -1396,9 +1396,9 @@ HTML;
 	 */
 	public function getTopicIcon(KunenaTopic $topic): string
 	{
-		$config           = KunenaFactory::getConfig();
-		$ktemplate        = KunenaFactory::getTemplate();
-		$topicicontype    = $ktemplate->params->get('topicicontype');
+		$config          = KunenaFactory::getConfig();
+		$ktemplate       = KunenaFactory::getTemplate();
+		$topicicontype   = $ktemplate->params->get('topicicontype');
 		$categoryIconset = $topic->getCategory()->iconset;
 
 		if ($config->topicIcons)
@@ -1792,8 +1792,8 @@ HTML;
 	}
 
 	/**
-	 * @param   string  $filename          filename
-	 * @param   bool    $url               url
+	 * @param   string  $filename         filename
+	 * @param   bool    $url              url
 	 * @param   mixed   $categoryIconset  category
 	 *
 	 * @return  string
@@ -1806,7 +1806,7 @@ HTML;
 	{
 		if (!$this->isHmvc())
 		{
-			$set              = '';
+			$set             = '';
 			$categoryIconset = 'default';
 		}
 

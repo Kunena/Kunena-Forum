@@ -166,6 +166,11 @@ class KunenaProfilerItem
 	 */
 	public $start = [];
 	/**
+	 * @var string
+	 * @since version
+	 */
+	public $name;
+	/**
 	 * @var float
 	 * @since version
 	 */
@@ -180,11 +185,6 @@ class KunenaProfilerItem
 	 * @since version
 	 */
 	private $calls;
-	/**
-	 * @var string
-	 * @since version
-	 */
-	public $name;
 
 	/**
 	 * @param   string  $name  name

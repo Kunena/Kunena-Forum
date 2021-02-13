@@ -86,6 +86,12 @@ class KunenaView extends HtmlView
 	public $teaser = null;
 
 	/**
+	 * @var string
+	 * @since version
+	 */
+	public $common;
+
+	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
@@ -104,12 +110,16 @@ class KunenaView extends HtmlView
 	protected $ktemplate;
 
 	/**
+	 * @var string
+	 * @since version
+	 */
+	protected $state;
+
+	/**
 	 * @var KunenaProfiler
 	 * @since version
 	 */
 	private $profiler;
-	protected $state;
-	public $common;
 
 	/**
 	 * @param   array  $config  config
@@ -120,7 +130,7 @@ class KunenaView extends HtmlView
 	 */
 	public function __construct($config = [])
 	{
-		$name           = isset($config['name']) ? $config['name'] : $this->getName();
+		$name           = $config['name'] ?? $this->getName();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->document->setBase('');
 		$this->profiler  = KunenaProfiler::instance('Kunena');
@@ -475,8 +485,8 @@ class KunenaView extends HtmlView
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 * @throws LogicException
+	 * @throws Exception
 	 */
 	public function render(string $layout, string $tpl, array $hmvcParams = []): void
 	{

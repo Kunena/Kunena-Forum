@@ -18,9 +18,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -60,7 +58,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  KunenaTopicUser
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public static function get($topic = null, $user = null, $reload = false): KunenaTopicUser
@@ -94,7 +91,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  KunenaTopicUser[]
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public static function getTopics($ids = false, $user = null)
@@ -143,7 +139,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	protected static function loadTopics(array $ids, KunenaUser $user): void
@@ -213,7 +208,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  array List of [topic][userid] = value.
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public static function getUserIds(array $topics, $value = 'user_id'): array
@@ -275,7 +269,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 */
 	public static function move(KunenaTopic $old, KunenaTopic $new): bool
@@ -326,7 +319,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 */
 	public static function merge(KunenaTopic $old, KunenaTopic $new): bool
@@ -382,7 +374,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 */
 	protected static function reloadTopic(int $id): void
@@ -448,7 +439,6 @@ abstract class KunenaTopicUserHelper
 	 * @return  boolean|integer
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)

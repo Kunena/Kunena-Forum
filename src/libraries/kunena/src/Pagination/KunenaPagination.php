@@ -5,8 +5,8 @@
  * @package         Kunena.Framework
  * @subpackage      Pagination
  *
- * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright       Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -807,7 +807,7 @@ class KunenaPagination
 			}
 
 			return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
-					. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
+				. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
 		}
 
 		return "<a title=\"" . $item->text . "\" href=\"" . $item->link . "\" class=\"pagenav\">" . $item->text . "</a>";

@@ -17,7 +17,6 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
-use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use function defined;
 
 defined('_JEXEC') or die();

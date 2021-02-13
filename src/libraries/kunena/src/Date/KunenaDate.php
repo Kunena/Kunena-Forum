@@ -63,7 +63,6 @@ class KunenaDate extends Date
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = ''): string
@@ -78,7 +77,6 @@ class KunenaDate extends Date
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false): string

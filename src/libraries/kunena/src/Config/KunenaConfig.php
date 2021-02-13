@@ -4,8 +4,8 @@
  *
  * @package        Kunena.Framework
  *
- * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  *
@@ -30,7 +30,6 @@ use function defined;
 /**
  * Class KunenaConfig
  *
- * @since   Kunena 6.0
  * @property int     $id
  * @property string  $boardTitle
  * @property string  $email
@@ -254,6 +253,7 @@ use function defined;
  * @property boolean $disableRe
  * @property boolean $utmSource
  *
+ * @since   Kunena 6.0
  */
 class KunenaConfig extends CMSObject
 {
@@ -1594,6 +1594,7 @@ class KunenaConfig extends CMSObject
 	 * @since  Kunena 6.0
 	 */
 	public $emailHeadersizex = 560;
+
 	private $moderator_id;
 
 	/**
@@ -1710,9 +1711,9 @@ class KunenaConfig extends CMSObject
 		// Add anything that requires validation
 
 		// Need to have at least one per page of these
-		$this->messagesPerPage        = max($this->messagesPerPage, 1);
+		$this->messagesPerPage       = max($this->messagesPerPage, 1);
 		$this->messagesPerPageSearch = max($this->messagesPerPageSearch, 1);
-		$this->threadsPerPage         = max($this->threadsPerPage, 1);
+		$this->threadsPerPage        = max($this->threadsPerPage, 1);
 	}
 
 	/**

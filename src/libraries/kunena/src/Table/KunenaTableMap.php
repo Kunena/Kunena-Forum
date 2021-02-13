@@ -14,13 +14,13 @@ namespace Kunena\Forum\Libraries\Table;
 
 defined('_JEXEC') or die();
 
-use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
 use RuntimeException;
 use UnexpectedValueException;
+use function defined;
 
 /**
  * Class KunenaTableMap

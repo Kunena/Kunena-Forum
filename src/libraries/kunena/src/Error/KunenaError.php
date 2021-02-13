@@ -14,7 +14,6 @@ namespace Kunena\Forum\Libraries\Error;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -23,6 +22,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use StdClass;
+use function defined;
 
 /**
  * Class KunenaError

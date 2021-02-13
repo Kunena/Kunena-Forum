@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -34,7 +33,6 @@ use function defined;
 /**
  * Class KunenaForumAnnouncement
  *
- * @since   Kunena 6.0
  * @property int    $id
  * @property string $title
  * @property int    $created_by
@@ -46,6 +44,7 @@ use function defined;
  * @property int    $publish_down
  * @property int    $ordering
  * @property int    $showdate
+ * @since   Kunena 6.0
  */
 class KunenaAnnouncement extends KunenaDatabaseObject
 {
@@ -141,8 +140,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getUrl($layout = 'default', $xhtml = true): bool
 	{
@@ -187,8 +186,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getTaskUrl($task = null, $xhtml = true): bool
 	{

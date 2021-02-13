@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\Tables\TableKunenaRate;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use RuntimeException;
 use function defined;
 

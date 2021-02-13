@@ -153,7 +153,7 @@ class KunenaTree implements Iterator
 				{
 					if (isset($this->_instances [$id]))
 					{
-						$level                                                         = isset($this->_levels [$parent]) ? $this->_levels [$parent] + 1 : 0;
+						$level               = isset($this->_levels [$parent]) ? $this->_levels [$parent] + 1 : 0;
 						$this->_levels [$id] = $this->_instances[$id]->{$this->_level} = $level;
 					}
 				}
@@ -264,7 +264,7 @@ class KunenaTree implements Iterator
 	}
 
 	/**
-	 * @param   int    $parentid   parent id
+	 * @param   int    $parentid    parent id
 	 * @param   array  $itemIndent  item indent
 	 * @param   bool   $gap         gap
 	 *

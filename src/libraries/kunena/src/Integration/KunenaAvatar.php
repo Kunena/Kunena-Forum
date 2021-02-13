@@ -108,8 +108,8 @@ class KunenaAvatar
 	/**
 	 * @return  string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function getEditURL(): string
 	{

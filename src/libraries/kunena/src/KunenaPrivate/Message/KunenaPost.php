@@ -20,10 +20,10 @@ use function defined;
 /**
  * Private message mapping to forum message.
  *
- * @since   Kunena 6.0
- *
  * @property int $message_id
  * @property int $private_id
+ * @since   Kunena 6.0
+ *
  */
 class KunenaPost extends KunenaDatabaseObject
 {

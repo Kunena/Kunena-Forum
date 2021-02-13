@@ -33,7 +33,6 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\User\Ban
  *
- * @since   Kunena 6.0
  * @property    integer $created_time
  * @property    integer $created_by
  * @property    integer $modified_by
@@ -48,6 +47,7 @@ use function defined;
  * @property    string  $comment
  * @property    integer $expiration
  *
+ * @since   Kunena 6.0
  */
 class KunenaBan extends parentAlias
 {
@@ -118,6 +118,7 @@ class KunenaBan extends parentAlias
 	 * @since version
 	 */
 	private $identifier;
+
 	/**
 	 * @var array|mixed
 	 * @since version

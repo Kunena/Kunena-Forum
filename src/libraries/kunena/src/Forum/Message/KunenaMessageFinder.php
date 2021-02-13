@@ -21,7 +21,6 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -229,8 +228,8 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function find($access = 'read'): array
 	{

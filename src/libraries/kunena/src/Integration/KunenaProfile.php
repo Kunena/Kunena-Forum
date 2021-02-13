@@ -15,12 +15,12 @@ namespace Kunena\Forum\Libraries\Integration;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use function defined;
 
 /**
  * Class KunenaProfile
@@ -153,7 +153,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int    $view    view
+	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
 	 * @return  void

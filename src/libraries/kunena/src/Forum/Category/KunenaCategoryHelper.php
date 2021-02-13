@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
@@ -242,7 +241,7 @@ abstract class KunenaCategoryHelper
 
 			if (!isset(self::$_tree [(int) $instance->id]))
 			{
-				self::$_tree [$instance->id]                       = [];
+				self::$_tree [$instance->id]                      = [];
 				self::$_tree [$instance->parentid][$instance->id] = &self::$_tree [$instance->id];
 			}
 		}
@@ -507,8 +506,8 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 * @throws  null
+	 * @throws  Exception
 	 */
 	public static function getNewTopics($catids): void
 	{
@@ -1045,7 +1044,7 @@ abstract class KunenaCategoryHelper
 	 * Check in existing categories if the alias is already taken.
 	 *
 	 * @param   mixed  $categoryId  category
-	 * @param   mixed  $alias        alias
+	 * @param   mixed  $alias       alias
 	 *
 	 * @return  boolean|void
 	 *

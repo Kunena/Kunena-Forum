@@ -22,7 +22,6 @@ use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -30,14 +29,14 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
  *
- * @since   Kunena 6.0
- *
  * @property int    $role
  * @property string $allreadtime
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
  * @property int    $categoryId
+ * @since   Kunena 6.0
+ *
  */
 class KunenaCategoryUser extends CMSObject
 {
@@ -56,8 +55,9 @@ class KunenaCategoryUser extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   int    $category  category
 	 * @param   mixed  $user      user
+	 *
+	 * @param   int    $category  category
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -209,7 +209,7 @@ class KunenaCategoryUser extends CMSObject
 	 * Method to load a \Kunena\Forum\Libraries\Forum\Category\CategoryUser object by id.
 	 *
 	 * @param   null|int  $categoryId  The category id to be loaded.
-	 * @param   mixed     $user         The user to be loaded.
+	 * @param   mixed     $user        The user to be loaded.
 	 *
 	 * @return  boolean
 	 *

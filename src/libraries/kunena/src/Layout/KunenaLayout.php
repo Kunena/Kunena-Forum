@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Layout;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -28,6 +27,8 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RunTimeException;
+use stdClass;
+use function defined;
 
 /**
  * implements \Kunena specific functions for all layouts.
@@ -52,56 +53,67 @@ class KunenaLayout extends KunenaBase
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy;
+
 	/**
 	 * @var false|mixed|string|void
 	 * @since version
 	 */
 	private $personalText;
+
 	/**
 	 * @var mixed|void|null
 	 * @since version
 	 */
 	private $usermedals;
+
 	/**
 	 * @var mixed|void|null
 	 * @since version
 	 */
 	private $userpoints;
+
 	/**
-	 * @var int|mixed|void|null
+	 * @var integer|mixed|void|null
 	 * @since version
 	 */
 	private $userthankyou;
+
 	/**
-	 * @var int|mixed|void|null
+	 * @var integer|mixed|void|null
 	 * @since version
 	 */
 	private $userposts;
+
 	/**
-	 * @var false|mixed|\stdClass|string|void|null
+	 * @var false|mixed|stdClass|string|void|null
 	 * @since version
 	 */
 	private $userranktitle;
+
 	/**
-	 * @var false|mixed|\stdClass|string|void|null
+	 * @var false|mixed|stdClass|string|void|null
 	 * @since version
 	 */
 	private $userrankimage;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	private $userkarma;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	private $userkarma_plus;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	private $userkarma_minus;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
@@ -180,8 +192,8 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 * @throws null
+	 * @throws Exception
 	 */
 	public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
 	{

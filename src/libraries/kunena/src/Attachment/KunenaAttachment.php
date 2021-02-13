@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use Exception;
 use finfo;
-use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
@@ -30,7 +29,6 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Image\KunenaImage;
@@ -41,11 +39,11 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
+use function defined;
 
 /**
  * Class KunenaAttachment
  *
- * @since   Kunena 4.0
  * @property int    $id
  * @property int    $userid
  * @property int    $mesid
@@ -63,6 +61,7 @@ use RuntimeException;
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
  * @property string $setLayout
+ * @since   Kunena 4.0
  */
 class KunenaAttachment extends KunenaDatabaseObject
 {
@@ -240,6 +239,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
+	public $setLayout = 'default';
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
 	protected $_table = 'KunenaAttachments';
 
 	/**
@@ -254,12 +259,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	protected $shortname;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $setLayout = 'default';
-	
 	/**
 	 * @param   mixed  $identifier  identifier
 	 * @param   bool   $reload      reload

@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Exception;
 use Kunena\Forum\Libraries\Collection\KunenaCollection;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use RuntimeException;
 use function defined;
 

@@ -15,13 +15,12 @@ namespace Kunena\Forum\Libraries\Form\Fields;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Form\FormField;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**

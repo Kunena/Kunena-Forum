@@ -20,10 +20,8 @@ use Joomla\CMS\User\User;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
@@ -346,8 +344,8 @@ class KunenaTopicFinder extends KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function find($access = 'read'): array
 	{

@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\BBCode;
 defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
 use GeSHi;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
@@ -36,19 +35,19 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
 use Nbbc\BBCodeLibrary;
 use stdClass;
+use function defined;
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
 /**
- * @see  Nbbc\BBCode;
+ * @see     Nbbc\BBCode;
  * Class KunenaBbcode
  *
  * @since   6.0
@@ -141,6 +140,83 @@ class KunenaBBCode extends BBCode
 
 		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   bool  $enable
+	 *
+	 * @return void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function SetEnableSmileys($enable = false)
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetSmileyDir()
+	 *
+	 * @param $JPATH_ROOT
+	 *
+	 * @return  void
+	 * @since   Kunena 6.0
+	 */
+	public function SetSmileyDir($JPATH_ROOT)
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetSmileyURL()
+	 *
+	 * @param   string  $param  string params
+	 *
+	 * @return void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function SetSmileyURL(string $param): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   bool  $true  bool
+	 *
+	 * @return void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function SetDetectURLs(bool $true): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   mixed  $url_pattern  mixed
+	 *
+	 * @return void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function SetURLPattern($url_pattern): void
+	{
+	}
+
+	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   string  $string  string
+	 *
+	 * @return void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function SetURLTarget(string $string): void
+	{
 	}
 
 	/**
@@ -382,6 +458,19 @@ class KunenaBBCode extends BBCode
 	}
 
 	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @param   string  $email  email
+	 *
+	 * @return  string|void
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function IsValidEmail(string $email): string
+	{
+	}
+
+	/**
 	 * @param   mixed  $params  params
 	 *
 	 * @return  boolean
@@ -534,9 +623,10 @@ class KunenaBBCode extends BBCode
 	 * @see     BBCode::IsValidURL()
 	 * Regular expression taken from https://gist.github.com/729294
 	 *
-	 * @param   string  $string     string
 	 * @param   bool    $email_too  email
 	 * @param   bool    $local_too  local
+	 *
+	 * @param   string  $string     string
 	 *
 	 * @return  boolean
 	 *
@@ -570,100 +660,11 @@ class KunenaBBCode extends BBCode
 	}
 
 	/**
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @param   bool  $enable
-	 *
-	 * @return void
-	 * @since   Kunena 6.0
-	 *
-	 */
-	public function SetEnableSmileys($enable = false)
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetSmileyDir()
-	 *
-	 * @param $JPATH_ROOT
-	 *
-	 * @return  void
-	 * @since   Kunena 6.0
-	 */
-	public function SetSmileyDir($JPATH_ROOT)
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetSmileyURL()
-	 *
-	 * @param   string  $param  string params
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @return void
-	 */
-	public function SetSmileyURL(string $param): void
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @param   bool  $true  bool
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @return void
-	 */
-	public function SetDetectURLs(bool $true): void
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @param   mixed $url_pattern  mixed
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @return void
-	 */
-	public function SetURLPattern($url_pattern): void
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @param   string  $string  string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @return void
-	 */
-	public function SetURLTarget(string $string): void
-	{
-	}
-
-	/**
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @param   string  $email  email
-	 *
-	 * @return  string|void
-	 * @since   Kunena 6.0
-	 *
-	 */
-	public function IsValidEmail(string $email): string
-	{
-	}
-
-	/**
 	 * @see     BBCode::FillTemplate()
 	 *
-	 * @param   array      $url_pattern  url pattern
 	 * @param   bool|null  $params       params
+	 *
+	 * @param   array      $url_pattern  url pattern
 	 *
 	 * @return  string|void
 	 * @since   Kunena 6.0
@@ -2733,15 +2734,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 	/**
 	 * @param   KunenaAttachment  $attachment    attachment
-	 * @param   object      $bbcode        bbcode
-	 * @param   bool        $displayImage  display image
+	 * @param   object            $bbcode        bbcode
+	 * @param   bool              $displayImage  display image
 	 *
 	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws null
 	 * @throws Exception
+	 * @throws null
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true): string
 	{

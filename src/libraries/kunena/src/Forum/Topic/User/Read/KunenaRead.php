@@ -19,10 +19,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
-use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -30,12 +28,12 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
  *
- * @since   Kunena
  * @property int $topic_id
  * @property int $categoryId
  * @property int $message_id
  * @property int $time
  * @property int $user_id
+ * @since   Kunena
  */
 class KunenaRead extends CMSObject
 {
@@ -54,8 +52,9 @@ class KunenaRead extends CMSObject
 	/**
 	 * @internal
 	 *
-	 * @param   mixed  $topic  topic
 	 * @param   mixed  $user   user
+	 *
+	 * @param   mixed  $topic  topic
 	 *
 	 * @since   Kunena 6.0
 	 *

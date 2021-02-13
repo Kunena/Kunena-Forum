@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use function defined;
 

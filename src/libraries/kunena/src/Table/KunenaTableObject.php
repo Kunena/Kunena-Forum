@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Table;
 defined('_JEXEC') or die();
 
 use Closure;
-use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
@@ -24,6 +23,7 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use RuntimeException;
 use UnexpectedValueException;
+use function defined;
 
 /**
  * Abstract Table Object class
@@ -87,7 +87,9 @@ abstract class KunenaTableObject
 	 * @since   Kunena 4.0
 	 */
 	protected static $_locked = false;
+
 	private static $tbl_key;
+
 	private static $locked;
 
 	/**
@@ -657,7 +659,7 @@ abstract class KunenaTableObject
 	 */
 	public static function getQuery()
 	{
-		$db    = static::$db;
+		$db = static::$db;
 
 		return $db->getQuery(true)
 			->select($db->quoteName('a.*'))

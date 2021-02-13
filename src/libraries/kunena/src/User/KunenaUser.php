@@ -5,8 +5,8 @@
  * @package         Kunena.Framework
  * @subpackage      User
  *
- * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @link            https://www.kunena.org
  **/
 
@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 
 use DateTimeZone;
 use Exception;
-use function defined;
 use InvalidArgumentException;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
@@ -46,11 +45,11 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use stdClass;
+use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
  *
- * @since   Kunena 6.0
  * @property    int    $id
  * @property    int    $userid
  * @property    int    $status
@@ -115,6 +114,7 @@ use stdClass;
  * @property    string $pinterest
  * @property    string $reddit
  * @property    int    $timestamp
+ * @since   Kunena 6.0
  */
 class KunenaUser extends CMSObject
 {
@@ -123,66 +123,6 @@ class KunenaUser extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected static $_ranks = null;
-
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $_allowed = null;
-
-	/**
-	 * @var     array
-	 * @since   Kunena 6.0
-	 */
-	protected $_link = [];
-
-	/**
-	 * @var     mixed
-	 * @since   Kunena 6.0
-	 */
-	protected $_time;
-
-	/**
-	 * @var     mixed
-	 * @since   Kunena 6.0
-	 */
-	protected $_pm;
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_email;
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_website;
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_personalText;
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_signature;
-
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_exists = false;
-
-	/**
-	 * @var     DatabaseDriver|null
-	 * @since   Kunena 6.0
-	 */
-	protected $_db = null;
 
 	/**
 	 * @var     string
@@ -567,11 +507,73 @@ class KunenaUser extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	public $timestamp;
+
+	/**
+	 * @var     null
+	 * @since   Kunena 6.0
+	 */
+	protected $_allowed = null;
+
+	/**
+	 * @var     array
+	 * @since   Kunena 6.0
+	 */
+	protected $_link = [];
+
+	/**
+	 * @var     mixed
+	 * @since   Kunena 6.0
+	 */
+	protected $_time;
+
+	/**
+	 * @var     mixed
+	 * @since   Kunena 6.0
+	 */
+	protected $_pm;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $_email;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $_website;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $_personalText;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $_signature;
+
+	/**
+	 * @var     boolean
+	 * @since   Kunena 6.0
+	 */
+	protected $_exists = false;
+
+	/**
+	 * @var     DatabaseDriver|null
+	 * @since   Kunena 6.0
+	 */
+	protected $_db = null;
+
 	/**
 	 * @var KunenaConfig
 	 * @since version
 	 */
 	private $_config;
+
 	/**
 	 * @var \Joomla\CMS\Application\CMSApplicationInterface|null
 	 * @since version
@@ -823,8 +825,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function isAdmin(KunenaCategory $category = null): bool
 	{
@@ -840,8 +842,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function isModerator(KunenaCategory $category = null): bool
 	{
@@ -1114,12 +1116,14 @@ class KunenaUser extends CMSObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @internal param int $catid Category id or 0 for global.
 	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
+	 *
+	 * @internal param int $catid Category id or 0 for global.
+	 *
+	 * @param   string  $class  class
 	 *
 	 * @param   string  $name   name
 	 * @param   string  $title  title
-	 * @param   string  $class  class
 	 *
 	 * @return  string
 	 *
@@ -1830,7 +1834,7 @@ class KunenaUser extends CMSObject
 		else
 		{
 			// Generate user rank.
-			$rank               = new stdClass;
+			$rank              = new stdClass;
 			$rank->rankId      = 0;
 			$rank->rankTitle   = Text::_('COM_KUNENA_RANK_USER');
 			$rank->rankMin     = 0;

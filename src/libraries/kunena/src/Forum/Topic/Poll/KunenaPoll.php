@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Tables\KunenaTable;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 use function defined;
@@ -35,12 +34,12 @@ use function defined;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
  *
- * @since   Kunena 6.0
- *
  * @property int    $threadid
  * @property string $polltimetolive
  * @property int    $id
  * @property string $title
+ * @since   Kunena 6.0
+ *
  */
 class KunenaPoll extends CMSObject
 {

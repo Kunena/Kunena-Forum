@@ -24,18 +24,17 @@ use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\MessageThankyou
  *
- * @since   Kunena 6.0
  * @property int    $targetuserid
  * @property string $time
  * @property int    $postid
  *
  * @property int    $userid
+ * @since   Kunena 6.0
  */
 class KunenaMessageThankyou extends CMSObject
 {

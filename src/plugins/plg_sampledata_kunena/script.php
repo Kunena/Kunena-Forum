@@ -12,7 +12,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
-use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\Exception\ExecutionFailureException;
 
@@ -63,13 +62,6 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
 	protected $app;
 
 	/**
-	 * @var  string  During an update, it will be populated with the old release version
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private $oldRelease;
-
-	/**
 	 * Database object
 	 *
 	 * @var    JDatabaseDriver
@@ -77,6 +69,13 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
 	 * @since   4.0.0
 	 */
 	protected $db;
+
+	/**
+	 * @var  string  During an update, it will be populated with the old release version
+	 *
+	 * @since   Kunena 6.0
+	 */
+	private $oldRelease;
 
 	/**
 	 * method to run after an install/update/uninstall method

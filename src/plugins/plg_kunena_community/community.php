@@ -77,10 +77,10 @@ class plgKunenaCommunity extends CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
+	 * @todo    Should we remove category ACL integration?
 	 * @return  KunenaAccess|KunenaAccessCommunity|void
 	 *
 	 * @since   Kunena
-	 * @todo    Should we remove category ACL integration?
 	 */
 	public function onKunenaGetAccessControl()
 	{

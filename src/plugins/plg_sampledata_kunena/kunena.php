@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     Joomla.Plugin
- * @subpackage  Sampledata.Kunena
+ * @package        Joomla.Plugin
+ * @subpackage     Sampledata.Kunena
  *
  * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -53,15 +53,6 @@ class PlgSampledataKunena extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
-	 * Holds the menuitem model
-	 *
-	 * @var     MenusModelItem
-	 *
-	 * @since   4.0.0
-	 */
-	private $menuItemModel;
-
-	/**
 	 * @var     string language path
 	 *
 	 * @since   4.0.0
@@ -74,6 +65,15 @@ class PlgSampledataKunena extends CMSPlugin
 	 * @since   4.0.0
 	 */
 	protected $adminId;
+
+	/**
+	 * Holds the menuitem model
+	 *
+	 * @var     MenusModelItem
+	 *
+	 * @since   4.0.0
+	 */
+	private $menuItemModel;
 
 	/**
 	 * Get an overview of the proposed sampleData.

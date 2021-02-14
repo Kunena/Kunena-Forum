@@ -98,8 +98,8 @@ EOF;
 	/**
 	 * @internal
 	 *
-	 * @param   string   $context  Context
-	 * @param   array    $params   Params
+	 * @param   string  $context  Context
+	 * @param   array   $params   Params
 	 *
 	 * @return  void
 	 *

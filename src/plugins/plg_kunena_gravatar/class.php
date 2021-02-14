@@ -83,6 +83,7 @@ class KunenaGravatar
 	 * @since   Kunena 6.0
 	 */
 	protected $extra = "";
+
 	/**
 	 * @var string
 	 * @since version

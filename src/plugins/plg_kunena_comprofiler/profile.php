@@ -205,7 +205,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   Kunena 6.0
 	 */

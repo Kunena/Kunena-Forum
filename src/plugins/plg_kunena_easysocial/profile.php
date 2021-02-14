@@ -74,7 +74,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   string  $task   task
 	 * @param   bool    $xhtml  xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   Kunena 6.0
 	 */

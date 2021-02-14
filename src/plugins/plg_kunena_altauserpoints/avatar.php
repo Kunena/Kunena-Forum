@@ -58,20 +58,6 @@ class AvatarAltaUserPoints extends KunenaAvatar
 	}
 
 	/**
-	 * @param   KunenaUser  $user   user
-	 * @param   int         $sizex  sizex
-	 * @param   int         $sizey  sizey
-	 *
-	 * @return  string
-	 * @since   Kunena 6.0
-	 * @throws Exception
-	 */
-	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
-	{
-		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
-	}
-
-	/**
 	 * @param           $user
 	 * @param   string  $class  class
 	 * @param   int     $sizex  sizex
@@ -111,5 +97,19 @@ class AvatarAltaUserPoints extends KunenaAvatar
 		}
 
 		return $avatar;
+	}
+
+	/**
+	 * @param   KunenaUser  $user   user
+	 * @param   int         $sizex  sizex
+	 * @param   int         $sizey  sizey
+	 *
+	 * @return  string
+	 * @since   Kunena 6.0
+	 * @throws Exception
+	 */
+	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
+	{
+		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
 	}
 }

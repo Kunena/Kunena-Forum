@@ -115,9 +115,9 @@ class plgQuickiconKunena extends CMSPlugin
 			$icon = 'fas fa-exclamation-triangle';
 
 			// Not fully installed
-			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
-			$icon = 'kunena/icons/icon-48-kupdate-alert-white.png';
-			$text = Text::_('PLG_QUICKICON_KUNENA_COMPLETE_INSTALLATION');
+			$img   = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
+			$icon  = 'kunena/icons/icon-48-kupdate-alert-white.png';
+			$text  = Text::_('PLG_QUICKICON_KUNENA_COMPLETE_INSTALLATION');
 			$class = 'pulse warning';
 		}
 		elseif ($updateInfo === null)
@@ -125,9 +125,9 @@ class plgQuickiconKunena extends CMSPlugin
 			// Unsupported
 			$icon = 'fas fa-remove';
 
-			$img  = $useIcons ? $icon : 'kunena/icons/kunena-logo-48-white.png';
-			$icon = 'kunena/icons/kunena-logo-48-white.png';
-			$text = Text::_('COM_KUNENA');
+			$img   = $useIcons ? $icon : 'kunena/icons/kunena-logo-48-white.png';
+			$icon  = 'kunena/icons/kunena-logo-48-white.png';
+			$text  = Text::_('COM_KUNENA');
 			$class = 'pulse error';
 		}
 		elseif ($updateInfo === false)
@@ -135,9 +135,9 @@ class plgQuickiconKunena extends CMSPlugin
 			// Disabled
 			$icon = 'fas fa-minus-circle';
 
-			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
-			$icon = 'kunena/icons/icon-48-kupdate-alert-white.png';
-			$text = Text::_('COM_KUNENA') . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_DISABLED');
+			$img   = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-alert-white.png';
+			$icon  = 'kunena/icons/icon-48-kupdate-alert-white.png';
+			$text  = Text::_('COM_KUNENA') . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_DISABLED');
 			$class = 'pulse error';
 		}
 		elseif (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
@@ -145,10 +145,10 @@ class plgQuickiconKunena extends CMSPlugin
 			// Has updates
 			$icon = 'fas fa-download';
 
-			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
-			$icon = 'kunena/icons/icon-48-kupdate-update-white.png';
-			$text = 'Kunena ' . $updateInfo->version . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_NOW');
-			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
+			$img   = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
+			$icon  = 'kunena/icons/icon-48-kupdate-update-white.png';
+			$text  = 'Kunena ' . $updateInfo->version . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_NOW');
+			$link  = 'index.php?option=com_installer&view=update&filter_search=kunena';
 			$class = 'pulse warning';
 		}
 		elseif (!empty($updateInfo->addons))
@@ -156,19 +156,19 @@ class plgQuickiconKunena extends CMSPlugin
 			// Has updated add-ons
 			$icon = 'fas fa-download';
 
-			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
-			$icon = 'kunena/icons/icon-48-kupdate-update-white.png';
-			$text = Text::_('COM_KUNENA') . '<br />' . Text::sprintf('PLG_QUICKICON_KUNENA_UPDATE_ADDONS', $updateInfo->addons);
-			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
+			$img   = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-update-white.png';
+			$icon  = 'kunena/icons/icon-48-kupdate-update-white.png';
+			$text  = Text::_('COM_KUNENA') . '<br />' . Text::sprintf('PLG_QUICKICON_KUNENA_UPDATE_ADDONS', $updateInfo->addons);
+			$link  = 'index.php?option=com_installer&view=update&filter_search=kunena';
 			$class = 'pulse warning';
 		}
 		else
 		{
 			$icon = 'fas fa-comments';
 
-			$img  = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-good-white.png';
-			$icon = 'kunena/icons/icon-48-kupdate-good-white.png';
-			$text = Text::_('COM_KUNENA');
+			$img   = $useIcons ? $icon : 'kunena/icons/icon-48-kupdate-good-white.png';
+			$icon  = 'kunena/icons/icon-48-kupdate-good-white.png';
+			$text  = Text::_('COM_KUNENA');
 			$class = 'pulse success';
 		}
 
@@ -183,8 +183,8 @@ class plgQuickiconKunena extends CMSPlugin
 				'text'  => $text,
 				'class' => $class,
 				'id'    => 'plg_quickicon_kunena',
-				'group' => 'update_quickicon'
-			]
+				'group' => 'update_quickicon',
+			],
 		];
 	}
 }

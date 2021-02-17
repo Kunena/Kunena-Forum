@@ -17,9 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -43,14 +41,14 @@ class HomeController extends KunenaController
 	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return  BaseController|void
+	 * @return  KunenaController|void
 	 *
-	 * @throws  null
+	 * @since   Kunena 1.0
+	 *
 	 * @throws  Exception
-	 *@since   Kunena 1.0
-	 *
+	 * @throws  null
 	 */
-	public function display($cachable = false, $urlparams = false): BaseController
+	public function display($cachable = false, $urlparams = false): KunenaController
 	{
 		$menu = $this->app->getMenu();
 		$home = $menu->getActive();

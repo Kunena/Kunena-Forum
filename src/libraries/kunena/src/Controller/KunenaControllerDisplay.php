@@ -269,7 +269,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): void
+	protected function prepareDocument()
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');

@@ -72,7 +72,7 @@ if (!KunenaConfig::getInstance()->accessComponent)
 }
 
 // Load router
-Router::getInstance('com_kunena');
+Router::getInstance('site');
 
 // Initialize Kunena Framework.
 KunenaForum::setup();

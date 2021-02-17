@@ -142,7 +142,7 @@ class KunenaController extends BaseController
 			$view = strtolower(Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
-		$path = JPATH_COMPONENT . "/src/{ucfirst($view)}Controller.php";
+		$path = JPATH_COMPONENT . "/src/Controller/" . ucfirst($view) . "Controller.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
 		if (is_file($path))

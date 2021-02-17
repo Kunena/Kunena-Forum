@@ -20,6 +20,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -88,7 +89,7 @@ class KunenaProfile
 			$limit = KunenaFactory::getConfig()->popUserCount;
 		}
 
-		return (array) $this->_getTopHits($limit);
+		return (array) $this->getTopHitsArray($limit);
 	}
 
 	/**
@@ -98,7 +99,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function _getTopHits($limit = 0): array
+	protected function getTopHitsArray($limit = 0): array
 	{
 		return [];
 	}
@@ -140,15 +141,15 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int     $user   user
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   KunenaUser  $user   user
+	 * @param   string      $task   task
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): void
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): void
 	{
 	}
 

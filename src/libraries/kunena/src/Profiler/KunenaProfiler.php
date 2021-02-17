@@ -174,17 +174,17 @@ class KunenaProfilerItem
 	 * @var float
 	 * @since version
 	 */
-	private $external;
-	/**
-	 * @var float
-	 * @since version
-	 */
-	private $total;
+	public $total;
 	/**
 	 * @var int
 	 * @since version
 	 */
-	private $calls;
+	public $calls;
+	/**
+	 * @var float
+	 * @since version
+	 */
+	private $external;
 
 	/**
 	 * @param   string  $name  name

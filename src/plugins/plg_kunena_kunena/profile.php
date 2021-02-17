@@ -144,7 +144,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	}
 
 	/**
-	 * @param   int          $user       user
+	 * @param   KunenaUser   $user       user
 	 * @param   string       $task       task
 	 * @param   bool         $xhtml      xhtml
 	 * @param   bool|string  $avatarTab  avatarTab
@@ -156,7 +156,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws null
 	 * @throws Exception
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true, $avatarTab = ''): bool
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true, $avatarTab = ''): bool
 	{
 		if ($user == 0)
 		{

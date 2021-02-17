@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Router;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
@@ -27,7 +28,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Site\Service\Router;
 use stdClass;
 use function defined;
 
@@ -40,8 +40,8 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !Kunena
 	Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 	Factory::getApplication()->sendHeaders();
 	?>
-	<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
-	<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+    <h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+    <div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
 	<?php
 	return;
 }
@@ -72,7 +72,7 @@ if (!KunenaConfig::getInstance()->accessComponent)
 }
 
 // Load router
-Router::getInstance();
+Router::getInstance('com_kunena');
 
 // Initialize Kunena Framework.
 KunenaForum::setup();
@@ -133,7 +133,7 @@ echo $contents;
 KunenaError::cleanup();
 
 // Kunena conflicts with jot_cache, due to huge object message in app-inputs.
-//  this huje object causes crash. so, need to cleanup app-inputs before exit here.
+// This object causes crash. so, need to cleanup app-inputs before exit here.
 $app->input->set('message', null);
 
 // Display profiler information.

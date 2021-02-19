@@ -525,7 +525,7 @@ abstract class KunenaRoute
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function getHome($item): ?bool
+	public static function getHome($item)
 	{
 		if (!$item)
 		{
@@ -543,7 +543,7 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				$parentid          = $item->parentid;
+				$parentid          = $item->parent_id;
 				$parent            = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}

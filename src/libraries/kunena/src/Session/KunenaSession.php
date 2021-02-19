@@ -145,7 +145,7 @@ class KunenaSession extends CMSObject
 	 * @return    object    The session table object
 	 * @since     1.5
 	 */
-	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaSessions'): object
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaSessions')
 	{
 		static $tabletype = null;
 

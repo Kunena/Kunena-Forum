@@ -556,14 +556,14 @@ class KunenaBase extends KunenaLayoutBase
 	/**
 	 * Property overloading.
 	 *
-	 * @param   mixed    $property  property
-	 * @param   integer  $value     value
+	 * @param   mixed   $property  property
+	 * @param   object  $value     value
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function __set($property, int $value)
+	public function __set($property, $value)
 	{
 		$this->set($property, $value);
 	}
@@ -776,9 +776,11 @@ class KunenaBase extends KunenaLayoutBase
 
 				require_once $filename;
 			}
-
-			// Create layout object.
-			return new $class($path, $templatePaths);
+			else
+			{
+				// Create layout object.
+				return new $class($path, $templatePaths);
+			}
 		}
 
 		// Create default layout object.

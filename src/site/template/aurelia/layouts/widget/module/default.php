@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use function defined;
 
-$modules = $this->renderPosition();
+$modules = (new Layout\Widget\KunenaLayoutWidgetModule('WidgetModule'))->renderPosition();
 
 if (!$modules)
 {

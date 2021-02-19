@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -33,30 +32,6 @@ use function defined;
 class KunenaLayoutWidgetFooter extends KunenaLayout
 {
 	/**
-	 * Method to get the time of page generation
-	 *
-	 * @return  string|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function getTime()
-	{
-		$config = KunenaFactory::getConfig();
-
-		if (!$config->timeToCreatePage)
-		{
-			return;
-		}
-
-		$profiler = KunenaProfiler::instance('Kunena');
-		$time     = $profiler->getTime('Total Time');
-
-		return sprintf('%0.3f', $time);
-	}
-
-	/**
 	 * Method to get the RSS URL link with image
 	 *
 	 * @return  string|void
@@ -66,7 +41,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	protected function getRSS()
+	public function getRSS()
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -103,5 +78,29 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 			return '<a rel="alternate" type="application/rss+xml" href="' . $url . '">' . KunenaIcons::rss($text = true) . '</a>';
 		}
+	}
+
+	/**
+	 * Method to get the time of page generation
+	 *
+	 * @return  string|void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function getTime()
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (!$config->timeToCreatePage)
+		{
+			return;
+		}
+
+		$profiler = KunenaProfiler::instance('Kunena');
+		$time     = $profiler->getTime('Total Time');
+
+		return sprintf('%0.3f', $time);
 	}
 }

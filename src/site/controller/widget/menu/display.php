@@ -30,58 +30,50 @@ use function defined;
 class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Widget/Menu';
-
-	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $basemenu;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $list;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $menu;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $active;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $path;
-
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $active_id;
-
 	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $showAll;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $class_sfx;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Widget/Menu';
 
 	/**
 	 * Prepare menu display.

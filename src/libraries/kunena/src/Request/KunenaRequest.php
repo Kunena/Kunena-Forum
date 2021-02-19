@@ -18,6 +18,7 @@ use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
 /**
@@ -52,6 +53,7 @@ class KunenaRequest
 	 * @return  KunenaControllerBase| KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public static function factory(string $path, Input $input = null, $options = null)
 	{
@@ -66,12 +68,10 @@ class KunenaRequest
 		// Attempt to load controller.
 		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
 
-		if (!class_exists($class))
+		if (class_exists($class))
 		{
-			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $class), 404);
+			// Create controller object.
+			return new $class($input, null, $options);
 		}
-
-		// Create controller object.
-		return new $class($input, null, $options);
 	}
 }

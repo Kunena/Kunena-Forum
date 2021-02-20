@@ -153,4 +153,15 @@ class KunenaProfile
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 	}
+	
+	/**
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena
+	 * @return void
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+	}
 }

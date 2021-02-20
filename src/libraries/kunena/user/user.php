@@ -305,12 +305,12 @@ class KunenaUser extends CMSObject
 			case 'edit' :
 				if (!isset($this->registerDate) || !$this->isMyself() && !$user->isAdmin() && !$user->isModerator())
 				{
-					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', KunenaFactory::getProfile()->getProfileName($this)), $user->exists() ? 403 : 401);
 				}
 
 				if ($user->isModerator() && $kuser->isAdmin() && !$user->isAdmin())
 				{
-					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', KunenaFactory::getProfile()->getProfileName($this)), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'ban' :
@@ -399,58 +399,6 @@ class KunenaUser extends CMSObject
 	public function isModerator(KunenaForumCategory $category = null)
 	{
 		return KunenaAccess::getInstance()->isModerator($this, $category && $category->exists() ? $category->id : null);
-	}
-
-	/**
-	 * @param   string $visitorname visitor name
-	 * @param   bool   $escape      escape
-	 *
-	 * @return string
-	 * @since Kunena
-	 */
-	public function getName($visitorname = '', $escape = true)
-	{
-		if (!$this->userid && !$this->name)
-		{
-			$name = $visitorname;
-		}
-		else
-		{
-			$usersConfig = \Joomla\CMS\Plugin\PluginHelper::isEnabled('kunena', 'comprofiler');
-
-			if ($usersConfig)
-			{
-				global $ueConfig;
-
-				if ($ueConfig['name_format'] == 1)
-				{
-					return $this->name;
-				}
-				elseif ($ueConfig['name_format'] == 2)
-				{
-					return $this->name . ' (' . $this->username . ')';
-				}
-				elseif ($ueConfig['name_format'] == 3)
-				{
-					return $this->username;
-				}
-				elseif ($ueConfig['name_format'] == 4)
-				{
-					return $this->username . ' (' . $this->name . ')';
-				}
-			}
-			else
-			{
-				$name = $this->_config->username ? $this->username : $this->name;
-			}
-		}
-
-		if ($escape)
-		{
-			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
-		}
-
-		return $name;
 	}
 
 	/**
@@ -1887,6 +1835,8 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
+	 * Get profile link of the user
+	 * 
 	 * @param   null|string $name       name
 	 * @param   null|string $title      title
 	 * @param   string      $rel        rel
@@ -1903,7 +1853,7 @@ class KunenaUser extends CMSObject
 	{
 		if (!$name)
 		{
-			$name = $this->getName();
+			$name = KunenaFactory::getProfile()->getProfileName($this);
 		}
 
 		$key = "{$name}.{$title}.{$rel}.{$catid}";
@@ -1912,7 +1862,7 @@ class KunenaUser extends CMSObject
 		{
 			if (!$title)
 			{
-				$title = Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+				$title = Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaFactory::getProfile()->getProfileName($this));
 			}
 
 			$class = ($class !== null) ? $class : $this->getType($catid, 'class');

@@ -890,7 +890,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$user            = KunenaUserHelper::get($user);
 		$message         = new KunenaForumMessage;
 		$message->catid  = $catid;
-		$message->name   = $user->getName('');
+		$message->name   = KunenaFactory::getProfile()->getProfileName($user, '');
 		$message->userid = $user->userid;
 		$message->ip     = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold   = $this->review ? (int) !$this->isAuthorised('moderate', $user) : 0;

@@ -18,7 +18,7 @@ $tabs = $this->getTabs();
 
 <h1 class="float-left">
 	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
-	<?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo $this->escape(KunenaFactory::getProfile()->getProfileName($this->profile)); ?>
 </h1>
 
 <h2 class="float-right">

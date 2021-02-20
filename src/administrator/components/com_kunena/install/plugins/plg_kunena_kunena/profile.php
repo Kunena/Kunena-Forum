@@ -171,4 +171,32 @@ class KunenaProfileKunena extends KunenaProfile
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * @return string
+	 * @see KunenaProfile::getProfileName()
+	 * @since Kunena 5.2
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$config = KunenaFactory::getConfig();
+		$my     = Factory::getUser();
+
+		if (!$user->userid && !$user->name)
+		{
+			$name = $visitorname;
+		}
+		else
+		{
+			$name = $config->username ? $user->username : $user->name;
+		}
+
+		if ($escape)
+		{
+			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+		}
+
+		return $name;
+	}
 }

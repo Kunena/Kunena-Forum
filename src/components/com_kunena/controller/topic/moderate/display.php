@@ -117,7 +117,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 			if ($user->exists())
 			{
-				$username       = $user->getName();
+			    $username       = KunenaFactory::getProfile()->getProfileName($user);
 				$this->userLink = $this->message->userid ? HTMLHelper::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=user&userid=' . $this->message->userid,
 					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')'

@@ -150,6 +150,7 @@ class KunenaPage extends KunenaLayout
 	 *
 	 * @return  KunenaControllerDisplay
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function request($path, Input $input = null, $options = null): KunenaControllerDisplay

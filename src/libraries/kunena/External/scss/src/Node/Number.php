@@ -293,7 +293,7 @@ class Number extends Node implements ArrayAccess
 	 * @return  string
 	 * @throws CompilerException
 	 */
-	public function output(Compiler $compiler = null)
+	public function output(Compiler $compiler): string
 	{
 		$dimension = round($this->dimension, static::$precision);
 
@@ -329,7 +329,7 @@ class Number extends Node implements ArrayAccess
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {}
 	 */
 	public function __toString()
 	{

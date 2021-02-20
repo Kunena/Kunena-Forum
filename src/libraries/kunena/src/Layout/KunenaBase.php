@@ -799,6 +799,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @return  KunenaControllerDisplay|KunenaLayout
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function subRequest(string $path, Input $input = null, $options = null)

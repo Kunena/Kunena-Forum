@@ -427,7 +427,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionDate(): string
+	public static function versionDate(): bool
 	{
 		if (self::$version_date === false)
 		{
@@ -444,7 +444,7 @@ abstract class KunenaForum
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionName(): string
+	public static function versionName(): bool
 	{
 		if (self::$version_name === false)
 		{

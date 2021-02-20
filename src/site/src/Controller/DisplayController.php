@@ -25,13 +25,14 @@ class DisplayController extends BaseController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 *                                         Recognized key values include 'name', 'default_task', 'model_path', and
-	 *                                         'view_path' (this list is not meant to be comprehensive).
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 *                                              Recognized key values include 'name', 'default_task', 'model_path', and
+	 *                                              'view_path' (this list is not meant to be comprehensive).
+	 * @param   MVCFactoryInterface|null  $factory  The factory.
+	 * @param   null                      $app      The JApplication for the dispatcher
+	 * @param   null                      $input    Input
 	 *
+	 * @throws \Exception
 	 * @since   3.0.1
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
@@ -49,6 +50,7 @@ class DisplayController extends BaseController
 	 *
 	 * @return  BaseController  This object to support chaining.
 	 *
+	 * @throws \Exception
 	 * @since   1.5
 	 */
 	public function display($cachable = false, $urlparams = false)

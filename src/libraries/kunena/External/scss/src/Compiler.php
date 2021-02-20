@@ -169,14 +169,14 @@ class Compiler
 	/**
 	 * Compile scss
 	 *
-	 * @api
-	 *
 	 * @param   string  $code
-	 * @param   string  $path
+	 * @param   null    $path
 	 *
 	 * @return  string
 	 * @throws CompilerException
-	 * @throws  ParserException
+	 * @throws Exception\ParserException
+	 * @api
+	 *
 	 */
 	public function compile($code, $path = null)
 	{
@@ -990,6 +990,7 @@ class Compiler
 	 * @param   array  $with
 	 *
 	 * @return integer
+	 * @throws CompilerException
 	 */
 	private function compileWith($with)
 	{
@@ -2179,6 +2180,7 @@ class Compiler
 	 * @param   array  $exp
 	 *
 	 * @return  array
+	 * @throws CompilerException
 	 */
 	protected function expToString($exp)
 	{
@@ -2639,6 +2641,7 @@ class Compiler
 	 * @param   array  $right
 	 *
 	 * @return  array
+	 * @throws CompilerException
 	 */
 	protected function opAdd($left, $right)
 	{
@@ -2675,6 +2678,7 @@ class Compiler
 	 * @param   boolean  $shouldEval
 	 *
 	 * @return  array
+	 * @throws CompilerException
 	 */
 	protected function opAnd($left, $right, $shouldEval)
 	{
@@ -2699,6 +2703,7 @@ class Compiler
 	 * @param   boolean  $shouldEval
 	 *
 	 * @return  array
+	 * @throws CompilerException
 	 */
 	protected function opOr($left, $right, $shouldEval)
 	{
@@ -3308,7 +3313,7 @@ class Compiler
 	 *
 	 * @return  array
 	 */
-	protected function multiplyMedia(Environment $env = null, $childQueries = null)
+	protected function multiplyMedia(Environment $env, array $childQueries): array
 	{
 		if (!isset($env) ||
 			!empty($env->block->type) && $env->block->type !== Type::T_MEDIA
@@ -3390,7 +3395,7 @@ class Compiler
 	 *
 	 * @return Environment
 	 */
-	protected function pushEnv(Block $block = null)
+	protected function pushEnv(Block $block): Environment
 	{
 		$env         = new Environment;
 		$env->parent = $this->env;
@@ -3429,7 +3434,7 @@ class Compiler
 	 * @param   boolean      $shadow
 	 * @param   Environment  $env
 	 */
-	protected function set($name, $value, $shadow = false, Environment $env = null)
+	protected function set(string $name, $value, bool $shadow = false, Environment $env)
 	{
 		$name = $this->normalizeName($name);
 
@@ -3501,16 +3506,16 @@ class Compiler
 	/**
 	 * Get variable
 	 *
-	 * @api
-	 *
 	 * @param   string       $name
 	 * @param   boolean      $shouldThrow
 	 * @param   Environment  $env
 	 *
 	 * @return  mixed
 	 * @throws CompilerException
+	 * @api
+	 *
 	 */
-	public function get($name, $shouldThrow = true, Environment $env = null)
+	public function get(string $name, bool $shouldThrow = true, Environment $env)
 	{
 		$normalizedName    = $this->normalizeName($name);
 		$specialContentKey = static::$namespaces['special'] . 'content';
@@ -3568,7 +3573,7 @@ class Compiler
 	 * @return  boolean
 	 * @throws CompilerException
 	 */
-	protected function has($name, Environment $env = null)
+	protected function has(string $name, Environment $env): bool
 	{
 		return $this->get($name, false, $env) !== null;
 	}
@@ -4023,6 +4028,7 @@ class Compiler
 	 * @param   array   $returnValue
 	 *
 	 * @return  boolean Returns true if returnValue is set; otherwise, false
+	 * @throws CompilerException
 	 */
 	protected function callNativeFunction($name, $args, &$returnValue)
 	{
@@ -4396,6 +4402,7 @@ class Compiler
 	 * @param   string  $delim
 	 *
 	 * @return  array
+	 * @throws CompilerException
 	 */
 	protected function coerceList($item, $delim = ',')
 	{

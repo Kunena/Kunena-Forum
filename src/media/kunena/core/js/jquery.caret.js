@@ -147,7 +147,7 @@
 					clonedRange.detach();
 				}
 
-				if (!offset || (offset != null ? offset.height : void 0) === 0) {
+				if (!offset || (true ? offset.height : void 0) === 0) {
 					clonedRange = range.cloneRange();
 					shadowCaret = $(oDocument.createTextNode("|"));
 					clonedRange.insertNode(shadowCaret[0]);

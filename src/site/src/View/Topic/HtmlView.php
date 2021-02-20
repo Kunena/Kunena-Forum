@@ -1036,6 +1036,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function displayMessageField($name)
@@ -1060,6 +1061,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function displayCategoryField($name)
@@ -1196,6 +1198,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  KunenaControllerDisplay
 	 *
+	 * @throws Exception
 	 * @since   Kunena 4.0
 	 */
 	public function subRequest($path, Input $input = null, $options = null)

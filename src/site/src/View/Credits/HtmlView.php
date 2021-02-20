@@ -28,10 +28,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  The name of the template file to parse
+	 * @param   null  $tpl  The name of the template file to parse
 	 *
 	 * @return  mixed  A string if successful, otherwise a JError object.
 	 *
+	 * @throws \Exception
 	 * @since   1.0
 	 */
 	public function display($tpl = null)

@@ -109,7 +109,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params): void
+	public function showProfile(int $view, object $params)
 	{
 	}
 

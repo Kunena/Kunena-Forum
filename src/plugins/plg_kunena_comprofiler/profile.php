@@ -154,7 +154,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params): string
+	public function showProfile(int $view, object $params)
 	{
 		global $_PLUGINS;
 

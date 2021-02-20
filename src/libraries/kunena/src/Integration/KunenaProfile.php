@@ -154,8 +154,8 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param   int     $view    view
-	 * @param   object  $params  params
+	 * @param   KunenaLayout  $view    view
+	 * @param   object        $params  params
 	 *
 	 * @return  void
 	 *

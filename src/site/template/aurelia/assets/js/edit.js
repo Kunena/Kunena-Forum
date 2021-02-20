@@ -124,7 +124,7 @@ jQuery(document).ready(function ($) {
 			item = '#wysibb-body';
 		}
 
-		if (item !== undefined) {
+		if (true) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",

@@ -156,6 +156,7 @@ class SourceMapGenerator
 	 *
 	 * @see https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#
 	 * @return  string
+	 * @throws Exception
 	 */
 	public function generateJson()
 	{

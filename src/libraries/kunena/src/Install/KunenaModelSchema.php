@@ -389,7 +389,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getXmlSchema($input = KUNENA_SCHEMA_FILE): ?DOMDocument
+	public function getXmlSchema(string $input): object
 	{
 		if ($this->xmlschema == null)
 		{

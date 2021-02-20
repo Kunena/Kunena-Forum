@@ -173,7 +173,12 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get the name of the user from this profile
+	 * 
+	 * @param   KunenaUser  $user
+	 * @param   string      $visitorname
+	 * @param   bool        $escape
+	 *
 	 * @return string
 	 * @see KunenaProfile::getProfileName()
 	 * @since Kunena 5.2
@@ -181,7 +186,6 @@ class KunenaProfileKunena extends KunenaProfile
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
 
 		if (!$user->userid && !$user->name)
 		{

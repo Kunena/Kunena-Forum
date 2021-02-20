@@ -61,7 +61,7 @@ class KunenaViewCategory extends KunenaView
 		{
 			if ($this->config->rss_type=='topic')
 			{
-				$description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name)); 
+			    $description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($topic->last_post_userid), $topic->last_post_guest_name)); 
 			}
 			else
 			{
@@ -70,7 +70,7 @@ class KunenaViewCategory extends KunenaView
 
 			$date        = new \Joomla\CMS\Date\Date($topic->last_post_time);
 			$userid      = $topic->last_post_userid;
-			$username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+			$username    = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($userid), $topic->last_post_guest_name);
 
 			$title    = $topic->subject;
 			$category = $topic->getCategory();

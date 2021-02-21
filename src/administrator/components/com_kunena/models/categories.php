@@ -436,7 +436,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				// Checkout?
 				if ($this->me->isAdmin($category) && $category->isCheckedOut(0))
 				{
-					$category->editor = KunenaFactory::getProfile()->getProfileName($category->checked_out);
+				    $category->editor = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($category->checked_out));
 				}
 				else
 				{

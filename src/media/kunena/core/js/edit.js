@@ -244,12 +244,14 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid}
 			})
 				.done(function (data) {
-					if ($('#message').val().length > 1) {
-						if ($('#message').val().length > 1) {
+					var editor_text = CKEDITOR.instances.message.getData();
+
+					if (editor_text.length > 1) {
+						if (editor_text.length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#message').val(category_template_text);
+							CKEDITOR.instances.message.setData(category_template_text);
 						}
 					}
 					else {
@@ -257,7 +259,7 @@ jQuery(document).ready(function ($) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#message').val(data);
+							CKEDITOR.instances.message.setData(data);
 						}
 					}
 
@@ -272,15 +274,15 @@ jQuery(document).ready(function ($) {
 		$('#modal_confirm_template_category').modal('hide');
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text.responseJSON);
+		CKEDITOR.instances.message.setData(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		var existing_content = editor.val();
+		var existing_content = CKEDITOR.instances.message.getData();
 		var textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
+		CKEDITOR.instances.message.setData(category_template_text.responseJSON + ' ' + existing_content);
 	});
 
 	if ($.fn.datepicker !== undefined) {

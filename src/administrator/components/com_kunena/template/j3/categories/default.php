@@ -340,7 +340,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									if ($item->checked_out)
 									{
 										$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
-										$editor     = KunenaFactory::getUser($item->editor)->getName();
+										$editor     = KunenaFactory::getProfile()->getProfileName($item->editor);
 										echo HTMLHelper::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 									}
 									?>

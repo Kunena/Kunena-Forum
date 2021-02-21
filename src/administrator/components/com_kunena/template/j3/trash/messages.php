@@ -228,7 +228,7 @@ HTMLHelper::_('dropdown.init');
 										   target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
 									</td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
-									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
+									<td><?php echo $this->escape(KunenaFactory::getProfile()->getProfileName($row->getAuthor())); ?></td>
 									<td><?php echo $this->escape($row->ip); ?></td>
 									<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->time); ?></td>
 								</tr>

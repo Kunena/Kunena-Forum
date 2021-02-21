@@ -360,7 +360,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
-			$message->message = "[quote=\"{KunenaFactory::getProfile()->getName($user, $this->name)}\" post={$this->id}]" . $text . "[/quote]";
+			$message->message = "[quote=\"{KunenaFactory::getProfile()->getProfileName($user, $this->name)}\" post={$this->id}]" . $text . "[/quote]";
 		}
 		else
 		{
@@ -1405,7 +1405,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 		else
 		{
-			$this->name = KunenaFactory::getProfile()->getName($author);
+			$this->name = KunenaFactory::getProfile()->getProfileName($author);
 		}
 
 		// Check email address

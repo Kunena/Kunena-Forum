@@ -630,7 +630,7 @@ class KunenaUser extends CMSObject
 		{
 			if (!$title)
 			{
-				$title = Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+				$title = Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaFactory::getProfile()->getProfileName($this));
 			}
 
 			$link = $this->getURL();

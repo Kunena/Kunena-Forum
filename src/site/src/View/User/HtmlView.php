@@ -17,12 +17,12 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 
 /**
@@ -30,69 +30,69 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
-	private $topic;
-	private $position;
-	private $config;
+	public $config;
+	public $me;
+	public $state;
+	public $embedded;
+	public $topic;
+	public $position;
 	/**
 	 * @var false|float
 	 * @since version
 	 */
-	private $pages;
+	public $pages;
 	/**
 	 * @var int
 	 * @since version
 	 */
-	private $message_position;
-	private $module;
-	private $firstUserName;
-	private $firstPostTime;
-	private $firstPostAuthor;
+	public $message_position;
+	public $module;
+	public $firstUserName;
+	public $firstPostTime;
+	public $firstPostAuthor;
 	/**
 	 * @var string
 	 * @since version
 	 */
-	private $categoryLink;
+	public $categoryLink;
 	/**
 	 * @var bool
 	 * @since version
 	 */
-	private $cache;
-	private $me;
-	private $category;
-	private $topics;
-	private $messages;
-	private $layout;
-	private $state;
+	public $cache;
+	public $category;
+	public $topics;
+	public $messages;
+	public $layout;
 	/**
 	 * @var string
 	 * @since version
 	 */
-	private $moreUri;
-	private $embedded;
+	public $moreUri;
 	/**
 	 * @var bool|string
 	 * @since version
 	 */
-	private $URL;
-	private $message_ordering;
+	public $URL;
+	public $message_ordering;
 	/**
 	 * @var false
 	 * @since version
 	 */
-	private $actionMove;
+	public $actionMove;
 	/**
 	 * @var mixed
 	 * @since version
 	 */
-	private $total;
-	private $params;
+	public $total;
+	public $params;
 	/**
 	 * @var mixed
 	 * @since version
 	 */
-	private $topicActions;
+	public $topicActions;
 
 	/**
 	 * @param   null  $tpl  tpl

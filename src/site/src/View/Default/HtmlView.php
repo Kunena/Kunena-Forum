@@ -14,14 +14,14 @@ namespace Kunena\Forum\Site\View;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  * Topics View
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
 	/**
 	 * @return  void

@@ -12,16 +12,24 @@ namespace Kunena\Forum\Site\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Kunena Component Controller
  *
  * @since   Kunena 6.0
  */
-class DisplayController extends BaseController
+class DisplayController extends KunenaController
 {
+	protected $default_view = 'kunena\forum\site\controller\display';
+
+	protected $prefix = 'site';
+
+	protected $layout = 'default';
+
 	/**
 	 * Constructor.
 	 *
@@ -32,8 +40,8 @@ class DisplayController extends BaseController
 	 * @param   null                      $app      The JApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
-	 * @throws \Exception
 	 * @since   3.0.1
+	 * @throws \Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -50,10 +58,10 @@ class DisplayController extends BaseController
 	 *
 	 * @return  BaseController  This object to support chaining.
 	 *
-	 * @throws \Exception
 	 * @since   1.5
+	 * @throws \Exception
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparams = false): BaseController
 	{
 		try
 		{

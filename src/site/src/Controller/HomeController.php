@@ -37,6 +37,10 @@ class HomeController extends KunenaController
 	 */
 	public $home = 1;
 
+	protected $default_view = 'kunena\forum\site\controller\display';
+
+	protected $prefix = 'site';
+
 	/**
 	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams

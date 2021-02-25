@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -33,6 +34,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+use Kunena\Forum\Libraries\View\KunenaView;
 use function defined;
 
 /**
@@ -73,15 +75,17 @@ class KunenaController extends BaseController
 	protected $app;
 
 	/**
-	 * @param   array  $config  config
+	 * @param   array                                             $config  config
+	 * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory
+	 * @param   null                                              $app
+	 * @param   null                                              $input
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
-	public function __construct($config = [])
+	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
-		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->me       = KunenaUserHelper::getMyself();
 
@@ -95,6 +99,8 @@ class KunenaController extends BaseController
 		{
 			$this->input = $this->app->input;
 		}
+
+		parent::__construct($config, $factory, $app, $input);
 	}
 
 	/**
@@ -372,7 +378,7 @@ class KunenaController extends BaseController
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function display($cachable = false, $urlparams = false): BaseController
+	public function display($cachable = false, $urlparams = false)
 	{
 		KunenaProfiler::getInstance() ? $this->profiler->mark('beforeDisplay') : null;
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -436,13 +442,17 @@ class KunenaController extends BaseController
 			*/
 		}
 
-		$view = $this->getView($vName, $vFormat);
+		$config              = [];
+		$config['base_path'] = $this->basePath;
+		$config['layout']    = $lName;
+
+		$view = $this->getView($vName, $vFormat, 'site', $config);
 
 		if ($view)
 		{
 			if ($this->app->isClient('site') && $vFormat == 'html')
 			{
-				$common = $this->getView('common', $vFormat);
+				$common = $this->getView('common', $vFormat, 'site', $config);
 				$model  = $this->getModel('common');
 				$common->setModel($model, true);
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
@@ -466,7 +476,8 @@ class KunenaController extends BaseController
 			{
 				PluginHelper::importPlugin('kunena');
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['start', $view]);
-				$view->displayAll();
+				$test = new KunenaView($config);
+				$test->displayAll();
 				Factory::getApplication()->triggerEvent('onKunenaDisplay', ['end', $view]);
 			}
 			else

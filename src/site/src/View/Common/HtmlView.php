@@ -18,12 +18,10 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
@@ -35,6 +33,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\View\KunenaView;
 use StdClass;
 
 /**
@@ -42,7 +41,7 @@ use StdClass;
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
 	/**
 	 * @var     integer
@@ -55,20 +54,20 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $offline = false;
-	private $me;
-	private $ktemplate;
-	private $app;
-	private $state;
-	private $config;
-	private $memberCount;
-	private $lastUserId;
+	public $ktemplate;
+	public $app;
+	public $me;
+	public $state;
+	public $config;
+	public $memberCount;
+	public $lastUserId;
 	/**
 	 * @var array
 	 * @since version
 	 */
-	private $pathway;
+	public $pathway;
 
-	private $header;
+	public $header;
 
 
 	/**
@@ -216,7 +215,7 @@ class HtmlView extends BaseHtmlView
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$catParams   = ['sections' => 1, 'catid' => 0];
+		$catParams    = ['sections' => 1, 'catid' => 0];
 		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
@@ -468,7 +467,7 @@ class HtmlView extends BaseHtmlView
 		$kunenaStats = KunenaStatistics::getInstance();
 		$kunenaStats->loadGeneral();
 
-		$kunenaStats1    = $kunenaStats;
+		$kunenaStats1     = $kunenaStats;
 		$latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 		$statisticsLink   = $this->getStatsLink($this->config->boardTitle . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');

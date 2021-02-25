@@ -14,14 +14,14 @@ namespace Kunena\Forum\Site\View\Category;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  * Category View
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
 	/**
 	 * @param   null  $tpl  tpl

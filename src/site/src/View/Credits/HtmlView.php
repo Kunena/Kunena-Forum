@@ -16,14 +16,14 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
  * Topics View
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
 	/**
 	 * Display the view
@@ -32,8 +32,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise a JError object.
 	 *
-	 * @throws \Exception
 	 * @since   1.0
+	 * @throws \Exception
 	 */
 	public function display($tpl = null)
 	{

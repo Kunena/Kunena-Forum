@@ -90,25 +90,22 @@ class KunenaView extends HtmlView
 	 * @since version
 	 */
 	public $common;
+	/**
+	 * @var KunenaTemplate
+	 * @since version
+	 */
+	public $ktemplate;
 
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $inLayout = 0;
-
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;
-
-	/**
-	 * @var KunenaTemplate
-	 * @since version
-	 */
-	protected $ktemplate;
-
 	/**
 	 * @var string
 	 * @since version
@@ -177,7 +174,7 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayAll(): void
+	public function displayAll()
 	{
 		if ($this->inLayout)
 		{
@@ -258,17 +255,33 @@ class KunenaView extends HtmlView
 
 		if (method_exists($this, $layoutFunction))
 		{
-			$contents = $this->$layoutFunction($tpl ? $tpl : null);
+			$contents = $this->$layoutFunction($tpl);
 		}
 		elseif (method_exists($this, 'displayDefault'))
 		{
-			// TODO: should raise error instead, used just in case..
-			$contents = $this->displayDefault($tpl ? $tpl : null);
+			try
+			{
+				$contents = $this->displayDefault($tpl);
+			}
+			catch (Exception $e)
+			{
+				Factory::getApplication()->enqueueMessage($e->getMessage());
+
+				return;
+			}
 		}
 		else
 		{
-			// TODO: should raise error instead..
-			$contents = $this->display($tpl ? $tpl : null);
+			try
+			{
+				$contents = $this->display($tpl);
+			}
+			catch (Exception $e)
+			{
+				Factory::getApplication()->enqueueMessage($e->getMessage());
+
+				return;
+			}
 		}
 
 		KunenaProfiler::getInstance() ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;

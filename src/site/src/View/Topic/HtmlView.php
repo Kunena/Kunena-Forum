@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -30,7 +29,6 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -42,6 +40,7 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\View\KunenaView;
 use LogicException;
 
 /**
@@ -49,7 +48,7 @@ use LogicException;
  *
  * @since   Kunena 6.0
  */
-class HtmlView extends BaseHtmlView
+class HtmlView extends KunenaView
 {
 	/**
 	 * @var     null
@@ -92,66 +91,108 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $cache = true;
-	private $topic;
-	private $state;
-	private $total;
-	private $app;
-	private $config;
+	public $ktemplate;
+	public $app;
+	public $config;
+	public $inLayout;
+	public $me;
+	public $state;
+	public $topic;
+	public $total;
 	/**
 	 * @var bool|mixed
 	 * @since version
 	 */
-	private $subscriptionsChecked;
+	public $subscriptionsChecked;
 	/**
 	 * @var bool|mixed
 	 * @since version
 	 */
-	private $postAnonymous;
+	public $postAnonymous;
 	/**
 	 * @var array|bool
 	 * @since version
 	 */
-	private $allowedExtensions;
+	public $allowedExtensions;
 	/**
 	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
 	 * @since version
 	 */
-	private $attachments;
+	public $attachments;
 	/**
 	 * @var string
 	 * @since version
 	 */
-	private $action;
-	private $ktemplate;
-	private $topicIcons;
+	public $action;
+	public $topicIcons;
 	/**
 	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
 	 * @since version
 	 */
-	private $category;
+	public $category;
 	/**
 	 * @var KunenaMessage
 	 * @since version
 	 */
-	private $message;
-	private $catid;
-	private $inLayout;
-	private $me;
+	public $message;
+	public $catid;
 	/**
 	 * @var string
 	 * @since version
 	 */
-	private $numLink;
-	private $messages;
-	private $replynum;
+	public $numLink;
+	public $messages;
+	public $replynum;
 	/**
 	 * @var \Kunena\Forum\Libraries\User\KunenaUser
 	 * @since version
 	 */
-	private $profile;
-	private $quickReply;
-	private $layout;
-	private $usertopic;
+	public $profile;
+	public $quickReply;
+	public $layout;
+	public $usertopic;
+
+	/**
+	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayUnread($tpl = null)
+	{
+		// Redirect unread layout to the page that contains the first unread message
+		$category = $this->get('Category');
+		$topic    = $this->get('Topic');
+		KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
+
+		$message = KunenaMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
+
+		while (@ob_end_clean())
+		{
+		}
+
+		$this->app->redirect($topic->getUrl($category, false, $message));
+	}
+
+	/**
+	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function displayFlat($tpl = null)
+	{
+		$this->state->set('layout', 'default');
+		$this->me->setTopicLayout('flat');
+		$this->displayDefault($tpl);
+	}
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -277,45 +318,244 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	 * @param   null  $tpl  tpl
+	 * @param   integer  $maxpages  max pages
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayUnread($tpl = null)
-	{
-		// Redirect unread layout to the page that contains the first unread message
-		$category = $this->get('Category');
-		$topic    = $this->get('Topic');
-		KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
-
-		$message = KunenaMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
-
-		while (@ob_end_clean())
-		{
-		}
-
-		$this->app->redirect($topic->getUrl($category, false, $message));
-	}
-
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function displayFlat($tpl = null)
+	public function getPagination($maxpages)
 	{
-		$this->state->set('layout', 'default');
-		$this->me->setTopicLayout('flat');
-		$this->displayDefault($tpl);
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
+	}
+
+	/**
+	 * @param   integer  $maxpages  max pages
+	 *
+	 * @return  KunenaPagination
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function getPaginationObject($maxpages)
+	{
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
+
+		$uri = KunenaRoute::normalize(null, true);
+
+		if ($uri)
+		{
+			$uri->delVar('mesid');
+			$pagination->setUri($uri);
+		}
+
+		return $pagination;
+	}
+
+	/**
+	 * @param   string  $type  type
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function _prepareDocument($type)
+	{
+		$app       = Factory::getApplication();
+		$menu_item = $app->getMenu()->getActive(); // Get the active item
+
+		if ($menu_item)
+		{
+			$params             = $menu_item->getParams(); // Get the params
+			$params_title       = $params->get('page_title');
+			$params_description = $params->get('menu-meta_description');
+
+			if ($type == 'default')
+			{
+				$headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
+				$title1     = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
+
+				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
+				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
+
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title = Text::sprintf($this->topic->subject) . " ({$page}/{$pages})";
+					$this->setTitle($title);
+				}
+
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					// Create Meta Description form the content of the first message
+					// better for search results display but NOT for search ranking!
+					$description = KunenaParser::stripBBCode($this->topic->first_post_message, 182);
+					$description = preg_replace('/\s+/', ' ', $description); // Remove newlines
+					$description = trim($description); // Remove trailing spaces and beginning
+
+					if ($page)
+					{
+						$description .= " ({$page}/{$pages})";  // Avoid the "duplicate meta description" error in google webmaster tools
+					}
+
+					$this->setDescription($description);
+				}
+			}
+			elseif ($type == 'create')
+			{
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title1 = Text::_('COM_KUNENA_POST_NEW_TOPIC');
+					$this->setTitle($title1);
+				}
+
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$this->setDescription(Text::_('COM_KUNENA_POST_NEW_TOPIC'));
+				}
+			}
+			elseif ($type == 'reply')
+			{
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title1 = Text::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
+					$this->setTitle($title1);
+				}
+
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$this->setDescription(Text::_('COM_KUNENA_POST_REPLY_TOPIC'));
+				}
+			}
+			elseif ($type == 'edit')
+			{
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title1 = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+					$this->setTitle($title1);
+				}
+
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$this->setDescription(Text::_('COM_KUNENA_POST_EDIT'));
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param   string  $title  Title name on the browser
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function setTitle(string $title): void
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+
+		if (!$this->state->get('embedded'))
+		{
+			// Check for empty title and add site name if param is set
+			$title = strip_tags($title);
+
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
+			{
+				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->boardTitle . ' - ' . $title);
+			}
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
+			{
+				$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
+			}
+			else
+			{
+				$title = KunenaFactory::getConfig()->boardTitle . ': ' . $title;
+			}
+
+			$this->document->setTitle($title);
+		}
+	}
+
+	/**
+	 * @param   string  $description  description
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function setDescription($description)
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+
+		if (!$this->state->get('embedded'))
+		{
+			// TODO: allow translations/overrides
+			$lang   = Factory::getLanguage();
+			$length = StringHelper::strlen($lang->getName());
+			$length = 137 - $length;
+
+			if (StringHelper::strlen($description) > $length)
+			{
+				$description = StringHelper::substr($description, 0, $length) . '...';
+			}
+
+			$this->document->setMetadata('description', $description);
+		}
 	}
 
 	/**
@@ -677,6 +917,54 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @param   array  $matches  matches
+	 *
+	 * @return  mixed|string|void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function fillMessageInfo($matches)
+	{
+		switch ($matches[1])
+		{
+			case 'ROW':
+				return $this->mmm && 1 ? 'odd' : 'even';
+			case 'DATE':
+				$date = new KunenaDate($matches[2]);
+
+				return $date->toSpan('config_postDateFormat', 'config_postDateFormatHover');
+			case 'NEW':
+				return $this->message->isNew() ? 'new' : 'old';
+			case 'REPLYNO':
+				return $this->replynum;
+			case 'MESSAGE_PROFILE':
+				return $this->getMessageProfileBox();
+			case 'MESSAGE_ACTIONS':
+				return $this->getMessageActions();
+		}
+	}
+
+	/**
+	 * @param   null  $template  template
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function displayMessages($template = null)
+	{
+		foreach ($this->messages as $id => $message)
+		{
+			$this->displayMessage($id, $message, $template);
+		}
+	}
+
+	/**
 	 * @param   integer  $id        id
 	 * @param   string   $message   message
 	 * @param   null     $template  template
@@ -863,108 +1151,21 @@ class HtmlView extends BaseHtmlView
 		$this->setLayout($layout);
 	}
 
-	/**
-	 * @param   array  $matches  matches
-	 *
-	 * @return  mixed|string|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function fillMessageInfo($matches)
-	{
-		switch ($matches[1])
-		{
-			case 'ROW':
-				return $this->mmm && 1 ? 'odd' : 'even';
-			case 'DATE':
-				$date = new KunenaDate($matches[2]);
-
-				return $date->toSpan('config_postDateFormat', 'config_postDateFormatHover');
-			case 'NEW':
-				return $this->message->isNew() ? 'new' : 'old';
-			case 'REPLYNO':
-				return $this->replynum;
-			case 'MESSAGE_PROFILE':
-				return $this->getMessageProfileBox();
-			case 'MESSAGE_ACTIONS':
-				return $this->getMessageActions();
-		}
-	}
+	// Helper functions
 
 	/**
-	 * @param   null  $template  template
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function displayMessages($template = null)
-	{
-		foreach ($this->messages as $id => $message)
-		{
-			$this->displayMessage($id, $message, $template);
-		}
-	}
-
-	/**
-	 * @param   integer  $maxpages  max pages
-	 *
-	 * @return  KunenaPagination
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function getPaginationObject($maxpages)
-	{
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
-		$pagination->setDisplayedPages($maxpages);
-
-		$uri = KunenaRoute::normalize(null, true);
-
-		if ($uri)
-		{
-			$uri->delVar('mesid');
-			$pagination->setUri($uri);
-		}
-
-		return $pagination;
-	}
-
-	/**
-	 * @param   integer  $maxpages  max pages
+	 * @param   integer  $anker  anker
+	 * @param   string   $name   name
+	 * @param   string   $rel    rel
+	 * @param   string   $class  class
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
 	 */
-	public function getPagination($maxpages)
+	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
-		return $this->getPaginationObject($maxpages)->getPagesLinks();
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function hasThreadHistory()
-	{
-		if (!$this->config->showHistory || !$this->topic->exists())
-		{
-			return false;
-		}
-
-		return true;
+		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 
 	/**
@@ -1008,6 +1209,21 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function hasThreadHistory()
+	{
+		if (!$this->config->showHistory || !$this->topic->exists())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * @param   integer  $mesid     mesid
 	 * @param   integer  $replycnt  reply count
 	 *
@@ -1029,15 +1245,13 @@ class HtmlView extends BaseHtmlView
 		return $this->numLink;
 	}
 
-	// Helper functions
-
 	/**
 	 * @param   string  $name  name
 	 *
 	 * @return  mixed
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function displayMessageField($name)
 	{
@@ -1061,8 +1275,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function displayCategoryField($name)
 	{
@@ -1082,89 +1296,6 @@ class HtmlView extends BaseHtmlView
 		}
 
 		return !$this->topic->getUserTopic()->subscribed;
-	}
-
-	/**
-	 * @param   integer  $anker  anker
-	 * @param   string   $name   name
-	 * @param   string   $rel    rel
-	 * @param   string   $class  class
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
-	{
-		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
-	}
-
-	/**
-	 * @param   string  $title  Title name on the browser
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function setTitle($title)
-	{
-		if ($this->inLayout)
-		{
-			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-		}
-
-		if (!$this->state->get('embedded'))
-		{
-			// Check for empty title and add site name if param is set
-			$title = strip_tags($title);
-
-			if ($this->app->get('sitename_pagetitles', 0) == 1)
-			{
-				$title = Text::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->boardTitle . ' - ' . $title);
-			}
-			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
-			{
-				$title = Text::sprintf('JPAGETITLE', $title . ' - ' . $this->config->boardTitle, $this->app->get('sitename'));
-			}
-			else
-			{
-				$title = KunenaFactory::getConfig()->boardTitle . ': ' . $title;
-			}
-
-			$this->document->setTitle($title);
-		}
-	}
-
-	/**
-	 * @param   string  $description  description
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function setDescription($description)
-	{
-		if ($this->inLayout)
-		{
-			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
-		}
-
-		if (!$this->state->get('embedded'))
-		{
-			// TODO: allow translations/overrides
-			$lang   = Factory::getLanguage();
-			$length = StringHelper::strlen($lang->getName());
-			$length = 137 - $length;
-
-			if (StringHelper::strlen($description) > $length)
-			{
-				$description = StringHelper::substr($description, 0, $length) . '...';
-			}
-
-			$this->document->setMetadata('description', $description);
-		}
 	}
 
 	/**
@@ -1198,8 +1329,8 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  KunenaControllerDisplay
 	 *
-	 * @throws Exception
 	 * @since   Kunena 4.0
+	 * @throws Exception
 	 */
 	public function subRequest($path, Input $input = null, $options = null)
 	{
@@ -1253,11 +1384,11 @@ class HtmlView extends BaseHtmlView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$catParams = ['ordering'    => 'ordering',
-					   'toplevel'    => 0,
-					   'sections'    => 0,
-					   'direction'   => 1,
-					   'hide_lonely' => 1,
-					   'action'      => 'topic.create', ];
+		              'toplevel'    => 0,
+		              'sections'    => 0,
+		              'direction'   => 1,
+		              'hide_lonely' => 1,
+		              'action'      => 'topic.create',];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);
@@ -1298,7 +1429,7 @@ class HtmlView extends BaseHtmlView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -1370,7 +1501,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -1445,7 +1576,7 @@ class HtmlView extends BaseHtmlView
 			$this->message->edit($saved);
 		}
 
-		$this->postAnonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$modified_reason            = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
@@ -1497,138 +1628,6 @@ class HtmlView extends BaseHtmlView
 		}
 
 		$this->app->redirect(Route::_($uri->toString()));
-	}
-
-	/**
-	 * @param   string  $type  type
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function _prepareDocument($type)
-	{
-		$app       = Factory::getApplication();
-		$menu_item = $app->getMenu()->getActive(); // Get the active item
-
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams(); // Get the params
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
-
-			if ($type == 'default')
-			{
-				$headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
-				$title1     = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
-
-				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
-				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
-
-				if (!empty($params_title))
-				{
-					$title = $params->get('page_title');
-					$this->setTitle($title);
-				}
-				else
-				{
-					$title = Text::sprintf($this->topic->subject) . " ({$page}/{$pages})";
-					$this->setTitle($title);
-				}
-
-				if (!empty($params_description))
-				{
-					$description = $params->get('menu-meta_description');
-					$this->setDescription($description);
-				}
-				else
-				{
-					// Create Meta Description form the content of the first message
-					// better for search results display but NOT for search ranking!
-					$description = KunenaParser::stripBBCode($this->topic->first_post_message, 182);
-					$description = preg_replace('/\s+/', ' ', $description); // Remove newlines
-					$description = trim($description); // Remove trailing spaces and beginning
-
-					if ($page)
-					{
-						$description .= " ({$page}/{$pages})";  // Avoid the "duplicate meta description" error in google webmaster tools
-					}
-
-					$this->setDescription($description);
-				}
-			}
-			elseif ($type == 'create')
-			{
-				if (!empty($params_title))
-				{
-					$title = $params->get('page_title');
-					$this->setTitle($title);
-				}
-				else
-				{
-					$title1 = Text::_('COM_KUNENA_POST_NEW_TOPIC');
-					$this->setTitle($title1);
-				}
-
-				if (!empty($params_description))
-				{
-					$description = $params->get('menu-meta_description');
-					$this->setDescription($description);
-				}
-				else
-				{
-					$this->setDescription(Text::_('COM_KUNENA_POST_NEW_TOPIC'));
-				}
-			}
-			elseif ($type == 'reply')
-			{
-				if (!empty($params_title))
-				{
-					$title = $params->get('page_title');
-					$this->setTitle($title);
-				}
-				else
-				{
-					$title1 = Text::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
-					$this->setTitle($title1);
-				}
-
-				if (!empty($params_description))
-				{
-					$description = $params->get('menu-meta_description');
-					$this->setDescription($description);
-				}
-				else
-				{
-					$this->setDescription(Text::_('COM_KUNENA_POST_REPLY_TOPIC'));
-				}
-			}
-			elseif ($type == 'edit')
-			{
-				if (!empty($params_title))
-				{
-					$title = $params->get('page_title');
-					$this->setTitle($title);
-				}
-				else
-				{
-					$title1 = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
-					$this->setTitle($title1);
-				}
-
-				if (!empty($params_description))
-				{
-					$description = $params->get('menu-meta_description');
-					$this->setDescription($description);
-				}
-				else
-				{
-					$this->setDescription(Text::_('COM_KUNENA_POST_EDIT'));
-				}
-			}
-		}
 	}
 
 }

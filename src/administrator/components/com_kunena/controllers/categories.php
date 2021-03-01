@@ -514,7 +514,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 			if ($aliases_all && $aliases)
 			{
-				$aliases = array_diff($aliases_all, $aliases);
+				$aliases = array_diff($aliases_all, $aliases['aliases']);
 
 				foreach ($aliases_all as $alias)
 				{

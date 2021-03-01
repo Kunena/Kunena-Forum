@@ -1,6 +1,7 @@
 jQuery(document).ready(function ($) {
 	var input_alias = $("#jform_aliases");
 	var box = $("#aliascheck");
+	var info = $("#aliasinfo");
 	var apply = $(".button-apply");
 	var save = $(".button-save");
 	var savenew = $(".button-save-new");
@@ -37,8 +38,8 @@ jQuery(document).ready(function ($) {
 				}
 
 				if (box.length) {
-					box.addClass("valid icon icon-ok");
-					box.html("");
+					info.addClass("valid icon icon-ok");
+					info.html("");
 				}
 			}
 		});

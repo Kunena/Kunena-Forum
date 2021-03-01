@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.3-dev]
 ### Fixed
+* [#7930](https://github.com/Kunena/Kunena-Forum/issues/7930): Error 500 string to array conversion
 * [#7859](https://github.com/Kunena/Kunena-Forum/issues/7859): Reason for editing is hidden
 * [#7923](https://github.com/Kunena/Kunena-Forum/issues/7923): Poll in cat which contain subcategories aren't possible #7923
 * [#7919](https://github.com/Kunena/Kunena-Forum/issues/7919): Trying to get property 'userid' of non-object profile.php

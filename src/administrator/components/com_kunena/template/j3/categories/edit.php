@@ -109,6 +109,7 @@ Factory::getDocument()->addScript(Uri::root() . 'administrator\components\com_ku
 														<input class="inputbox" id="jform_aliases" type="text"
 														       name="alias" size="80"
 														       value="<?php echo $this->escape($this->category->alias); ?>"/>
+														<span id="aliasinfo"></span>
 														<?php
 														if ($this->options ['aliases'])
 															:

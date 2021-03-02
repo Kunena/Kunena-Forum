@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Add a template params to load a custom config file for ckeditor
 
 ### Changed
+* [#7933](https://github.com/Kunena/Kunena-Forum/issues/7933): Type mismatch in libraries/bbcode/bbcode.php
 * Update CKeditor to 4.16.0
 * Avoid to put line return on icons in Ckeditor
 * Update fontawesome to 5.15.2

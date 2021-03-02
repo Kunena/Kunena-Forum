@@ -1217,7 +1217,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
+	public function DoEmail(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1266,7 +1266,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoURL($bbcode, $action, $name, $default, $params, $content)
+	public function DoURL(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
 		// Has been processed.
@@ -1369,7 +1369,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoSize($bbcode, $action, $name, $default, $params, $content)
+	public function DoSize(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1434,7 +1434,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	public function DoList($bbcode, $action, $name, $default, $params, $content)
+	public function DoList(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		// Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
 		// list style is that with image-based markers, which often slows down web sites.
@@ -1525,7 +1525,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
+	public function DoSpoiler(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1574,7 +1574,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoHide($bbcode, $action, $name, $default, $params, $content)
+	public function DoHide(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1624,7 +1624,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
+	public function DoConfidential(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1714,7 +1714,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoMap($bbcode, $action, $name, $default, $params, $content)
+	public function DoMap(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1770,7 +1770,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
+	public function DoEbay(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -1873,7 +1873,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoArticle($bbcode, $action, $name, $default, $params, $content)
+	public function DoArticle(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2019,7 +2019,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
+	public function DoQuote(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2051,7 +2051,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoCode($bbcode, $action, $name, $default, $params, $content)
+	public function DoCode(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2119,7 +2119,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function doTableau($bbcode, $action, $name, $default, $params, $content)
+	public function doTableau(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2181,7 +2181,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoVideo($bbcode, $action, $name, $default, $params, $content)
+	public function DoVideo(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2464,7 +2464,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @throws Exception
 	 * @throws null
 	 */
-	public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
+	public function DoAttachment(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2625,7 +2625,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @throws Exception
 	 * @throws null
 	 */
-	public function DoFile($bbcode, $action, $name, $default, $params, $content)
+	public function DoFile(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2717,7 +2717,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @throws Exception
 	 * @throws null
 	 */
-	public function DoImage($bbcode, $action, $name, $default, $params, $content)
+	public function DoImage(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2813,7 +2813,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
+	public function DoTerminal(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -2842,7 +2842,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
+	public function DoTweet(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -3133,7 +3133,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
+	public function DoSoundcloud(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{
@@ -3178,7 +3178,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	 * @return boolean|string
 	 * @since Kunena
 	 */
-	public static function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+	public static function DoInstagram(Nbbc\BBCode $bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == Nbbc\BBCode::BBCODE_CHECK)
 		{

@@ -196,7 +196,7 @@ jQuery(function ($) {
 		}
 
 		var ckeditor_existing_content = CKEDITOR.instances.message.getData();
-		CKEDITOR.instances.message.insertText(ckeditor_existing_content+' '+content_to_inject);
+		CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
 
 		$('#files .btn.btn-primary').each(function () {
 			$('#files .btn.btn-primary').addClass('btn-success');

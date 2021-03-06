@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.3]
 ### Fixed
+* When enabling Jomsocial integration in Kunena the username of user has disppear
 * When do a clean install of Kunena you aren't redirected to the install page
 * [#7875](https://github.com/Kunena/Kunena-Forum/issues/7875): [CKEditor] The attachment button Insert All duplicates the content of the posts
 * [#7930](https://github.com/Kunena/Kunena-Forum/issues/7930): Error 500 string to array conversion

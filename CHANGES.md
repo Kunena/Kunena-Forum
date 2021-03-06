@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update fontawesome to 5.15.2
 
 ### Removed
+* Remove the button in template to access to manage categories from frontend, this feature isn't working (Part 2: forgot in crypsisb3)
 * Remove the button in template to access to manage categories from frontend, this feature isn't working
 * Remove uneeded plugins files for CKeditor
 

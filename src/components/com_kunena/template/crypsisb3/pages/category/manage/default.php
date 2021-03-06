@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
-$content = $this->execute('Category/Manage');
+/*$content = $this->execute('Category/Manage');
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_MENU_CATEGORY_MANAGE'),
 	'index.php?option=com_kunena&view=category&layout=manage'
 );
 
-echo $content;
+echo $content;*/

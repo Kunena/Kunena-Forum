@@ -135,18 +135,6 @@ class Pkg_KunenaInstallerScript
 	}
 
 	/**
-	 * @param   string $uri uri
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function makeRoute($uri)
-	{
-		return Route::_($uri, false);
-	}
-
-	/**
 	 * @param   string  $type   type
 	 * @param   string  $parent parent
 	 *

@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.3-dev]
+## [5.2.3]
 ### Fixed
 * When do a clean install of Kunena you aren't redirected to the install page
 * [#7875](https://github.com/Kunena/Kunena-Forum/issues/7875): [CKEditor] The attachment button Insert All duplicates the content of the posts
@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update fontawesome to 5.15.2
 
 ### Removed
+* Remove the button in template to access to manage categories from frontend, this feature isn't working
 * Remove uneeded plugins files for CKeditor
 
 ## [5.2.2] - 2021-01-13

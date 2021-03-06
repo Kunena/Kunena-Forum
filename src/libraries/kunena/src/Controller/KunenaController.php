@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -233,22 +234,22 @@ class KunenaController extends BaseController
 		try
 		{
 			// TODO: This would be great, but we would need to store POST before doing it in here...
-			/*
+
 			if ($task != 'display')
 			{
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
-				if (!\Kunena\Forum\Libraries\Forum\KunenaForum::enabled(true))
+				if (!KunenaForum::enabled(true))
 				{
-					throw new \Kunena\Forum\Libraries\Exception\Authorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+					throw new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 				}
 
 				// If forum is for registered users only, prevent guests from accessing tasks.
 				if ($this->config->regOnly && !$this->me->exists())
 				{
-					throw new \Kunena\Forum\Libraries\Exception\Authorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+					throw new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
 			}
-			*/
+
 
 			// Execute the task.
 			$content = static::executeTask($task);

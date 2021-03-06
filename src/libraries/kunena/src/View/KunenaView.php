@@ -17,6 +17,7 @@ use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
@@ -95,7 +96,26 @@ class KunenaView extends HtmlView
 	 * @since version
 	 */
 	public $ktemplate;
-
+	/**
+	 * @var string
+	 * @since version
+	 */
+	public $logo;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	public $intro;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	public $memberList;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	public $thanks;
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
@@ -111,7 +131,6 @@ class KunenaView extends HtmlView
 	 * @since version
 	 */
 	protected $state;
-
 	/**
 	 * @var KunenaProfiler
 	 * @since version
@@ -206,11 +225,12 @@ class KunenaView extends HtmlView
 			$this->setLayout($layout);
 		}
 
-		$view           = $this->getName();
-		$layout         = $this->getLayout();
-		$viewName       = ucfirst($view);
-		$layoutName     = ucfirst($layout);
-		$layoutFunction = 'display' . $layoutName;
+		$view            = $this->getName();
+		$layout          = $this->getLayout();
+		$viewName        = ucfirst($view);
+		$layoutName      = ucfirst($layout);
+		$layoutFunction  = 'display' . $layoutName;
+		$this->_template = $this->ktemplate->getTemplatePaths("/layouts/$view/$layout.php", true);
 
 		KunenaProfiler::getInstance() ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
@@ -551,6 +571,95 @@ class KunenaView extends HtmlView
 		{
 			$this->display($tpl);
 		}
+	}
+
+	/**
+	 * Load a template file -- first look in the templates folder for an override
+	 *
+	 * @param   string  $tpl  The name of the template source file; automatically searches the template paths and compiles as needed.
+	 *
+	 * @return  string  The output of the the template script.
+	 *
+	 * @since   3.0
+	 * @throws  \Exception
+	 */
+	public function loadTemplate($tpl = null)
+	{
+		// Clear prior output
+		$this->_output = null;
+
+		$app            = Factory::getApplication();
+		$input          = $app->input;
+		$template       = Factory::getApplication()->getTemplate(true);
+		$layout         = $this->getLayout();
+		$layoutTemplate = $this->getLayoutTemplate();
+		$view           = $input->get('view');
+
+		// Create the template file name based on the layout
+		$file = isset($tpl) ? $layout . '_' . $tpl : $layout;
+
+		// Clean the file name
+		$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
+		$tpl  = isset($tpl) ? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
+
+		// Load the language file for the template
+		$lang = Factory::getLanguage();
+		$lang->load('tpl_' . $template->template, JPATH_BASE)
+		|| $lang->load('tpl_' . $template->parent, JPATH_THEMES . '/' . $template->parent)
+		|| $lang->load('tpl_' . $template->template, JPATH_THEMES . '/' . $template->template);
+
+		// Change the template folder if alternative layout is in different template
+		if (isset($layoutTemplate) && $layoutTemplate !== '_' && $layoutTemplate != $template->template)
+		{
+			$this->_path['template'] = str_replace(
+				JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template,
+				JPATH_THEMES . DIRECTORY_SEPARATOR . $layoutTemplate,
+				$this->_path['template']
+			);
+		}
+
+		// Load the template script
+		$filetofind      = $this->_createFileName('template', array('name' => $file));
+		$this->_template = Path::find($this->_path['template'], $filetofind);
+
+		// If alternate layout can't be found, fall back to default layout
+		if ($this->_template == false)
+		{
+			$this->_template = $this->ktemplate->getTemplatePaths("/layouts/$view/$layout.php", true);
+		}
+
+		if ($this->_template != false)
+		{
+			foreach ($this->_template as $temp)
+			{
+				if (file_exists($temp))
+				{
+					unset($tpl, $file);
+
+					// Never allow a 'this' property
+					if (isset($this->this))
+					{
+						unset($this->this);
+					}
+
+					// Start capturing output into a buffer
+					ob_start();
+
+					// Include the requested template filename in the local scope
+					// (this will execute the view logic).
+					include $temp;
+
+					// Done with the requested template; get the buffer and
+					// clear it.
+					$this->_output = ob_get_contents();
+					ob_end_clean();
+
+					return $this->_output;
+				}
+			}
+		}
+
+		throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
 	}
 
 	/**

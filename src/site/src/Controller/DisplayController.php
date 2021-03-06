@@ -56,12 +56,12 @@ class DisplayController extends KunenaController
 	 * @param   boolean  $cachable   If true, the view output will be cached.
 	 * @param   boolean  $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
-	 * @return  BaseController  This object to support chaining.
+	 * @return  KunenaController  This object to support chaining.
 	 *
 	 * @since   1.5
 	 * @throws \Exception
 	 */
-	public function display($cachable = false, $urlparams = false): BaseController
+	public function display($cachable = false, $urlparams = false): KunenaController
 	{
 		try
 		{

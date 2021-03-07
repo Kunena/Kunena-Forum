@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.3]
+## [5.2.4-dev]
+
+## [5.2.3] - 2021-03-07
 ### Fixed
 * [#7943](https://github.com/Kunena/Kunena-Forum/issues/7943): Variable escaped {KunenaFactory::getProfile() in quote
 * When enabling Easysocial integration in Kunena the username of user has disppear

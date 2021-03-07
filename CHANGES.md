@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.3]
 ### Fixed
+* [#7943](https://github.com/Kunena/Kunena-Forum/issues/7943): Variable escaped {KunenaFactory::getProfile() in quote
 * When enabling Easysocial integration in Kunena the username of user has disppear
 * [#7573](https://github.com/Kunena/Kunena-Forum/issues/7573): Subscription New Topics - notification is sent for each new message
 * When enabling Jomsocial integration in Kunena the username of user has disppear

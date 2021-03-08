@@ -134,7 +134,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', KunenaFactory::getProfile()->getProfileName($this->me));
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->me->getName());
 	}
 
 	/**
@@ -146,7 +146,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-	    $this->setMetaData('profile:username', KunenaFactory::getProfile()->getProfileName($this->profile), 'property');
+		$this->setMetaData('profile:username', $this->profile->getName(), 'property');
 
 		if ($this->profile->getGender() == 1)
 		{
@@ -220,12 +220,12 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-			    $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', KunenaFactory::getProfile()->getProfileName($this->profile));
+			    $title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 				$this->setTitle($title);
 			}
 
 			$this->setMetaData('og:description', $title, 'property');
-			$this->setMetaData('og:title', KunenaFactory::getProfile()->getProfileName($this->profile), 'property');
+			$this->setMetaData('og:title', $this->profile->getName(), 'property');
 
 			if (!empty($params_keywords))
 			{
@@ -234,7 +234,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-			    $keywords = $this->config->board_title . ', ' . KunenaFactory::getProfile()->getProfileName($this->profile);
+				$keywords = $this->config->board_title . ', ' . $this->profile->getName();
 				$this->setKeywords($keywords);
 			}
 
@@ -245,9 +245,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-			    $description = Text::sprintf('COM_KUNENA_META_PROFILE', KunenaFactory::getProfile()->getProfileName($this->profile),
-			        $this->config->board_title, KunenaFactory::getProfile()->getProfileName($this->profile), $this->config->board_title
-				);
+				$description = Text::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
+					$this->config->board_title, $this->profile->getName(), $this->config->board_title);
 				$this->setDescription($description);
 			}
 

@@ -820,12 +820,12 @@ class KunenaUserBan extends CMSObject
 
 		if ($user->isAdmin())
 		{
-		    throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', KunenaFactory::getProfile()->getProfileName($user)));
+			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName()));
 		}
 
 		if ($user->isModerator() && !$me->isAdmin())
 		{
-		    throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', KunenaFactory::getProfile()->getProfileName($user)));
+			throw new Exception(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName()));
 		}
 
 		return true;

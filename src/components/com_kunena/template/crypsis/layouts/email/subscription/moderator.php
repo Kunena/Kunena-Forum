@@ -170,7 +170,7 @@ if (!$config->plain_email) :
 							<div>
 								<p><?php echo Text::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
 								<p><?php echo Text::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
-								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . KunenaFactory::getProfile()->getProfileName($author, '???', false); ?></p>
+								<p><?php echo Text::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
                                 <p><?php echo Text::_('COM_KUNENA_EMAIL_MESSAGE_LINK_URL');?> :
 									<a href="<?php echo $this->messageLink; ?>"><b><?php echo $this->messageLink; ?></b></a>
@@ -255,7 +255,7 @@ if (!$config->plain_email) :
 
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 
-{$this->text('COM_KUNENA_VIEW_POSTED')} : {KunenaFactory::getProfile()->getProfileName($author, '???', false)}
+{$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
 {$this->text('COM_KUNENA_EMAIL_MESSAGE_LINK_URL')} : {$this->messageLink}
 

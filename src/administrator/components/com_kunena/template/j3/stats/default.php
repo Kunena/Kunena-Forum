@@ -66,7 +66,7 @@ if (Factory::getLanguage()->isRTL())
 					<td><?php echo Text::_('COM_KUNENA_STATS_TOTAL_TOPICS'); ?></td>
 					<td><strong><?php echo $this->topicCount; ?></strong></td>
 					<td><?php echo Text::_('COM_KUNENA_STATS_LATEST_MEMBER'); ?> </td>
-					<td><strong><?php echo KunenaFactory::getProfile()->getProfileName(intval($this->lastUserId)); ?></strong>
+					<td><strong><?php echo KunenaFactory::getUser(intval($this->lastUserId))->getName(); ?></strong>
 					</td>
 				</tr>
 				<tr>

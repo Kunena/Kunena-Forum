@@ -553,7 +553,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 				if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user))
 				{
-				    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape(KunenaFactory::getProfile()->getProfileName($user)), $this->escape($category->name)));
+				    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape($user->getName()), $this->escape($category->name)));
 				}
 			}
 		}

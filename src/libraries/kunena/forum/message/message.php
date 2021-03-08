@@ -321,7 +321,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$message->parent  = $this->id;
 		$message->thread  = $topic->id;
 		$message->catid   = $topic->category_id;
-		$message->name    = KunenaFactory::getProfile()->getProfileName($user, '');
+		$message->name    = $user->getName('');
 		$message->userid  = $user->userid;
 		$message->subject = $this->subject;
 		$message->ip      = IpHelper::getIP();
@@ -356,7 +356,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($fields === true)
 		{
-			$profilename      = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($this->userid), $this->name);
+			$profilename      = KunenaFactory::getUser($this->userid)->getName($this->name);
 			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
@@ -1405,7 +1405,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 		else
 		{
-			$this->name = KunenaFactory::getProfile()->getProfileName($author);
+			$this->name = $author->getName();
 		}
 
 		// Check email address

@@ -25,6 +25,12 @@ class KunenaProfile
 	protected static $instance = false;
 
 	/**
+	 * @var boolean
+	 * @since Kunena 5.2
+	 */
+	public $enabled = true;
+
+	/**
 	 * @param   null $integration integration
 	 *
 	 * @return boolean|KunenaProfile
@@ -53,6 +59,7 @@ class KunenaProfile
 			if (!self::$instance)
 			{
 				self::$instance = new KunenaProfile;
+				self::$instance->enabled = false;
 			}
 		}
 

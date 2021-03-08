@@ -246,7 +246,7 @@ function KunenaBuildRoute(&$query)
 		}
 		else
 		{
-		    $segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaFactory::getProfile()->getProfileName(KunenaUserHelper::get((int) $query['userid'])));
+			$segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaUserHelper::get((int) $query['userid'])->getName());
 		}
 
 		unset($query['userid']);

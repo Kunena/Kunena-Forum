@@ -107,7 +107,7 @@ $txt       = $topic->getActions();
 				?>
 				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 				<?php echo Text::_('COM_KUNENA_BY') ?>
-				<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaFactory::getProfile()->getProfileName($topic->getAuthor())), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+				<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<?php endif; ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
@@ -137,7 +137,7 @@ $txt       = $topic->getActions();
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
 					<div class="span3">
-						<?php echo $topic->getLastPostAuthor()->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaFactory::getProfile()->getProfileName($topic->getLastPostAuthor())), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+						<?php echo $topic->getLastPostAuthor()->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 					</div>
 				<?php endif; ?>
 				<div class="span9">

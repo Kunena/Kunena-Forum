@@ -201,7 +201,7 @@ class KunenaViewTopics extends KunenaView
 				$description = $topic->first_post_message;
 				$date        = new \Joomla\CMS\Date\Date($topic->first_post_time);
 				$userid      = $topic->first_post_userid;
-				$username    = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($userid), $topic->first_post_guest_name);
+				$username    = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 			}
 			else
 			{
@@ -219,7 +219,7 @@ class KunenaViewTopics extends KunenaView
 
 				$date     = new \Joomla\CMS\Date\Date($topic->last_post_time);
 				$userid   = $topic->last_post_userid;
-				$username = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($userid), $topic->last_post_guest_name);
+				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
 
 			$title    = $topic->subject;
@@ -260,7 +260,7 @@ class KunenaViewTopics extends KunenaView
 
 			$date     = new \Joomla\CMS\Date\Date($message->time);
 			$userid   = $message->userid;
-			$username = KunenaFactory::getProfile()->getProfileName(KunenaFactory::getUser($userid), $message->name);
+			$username = KunenaFactory::getUser($userid)->getName($message->name);
 
 			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}

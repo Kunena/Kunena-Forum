@@ -258,7 +258,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 				if ($view == 'user')
 				{
-				    $userName              = KunenaFactory::getProfile()->getProfileName($user);
+				    $userName              = $user->getName();
 					$charMapApostropheOnly = array('s', 'S', 'z', 'Z');
 
 					if (in_array(substr($userName, -1), $charMapApostropheOnly))
@@ -293,7 +293,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$total = $this->pagination->pagesTotal;
 		$user  = KunenaUserHelper::get($this->state->get('user'));
 
-		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . KunenaFactory::getProfile()->getProfileName($user) . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 		$app             = Factory::getApplication();
 		$menu_item       = $app->getMenu()->getActive();
 		$config          = Factory::getApplication('site');
@@ -325,7 +325,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
 			{
-			    $keywords = $this->config->board_title . ', ' . KunenaFactory::getProfile()->getProfileName($user);
+			    $keywords = $this->config->board_title . ', ' . $user->getName();
 				$this->setKeywords($keywords);
 			}
 			elseif (!empty($params_keywords))

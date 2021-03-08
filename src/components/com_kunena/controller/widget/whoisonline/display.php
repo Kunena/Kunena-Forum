@@ -94,12 +94,12 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 			{
 				if ($moderator)
 				{
-				    $this->hiddenList[KunenaFactory::getProfile()->getProfileName($user)] = $user;
+					$this->hiddenList[$user->getName()] = $user;
 				}
 			}
 			else
 			{
-			    $this->onlineList[KunenaFactory::getProfile()->getProfileName($user)] = $user;
+				$this->onlineList[$user->getName()] = $user;
 			}
 		}
 

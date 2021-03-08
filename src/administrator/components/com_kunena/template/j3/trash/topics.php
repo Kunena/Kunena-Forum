@@ -200,7 +200,7 @@ HTMLHelper::_('dropdown.init');
 										<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
 										   target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
 									<td><?php echo $this->escape($row->getCategory()->name); ?></td>
-									<td><?php echo $this->escape(KunenaFactory::getProfile()->getProfileName($row->getAuthor())); ?></td>
+									<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
 									<td><?php echo $row->ip; ?></td>
 									<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->time); ?></td>
 								</tr>

@@ -470,7 +470,7 @@ class KunenaControllerTopic extends KunenaController
 		$this->id = Factory::getApplication()->input->getInt('parentid', 0);
 		$fields   = array(
 			'catid'             => $this->catid,
-		    'name'              => Factory::getApplication()->input->getString('authorname', KunenaFactory::getProfile()->getProfileName($this->me)),
+		    'name'              => Factory::getApplication()->input->getString('authorname', $this->me->getName()),
 			'email'             => Factory::getApplication()->input->getString('email', null),
 			'subject'           => Factory::getApplication()->input->post->get('subject', '', 'raw'),
 			'message'           => Factory::getApplication()->input->post->get('message', '', 'raw'),
@@ -2290,7 +2290,7 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($emailToList))
 			{
-			    $mailnamesender  = !empty($this->config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . KunenaFactory::getProfile()->getProfileName($this->me));
+				$mailnamesender  = !empty($this->config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->board_title . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)

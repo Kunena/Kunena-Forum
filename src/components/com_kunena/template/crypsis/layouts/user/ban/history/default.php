@@ -140,7 +140,7 @@ use Joomla\CMS\Language\Text;
 
 		<tr>
 			<td colspan="6">
-				<?php echo Text::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape(KunenaFactory::getProfile()->getProfileName($this->profile))); ?>
+				<?php echo Text::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile)->getName()); ?>
 			</td>
 		</tr>
 	<?php endif; ?>

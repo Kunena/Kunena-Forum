@@ -23,7 +23,6 @@ $category        = $this->topic->getCategory();
 $category        = $this->topic->getCategory();
 $config          = KunenaConfig::getInstance();
 $txt             = '';
-$profile         = KunenaFactory::getProfile();
 
 if ($this->topic->ordering)
 {
@@ -113,7 +112,7 @@ if (!empty($this->spacing)) : ?>
 				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') ?>
-			<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $profile->getProfileName($this->topic->getFirstPostAuthor())), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+			<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 			<div class="float-right">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
@@ -152,14 +151,14 @@ if (!empty($this->spacing)) : ?>
 		<div class="row">
 			<?php if ($config->avataroncat) : ?>
 			<div class="col-xs-6 col-md-3">
-				<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaUserHelper::get($this->topic->getLastPostAuthor())), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
+				<?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avataredit); ?>
 			</div>
 			<div class="col-xs-6 col-md-9">
 				<?php else : ?>
 				<div class="col-md-12">
 					<?php endif; ?>
 					<span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
-						<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', KunenaUserHelper::get($this->topic->getLastPostAuthor())), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+						<?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
 					</span>
 					<br>
 					<span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

@@ -2026,12 +2026,18 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return true;
 		}
 
-		$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$wrote = '';
+		$quote_params = explode(' ' ,$default);
+		$username = $quote_params['0'];
+		$messageid = explode('=', $quote_params['1']);
+		
+		$message = KunenaForumMessageHelper::get($messageid['1']);
+		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 
-		if ($user)
+		if ($username)
 		{
-			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
+			$wrote = '<a href="' . $msglink . '"> ' . $quote_params['0'] . " " . Text::_('COM_KUNENA_POST_WROTE') . ': </a>';
 		}
 
 		$html = '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';

@@ -310,9 +310,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @throws null
 	 * @since Kunena
 	 */
-	public function newReply($fields = array(), $user = null, $safefields = null)
+	public function newReply($fields = array(), $userfromparent = null, $safefields = null)
 	{
-		$user     = KunenaUserHelper::get($user);
+		$user     = KunenaUserHelper::get();
 		$topic    = $this->getTopic();
 		$category = $this->getCategory();
 
@@ -356,11 +356,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($fields === true)
 		{
-			$profilename      = KunenaFactory::getUser($this->userid)->getName($this->name);
+			$userobjectparent = KunenaUserHelper::get($userfromparent);
 			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
-			$message->message = "[quote={$profilename} post={$this->id}]" . $text . "[/quote]";
+			$message->message = "[quote=\"{$userobjectparent->getName($this->name)} post={$this->id}\"]" . $text . "[/quote]";
 		}
 		else
 		{

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.4-dev]
 ### Fixed
+* [#7954](https://github.com/Kunena/Kunena-Forum/issues/7954): Quote adds the message ID of the quoted post
 * [#7947](https://github.com/Kunena/Kunena-Forum/issues/7947): Names not displayed when Kunena Profile is disabled (in the Kunena Integration plugin)
 
 ## [5.2.3] - 2021-03-07

@@ -51,7 +51,7 @@ class Com_KunenaInstallerScript
 	 * @var array
 	 * @since Kunena
 	 */
-	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML', 'fileinfo', 'mbstring', 'openssl');
+	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML', 'mbstring');
 
 	/**
 	 * @param   string $parent parent

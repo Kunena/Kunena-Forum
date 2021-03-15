@@ -1960,7 +1960,7 @@ HTML;
 	}
 
 	/**
-	 * Load fontawesome libraries
+	 * Load fontawesome libraries with if enabled the compatibility layer for version 4.x
 	 *
 	 * @since Kunena 5.2
 	 */
@@ -1968,10 +1968,16 @@ HTML;
 	{
 		$ktemplate = KunenaFactory::getTemplate();
 		$fontawesome = $ktemplate->params->get('fontawesome');
+		$fontawesome_layer_v4 = $ktemplate->params->get('fontawesome_layer_v4');
 
 		if ($fontawesome)
 		{
 			$this->addScript('https://use.fontawesome.com/releases/v5.15.2/js/all.js', array(), array('defer' => true));
+		}
+		
+		if ($fontawesome && $fontawesome_layer_v4)
+		{
+			$this->addScript('https://use.fontawesome.com/releases/v5.15.2/js/v4-shims.js', array(), array('defer' => true));
 		}
 	}
 }

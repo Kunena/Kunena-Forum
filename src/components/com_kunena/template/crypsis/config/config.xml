@@ -129,6 +129,11 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="fontawesome_layer_v4" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_COMPATIBILITY_LAYER_V4"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_COMPATIBILITY_LAYER_V4_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="socialshare" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE"
                description="COM_KUNENA_TEMPLATE_DISPLAY_SOCIALSHARE_DESC">
             <option value="0">COM_KUNENA_NO</option>

@@ -202,6 +202,16 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{
-		return FD::user($user->id)->username;
+		$config  = ES::config();
+		$displayusername =  $config->get('users.displayName');
+
+		if ( $displayusername == 'username')
+		{
+			return FD::user($user->id)->username;
+		}
+		else
+		{
+			return FD::user($user->id)->name;
+		}
 	}
 }

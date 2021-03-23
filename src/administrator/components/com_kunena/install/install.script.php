@@ -179,6 +179,21 @@ class Com_KunenaInstallerScript
 			}
 		}
 
+		// Delete the directories of plugins of CKeditor not present anymore
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/copyformatting');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/div');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/flashs');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/forms');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/pagebreak');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/pastetools');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/preview');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/showblocks');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/table');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/tableselection');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/tabletools');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/templates');
+		$this->deleteFolder(JPATH_SITE . '/media/kunena/core/js/plugins/wsc');
+
 		// Copy files to new dir for Crypsis
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less'))
 		{

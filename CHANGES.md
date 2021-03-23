@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [#7947](https://github.com/Kunena/Kunena-Forum/issues/7947): Names not displayed when Kunena Profile is disabled (in the Kunena Integration plugin)
 
 ### Changed
+* During install or update of Kunena the directories of CKeditor plugins not present anymore are deleted
 * Typo in language file en-GB.com_kunena.templates.ini
 * Add a new setting in templates to load fontawesome compatibility layer for version 4.x
 * In KunenaUser class don't need to call in each method the config object because is called in contructor

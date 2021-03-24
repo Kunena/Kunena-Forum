@@ -101,7 +101,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
 
-		if(is_array($categoryIds))
+		if (!isset($categoryIds))
 		{
 			$categoryIds = false;
 		}

@@ -853,6 +853,11 @@
                  versionname="Internal">
             <phpfile name="5.2.0-2020-08-20_updaterankstitle"/>
         </version>
+        <version version="5.2.4-DEV"
+                 versiondate="2020-03-24"
+                 versionname="Internal">
+            <phpfile name="5.2.0-2021-03-24_configuration"/>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

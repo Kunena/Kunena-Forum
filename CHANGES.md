@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.4-dev]
 ### Fixed
+* When Jomsocial plugin integration is enabled it don't follow Jomsocial settings to display the name or the username
 * Rendering Error in layout User/Ban/History: Call to a member function getName() on string in /libraries/kunena/layout/base.php on line 168
 * Users always showing as "online" even when offline on the crypsisb4 template
 * When integration with easysocial is enabled, get displayname setting from easysocial configuration to know what to display

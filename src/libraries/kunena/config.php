@@ -404,10 +404,10 @@ class KunenaConfig extends CMSObject
 	public $userlist_userhits = 1;
 
 	/**
-	 * @var    string  Latest category; select, integer multiple
+	 * @var    integer  Latest category; select, integer multiple
 	 * @since  1.0.0
 	 */
-	public $latestcategory = '';
+	public $latestcategory = 0;
 
 	/**
 	 * @var    integer  Show stats; select, boolean

@@ -190,7 +190,7 @@ class KunenaBbcode extends Nbbc\BBCode
 
 			if (strstr($params['host'], 'instagram.') && !empty($path[1]))
 			{
-				return KunenaBbcodeLibrary::DoInstagram('', '', '', '', '', rtrim($params['url']));
+				return KunenaBbcodeLibrary::renderInstagram(rtrim($params['url']));
 			}
 		}
 
@@ -3193,50 +3193,62 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		if (!empty($content))
 		{
-			$before  = $content;
-			$content = strip_tags($content);
+			return self::renderInstagram($content);
+		}
+	}
 
-			$content = trim($content);
+	/**
+	 * Method to render the instagram content
+	 * 
+	 * @param string $content
+	 * @return string
+	 * @since Kunena 5.2
+	 */
+	public static function renderInstagram($content)
+	{
+		$before  = $content;
+		$content = strip_tags($content);
 
-			$url_parsed = parse_url($content);
+		$content = trim($content);
 
-			if (isset($url_parsed['scheme']))
+		$url_parsed = parse_url($content);
+
+		if (isset($url_parsed['scheme']))
+		{
+			if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
 			{
-				if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
-				{
-					$content = $url_parsed['host'] . $url_parsed['path'];
-				}
-				else
-				{
-					$content = $url_parsed['path'];
-				}
-			}
-
-			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
-			{
-				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
-				{
-					// Add scheme to raw domain URLs.
-					$url = "https://{$content}";
-				}
-
-				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
-			}
-
-			// Display tag in activity streams etc..
-			if (!empty($bbcode->parent->forceMinimal))
-			{
-			    return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-			}
-
-			if (!empty($content))
-			{
-				return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+				$content = $url_parsed['host'] . $url_parsed['path'];
 			}
 			else
 			{
-				return $before;
+				$content = $url_parsed['path'];
 			}
+		}
+
+		if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+		{
+			if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+			{
+				// Add scheme to raw domain URLs.
+				$url = "https://{$content}";
+			}
+
+			return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+		}
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
+
+		if (!empty($content))
+		{
+			return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+		}
+		else
+		{
+			return $before;
 		}
 	}
 }

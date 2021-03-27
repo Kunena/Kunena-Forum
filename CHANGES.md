@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.4-dev]
 ### Fixed
+* When Easy profile plugin integration is enabled it don't follow Easy profile settings to display the name or the username
+* [#7977](https://github.com/Kunena/Kunena-Forum/issues/7977): KunenaBbcodeLibrary::DoInstagram() must be an instance of Nbbc\BBCode, string given
 * When Jomsocial plugin integration is enabled it don't follow Jomsocial settings to display the name or the username
 * [#7945](https://github.com/Kunena/Kunena-Forum/issues/7945): The menu item Recent Topics shows either all or nothing
 * Rendering Error in layout User/Ban/History: Call to a member function getName() on string in /libraries/kunena/layout/base.php on line 168

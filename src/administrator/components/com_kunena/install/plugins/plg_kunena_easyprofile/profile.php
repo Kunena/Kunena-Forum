@@ -108,4 +108,36 @@ class KunenaProfileEasyprofile extends KunenaProfile
 
 		return $user->getLink();
 	}
+	
+	/**
+	 * Return username of user
+	 *
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena 5.2
+	 * @return string
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$config = JComponentHelper::getParams('com_jsn');
+		$formatName = $config->get('formatname', 'NAME');
+
+		if($formatName == 'NAME')
+		{
+			return JsnHelper::getUser($user->id)->name;
+		}
+		else if ($formatName == 'USERNAME')
+		{
+			return JsnHelper::getUser($user->id)->username;
+		}
+		else if ($formatName == 'NAMEUSERNAME')
+		{
+			return JsnHelper::getUser($user->id)->name . ' (' . JsnHelper::getUser($user->id)->username . ')';
+		}
+		else
+		{
+			return JsnHelper::getUser($user->id)->username . ' (' . JsnHelper::getUser($user->id)->name . ')';
+		}
+	}
 }

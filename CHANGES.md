@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.4-dev]
 ### Fixed
+* Log all the actions into Php file during Kunena install, to have a way to find the error in case of fail
 * Missing call for namespace Joomla\CMS\Language\Text in some templates files
 * Improve display of quote in message and move quote in template
 * When Altauserpoints plugin integration is enabled it don't follow Altauserpoints settings to display the name or the username

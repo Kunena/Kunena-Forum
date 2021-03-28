@@ -149,6 +149,20 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 			array('step' => 'Database', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_DATABASE')),
 			array('step' => 'Finish', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_FINISH')),
 			array('step' => '', 'menu' => Text::_('COM_KUNENA_INSTALL_STEP_COMPLETE')), );
+
+		// The log file will be found into \administrator\logs
+		JLog::addLogger(
+			array(
+				// Sets file name
+				'text_file' => 'com_kunena.log.php'
+			),
+			// Sets messages of all log levels to be sent to the file.
+			JLog::ALL,
+			// The log category/categories which should be recorded in this file.
+			// In this case, it's just the one category from our extension.
+			// We still need to put it inside an array.
+			array('com_kunena')
+		);
 	}
 
 	/**
@@ -397,11 +411,13 @@ class KunenaModelInstall extends \Joomla\CMS\MVC\Model\BaseDatabaseModel
 		if ($id === null)
 		{
 			$status [] = array('step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg);
+			JLog::add('Task '.$task.' MSG '.$msg.' RESULT '.$result, JLog::ERROR, 'com_kunena');
 		}
 		else
 		{
 			unset($status [$id]);
 			$status [$id] = array('step' => $step, 'task' => $task, 'success' => $result, 'msg' => $msg);
+			JLog::add('Task '.$task.' MSG '.$msg.' RESULT '.$result, JLog::ERROR, 'com_kunena');
 		}
 
 		$this->setState('status', $status);

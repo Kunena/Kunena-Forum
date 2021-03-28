@@ -2027,7 +2027,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
-		$wrote = '';
+
 		$quote_params = explode(' ' ,$default);
 		$username = $quote_params['0'];
 		$messageid = explode('=', $quote_params['1']);
@@ -2035,14 +2035,17 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$message = KunenaForumMessageHelper::get($messageid['1']);
 		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 
-		if ($username)
+		$layout = KunenaLayout::factory('BBCode/Quote');
+		
+		if ($layout->getPath())
 		{
-			$wrote = '<a href="' . $msglink . '"> ' . $quote_params['0'] . " " . Text::_('COM_KUNENA_POST_WROTE') . ': </a>';
+			return (string) $layout
+				->set('username', $username)
+				->set('msglink', $msglink) 
+				->set('content', $content);
 		}
 
-		$html = '<blockquote><p class="kmsgtext-quote">' . $wrote . $content . '</p></blockquote>';
-
-		return $html;
+		return '';
 	}
 
 	/**

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.4-dev]
 ### Fixed
+* Missing call for namespace Joomla\CMS\Language\Text in some templates files
+* Improve display of quote in message and move quote in template
 * When Altauserpoints plugin integration is enabled it don't follow Altauserpoints settings to display the name or the username
 * When Easy profile plugin integration is enabled it don't follow Easy profile settings to display the name or the username
 * [#7977](https://github.com/Kunena/Kunena-Forum/issues/7977): KunenaBbcodeLibrary::DoInstagram() must be an instance of Nbbc\BBCode, string given

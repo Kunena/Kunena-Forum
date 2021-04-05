@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.4-dev]
+## [5.2.5-dev]
+
+## [5.2.4]
 ### Fixed
 * Log all the actions into Php file during Kunena install, to have a way to find the error in case of fail
 * Missing call for namespace Joomla\CMS\Language\Text in some templates files

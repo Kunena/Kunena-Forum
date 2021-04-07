@@ -162,6 +162,10 @@ class KunenaAdminControllerPlugins extends KunenaController
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
+				else
+				{
+					$cids_exist[] = $plg->extension_id;
+				}
 			}
 
 			$extension    = $this->input->get('extension');

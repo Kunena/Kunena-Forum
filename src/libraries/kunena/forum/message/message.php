@@ -302,15 +302,17 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   array      $fields     fields
-	 * @param   mixed      $user       user
-	 * @param   null|array $safefields safefields
+	 * Prepare the data and save to reply
+	 * 
+	 * @param   array      $fields              Fields to prepare teh message
+	 * @param   int        $useridfromparent    Userid of the user of parent
+	 * @param   null|array $safefields          safefields
 	 *
 	 * @return array
 	 * @throws null
 	 * @since Kunena
 	 */
-	public function newReply($fields = array(), $userfromparent = null, $safefields = null)
+	public function newReply($fields = array(), $useridfromparent = 0, $safefields = null)
 	{
 		$user     = KunenaUserHelper::get();
 		$topic    = $this->getTopic();
@@ -356,11 +358,10 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($fields === true)
 		{
-			$userobjectparent = KunenaUserHelper::get($userfromparent);
-			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
-			$replace          = '';
-			$text             = preg_replace($find, $replace, $this->message);
-			$message->message = "[quote=\"{$userobjectparent->getName($this->name)} post={$this->id}\"]" . $text . "[/quote]";
+			$find                 = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
+			$replace              = '';
+			$text                 = preg_replace($find, $replace, $this->message);
+			$message->message     = "[quote=\"{$useridfromparent} post={$this->id}\"]" . $text . "[/quote]";
 		}
 		else
 		{

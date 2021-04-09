@@ -2029,14 +2029,14 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
 		$quote_params = explode(' ' ,$default);
-		$username = $quote_params['0'];
 		$messageid = explode('=', $quote_params['1']);
-		
+
 		$message = KunenaForumMessageHelper::get($messageid['1']);
+		$username = KunenaUserHelper::get($message->userid)->getName();
 		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 
 		$layout = KunenaLayout::factory('BBCode/Quote');
-		
+
 		if ($layout->getPath())
 		{
 			return (string) $layout

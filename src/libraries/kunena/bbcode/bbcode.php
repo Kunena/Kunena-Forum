@@ -2032,7 +2032,11 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$messageid = explode('=', $quote_params['1']);
 
 		$message = KunenaForumMessageHelper::get($messageid['1']);
-		$username = KunenaUserHelper::get($message->userid)->getName();
+		if (!empty($quote_params['0']))
+		{
+			$username = KunenaUserHelper::get($message->userid)->getName();
+		}
+
 		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 
 		$layout = KunenaLayout::factory('BBCode/Quote');

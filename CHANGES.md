@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* An username still appears on quote even on quote not related to a message
 * When quote a message from someone which have a name or an username with more than one word, it displays only the first word
 * When try to enabling some integration plugins it doesn't work
 * [#5956](https://github.com/Kunena/Kunena-Forum/issues/5956): We need another message when someone try to enable not needed Kunena plugins

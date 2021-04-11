@@ -76,6 +76,14 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SMALL');
 Text::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
 Text::script('COM_KUNENA_EDITOR_SIZE_BIG');
 Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
+Text::script('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
+Text::script('COM_KUNENA_POLL_ADD_POLL_OPTION');
+Text::script('COM_KUNENA_POLL_REMOVE_POLL_OPTION');
+Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
+Text::script('COM_KUNENA_POLL_TITLE');
 
 $this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);

@@ -83,6 +83,7 @@ Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
 Text::script('COM_KUNENA_POLL_ADD_POLL_OPTION');
 Text::script('COM_KUNENA_POLL_REMOVE_POLL_OPTION');
 Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
+Text::script('COM_KUNENA_POLL_TITLE');
 
 $this->addScriptOptions('com_kunena.imageheight', $this->config->imageheight);
 $this->addScriptOptions('com_kunena.imagewidth', $this->config->imagewidth);

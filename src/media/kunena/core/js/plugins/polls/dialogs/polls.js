@@ -51,7 +51,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'text',
 						id: 'polltitle',
-						label: 'Poll title',
+						label: Joomla.JText._('COM_KUNENA_POLL_TITLE'),
 						default: ''
 					},
 					{

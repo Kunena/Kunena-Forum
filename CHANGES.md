@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* On crypsisb3 and crypsisb4 some strings of poll dialog aren't here and the poll title label ins't translated
 * [#7996](https://github.com/Kunena/Kunena-Forum/issues/7996): Impossible to choose birthdate with datepicker
 * An username still appears on quote even on quote not related to a message
 * When quote a message from someone which have a name or an username with more than one word, it displays only the first word

@@ -122,9 +122,9 @@ $this->addScript('assets/js/search.js');
 						</legend>
 						<div id="searchatdate">
 							<div class="input-append date">
-								<input type="text" name="searchatdate" data-date-format="mm/dd/yyyy"
+								<input type="text" name="searchatdate" data-date-format="yyyy-dd-mm"
 								       value="">
-								<span class="input-group-addon"><?php echo KunenaIcons::calendar(); ?></span>
+								<span class="add-on"><?php echo KunenaIcons::calendar(); ?></span>
 							</div>
 						</div>
 					</fieldset>

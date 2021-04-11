@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * When try to enabling some integration plugins it doesn't work
 * [#5956](https://github.com/Kunena/Kunena-Forum/issues/5956): We need another message when someone try to enable not needed Kunena plugins
 
+### Changed
+* Set the following date format for all datepicker : yyyy-mm-dd
+
 ## [5.2.4] - 2021-04-04
 ### Fixed
 * Log all the actions into Php file during Kunena install, to have a way to find the error in case of fail

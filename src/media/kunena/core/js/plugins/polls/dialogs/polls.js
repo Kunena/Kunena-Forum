@@ -101,7 +101,8 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 							var theInput = jQuery('#' + this.domId).find('input');
 							// Apply the datepicker to the input control
 							jQuery(theInput.selector).datepicker({
-								showButtonPanel: true
+								showButtonPanel: true,
+								format: "yyyy-mm-dd"
 							});
 						},
 					},

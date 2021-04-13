@@ -15,6 +15,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
 $this->addScript('assets/js/poll.js');
+
+$polllifespan = '';
+if (!empty($this->poll->polltimetolive))
+{
+	$polllifespan = ' (' . $this->poll->polltimetolive . ')';
+}
 ?>
 
 <?php if ($this->show_title)
@@ -27,7 +33,7 @@ $this->addScript('assets/js/poll.js');
 		&times;
 	</button>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title) . $polllifespan; ?>
 	</h2>
 <?php endif; ?>
 

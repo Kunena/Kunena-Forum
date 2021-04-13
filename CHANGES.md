@@ -6,12 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
-* On crypsisb3 and crypsisb4 some strings of poll dialog aren't here and the poll title label ins't translated
+* On crypsisb3 and crypsisb4 when edit a poll the fields (poll title, options...) aren't filled
+* On crypsisb3 and crypsisb4 some strings of poll dialog aren't here and the poll title label isn't translated
 * [#7996](https://github.com/Kunena/Kunena-Forum/issues/7996): Impossible to choose birthdate with datepicker
 * An username still appears on quote even on quote not related to a message
 * When quote a message from someone which have a name or an username with more than one word, it displays only the first word
 * When try to enabling some integration plugins it doesn't work
 * [#5956](https://github.com/Kunena/Kunena-Forum/issues/5956): We need another message when someone try to enable not needed Kunena plugins
+
+### Added
+* Display poll end time if exist next to the poll title on results and vote layout
 
 ### Changed
 * Set the following date format for all datepicker : yyyy-mm-dd

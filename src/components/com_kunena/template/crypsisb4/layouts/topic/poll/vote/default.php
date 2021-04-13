@@ -15,12 +15,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $this->addScript('assets/js/poll.js');
+
+$polllifespan = '';
+if (!empty($this->poll->polltimetolive))
+{
+	$polllifespan = ' (' . $this->poll->polltimetolive . ')';
+}
 ?>
 	<div class="float-right btn btn-outline-primary border btn-small" data-toggle="collapse" data-target="#poll-vote">
 		&times;
 	</div>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title) . $polllifespan; ?>
 	</h2>
 
 	<div class="" id="poll-vote">

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* On crypsisb3 and crypsisb4, the poll icon is disabled on categories which have polls enabled which contains sub-categories
 * On crypsisb3 and crypsisb4 when edit a poll the fields (poll title, options...) aren't filled
 * On crypsisb3 and crypsisb4 some strings of poll dialog aren't here and the poll title label isn't translated
 * [#7996](https://github.com/Kunena/Kunena-Forum/issues/7996): Impossible to choose birthdate with datepicker

@@ -19,7 +19,7 @@ $this->addScript('assets/js/poll.js');
 $polllifespan = '';
 if (!empty($this->poll->polltimetolive))
 {
-	$polllifespan = ' (' . $this->poll->polltimetolive . ')';
+	$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
 }
 ?>
 	<div class="float-right btn btn-outline-primary border btn-small" data-toggle="collapse" data-target="#poll-vote">

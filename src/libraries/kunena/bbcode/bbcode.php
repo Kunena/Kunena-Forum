@@ -2029,12 +2029,25 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
 		$quote_params = explode(' ' ,$default);
-		$messageid = explode('=', $quote_params['1']);
-
-		$message = KunenaForumMessageHelper::get($messageid['1']);
-		if (!empty($quote_params['0']))
+		if (count($quote_params) == 3)
 		{
-			$username = KunenaUserHelper::get($message->userid)->getName();
+			$messageid = explode('=', $quote_params['1']);
+			$message = KunenaForumMessageHelper::get($messageid['1']);
+
+			if ($message->userid > 0)
+			{
+				$username = KunenaUserHelper::get($message->userid)->getName();
+			}
+			else 
+			{
+				$username = Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_NON_EXISTANT_USER');
+			}
+		}
+		else
+		{
+			// To support old bbcode tags used before Kunena 5.2.x
+			$message = KunenaForumMessageHelper::get($params['post']);
+			$username = $quote_params['0'];
 		}
 
 		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);

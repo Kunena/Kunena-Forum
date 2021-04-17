@@ -358,10 +358,17 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if ($fields === true)
 		{
+			$userfromparent = KunenaUserHelper::get($useridfromparent);
+			$userfromparentname =$userfromparent->getName();
+			if (empty($userfromparent->getName()))
+			{
+				$userfromparentname = 'anonymous';
+			}
+
 			$find                 = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
 			$replace              = '';
 			$text                 = preg_replace($find, $replace, $this->message);
-			$message->message     = "[quote=\"{$useridfromparent} post={$this->id}\"]" . $text . "[/quote]";
+			$message->message     = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
 		}
 		else
 		{

@@ -299,7 +299,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$ip             = $this->app->input->getString('ip', '');
-		$block          = $this->app->input->getInt('block', 0);
+		$banlevel       = $this->app->input->getInt('banlevel', 0);
 		$expiration     = $this->app->input->getString('expiration', '');
 		$reason_private = $this->app->input->getString('reason_private', '');
 		$reason_public  = $this->app->input->getString('reason_public', '');
@@ -315,7 +315,7 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$ban->id)
 		{
-			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
+			$ban->ban($user->userid, $ip, $banlevel, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
 
 			// Send report to stopforumspam
@@ -330,14 +330,14 @@ class KunenaControllerUser extends KunenaController
 			}
 			else
 			{
-				$ban->blocked = $block;
+				$ban->blocked = $banlevel;
 				$ban->setExpiration($expiration, $comment);
 				$ban->setReason($reason_public, $reason_private);
 				$success = $ban->save();
 			}
 		}
 
-		if ($block)
+		if ($banlevel)
 		{
 			if ($ban->isEnabled())
 			{

@@ -54,7 +54,7 @@ use Joomla\CMS\Language\Text;
 
 				// Build the html select list
 				echo HTMLHelper::_(
-					'select.genericlist', $block, 'block', '', 'value', 'text',
+					'select.genericlist', $block, 'banlevel', '', 'value', 'text',
 					$this->escape($this->banInfo->blocked), 'ban-level'
 				);
 				?>

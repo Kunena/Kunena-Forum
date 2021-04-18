@@ -77,6 +77,51 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 				</div>
 			<?php endif; ?>
 			<div class="row clearfix">
+					<div class="col-xl-3 col-md-3">
+						<div class="card proj-t-card bg-warning">
+							<div class="card-body">
+								<div class="row align-items-center mb-30">
+									<div class="col-auto">
+										<i class="fas fa-database text-white f-30"></i>
+									</div>
+									<div class="col pl-0">
+										<h6 class="mb-0 text-white">Install</h6>
+										<h6 class="mb-0 text-white">Kunena Menus</h6>
+									</div>
+								</div>
+								<div>
+									<ul id="sample-data-wrapper" class="list-group list-group-flush">
+										<li class="list-group-item sampleData-kunena">
+											<div class="d-flex justify-content-between align-items-center">
+												<div class="mr-2">
+													<span class="fas fa-comments" aria-hidden="true"></span>
+													Kunena Menus
+												</div>
+												<button type="button" class="btn btn-secondary btn-sm apply-sample-data"
+														data-type="kunena" data-steps="1">
+													<span class="fas fa-upload" aria-hidden="true"></span> Install
+													<span class="sr-only">Kunena Menus</span>
+												</button>
+											</div>
+											<p class="small mt-1">Install Kunena Menus</p>
+										</li>
+										<li class="list-group-item sampleData-progress-kunena d-none">
+											<div class="progress">
+												<div class="progress-bar progress-bar-striped progress-bar-animated"
+													 role="progressbar"></div>
+											</div>
+										</li>
+										<li class="list-group-item sampleData-progress-kunena d-none">
+											<ul class="list-unstyled"></ul>
+										</li>
+									</ul>
+								</div>
+								<h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="row clearfix">
 				<div class="col-xl-4 col-md-12">
 					<div class="card proj-t-card">
 						<div class="card-body">

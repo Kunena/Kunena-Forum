@@ -27,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class TableKunenaSessions extends KunenaTable
+class KunenaSessions extends KunenaTable
 {
 	/**
 	 * @var     integer

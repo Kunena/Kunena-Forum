@@ -332,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `view`             varchar(8)   NOT NULL default '',
     `signature`        text         NULL,
     `moderator`        int(11)      NULL     default '0',
-    `banned`           datetime     NULL     DEFAULT NULL,
+    `banned`           datetime     NULL     DEFAULT '1000-01-01 00:00:00',
     `ordering`         int(11)      NULL     default '0',
     `posts`            int(11)      NULL     default '0',
     `avatar`           varchar(255) NULL,

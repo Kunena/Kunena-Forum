@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* [#6023](https://github.com/Kunena/Kunena-Forum/issues/6023): Ban from forum does not work (part 2)
 * Don't logout the user when do unban, related to the issue [#5956](https://github.com/Kunena/Kunena-Forum/issues/5956)
 * When the poll has ended display a different string next to the poll life span
 * Quote on messages done on previous versions not show the author user of the quote but the current user

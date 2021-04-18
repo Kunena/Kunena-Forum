@@ -282,7 +282,7 @@ class KunenaUserBan extends CMSObject
 	 */
 	public function isLifetime()
 	{
-		return $this->expiration == $this->_db->getNullDate();
+		return $this->expiration == '9999-12-31 23:59:59';
 	}
 
 	/**
@@ -363,7 +363,7 @@ class KunenaUserBan extends CMSObject
 		$query->select('b.*')
 			->from($db->quoteName('#__kunena_users_banned') . ' AS b')
 			->innerJoin($db->quoteName('#__users') . ' AS u ON u.id=b.userid')
-			->where('b.expiration = ' . $db->quote($db->getNullDate()) . ' OR b.expiration > ' . $db->quote($now->toSql()))
+			->where('b.expiration = ' . $db->quote('9999-12-31 23:59:59') . ' OR b.expiration > ' . $db->quote($now->toSql()))
 			->order('b.created_time DESC');
 		$db->setQuery($query, $start, $limit);
 
@@ -588,22 +588,24 @@ class KunenaUserBan extends CMSObject
 	}
 
 	/**
+	 * Do the ban for the specified user from site or forum
+	 * 
 	 * @param   null   $userid         userid
-	 * @param   null   $ip             ip
-	 * @param   int    $block          block
-	 * @param   null   $expiration     expiration
-	 * @param   string $reason_private private
-	 * @param   string $reason_public  public
-	 * @param   string $comment        comment
+	 * @param   null   $ip             The address IP of the user
+	 * @param   bool   $banlevel       Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
+	 * @param   null   $expiration     The expiration date of the ban, if no date is specified the ban is set for lifetime
+	 * @param   string $reason_private The private reason
+	 * @param   string $reason_public  The public reason
+	 * @param   string $comment        Set a comment for others moderators
 	 *
-	 * @since Kunena
+	 * @since Kunena 1.6
 	 * @return void
 	 */
-	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
+	public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
 		$this->userid  = intval($userid) > 0 ? (int) $userid : null;
 		$this->ip      = $ip ? (string) $ip : null;
-		$this->blocked = (int) $block;
+		$this->blocked = (int) $banlevel;
 		$this->setExpiration($expiration);
 		$this->reason_private = (string) $reason_private;
 		$this->reason_public  = (string) $reason_public;
@@ -625,9 +627,9 @@ class KunenaUserBan extends CMSObject
 			return;
 		}
 
-		if (!$expiration || $expiration == $this->_db->getNullDate())
+		if (!$expiration || $expiration == '0000-00-00 00:00:00')
 		{
-			$this->expiration = $this->_db->getNullDate();
+			$this->expiration = '9999-12-31 23:59:59';
 		}
 		else
 		{
@@ -704,10 +706,6 @@ class KunenaUserBan extends CMSObject
 			throw new Exception($e->getMessage());
 		}
 
-		$user = Factory::getUser($this->userid);
-		$app  = Factory::getApplication();
-		$app->logout((int) $this->userid);
-
 		if (!$this->id)
 		{
 			// If we have new ban, add creation date and user if they do not exist
@@ -747,6 +745,8 @@ class KunenaUserBan extends CMSObject
 
 		if ($this->userid)
 		{
+			$user = Factory::getUser($this->userid);
+
 			// Change user block also in Joomla
 			if (!$user)
 			{
@@ -755,19 +755,23 @@ class KunenaUserBan extends CMSObject
 				return false;
 			}
 
-			$block = 0;
+			$banlevel = 0;
 
 			if ($this->isEnabled())
 			{
-				$block = $this->blocked;
+				$banlevel = $this->blocked;
+
+				$app  = Factory::getApplication();
+				$app->logout((int) $this->userid);
 			}
 
-			if ($user->block != $block)
+			if ($user->block != $banlevel)
 			{
-				$user->block = $block;
+				$user->block = $banlevel;
 				$user->save();
 			}
-
+			echo 'banlevel '.$banlevel;
+			
 			// Change user state also in #__kunena_users
 			$profile         = KunenaFactory::getUser($this->userid);
 			$profile->banned = $this->expiration;

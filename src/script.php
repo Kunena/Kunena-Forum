@@ -23,8 +23,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
-use Kunena\Forum\Libraries\Install\KunenaModelInstall;
-use Kunena\Forum\Libraries\Installer;
+use Kunena\Forum\Libraries\KunenaInstaller;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
@@ -254,15 +253,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		}
 
 		$this->addDashboardMenu('kunena', 'kunena');
-
-		JLoader::register('JNamespacePsr4Map', JPATH_LIBRARIES . '/namespacemap.php');
-		$extensionPsr4Loader = new \JNamespacePsr4Map;
-		$extensionPsr4Loader->load();
-
-		JLoader::registerNamespace("Kunena\Forum\Libraries", JPATH_LIBRARIES . "/kunena", $reset = false, $prepend = false, $type = 'psr4');
-		
-		$installer = new KunenaModelInstall;
-		$installer->createMenu();
 
 		// Delete the tmp install directory
 		foreach (glob(KunenaPath::tmpdir() . '/install_*') as $dir)
@@ -536,7 +526,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		// Check if we can downgrade to the current version.
 		if (class_exists('KunenaInstaller'))
 		{
-			if (Installer::canDowngrade($version))
+			if (KunenaInstaller::canDowngrade($version))
 			{
 				return true;
 			}

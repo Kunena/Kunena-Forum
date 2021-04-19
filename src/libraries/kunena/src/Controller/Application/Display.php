@@ -43,7 +43,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaDisplay extends KunenaControllerDisplay
+class Display extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaConfig

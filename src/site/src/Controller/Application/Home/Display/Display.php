@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Home;
+namespace Kunena\Forum\Site\Controller\Application\Home\Display;
 
 defined('_JEXEC') or die();
 
@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaControllerDisplay
+class Display extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.

@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller;
+namespace Kunena\Forum\Site\Controllers;
 
 defined('_JEXEC') or die();
 
@@ -19,11 +19,11 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
 use function defined;
 
 /**
- * Kunena Credits Controller
+ * Kunena Common Controller
  *
  * @since   Kunena 2.0
  */
-class CreditsController extends KunenaController
+class CommonController extends KunenaController
 {
 	/**
 	 * @param   array  $config  config

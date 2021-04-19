@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Kunena\Forum\Site\Controller;
+namespace Kunena\Forum\Site\Controllers;
 
 defined('_JEXEC') or die;
 

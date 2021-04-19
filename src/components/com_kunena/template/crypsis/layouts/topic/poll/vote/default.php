@@ -15,16 +15,16 @@ use Joomla\CMS\Language\Text;
 
 $this->addScript('assets/js/poll.js');
 
-if ($this->show_title && !empty($this->poll->polltimetolive))
+if (!empty($this->poll->polltimetolive))
 {
-    if (!$this->polllifespan)
-    {
-        $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
-    }
-    else
-    {
-        $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
-    }
+	if (!$this->polllifespan)
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
+	}
+	else
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
+	}
 }
 ?>
 	<div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-vote">&times;</div>

@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 $this->addScript('assets/js/poll.js');
 
-if ($this->show_title && !empty($this->poll->polltimetolive))
+if (!empty($this->poll->polltimetolive))
 {
 	if (!$this->polllifespan)
 	{

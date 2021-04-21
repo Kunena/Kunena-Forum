@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
-
+die();
 $content = $this->execute('Topic/Item')
 	->setLayout(KunenaUserHelper::getMyself()->getTopicLayout());
 

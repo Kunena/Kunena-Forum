@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -42,6 +43,11 @@ class Dispatcher extends ComponentDispatcher
 	 */
 	public function dispatch()
 	{
+	    // Display time it took to create the entire page in the footer.
+	    $kunena_profiler = KunenaProfiler::instance('Kunena');
+	    $kunena_profiler->start('Total Time');
+	    KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+	    
 	    // Initialize Kunena Framework.
 	    KunenaForum::setup();
 	    
@@ -111,14 +117,14 @@ class Dispatcher extends ComponentDispatcher
 	        }
 	        else
 	        {
-	            throw new Exception("Kunena view '{$view}' not found", 404);
+	            throw new \Exception("Kunena view '{$view}' not found", 404);
 	        }
 	    }
 	    
 	    // Prepare and display the output.
-	    $params       = new stdClass;
+	    $params       = new \stdClass;
 	    $params->text = '';
-	    $topics       = new stdClass;
+	    $topics       = new \stdClass;
 	    $topics->text = '';
 	    PluginHelper::importPlugin('content');
 	    Factory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
@@ -130,6 +136,22 @@ class Dispatcher extends ComponentDispatcher
 	    // Remove custom error handlers.
 	    KunenaError::cleanup();
 	    
-	    parent::dispatch();
+	    // Display profiler information.
+	    if (KUNENA_PROFILER)
+	    {
+	        $kunena_profiler->stop('Total Time');
+	        
+	        echo '<div class="kprofiler">';
+	        echo "<h3>Kunena Profile Information</h3>";
+	        
+	        foreach ($kunena_profiler->getAll() as $item)
+	        {
+	            echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
+	                $item->getTotalTime(), $item->calls
+	                );
+	        }
+	        
+	        echo '</div>';
+	    }
 	}
 }

@@ -31,7 +31,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
+class WidgetLoginDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string

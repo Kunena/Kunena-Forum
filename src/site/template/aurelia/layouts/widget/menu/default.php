@@ -10,14 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-use function defined;
+
 
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // Note. It is important to remove spaces between elements.

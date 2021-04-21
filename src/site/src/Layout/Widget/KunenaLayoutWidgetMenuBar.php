@@ -14,7 +14,6 @@ namespace Kunena\Forum\Site\Layout\Widget;
 
 defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -23,14 +22,12 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
- * KunenaLayoutWidgetFooter
+ * KunenaLayoutWidgetMenuBar
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutPage extends KunenaLayout
+class KunenaLayoutWidgetMenuBar extends KunenaLayout
 {
-
 }

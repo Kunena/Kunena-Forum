@@ -87,14 +87,14 @@ abstract class KunenaMenuHelper
 				{
 					$item->parent = false;
 
-					if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parentid && $item->getParams()->get('menu_show', 1) == 1)
+					if (isset($items[$lastitem]) && $items[$lastitem]->id == $item->parent_id && $item->getParams()->get('menu_show', 1) == 1)
 					{
 						$items[$lastitem]->parent = true;
 					}
 
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
-						|| (!$showAll && $item->level > 1 && !in_array($item->parentid, $path))
+						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
 						|| ($start > 1 && !in_array($item->tree[$start - 2], $path)))
 					{
 						unset($items[$i]);
@@ -102,7 +102,7 @@ abstract class KunenaMenuHelper
 					}
 
 					// Exclude item with menu item option set to exclude from menu modules
-					if (($item->getParams()->get('menu_show', 1) == 0) || in_array($item->parentid, $hidden_parents))
+					if (($item->getParams()->get('menu_show', 1) == 0) || in_array($item->parent_id, $hidden_parents))
 					{
 						$hidden_parents[] = $item->id;
 						unset($items[$i]);

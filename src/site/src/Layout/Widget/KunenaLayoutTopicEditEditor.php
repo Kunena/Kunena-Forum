@@ -30,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetEditor extends KunenaLayout
+class KunenaLayoutTopicEditEditor extends KunenaLayout
 {
 	/**
 	 * @var     KunenaTemplate

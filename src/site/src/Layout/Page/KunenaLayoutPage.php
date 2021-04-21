@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Widget;
+namespace Kunena\Forum\Site\Layout\Page;
 
 defined('_JEXEC') or die;
 
@@ -26,10 +26,11 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
- * KunenaLayoutWidgetFooter
+ * KunenaLayoutPage
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetMenuDisplay extends KunenaLayout
+class KunenaLayoutPage extends KunenaLayout
 {
+
 }

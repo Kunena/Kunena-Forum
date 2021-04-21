@@ -163,7 +163,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function render($layout = null): string
 	{
-		if (0 && $this->debug)
+		if (0 & $this->debug)
 		{
 			echo $this->debugInfo();
 		}
@@ -221,8 +221,8 @@ class KunenaBase extends KunenaLayoutBase
 		$rawPath = strtolower(str_replace('.', '/', $this->_name)) . '/' . $this->layout . '.php';
 
 		$html = "<pre>";
-		$html .= '<strong>Layout:</strong> ' . $this->_name . '<br />';
-		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
+		$html .= '<strong>Layout ($this->_name):</strong> ' . $this->_name . '<br />';
+		$html .= '<strong>Template ($this->layout):</strong> ' . $this->layout . '.php<br />';
 		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
 		$html .= '<strong>includePaths:</strong> ';
 		$html .= print_r($this->includePaths, true);
@@ -269,7 +269,7 @@ class KunenaBase extends KunenaLayoutBase
 	public function getLayout(): string
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
-
+		
 		return $layout ?: 'default';
 	}
 
@@ -756,35 +756,35 @@ class KunenaBase extends KunenaLayoutBase
 
 		foreach ($paths as $path)
 		{
-			if (!$path)
-			{
-				continue;
-			}
+		    if (!$path)
+		    {
+		        continue;
+		    }
+		    
+		    // Attempt to load layout class if it doesn't exist.
+		    $class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
+		    
+		    if (!class_exists($class))
+		    {
+		        $fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
+		        $filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
+		        
+		        if (!is_file($filename))
+		        {
+		            continue;
+		        }
+		        
+		        require_once $filename;
+		    }
 
-			// Attempt to load layout class if it doesn't exist.
-			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
-
-			if (!class_exists($class))
-			{
-				$fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
-				$filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
-
-				if (!is_file($filename))
-				{
-					continue;
-				}
-
-				require_once $filename;
-			}
-			else
-			{
-				// Create layout object.
-				return new $class($path, $templatePaths);
-			}
+		    // Create layout object.
+		    return new $class($path, $templatePaths);
 		}
 
+		$layout = new KunenaLayout($path, $templatePaths);
+
 		// Create default layout object.
-		return new KunenaLayout($path, $templatePaths);
+		return $layout;
 	}
 
 	/**

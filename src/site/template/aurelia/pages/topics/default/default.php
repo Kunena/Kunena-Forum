@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use function defined;
 
+// $this is an object of KunenaLayoutPage
 $content = $this->execute('Topic/List/Recent')
 	->setLayout('recent');
 

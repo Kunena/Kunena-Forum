@@ -91,7 +91,7 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 	public static function getInstance($view, $subview, $task, $input, $app)
 	{
 		// Define HMVC controller and execute it.
-		$controllerClassNamespaced = 'Kunena\Forum\Site\Controller\Application\\' . ucfirst($view) . '\Display\\' . ucfirst($task); // Display is the replacement of Default, because it's a reserved word in Php 7.0+
+		$controllerClassNamespaced = 'Kunena\Forum\Site\Controller\Application\\' . ucfirst($view) . '\Display\\' . ucfirst($task); // Display is the replacement of word Default, because it's a reserved word in Php 7.0+
 		$controllerDefaultNamespaced = 'Kunena\Forum\Libraries\Controller\Application\\'. ucfirst($task);
 
 		$controller = class_exists($controllerClassNamespaced)

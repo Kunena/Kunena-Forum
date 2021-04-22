@@ -36,7 +36,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-abstract class ComponentTopicControllerListDisplay extends KunenaControllerDisplay
+abstract class ListDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -117,7 +117,7 @@ abstract class ComponentTopicControllerListDisplay extends KunenaControllerDispl
 			KunenaMessageHelper::loadLocation($mesIds);
 		}
 
-		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		$cache   = Factory::getCache('com_kunena', 'output');
 
 		/*

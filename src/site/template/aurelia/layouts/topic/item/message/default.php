@@ -10,15 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
-use Kunena\Forum\Libraries\Template\Template;
-use function defined;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template     = Template::getInstance();
+$template     = KunenaTemplate::getInstance();
 $direction    = $template->params->get('avatarPosition');
 $sideProfile  = $this->profile->getSideProfile($this);
 $quick        = $template->params->get('quick');

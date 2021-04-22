@@ -205,7 +205,7 @@ class Display extends KunenaControllerDisplay
 			{
 				if (!($e instanceof KunenaAuthorise))
 				{
-					$header  = 'Error while rendering KunenaLayout';
+					$header  = 'Error while rendering KunenaLayout.';
 					$content = $e->getMessage();
 					$e       = new KunenaAuthorise($e->getMessage(), $e->getCode(), $e);
 				}

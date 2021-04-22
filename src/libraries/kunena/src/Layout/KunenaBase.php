@@ -762,9 +762,17 @@ class KunenaBase extends KunenaLayoutBase
 		    }
 		    
 		    // Attempt to load layout class if it doesn't exist.
+		    $ex = explode('/', $path);
 		    $class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
+		    $fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
 		    
-		    if (!class_exists($class))
+		    $classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0]. '\\' . $class;
+		    
+		    /*echo 'try to load '.$classnamespaced.'    ';
+
+		    echo 'exist '.class_exists($classnamespaced);*/
+		    
+		   /*if (!class_exists($class))
 		    {
 		        $fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
 		        $filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
@@ -773,12 +781,19 @@ class KunenaBase extends KunenaLayoutBase
 		        {
 		            continue;
 		        }
-		        
-		        require_once $filename;
-		    }
 
-		    // Create layout object.
-		    return new $class($path, $templatePaths);
+		        require_once $filename;
+		    }*/
+
+		    if (class_exists($classnamespaced))
+		    {
+		          $classlaoded = new $classnamespaced($path, $templatePaths);
+
+		          
+		          // Create layout object.
+		          return $classlaoded;
+		    }
+		    
 		}
 
 		$layout = new KunenaLayout($path, $templatePaths);

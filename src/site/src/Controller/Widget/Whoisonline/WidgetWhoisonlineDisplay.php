@@ -28,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaControllerDisplay
+class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string

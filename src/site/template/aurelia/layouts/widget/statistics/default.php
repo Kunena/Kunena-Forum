@@ -10,12 +10,10 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
 
 ?>
@@ -24,7 +22,7 @@ use function defined;
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-				 data-target="#kstats"><?php echo Icons::collapse(); ?></div>
+				 data-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
 	<h2 class="card-header">
@@ -47,7 +45,7 @@ use function defined;
 				<div class="row">
 					<div class="col-md-1">
 						<ul class="list-unstyled">
-							<li class="btn-link text-center"><?php echo Icons::stats(); ?></li>
+							<li class="btn-link text-center"><?php echo KunenaIcons::stats(); ?></li>
 						</ul>
 					</div>
 

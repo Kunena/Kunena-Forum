@@ -10,13 +10,10 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>

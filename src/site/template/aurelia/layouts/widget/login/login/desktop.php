@@ -10,22 +10,19 @@
  * @link            https://www.kunena.org
 **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Icons\Icons;
-use Kunena\Forum\Libraries\Login\Login;
-use function defined;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 
 ?>
 <ul class="nav float-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-desktop">
-			<?php echo Icons::user(); ?>
+			<?php echo KunenaIcons::user(); ?>
 			<span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
 			<b class="caret"></b>
 		</a>
@@ -40,7 +37,7 @@ use function defined;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo Icons::user(); ?>
+								<?php echo KunenaIcons::user(); ?>
 								<label for="kdesktop-username" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>
@@ -56,7 +53,7 @@ use function defined;
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo Icons::lock(); ?>
+								<?php echo KunenaIcons::lock(); ?>
 								<label for="klogin-desktop-passwd" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
 								</label>
@@ -68,7 +65,7 @@ use function defined;
 					</div>
 				</div>
 
-				<?php $login = Login::getInstance(); ?>
+				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php
 				if ($login->getTwoFactorMethods() > 1)
 					:
@@ -77,7 +74,7 @@ use function defined;
 						<div class="controls">
 							<div class="input-prepend input-append">
 							<span class="add-on">
-								<?php echo Icons::star(); ?>
+								<?php echo KunenaIcons::star(); ?>
 								<label for="k-lgn-secretkey" class="element-invisible">
 									<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>

@@ -51,7 +51,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
+class ItemDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -134,7 +134,7 @@ class ComponentTopicControllerItemDisplay extends KunenaControllerDisplay
 
 		$this->me = KunenaUserHelper::getMyself();
 
-		$allowed = md5(serialize(Access::getInstance()->getAllowedCategories()));
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		$cache   = Factory::getCache('com_kunena', 'output');
 
 		/*

@@ -17,20 +17,17 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use function defined;
 
-$rss  = (new Layout\Widget\KunenaLayoutWidgetFooter('footer'))->getRSS();
-$time = (new Layout\Widget\KunenaLayoutWidgetFooter('footer'))->getTime();
-?>
-
-	<?php if ($rss !== null)
-	:
-	?>
-    <footer class="float-right large-kicon"><?php echo $rss; ?></footer>
+if (($rss = $this->getRSS()) !== null)
+    :
+    ?>
+	<div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
+	<div class="clearfix"></div>
 <?php endif; ?>
 
-	<?php if ($time !== null)
+<?php if (($time = $this->getTime()) !== null)
 	:
 	?>
-    <footer class="center">
+	<div class="center">
 		<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
-    </footer>
+	</div>
 <?php endif;

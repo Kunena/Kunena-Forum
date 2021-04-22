@@ -25,7 +25,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControllerDisplay
+class WidgetAnnouncementDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string

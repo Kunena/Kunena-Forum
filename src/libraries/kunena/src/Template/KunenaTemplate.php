@@ -961,7 +961,7 @@ HTML;
 	 *
 	 * @throws Exception
 	 */
-	public function addStyleDeclaration(string $style): string
+	public function addStyleDeclaration(string $style)
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -1069,7 +1069,7 @@ HTML;
 	 *
 	 * @throws Exception
 	 */
-	public function addScript(string $filename, $options = [], $attribs = []): Document
+	public function addScript(string $filename, $options = [], $attribs = [])
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');

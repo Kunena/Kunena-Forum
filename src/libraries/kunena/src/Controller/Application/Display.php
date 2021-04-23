@@ -466,7 +466,7 @@ class Display extends KunenaControllerDisplay
 		#kunena + div { display: block !important;}
 EOF;
 
-			//KunenaTemplate::getInstance()->addStyleDeclaration($styles);
+			KunenaTemplate::getInstance()->addStyleDeclaration($styles);
 		}
 
 		return $credits;

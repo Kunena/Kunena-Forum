@@ -33,7 +33,6 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Site\Controller\SearchController;
 use LogicException;
 use function defined;
 
@@ -495,7 +494,7 @@ class KunenaView extends HtmlView
 	 */
 	public function parse(string $text, int $len, $parent)
 	{
-		if ($this instanceof SearchController)
+	    if ($this instanceof ComponentKunenaControllerSearchFormDisplay)
 		{
 			$parentinternalObject = $parent;
 		}

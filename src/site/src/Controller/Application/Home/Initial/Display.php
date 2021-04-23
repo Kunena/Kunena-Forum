@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Home\Display;
+namespace Kunena\Forum\Site\Controller\Application\Home\Initial;
 
 defined('_JEXEC') or die();
 

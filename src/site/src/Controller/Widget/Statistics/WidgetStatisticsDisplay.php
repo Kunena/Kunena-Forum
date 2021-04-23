@@ -53,7 +53,6 @@ class WidgetStatisticsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $statisticsUrl;
-	private $lastUserId;
 
 	/**
 	 * Prepare statistics box display.

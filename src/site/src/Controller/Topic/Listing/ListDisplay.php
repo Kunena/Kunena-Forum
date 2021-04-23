@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\KunenaList;
+namespace Kunena\Forum\Site\Controller\Topic\Listing;
 
 defined('_JEXEC') or die();
 
@@ -151,7 +151,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;

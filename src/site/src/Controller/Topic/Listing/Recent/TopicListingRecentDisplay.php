@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\KunenaList\Recent;
+namespace Kunena\Forum\Site\Controller\Topic\Listing\Recent;
 
 defined('_JEXEC') or die();
 
@@ -21,13 +21,13 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 
@@ -36,11 +36,8 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
+class TopicListingRecentDisplay extends ListDisplay
 {
-	private $headerText;
-	private $pagination;
-
 	/**
 	 * Prepare recent topics list.
 	 *
@@ -55,13 +52,13 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel([], $this->input);
+		$model = new TopicsModel(array(), $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state    = $model->getState();
-		$me       = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$moreUri  = null;
 		$holding  = $this->getOptions()->get('topics_deletedtopics');
-		$embedded = $this->getOptions()->get('embedded', true);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$start = $state->get('list.start');
 		$limit = $state->get('list.limit');
@@ -355,7 +352,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$page       = $this->pagination->pagesCurrent;
 		$total      = $this->pagination->pagesTotal;
@@ -398,6 +395,7 @@ class ComponentTopicControllerListRecentDisplay extends KunenaControllerDisplay
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
+			$title = '';
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');

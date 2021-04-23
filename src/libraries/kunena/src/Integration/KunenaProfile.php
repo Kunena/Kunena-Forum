@@ -149,7 +149,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): void
+	public function getProfileURL($user, $task = '', $xhtml = true): void
 	{
 	}
 

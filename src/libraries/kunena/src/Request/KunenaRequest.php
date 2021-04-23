@@ -67,11 +67,17 @@ class KunenaRequest
 
 		// Attempt to load controller.
 		$ex = explode(' ',$words);
-		$classnamespaced = 'Kunena\Forum\Site\Controller\\'  .$ex[0]. '\\' . $ex[1] . '\\' . str_replace(' ', '', $words);
+		$subpart = '';
+		if (count($ex)==4)
+		{
+			$subpart = ''.$ex[2] . '\\';
+		}
+
+		$classnamespaced = 'Kunena\Forum\Site\Controller\\'  .$ex[0]. '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
 
 		if (!class_exists($classnamespaced))
 		{
-			throw new InvalidArgumentException(sprintf('In the request the controller %s doesn\'t exist.', $classnamespaced), 404);
+			throw new InvalidArgumentException(sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
 		}
 
 		// Create controller object.

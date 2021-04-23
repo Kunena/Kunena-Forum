@@ -30,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentSearchControllerFormDisplay extends KunenaControllerDisplay
+class SearchFormDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     SearchModel

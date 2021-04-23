@@ -37,7 +37,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerItemDisplay extends KunenaControllerDisplay
+class UserItemDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser

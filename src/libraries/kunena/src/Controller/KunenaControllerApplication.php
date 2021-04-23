@@ -54,18 +54,20 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 	 */
 	public static function getInstance($view, $subview, $task, $input, $app)
 	{
-	    //echo ' $view '.$view.' $subview '. $subview. ' $task '.$task;
-		
-	    if ($subview == 'default')
-	    {
-$subviewfixed = 'Initial';
-	    }
-	    
+		// Display is the replacement of word Default, because it's a reserved word in Php 7.0+
+		if ($subview == 'default')
+		{
+			$subviewfixed = 'Initial';
+		}
+		else
+		{
+			$subviewfixed = $subview;
+		}
+
 		// Define HMVC controller and execute it.
-	    $controllerClassNamespaced = 'Kunena\Forum\Site\Controller\Application\\' . ucfirst($view) . '\\' . $subviewfixed . '\\' . ucfirst($task); // Display is the replacement of word Default, because it's a reserved word in Php 7.0+
+		$controllerClassNamespaced = 'Kunena\Forum\Site\Controller\Application\\' . ucfirst($view) . '\\' . $subviewfixed . '\\' . ucfirst($task);
 		$controllerDefaultNamespaced = 'Kunena\Forum\Libraries\Controller\Application\\'. ucfirst($task);
-		/*echo ' $controllerClassNamespaced '.$controllerClassNamespaced. ' exist '.class_exists($controllerClassNamespaced);
-		echo ' $controllerDefaultNamespaced '.$controllerDefaultNamespaced. ' exist '.class_exists($controllerDefaultNamespaced);*/
+
 		$controller = class_exists($controllerClassNamespaced)
 		? new $controllerClassNamespaced($input, $app, $app->getParams('com_kunena'))
 		: (class_exists($controllerDefaultNamespaced)
@@ -75,8 +77,7 @@ $subviewfixed = 'Initial';
 		// Execute HMVC if the controller is present.
 		if ($controller && $controller->exists())
 		{
-		    
-		    return $controller;
+			return $controller;
 		}
 
 		return;

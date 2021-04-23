@@ -91,7 +91,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @throws Exception
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null)
+	public function __construct($config = array(), \Joomla\Input\Input $input = null)
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -186,12 +186,12 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none'): object
+	protected function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none')
 	{
 		// If we are not in embedded mode, get variable from application
 		if (!$this->embedded)
 		{
-			return (object) $this->app->getUserStateFromRequest($key, $request, $default, $type);
+			return $this->app->getUserStateFromRequest($key, $request, $default, $type);
 		}
 
 		// Embedded models/views do not have user state -- all variables come from parameters

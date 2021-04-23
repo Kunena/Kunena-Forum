@@ -66,12 +66,21 @@ class KunenaRequest
 		}
 
 		// Attempt to load controller.
-		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
-
-		if (class_exists($class))
+		$ex = explode(' ',$words);
+		$subpart = '';
+		if (count($ex)==4)
 		{
-			// Create controller object.
-			return new $class($input, null, $options);
+			$subpart = ''.$ex[2] . '\\';
 		}
+
+		$classnamespaced = 'Kunena\Forum\Site\Controller\\'  .$ex[0]. '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
+
+		if (!class_exists($classnamespaced))
+		{
+			throw new InvalidArgumentException(sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
+		}
+
+		// Create controller object.
+		return new $classnamespaced($input, null, $options);
 	}
 }

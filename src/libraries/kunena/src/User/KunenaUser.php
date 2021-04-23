@@ -1186,7 +1186,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	public function getURL($xhtml = true, $task = ''): bool
+	public function getURL($xhtml = true, $task = '')
 	{
 		// Note: We want to link also existing users who have never visited Kunena before.
 		if (!$this->userid || !$this->registerDate)

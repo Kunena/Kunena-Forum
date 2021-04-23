@@ -10,8 +10,6 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -20,12 +18,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Category\Category;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
@@ -54,7 +51,7 @@ if (KunenaConfig::getInstance()->ratingEnabled)
 
 				<?php if ($layout != 'unread') : ?>
 					<small class="hidden-xs-down">
-						(<?php echo Category::getInstance()->totalCount($this->pagination->total); ?>)
+						(<?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?>)
 					</small>
 				<?php endif; ?>
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
@@ -101,13 +98,13 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
 		<?php if ($view == 'user'): ?>
 			<input type="hidden" name="userid" value="<?php echo $this->user->userid; ?>"/>
 		<?php endif; ?>
-		<table class="table<?php echo Template::getInstance()->borderless(); ?> shadow-lg rounded">
+		<table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
 			<thead>
 			<tr>
 				<th scope="col" class="center hidden-xs-down">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom" rel="nofollow">
-						<?php echo Icons::arrowdown(); ?>
+						<?php echo KunenaIcons::arrowdown(); ?>
 					</a>
 				</th>
 				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
@@ -126,7 +123,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
 					<a id="forumbottom"> </a>
 					<a href="#forumtop" rel="nofollow">
 						<span class="dropdown-divider"></span>
-						<?php echo Icons::arrowup(); ?>
+						<?php echo KunenaIcons::arrowup(); ?>
 					</a>
 				</th>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>

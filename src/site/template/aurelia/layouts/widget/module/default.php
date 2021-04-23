@@ -10,13 +10,9 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
-use function defined;
-
-$modules = (new Layout\Widget\KunenaLayoutWidgetModule('WidgetModule'))->renderPosition();
+$modules = $this->renderPosition();
 
 if (!$modules)
 {
@@ -25,6 +21,6 @@ if (!$modules)
 
 ?>
 <!-- Module position: <?php echo $this->position; ?> -->
-<div class="card card-body">
+<div class="well well-small">
 	<?php echo $modules; ?>
 </div>

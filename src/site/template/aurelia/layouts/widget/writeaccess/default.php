@@ -10,18 +10,16 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Topic\TopicHelper;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
-$topic  = TopicHelper::get($this->id);
+$topic  = KunenaTopicHelper::get($this->id);
 $config = KunenaFactory::getConfig();
 ?>
 
@@ -29,7 +27,7 @@ $config = KunenaFactory::getConfig();
 	<div class="btn-toolbar float-right">
 		<div class="btn-group">
 			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-				 data-target="#writeaccess"><?php echo Icons::collapse(); ?></div>
+				 data-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
 		</div>
 	</div>
 

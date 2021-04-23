@@ -10,12 +10,9 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use function defined;
 
 ?>
 
@@ -26,7 +23,7 @@ use function defined;
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="knav-collapse collapse navbar-collapse">
-		<?php echo $this->subRequest('Widget/Menu');
+		<?php echo $this->subRequest('Widget/Menu'); 
 		?>
     </div>
     <button class="navbar-toggler float-right" aria-expanded="false" aria-controls="knav-usercollapse"

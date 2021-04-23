@@ -869,7 +869,7 @@ abstract class KunenaRoute
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function getMenu(): bool
+	public static function getMenu()
 	{
 		return self::$home;
 	}

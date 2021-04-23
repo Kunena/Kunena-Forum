@@ -33,12 +33,6 @@ use function defined;
 class KunenaPage extends KunenaLayout
 {
 	/**
-	 * @var mixed|void
-	 * @since version
-	 */
-	private $breadcrumb;
-
-	/**
 	 * Returns layout class.
 	 *
 	 * <code>
@@ -120,7 +114,7 @@ class KunenaPage extends KunenaLayout
 		}
 
 		// Create default layout object.
-		return new KunenaLayout($path, $templatePaths);
+		return new KunenaPage($path, $templatePaths);
 	}
 
 	/**
@@ -136,7 +130,7 @@ class KunenaPage extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 */
-	public function execute($path, Input $input = null, $options = null): KunenaLayout
+	public function execute($path, Input $input = null, $options = null)
 	{
 		return $this->request($path, $input, $options)->execute();
 	}
@@ -153,7 +147,7 @@ class KunenaPage extends KunenaLayout
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function request($path, Input $input = null, $options = null): KunenaControllerDisplay
+	public function request($path, Input $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
 			->setPrimary()->set('layout', $this->getLayout());
@@ -172,7 +166,7 @@ class KunenaPage extends KunenaLayout
 	 *
 	 * @throws Exception
 	 */
-	public function addBreadcrumb(string $text, string $uri, $ignore = true): KunenaPage
+	public function addBreadcrumb(string $text, string $uri, $ignore = true)
 	{
 		if ($ignore)
 		{

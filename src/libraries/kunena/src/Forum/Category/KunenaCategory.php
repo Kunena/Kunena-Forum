@@ -1915,7 +1915,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 5.0.13
 	 */
-	public function totalCount(int $count): int
+	public function totalCount(int $count)
 	{
 		if ($count)
 		{

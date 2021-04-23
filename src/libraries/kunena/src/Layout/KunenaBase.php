@@ -163,7 +163,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function render($layout = null): string
 	{
-		if (0 && $this->debug)
+		if (0 & $this->debug)
 		{
 			echo $this->debugInfo();
 		}
@@ -192,6 +192,7 @@ class KunenaBase extends KunenaLayoutBase
 
 			// And get the contents.
 			$output = ob_get_clean();
+		
 		}
 		catch (Exception $e)
 		{
@@ -221,8 +222,8 @@ class KunenaBase extends KunenaLayoutBase
 		$rawPath = strtolower(str_replace('.', '/', $this->_name)) . '/' . $this->layout . '.php';
 
 		$html = "<pre>";
-		$html .= '<strong>Layout:</strong> ' . $this->_name . '<br />';
-		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
+		$html .= '<strong>Layout ($this->_name):</strong> ' . $this->_name . '<br />';
+		$html .= '<strong>Template ($this->layout):</strong> ' . $this->layout . '.php<br />';
 		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
 		$html .= '<strong>includePaths:</strong> ';
 		$html .= print_r($this->includePaths, true);
@@ -269,7 +270,7 @@ class KunenaBase extends KunenaLayoutBase
 	public function getLayout(): string
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
-
+		
 		return $layout ?: 'default';
 	}
 
@@ -762,29 +763,25 @@ class KunenaBase extends KunenaLayoutBase
 			}
 
 			// Attempt to load layout class if it doesn't exist.
+			$ex = explode('/', $path);
 			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
+			$fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
 
-			if (!class_exists($class))
+			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0]. '\\' . $class;
+
+			if (class_exists($classnamespaced))
 			{
-				$fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
-				$filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
+				$classlaoded = new $classnamespaced($path, $templatePaths);
 
-				if (!is_file($filename))
-				{
-					continue;
-				}
-
-				require_once $filename;
-			}
-			else
-			{
 				// Create layout object.
-				return new $class($path, $templatePaths);
+				return $classlaoded;
 			}
 		}
 
+		$layout = new KunenaLayout($path, $templatePaths);
+
 		// Create default layout object.
-		return new KunenaLayout($path, $templatePaths);
+		return $layout;
 	}
 
 	/**

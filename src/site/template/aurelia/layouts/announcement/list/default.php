@@ -10,14 +10,11 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 $options = $this->getOptions();
 HTMLHelper::_('behavior.core');

@@ -10,16 +10,13 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 $me    = KunenaUserHelper::getMyself();
 $state = $this->state;
@@ -43,7 +40,7 @@ $state = $this->state;
 				   placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 			<span class="input-group-append">
 					<button class="btn btn-light border" type="submit">
-						<?php echo Icons::search(); ?>
+						<?php echo KunenaIcons::search(); ?>
 					</button>
 				</span>
 		</div>

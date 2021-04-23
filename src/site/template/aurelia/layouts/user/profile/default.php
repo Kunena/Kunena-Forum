@@ -10,15 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Icons\Icons;
-use function defined;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 $user            = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -115,8 +112,8 @@ if ($user->userid > 1)
 	?>
 	<div class="profile-expand center">
 		<span class="heading btn btn-outline-primary border btn-xs heading-less"
-			  style="display:none;"><?php echo Icons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-outline-primary border btn-xs"><?php echo Icons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+			  style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+		<span class="heading btn btn-outline-primary border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 		<div class="content" style="display:none;">
 			<ul>
 				<?php if ($user->posts >= 1)

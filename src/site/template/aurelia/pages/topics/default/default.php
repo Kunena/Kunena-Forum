@@ -10,13 +10,10 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
-use function defined;
-
-$content = $this->execute('Topic/List/Recent')
+// $this should be an object of KunenaLayoutPage
+$content = $this->execute('Topic/Listing/Recent')
 	->setLayout('recent');
 
 $this->addBreadcrumb(

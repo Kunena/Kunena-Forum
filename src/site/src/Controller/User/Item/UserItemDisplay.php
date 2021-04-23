@@ -1,0 +1,277 @@
+<?php
+/**
+ * Kunena Component
+ *
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
+ *
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+namespace Kunena\Forum\Site\Controller\User\item;
+
+defined('_JEXEC') or die();
+
+use Exception;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\User;
+use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaBan;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Model\UserModel;
+use function defined;
+
+/**
+ * Class ComponentUserControllerItemDisplay
+ *
+ * @since   Kunena 4.0
+ */
+class UserItemDisplay extends KunenaControllerDisplay
+{
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $me;
+
+	/**
+	 * @var     User
+	 * @since   Kunena 6.0
+	 */
+	public $user;
+
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $profile;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $headerText;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $tabs;
+
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'User/Item';
+
+	/**
+	 * Load user profile.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 */
+	protected function before()
+	{
+		parent::before();
+
+		// If profile integration is disabled, this view doesn't exist.
+		$integration = KunenaFactory::getProfile();
+
+		if (get_class($integration) == 'KunenaProfileNone')
+		{
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+		}
+
+		$userid = $this->input->getInt('userid');
+
+		$model = new UserModel([], $this->input);
+		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$state = $model->getState();
+
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->user    = Factory::getUser($userid);
+		$this->profile = KunenaUserHelper::get($userid);
+		$this->profile->tryAuthorise('read');
+
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+		$points              = $activityIntegration->getUserPoints($this->profile->userid);
+		$medals              = $activityIntegration->getUserMedals($this->profile->userid);
+		$private             = KunenaFactory::getPrivateMessaging();
+		$socials             = $this->profile->socialButtons();
+		$socials1            = ArrayHelper::toObject($socials);
+
+		$avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+		$banInfo = $this->config->showBannedReason
+			? KunenaBan::getInstanceByUserid($this->profile->userid)
+			: null;
+
+		// Update profile hits.
+		if (!$this->profile->exists() || !$this->profile->isMyself())
+		{
+			$this->profile->uhits++;
+			$this->profile->save();
+		}
+
+		$Itemid = $this->input->getInt('Itemid');
+		$format = $this->input->getCmd('format');
+
+		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
+		{
+			$controller = BaseController::getInstance("kunena");
+
+			if ($this->config->profileId)
+			{
+				$itemidfix = $this->config->profileId;
+			}
+			else
+			{
+				$menu      = $this->app->getMenu();
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+				$itemidfix = $getid->id;
+			}
+
+			if (!$itemidfix)
+			{
+				$itemidfix = KunenaRoute::fixMissingItemID();
+			}
+
+			if (!$userid)
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
+			}
+			else
+			{
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
+			}
+
+			$controller->redirect();
+		}
+
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @return  void|boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function prepareDocument(): bool
+	{
+		$this->setMetaData('profile:username', $this->profile->getName(), 'property');
+
+		if ($this->profile->getGender() == 1)
+		{
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
+		}
+		elseif ($this->profile->getGender() == 2)
+		{
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
+		}
+		else
+		{
+			$this->setMetaData('profile:gender', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
+		}
+
+		$menu_item = $this->app->getMenu()->getActive();
+		$robots    = $this->config->get('robots');
+		$image     = '';
+
+		$this->setMetaData('og:url', Uri::current(), 'property');
+		$this->setMetaData('og:type', 'profile', 'property');
+
+		if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar))
+		{
+			$image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
+		}
+		elseif ($this->profile->avatar == null || $this->config->avatarType && KunenaFactory::getUser($this->profile->id)->avatar == null)
+		{
+			if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
+			{
+				$image = Uri::base() . $this->config->emailHeader;
+			}
+		}
+		else
+		{
+			$image = $this->profile->getAvatarURL('Profile', '200');
+		}
+
+		$this->setMetaData('og:image', $image, 'property');
+
+		if ($robots == 'noindex, follow')
+		{
+			$this->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$this->setMetaData('robots', 'index, nofollow');
+		}
+		elseif ($robots == 'noindex, nofollow')
+		{
+			$this->setMetaData('robots', 'noindex, nofollow');
+		}
+		else
+		{
+			$this->setMetaData('robots', 'index, follow');
+		}
+
+		if ($menu_item)
+		{
+			$params             = $menu_item->getParams();
+			$params_title       = $params->get('page_title');
+			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
+
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+				$this->setTitle($title);
+			}
+
+			$this->setMetaData('og:description', $title, 'property');
+			$this->setMetaData('og:title', $this->profile->getName(), 'property');
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = Text::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
+					$this->config->boardTitle, $this->profile->getName(), $this->config->boardTitle
+				);
+				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$this->setMetaData('robots', $robots);
+			}
+		}
+	}
+}

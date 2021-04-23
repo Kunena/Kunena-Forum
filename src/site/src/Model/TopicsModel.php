@@ -18,14 +18,13 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -33,7 +32,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 2.0
  */
-class TopicsModel extends ListModel
+class TopicsModel extends KunenaModel
 {
 	/**
 	 * @var     array
@@ -64,9 +63,7 @@ class TopicsModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $actionMove = false;
-	private $config;
-	private $me;
-	private $app;
+
 
 	/**
 	 * @return  boolean
@@ -583,6 +580,8 @@ class TopicsModel extends ListModel
 	}
 
 	/**
+	 * Method to auto-populate the model state.
+	 * 
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *
@@ -592,7 +591,7 @@ class TopicsModel extends ListModel
 	 *
 	 * @throws Exception
 	 */
-	protected function populateState($ordering = null, $direction = null): void
+	protected function populateState($ordering = null, $direction = null)
 	{
 		$params = $this->getParameters();
 		$this->setState('params', $params);

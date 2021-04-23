@@ -10,11 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
-
-use function defined;
 
 ?>
 <div id="kunena" class="layout">

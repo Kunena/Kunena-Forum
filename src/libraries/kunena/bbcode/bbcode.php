@@ -614,7 +614,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		'font' => array(
 			'mode'     => Nbbc\BBCode::BBCODE_MODE_LIBRARY,
-			'allow'    => array('_default' => '/^[a-zA-Z0-9._ -]+$/'),
+			'allow'    => array('_default' => '/^[a-zA-Z0-9._, -]+$/'),
 			'method'   => 'DoFont',
 			'class'    => 'inline',
 			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),

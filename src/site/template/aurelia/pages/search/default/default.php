@@ -10,12 +10,9 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use function defined;
 
 $content = $this->execute('Search/Form');
 

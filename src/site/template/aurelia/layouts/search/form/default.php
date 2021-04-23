@@ -10,16 +10,13 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 // FIXME: change into JForm.
 
@@ -54,7 +51,7 @@ $this->addScript('assets/js/search.js');
 			<button class="btn btn-outline-primary border btn-sm" type="button"
 					data-toggle="collapse"
 					data-target="#search" aria-expanded="false"
-					aria-controls="search"><?php echo Icons::collapse(); ?></button>
+					aria-controls="search"><?php echo KunenaIcons::collapse(); ?></button>
 		</div>
 	</div>
 	<h1>
@@ -112,7 +109,7 @@ $this->addScript('assets/js/search.js');
 		<button type="button" class="btn btn-outline-primary border btn-sm float-right"
 				data-toggle="collapse"
 				data-target="#search-options" aria-expanded="false"
-				aria-controls="search-options"><?php echo Icons::collapse(); ?></button>
+				aria-controls="search-options"><?php echo KunenaIcons::collapse(); ?></button>
 		<h2>
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h2>
@@ -147,7 +144,7 @@ $this->addScript('assets/js/search.js');
 						<div class="control-group">
 							<div class="controls" id="searchatdate">
 								<div class="input-group date">
-									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . Icons::grid() . '</span>', 'searchatdate'); ?>
+									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'searchatdate'); ?>
 								</div>
 							</div>
 						</div>
@@ -232,10 +229,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-outline-primary border">
-				<?php echo Icons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
+				<?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
 			</button>
 			<button type="reset" class="btn btn-outline-primary border" onclick="window.history.back();">
-				<?php echo Icons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
+				<?php echo KunenaIcons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
 			</button>
 		</div>
 	</div>

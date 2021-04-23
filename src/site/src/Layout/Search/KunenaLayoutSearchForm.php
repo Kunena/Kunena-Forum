@@ -32,11 +32,6 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	public $state;
-	/**
-	 * @var mixed|void
-	 * @since version
-	 */
-	private $config;
 
 	/**
 	 * Method to display the list to choose between posts or titles

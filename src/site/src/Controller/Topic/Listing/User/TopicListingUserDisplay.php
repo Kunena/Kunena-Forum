@@ -54,9 +54,9 @@ class TopicListingUserDisplay extends ListDisplay
 
 		$model = new TopicsModel([], $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state   = $model->getState();
-		$this->me      = KunenaUserHelper::getMyself();
-		$moreUri = null;
+		$state    = $model->getState();
+		$this->me = KunenaUserHelper::getMyself();
+		$moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', true);
 

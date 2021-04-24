@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use function defined;
 
 /**
@@ -64,14 +65,25 @@ class KunenaRequest
 		}
 
 		// Attempt to load controller.
-		$ex = explode(' ',$words);
+		$ex      = explode(' ', $words);
 		$subpart = '';
-		if (count($ex)==4)
+
+		if (count($ex) == 4)
 		{
-			$subpart = ''.$ex[2] . '\\';
+			$subpart = '' . $ex[2] . '\\';
 		}
 
-		$classnamespaced = 'Kunena\Forum\Site\Controller\\'  .$ex[0]. '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
+		if ($ex[0] . '/' . $ex[1] == 'Topic/List')
+		{
+			$ex[1] = 'Listing';
+		}
+
+		if ($words == 'Topic List User Display')
+		{
+			$words = 'TopicListingUserDisplay';
+		}
+
+		$classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
 
 		if (!class_exists($classnamespaced))
 		{

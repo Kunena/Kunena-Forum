@@ -343,6 +343,11 @@ class KunenaAdminModelTemplates extends \Joomla\CMS\MVC\Model\AdminModel
 			return false;
 		}
 
+		if (!$transport->isSupported())
+		{
+			return false;
+		}
+
 		// Create a 'stream' transport.
 		$http = new Joomla\CMS\Http\Http($options, $transport);
 

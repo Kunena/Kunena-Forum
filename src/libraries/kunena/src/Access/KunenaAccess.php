@@ -154,7 +154,7 @@ class KunenaAccess
 	}
 
 	/**
-	 * @return  mixed|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -221,7 +221,7 @@ class KunenaAccess
 	/**
 	 * @param   array|null  $list  list
 	 *
-	 * @return  mixed|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

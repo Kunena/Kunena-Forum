@@ -20,7 +20,6 @@ use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 use Joomla\Component\Users\Administrator\Model\UserModel;
-use Joomla\Registry\Registry;
 use function defined;
 
 /**
@@ -300,7 +299,7 @@ class KunenaLogin
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return  Registry|boolean
+	 * @return  boolean|false
 	 *
 	 * @since   Kunena 5.1
 	 */

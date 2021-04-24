@@ -305,7 +305,7 @@ class CategoryModel extends ListModel
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = [
 				'hold'  => $hold,
-				'moved' => $moved, ];
+				'moved' => $moved,];
 
 			switch ($topicOrdering)
 			{
@@ -379,7 +379,7 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  array|null|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -481,7 +481,7 @@ class CategoryModel extends ListModel
 	}
 
 	/**
-	 * @return  array|null|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

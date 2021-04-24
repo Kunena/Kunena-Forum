@@ -73,7 +73,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * @internal
 	 *
-	 * @return  mixed
+	 * @return  \Kunena\Forum\Libraries\Controller\KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -299,7 +299,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @param   string  $layout  The layout name.
 	 *
-	 * @return  KunenaControllerDisplay|KunenaLayout
+	 * @return  KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 */

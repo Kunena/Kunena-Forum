@@ -189,7 +189,7 @@ abstract class KunenaTableObject
 	/**
 	 * Get the database columns.
 	 *
-	 * @return  mixed  An array of the field names, or false if an error occurs.
+	 * @return  int[]|string[]  An array of the field names, or false if an error occurs.
 	 *
 	 * @since   Kunena 4.0
 	 *
@@ -454,7 +454,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns an associative array of object properties.
 	 *
-	 * @return  array|Closure
+	 * @return  Closure
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -653,7 +653,7 @@ abstract class KunenaTableObject
 	/**
 	 * @internal
 	 *
-	 * @return  mixed
+	 * @return  \Joomla\Database\DatabaseQuery
 	 *
 	 * @since   Kunena 6.0
 	 */

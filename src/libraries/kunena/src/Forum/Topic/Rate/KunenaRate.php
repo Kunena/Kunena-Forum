@@ -23,10 +23,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Tables\KunenaTable;
-use Kunena\Forum\Libraries\Tables\TableKunenaRate;
 use RuntimeException;
 use function defined;
 
@@ -132,7 +129,7 @@ class KunenaRate extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return  boolean|Table|KunenaTable|TableKunenaRate
+	 * @return  boolean|Table
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -159,7 +156,7 @@ class KunenaRate extends CMSObject
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaMessage|KunenaRate
+	 * @return  KunenaRate
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -177,7 +174,7 @@ class KunenaRate extends CMSObject
 	 *
 	 * @param   string  $user  user
 	 *
-	 * @return  boolean|JsonResponse
+	 * @return  JsonResponse
 	 *
 	 * @since    Kunena 2.0
 	 *

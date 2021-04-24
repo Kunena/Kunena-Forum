@@ -94,9 +94,9 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * @param   string  $group    group
-	 * @param   string  $element  element
+	 * @param $pluginName
 	 *
+	 * @return false
 	 * @since version
 	 */
 	public function enablePlugin($pluginName)

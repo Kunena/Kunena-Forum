@@ -20,8 +20,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Tables\KunenaTable;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -86,7 +84,7 @@ class KunenaRead extends CMSObject
 	 * @param   string  $type    Topics table name to be used.
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
-	 * @return  boolean|Table|KunenaTable|KunenaUser
+	 * @return  boolean|Table
 	 *
 	 * @since   Kunena 6.0
 	 */

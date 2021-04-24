@@ -69,7 +69,7 @@ class ComponentUserControllerAttachmentsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 *

@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use function defined;
 
@@ -78,7 +77,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * Get Kunena access control object.
 	 *
 	 * @todo    Should we remove category ACL integration?
-	 * @return  KunenaAccess|KunenaAccessCommunity|void
+	 * @return  KunenaAccessCommunity|void
 	 *
 	 * @since   Kunena
 	 */

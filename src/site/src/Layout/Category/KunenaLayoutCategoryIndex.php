@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -142,7 +141,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * Method to retrieve the URL of mark read button
 	 *
 	 * @param   int  $categoryId  The category Id
-	 * @param   int  $numTopics    The number of topics
+	 * @param   int  $numTopics   The number of topics
 	 *
 	 * @return  string|void
 	 *
@@ -170,7 +169,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * @param   integer      $catid  The Id of category
 	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
-	 * @return  string|void
+	 * @return  bool|string
 	 *
 	 * @since   Kunena 6.0
 	 *

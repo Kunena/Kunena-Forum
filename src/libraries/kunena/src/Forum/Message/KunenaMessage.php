@@ -1483,7 +1483,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * Get the number of attachments into a message
 	 *
-	 * @return  array|StdClass
+	 * @return  StdClass
 	 *
 	 * @since   Kunena 6.0
 	 *

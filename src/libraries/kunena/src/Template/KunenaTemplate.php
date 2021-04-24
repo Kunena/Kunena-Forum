@@ -471,7 +471,7 @@ class KunenaTemplate extends CMSObject
 	/**
 	 * getconfigxml
 	 *
-	 * @return  boolean|mixed|string
+	 * @return  array|false|string|string[]|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1254,7 +1254,7 @@ HTML;
 	 * @param   bool  $all      all
 	 * @param   int   $checked  checked
 	 *
-	 * @return  array|SimpleXMLElement
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1705,7 +1705,7 @@ HTML;
 	 * @param   bool  $all      all
 	 * @param   int   $checked  checked
 	 *
-	 * @return  array|SimpleXMLElement
+	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 *

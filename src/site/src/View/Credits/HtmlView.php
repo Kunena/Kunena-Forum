@@ -30,7 +30,7 @@ class HtmlView extends KunenaView
 	 *
 	 * @param   null  $tpl  The name of the template file to parse
 	 *
-	 * @return  mixed  A string if successful, otherwise a JError object.
+	 * @return  void  A string if successful, otherwise a JError object.
 	 *
 	 * @since   1.0
 	 * @throws \Exception

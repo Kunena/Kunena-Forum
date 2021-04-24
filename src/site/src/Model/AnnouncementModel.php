@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -60,7 +59,7 @@ class AnnouncementModel extends ListModel
 	}
 
 	/**
-	 * @return  integer|void
+	 * @return  bool|void
 	 *
 	 * @since   Kunena 6.0
 	 */

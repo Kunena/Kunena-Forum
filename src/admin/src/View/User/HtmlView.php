@@ -114,9 +114,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayMove(): void
 	{
@@ -145,11 +145,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

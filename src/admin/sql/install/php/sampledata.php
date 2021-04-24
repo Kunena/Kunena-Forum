@@ -10,9 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 
@@ -28,7 +28,7 @@ class KText
 	/**
 	 * @param   string  $string  string
 	 *
-	 * @return  mixed
+	 * @return  array|string|string[]
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -41,10 +41,10 @@ class KText
 /**
  * @return  integer
  *
- * @throws  KunenaInstallerException
- * @throws Exception
  * @since   Kunena 6.0
  *
+ * @throws Exception
+ * @throws  KunenaInstallerException
  */
 function installSampleData(): int
 {

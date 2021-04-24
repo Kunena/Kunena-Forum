@@ -38,7 +38,11 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
-
+	/**
+	 * @var     array|KunenaCategory[]
+	 * @since   Kunena 6.0
+	 */
+	public $batchCategories;
 	/**
 	 * The model state
 	 *
@@ -46,13 +50,6 @@ class HtmlView extends BaseHtmlView
 	 * @since  Kunena 6.0
 	 */
 	protected $state;
-
-	/**
-	 * @var     array|KunenaCategory[]
-	 * @since   Kunena 6.0
-	 */
-	public $batchCategories;
-
 	/**
 	 * @var mixed
 	 * @since version
@@ -68,8 +65,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function displayCreate(): void
 	{
@@ -78,9 +75,9 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * @return void
-	 * @throws Exception
 	 * @since Kunena
 	 *
+	 * @throws Exception
 	 */
 	public function displayEdit()
 	{
@@ -130,11 +127,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  void|mixed
+	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{

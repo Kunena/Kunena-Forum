@@ -15,7 +15,6 @@ namespace Kunena\Forum\Site\Layout\Announcement\Kunenalist;
 defined('_JEXEC') or die;
 
 use Exception;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
@@ -75,7 +74,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * @param   string  $name  The name of the field
 	 * @param   string  $mode  Define the way to display the date on the field
 	 *
-	 * @return  boolean
+	 * @return  int|string
 	 *
 	 * @since   Kunena 6.0
 	 *

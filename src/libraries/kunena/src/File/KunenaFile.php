@@ -24,7 +24,7 @@ class KunenaFile
 	/**
 	 * @param   string  $file  file
 	 *
-	 * @return  boolean|mixed|string
+	 * @return  false|string
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -14,7 +14,6 @@ namespace Kunena\Forum\Site\View\Topics;
 defined('_JEXEC') or die;
 
 use Exception;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -33,7 +32,7 @@ class json extends KunenaView
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  mixed|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

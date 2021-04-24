@@ -78,7 +78,7 @@ class PlgSampledataKunena extends CMSPlugin
 	/**
 	 * Get an overview of the proposed sampleData.
 	 *
-	 * @return  boolean  True on success.
+	 * @return  \stdClass|void  True on success.
 	 *
 	 * @since   4.0.0
 	 */

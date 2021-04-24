@@ -1248,7 +1248,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return  mixed
+	 * @return  int|string
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
@@ -1273,7 +1273,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return  mixed
+	 * @return  int|string
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
@@ -1341,7 +1341,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean|void
+	 * @return  boolean|false
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1439,7 +1439,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean|void
+	 * @return  boolean|false
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1511,7 +1511,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  boolean|void
+	 * @return  boolean|false
 	 *
 	 * @since   Kunena 6.0
 	 *

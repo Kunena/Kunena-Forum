@@ -20,12 +20,12 @@ use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 
 /**
@@ -68,9 +68,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @param   array  $config  config
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -81,16 +81,17 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @param   array  $data      data
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 * @param   bool   $loadData  loadData
+	 *
+	 * @param   array  $data      data
 	 *
 	 * @return  boolean|mixed
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
+	 * @throws  Exception
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -112,9 +113,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @return  array
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getTemplates(): array
 	{
@@ -157,7 +158,7 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  boolean|void|string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -178,7 +179,7 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  boolean|void|string
+	 * @return  string|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -199,7 +200,7 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  bool
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -274,6 +275,63 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
+	 * @return array
+	 *
+	 * @since Kunena
+	 * @throws Exception
+	 */
+	public function getTemplatesXml()
+	{
+		// Get template xml file info
+		return self::loadTemplatesXml();
+	}
+
+	/**
+	 * parseKunenaInstallFile
+	 *
+	 * @return array|false
+	 *
+	 * @since Kunena 6.0
+	 */
+	public function loadTemplatesXml()
+	{
+		$template1 = array();
+		$context   = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+		$url       = 'https://update.kunena.org/templates.xml';
+
+		$xml = file_get_contents($url, false, $context);
+		$xml = simplexml_load_string($xml);
+
+		if ($xml)
+		{
+			foreach ($xml->templates as $template)
+			{
+				foreach ($template as $temp)
+				{
+					$attributes             = $temp->attributes();
+					$temp                   = new stdClass;
+					$temp->name             = (string) $attributes->name;
+					$temp->type             = (string) $attributes->element;
+					$temp->created          = (string) $attributes->created;
+					$temp->author           = (string) $attributes->author;
+					$temp->version          = (string) $attributes->version;
+					$temp->description      = (string) $attributes->description;
+					$temp->detailsurl       = (string) $attributes->detailsurl;
+					$temp->price            = (string) $attributes->price;
+					$temp->thumbnail        = (string) $attributes->thumbnail;
+					$temp->authorurl        = (string) $attributes->authorurl;
+					$temp->authoremail      = (string) $attributes->authoremail;
+					$template1[$temp->name] = $temp;
+				}
+			}
+
+			return $template1;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Method to auto-populate the model state.
 	 *
 	 * @param   null  $ordering   ordering
@@ -281,9 +339,9 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
@@ -328,9 +386,9 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -359,13 +417,13 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  array|mixed
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 *
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 *
+	 * @return  array|mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	protected function loadFormData(): array
 	{
@@ -379,62 +437,5 @@ class TemplatesModel extends AdminModel
 		}
 
 		return $data;
-	}
-
-	/**
-	 * parseKunenaInstallFile
-	 *
-	 * @return boolean|stdClass|array
-	 *
-	 * @since Kunena 6.0
-	 */
-	public function loadTemplatesXml()
-	{
-		$template1 = array();
-		$context   = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
-		$url       = 'https://update.kunena.org/templates.xml';
-
-		$xml = file_get_contents($url, false, $context);
-		$xml = simplexml_load_string($xml);
-
-		if ($xml)
-		{
-			foreach ($xml->templates as $template)
-			{
-				foreach ($template as $temp)
-				{
-					$attributes             = $temp->attributes();
-					$temp                   = new stdClass;
-					$temp->name             = (string) $attributes->name;
-					$temp->type             = (string) $attributes->element;
-					$temp->created          = (string) $attributes->created;
-					$temp->author           = (string) $attributes->author;
-					$temp->version          = (string) $attributes->version;
-					$temp->description      = (string) $attributes->description;
-					$temp->detailsurl       = (string) $attributes->detailsurl;
-					$temp->price            = (string) $attributes->price;
-					$temp->thumbnail        = (string) $attributes->thumbnail;
-					$temp->authorurl        = (string) $attributes->authorurl;
-					$temp->authoremail      = (string) $attributes->authoremail;
-					$template1[$temp->name] = $temp;
-				}
-			}
-
-			return $template1;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return array
-	 *
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public function getTemplatesXml()
-	{
-		// Get template xml file info
-		return self::loadTemplatesXml();
 	}
 }

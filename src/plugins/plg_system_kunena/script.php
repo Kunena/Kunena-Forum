@@ -97,7 +97,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	/**
 	 * @param $pluginName
 	 *
-	 * @return void|boolean
+	 * @return boolean|false
 	 * @since version
 	 */
 	public function enablePlugin($pluginName)

@@ -895,15 +895,109 @@ class TopicController extends KunenaController
 	}
 
 	/**
+	 * Check if the IP, username or email address given are blacklisted
+	 *
+	 * @param   string  $message  message
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6
+	 */
+	protected function checkIfBlacklisted($message)
+	{
+		$ip    = $message->ip;
+		$name  = $message->name;
+		$email = $message->email;
+
+		// Prepare the request to stopforumspam
+		if (KunenaUserHelper::isIPv6($message->ip))
+		{
+			$ip = '[' . $message->ip . ']';
+		}
+
+		$data = 'ip=' . $ip;
+
+		if (!empty($name))
+		{
+			$data .= '&username=' . $name;
+		}
+
+		if (!empty($email))
+		{
+			$data .= '&email=' . $email;
+		}
+
+		$options = new Registry;
+
+		$transport = new StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new Http($options, $transport);
+
+		$response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
+
+		if ($response->code == '200')
+		{
+			// The query has worked
+			$result = json_decode($response->body);
+
+			if ($result->success)
+			{
+				if ($result->ip->appears)
+				{
+					return true;
+				}
+				elseif (!empty($result->username))
+				{
+					if ($result->username->appears)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				elseif (!empty($result->email))
+				{
+					if ($result->email->appears)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			else
+			{
+				// TODO : log the result or display something in debug mode
+
+				return false;
+			}
+		}
+		else
+		{
+			// The query has failed or has been refused
+
+			// TODO : log the result or display something in debug mode
+
+			return false;
+		}
+
+	}
+
+	/**
 	 * Check if title of topic or message contains URL to limit part of spam
 	 *
 	 * @internal param string $usbject
 	 *
-	 * @param   string  $subject subject
+	 * @param   string  $subject  subject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
+	 * @since    Kunena 6.0
 	 */
 	protected function checkURLInSubject($subject)
 	{
@@ -930,8 +1024,8 @@ class TopicController extends KunenaController
 	/**
 	 * Check in the text the max links
 	 *
-	 * @param   string  $text  text
-	 * @param   object  $topic topic
+	 * @param   string  $text   text
+	 * @param   object  $topic  topic
 	 *
 	 * @return  boolean
 	 *
@@ -1001,6 +1095,80 @@ class TopicController extends KunenaController
 		}
 
 		return true;
+	}
+
+	/**
+	 * Save private data from message
+	 *
+	 * @param   KunenaMessage  $message  message
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function postPrivate(KunenaMessage $message)
+	{
+		if (!$this->me->userid)
+		{
+			return;
+		}
+
+		$body      = (string) $this->input->getRaw('private');
+		$attachIds = $this->input->get('attachment_private', [], 'array');
+
+		if (!trim($body) && !$attachIds)
+		{
+			return;
+		}
+
+		$moderator          = $this->me->isModerator($message->getCategory());
+		$parent             = $message->getParent();
+		$author             = $message->getAuthor();
+		$pAuthor            = $parent->getAuthor();
+		$private            = new KunenaPrivateMessage;
+		$private->author_id = $author->userid;
+		$private->subject   = $message->subject;
+		$private->body      = $body;
+
+		// Attach message.
+		$private->posts()->add($message->id);
+
+		// Attach author of the message.
+		if ($author->exists())
+		{
+			$private->users()->add($author->userid);
+		}
+
+		if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory())))
+		{
+			// Attach receiver (but only if moderator either posted or replied parent post).
+			if ($pAuthor->exists())
+			{
+				$private->users()->add($pAuthor->userid);
+			}
+		}
+
+		$private->attachments()->setMapped($attachIds);
+
+		try
+		{
+			$private->save();
+		}
+		catch (Exception $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		KunenaLog::log(
+			KunenaLog::TYPE_ACTION,
+			KunenaLog::LOG_PRIVATE_POST_CREATE,
+			['id' => $private->id, 'mesid' => $message->id],
+			$message->getCategory(),
+			$message->getTopic(),
+			$pAuthor
+		);
 	}
 
 	/**
@@ -1337,6 +1505,72 @@ class TopicController extends KunenaController
 	}
 
 	/**
+	 * Load private data information when edit message
+	 *
+	 * @param   KunenaMessage  $message  message
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	protected function editPrivate(KunenaMessage $message)
+	{
+		if (!$this->me->userid)
+		{
+			return;
+		}
+
+		$body      = (string) $this->input->getRaw('private');
+		$attachIds = $this->input->get('attachment_private', [], 'array');
+		$finder    = new KunenaFinder;
+		$finder
+			->filterByMessage($message)
+			->where('parentid', '=', 0)
+			->where('author_id', '=', $message->userid)
+			->order('id')
+			->limit(1);
+		$private = $finder->firstOrNew();
+
+		if (!$private->exists())
+		{
+			$this->postPrivate($message);
+
+			return;
+		}
+
+		$private->subject = $message->subject;
+		$private->body    = $body;
+
+		if (!empty($attachIds))
+		{
+			$private->attachments()->setMapped($attachIds);
+		}
+
+		if (!$private->body && !$private->attachments)
+		{
+			try
+			{
+				$private->delete();
+			}
+			catch (Exception $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
+		}
+
+		try
+		{
+			$private->save();
+		}
+		catch (Exception $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+	}
+
+	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -1351,7 +1585,7 @@ class TopicController extends KunenaController
 	}
 
 	/**
-	 * @param   string  $type type
+	 * @param   string  $type  type
 	 *
 	 * @return  void
 	 *
@@ -2495,239 +2729,5 @@ class TopicController extends KunenaController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
 		$this->setRedirect($topic->getUrl($this->return, false));
-	}
-
-	/**
-	 * Check if the IP, username or email address given are blacklisted
-	 *
-	 * @param   string  $message message
-	 *
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 6
-	 */
-	protected function checkIfBlacklisted($message)
-	{
-		$ip    = $message->ip;
-		$name  = $message->name;
-		$email = $message->email;
-
-		// Prepare the request to stopforumspam
-		if (KunenaUserHelper::isIPv6($message->ip))
-		{
-			$ip = '[' . $message->ip . ']';
-		}
-
-		$data = 'ip=' . $ip;
-
-		if (!empty($name))
-		{
-			$data .= '&username=' . $name;
-		}
-
-		if (!empty($email))
-		{
-			$data .= '&email=' . $email;
-		}
-
-		$options = new Registry;
-
-		$transport = new StreamTransport($options);
-
-		// Create a 'stream' transport.
-		$http = new Http($options, $transport);
-
-		$response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
-
-		if ($response->code == '200')
-		{
-			// The query has worked
-			$result = json_decode($response->body);
-
-			if ($result->success)
-			{
-				if ($result->ip->appears)
-				{
-					return true;
-				}
-				elseif (!empty($result->username))
-				{
-					if ($result->username->appears)
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-				elseif (!empty($result->email))
-				{
-					if ($result->email->appears)
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			}
-			else
-			{
-				// TODO : log the result or display something in debug mode
-
-				return false;
-			}
-		}
-		else
-		{
-			// The query has failed or has been refused
-
-			// TODO : log the result or display something in debug mode
-
-			return false;
-		}
-
-	}
-
-	/**
-	 * Save private data from message
-	 *
-	 * @param   KunenaMessage  $message message
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function postPrivate(KunenaMessage $message)
-	{
-		if (!$this->me->userid)
-		{
-			return;
-		}
-
-		$body      = (string) $this->input->getRaw('private');
-		$attachIds = $this->input->get('attachment_private', [], 'array');
-
-		if (!trim($body) && !$attachIds)
-		{
-			return;
-		}
-
-		$moderator          = $this->me->isModerator($message->getCategory());
-		$parent             = $message->getParent();
-		$author             = $message->getAuthor();
-		$pAuthor            = $parent->getAuthor();
-		$private            = new KunenaPrivateMessage;
-		$private->author_id = $author->userid;
-		$private->subject   = $message->subject;
-		$private->body      = $body;
-
-		// Attach message.
-		$private->posts()->add($message->id);
-
-		// Attach author of the message.
-		if ($author->exists())
-		{
-			$private->users()->add($author->userid);
-		}
-
-		if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory())))
-		{
-			// Attach receiver (but only if moderator either posted or replied parent post).
-			if ($pAuthor->exists())
-			{
-				$private->users()->add($pAuthor->userid);
-			}
-		}
-
-		$private->attachments()->setMapped($attachIds);
-
-		try
-		{
-			$private->save();
-		}
-		catch (Exception $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		KunenaLog::log(
-			KunenaLog::TYPE_ACTION,
-			KunenaLog::LOG_PRIVATE_POST_CREATE,
-			['id' => $private->id, 'mesid' => $message->id],
-			$message->getCategory(),
-			$message->getTopic(),
-			$pAuthor
-		);
-	}
-
-	/**
-	 * Load private data information when edit message
-	 *
-	 * @param   KunenaMessage  $message message
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function editPrivate(KunenaMessage $message)
-	{
-		if (!$this->me->userid)
-		{
-			return;
-		}
-
-		$body      = (string) $this->input->getRaw('private');
-		$attachIds = $this->input->get('attachment_private', [], 'array');
-		$finder    = new KunenaFinder;
-		$finder
-			->filterByMessage($message)
-			->where('parentid', '=', 0)
-			->where('author_id', '=', $message->userid)
-			->order('id')
-			->limit(1);
-		$private = $finder->firstOrNew();
-
-		if (!$private->exists())
-		{
-			$this->postPrivate($message);
-
-			return;
-		}
-
-		$private->subject = $message->subject;
-		$private->body    = $body;
-
-		if (!empty($attachIds))
-		{
-			$private->attachments()->setMapped($attachIds);
-		}
-
-		if (!$private->body && !$private->attachments)
-		{
-			try
-			{
-				$private->delete();
-			}
-			catch (Exception $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
-
-		try
-		{
-			$private->save();
-		}
-		catch (Exception $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
 	}
 }

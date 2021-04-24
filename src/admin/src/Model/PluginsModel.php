@@ -32,14 +32,15 @@ class PluginsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                     $config   An optional associative array of configuration settings.
-	 * @param   MVCFactoryInterface|null  $factory  mvc
-	 *
-	 * @throws Exception
-	 * @since   Kunena 1.6
-	 *
 	 * @see     JController
 	 *
+	 * @param   MVCFactoryInterface|null  $factory  mvc
+	 *
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 *
+	 * @since   Kunena 1.6
+	 *
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
@@ -65,7 +66,7 @@ class PluginsModel extends ListModel
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load current data
 	 *
-	 * @return  Form|boolean  The Form object or false on error
+	 * @return  Form|null  The Form object or false on error
 	 *
 	 * @since   6.0
 	 */

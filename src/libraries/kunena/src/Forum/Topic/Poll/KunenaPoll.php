@@ -25,8 +25,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Tables\KunenaTable;
-use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
 use function defined;
@@ -150,7 +148,7 @@ class KunenaPoll extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return  boolean|Table|KunenaTable|TableKunenaPolls
+	 * @return  boolean|Table
 	 *
 	 * @since   Kunena 6.0
 	 */

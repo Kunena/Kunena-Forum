@@ -129,7 +129,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		$options    = [];
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		// Todo: fix params
-		$catParams   = ['sections' => 1, 'catid' => 0];
+		$catParams    = ['sections' => 1, 'catid' => 0];
 		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
@@ -145,7 +145,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

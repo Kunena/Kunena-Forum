@@ -24,8 +24,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Table\KunenaTableObject;
-use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -95,7 +93,7 @@ class KunenaTopicUser extends CMSObject
 	 * @param   string  $type    Topics table name to be used.
 	 * @param   string  $prefix  Topics table prefix to be used.
 	 *
-	 * @return  boolean|Table|KunenaTableObject|KunenaUserTopics
+	 * @return  boolean|Table
 	 *
 	 * @since   Kunena 6.0
 	 */

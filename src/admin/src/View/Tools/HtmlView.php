@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
@@ -109,11 +108,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -217,97 +216,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarPrune(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('tools.prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/prune-categories';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarSyncUsers(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('tools.syncUsers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/synchronize-users';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarRecount(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('tools.recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/recount-statistics';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarMenu(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-		ToolbarHelper::spacer();
-
-		if (!empty($this->legacy))
-		{
-			ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
-		}
-
-		ToolbarHelper::custom('tools.trashMenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/menu-manager';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarPurgeReStatements(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-		ToolbarHelper::spacer();
-		ToolbarHelper::trash('tools.purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/purge-re-prefixes';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
 	protected function setToolBarCleanupIP(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
@@ -340,13 +248,72 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarUninstall(): void
+	protected function setToolBarMenu(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
+
+		if (!empty($this->legacy))
+		{
+			ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
+		}
+
+		ToolbarHelper::custom('tools.trashMenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
+		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/uninstall-kunena';
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/menu-manager';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarPrune(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('tools.prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/prune-categories';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarPurgeReStatements(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+		ToolbarHelper::spacer();
+		ToolbarHelper::trash('tools.purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/purge-re-prefixes';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarRecount(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('tools.recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/recount-statistics';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
@@ -377,6 +344,38 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/faq/configuration-report';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarSyncUsers(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('tools.syncUsers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/synchronize-users';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarUninstall(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/uninstall-kunena';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

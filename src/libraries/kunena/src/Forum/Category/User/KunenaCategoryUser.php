@@ -22,7 +22,6 @@ use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -90,7 +89,7 @@ class KunenaCategoryUser extends CMSObject
 	 * @param   string  $type    The categories table name to be used
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
-	 * @return  Table|KunenaUser The categories table object
+	 * @return  bool|Table The categories table object
 	 *
 	 * @since   Kunena 6.0
 	 */

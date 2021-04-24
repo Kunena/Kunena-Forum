@@ -115,7 +115,7 @@ class UserModel extends ListModel
 	}
 
 	/**
-	 * @return  array|mixed
+	 * @return  array|false
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -230,7 +230,7 @@ class UserModel extends ListModel
 	}
 
 	/**
-	 * @return  array|string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+
 //use function defined;
 
 /**
@@ -34,7 +35,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 	/**
 	 * Method to get the RSS URL link with image
 	 *
-	 * @return  string|void
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *

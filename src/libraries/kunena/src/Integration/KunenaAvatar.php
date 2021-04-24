@@ -122,7 +122,7 @@ class KunenaAvatar
 	 * @param   int         $sizex  sizex
 	 * @param   int         $sizey  sizey
 	 *
-	 * @return  string|void
+	 * @return  false|string
 	 *
 	 * @since   Kunena 6.0
 	 *

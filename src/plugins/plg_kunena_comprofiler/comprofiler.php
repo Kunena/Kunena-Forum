@@ -19,14 +19,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
-use Kunena\Forum\Libraries\Login\KunenaLogin;
 use function defined;
 
 /**
@@ -157,7 +155,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @return  KunenaAccess|KunenaAccessComprofiler|void
+	 * @return  KunenaAccessComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -174,7 +172,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return  KunenaLogin|KunenaLoginComprofiler|void
+	 * @return  KunenaLoginComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */

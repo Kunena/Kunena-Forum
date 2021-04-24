@@ -53,10 +53,10 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|KunenaTopic[]|boolean
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getSubscriptions(): array
 	{
@@ -98,9 +98,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  KunenaCategory[]
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getCatSubscriptions(): array
 	{
@@ -112,9 +112,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getIPlist(): array
 	{
@@ -177,9 +177,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  mixed
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getListModCats()
 	{
@@ -210,9 +210,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  KunenaUser
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -224,9 +224,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|mixed|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getListUserRanks(): array
 	{
@@ -273,11 +273,11 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|string|void
+	 * @return  array|void|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getMoveUser()
 	{
@@ -319,9 +319,9 @@ class UserModel extends KunenaModel
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

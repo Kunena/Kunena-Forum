@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -29,7 +28,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  mixed|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

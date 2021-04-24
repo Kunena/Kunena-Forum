@@ -1099,7 +1099,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  boolean|KunenaCategory
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1911,7 +1911,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   int  $count  count
 	 *
-	 * @return  integer
+	 * @return  string
 	 *
 	 * @since   Kunena 5.0.13
 	 */

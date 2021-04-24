@@ -48,7 +48,7 @@ class AvatarCommunity extends KunenaAvatar
 	}
 
 	/**
-	 * @param $userlist
+	 * @param   array  $userlist
 	 *
 	 * @return  void
 	 * @since   Kunena 6.0

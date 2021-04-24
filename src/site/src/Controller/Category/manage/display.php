@@ -19,7 +19,6 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -42,44 +41,37 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Category/Manage';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
 	public $headerText;
-
 	/**
 	 * @var     KunenaCategory
 	 * @since   Kunena 5.1
 	 */
 	public $category;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $total;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
-
 	/**
 	 * @var     KunenaPagination
 	 * @since   Kunena 5.1
 	 */
 	public $pagination;
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 5.1
 	 */
 	public $me;
-
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Category/Manage';
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
@@ -89,7 +81,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare category display.
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  false|KunenaAuthorise
 	 *
 	 * @since   Kunena 5.1
 	 *
@@ -179,15 +171,15 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		$catParams = ['sections' => 1, 'catid' => 0];
 
-		$lists                     = [];
-		$lists ['accesstypes']     = Access::getInstance()->getAccessTypesList($category);
-		$lists ['accesslists']     = Access::getInstance()->getAccessOptions($category);
-		$lists ['categories']      = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
-		$lists ['channels']        = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']         = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
-		$lists ['published']       = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
-		$lists ['forumLocked']     = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
-		$lists ['forumReview']     = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-control" size="1"', 'value', 'text', $category->review);
+		$lists                    = [];
+		$lists ['accesstypes']    = Access::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists']    = Access::getInstance()->getAccessOptions($category);
+		$lists ['categories']     = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
+		$lists ['channels']       = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['aliases']        = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
+		$lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
+		$lists ['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
+		$lists ['forumReview']    = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-control" size="1"', 'value', 'text', $category->review);
 		$lists ['allowPolls']     = HTMLHelper::_('select.genericlist', $yesno, 'allowPolls', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allowPolls);
 		$lists ['allowAnonymous'] = HTMLHelper::_('select.genericlist', $yesno, 'allowAnonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->allowAnonymous);
 		$lists ['postAnonymous']  = HTMLHelper::_('select.genericlist', $postAnonymous, 'postAnonymous', 'class="inputbox form-control" size="1"', 'value', 'text', $category->postAnonymous);

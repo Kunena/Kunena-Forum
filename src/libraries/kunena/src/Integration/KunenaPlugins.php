@@ -30,7 +30,7 @@ class KunenaPlugins
 	/**
 	 * Returns total kunena plugins.
 	 *
-	 * @return  boolean Codename.
+	 * @return  int Codename.
 	 *
 	 * @since   Kunena 6.0
 	 *

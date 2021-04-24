@@ -33,12 +33,10 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -66,10 +64,10 @@ class UserController extends KunenaController
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @throws  Exception
-	 * @throws  null
-	 *@since   Kunena 6.0
+	 * @since   Kunena 6.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{
@@ -196,7 +194,7 @@ class UserController extends KunenaController
 	}
 
 	/**
-	 * @param   integer  $karmaDelta karma delta
+	 * @param   integer  $karmaDelta  karma delta
 	 *
 	 * @return  void
 	 *
@@ -935,6 +933,68 @@ class UserController extends KunenaController
 	// Internal functions:
 
 	/**
+	 * Reports a user to stopforumspam.com
+	 *
+	 * @param   int          $userid    userid
+	 * @param   string|null  $evidence  evidence
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws Exception
+	 */
+	protected function report(int $userid = 0, string $evidence = null)
+	{
+		if (!$this->config->stopForumSpamKey || !$userid)
+		{
+			return false;
+		}
+
+		$spammer = Factory::getUser($userid);
+
+		// TODO: remove this query by getting the ip of user by an another way
+		$db = Factory::getDBO();
+		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$ip = $db->loadResult();
+
+		if (!empty($ip))
+		{
+			$data                     = [];
+			$data['username']         = $spammer->username;
+			$data['ip']               = $ip;
+			$data['email']            = $spammer->email;
+			$data['stopForumSpamKey'] = $this->config->stopForumSpamKey;
+			$data['evidence']         = $evidence;
+
+			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
+
+			if ($result != false)
+			{
+				// Report accepted. There is no need to display the reason
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+
+				return true;
+			}
+			else
+			{
+				// Report failed or refused
+				$reasons = [];
+				preg_match('/<p>.*<\/p>/', $result->body, $reasons);
+
+				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+
+				return false;
+			}
+		}
+		else
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+		}
+	}
+
+	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -1413,67 +1473,5 @@ class UserController extends KunenaController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
 		$this->setRedirectBack();
-	}
-
-	/**
-	 * Reports a user to stopforumspam.com
-	 *
-	 * @param   int          $userid    userid
-	 * @param   string|null  $evidence  evidence
-	 *
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	protected function report(int $userid = 0, string $evidence = null)
-	{
-		if (!$this->config->stopForumSpamKey || !$userid)
-		{
-			return false;
-		}
-
-		$spammer = Factory::getUser($userid);
-
-		// TODO: remove this query by getting the ip of user by an another way
-		$db = Factory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
-		$ip = $db->loadResult();
-
-		if (!empty($ip))
-		{
-			$data                      = [];
-			$data['username']          = $spammer->username;
-			$data['ip']                = $ip;
-			$data['email']             = $spammer->email;
-			$data['stopForumSpamKey'] = $this->config->stopForumSpamKey;
-			$data['evidence']          = $evidence;
-
-			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
-
-			if ($result != false)
-			{
-				// Report accepted. There is no need to display the reason
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
-
-				return true;
-			}
-			else
-			{
-				// Report failed or refused
-				$reasons = [];
-				preg_match('/<p>.*<\/p>/', $result->body, $reasons);
-
-				// Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
-
-				return false;
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
-		}
 	}
 }

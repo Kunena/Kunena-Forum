@@ -31,22 +31,22 @@ use function defined;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 *
 	 * @var object
 	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
 	public $config;
 
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{

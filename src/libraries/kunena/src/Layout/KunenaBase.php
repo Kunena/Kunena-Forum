@@ -192,7 +192,7 @@ class KunenaBase extends KunenaLayoutBase
 
 			// And get the contents.
 			$output = ob_get_clean();
-		
+
 		}
 		catch (Exception $e)
 		{
@@ -270,7 +270,7 @@ class KunenaBase extends KunenaLayoutBase
 	public function getLayout(): string
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
-		
+
 		return $layout ?: 'default';
 	}
 
@@ -279,7 +279,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @param   string  $layout  The layout name.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  \Kunena\Forum\Libraries\Layout\KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -438,7 +438,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @param   string  $filename  filename
 	 *
-	 * @return  mixed
+	 * @return  false|\Joomla\CMS\Document\Document|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -455,7 +455,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   string  $content  content
 	 * @param   string  $type     type
 	 *
-	 * @return  mixed
+	 * @return  \Joomla\CMS\Document\Document|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -473,7 +473,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   boolean  $options  options
 	 * @param   boolean  $merge    merge
 	 *
-	 * @return  mixed
+	 * @return  \Joomla\CMS\Document\Document|void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -501,7 +501,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @param   string  $path  The paths queue.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  \Kunena\Forum\Libraries\Layout\KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -517,7 +517,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @param   array  $paths  The paths queue.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  \Kunena\Forum\Libraries\Layout\KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -575,7 +575,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   string  $key    The name of the property.
 	 * @param   mixed   $value  The value of the property to set.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  \Kunena\Forum\Libraries\Layout\KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -599,7 +599,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   string  $name       name
 	 * @param   mixed   $arguments  arguments
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -631,7 +631,7 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @param   mixed  $properties  Either an associative array or another object.
 	 *
-	 * @return  KunenaLayout|KunenaLayoutBase
+	 * @return  \Kunena\Forum\Libraries\Layout\KunenaBase
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -763,11 +763,11 @@ class KunenaBase extends KunenaLayoutBase
 			}
 
 			// Attempt to load layout class if it doesn't exist.
-			$ex = explode('/', $path);
+			$ex    = explode('/', $path);
 			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
-			$fpath    = (string) preg_replace('|\\\|', '/', strtolower($path));
+			$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
 
-			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0]. '\\' . $class;
+			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0] . '\\' . $class;
 
 			if (class_exists($classnamespaced))
 			{
@@ -796,8 +796,8 @@ class KunenaBase extends KunenaLayoutBase
 	 *
 	 * @return  KunenaControllerDisplay|KunenaLayout
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function subRequest(string $path, Input $input = null, $options = null)
 	{

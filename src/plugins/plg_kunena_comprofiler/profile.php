@@ -150,7 +150,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int     $view    view
 	 * @param   object  $params  params
 	 *
-	 * @return  void|string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -162,9 +162,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-				'forumSideProfile', ['kunena', $view, $view->profile->userid,
-				['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params], ]
-			)
+			'forumSideProfile', ['kunena', $view, $view->profile->userid,
+				['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params],]
+		)
 		);
 	}
 

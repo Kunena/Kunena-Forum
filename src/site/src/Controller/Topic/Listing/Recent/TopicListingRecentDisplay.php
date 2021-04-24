@@ -54,10 +54,10 @@ class TopicListingRecentDisplay extends ListDisplay
 
 		$model = new TopicsModel(array(), $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state    = $model->getState();
+		$state          = $model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
-		$moreUri  = null;
-		$holding  = $this->getOptions()->get('topics_deletedtopics');
+		$moreUri        = null;
+		$holding        = $this->getOptions()->get('topics_deletedtopics');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$start = $state->get('list.start');
@@ -346,7 +346,7 @@ class TopicListingRecentDisplay extends ListDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

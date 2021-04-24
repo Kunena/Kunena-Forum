@@ -90,13 +90,13 @@ class SearchFormDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$error       = $this->model->getError();
+		$error             = $this->model->getError();
 	}
 
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

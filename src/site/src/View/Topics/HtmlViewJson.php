@@ -9,7 +9,6 @@
  * @link          https://www.kunena.org
  **/
 
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -28,7 +27,7 @@ class KunenaViewTopics extends KunenaView
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
-	 * @return  mixed|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *

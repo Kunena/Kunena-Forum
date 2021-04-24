@@ -24,7 +24,6 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\Profiler\Profiler;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -88,7 +87,7 @@ class Router extends RouterView
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  \Kunena\Forum\Site\Service\Router|null
 	 *
 	 * @since   Kunena 6.0
 	 *

@@ -13,11 +13,9 @@ namespace Kunena\Forum\Libraries\Model;
 
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Input\Input;
@@ -84,12 +82,12 @@ class KunenaModel extends BaseDatabaseModel
 	protected $embedded = false;
 
 	/**
-	 * @param   array                     $config   config
-	 * @param   MVCFactoryInterface|null  $factory  factory
+	 * @param   array                     $config  config
+	 * @param   \Joomla\Input\Input|null  $input
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __construct($config = array(), \Joomla\Input\Input $input = null)
 	{
@@ -152,7 +150,7 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @param   mixed  $var  The output to escape.
 	 *
-	 * @return  mixed The escaped value.
+	 * @return  string The escaped value.
 	 *
 	 * @since   Kunena 6.0
 	 */

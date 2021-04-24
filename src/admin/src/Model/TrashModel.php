@@ -68,12 +68,12 @@ class TrashModel extends KunenaModel
 	/**
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
-	 * @return  array|object
+	 * @return  array
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getTrashItems()
 	{
@@ -92,10 +92,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function internalGetTopics(): array
 	{
@@ -187,10 +187,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	protected function internalGetMessages(): array
 	{
@@ -360,10 +360,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getPurgeItems(): array
 	{

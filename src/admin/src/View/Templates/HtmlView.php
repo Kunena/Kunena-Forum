@@ -81,9 +81,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayAdd(): void
 	{
@@ -109,11 +109,11 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   null  $tpl  tpl
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -155,9 +155,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayEdit(): void
 	{
@@ -209,9 +209,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayChooseLess(): void
 	{
@@ -252,9 +252,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayEditLess(): void
 	{
@@ -289,9 +289,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayChooseCss(): void
 	{
@@ -336,9 +336,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function displayEditCss(): void
 	{

@@ -270,7 +270,7 @@ abstract class KunenaParser
 	 * @param   bool    $html    html
 	 * @param   string  $target  target
 	 *
-	 * @return  string|void
+	 * @return  false|string
 	 *
 	 * @since   Kunena 6.0
 	 *

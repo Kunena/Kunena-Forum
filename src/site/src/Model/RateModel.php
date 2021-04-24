@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRate;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 
@@ -42,7 +41,7 @@ class RateModel extends ListModel
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  \Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRate
 	 *
 	 * @since   Kunena 6.0
 	 *

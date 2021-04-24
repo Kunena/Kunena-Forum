@@ -20,7 +20,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
-use Kunena\Forum\Libraries\Tables\KunenaTable;
 use function defined;
 
 /**
@@ -172,7 +171,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  Table|KunenaTable  The table object.
+	 * @return  bool|Table  The table object.
 	 *
 	 * @since   Kunena 6.0
 	 */

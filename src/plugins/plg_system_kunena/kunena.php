@@ -249,7 +249,7 @@ EOF;
 	 * @param   object  $params  Joomla\Registry\Registry object holding eventual parameters
 	 * @param   int     $page    An integer holding page number
 	 *
-	 * @return  object|string
+	 * @return  string
 	 *
 	 * @since   Kunena 2.0
 	 *

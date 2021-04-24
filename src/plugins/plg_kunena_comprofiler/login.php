@@ -96,7 +96,7 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return  mixed
+	 * @return  array|bool|float|int|object|string|null
 	 *
 	 * @since   Kunena 6.0
 	 */

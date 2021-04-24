@@ -1417,7 +1417,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1528,7 +1528,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1670,7 +1670,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1722,7 +1722,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1774,7 +1774,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1863,7 +1863,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  mixed|void
+	 * @return  bool|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -1957,7 +1957,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @param   int  $ItemID  id
 	 *
-	 * @return  boolean|string|void
+	 * @return  false|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -2980,7 +2980,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -3308,7 +3308,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -3356,7 +3356,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 * @param   mixed  $params   params
 	 * @param   mixed  $content  content
 	 *
-	 * @return  boolean|string|void
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *

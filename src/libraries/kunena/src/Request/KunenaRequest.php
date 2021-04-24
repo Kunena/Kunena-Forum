@@ -17,8 +17,6 @@ defined('_JEXEC') or die();
 use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
 /**

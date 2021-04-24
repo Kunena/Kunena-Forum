@@ -120,7 +120,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			$tab           = new stdClass;
 			$tab->title    = Text::_('COM_KUNENA_USERPOSTS');
-			$tab->content  = $this->subRequest('Message/List/Recent', new Input($params), $params);
+			$tab->content  = $this->subRequest('Message/Listing/Recent', new Input($params), $params);
 			$tab->active   = true;
 			$tabs['posts'] = $tab;
 		}
@@ -160,7 +160,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'limitstart'       => 0,
 					'filter_order_Dir' => 'desc',
 				];
-				$tab->content .= $this->subRequest('Topic/List/User', new Input($params), $params);
+				$tab->content .= $this->subRequest('Topic/Listing/User', new Input($params), $params);
 			}
 
 			$tab->active = false;
@@ -189,7 +189,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 			$tab               = new stdClass;
 			$tab->title        = Text::_('COM_KUNENA_FAVORITES');
-			$tab->content      = $this->subRequest('Topic/List/User', new Input($params), $params);
+			$tab->content      = $this->subRequest('Topic/Listing/User', new Input($params), $params);
 			$tab->active       = false;
 			$tabs['favorites'] = $tab;
 		}
@@ -213,7 +213,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
 			];
-			$tab->content .= $this->subRequest('Message/List/Recent', new Input($params), $params);
+			$tab->content .= $this->subRequest('Message/Listing/Recent', new Input($params), $params);
 
 			$params       = [
 				'embedded'            => 1,
@@ -228,7 +228,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'limitstart'       => 0,
 				'filter_order_Dir' => 'desc',
 			];
-			$tab->content .= $this->subRequest('Message/List/Recent', new Input($params), $params);
+			$tab->content .= $this->subRequest('Message/Listing/Recent', new Input($params), $params);
 
 			$tab->active      = false;
 			$tabs['thankyou'] = $tab;
@@ -251,7 +251,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			];
 			$tab                = new stdClass;
 			$tab->title         = Text::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
-			$tab->content       = $this->subRequest('Message/List/Recent', new Input($params), $params);
+			$tab->content       = $this->subRequest('Message/Listing/Recent', new Input($params), $params);
 			$tab->active        = false;
 			$tabs['unapproved'] = $tab;
 		}

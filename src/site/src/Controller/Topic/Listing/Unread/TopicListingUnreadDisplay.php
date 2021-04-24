@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\KunenaList\Unread;
+namespace Kunena\Forum\Site\Controller\Topic\Listing\Unread;
 
 defined('_JEXEC') or die();
 
@@ -36,7 +36,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerListUnreadDisplay extends KunenaControllerDisplay
+class TopicListingUnreadDisplay extends KunenaControllerDisplay
 {
 
 	/**

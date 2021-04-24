@@ -135,7 +135,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if ($this->config->readOnly)
 		{
-			throw new Authorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		// FIXME: We need to proxy this...
@@ -165,7 +165,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if (!$this->topic->category_id)
 		{
-			throw new Authorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+			throw new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 

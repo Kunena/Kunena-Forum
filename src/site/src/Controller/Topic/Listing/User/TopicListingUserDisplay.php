@@ -58,9 +58,9 @@ class TopicListingUserDisplay extends ListDisplay
 		$this->me      = KunenaUserHelper::getMyself();
 		$moreUri = null;
 
-		$embedded = $this->getOptions()->get('embedded', true);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
-		if ($embedded)
+		if ($this->embedded)
 		{
 			$moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
 				$state->get('list.mode') . '&userid=' . $state->get('user') . '&limit=' . $state->get('list.limit')
@@ -317,7 +317,7 @@ class TopicListingUserDisplay extends ListDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$this->setMetaData('og:url', Uri::current(), 'property');
 
@@ -368,6 +368,7 @@ class TopicListingUserDisplay extends ListDisplay
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
+			$title = '';
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');

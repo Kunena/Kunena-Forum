@@ -15,7 +15,10 @@ namespace Kunena\Forum\Site\Dispatcher;
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -44,10 +47,46 @@ class Dispatcher extends ComponentDispatcher
 	 */
 	public function dispatch()
 	{
+		// Display offline message if Kunena hasn't been fully installed.
+		if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
+		{
+			$lang = Factory::getLanguage();
+			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
+			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+			Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+			Factory::getApplication()->sendHeaders();
+			?>
+				<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+				<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+			<?php
+
+			return;
+		}
+
 		// Display time it took to create the entire page in the footer.
 		$kunena_profiler = KunenaProfiler::instance('Kunena');
 		$kunena_profiler->start('Total Time');
 		KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+
+		// Prevent direct access to the component if the option has been disabled.
+		if (!KunenaConfig::getInstance()->accessComponent)
+		{
+			$active = Factory::getApplication()->getMenu()->getActive();
+
+			if (!$active)
+			{
+				// Prevent access without using a menu item.
+				Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
+				throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+			}
+
+			if ($active->type != 'component' || $active->component != 'com_kunena')
+			{
+				// Prevent spoofed access by using random menu item.
+				Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
+				throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+			}
+		}
 
 		// Initialize Kunena Framework.
 		KunenaForum::setup();

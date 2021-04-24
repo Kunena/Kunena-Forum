@@ -340,7 +340,7 @@ class TopicListingRecentDisplay extends ListDisplay
 			}
 		}
 
-		$actions1 = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($topics, $actions);
 	}
 
 	/**

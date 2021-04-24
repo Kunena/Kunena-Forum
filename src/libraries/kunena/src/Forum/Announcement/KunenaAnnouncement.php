@@ -414,7 +414,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
-		return true;
+		return null;
 	}
 
 	/**
@@ -426,7 +426,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user): ?KunenaAuthorise
+	protected function authoriseRead(KunenaUser $user)
 	{
 		if (!$this->exists())
 		{
@@ -438,7 +438,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return true;
+		return null;
 	}
 
 	/**
@@ -468,7 +468,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			}
 		}
 
-		return true;
+		return null;
 	}
 
 	/**
@@ -493,6 +493,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return true;
+		return null;
 	}
 }

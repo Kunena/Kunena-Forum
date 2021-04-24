@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* In backend, in templates list view before to do the request to get the list of premium templates it check if the method to do it are presents in the system
+* Allowing ',' in font name in bbcode
 * [#8020](https://github.com/Kunena/Kunena-Forum/issues/8020): Polls are not displayed Rendering Error in layout ...
 * [#6023](https://github.com/Kunena/Kunena-Forum/issues/6023): Ban from forum does not work (part 2)
 * Don't logout the user when do unban, related to the issue [#5956](https://github.com/Kunena/Kunena-Forum/issues/5956)

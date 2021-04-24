@@ -19,7 +19,6 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -35,11 +34,6 @@ class feed extends KunenaView
 {
 	private $topics;
 	private $messages;
-	private $state;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
 	private $total;
 	/**
 	 * @var string
@@ -64,7 +58,7 @@ class feed extends KunenaView
 		}
 
 		KunenaParser::$relative = false;
-		$cache            = Factory::getCache('com_kunena_rss', 'output');
+		$cache                  = Factory::getCache('com_kunena_rss', 'output');
 
 		if (!$this->config->cache)
 		{

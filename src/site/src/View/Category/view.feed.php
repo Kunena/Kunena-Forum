@@ -20,7 +20,6 @@ use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -33,12 +32,6 @@ use function defined;
  */
 class feed extends KunenaView
 {
-	/**
-	 * @var \Kunena\Forum\Libraries\Template\KunenaTemplate
-	 * @since version
-	 */
-	private $ktemplate;
-
 	/**
 	 * @param   null  $tpl  tpl
 	 *

@@ -552,7 +552,7 @@ class KunenaBBCode extends BBCode
 			(?:
 				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
 				|
-				[^\s`!()\[\]{};:\'"\.,<>?Â«Â»â€œâ€�â€˜â€™]
+				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’™]
 			)
 		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -576,7 +576,7 @@ class KunenaBBCode extends BBCode
 					}
 
 					// Never start URL from the middle of text (except for punctuation).
-					$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?Â«Â»â€œâ€�â€˜â€™]$#u', $search[$index - 1]);
+					$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
 					$invalid |= !$this->IsValidURL($url, true);
 
 					// We have a full, complete, and properly-formatted URL, with protocol.
@@ -2765,7 +2765,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!$attachment->isAuthorised() && !$config->showImgForGuest && $attachment->id != '0')
 		{
-		  return;
+			return;
 		}
 
 		if (!$attachment->isAuthorised())

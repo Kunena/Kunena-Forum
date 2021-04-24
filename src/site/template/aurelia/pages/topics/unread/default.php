@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use function defined;
 
-$content = $this->execute('Topic/List/Unread')
+$content = $this->execute('Topic/Listing/Unread')
 	->setLayout('unread');
 
 $this->addBreadcrumb(

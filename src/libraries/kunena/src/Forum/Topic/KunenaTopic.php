@@ -1499,7 +1499,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 */
-	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true): bool
+	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
 		// Special case to ignore authorisation.
 		if ($action == 'none')

@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\KunenaList\User;
+namespace Kunena\Forum\Site\Controller\Topic\Listing\User;
 
 defined('_JEXEC') or die();
 
@@ -36,7 +36,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerListUserDisplay extends KunenaControllerDisplay
+class TopicListUserDisplay extends KunenaControllerDisplay
 {
 	private $headerText;
 	private $pagination;

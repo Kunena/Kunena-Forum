@@ -19,13 +19,12 @@ use DateTime;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -34,7 +33,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 2.0
  */
-class SearchModel extends ListModel
+class SearchModel extends KunenaModel
 {
 	/**
 	 * @var     null
@@ -53,8 +52,6 @@ class SearchModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $messages = false;
-	private $config;
-	private $app;
 
 	/**
 	 * @return  boolean|integer

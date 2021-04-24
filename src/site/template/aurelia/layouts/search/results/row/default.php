@@ -10,17 +10,14 @@
  * @link            https://www.kunena.org
 **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\Message;
-use Kunena\Forum\Libraries\Icons\Icons;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 $message              = $this->message;
 $topic                = $message->getTopic();
@@ -46,16 +43,16 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 
 	<div class="col-md-10">
 		<small class="text-muted float-right hidden-phone"
-		       style="margin-top:-5px;"> <?php echo Icons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
+		       style="margin-top:-5px;"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
 				:
-				?> - <?php echo Icons::edit() . ' ' . $message->getModifiedTime()->toSpan();
+				?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan();
 			endif; ?></small>
 		<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $message->getState(); ?> khistory">
 			<div class="mykmsg-header">
 				<?php
-				$title   = Message::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+				$title   = KunenaMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, Template::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
 			<div class="kmessage">
 				<?php if (!$isReply)

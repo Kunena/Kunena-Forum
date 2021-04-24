@@ -60,7 +60,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 
 		$this->model = new SearchModel([], $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state = $this->model->getState();
+		$this->state = $this->model->getState();
 
 		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
 
@@ -87,9 +87,9 @@ class SearchFormDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$me = KunenaUserHelper::getMyself();
+		$this->me = KunenaUserHelper::getMyself();
 
-		$isModerator = ($me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$error       = $this->model->getError();
 	}
 
@@ -102,7 +102,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

@@ -114,18 +114,6 @@ class KunenaBan extends parentAlias
 	protected $_exists = false;
 
 	/**
-	 * @var null
-	 * @since version
-	 */
-	private $identifier;
-
-	/**
-	 * @var array|mixed
-	 * @since version
-	 */
-	private $params;
-
-	/**
 	 * Constructor
 	 *
 	 * @access  protected
@@ -166,7 +154,7 @@ class KunenaBan extends parentAlias
 	 *
 	 * @since     Kunena 1.6
 	 */
-	public function load(int $id): bool
+	public function load($id): bool
 	{
 		// Create the user table object
 		$table = $this->getTable();
@@ -296,7 +284,7 @@ class KunenaBan extends parentAlias
 	 *
 	 * @since   Kunena 6.0
 	 */
-	private static function cacheUserid(int $userid): void
+	private static function cacheUserid($userid): void
 	{
 		if ($userid > 0)
 		{

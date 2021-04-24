@@ -100,7 +100,7 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByCategories(array $categories): KunenaMessageFinder
+	public function filterByCategories(array $categories)
 	{
 		$list = [];
 

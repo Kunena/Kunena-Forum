@@ -201,7 +201,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 
 		$actionMove = $model->getActionMove();
 
-		$this->pagination = new Pagination($this->total, $limitstart, $limit);
+		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
 		$doc  = Factory::getApplication()->getDocument();
 		$page = $this->pagination->pagesCurrent;

@@ -21,13 +21,13 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 
@@ -36,11 +36,8 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class TopicListUserDisplay extends KunenaControllerDisplay
+class TopicListingUserDisplay extends ListDisplay
 {
-	private $headerText;
-	private $pagination;
-
 	/**
 	 * Prepare user's topic list.
 	 *
@@ -58,7 +55,7 @@ class TopicListUserDisplay extends KunenaControllerDisplay
 		$model = new TopicsModel([], $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state   = $model->getState();
-		$me      = KunenaUserHelper::getMyself();
+		$this->me      = KunenaUserHelper::getMyself();
 		$moreUri = null;
 
 		$embedded = $this->getOptions()->get('embedded', true);
@@ -310,7 +307,7 @@ class TopicListUserDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$actions1 = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($topics, $actions);
 	}
 
 	/**

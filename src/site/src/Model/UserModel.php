@@ -17,10 +17,10 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -28,11 +28,8 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 6.0
  */
-class UserModel extends ListModel
+class UserModel extends KunenaModel
 {
-	private $app;
-	private $config;
-
 	/**
 	 * @return  integer
 	 *

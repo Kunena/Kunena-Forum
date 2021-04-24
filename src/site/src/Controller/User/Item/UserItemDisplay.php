@@ -101,7 +101,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 
 		$model = new UserModel([], $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state = $model->getState();
+		$this->state = $model->getState();
 
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->user    = Factory::getUser($userid);
@@ -174,7 +174,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$this->setMetaData('profile:username', $this->profile->getName(), 'property');
 

@@ -20,6 +20,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Administrator\Model\CategoriesModel;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -35,7 +36,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 2.0
  */
-class CategoryModel extends ListModel
+class CategoryModel extends CategoriesModel
 {
 	/**
 	 * @var     boolean|array
@@ -72,9 +73,6 @@ class CategoryModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $total;
-	private $config;
-	private $app;
-	private $me;
 
 	/**
 	 * @return  boolean

@@ -33,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentCategoryControllerSubscriptionsDisplay extends KunenaControllerDisplay
+class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string

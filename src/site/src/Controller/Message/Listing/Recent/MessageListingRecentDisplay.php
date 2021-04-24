@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Message\Kunenalist\Recent;
+namespace Kunena\Forum\Site\Controller\Message\Listing\Recent;
 
 defined('_JEXEC') or die();
 
@@ -37,7 +37,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ListRecentDisplay extends KunenaControllerDisplay
+class MessageListingRecentDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string

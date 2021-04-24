@@ -20,7 +20,6 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -29,6 +28,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 
@@ -37,7 +37,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class MessageListingRecentDisplay extends KunenaControllerDisplay
+class MessageListingRecentDisplay extends ListDisplay
 {
 	/**
 	 * @var     string
@@ -50,9 +50,6 @@ class MessageListingRecentDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
-	private $headerText;
-	private $state;
-	private $pagination;
 
 	/**
 	 * Prepare category list display.
@@ -293,7 +290,7 @@ class MessageListingRecentDisplay extends KunenaControllerDisplay
 				$actions = ['approve', 'delete', 'move', 'permdelete'];
 		}
 
-		$actions1 = $this->getMessageActions($this->messages, $actions);
+		$this->actions = $this->getMessageActions($this->messages, $actions);
 	}
 
 	/**

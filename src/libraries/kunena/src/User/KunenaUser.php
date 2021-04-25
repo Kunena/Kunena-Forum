@@ -1578,7 +1578,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @since   Kunena 4.0
 	 */
-	public function getWebsiteURL(): string
+	public function getWebsiteURL()
 	{
 		$url = $this->websiteurl;
 
@@ -1597,7 +1597,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @since   Kunena 4.0
 	 */
-	public function getWebsiteName(): string
+	public function getWebsiteName()
 	{
 		return trim($this->websitename) ? $this->websitename : $this->websiteurl;
 	}

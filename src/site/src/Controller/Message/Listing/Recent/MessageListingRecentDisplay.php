@@ -64,7 +64,7 @@ class MessageListingRecentDisplay extends ListDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel(array(), null, null, $this->input);
+		$model = new TopicsModel([], $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $model->getState();
 		$me          = KunenaUserHelper::getMyself();

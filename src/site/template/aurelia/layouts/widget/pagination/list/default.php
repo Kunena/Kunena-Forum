@@ -30,7 +30,7 @@ $last = 0;
 ?>
 
 <nav class="hidden-xs-down">
-	<ul class="pagination">
+    <ul class="pagination ms-0">
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
@@ -50,16 +50,16 @@ $last = 0;
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
 		?>
-	</ul>
+    </ul>
 </nav>
 
 <nav class="d-block d-sm-none">
-	<ul class="pagination">
+    <ul class="pagination ms-0">
 		<?php
 		foreach ($data->pages as $k => $item)
 		{
 			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
 		?>
-	</ul>
+    </ul>
 </nav>

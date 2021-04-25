@@ -257,13 +257,13 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   boolean  $starttime  start time
+	 * @param   int  $starttime  start time
 	 *
 	 * @return  mixed
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function start(bool $starttime): bool
+	public function start($starttime): int
 	{
 		$this->calls++;
 		$this->start[] = $starttime;
@@ -272,13 +272,13 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param   boolean  $stoptime  stop time
+	 * @param   int  $stoptime  stop time
 	 *
-	 * @return  float
+	 * @return int
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function stop(bool $stoptime)
+	public function stop(int $stoptime): int
 	{
 		$starttime = array_pop($this->start);
 

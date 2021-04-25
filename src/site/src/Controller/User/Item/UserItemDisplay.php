@@ -109,14 +109,14 @@ class UserItemDisplay extends KunenaControllerDisplay
 		$this->profile->tryAuthorise('read');
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$points              = $activityIntegration->getUserPoints($this->profile->userid);
-		$medals              = $activityIntegration->getUserMedals($this->profile->userid);
-		$private             = KunenaFactory::getPrivateMessaging();
+		$this->points        = $activityIntegration->getUserPoints($this->profile->userid);
+		$this->medals        = $activityIntegration->getUserMedals($this->profile->userid);
+		$this->private       = KunenaFactory::getPrivateMessaging();
 		$socials             = $this->profile->socialButtons();
-		$socials1            = ArrayHelper::toObject($socials);
+		$this->socials       = ArrayHelper::toObject($socials);
 
-		$avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
-		$banInfo = $this->config->showBannedReason
+		$this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+		$this->banInfo = $this->config->showBannedReason
 			? KunenaBan::getInstanceByUserid($this->profile->userid)
 			: null;
 

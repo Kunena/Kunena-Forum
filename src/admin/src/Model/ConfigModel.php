@@ -1345,6 +1345,12 @@ class ConfigModel extends AdminModel
 	public $utmSource = 0;
 
 	/**
+	 * @var    boolean  profiler
+	 * @since  Kunena 6.0.0
+	 */
+	public $profiler = 0;
+
+	/**
 	 * @inheritDoc
 	 *
 	 * @param   array    $data      data
@@ -1362,9 +1368,9 @@ class ConfigModel extends AdminModel
 	/**
 	 * @return  array
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getConfigLists(): array
 	{

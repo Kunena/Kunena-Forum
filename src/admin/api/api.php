@@ -11,19 +11,19 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 if (defined('KUNENA_LOADED'))
 {
 	return;
 }
 
-// Manually enable code profiling by setting value to 1
 /**
  *
  */
-define('KUNENA_PROFILER', 0);
+define('KUNENA_PROFILER', KunenaConfig::getInstance()->profiler);
 
-// Component name amd database prefix
+// Component name and database prefix
 /**
  *
  */

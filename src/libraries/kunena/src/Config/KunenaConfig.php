@@ -252,6 +252,7 @@ use function defined;
  * @property boolean $autoEmbedInstagram
  * @property boolean $disableRe
  * @property boolean $utmSource
+ * @property boolean $profiler
  *
  * @since   Kunena 6.0
  */
@@ -1596,6 +1597,8 @@ class KunenaConfig extends CMSObject
 	public $emailHeadersizex = 560;
 
 	public $moderator_id;
+
+	public $profiler = 0;
 
 	/**
 	 * @since   Kunena 6.0

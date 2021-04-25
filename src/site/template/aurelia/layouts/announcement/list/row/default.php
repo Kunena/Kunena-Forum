@@ -24,29 +24,29 @@ $announcement = $this->announcement;
 ?>
 
 <tr>
-	<td class="nowrap hidden-xs-down">
+    <td class="nowrap hidden-xs-down">
 		<?php echo $announcement->displayField('created', 'date_today'); ?>
-	</td>
+    </td>
 
-	<td class="nowrap">
-		<div class="overflow">
+    <td class="nowrap">
+        <div class="overflow">
 			<?php echo HTMLHelper::_(
 				'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
 				null, 'follow'
 			); ?>
-		</div>
-	</td>
+        </div>
+    </td>
 
 	<?php if ($this->checkbox)
 		:
 		?>
-		<td class="center">
+        <td class="center">
 			<?php if ($this->canPublish())
 			{
 				echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);
 			} ?>
-		</td>
-		<td class="center">
+        </td>
+        <td class="center">
 			<?php if ($this->canEdit())
 			{
 				echo HTMLHelper::_(
@@ -54,8 +54,8 @@ $announcement = $this->announcement;
 					'edit', '', true
 				);
 			} ?>
-		</td>
-		<td class="center">
+        </td>
+        <td class="center">
 			<?php if ($this->canDelete())
 			{
 				echo HTMLHelper::_(
@@ -63,10 +63,10 @@ $announcement = $this->announcement;
 					Text::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true
 				);
 			} ?>
-		</td>
+        </td>
 	<?php endif; ?>
 
-	<td>
+    <td>
 		<?php if (KunenaConfig::getInstance()->username)
 			:
 			?>
@@ -77,18 +77,18 @@ $announcement = $this->announcement;
 			?>
 			<?php echo $announcement->getAuthor()->name; ?>
 		<?php endif; ?>
-	</td>
+    </td>
 
-	<td class="center hidden-xs-down">
+    <td class="center hidden-xs-down">
 		<?php echo $announcement->displayField('id'); ?>
-	</td>
+    </td>
 
 	<?php if ($this->checkbox)
 		:
 		?>
-		<td class="center">
+        <td class="center">
 			<?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
-		</td>
+        </td>
 	<?php endif; ?>
 
 </tr>

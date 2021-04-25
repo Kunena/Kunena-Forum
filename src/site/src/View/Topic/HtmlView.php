@@ -1416,7 +1416,7 @@ class HtmlView extends KunenaView
 			$selected = $saved['catid'];
 		}
 
-		$selectcatlist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $catParams, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$selectcatlist = HTMLHelper::_('select.list', 'catid', $this->catid, $options, $catParams, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 

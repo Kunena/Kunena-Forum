@@ -44,40 +44,35 @@ use function defined;
 class CategoryIndexDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Category/Index';
-
-	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $sections = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $pending = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $more = [];
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Category/Index';
 
 	/**
 	 * Prepare category index display.
@@ -163,8 +158,8 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 
 		$options      = [];
 		$options []   = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$catParams   = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $catParams, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$catParams    = ['sections' => 1, 'catid' => 0];
+		$categorylist = HTMLHelper::_('select.genericlist', $catParams, 'catid', 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $options);
 
 		if ($catid)
 		{
@@ -428,13 +423,13 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return boolean
+	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument(): void
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

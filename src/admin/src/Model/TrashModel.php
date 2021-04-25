@@ -340,11 +340,11 @@ class TrashModel extends KunenaModel
 	/**
 	 * Method to get select options to choose between topics and messages.
 	 *
-	 * @return  array
+	 * @return  string
 	 *
 	 * @since   Kunena 1.6
 	 */
-	public function getViewOptions(): array
+	public function getViewOptions(): string
 	{
 		$viewOptions   = [];
 		$viewOptions[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));

@@ -38,67 +38,56 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $systemReport = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $systemReportAnonymous = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $listTrashDelete = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $forumList = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $controlOptions = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $keepSticky = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $conflicts = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $invalid = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $catSubscribersUsers = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $topicSubscribersUsers = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0

@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Administrator\Model\CategoriesModel;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -514,7 +513,8 @@ class CategoryModel extends CategoriesModel
 		$params = $this->getParameters();
 		$this->setState('params', $params);
 
-		$userid = $this->getInt('userid', -1);
+		$userid   = $this->getInt('userid', -1);
+		$template = $this->getState('template');
 
 		if ($userid < 0)
 		{

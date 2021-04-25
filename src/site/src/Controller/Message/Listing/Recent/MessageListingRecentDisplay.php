@@ -40,16 +40,15 @@ use function defined;
 class MessageListingRecentDisplay extends ListDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Message/List';
-
-	/**
 	 * @var     array|KunenaMessage[]
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Message/List';
 
 	/**
 	 * Prepare category list display.
@@ -65,7 +64,7 @@ class MessageListingRecentDisplay extends ListDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel([], $this->input);
+		$model = new TopicsModel(array(), null, null, $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $model->getState();
 		$me          = KunenaUserHelper::getMyself();

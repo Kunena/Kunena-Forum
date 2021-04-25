@@ -73,7 +73,7 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$model = new CategoryModel([], $this->input);
+		$model = new CategoryModel(array(), null, null, $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state = $model->getState();
 

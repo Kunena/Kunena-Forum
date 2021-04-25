@@ -58,7 +58,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->model = new SearchModel([], $this->input);
+		$this->model = new SearchModel(array(), null, null, $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 

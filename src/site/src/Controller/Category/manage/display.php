@@ -19,6 +19,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -172,11 +173,11 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 		$catParams = ['sections' => 1, 'catid' => 0];
 
 		$lists                    = [];
-		$lists ['accesstypes']    = Access::getInstance()->getAccessTypesList($category);
-		$lists ['accesslists']    = Access::getInstance()->getAccessOptions($category);
+		$lists ['accesstypes']    = KunenaAccess::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists']    = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']     = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
 		$lists ['channels']       = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']        = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
+		$lists ['aliases']        = $aliases ? HTMLHelper::_('select.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
 		$lists ['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
 		$lists ['forumReview']    = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-control" size="1"', 'value', 'text', $category->review);

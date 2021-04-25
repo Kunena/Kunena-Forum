@@ -13,7 +13,6 @@ namespace Kunena\Forum\Libraries\Model;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
@@ -84,24 +83,25 @@ class KunenaModel extends BaseDatabaseModel
 	protected $embedded = false;
 
 	/**
-	 * @param   array                                             $config   config
-	 * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory  The factory.
-	 * @param   \Joomla\CMS\Application\CMSApplication|null       $app      The JApplication for the dispatcher
-	 * @param   \Joomla\Input\Input|null                          $input    Input
+	 * @param   array                     $config  config
+	 * @param   \Joomla\Input\Input|null  $input   Input
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct(array $config = array(), MVCFactoryInterface $factory = null, CMSApplication $app = null, Input $input = null)
+	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
+		$this->input = Factory::getApplication()->input;
+
 		$this->option = 'com_kunena';
-		parent::__construct($config, $factory, $app, $input);
 
 		$this->app    = Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->input  = $this->app->input;
+
+		parent::__construct($config, $factory, $app, $input);
 	}
 
 	/**

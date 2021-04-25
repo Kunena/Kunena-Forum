@@ -47,6 +47,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public $ktemplate;
 
+	public $categorylist;
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0

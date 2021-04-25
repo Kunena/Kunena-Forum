@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* [#8033](https://github.com/Kunena/Kunena-Forum/issues/8033): Poll: Notice: Undefined variable: polllifespan - (if the Lifetime field is not filled)
 * In backend, in templates list view before to do the request to get the list of premium templates it check if the method to do it are presents in the system
 * Allowing ',' in font name in bbcode
 * [#8020](https://github.com/Kunena/Kunena-Forum/issues/8020): Polls are not displayed Rendering Error in layout ...

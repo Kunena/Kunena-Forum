@@ -16,6 +16,7 @@ use Joomla\CMS\Session\Session;
 
 $this->addScript('assets/js/poll.js');
 
+$polllifespan = '';
 if ($this->show_title && !empty($this->poll->polltimetolive))
 {
 	if (!$this->polllifespan)

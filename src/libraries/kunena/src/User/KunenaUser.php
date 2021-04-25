@@ -1660,7 +1660,7 @@ class KunenaUser extends CMSObject
 
 		if (!isset($this->_signature))
 		{
-			$this->_signature = KunenaParser::parseBBCode($this->signature, $this, KunenaFactory::getConfig()->maxSig);
+			$this->_signature = KunenaParser::parseBBCode((string) $this->signature, $this, KunenaFactory::getConfig()->maxSig);
 		}
 
 		return $this->_signature;
@@ -2267,7 +2267,7 @@ class KunenaUser extends CMSObject
 
 		if (!isset($this->_personalText))
 		{
-			$this->_personalText = KunenaParser::parseText($this->personalText);
+			$this->_personalText = KunenaParser::parseText((string) $this->personalText);
 		}
 
 		return $this->_personalText;

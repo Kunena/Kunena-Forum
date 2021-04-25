@@ -1276,7 +1276,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 */
-	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
+	public function isAuthorised(string $action = 'read', KunenaUser $user = null)
 	{
 		if (KunenaFactory::getConfig()->readOnly)
 		{
@@ -1303,7 +1303,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 */
-	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true): bool
+	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
 		// Special case to ignore authorisation.
 		if ($action == 'none')

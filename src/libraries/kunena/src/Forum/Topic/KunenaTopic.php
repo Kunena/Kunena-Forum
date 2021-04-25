@@ -145,6 +145,25 @@ class KunenaTopic extends KunenaDatabaseObject
 	public $lastread = 0;
 
 	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $hold = 0;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $posts = 0;
+
+	/**
+	 * @var     integer
+	 * @since   Kunena 6.0
+	 */
+	public $category_id = 0;
+
+
+	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */

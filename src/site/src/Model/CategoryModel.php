@@ -496,6 +496,10 @@ class CategoryModel extends CategoriesModel
 	}
 
 	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *
@@ -514,7 +518,6 @@ class CategoryModel extends CategoriesModel
 		$this->setState('params', $params);
 
 		$userid   = $this->getInt('userid', -1);
-		//$template = $this->getState('template');
 
 		if ($userid < 0)
 		{

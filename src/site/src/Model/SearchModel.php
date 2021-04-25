@@ -430,6 +430,10 @@ class SearchModel extends KunenaModel
 	}
 
 	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *

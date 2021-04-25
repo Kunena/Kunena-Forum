@@ -501,6 +501,8 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
 	 * @param   string  $ordering   ordering
 	 * @param   string  $direction  direction
 	 *

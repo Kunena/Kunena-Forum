@@ -413,6 +413,8 @@ class TrashModel extends KunenaModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

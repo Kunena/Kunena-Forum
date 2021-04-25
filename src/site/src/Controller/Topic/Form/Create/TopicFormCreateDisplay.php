@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
-use Kunena\Forum\Libraries\KunenaPrivate\Message;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -43,13 +42,12 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $captchaHtml = null;
-
+	public $headerText;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
-	private $headerText;
 	private $topic;
 	private $me;
 	/**
@@ -110,7 +108,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		$categories        = KunenaCategoryHelper::getCategories();
@@ -208,7 +206,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		$privateMessage       = new KunenaPrivateMessage;
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 

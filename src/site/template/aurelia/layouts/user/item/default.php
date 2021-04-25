@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
 
 $tabs = $this->getTabs();
@@ -31,7 +31,7 @@ $tabs = $this->getTabs();
 		:
 		?>
 		<?php echo $this->profile->getLink(
-		Icons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
+		KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
 		Text::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn'
 	); ?>
 	<?php endif; ?>
@@ -53,23 +53,23 @@ echo $this->subLayout('User/Item/Summary')
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-	<ul class="nav nav-tabs">
+    <ul class="nav nav-tabs">
 		<?php foreach ($tabs as $name => $tab) : ?>
-			<li class="nav-item">
-				<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
-						href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
-			</li>
+            <li class="nav-item">
+                <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
+                        href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+            </li>
 		<?php endforeach; ?>
-	</ul>
-	<div class="tab-content">
+    </ul>
+    <div class="tab-content">
 		<?php foreach ($tabs as $name => $tab) : ?>
-			<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
-				<div>
+            <div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
+                <div>
 					<?php echo $tab->content; ?>
-				</div>
-			</div>
+                </div>
+            </div>
 		<?php endforeach; ?>
-	</div>
+    </div>
 </div>
 
 <div class="clearfix"></div>

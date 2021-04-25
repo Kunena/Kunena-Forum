@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\User\KunenaList;
+namespace Kunena\Forum\Site\Controller\User\Listing;
 
 defined('_JEXEC') or die();
 
@@ -33,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerListDisplay extends KunenaControllerDisplay
+class UserListingDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     object
@@ -123,7 +123,7 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 		$finder = new KunenaFinder;
 		$finder
 			->filterByConfiguration($filter)
-			->filterByName($this->state->get('list.search'));
+			->filterByName((string) $this->state->get('list.search'));
 
 		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
@@ -146,13 +146,13 @@ class ComponentUserControllerListDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument(): void
 	{
 		$page      = $this->pagination->pagesCurrent;
 		$pages     = $this->pagination->pagesTotal;

@@ -16,10 +16,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Forum\Topic\Topic;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\Template;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 $categoryActions = $this->getCategoryActions();
@@ -28,70 +28,70 @@ $this->addStyleSheet('rating.css');
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
-	<div class="clearfix"></div>
-	<br>
-	<h1 class="alert alert-info shadow-lg rounded">
-		<a class="close" data-dismiss="alert" href="#"></a>
+    <div class="clearfix"></div>
+    <br>
+    <h1 class="alert alert-info shadow-lg rounded">
+        <a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
-	</h1>
+    </h1>
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
 
 	<?php if (!empty($this->topics)) : ?>
-		<div class="row">
-			<div class="col-md-12">
-				<h2 class="float-right">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="float-right">
 					<?php echo $this->subLayout('Widget/Search')
-	->set('catid', $this->category->id)
-	->setLayout('topic'); ?>
-				</h2>
+						->set('catid', $this->category->id)
+						->setLayout('topic'); ?>
+                </h2>
 
-				<div class="float-left">
+                <div class="float-left">
 					<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination)
-	->set('display', true); ?>
-				</div>
-			</div>
-		</div>
+						->set('pagination', $this->pagination)
+						->set('display', true); ?>
+                </div>
+            </div>
+        </div>
 	<?php endif; ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
-		<input type="hidden" name="view" value="topics"/>
+    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
+        <input type="hidden" name="view" value="topics"/>
 		<?php echo HTMLHelper::_('form.token'); ?>
-		<div>
-			<ul class="inline">
+        <div>
+            <ul class="inline">
 				<?php if ($categoryActions) : ?>
-					<li>
+                    <li>
 						<?php echo implode($categoryActions); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
-			</ul>
-		</div>
+            </ul>
+        </div>
 		<?php if ($this->topics) : ?>
-		<table class="table<?php echo Template::getInstance()->borderless(); ?>">
-			<thead>
-			<tr>
-				<th scope="col" class="center hidden-xs-down">
-					<a id="forumtop"> </a>
-					<a href="#forumbottom" rel="nofollow">
-						<?php echo Icons::arrowdown(); ?>
-					</a>
-				</th>
-				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
-					/ <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-				<th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+        <table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
+            <thead>
+            <tr>
+                <th scope="col" class="center hidden-xs-down">
+                    <a id="forumtop"> </a>
+                    <a href="#forumbottom" rel="nofollow">
+						<?php echo KunenaIcons::arrowdown(); ?>
+                    </a>
+                </th>
+                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+                    / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
 				<?php if (!empty($this->topicActions)) : ?>
-					<th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/>
-					</th>
+                    <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/>
+                    </th>
 				<?php endif; ?>
-			</tr>
-			</thead>
-			<tbody class="category-item">
+            </tr>
+            </thead>
+            <tbody class="category-item">
 			<?php
-			/** @var Topic $previous */
+			/** @var KunenaTopic $previous */
 			$previous = null;
 
 			foreach ($this->topics as $position => $topic)
@@ -105,21 +105,21 @@ $this->addStyleSheet('rating.css');
 				$previous = $topic;
 			}
 			?>
-			</tbody>
-			<tfoot>
+            </tbody>
+            <tfoot>
 			<?php if ($this->topics) : ?>
-				<tr>
-					<th scope="col" class="center hidden-xs-down">
-						<a id="forumbottom"> </a>
-						<a href="#forumtop" rel="nofollow">
-							<span class="dropdown-divider"></span>
-							<?php echo Icons::arrowup(); ?>
-						</a>
-					</th>
-					<th scope="col" class="hidden-xs-down">
-						<div class="form-group">
-							<div class="input-group" role="group">
-								<div class="input-group-btn">
+                <tr>
+                    <th scope="col" class="center hidden-xs-down">
+                        <a id="forumbottom"> </a>
+                        <a href="#forumtop" rel="nofollow">
+                            <span class="dropdown-divider"></span>
+							<?php echo KunenaIcons::arrowup(); ?>
+                        </a>
+                    </th>
+                    <th scope="col" class="hidden-xs-down">
+                        <div class="form-group">
+                            <div class="input-group" role="group">
+                                <div class="input-group-btn">
 									<?php if (!empty($this->moreUri))
 									{
 										echo HTMLHelper::_(
@@ -141,30 +141,30 @@ $this->addStyleSheet('rating.css');
 												'kchecktarget'
 											);
 											?>
-											<button class="btn btn-outline-primary border" name="kcheckgo"
-													type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
+                                            <button class="btn btn-outline-primary border" name="kcheckgo"
+                                                    type="submit"><?php echo Text::_('COM_KUNENA_GO') ?></button>
 										<?php endif; ?>
 									<?php endif; ?>
-								</div>
-							</div>
-						</div>
-					</th>
-				</tr>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
 			<?php endif; ?>
-			</tfoot>
+            </tfoot>
 			<?php endif; ?>
-		</table>
-	</form>
+        </table>
+    </form>
 
 	<?php if ($this->topics) : ?>
-		<div class="float-left">
+        <div class="float-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination)
-	->set('display', true); ?>
-		</div>
+				->set('pagination', $this->pagination)
+				->set('display', true); ?>
+        </div>
 	<?php endif; ?>
 
-	<div class="clearfix"></div>
+    <div class="clearfix"></div>
 
 	<?php if (!empty($this->moderators))
 	{
@@ -174,7 +174,7 @@ $this->addStyleSheet('rating.css');
 	?>
 
 	<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
-		<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $this->category->id); ?></div>
+        <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $this->category->id); ?></div>
 	<?php endif; ?>
 
 <?php endif; ?>

@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
 
 $attachment = $this->attachment;
@@ -42,22 +42,23 @@ if ($attachment->isImage())
 {
 	if ($attachment->getPath()) :
 		?>
-		<a href="<?php echo $name; ?>"
-		   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-			<img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbWidth; ?>"
-				 height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
-		</a>
+        <a href="<?php echo $name; ?>"
+           title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+            <img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
+                 width="<?php echo $config->thumbWidth; ?>"
+                 height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
+        </a>
 	<?php
 	else:
-		echo Icons::picture();
+		echo KunenaIcons::picture();
 	endif;
 }
 else
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(false, false, true); ?>"
-	   title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo Icons::file(); ?>
-	</a>
+    <a href="<?php echo $attachment->getUrl(false, false, true); ?>"
+       title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
+		<?php echo KunenaIcons::file(); ?>
+    </a>
 	<?php
 }

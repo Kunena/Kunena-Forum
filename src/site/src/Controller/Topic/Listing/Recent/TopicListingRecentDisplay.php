@@ -52,7 +52,7 @@ class TopicListingRecentDisplay extends ListDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel([], $this->input);
+		$model = new TopicsModel([]);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state          = $model->getState();
 		$this->me       = KunenaUserHelper::getMyself();

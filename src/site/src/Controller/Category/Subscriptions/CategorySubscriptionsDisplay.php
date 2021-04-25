@@ -36,28 +36,25 @@ use function defined;
 class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Category/List';
-
-	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
-
 	/**
 	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Category/List';
 
 	/**
 	 * Prepare category subscriptions display.
@@ -73,10 +70,10 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$model = new CategoryModel([], $this->input);
+		$model = new CategoryModel([]);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state = $model->getState();
-		
+
 		$me = KunenaUserHelper::getMyself();
 
 		if (!$me->exists())

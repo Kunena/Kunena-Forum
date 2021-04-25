@@ -52,16 +52,16 @@ class TopicListingUnreadDisplay extends ListDisplay
 	{
 		parent::before();
 
-		$this->model = new TopicsModel([], $this->input);
+		$this->model = new TopicsModel([]);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
-		$access   = KunenaAccess::getInstance();
-		$start    = $this->state->get('list.start');
-		$limit    = $this->state->get('list.limit');
-		$params   = ComponentHelper::getParams('com_kunena');
-		$Itemid   = $this->input->getInt('Itemid');
+		$access         = KunenaAccess::getInstance();
+		$start          = $this->state->get('list.start');
+		$limit          = $this->state->get('list.limit');
+		$params         = ComponentHelper::getParams('com_kunena');
+		$Itemid         = $this->input->getInt('Itemid');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		// Handle &sel=x parameter.
@@ -145,8 +145,8 @@ class TopicListingUnreadDisplay extends ListDisplay
 			$this->prepareTopics();
 		}
 
-		$actions    = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions   = $this->getTopicActions($this->topics, $actions);
+		$actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+		$this->actions    = $this->getTopicActions($this->topics, $actions);
 		$this->headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

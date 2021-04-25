@@ -99,7 +99,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$model = new UserModel([], $this->input);
+		$model = new UserModel([]);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $model->getState();
 

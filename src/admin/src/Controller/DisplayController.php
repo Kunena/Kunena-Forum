@@ -45,9 +45,9 @@ class DisplayController extends BaseController
 	 *
 	 * @return  BaseController
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = array()): BaseController
 	{

@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Input\Input;
@@ -90,18 +89,15 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = array(), \Joomla\Input\Input $input = null)
 	{
-		$this->input = Factory::getApplication()->input;
-
 		$this->option = 'com_kunena';
+		parent::__construct($config);
 
 		$this->app    = Factory::getApplication();
 		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->input  = $this->app->input;
-
-		parent::__construct($config, $factory, $app, $input);
 	}
 
 	/**

@@ -514,7 +514,7 @@ class CategoryModel extends CategoriesModel
 		$this->setState('params', $params);
 
 		$userid   = $this->getInt('userid', -1);
-		$template = $this->getState('template');
+		//$template = $this->getState('template');
 
 		if ($userid < 0)
 		{

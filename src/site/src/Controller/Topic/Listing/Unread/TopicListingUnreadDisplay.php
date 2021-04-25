@@ -21,13 +21,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use function defined;
 
@@ -36,7 +36,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class TopicListingUnreadDisplay extends KunenaControllerDisplay
+class TopicListingUnreadDisplay extends ListDisplay
 {
 	public $headerText;
 
@@ -54,20 +54,20 @@ class TopicListingUnreadDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel([], $this->input);
-		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state    = $model->getState();
-		$me       = KunenaUserHelper::getMyself();
+		$this->model = new TopicsModel([], $this->input);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state    = $this->model->getState();
+		$this->me       = KunenaUserHelper::getMyself();
 		$moreUri  = null;
 		$access   = KunenaAccess::getInstance();
-		$start    = $state->get('list.start');
-		$limit    = $state->get('list.limit');
+		$start    = $this->state->get('list.start');
+		$limit    = $this->state->get('list.limit');
 		$params   = ComponentHelper::getParams('com_kunena');
 		$Itemid   = $this->input->getInt('Itemid');
-		$embedded = $this->getOptions()->get('embedded', true);
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		// Handle &sel=x parameter.
-		$time = $state->get('list.time');
+		$time = $this->state->get('list.time');
 
 		if ($time < 0)
 		{
@@ -112,13 +112,13 @@ class TopicListingUnreadDisplay extends KunenaControllerDisplay
 			->limit($limit)
 			->filterByTime($time)
 			->order('id', 0)
-			->filterByUserAccess($me)
-			->filterByUserUnread($me)
+			->filterByUserAccess($this->me)
+			->filterByUserUnread($this->me)
 			->find();
 
 		$mesIds = [];
 
-		$mesIds += KunenaTopicHelper::fetchNewStatus($topics, $me->userid);
+		$mesIds += KunenaTopicHelper::fetchNewStatus($topics, $this->me->userid);
 
 		$list = [];
 
@@ -148,7 +148,7 @@ class TopicListingUnreadDisplay extends KunenaControllerDisplay
 		}
 
 		$actions    = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$actions1   = $model->getTopicActions($topics, $actions);
-		$headerText = Text::_('COM_KUNENA_UNREAD');
+		$this->actions   = $this->getTopicActions($topics, $actions);
+		$this->headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

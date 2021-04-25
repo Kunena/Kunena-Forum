@@ -1874,9 +1874,10 @@ class ConfigModel extends AdminModel
 		$lists ['autoEmbedInstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedInstagram', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedInstagram);
 
 		// K6.0
-		$lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control"size="1"', 'value', 'text', $config->utmSource);
+		$lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control" size="1"', 'value', 'text', $config->utmSource);
 
-		$lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox" size="1"', 'value', 'text', $config->disableRe);
+		$lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox form-control" size="1"', 'value', 'text', $config->disableRe);
+		$lists ['profiler']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_profiler', 'class="inputbox form-control" size="1"', 'value', 'text', $config->profiler);
 
 		return $lists;
 	}

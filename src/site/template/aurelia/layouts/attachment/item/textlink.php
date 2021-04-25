@@ -15,9 +15,9 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Attachment\AttachmentHelper;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Icons\Icons;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
 
 $attachment = $this->attachment;
@@ -38,6 +38,6 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
    data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 " data-original-title="<?php echo $attachment->getShortName(); ?>"
    href="<?php echo $attachment->getUrl(false, false, true); ?>"
-   title="<?php echo AttachmentHelper::shortenFileName($attachment->getFilename(), $config->attachStart, $config->attach_end); ?>" <?php echo $attributesLink; ?>>
-	<?php echo Icons::info(); ?>
+   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), $config->attachStart, $config->attach_end); ?>" <?php echo $attributesLink; ?>>
+	<?php echo KunenaIcons::info(); ?>
 </a>

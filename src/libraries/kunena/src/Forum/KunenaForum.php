@@ -99,13 +99,13 @@ abstract class KunenaForum
 	protected static $version_major = false;
 
 	/**
-	 * @var     boolean
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected static $version_date = false;
+	protected static $version_date = null;
 
 	/**
-	 * @var     boolean
+	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected static $version_name = false;
@@ -423,11 +423,11 @@ abstract class KunenaForum
 	/**
 	 * Returns build date from Kunena Forum (for Git today).
 	 *
-	 * @return  boolean Date in yyyy-mm-dd format.
+	 * @return  string Date in yyyy-mm-dd format.
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionDate(): bool
+	public static function versionDate(): string
 	{
 		if (self::$version_date === false)
 		{
@@ -440,11 +440,11 @@ abstract class KunenaForum
 	/**
 	 * Returns codename from Kunena release.
 	 *
-	 * @return  boolean Codename.
+	 * @return  string Codename.
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function versionName(): bool
+	public static function versionName(): string
 	{
 		if (self::$version_name === false)
 		{

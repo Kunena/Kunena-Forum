@@ -177,7 +177,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 */
 	protected function getTable()
 	{
-		return Table::getInstance($this->_table, 'Table');
+		$table = Table::getInstance($this->_table, 'Kunena\Forum\Libraries\Tables\Table');
+
+		return $table;
 	}
 
 	/**

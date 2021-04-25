@@ -111,7 +111,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
-		$template = KunenaFactory::getTemplate();
+		$this->template = KunenaFactory::getTemplate();
 
 		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
@@ -142,15 +142,15 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$category1 = KunenaCategoryHelper::get($catid);
-		list($this->topic, $this->message) = $category1->newTopic($saved);
+		$this->category = KunenaCategoryHelper::get($catid);
+		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		$template->setCategoryIconset($this->topic->getCategory()->iconset);
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
 
 		// Get topic icons if they are enabled.
 		if ($this->config->topicIcons)
 		{
-			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
@@ -192,27 +192,27 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			'action'      => 'topic.create',
 		];
 
-		$selectcatlist = HTMLHelper::_(
+		$this->selectcatlist = HTMLHelper::_(
 			'kunenaforum.categorylist', 'catid', $catid, $options, $catParams,
 			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
-		$action = 'post';
+		$this->action = 'post';
 
-		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category1);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{
-			$poll = $this->topic->getPoll();
+			$this->poll = $this->topic->getPoll();
 		}
 
 		$privateMessage       = new KunenaPrivateMessage;
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$postAnonymous       = $saved ? $saved['anonymous'] : !empty($category1->postAnonymous);
-		$subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+		$this->postAnonymous       = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
+		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$canSubscribe = $this->canSubscribe();
+		$this->canSubscribe = $this->canSubscribe();
 
 		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
 

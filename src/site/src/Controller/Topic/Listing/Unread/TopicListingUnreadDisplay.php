@@ -38,8 +38,6 @@ use function defined;
  */
 class TopicListingUnreadDisplay extends ListDisplay
 {
-	public $headerText;
-
 	/**
 	 * Prepare topic list for moderators.
 	 *
@@ -58,7 +56,7 @@ class TopicListingUnreadDisplay extends ListDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
-		$moreUri  = null;
+		$this->moreUri  = null;
 		$access   = KunenaAccess::getInstance();
 		$start    = $this->state->get('list.start');
 		$limit    = $this->state->get('list.limit');
@@ -107,7 +105,7 @@ class TopicListingUnreadDisplay extends ListDisplay
 
 		$finder = new KunenaTopicFinder;
 
-		$topics = $finder
+		$this->topics = $finder
 			->start($start)
 			->limit($limit)
 			->filterByTime($time)
@@ -118,13 +116,13 @@ class TopicListingUnreadDisplay extends ListDisplay
 
 		$mesIds = [];
 
-		$mesIds += KunenaTopicHelper::fetchNewStatus($topics, $this->me->userid);
+		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
 		$list = [];
 
 		$count = 0;
 
-		foreach ($topics as $topic)
+		foreach ($this->topics as $topic)
 		{
 			if ($topic->unread)
 			{
@@ -133,22 +131,22 @@ class TopicListingUnreadDisplay extends ListDisplay
 			}
 		}
 
-		$topics = $list;
+		$this->topics = $list;
 
-		$pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		if ($moreUri)
+		if ($this->moreUri)
 		{
-			$pagination->setUri($moreUri);
+			$this->pagination->setUri($this->moreUri);
 		}
 
-		if ($topics)
+		if ($this->topics)
 		{
 			$this->prepareTopics();
 		}
 
 		$actions    = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions   = $this->getTopicActions($topics, $actions);
+		$this->actions   = $this->getTopicActions($this->topics, $actions);
 		$this->headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

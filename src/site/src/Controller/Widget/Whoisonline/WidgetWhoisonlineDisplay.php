@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -59,7 +59,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 
 		if (!$this->config->get('showWhoIsOnline'))
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		$me        = KunenaUserHelper::getMyself();

@@ -15,7 +15,7 @@ namespace Kunena\Forum\Administrator\Dispatcher;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 
 /**
  * ComponentDispatcher class for com_kunena
@@ -35,7 +35,7 @@ class Dispatcher extends ComponentDispatcher
 	{
 		if ($this->app->isClient('administrator') && !$this->app->getIdentity()->authorise('core.manage', 'com_kunena'))
 		{
-			throw new KunenaAuthorise($this->app->getLanguage()->_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaExceptionAuthorise($this->app->getLanguage()->_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 	}
 }

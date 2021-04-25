@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
@@ -72,7 +72,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		if (!method_exists($this, $function))
 		{
 			// Invalid page request.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Run before executing action.
@@ -80,22 +80,22 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		if ($result === false)
 		{
-			$content = new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif (!Session::checkToken())
 		{
 			// Invalid access token.
-			$content = new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 		elseif ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			$content = new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regOnly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			$content = new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
+			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
 		}
 		else
 		{
@@ -185,7 +185,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		if (!$response->success)
 		{
 			// We want to wrap the exception to be able to display correct HTTP status code.
-			$error = new KunenaAuthorise($response->message, $response->code);
+			$error = new KunenaExceptionAuthorise($response->message, $response->code);
 			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 		}
 

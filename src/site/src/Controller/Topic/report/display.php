@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -77,13 +77,13 @@ class ComponentTopicControllerReportDisplay extends KunenaControllerDisplay
 		if (!$this->config->reportMsg)
 		{
 			// Deny access if report feature has been disabled.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (!$me->exists())
 		{
 			// Deny access if user is guest.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 
 		if (!$mesid)

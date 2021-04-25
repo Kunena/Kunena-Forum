@@ -22,7 +22,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class KunenaAuthorise extends RuntimeException
+class KunenaExceptionAuthorise extends RuntimeException
 {
 	/**
 	 * @var     array

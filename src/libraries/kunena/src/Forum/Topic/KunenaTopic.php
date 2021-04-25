@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -2102,16 +2102,16 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function authoriseNotExists(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNotExists(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that topic does not exist
 		if ($this->_exists)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		return true;
@@ -2120,18 +2120,18 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user): KunenaAuthorise
+	protected function authoriseRead(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that user can read topic
 		if (!$this->exists())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// TODO: Allow owner to see his posts.
@@ -2139,7 +2139,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		{
 			if (!$user->exists())
 			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 			}
 
 			$access = KunenaAccess::getInstance();
@@ -2147,7 +2147,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
 			if (!in_array($this->hold, $hold))
 			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
 		}
 
@@ -2157,16 +2157,16 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function authoriseNotHold(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNotHold(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that topic is not unapproved or deleted
 		if ($this->hold)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		return true;
@@ -2175,16 +2175,16 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function authoriseNotMoved(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNotMoved(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that topic is not moved
 		if ($this->moved_id)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		return true;
@@ -2193,18 +2193,18 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseUnlocked(KunenaUser $user): KunenaAuthorise
+	protected function authoriseUnlocked(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that topic is not locked or user is a moderator
 		if ($this->locked && !$user->isModerator($this->getCategory()))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_TOPIC_LOCKED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_TOPIC_LOCKED'), 403);
 		}
 
 		return true;
@@ -2213,18 +2213,18 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseOwn(KunenaUser $user): KunenaAuthorise
+	protected function authoriseOwn(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Guests cannot own a topic.
 		if (!$user->exists())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
 		}
 
 		// Check that topic owned by the user or user is a moderator
@@ -2232,7 +2232,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
 		if (!$usertopic->owner && !$user->isModerator($this->getCategory()))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
 		return true;
@@ -2241,20 +2241,20 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authorisePoll(KunenaUser $user): KunenaAuthorise
+	protected function authorisePoll(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that user can vote
 		$poll = $this->getPoll();
 
 		if (!$poll->exists())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
 		}
 
 		return true;
@@ -2278,13 +2278,13 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseVote(KunenaUser $user): KunenaAuthorise
+	protected function authoriseVote(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check that user can vote
 		$config = KunenaFactory::getConfig();
@@ -2304,33 +2304,33 @@ class KunenaTopic extends KunenaDatabaseObject
 
 			if ($interval->format('%H:%I:%S') < $config->pollTimeBtVotes)
 			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 403);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_TOPIC_VOTE_NEED_TO_WAIT_BEFORE_TO_CHANGE_VOTE'), 403);
 			}
 		}
 
 		if ($votes && $config->pollAllowVoteOne)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
 		}
 
 		if ($votes >= $config->pollNbVotesByUser && $config->pollAllowVoteOne)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES'), 403);
 		}
 
 		if ($config->pollTimeBtVotes && (int) $poll->getMyTime($user) + (int) $config->pollTimeBtVotes > Factory::getDate()->toUnix())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY'), 403);
 		}
 
 		if ($this->locked)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED'), 403);
 		}
 
 		if ($poll->polltimetolive != '1000-01-01 00:00:00' && $poll->getTimeToLive() < Factory::getDate()->toUnix())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED'), 403);
 		}
 
 		return true;
@@ -2339,20 +2339,20 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseNoVotes(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNoVotes(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		$poll   = $this->getPoll();
 		$config = KunenaFactory::getConfig();
 
 		if ($poll->exists() && $poll->getUserCount() && !$config->allowEditPoll)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
 		}
 
 		return true;
@@ -2363,13 +2363,13 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authorisePermdelete(KunenaUser $user): KunenaAuthorise
+	protected function authorisePermdelete(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -2380,7 +2380,7 @@ class KunenaTopic extends KunenaDatabaseObject
 
 		if ($user->isModerator($this->getCategory()) && !$config->moderatorPermDelete || !$user->isModerator($this->getCategory()))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
 		return true;
@@ -2389,18 +2389,18 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseGuestWrite(KunenaUser $user): KunenaAuthorise
+	protected function authoriseGuestWrite(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
 		return true;

@@ -22,7 +22,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -93,7 +93,7 @@ class HtmlView extends KunenaView
 		{
 			if (!$layout)
 			{
-				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_PAGE'), 404);
 			}
 		}
 

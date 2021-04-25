@@ -25,7 +25,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -240,13 +240,13 @@ class KunenaController extends BaseController
 				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
 				if (!KunenaForum::enabled(true))
 				{
-					throw new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+					throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 				}
 
 				// If forum is for registered users only, prevent guests from accessing tasks.
 				if ($this->config->regOnly && !$this->me->exists())
 				{
-					throw new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+					throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 				}
 			}
 
@@ -318,7 +318,7 @@ class KunenaController extends BaseController
 		if ($content instanceof Exception)
 		{
 			// We want to wrap the exception to be able to display correct HTTP status code.
-			$exception = new KunenaAuthorise($content->getMessage(), $content->getCode(), $content);
+			$exception = new KunenaExceptionAuthorise($content->getMessage(), $content->getCode(), $content);
 			header('HTTP/1.1 ' . $exception->getResponseStatus(), true);
 		}
 

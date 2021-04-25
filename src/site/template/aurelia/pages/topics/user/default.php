@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use function defined;
 
-$content = $this->execute('Topic/List/User')
+$content = $this->execute('Topic/Listing/User')
 	->setLayout('user');
 
 $this->addBreadcrumb(

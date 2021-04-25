@@ -45,44 +45,49 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                         <div class="data-container">
                             <div class="tabbable-panel">
                                 <div class="tabbable-line">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item active">
-                                            <a class="nav-link" href="#tab-general" data-toggle="tab">
-												<?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?>
-                                            </a>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="tab-general-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab-general" type="button" role="tab"
+                                                    aria-controls="tab-general"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab-access" data-toggle="tab">
-												<?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
-                                            </a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab-access-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab-access" type="button" role="tab"
+                                                    aria-controls="tab-access"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></button>
                                         </li>
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#tab-settings" data-toggle="tab">
-													<?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
-                                                </a>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab-settings-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#tab-settings" type="button" role="tab"
+                                                        aria-controls="tab-settings"
+                                                        aria-selected="true"><?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></button>
                                             </li>
 										<?php endif; ?>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab-display" data-toggle="tab">
-												<?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
-                                            </a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab-display-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab-display" type="button" role="tab"
+                                                    aria-controls="tab-display"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?></button>
                                         </li>
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#tab-mods" data-toggle="tab">
-													<?php echo Text::_('COM_KUNENA_MODHEADER'); ?>
-                                                </a>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab-mods-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#tab-mods" type="button" role="tab"
+                                                        aria-controls="tab-mods"
+                                                        aria-selected="true"><?php echo Text::_('COM_KUNENA_MODHEADER'); ?></button>
                                             </li>
 										<?php endif; ?>
                                     </ul>
-                                    <div class="tab-content"
-                                         style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
-                                        <div class="tab-pane active" id="tab-general">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="tab-general" role="tabpanel"
+                                             aria-labelledby="tab-general-tab">
                                             <fieldset>
                                                 <table class="table table-striped">
                                                     <tr>
@@ -170,7 +175,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab-access">
+                                        <div class="tab-pane fade" id="tab-access" role="tabpanel"
+                                             aria-labelledby="tab-access-tab">
                                             <fieldset>
                                                 <table class="table table-striped">
                                                     <thead>
@@ -200,7 +206,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-                                            <div class="tab-pane" id="tab-settings">
+                                            <div class="tab-pane fade" id="tab-settings" role="tabpanel"
+                                                 aria-labelledby="tab-settings-tab">
                                                 <fieldset>
                                                     <table class="table table-striped">
                                                         <tr>
@@ -265,7 +272,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                 </fieldset>
                                             </div>
 										<?php endif; ?>
-                                        <div class="tab-pane" id="tab-display">
+                                        <div class="tab-pane fade" id="tab-display" role="tabpanel"
+                                             aria-labelledby="tab-display-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_INDEX_LEGEND'); ?></legend>
                                                 <table class="table table-striped">
@@ -285,7 +293,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 										<?php if (!$this->category->id || !$this->category->isSection())
 											:
 											?>
-                                            <div class="tab-pane" id="tab-mods">
+                                            <div class="tab-pane fade" id="tab-mods" role="tabpanel"
+                                                 aria-labelledby="tab-mods-tab">
                                                 <fieldset>
                                                     <legend><?php echo Text::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
 

@@ -34,6 +34,7 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $category = [];
+	public $options;
 
 	/**
 	 * The model state
@@ -46,8 +47,8 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function displayCreate(): void
 	{
@@ -56,10 +57,10 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * @return  void
-	 * @throws Exception
 	 * @since Kunena
 	 *
 	 *
+	 * @throws Exception
 	 */
 	public function displayEdit()
 	{
@@ -113,9 +114,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{

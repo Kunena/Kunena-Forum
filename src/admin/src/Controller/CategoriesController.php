@@ -30,8 +30,8 @@ use function defined;
 /**
  * Kunena Categories Controller
  *
- * @since   Kunena 2.0
  * @property  $me  KunenaUser
+ * @since   Kunena 2.0
  */
 class CategoriesController extends FormController
 {
@@ -52,9 +52,9 @@ class CategoriesController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -66,10 +66,10 @@ class CategoriesController extends FormController
 	 * Lock
 	 *
 	 * @return  void
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function lock(): void
 	{
@@ -89,10 +89,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since   Kunena 3.0
 	 *
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function setVariable(int $cid, string $variable, string $value): void
 	{
@@ -187,10 +187,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unlock(): void
 	{
@@ -206,10 +206,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function review(): void
 	{
@@ -225,10 +225,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unreview(): void
 	{
@@ -244,10 +244,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function allowAnonymous(): void
 	{
@@ -263,10 +263,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function denyAnonymous(): void
 	{
@@ -282,10 +282,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function allowPolls(): void
 	{
@@ -301,10 +301,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function denyPolls(): void
 	{
@@ -320,10 +320,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function publish(): void
 	{
@@ -339,10 +339,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function unpublish(): void
 	{
@@ -358,10 +358,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function add()
 	{
@@ -390,9 +390,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
+	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -427,10 +427,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function remove()
 	{
@@ -504,9 +504,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{
@@ -545,10 +545,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function saveOrder()
 	{
@@ -625,10 +625,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function saveOrderAjax(): void
 	{
@@ -680,10 +680,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function orderup(): void
 	{
@@ -702,9 +702,9 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws null
 	 * @since   Kunena 3.0
 	 *
+	 * @throws null
 	 */
 	protected function orderUpDown(int $id, int $direction): void
 	{
@@ -753,10 +753,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function orderdown(): void
 	{
@@ -772,10 +772,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function archive(): void
 	{
@@ -793,10 +793,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 4.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function trash(): void
 	{
@@ -814,10 +814,10 @@ class CategoriesController extends FormController
 	 *
 	 * @return  boolean|void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 5.1.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function batchCategories(): bool
 	{

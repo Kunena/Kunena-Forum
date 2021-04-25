@@ -43,13 +43,12 @@ class ComponentUserControllerEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
-
+	public $headerText;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit';
-	private $headerText;
 
 	/**
 	 * Prepare user for editing.

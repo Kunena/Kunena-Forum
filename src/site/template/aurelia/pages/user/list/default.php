@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use function defined;
 
-$content = $this->execute('User/List');
+$content = $this->execute('User/Listing');
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_USRL_USERLIST'),

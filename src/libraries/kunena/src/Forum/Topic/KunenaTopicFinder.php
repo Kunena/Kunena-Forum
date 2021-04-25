@@ -82,7 +82,11 @@ class KunenaTopicFinder extends KunenaFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list       = implode(',', $categories);
-		$this->query->where($this->db->quoteName('a.category_id') . ' IN (' . $list . ')');
+
+		if (!empty($list))
+		{
+			$this->query->where('a.category_id  IN (' . $list . ')');
+		}
 
 		return $this;
 	}

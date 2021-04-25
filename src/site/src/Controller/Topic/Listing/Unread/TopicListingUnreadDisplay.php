@@ -38,6 +38,7 @@ use function defined;
  */
 class TopicListingUnreadDisplay extends KunenaControllerDisplay
 {
+	public $headerText;
 
 	/**
 	 * Prepare topic list for moderators.
@@ -147,7 +148,7 @@ class TopicListingUnreadDisplay extends KunenaControllerDisplay
 		}
 
 		$actions    = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$actions1   = $this->getTopicActions($topics, $actions);
+		$actions1   = $model->getTopicActions($topics, $actions);
 		$headerText = Text::_('COM_KUNENA_UNREAD');
 	}
 }

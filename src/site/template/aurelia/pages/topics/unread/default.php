@@ -20,7 +20,7 @@ $content = $this->execute('Topic/Listing/Unread')
 	->setLayout('unread');
 
 $this->addBreadcrumb(
-	$content->headerText,
+	(string) $content->headerText,
 	'index.php?option=com_kunena&view=topics&layout=unread'
 );
 

@@ -151,6 +151,7 @@ class HtmlView extends KunenaView
 	public $quickReply;
 	public $layout;
 	public $usertopic;
+	public $headerText;
 
 	/**
 	 * @param   null  $tpl  tpl

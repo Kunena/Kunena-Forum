@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
@@ -135,7 +135,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if ($this->config->readOnly)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		// FIXME: We need to proxy this...
@@ -165,7 +165,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if (!$this->topic->category_id)
 		{
-			throw new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+			throw new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 

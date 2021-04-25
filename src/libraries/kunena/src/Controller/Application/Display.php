@@ -24,7 +24,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
@@ -104,7 +104,7 @@ class Display extends KunenaControllerDisplay
 		if ($result === false)
 		{
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Wrapper KunenaLayout.
@@ -141,7 +141,7 @@ class Display extends KunenaControllerDisplay
 				$content       = $this->display()->set('breadcrumb', $this->breadcrumb);
 				$this->content = $content->render();
 			}
-			catch (KunenaAuthorise $e)
+			catch (KunenaExceptionAuthorise $e)
 			{
 				$banned = KunenaUserHelper::getMyself()->isBanned();
 				$userid = $this->input->getInt('userid');
@@ -202,11 +202,11 @@ class Display extends KunenaControllerDisplay
 			}
 			catch (Exception $e)
 			{
-				if (!($e instanceof KunenaAuthorise))
+				if (!($e instanceof KunenaExceptionAuthorise))
 				{
 					$header  = 'Error while rendering KunenaLayout.';
 					$content = $e->getMessage();
-					$e       = new KunenaAuthorise($e->getMessage(), $e->getCode(), $e);
+					$e       = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
 				}
 				else
 				{

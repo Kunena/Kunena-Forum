@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUser;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -696,7 +696,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @param   KunenaUser|null  $user    user
 	 * @param   bool             $throw   throw
 	 *
-	 * @return  KunenaAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise|boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
@@ -750,7 +750,7 @@ class KunenaCategory extends KunenaDatabaseObject
 			{
 				// Plugin forces authorisation to fail.
 				// TODO: allow plugin to customise the error.
-				$this->_authcache[$user->userid][$action] = new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->userid ? 403 : 401);
+				$this->_authcache[$user->userid][$action] = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->userid ? 403 : 401);
 			}
 			else
 			{
@@ -790,13 +790,13 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user): KunenaAuthorise
+	protected function authoriseRead(KunenaUser $user): KunenaExceptionAuthorise
 	{
 		static $catids = false;
 
@@ -808,17 +808,17 @@ class KunenaCategory extends KunenaDatabaseObject
 		// Checks if user can read category
 		if (!$this->exists())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (empty($catids[$this->id]))
 		{
 			if ($user->exists())
 			{
-				return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
 
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 	}
 
@@ -2053,13 +2053,13 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseNotBanned(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNotBanned(KunenaUser $user)
 	{
 		$banned = $user->isBanned();
 
@@ -2069,120 +2069,132 @@ class KunenaCategory extends KunenaDatabaseObject
 
 			if (!$banned->isLifetime())
 			{
-				return new KunenaAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
+				return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			}
 
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseGuestWrite(KunenaUser $user): KunenaAuthorise
+	protected function authoriseGuestWrite(KunenaUser $user)
 	{
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubWrite)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseSubscribe(KunenaUser $user): KunenaAuthorise
+	protected function authoriseSubscribe(KunenaUser $user)
 	{
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 
 		if (!$config->allowSubscriptions || $config->topicSubscriptions == 'disabled')
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseCatSubscribe(KunenaUser $user): KunenaAuthorise
+	protected function authoriseCatSubscribe(KunenaUser $user)
 	{
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 
 		if (!$config->allowSubscriptions || $config->categorySubscriptions == 'disabled')
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseFavorite(KunenaUser $user): KunenaAuthorise
+	protected function authoriseFavorite(KunenaUser $user)
 	{
 		// Check if user is guest and they can create or reply topics
 		if (!KunenaFactory::getConfig()->allowFavorites)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 403);
 		}
 
 		if ($user->userid == 0)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseNotSection(KunenaUser $user): KunenaAuthorise
+	protected function authoriseNotSection(KunenaUser $user)
 	{
 		// Check if category is not a section
 		if ($this->isSection())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
 		}
+
+		return null;
 	}
 
 	/**
@@ -2202,166 +2214,182 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	protected function authoriseChannel(KunenaUser $user): KunenaAuthorise
+	protected function authoriseChannel(KunenaUser $user)
 	{
 		// Check if category is alias
 		$channels = $this->getChannels('none');
 
 		if (!isset($channels[$this->id]))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseUnlocked(KunenaUser $user): KunenaAuthorise
+	protected function authoriseUnlocked(KunenaUser $user)
 	{
 		// Check that category is not locked or that user is a moderator
 		if ($this->locked && (!$user->userid || !$user->isModerator($this)))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseModerate(KunenaUser $user): KunenaAuthorise
+	protected function authoriseModerate(KunenaUser $user)
 	{
 		// Check that user is moderator
 		if (!$user->userid)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator($this))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseGlobalModerate(KunenaUser $user): KunenaAuthorise
+	protected function authoriseGlobalModerate(KunenaUser $user)
 	{
 		// Check that user is a global moderator
 		if (!$user->userid)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 401);
 		}
 
 		if (!$user->isModerator())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseAdmin(KunenaUser $user): KunenaAuthorise
+	protected function authoriseAdmin(KunenaUser $user)
 	{
 		// Check that user is admin
 		if (!$user->userid)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 401);
 		}
 
 		if (!$user->isAdmin($this))
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authorisePoll(KunenaUser $user): KunenaAuthorise
+	protected function authorisePoll(KunenaUser $user)
 	{
 		// Check if polls are enabled at all
 		if (!KunenaFactory::getConfig()->pollEnabled)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED'), 403);
 		}
 
 		// Check if polls are not enabled in this category
 		if (!$this->allowPolls)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function authoriseVote(KunenaUser $user): KunenaAuthorise
+	protected function authoriseVote(KunenaUser $user)
 	{
 		// Check if user is guest
 		if ($user->userid == 0)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
 		}
+
+		return null;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaAuthorise|void
+	 * @return  KunenaExceptionAuthorise|void
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseUpload(KunenaUser $user): KunenaAuthorise
+	protected function authoriseUpload(KunenaUser $user)
 	{
 		// Check if attachments are allowed
 		if (KunenaAttachmentHelper::getExtensions($this, $user) === false)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
+
+		return null;
 	}
 }

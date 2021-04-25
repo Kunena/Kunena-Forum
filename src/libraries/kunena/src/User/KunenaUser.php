@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -715,7 +715,7 @@ class KunenaUser extends CMSObject
 	 * @param   KunenaUser|null  $user    user
 	 * @param   bool             $throw   throw
 	 *
-	 * @return  KunenaAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise|boolean
 	 *
 	 * @since   Kunena 4.0
 	 *
@@ -746,18 +746,18 @@ class KunenaUser extends CMSObject
 			case 'read' :
 				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubProfile))
 				{
-					$exception = new KunenaAuthorise(Text::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 404);
+					$exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 404);
 				}
 				break;
 			case 'edit' :
 				if (!isset($this->registerDate) || (!$this->isMyself() && !$user->isAdmin() && !$user->isModerator()))
 				{
-					$exception = new KunenaAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
 
 				if ($user->isModerator() && $kuser->isAdmin() && !$user->isAdmin())
 				{
-					$exception = new KunenaAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'ban' :
@@ -769,7 +769,7 @@ class KunenaUser extends CMSObject
 				}
 				catch (Exception $e)
 				{
-					$exception = new KunenaAuthorise($e->getMessage(), $user->exists() ? 403 : 401);
+					$exception = new KunenaExceptionAuthorise($e->getMessage(), $user->exists() ? 403 : 401);
 				}
 				break;
 			default :

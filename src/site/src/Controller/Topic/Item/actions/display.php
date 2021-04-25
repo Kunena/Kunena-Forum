@@ -20,7 +20,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -87,7 +87,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->config->readOnly)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		if ($this->topic->isAuthorised('reply'))

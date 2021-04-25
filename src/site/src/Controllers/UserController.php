@@ -33,7 +33,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -113,14 +113,14 @@ class UserController extends KunenaController
 		{
 			if (!KunenaFactory::getConfig()->userlistAllowed && $this->app->getIdentity()->guest)
 			{
-				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
 		// Else the user does not exists.
 		if (!$this->me)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_USER_UNKNOWN'), 404);
 		}
 
 		parent::display();
@@ -324,7 +324,7 @@ class UserController extends KunenaController
 
 		if (!Session::checkToken('post'))
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 
 		// Check permission
@@ -335,14 +335,14 @@ class UserController extends KunenaController
 		{
 			if ($userid != $my->id)
 			{
-				throw new KunenaAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
 			}
 		}
 
 		// Make sure that the user exists.
 		if (!$this->me->exists())
 		{
-			throw new KunenaAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		if (!$userid)
@@ -383,7 +383,7 @@ class UserController extends KunenaController
 
 		if ($errors)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
 		if ($this->user->userid == $this->me->userid)

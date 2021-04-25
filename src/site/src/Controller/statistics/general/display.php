@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -66,12 +66,12 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 
 		if (!$this->config->get('showStats'))
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		if (!$this->config->statsLinkAllowed && Factory::getApplication()->getIdentity()->guest)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$statistics = KunenaStatistics::getInstance();

@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\KunenaFinder;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -69,7 +69,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare user attachments list.
 	 *
-	 * @return  KunenaAuthorise
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -104,7 +104,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 
 		if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile)
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
 		if ($moreUri)

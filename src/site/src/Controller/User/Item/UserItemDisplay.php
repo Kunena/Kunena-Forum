@@ -23,7 +23,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -94,7 +94,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 
 		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
 		$userid = $this->input->getInt('userid');

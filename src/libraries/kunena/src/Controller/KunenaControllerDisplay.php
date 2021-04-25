@@ -21,7 +21,7 @@ use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -99,7 +99,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			$output = $this->execute();
 		}
-		catch (KunenaAuthorise $e)
+		catch (KunenaExceptionAuthorise $e)
 		{
 			if (!$this->primary)
 			{
@@ -165,7 +165,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Run after executing action.
 			$this->after();
 		}
-		catch (KunenaAuthorise $e)
+		catch (KunenaExceptionAuthorise $e)
 		{
 			if ($this->primary)
 			{

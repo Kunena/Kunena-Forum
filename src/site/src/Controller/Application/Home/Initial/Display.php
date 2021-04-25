@@ -21,7 +21,7 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -95,7 +95,7 @@ class Display extends KunenaControllerDisplay
 
 			if (!$default)
 			{
-				throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 500);
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item.
@@ -125,7 +125,7 @@ class Display extends KunenaControllerDisplay
 
 		if (!$controller)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		return $controller->execute();

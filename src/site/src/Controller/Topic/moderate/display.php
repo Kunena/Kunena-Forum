@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -111,7 +111,7 @@ class ComponentTopicControllerModerateDisplay extends KunenaControllerDisplay
 
 		if ($this->config->readOnly)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$category = $this->topic->getCategory();

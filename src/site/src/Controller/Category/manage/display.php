@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -82,7 +82,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare category display.
 	 *
-	 * @return  false|KunenaAuthorise
+	 * @return  false|KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 5.1
 	 *
@@ -94,7 +94,7 @@ class ComponentCategoryControllerManageDisplay extends KunenaControllerDisplay
 
 		if (!$this->me->isAdmin())
 		{
-			return new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
 		parent::before();

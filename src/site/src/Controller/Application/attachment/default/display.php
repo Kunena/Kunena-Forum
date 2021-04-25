@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Exception\KunenaAuthorise;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -61,7 +61,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  KunenaAuthorise
+	 * @throws  KunenaExceptionAuthorise
 	 * @throws  RuntimeException
 	 * @throws  null
 	 */
@@ -75,7 +75,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		{
 			// In case of an error we want to set HTTP error code.
 			// We want to wrap the exception to be able to display correct HTTP status code.
-			$error = new KunenaAuthorise($e->getMessage(), $e->getCode(), $e);
+			$error = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
 			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 
 			echo $error->getResponseStatus();
@@ -114,19 +114,19 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 
 		if ($format != 'raw' || !$id)
 		{
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 
 		if ($this->config->regOnly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
 		$attachment = KunenaAttachmentHelper::get($id);
@@ -142,12 +142,12 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		if (!$path)
 		{
 			// File doesn't exist.
-			throw new KunenaAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (headers_sent())
 		{
-			throw new KunenaAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
+			throw new KunenaExceptionAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
 		}
 
 		// Close all output buffers, just in case.

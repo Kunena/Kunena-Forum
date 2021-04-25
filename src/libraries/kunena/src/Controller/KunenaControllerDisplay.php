@@ -46,6 +46,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public $layout = 'default';
 
+	public $user;
+	public $headerText;
+	public $pagination;
 	/**
 	 * @var     KunenaConfig
 	 * @since   Kunena 6.0

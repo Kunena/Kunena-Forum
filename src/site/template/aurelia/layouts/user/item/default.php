@@ -14,9 +14,12 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use function defined;
+
+HTMLHelper::_('bootstrap.framework');
 
 $tabs = $this->getTabs();
 ?>
@@ -53,20 +56,21 @@ echo $this->subLayout('User/Item/Summary')
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
 		<?php foreach ($tabs as $name => $tab) : ?>
-            <li class="nav-item">
-                <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
-                        href="#<?php echo $name; ?>" data-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
+            <li class="nav-item" role="presentation">
+                <button <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
+                        id="<?php echo $name; ?>-tab" data-bs-toggle="tab" data-bs-target="#<?php echo $name; ?>"
+                        type="button" role="tab"
+                        aria-controls="home" aria-selected="true"><?php echo $tab->title; ?></button>
             </li>
 		<?php endforeach; ?>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content" id="myTabContent">
 		<?php foreach ($tabs as $name => $tab) : ?>
-            <div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>">
-                <div>
-					<?php echo $tab->content; ?>
-                </div>
+            <div class="tab-pane fade show <?php echo $tab->active ? ' in active show' : ''; ?>"
+                 id="<?php echo $name; ?>" role="tabpanel" aria-labelledby="<?php echo $name; ?>-tab">
+				<?php echo $tab->content; ?>
             </div>
 		<?php endforeach; ?>
     </div>

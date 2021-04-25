@@ -4688,7 +4688,6 @@ select.form-control {
 	-moz-appearance: none;
 	appearance: none;
 	padding-right: 20px;
-	background-image: url("../img/down-arrow.svg");
 	background-position: center right 15px;
 	background-repeat: no-repeat;
 	-webkit-background-size: 10px;

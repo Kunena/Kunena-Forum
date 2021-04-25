@@ -23,6 +23,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
+HTMLHelper::_('bootstrap.framework');
+
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
 $tabs          = $this->getTabsEdit();
@@ -45,7 +47,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 	<?php echo HTMLHelper::_('form.token'); ?>
 
     <div class="tabs">
-        <ul id="\Kunena\Forum\Libraries\User\KunenaUserEdit" class="nav nav-tabs">
+        <ul id="UserEdit" class="nav nav-tabs">
 
 			<?php foreach ($tabs as $name => $tab)
 				:

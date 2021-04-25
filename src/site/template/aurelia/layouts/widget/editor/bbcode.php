@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -21,6 +22,8 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
+
+HTMLHelper::_('bootstrap.framework');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('jquery.caret.js');

@@ -19,6 +19,8 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
+HTMLHelper::_('bootstrap.framework');
+
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect');

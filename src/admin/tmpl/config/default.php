@@ -19,6 +19,8 @@ use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
+HTMLHelper::_('bootstrap.framework');
+
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect');
@@ -39,54 +41,78 @@ $wa->useScript('multiselect');
                         <div class="data-container">
                             <div class="tabbable-panel">
                                 <div class="tabbable-line">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#tab_basics"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_BASICS'); ?></a>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="tab_basics-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_basics" type="button" role="tab"
+                                                    aria-controls="tab_basics"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_BASICS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_frontend"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_FRONTEND'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_frontend-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_frontend" type="button" role="tab"
+                                                    aria-controls="tab_frontend"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_FRONTEND'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_users"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_USERS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_users-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_users" type="button" role="tab"
+                                                    aria-controls="tab_users"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_USERS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_emails"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_SUBSCRIPTIONS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_emails-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_emails" type="button" role="tab"
+                                                    aria-controls="tab_emails"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_SUBSCRIPTIONS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_security"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_SECURITY'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_security-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_security" type="button" role="tab"
+                                                    aria-controls="tab_security"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_SECURITY'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_avatars"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_AVATARS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_avatars-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_avatars" type="button" role="tab"
+                                                    aria-controls="tab_avatars"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_AVATARS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_uploads"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_UPLOADS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_uploads-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_uploads" type="button" role="tab"
+                                                    aria-controls="tab_uploads"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_UPLOADS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_ranking"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_RANKING'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_ranking-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_ranking" type="button" role="tab"
+                                                    aria-controls="tab_ranking"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_RANKING'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_bbcode"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_BBCODE'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_bbcode-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_bbcode" type="button" role="tab"
+                                                    aria-controls="tab_bbcode"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_BBCODE'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_rss"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_ADMIN_RSS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_rss-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_rss" type="button" role="tab"
+                                                    aria-controls="tab_rss"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_ADMIN_RSS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_extra"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_extra-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_extra" type="button" role="tab"
+                                                    aria-controls="tab_extra"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab_menu"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_ADMIN_MENU_SETTINGS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab_menu-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab_menu" type="button" role="tab"
+                                                    aria-controls="tab_menu"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_ADMIN_MENU_SETTINGS'); ?></button>
                                         </li>
                                     </ul>
 

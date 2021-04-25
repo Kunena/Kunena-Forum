@@ -1600,6 +1600,8 @@ class KunenaConfig extends CMSObject
 
 	public $profiler = 0;
 
+	public $attach_end;
+
 	/**
 	 * @since   Kunena 6.0
 	 */

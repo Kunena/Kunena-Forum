@@ -29,6 +29,56 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
+	 * Filter search
+	 *
+	 * @since  6.0
+	 */
+	public $filterSearch;
+
+	/**
+	 * Filter title
+	 *
+	 * @since  6.0
+	 */
+	public $filterTitle;
+
+	/**
+	 * Filter topic
+	 *
+	 * @since  6.0
+	 */
+	public $filterTopic;
+
+	/**
+	 * Filter category
+	 *
+	 * @since  6.0
+	 */
+	public $filterCategory;
+
+	/**
+	 * Filter ip
+	 *
+	 * @since  6.0
+	 */
+	public $filterIp;
+
+	/**
+	 * Filter author
+	 *
+	 * @since  6.0
+	 */
+	public $filterAuthor;
+
+
+	/**
+	 * Filter active
+	 *
+	 * @since  6.0
+	 */
+	public $filterActive;
+
+	/**
 	 * The model state
 	 *
 	 * @var    CMSObject

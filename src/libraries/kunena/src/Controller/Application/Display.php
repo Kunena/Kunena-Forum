@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Pathway\Pathway;
@@ -443,7 +442,7 @@ class Display extends KunenaControllerDisplay
 			Text::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			['style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;']
 		);*/
-		$credits      .= ' <a href="https://www.kunena.org"
+		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline !important; visibility: visible !important; text-decoration: none !important;">'
 			. Text::_('COM_KUNENA') . '</a>';
 

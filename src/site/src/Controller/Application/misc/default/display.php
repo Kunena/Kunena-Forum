@@ -35,7 +35,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $header;
+	public $header = '';
 
 	/**
 	 * @var     string

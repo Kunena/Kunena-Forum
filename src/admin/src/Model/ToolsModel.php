@@ -26,10 +26,10 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 use RuntimeException;
 use stdClass;
 use function defined;
@@ -301,9 +301,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getSystemReportAnonymous(): string
 	{
@@ -326,11 +326,11 @@ class ToolsModel extends AdminModel
 	/**
 	 * Check if php extensions needed by kunena are right loaded
 	 *
-	 * @return  string|void
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getPhpExtensions(): string
+	protected function getPhpExtensions()
 	{
 		if (extension_loaded('mbstring'))
 		{
@@ -384,9 +384,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	protected function getReportData(): void
 	{
@@ -584,9 +584,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  boolean|stdClass|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
 	 */
 	protected function internalGetJoomlaTemplate()
 	{
@@ -691,9 +691,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
 	 */
 	protected function internalGetTablesCollation(): string
 	{
@@ -763,9 +763,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
 	 */
 	protected function internalGetKunenaConfiguration(): string
 	{
@@ -947,9 +947,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
+	 * @throws  Exception
 	 */
 	public function getSystemReport(): string
 	{

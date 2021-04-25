@@ -26,15 +26,14 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPollHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
-use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Plugin\Kunena\Joomla\Login;
 use RuntimeException;
 use StdClass;
 use function defined;
@@ -57,9 +56,9 @@ class ToolsController extends FormController
 	 *
 	 * @param   array  $config  config
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -75,10 +74,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function diagnostics(): void
 	{
@@ -120,10 +119,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function prune(): void
 	{
@@ -244,10 +243,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function syncUsers(): void
 	{
@@ -393,10 +392,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function recount(): void
 	{
@@ -509,10 +508,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function doRecount(): void
 	{
@@ -707,10 +706,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function trashMenu(): void
 	{
@@ -727,10 +726,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function fixLegacy(): void
 	{
@@ -762,10 +761,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function purgeReStatements(): void
 	{
@@ -826,10 +825,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function cleanupIP(): void
 	{
@@ -921,9 +920,9 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
+	 * @throws  Exception
 	 */
 	public function cancel($key = null)
 	{
@@ -935,10 +934,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 4.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function uninstall(): void
 	{
@@ -990,10 +989,10 @@ class ToolsController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function systemReport(): void
 	{

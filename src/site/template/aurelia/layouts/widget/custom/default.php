@@ -11,13 +11,12 @@
  **/
 
 defined('_JEXEC') or die();
-
 ?>
 <div class="card">
-	<h3 class="card-header"><?php echo $this->header; ?></h3>
+    <h3 class="card-header"><?php echo $this->header; ?></h3>
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_top'); ?>
-	<div class="card-body">
+    <div class="card-body">
 		<?php echo $this->body; ?>
-	</div>
+    </div>
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_custom_bottom'); ?>
 </div>

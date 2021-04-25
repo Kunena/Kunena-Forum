@@ -68,9 +68,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getAdminOptions()
 	{
@@ -182,9 +182,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  boolean|KunenaCategory|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -249,9 +249,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getAdminModerators()
 	{
@@ -271,9 +271,9 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @return  boolean
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function saveOrder($pks = null, $order = null): bool
 	{
@@ -355,10 +355,10 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 5.1
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function getBatchCategories(): array
 	{
@@ -379,10 +379,10 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|KunenaCategory[]
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
+	 * @throws  null
 	 */
 	public function getAdminCategories()
 	{

@@ -108,7 +108,7 @@ abstract class KunenaTemplateHelper
 
 	/**
 	 * @param   string  $templateDir      template dir
-	 * @param   null    $templateBaseDir  template basedir
+	 * @param   string  $templateBaseDir  template basedir
 	 *
 	 * @return  boolean|stdClass
 	 *

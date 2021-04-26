@@ -41,17 +41,17 @@ class TemplateController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                     $config   An optional associative array of configuration settings.
+	 * @see     BaseController
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
-	 * @throws Exception
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
-	 *
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -68,9 +68,9 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -111,10 +111,10 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws null
-	 * @throws Exception
 	 * @since   Kunena 3.0
 	 *
+	 * @throws Exception
+	 * @throws null
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
@@ -276,10 +276,10 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  null
+	 * @throws  Exception
 	 */
 	public function apply(): void
 	{
@@ -318,9 +318,9 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
+	 * @throws  Exception
 	 */
 	public function restore(): void
 	{

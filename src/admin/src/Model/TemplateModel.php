@@ -28,20 +28,20 @@ use stdClass;
  */
 class TemplateModel extends AdminModel
 {
-
 	/**
-	 * @param   array  $data      data
-	 * @param   bool   $loadData  loadData
-	 *
-	 * @return  boolean|mixed
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 *
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 *
+	 * @param   bool   $loadData  loadData
+	 *
+	 * @param   array  $data      data
+	 *
+	 * @return  object|mixed
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
 	 */
-	public function getForm($data = [], $loadData = true): bool
+	public function getForm($data = [], $loadData = true): object
 	{
 		// Load the configuration definition file.
 		$template = $this->getState('template');
@@ -61,21 +61,21 @@ class TemplateModel extends AdminModel
 	/**
 	 * @return  boolean|stdClass
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	public function getTemplateDetails()
 	{
 		$app = Factory::getApplication();
 
 		$template = $app->getUserState('kunena.edit.template');
-		$details  = KunenaTemplateHelper::parseXmlFile($template);
+		$details  = KunenaTemplateHelper::parseXmlFile((string) $template);
 
 		if (empty($template))
 		{
 			$template = $this->getState('template');
-			$details  = KunenaTemplateHelper::parseXmlFile($template);
+			$details  = KunenaTemplateHelper::parseXmlFile((string) $template);
 		}
 
 		return $details;
@@ -91,9 +91,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -129,9 +129,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{

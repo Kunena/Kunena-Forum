@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  */
 class HtmlView extends BaseHtmlView
 {
+	public $templatename;
 
 	/**
 	 * @param   null  $tpl  tpl
@@ -40,11 +41,11 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$form         = $this->get('Form');
-		$params       = $this->get('editparams');
-		$details      = $this->get('templatedetails');
-		$templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template     = KunenaTemplate::getInstance($templatename);
+		$this->form    = $this->get('Form');
+		$this->params  = $this->get('editparams');
+		$this->details = $this->get('templatedetails');
+		$templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
+		$template      = KunenaTemplate::getInstance($templatename);
 		$template->initializeBackend();
 
 		$templateFile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';

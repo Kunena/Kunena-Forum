@@ -83,6 +83,12 @@ abstract class KunenaMenuFix
 	public static $parent = null;
 
 	/**
+	 * @var     null
+	 * @since   Kunena 6.0
+	 */
+	public $parentid;
+
+	/**
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0

@@ -45,17 +45,23 @@ $wa->useScript('multiselect');
             <div class="card card-block bg-faded p-2">
                 <div class="tabbable-panel">
                     <div class="tabbable-line">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#tab1"
-                                   data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_RANKS'); ?></a></li>
-                            <li><a class="nav-link" href="#tab2"
-                                   data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></a>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab"
+                                        data-bs-target="#tab1" type="button" role="tab"
+                                        aria-controls="tab1"
+                                        aria-selected="true"><?php echo Text::_('COM_KUNENA_A_RANKS'); ?></button>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab1-tab" data-bs-toggle="tab"
+                                        data-bs-target="#tab2" type="button" role="tab"
+                                        aria-controls="tab2"
+                                        aria-selected="true"><?php echo Text::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></button>
                             </li>
                         </ul>
 
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab1">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tab1" role="tabpanel"
+                                 aria-labelledby="tab1-tab">
                                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>"
                                       method="post"
                                       id="adminForm" name="adminForm">
@@ -253,7 +259,8 @@ $wa->useScript('multiselect');
                                 </form>
                             </div>
 
-                            <div class="tab-pane" id="tab2">
+                            <div class="tab-pane fade show" id="tab2" role="tabpanel"
+                                 aria-labelledby="tab2-tab">
                                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
                                       id="uploadForm" method="post"
                                       enctype="multipart/form-data">

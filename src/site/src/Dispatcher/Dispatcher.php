@@ -1,12 +1,14 @@
 <?php
-
 /**
- * @package         Joomla.Site
- * @subpackage      com_content
+ * Kunena Component
  *
- * @copyright   (C) 2017 Open Source Matters, Inc. <https://www.joomla.org>
- * @license         GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package         Kunena.Site
+ * @subpackage      Dispatcher
+ *
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
 namespace Kunena\Forum\Site\Dispatcher;
 
@@ -31,43 +33,22 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 /**
  * ComponentDispatcher class for com_kunena
  *
- * @since  4.0.0
+ * @since  6.0.0
  */
 class Dispatcher extends ComponentDispatcher
 {
 	public $option = 'com_kunena';
 
 	/**
-	 * Dispatch a controller task. Redirecting the user if appropriate.
+	 * Method to check component access permission
 	 *
 	 * @return  void
 	 *
-	 * @since   4.0.0
+	 * @since   6.0.0
 	 * @throws \Exception
 	 */
-	public function dispatch()
+	protected function checkAccess()
 	{
-		// Display offline message if Kunena hasn't been fully installed.
-		if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
-		{
-			$lang = Factory::getLanguage();
-			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
-			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-			Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
-			Factory::getApplication()->sendHeaders();
-			?>
-				<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
-				<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
-			<?php
-
-			return;
-		}
-
-		// Display time it took to create the entire page in the footer.
-		$kunena_profiler = KunenaProfiler::instance('Kunena');
-		$kunena_profiler->start('Total Time');
-		KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
-
 		// Prevent direct access to the component if the option has been disabled.
 		if (!KunenaConfig::getInstance()->accessComponent)
 		{
@@ -87,6 +68,53 @@ class Dispatcher extends ComponentDispatcher
 				throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 			}
 		}
+	}
+
+	/**
+	 * Method to check if component is compatible and is installed
+	 *
+	 * @return  void
+	 *
+	 * @since   6.0.0
+	 */
+	protected function checkIfInstalled()
+	{
+		// Display offline message if Kunena hasn't been fully installed.
+		if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
+		{
+			$lang = Factory::getLanguage();
+			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
+			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+			Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+			Factory::getApplication()->sendHeaders();
+
+			?>
+			<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+			<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+			<?php
+
+			return;
+		}
+	}
+
+	/**
+	 * Dispatch a controller task. Redirecting the user if appropriate.
+	 *
+	 * @return  void
+	 *
+	 * @since   6.0.0
+	 * @throws \Exception
+	 */
+	public function dispatch()
+	{
+		$this->checkIfInstalled();
+
+		// Display time it took to create the entire page in the footer.
+		$kunena_profiler = KunenaProfiler::instance('Kunena');
+		$kunena_profiler->start('Total Time');
+		KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+
+		$this->checkAccess();
 
 		// Initialize Kunena Framework.
 		KunenaForum::setup();
@@ -133,7 +161,7 @@ class Dispatcher extends ComponentDispatcher
 			$contents = $controller->execute();
 			KunenaRoute::cacheStore();
 		}
-		elseif (is_file(KPATH_SITE . "/controllers/{$view}.php"))
+		elseif (class_exists('Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller'))
 		{
 			// Execute old MVC.
 			// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.

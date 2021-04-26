@@ -89,6 +89,7 @@ class KunenaController extends BaseController
 	{
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->me       = KunenaUserHelper::getMyself();
+		$this->app      = Factory::getApplication();
 
 		// Save user profile if it didn't exist.
 		if ($this->me->userid && !$this->me->exists())
@@ -149,22 +150,10 @@ class KunenaController extends BaseController
 			$view = strtolower(Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
 		}
 
-		$path = JPATH_COMPONENT . "/src/Controller/" . ucfirst($view) . "Controller.php";
-
-		// If the controller file path exists, include it ... else die with a 500 error.
-		if (is_file($path))
-		{
-			require_once $path;
-		}
-		else
-		{
-			throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
-		}
-
 		// Set the name for the controller and instantiate it.
 		if ($app->isClient('administrator'))
 		{
-			$class = $prefix . 'AdminController' . ucfirst($view);
+			$class = 'Kunena\Forum\Administrator\Controller\\' . ucfirst($view) . 'Controller';
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -172,7 +161,7 @@ class KunenaController extends BaseController
 		}
 		else
 		{
-			$class = $prefix . 'Controller' . ucfirst($view);
+			$class = 'Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller';
 			KunenaFactory::loadLanguage('com_kunena.controllers');
 			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');

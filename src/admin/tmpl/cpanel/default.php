@@ -213,13 +213,13 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                 <div class="col-auto">
                                     <i class="fas fa-list-alt bg-cyan"></i>
                                 </div>
-                                <span class="pt-badge bg-cyan">
+                            </div>
+                            <span class="pt-badge bg-cyan">
 									<a href="<?php echo Route::_('index.php?option=com_kunena&view=categories&layout=create'); ?>">
 										<i class="fas fa-plus"
                                            style="width: 12px;height: 12px;margin-top: -40px;font-size: 12px"></i>
 									</a>
 								</span>
-                            </div>
                         </div>
                     </div>
                 </div>

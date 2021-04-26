@@ -153,21 +153,21 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$user          = $this->get('user');
+		$this->user    = $this->get('user');
 		$this->sub     = $this->get('subscriptions');
 		$subsCatsList  = $this->get('catSubscriptions');
 		$this->ipslist = $this->get('IPlist');
 
 		$avatarIntegration = KunenaFactory::getAvatarIntegration();
-		$this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $user->avatar;
-		$this->avatar      = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+		$this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $this->user->avatar;
+		$this->avatar      = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 
 		// Make the select list for the moderator flag
 		$yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));
 		$yesnoMod [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 
 		// Build the html select list
-		$this->selectMod = HTMLHelper::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox form-control" size="2"', 'value', 'text', $user->moderator);
+		$this->selectMod = HTMLHelper::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox form-control" size="2"', 'value', 'text', $this->user->moderator);
 
 		// Make the select list for the moderator flag
 		$yesnoOrder [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_USER_ORDER_ASC'));
@@ -182,7 +182,7 @@ class HtmlView extends BaseHtmlView
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($user->hideEmail), 'khidemail'
+			'text', $this->escape($this->user->hideEmail), 'khidemail'
 		);
 		$this->settings[] = $item;
 
@@ -193,7 +193,7 @@ class HtmlView extends BaseHtmlView
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($user->showOnline), 'kshowonline'
+			'text', $this->escape($this->user->showOnline), 'kshowonline'
 		);
 		$this->settings[] = $item;
 
@@ -205,7 +205,7 @@ class HtmlView extends BaseHtmlView
 		$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 		$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($user->canSubscribe), 'kcansubscribe'
+			'text', $this->escape($this->user->canSubscribe), 'kcansubscribe'
 		);
 		$this->settings[] = $item;
 
@@ -225,7 +225,7 @@ class HtmlView extends BaseHtmlView
 		$options[]        = HTMLHelper::_('select.option', 720, Text::_('COM_KUNENA_SHOW_MONTH'));
 		$options[]        = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
 		$item->field      = HTMLHelper::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox form-control" size="1"', 'value',
-			'text', $this->escape($user->userListtime), 'kuserlisttime'
+			'text', $this->escape($this->user->userListtime), 'kuserlisttime'
 		);
 		$this->settings[] = $item;
 
@@ -241,15 +241,15 @@ class HtmlView extends BaseHtmlView
 			$options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
 			$options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 			$item->field      = HTMLHelper::_('select.genericlist', $options, 'social', 'class="kinputbox form-control" size="1"', 'value',
-				'text', $this->escape($user->socialshare), 'ksocialshare'
+				'text', $this->escape($this->user->socialshare), 'ksocialshare'
 			);
 			$this->settings[] = $item;
 		}
 
-		$this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="2"', 'value', 'text', $user->ordering);
+		$this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="2"', 'value', 'text', $this->user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');
-		$this->social      = $user->socialButtons();
+		$this->social      = $this->user->socialButtons();
 		$this->social      = ArrayHelper::toObject($this->social);
 
 		$this->config = KunenaConfig::getInstance();

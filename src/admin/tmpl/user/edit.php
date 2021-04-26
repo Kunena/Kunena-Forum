@@ -60,38 +60,53 @@ jQuery(function($) {
                         <div class="data-container">
                             <div class="tabbable-panel">
                                 <div class="tabbable-line">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#tab1"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab1" type="button" role="tab"
+                                                    aria-controls="tab1"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab2"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_USER_INFO'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab2-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab2" type="button" role="tab"
+                                                    aria-controls="tab2"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_INFO'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab3"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_MOD_NEW'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab3" type="button" role="tab"
+                                                    aria-controls="tab3"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_MOD_NEW'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab4"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab4" type="button" role="tab"
+                                                    aria-controls="tab4"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab5"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab5-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab5" type="button" role="tab"
+                                                    aria-controls="tab5"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab6"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_TRASH_IP'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab6-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab6" type="button" role="tab"
+                                                    aria-controls="tab6"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_TRASH_IP'); ?></button>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tab7"
-                                               data-toggle="tab"><?php echo Text::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="tab7-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#tab7" type="button" role="tab"
+                                                    aria-controls="tab7"
+                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></button>
                                         </li>
                                     </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab1">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel"
+                                             aria-labelledby="tab1-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
                                                 <div class="kwho-<?php echo $this->user->getType(0, true); ?>">
@@ -127,7 +142,8 @@ jQuery(function($) {
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="tab-pane" id="tab2">
+                                        <div class="tab-pane fade show" id="tab2" role="tabpanel"
+                                             aria-labelledby="tab2-tab">
                                             <fieldset>
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <tbody>
@@ -253,7 +269,8 @@ jQuery(function($) {
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab3">
+                                        <div class="tab-pane fade show" id="tab3" role="tabpanel"
+                                             aria-labelledby="tab3-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_MODCHANGE'); ?></legend>
                                                 <table class="table table-striped">
@@ -269,7 +286,8 @@ jQuery(function($) {
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab4">
+                                        <div class="tab-pane fade show" id="tab4" role="tabpanel"
+                                             aria-labelledby="tab4-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
@@ -307,7 +325,8 @@ jQuery(function($) {
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab5">
+                                        <div class="tab-pane fade show" id="tab5" role="tabpanel"
+                                             aria-labelledby="tab5-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
@@ -345,7 +364,8 @@ jQuery(function($) {
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab6">
+                                        <div class="tab-pane fade show" id="tab6" role="tabpanel"
+                                             aria-labelledby="tab6-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
                                                 <table class="table table-striped">
@@ -385,7 +405,8 @@ jQuery(function($) {
                                             </fieldset>
                                         </div>
 
-                                        <div class="tab-pane" id="tab7">
+                                        <div class="tab-pane fade show" id="tab7" role="tabpanel"
+                                             aria-labelledby="tab7-tab">
                                             <fieldset>
                                                 <table class="table table-striped">
                                                     <tr>

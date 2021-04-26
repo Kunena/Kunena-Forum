@@ -15,9 +15,9 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
@@ -45,17 +45,17 @@ class UserController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                     $config   An optional associative array of configuration settings.
+	 * @see     BaseController
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
-	 * @throws Exception
+	 * @param   array                     $config   An optional associative array of configuration settings.
+	 *
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
-	 *
+	 * @throws Exception
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -72,9 +72,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
@@ -98,9 +98,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
+	 * @throws Exception
 	 */
 	protected function saveInternal(string $type): void
 	{
@@ -219,9 +219,9 @@ class UserController extends FormController
 	 *
 	 * @return  boolean
 	 *
-	 * @throws Exception
 	 * @since   Kunena 5.1
 	 *
+	 * @throws Exception
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -247,9 +247,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
+	 * @throws  Exception
 	 */
 	public function apply(): void
 	{

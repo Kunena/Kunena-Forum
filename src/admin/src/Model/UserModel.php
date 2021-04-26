@@ -228,7 +228,7 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 */
-	public function getListUserRanks(): array
+	public function getListUserRanks(): string
 	{
 		$db   = Factory::getDBO();
 		$user = $this->getUser();

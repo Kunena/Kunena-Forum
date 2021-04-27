@@ -10,11 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Joomla;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -25,7 +22,7 @@ use Joomla\CMS\Router\Route;
  *
  * @since   Kunena 6.0
  */
-class Login
+class KunenaLoginJoomla
 {
 	/**
 	 * @var     null
@@ -120,7 +117,7 @@ class Login
 	 * @return  void|string
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL(): string
+	public function getRegistrationURL()
 	{
 		$usersConfig = ComponentHelper::getParams('com_users');
 

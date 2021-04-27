@@ -10,11 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Kunena;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -23,15 +20,13 @@ use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaProfile
  *
  * @since   Kunena 6.0
  */
-class KunenaIntegrationProfile extends KunenaProfile
+class KunenaProfileKunena extends KunenaProfile
 {
 	/**
 	 * @var     null
@@ -60,7 +55,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -121,7 +116,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile($view, object $params)
 	{
 	}
 
@@ -136,7 +131,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws null
 	 * @throws Exception
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 		$avatartab = '&avatartab=1';
 
@@ -156,7 +151,7 @@ class KunenaIntegrationProfile extends KunenaProfile
 	 * @throws null
 	 * @throws Exception
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true, $avatarTab = ''): bool
+	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
 	{
 		if ($user == 0)
 		{

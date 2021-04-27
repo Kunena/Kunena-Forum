@@ -136,7 +136,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): void
+	public function getUserListURL($action = '', $xhtml = true)
 	{
 	}
 
@@ -149,7 +149,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true): void
+	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
 	{
 	}
 
@@ -161,7 +161,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(KunenaLayout $view, object $params): void
+	public function showProfile($view, object $params)
 	{
 	}
 
@@ -173,7 +173,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): void
+	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
 	}
 }

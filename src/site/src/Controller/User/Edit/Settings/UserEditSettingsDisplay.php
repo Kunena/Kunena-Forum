@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\User\Edit;
+namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 
 defined('_JEXEC') or die();
 
@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use StdClass;
 use function defined;
 
@@ -26,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerEditSettingsDisplay extends ComponentUserControllerEditDisplay
+class UserEditSettingsDisplay extends UserEditDisplay
 {
 	/**
 	 * @var     object
@@ -39,7 +40,6 @@ class ComponentUserControllerEditSettingsDisplay extends ComponentUserController
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Settings';
-	private $headerText;
 
 	/**
 	 * Prepare Kunena user settings.

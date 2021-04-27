@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use function defined;
 
 /**
@@ -27,21 +28,13 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerEditProfileDisplay extends KunenaControllerDisplay
+class UserEditProfileDisplay extends UserEditDisplay
 {
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'User/Edit/Profile';
-	private $headerText;
-	private $profile;
-	/**
-	 * @var array
-	 * @since version
-	 */
-	private $genders;
-	private $birthdate;
 
 	/**
 	 * Prepare profile form items.

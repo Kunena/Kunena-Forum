@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use function defined;
 
 /**
@@ -31,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerEditAvatarDisplay extends KunenaControllerDisplay
+class UserEditAvatarDisplay extends UserEditDisplay
 {
 	/**
 	 * @var     string

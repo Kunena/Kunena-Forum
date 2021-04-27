@@ -31,28 +31,25 @@ use function defined;
 class WidgetStatisticsDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Widget/Statistics';
-
-	/**
 	 * @var     object
 	 * @since   Kunena 6.0
 	 */
 	public $config;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $latestMemberLink;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $statisticsUrl;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Widget/Statistics';
 
 	/**
 	 * Prepare statistics box display.

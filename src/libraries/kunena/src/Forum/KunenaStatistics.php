@@ -467,7 +467,8 @@ class KunenaStatistics
 	 */
 	public function loadTopTopics($limit = 0): array
 	{
-		$limit = $limit ? $limit : $this->_config->popSubjectCount;
+		$limit           = $limit ? $limit : $this->_config->popSubjectCount;
+		$this->topTopics = [];
 
 		if ($this->topTopics < $limit)
 		{

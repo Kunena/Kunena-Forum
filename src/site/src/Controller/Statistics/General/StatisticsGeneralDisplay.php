@@ -31,14 +31,14 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDisplay
+class StatisticsGeneralDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Statistics/General';
-	private $lastUserId;
+	public $name = 'Statistics/General';
+	public $lastUserId;
 
 	/**
 	 * Prepare general statistics display.
@@ -78,8 +78,8 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 		$statistics->loadAll();
 		$this->setProperties($statistics);
 
-		$latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
-		$userlistUrl      = KunenaFactory::getProfile()->getUserListUrl();
+		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink(null, null, '');
+		$this->userlistUrl      = KunenaFactory::getProfile()->getUserListUrl();
 	}
 
 	/**
@@ -91,9 +91,9 @@ class ComponentStatisticsControllerGeneralDisplay extends KunenaControllerDispla
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
-		$menu_item = $this->app->getMenu()->getActive();
+		$menu_item       = $this->app->getMenu()->getActive();
 		$componentParams = ComponentHelper::getParams('com_config');
 		$robots          = $componentParams->get('robots');
 

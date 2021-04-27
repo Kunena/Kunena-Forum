@@ -33,7 +33,7 @@ class HtmlView extends BaseHtmlView
 	 * @var \stdClass
 	 * @since version
 	 */
-	private $config;
+	public $config;
 
 	/**
 	 * @internal param null $tpl
@@ -55,7 +55,6 @@ class HtmlView extends BaseHtmlView
 
 		$kunenaStats = KunenaStatistics::getInstance();
 		$kunenaStats->loadAll(true);
-		$kunenaStats1 = $kunenaStats;
 
 		return parent::display($tpl);
 	}

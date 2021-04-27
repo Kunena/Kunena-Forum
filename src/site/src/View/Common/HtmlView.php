@@ -467,13 +467,12 @@ class HtmlView extends KunenaView
 		$kunenaStats = KunenaStatistics::getInstance();
 		$kunenaStats->loadGeneral();
 
-		$kunenaStats1     = $kunenaStats;
-		$latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
-		$statisticsLink   = $this->getStatsLink($this->config->boardTitle . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
-		$usercountLink    = $this->getUserlistLink('', $this->memberCount);
-		$userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
-		$moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
+		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
+		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$this->statisticsLink   = $this->getStatsLink($this->config->boardTitle . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
+		$this->usercountLink    = $this->getUserlistLink('', $this->memberCount);
+		$this->userlistLink     = $this->getUserlistLink('', Text::_('COM_KUNENA_STAT_USERLIST') . ' &raquo;');
+		$this->moreLink         = $this->getStatsLink(Text::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') . ' &raquo;');
 
 		$result = $this->loadTemplateFile($tpl);
 

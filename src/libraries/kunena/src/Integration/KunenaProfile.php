@@ -115,7 +115,7 @@ class KunenaProfile
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getStatisticsURL($action = '', $xhtml = true): bool
+	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();

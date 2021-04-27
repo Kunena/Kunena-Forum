@@ -83,39 +83,39 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 30);
 
-		$template      = KunenaFactory::getTemplate();
+		$this->template      = KunenaFactory::getTemplate();
 		$this->me      = KunenaUserHelper::getMyself();
 		$this->profile = KunenaUserHelper::get($userid);
-		$moreUri       = null;
+		$this->moreUri       = null;
 
 		$embedded = $this->getOptions()->get('embedded', false);
 
 		if ($embedded)
 		{
-			$moreUri = new Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
-			$moreUri->setVar('Itemid', KunenaRoute::getItemID($moreUri));
+			$this->moreUri = new Uri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
 		$finder = new KunenaFinder;
 		$finder->where('userid', '=', $userid);
 
-		$total      = $finder->count();
-		$pagination = new KunenaPagination($total, $start, $limit);
+		$this->total      = $finder->count();
+		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile)
 		{
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		if ($moreUri)
+		if ($this->moreUri)
 		{
-			$pagination->setUri($moreUri);
+			$this->pagination->setUri($this->moreUri);
 		}
 
 		$this->attachments = $finder
 			->order('id', -1)
-			->start($pagination->limitstart)
-			->limit($pagination->limit)
+			->start($this->pagination->limitstart)
+			->limit($this->pagination->limit)
 			->find();
 
 		// Pre-load messages.

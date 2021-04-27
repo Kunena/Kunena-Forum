@@ -42,7 +42,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	 *
 	 * @throws  Exception|void
 	 */
-	public function find(): array
+	public function find()
 	{
 		if ($this->skip)
 		{

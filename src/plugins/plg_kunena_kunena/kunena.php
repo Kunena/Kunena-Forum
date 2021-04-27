@@ -50,12 +50,12 @@ class PlgKunenaKunena extends CMSPlugin
 	 */
 	public function onKunenaGetAvatar()
 	{
-		/*if (!$this->params->get('avatar', 1))
+		if (!$this->params->get('avatar', 1))
 		{
 			return false;
 		}
 
-		return new KunenaAvatar;*/
+		return new KunenaAvatar;
 	}
 
 	/**
@@ -65,11 +65,11 @@ class PlgKunenaKunena extends CMSPlugin
 	 */
 	public function onKunenaGetProfile()
 	{
-		/*if (!$this->params->get('profile', 1))
+		if (!$this->params->get('profile', 1))
 		{
 			return false;
 		}
 
-		return new KunenaProfile;*/
+		return new KunenaProfile;
 	}
 }

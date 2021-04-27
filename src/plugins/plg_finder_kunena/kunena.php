@@ -10,11 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Joomla\Plugin\Finder\Kunena;
-
 defined('_JEXEC') or die('');
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Component\ComponentHelper;
@@ -23,7 +20,7 @@ use Joomla\Component\Finder\Administrator\Indexer\Indexer;
 use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\Forum\Forum;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
@@ -351,7 +348,7 @@ class plgFinderKunena extends Adapter
 		}
 
 		// Check if Kunena has been installed.
-		if (!class_exists('KunenaForum') || !Forum::isCompatible('4.0') || !Forum::installed())
+		if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.0') || !KunenaForum::installed())
 		{
 			return false;
 		}

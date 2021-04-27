@@ -136,7 +136,7 @@ class Router extends RouterView
 		$segments = [];
 
 		// If Kunena Forum isn't installed or SEF is not enabled, do nothing
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed() || !KunenaConfig::getInstance()->sef)
+		if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.0') || !KunenaForum::installed() || !KunenaConfig::getInstance()->sef)
 		{
 			return $segments;
 		}
@@ -383,7 +383,7 @@ class Router extends RouterView
 	public function parse(&$segments)
 	{
 		// If Kunena Forum isn't installed do nothing
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
+		if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.0') || !KunenaForum::installed())
 		{
 			return [];
 		}

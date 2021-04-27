@@ -10,15 +10,11 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
-
 defined('_JEXEC') or die('Unauthorized Access');
 
 use EasySocialPlugins;
-use Exception;
 use Joomla\CMS\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use function defined;
 
 $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
 
@@ -50,7 +46,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	public function __construct(object $subject, object $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed()))
+		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::installed()))
 		{
 			return true;
 		}

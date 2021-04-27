@@ -171,7 +171,7 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 */
-	public static function &prepareContent(string &$content, $target = 'body'): string
+	public static function &prepareContent(&$content, $target = 'body')
 	{
 		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
 		$events       = (int) $config->get('jcontentevents', false);

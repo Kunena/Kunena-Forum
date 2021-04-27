@@ -2722,7 +2722,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 */
-	public function canDoCaptcha(): bool
+	public function canDoCaptcha()
 	{
 		$config = KunenaFactory::getConfig();
 

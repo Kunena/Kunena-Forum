@@ -88,15 +88,15 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->me  = KunenaUserHelper::getMyself();
-		$ktemplate = KunenaFactory::getTemplate();
+		$this->me        = KunenaUserHelper::getMyself();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Get sections to display.
-		$catid       = $this->input->getInt('catid', 0);
-		$view        = $this->input->getInt('view');
-		$Itemid      = $this->input->getInt('Itemid');
-		$defaultmenu = $this->input->getInt('defaultmenu');
-		$layout      = $this->input->getInt('layout');
+		$catid        = $this->input->getInt('catid', 0);
+		$view         = $this->input->getInt('view');
+		$Itemid       = $this->input->getInt('Itemid');
+		$defaultmenu  = $this->input->getInt('defaultmenu');
+		$this->layout = $this->input->getInt('layout');
 
 		if (!$Itemid && $this->config->sefRedirect)
 		{
@@ -156,10 +156,10 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 		return;
 		}*/
 
-		$options      = [];
-		$options []   = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-		$catParams    = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('select.genericlist', $catParams, 'catid', 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $options);
+		$options            = [];
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+		$catParams          = ['sections' => 1, 'catid' => 0];
+		$this->categorylist = HTMLHelper::_('select.genericlist', $catParams, 'catid', 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $options);
 
 		if ($catid)
 		{

@@ -191,7 +191,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		];
 
 		$this->selectcatlist = HTMLHelper::_(
-			'kunenaforum.categorylist', 'catid', $catid, $options, $catParams,
+			'select.genericlist', 'catid', $catid, $options, $catParams,
 			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';

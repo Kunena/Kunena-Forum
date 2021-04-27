@@ -501,7 +501,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function getNewCount($count = null): int
+	public function getNewCount($count = null)
 	{
 		if ($count !== null)
 		{
@@ -796,7 +796,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function authoriseRead(KunenaUser $user): KunenaExceptionAuthorise
+	protected function authoriseRead(KunenaUser $user)
 	{
 		static $catids = false;
 

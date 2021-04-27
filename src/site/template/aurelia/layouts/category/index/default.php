@@ -28,7 +28,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 // Display time it took to create the entire page in the footer.
-$kunena_profiler = KunenaProfiler::instance('Kunena');
+$kunena_profiler = KunenaProfiler::instance();
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 

@@ -10,15 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Kunena;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
-use function defined;
 
 /**
  * Class PlgKunenaKunena
@@ -36,7 +33,7 @@ class PlgKunenaKunena extends CMSPlugin
 	public function __construct(object $subject, array $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0')))
+		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0')))
 		{
 			return;
 		}
@@ -51,14 +48,14 @@ class PlgKunenaKunena extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar(): KunenaAvatar
+	public function onKunenaGetAvatar()
 	{
-		if (!$this->params->get('avatar', 1))
+		/*if (!$this->params->get('avatar', 1))
 		{
 			return false;
 		}
 
-		return new KunenaAvatar;
+		return new KunenaAvatar;*/
 	}
 
 	/**
@@ -66,13 +63,13 @@ class PlgKunenaKunena extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile(): KunenaProfile
+	public function onKunenaGetProfile()
 	{
-		if (!$this->params->get('profile', 1))
+		/*if (!$this->params->get('profile', 1))
 		{
 			return false;
 		}
 
-		return new KunenaProfile;
+		return new KunenaProfile;*/
 	}
 }

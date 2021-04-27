@@ -9,9 +9,6 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
-
-namespace Kunena\Forum\Plugin\Kunena\Joomla;
-
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Access\Access;
@@ -25,14 +22,13 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use StdClass;
-use function defined;
 
 /**
  * Kunena Access Control for Joomla 2.5+
  *
  * @since   Kunena 6.0
  */
-class AccessJoomla
+class KunenaAccessJoomla
 {
 	/**
 	 * @var     null

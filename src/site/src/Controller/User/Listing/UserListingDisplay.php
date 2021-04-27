@@ -90,7 +90,7 @@ class UserListingDisplay extends KunenaControllerDisplay
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$model = new UserModel([], $this->input);
+		$model = new UserModel([], null);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $model->getState();
 

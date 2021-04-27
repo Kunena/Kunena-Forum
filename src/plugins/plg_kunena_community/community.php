@@ -11,16 +11,12 @@
  * @link             https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use function defined;
 
 /**
  * Class plgKunenaCommunity
@@ -40,7 +36,7 @@ class plgKunenaCommunity extends CMSPlugin
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
+		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::installed()))
 		{
 			return;
 		}

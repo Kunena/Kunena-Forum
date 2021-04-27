@@ -21,7 +21,6 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use StdClass;
 
 /**
  * Kunena Access Control for Joomla 2.5+

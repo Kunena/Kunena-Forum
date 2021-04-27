@@ -98,7 +98,7 @@ class TopicListingUserDisplay extends ListDisplay
 			$hold = '0';
 		}
 
-		$user = KunenaUserHelper::get($state->get('user'));
+		$this->user = KunenaUserHelper::get($state->get('user'));
 
 		// Get categories for the filter.
 		$categoryIds = $state->get('list.categories');
@@ -116,20 +116,20 @@ class TopicListingUserDisplay extends ListDisplay
 		{
 			case 'posted' :
 				$finder
-					->filterByUser($user, 'posted')
+				->filterByUser($this->user, 'posted')
 					->order('last_post_id', -1, 'ut');
 				break;
 
 			case 'started' :
-				$finder->filterByUser($user, 'owner');
+			    $finder->filterByUser($this->user, 'owner');
 				break;
 
 			case 'favorites' :
-				$finder->filterByUser($user, 'favorited');
+			    $finder->filterByUser($this->user, 'favorited');
 				break;
 
 			case 'subscriptions' :
-				$finder->filterByUser($user, 'subscribed');
+			    $finder->filterByUser($this->user, 'subscribed');
 				break;
 
 			case 'plugin':
@@ -140,7 +140,7 @@ class TopicListingUserDisplay extends ListDisplay
 
 			default :
 				$finder
-					->filterByUser($user, 'involved')
+				->filterByUser($this->user, 'involved')
 					->order('favorite', -1, 'ut');
 				break;
 		}

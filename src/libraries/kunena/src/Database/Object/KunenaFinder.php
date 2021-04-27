@@ -222,7 +222,7 @@ abstract class KunenaFinder
 	 *
 	 * @throws  Exception
 	 */
-	public function find(): array
+	public function find()
 	{
 		if ($this->skip)
 		{

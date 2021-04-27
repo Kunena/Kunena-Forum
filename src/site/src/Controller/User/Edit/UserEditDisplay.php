@@ -10,52 +10,51 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\User\Edit\User;
+namespace Kunena\Forum\Site\Controller\User\Edit;
 
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
+use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use StdClass;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 /**
- * Class ComponentUserControllerEditUserDisplay
+ * Class ComponentUserControllerEditDisplay
  *
  * @since   Kunena 4.0
  */
-class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
+class UserEditDisplay extends KunenaControllerDisplay
 {
 	/**
-	 * @var     boolean
+	 * @var     User
 	 * @since   Kunena 6.0
 	 */
-	public $changeUsername;
+	public $user;
 
+	/**
+	 * @var     KunenaUser
+	 * @since   Kunena 6.0
+	 */
+	public $profile;
+	public $headerText;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $frontendForm;
+	protected $name = 'User/Edit';
 
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit/User';
-	private $headerText;
-	private $user;
-
-	/**
-	 * Load user form.
+	 * Prepare user for editing.
 	 *
 	 * @return  void
+	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
@@ -64,32 +63,21 @@ class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$userParams = ComponentHelper::getParams('com_users');
+		// If profile integration is disabled, this view doesn't exist.
+		$integration = KunenaFactory::getProfile();
 
-		// Check if user is allowed to change his name.
-		$this->changeUsername = $userParams->get('change_login_name', 1);
-
-		// Check to see if Frontend User Params have been enabled.
-		if ($userParams->get('frontend_userparams', 0))
+		if (get_class($integration) == 'KunenaProfileNone')
 		{
-			Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
-
-			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
-			Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
-
-			PluginHelper::importPlugin('user');
-
-			$registry     = new Registry($this->user->params);
-			$form         = Form::getInstance('com_users.profile', 'frontend');
-			$data         = new StdClass;
-			$data->params = $registry->toArray();
-			Factory::getApplication()->triggerEvent('onContentPrepareForm', [$form, $data]);
-
-			$form->bind($data);
-			$this->frontendForm = $form->getFieldset('params');
+			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
 
-		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
+		$userid = $this->input->getInt('userid');
+
+		$this->user    = Factory::getUser($userid);
+		$this->profile = KunenaUserHelper::get($userid);
+		$this->profile->tryAuthorise('edit');
+
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 	}
 
 	/**
@@ -101,7 +89,7 @@ class ComponentUserControllerEditUserDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

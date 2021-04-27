@@ -102,7 +102,7 @@ class UserController extends FormController
 	 *
 	 * @throws Exception
 	 */
-	protected function saveInternal(string $type): void
+	protected function saveInternal(string $type)
 	{
 		$newView      = $this->app->input->getString('newView');
 		$newRank      = $this->app->input->getString('newRank');

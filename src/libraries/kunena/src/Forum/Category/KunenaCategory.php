@@ -1965,7 +1965,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	protected function saveInternal(): bool
+	protected function saveInternal()
 	{
 		// Reorder categories
 		$table = $this->getTable();

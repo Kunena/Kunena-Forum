@@ -128,10 +128,15 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws Exception
 	 */
-	public function load(int $id): bool
+	public function load($id)
 	{
 		// Create the table object
 		$table = $this->getTable();
+
+		if (!$id || \is_array($id) || !$table->load($id))
+		{
+			return false;
+		}
 
 		// Load the KunenaTable object based on id
 		$this->_exists = $table->load($id);
@@ -148,7 +153,7 @@ class KunenaPoll extends CMSObject
 	 * @param   string  $type    Polls table name to be used.
 	 * @param   string  $prefix  Polls table prefix to be used.
 	 *
-	 * @return  boolean|Table
+	 * @return  Table
 	 *
 	 * @since   Kunena 6.0
 	 */

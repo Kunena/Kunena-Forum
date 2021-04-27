@@ -306,7 +306,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function saveInternal(): bool
+	protected function saveInternal()
 	{
 		return true;
 	}

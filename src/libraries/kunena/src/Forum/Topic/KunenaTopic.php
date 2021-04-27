@@ -2267,7 +2267,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function getPoll(): KunenaPoll
+	public function getPoll()
 	{
 		$poll           = KunenaPollHelper::get($this->poll_id);
 		$poll->threadid = $this->id;

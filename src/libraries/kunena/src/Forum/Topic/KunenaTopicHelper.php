@@ -50,7 +50,7 @@ abstract class KunenaTopicHelper
 	 *
 	 * @throws  Exception
 	 */
-	public static function get($identifier = null, $reload = false): KunenaTopic
+	public static function get($identifier = null, $reload = false)
 	{
 		if ($identifier instanceof KunenaTopic)
 		{

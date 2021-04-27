@@ -215,7 +215,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 */
-	protected function saveInternal(): void
+	protected function saveInternal()
 	{
 		if (!is_null($this->_attachments))
 		{

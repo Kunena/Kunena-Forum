@@ -393,7 +393,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function saveInternal(): bool
+	protected function saveInternal()
 	{
 		$cache = Factory::getCache('com_kunena', 'output');
 		$cache->remove('announcement', 'global');

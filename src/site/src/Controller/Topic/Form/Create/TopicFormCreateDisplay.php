@@ -153,12 +153,12 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$captchaEnabled = true;
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaEnabled = true;
 		}
 		else
 		{
-			$captchaEnabled = false;
+			$this->captchaEnabled = false;
 		}
 
 		if (!$this->topic->category_id)

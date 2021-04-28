@@ -64,20 +64,20 @@ class MessageListingRecentDisplay extends ListDisplay
 	{
 		parent::before();
 
-		$model = new TopicsModel([]);
-		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $model->getState();
-		$me          = KunenaUserHelper::getMyself();
-		$moreUri     = null;
+		$this->model = new TopicsModel([]);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state = $this->model->getState();
+		$this->me          = KunenaUserHelper::getMyself();
+		$this->moreUri     = null;
 
-		$embedded = $this->getOptions()->get('embedded', false);
+		$this->embedded = $this->getOptions()->get('embedded', false);
 
-		if ($embedded)
+		if ($this->embedded)
 		{
-			$moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+			$this->moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
 				. '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
-			$moreUri->setVar('Itemid', KunenaRoute::getItemID($moreUri));
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
 		$start = $this->state->get('list.start');
@@ -211,9 +211,9 @@ class MessageListingRecentDisplay extends ListDisplay
 			}
 		}
 
-		if ($moreUri)
+		if ($this->moreUri)
 		{
-			$this->pagination->setUri($moreUri);
+			$this->pagination->setUri($this->moreUri);
 		}
 
 		$this->messages = $finder
@@ -230,7 +230,7 @@ class MessageListingRecentDisplay extends ListDisplay
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
 
-		$topics = KunenaTopicHelper::getTopics($topicIds, 'none');
+		$this->topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = [];
 
@@ -240,7 +240,7 @@ class MessageListingRecentDisplay extends ListDisplay
 			$mesIds[(int) $message->id]      = (int) $message->id;
 		}
 
-		if ($topics)
+		if ($this->topics)
 		{
 			$this->prepareTopics($userIds, $mesIds);
 		}

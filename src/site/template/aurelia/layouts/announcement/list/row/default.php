@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use function defined;
 
 $row          = $this->row;
@@ -30,10 +31,8 @@ $announcement = $this->announcement;
 
     <td class="nowrap">
         <div class="overflow">
-			<?php echo HTMLHelper::_(
-				'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-				null, 'follow'
-			); ?>
+			<?php echo KunenaForum::link($announcement->getUri(), $announcement->displayField('title'),
+				null, 'follow'); ?>
         </div>
     </td>
 

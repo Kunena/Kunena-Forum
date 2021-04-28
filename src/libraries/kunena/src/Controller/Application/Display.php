@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -437,12 +438,11 @@ class Display extends KunenaControllerDisplay
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
 		$credits      = '<div style="text-align:center;">';
-		/*$credits      .= HTMLHelper::_(
-			'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
+		$credits      .= KunenaForum::link('index.php?option=com_kunena&view=credits',
 			Text::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			['style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;']
-		);*/
-		$credits .= ' <a href="https://www.kunena.org"
+		);
+		$credits      .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline !important; visibility: visible !important; text-decoration: none !important;">'
 			. Text::_('COM_KUNENA') . '</a>';
 

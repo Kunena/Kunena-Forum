@@ -32,7 +32,7 @@ use function defined;
  *
  * @property int    $user_id
  * @property int    $topic_id
- * @property int    $categoryId
+ * @property int    $category_id
  * @property int    $posts
  * @property int    $last_post_id
  * @property int    $owner

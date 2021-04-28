@@ -18,11 +18,11 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
@@ -81,7 +81,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$db     = Factory::getDbo();
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", ];
+			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ",];
 		list($total, $topics) = KunenaTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
@@ -104,8 +104,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$options = [];
 		$params  = ['sections' => 0, 'catid' => 0];
 
-		return HTMLHelper::_(
-			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
+		return KunenaForum::categorylist('targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
 			'value', 'text', $this->category->id, 'kmod_categories'
 		);
 	}

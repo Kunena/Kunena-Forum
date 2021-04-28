@@ -925,15 +925,15 @@ class KunenaCategory extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'name':
-				return KunenaParser::parseText($this->name, '', 'category_name');
+				return KunenaParser::parseText((string) $this->name, '', 'category_name');
 			case 'icon':
-				return KunenaParser::parseText($this->name, '', 'category_icon');
+				return KunenaParser::parseText((string) $this->name, '', 'category_icon');
 			case 'description':
-				return KunenaParser::parseBBCode($this->$field, '', '', '', 'category_description');
+				return KunenaParser::parseBBCode((string) $this->$field, '', '', '', 'category_description');
 			case 'topictemplate':
-				return KunenaParser::parseBBCode($this->$field, '', '', '', 'category_topictemplate');
+				return KunenaParser::parseBBCode((string) $this->$field, '', '', '', 'category_topictemplate');
 			case 'headerdesc':
-				return KunenaParser::parseBBCode($this->$field, '', '', '', 'category_headerdesc');
+				return KunenaParser::parseBBCode((string) $this->$field, '', '', '', 'category_headerdesc');
 		}
 
 		return '';

@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message;
+use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
@@ -48,7 +48,6 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
-	private $headerText;
 	private $topic;
 	private $me;
 	/**
@@ -122,12 +121,12 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
-			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$captchaEnabled = true;
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaEnabled = true;
 		}
 		else
 		{
-			$captchaEnabled = false;
+			$this->captchaEnabled = false;
 		}
 
 		$parent->tryAuthorise('reply');
@@ -150,22 +149,22 @@ class ComponentTopicControllerFormReplyDisplay extends KunenaControllerDisplay
 		// Can user edit topic icons?
 		if ($this->config->topicIcons && $this->topic->isAuthorised('edit'))
 		{
-			$topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$this->topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
-		$action = 'post';
+		$this->action = 'post';
 
-		$privateMessage       = new KunenaMessage;
+		$privateMessage       = new KunenaPrivateMessage;
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$allowedExtensions = KunenaAttachmentHelper::getExtensions($category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($category);
 
-		$postAnonymous       = $saved ? $saved['anonymous'] : !empty($category->postAnonymous);
-		$subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($category->postAnonymous);
+		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$canSubscribe = $this->canSubscribe();
+		$this->canSubscribe = $this->canSubscribe();
 	}
 
 	/**

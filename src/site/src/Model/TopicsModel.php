@@ -265,7 +265,7 @@ class TopicsModel extends KunenaModel
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
 
-		$latestCategory    = $this->getState('list.categories');
+		$latestCategory   = $this->getState('list.categories');
 		$latestCategoryIn = $this->getState('list.categories.in');
 
 		$started       = false;
@@ -307,7 +307,7 @@ class TopicsModel extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions, ];
+			'subscribed' => $subscriptions,];
 
 		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
@@ -342,7 +342,7 @@ class TopicsModel extends KunenaModel
 			$time = Factory::getDate()->toUnix() - ($time * 3600);
 		}
 
-		$latestCategory    = $this->getState('list.categories');
+		$latestCategory   = $this->getState('list.categories');
 		$latestCategoryIn = $this->getState('list.categories.in');
 
 		$hold     = 0;
@@ -402,7 +402,7 @@ class TopicsModel extends KunenaModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where, ];
+			'where'     => $where,];
 
 		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
@@ -583,7 +583,7 @@ class TopicsModel extends KunenaModel
 	 * Method to auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.
-	 * 
+	 *
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *
@@ -637,7 +637,7 @@ class TopicsModel extends KunenaModel
 
 		if ($catid)
 		{
-			$latestCategory    = [$catid];
+			$latestCategory   = [$catid];
 			$latestCategoryIn = true;
 
 			// Check if the category is in excluded list
@@ -647,7 +647,7 @@ class TopicsModel extends KunenaModel
 
 				if (in_array($catid, $cat_excluded))
 				{
-					$latestCategory    = $this->config->rssExcludedCategories;
+					$latestCategory   = $this->config->rssExcludedCategories;
 					$latestCategoryIn = 0;
 					$this->setState('list.categories.exclude', 1);
 				}
@@ -658,7 +658,7 @@ class TopicsModel extends KunenaModel
 			if (Factory::getApplication()->getDocument()->getType() != 'feed')
 			{
 				// Get configuration from menu item.
-				$latestCategory    = $params->get('topics_categories', '');
+				$latestCategory   = $params->get('topics_categories', '');
 				$latestCategoryIn = $params->get('topics_catselection', '');
 
 				// Make sure that category list is an array.
@@ -683,12 +683,12 @@ class TopicsModel extends KunenaModel
 				// Use RSS configuration.
 				if (!empty($this->config->rssExcludedCategories))
 				{
-					$latestCategory    = $this->config->rssExcludedCategories;
+					$latestCategory   = $this->config->rssExcludedCategories;
 					$latestCategoryIn = 0;
 				}
 				else
 				{
-					$latestCategory    = $this->config->rssIncludedCategories;
+					$latestCategory   = $this->config->rssIncludedCategories;
 					$latestCategoryIn = 1;
 				}
 			}

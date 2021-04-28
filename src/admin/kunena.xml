@@ -18,13 +18,11 @@
         </sql>
     </install>
     <files folder="site">
-        <filename>jomsocial_rule.xml</filename>
-        <filename>kunena.php</filename>
-        <folder>controller</folder>
         <folder>language</folder>
-        <folder>layout</folder>
         <folder>src</folder>
         <folder>template</folder>
+        <folder>tmpl</folder>
+        <filename>jomsocial_rule.xml</filename>
     </files>
     <administration>
         <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA
@@ -45,17 +43,17 @@
             <menu view="trash">COM_KUNENA_TRASH_MANAGER</menu>
         </submenu>
         <files>
-            <filename>kunena.xml</filename>
-            <filename>access.xml</filename>
-            <filename>config.xml</filename>
             <folder>api</folder>
             <folder>forms</folder>
             <folder>language</folder>
             <folder>media</folder>
             <folder>services</folder>
-            <folder>src</folder>
             <folder>sql</folder>
+            <folder>src</folder>
             <folder>tmpl</folder>
+            <filename>kunena.xml</filename>
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
         </files>
     </administration>
 </extension>

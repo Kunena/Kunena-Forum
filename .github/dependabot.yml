@@ -42,6 +42,7 @@ updates:
   target-branch: K6.0
   labels:
   - "6.0"
+  - dependencies
   ignore:
   - dependency-name: friendsofphp/php-cs-fixer
     versions:

@@ -95,8 +95,8 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function displayPurge(): void
 	{
-		$purgeItems    = $this->get('PurgeItems');
-		$md5Calculated = $this->get('Md5');
+		$this->purgeItems    = $this->get('PurgeItems');
+		$this->md5Calculated = $this->get('Md5');
 
 		$this->setToolBarPurge();
 		$this->display();

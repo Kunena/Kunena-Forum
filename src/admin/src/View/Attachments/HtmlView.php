@@ -40,12 +40,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$items            = $this->get('Items');
+		$this->items      = $this->get('Items');
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
-		$sortFields          = $this->getSortFields();
-		$sortDirectionFields = $this->getSortDirectionFields();
+		$this->sortFields          = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))

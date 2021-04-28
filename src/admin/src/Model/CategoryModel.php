@@ -74,7 +74,7 @@ class CategoryModel extends CategoriesModel
 
 				try
 				{
-					$sections = $db->loadObjectList();
+					$this->sections = $db->loadObjectList();
 				}
 				catch (RuntimeException $e)
 				{

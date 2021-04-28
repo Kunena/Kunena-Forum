@@ -34,9 +34,10 @@ $config         = KunenaFactory::getTemplate()->params;
 	<?php if ($config->get('displayDropdownMenu'))
 		:
 		?>
-        <ul class="nav float-right">
+        <ul class="nav nav-tabs float-right">
             <li class="dropdown mobile-user">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">
 					<?php
 					$showOnlineStatus = $this->me->showOnline == 1;
 

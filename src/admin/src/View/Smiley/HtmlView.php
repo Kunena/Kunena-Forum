@@ -46,10 +46,10 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setLayout('edit');
 
-		$state          = $this->get('state');
-		$smileySelected = $this->get('smiley');
-		$smileyPath     = $this->ktemplate->getSmileyPath();
-		$listSmileys    = $this->get('SmileysPaths');
+		$this->state          = $this->get('state');
+		$this->smileySelected = $this->get('smiley');
+		$this->smileyPath     = $this->ktemplate->getSmileyPath();
+		$this->listSmileys    = $this->get('SmileysPaths');
 
 		$this->addToolbar();
 

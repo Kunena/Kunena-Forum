@@ -177,8 +177,8 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($layout == 'uninstall')
 		{
-			$login        = KunenaLogin::getInstance();
-			$isTFAEnabled = $login->isTFAEnabled();
+			$login              = KunenaLogin::getInstance();
+			$this->isTFAEnabled = $login->isTFAEnabled();
 
 			$this->setToolBarUninstall();
 		}

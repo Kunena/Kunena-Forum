@@ -41,10 +41,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function displayDefault($tpl = null)
 	{
-		$state      = $this->get('state');
-		$group      = $state->get('group');
-		$items      = $this->get('items');
-		$pagination = $this->get('Pagination');
+		$state            = $this->get('state');
+		$this->group      = $state->get('group');
+		$this->items      = $this->get('items');
+		$this->pagination = $this->get('Pagination');
 
 		$document = Factory::getApplication()->getDocument();
 		$document->setTitle(Text::_('Forum Labels'));
@@ -64,7 +64,7 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar(): void
 	{
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance();
+		$this->bar = Toolbar::getInstance();
 
 		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_LABELS_MANAGER'));

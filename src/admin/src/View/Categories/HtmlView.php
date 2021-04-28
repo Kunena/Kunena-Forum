@@ -107,7 +107,7 @@ class HtmlView extends BaseHtmlView
 	protected function setToolBarEdit()
 	{
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance();
+		$this->bar = Toolbar::getInstance();
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
@@ -141,7 +141,7 @@ class HtmlView extends BaseHtmlView
 		$this->categories      = $this->get('AdminCategories');
 		$this->pagination      = $this->get('AdminNavigation');
 		$this->state           = $this->get('State');
-		$pagesTotal            = 100;
+		$this->pagesTotal      = 100;
 		$this->batchCategories = $this->get('BatchCategories');
 
 		// Preprocess the list of items to find ordering divisions.
@@ -152,8 +152,8 @@ class HtmlView extends BaseHtmlView
 			$ordering[$item->parentid][] = $item->id;
 		}
 
-		$sortFields          = $this->getSortFields();
-		$sortDirectionFields = $this->getSortDirectionFields();
+		$this->sortFields          = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -161,8 +161,8 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		$user = Factory::getApplication()->getIdentity();
-		$me   = KunenaUserHelper::getMyself();
+		$this->user = Factory::getApplication()->getIdentity();
+		$this->me   = KunenaUserHelper::getMyself();
 
 		$this->filter              = new \stdClass;
 		$this->filter->Item        = $this->escape($this->state->get('item.id'));

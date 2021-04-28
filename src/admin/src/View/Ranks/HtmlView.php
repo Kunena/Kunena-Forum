@@ -80,8 +80,8 @@ class HtmlView extends BaseHtmlView
 		$this->pagination = $this->get('Pagination');
 		$this->ktemplate  = KunenaTemplate::getInstance();
 
-		$sortFields          = $this->getSortFields();
-		$sortDirectionFields = $this->getSortDirectionFields();
+		$this->sortFields          = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->filter               = new \stdClass;
 		$this->filter->Search       = $this->escape($this->state->get('filter.search'));

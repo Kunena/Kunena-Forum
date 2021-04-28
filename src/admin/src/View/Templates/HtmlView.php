@@ -163,9 +163,9 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setToolBarEdit();
 
-		$form               = $this->get('Form');
-		$params             = $this->get('editparams');
-		$details            = $this->get('templatedetails');
+		$this->form         = $this->get('Form');
+		$this->params       = $this->get('editparams');
+		$this->details      = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState('kunena.edit.templatename');
 		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
@@ -263,8 +263,8 @@ class HtmlView extends BaseHtmlView
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
 
-		$less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
-		$this->ftp = $this->get('FTPcredentials');
+		$this->less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
+		$this->ftp       = $this->get('FTPcredentials');
 		$this->display();
 	}
 
@@ -346,7 +346,7 @@ class HtmlView extends BaseHtmlView
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editCss.filename');
 		$this->content      = $this->get('FileContentParsed');
-		$cssPath            = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
+		$this->cssPath      = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}

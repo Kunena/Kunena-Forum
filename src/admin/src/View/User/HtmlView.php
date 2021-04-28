@@ -121,8 +121,8 @@ class HtmlView extends BaseHtmlView
 	public function displayMove(): void
 	{
 		$this->setToolBarMove();
-		$catsList = $this->get('moveCatsList');
-		$users    = $this->get('moveUser');
+		$this->catsList = $this->get('moveCatsList');
+		$this->users    = $this->get('moveUser');
 		$this->display();
 	}
 
@@ -153,10 +153,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->user    = $this->get('user');
-		$this->sub     = $this->get('subscriptions');
-		$subsCatsList  = $this->get('catSubscriptions');
-		$this->ipslist = $this->get('IPlist');
+		$this->user         = $this->get('user');
+		$this->sub          = $this->get('subscriptions');
+		$this->subsCatsList = $this->get('catSubscriptions');
+		$this->ipslist      = $this->get('IPlist');
 
 		$avatarIntegration = KunenaFactory::getAvatarIntegration();
 		$this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $this->user->avatar;

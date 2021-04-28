@@ -162,8 +162,8 @@ class HtmlView extends BaseHtmlView
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
-		$sortFields          = $this->getSortFields();
-		$sortDirectionFields = $this->getSortDirectionFields();
+		$this->sortFields          = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->user = Factory::getApplication()->getIdentity();
 

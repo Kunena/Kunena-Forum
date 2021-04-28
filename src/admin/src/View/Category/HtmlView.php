@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
 		$this->category = $this->get('AdminCategory');
 
 		// Get the toolbar object instance
-		$bar = Toolbar::getInstance();
+		$this->bar = Toolbar::getInstance();
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		ToolbarHelper::spacer();
@@ -130,8 +130,8 @@ class HtmlView extends BaseHtmlView
 			return;
 		}
 
-		$options    = $this->get('AdminOptions');
-		$moderators = $this->get('AdminModerators');
+		$this->options    = $this->get('AdminOptions');
+		$this->moderators = $this->get('AdminModerators');
 
 		$this->addToolbar();
 

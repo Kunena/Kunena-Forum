@@ -293,7 +293,7 @@ class KunenaAccess
 		{
 			if (method_exists($access, 'getAccessOptions'))
 			{
-				$list += $access->getAccessOptions(null, $category);
+				$list += $access->getAccessOptions('', $category);
 			}
 		}
 

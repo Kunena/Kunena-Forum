@@ -48,10 +48,10 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->setLayout('edit');
 
-		$state        = $this->get('state');
-		$rankSelected = $this->get('rank');
-		$rankPath     = $this->ktemplate->getRankPath();
-		$listRanks    = $this->get('RanksPaths');
+		$this->state        = $this->get('state');
+		$this->rankSelected = $this->get('rank');
+		$this->rankPath     = $this->ktemplate->getRankPath();
+		$this->listRanks    = $this->get('RanksPaths');
 
 		$this->addToolbar();
 

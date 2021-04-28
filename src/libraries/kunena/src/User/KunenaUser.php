@@ -2098,7 +2098,7 @@ class KunenaUser extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function isBanned(): bool
+	public function isBanned()
 	{
 		if (!$this->banned)
 		{

@@ -381,8 +381,8 @@ class HtmlView extends KunenaView
 
 			if ($type == 'default')
 			{
-				$headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
-				$title1     = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
+				$this->headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
+				$this->title1     = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 
 				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
 				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
@@ -656,39 +656,39 @@ class HtmlView extends KunenaView
 			}
 
 			// TODO: add context (options) to caching
-			$cache      = Factory::getCache('com_kunena', 'output');
-			$cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
-			$cachegroup = 'com_kunena.messages';
+			$this->cache      = Factory::getCache('com_kunena', 'output');
+			$this->cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
+			$this->cachegroup = 'com_kunena.messages';
 
 			// FIXME: enable caching after fixing the issues
-			$contents = false; // $cache->get($cachekey, $cachegroup);
+			$contents = false; // $this->cache->get($cachekey, $cachegroup);
 
 			if (!$contents)
 			{
-				$userkarma = "{$userkarma_title} {$userkarma_minus} {$userkarma_plus}";
+				$this->userkarma = "{$userkarma_title} {$userkarma_minus} {$userkarma_plus}";
 
 				// Use kunena profile
 				if ($this->config->showUserStats)
 				{
-					$userrankimage       = $this->profile->getRank($this->topic->category_id, 'image');
-					$userranktitle       = $this->profile->getRank($this->topic->category_id, 'title');
-					$userposts           = $this->profile->posts;
+					$this->userrankimage = $this->profile->getRank($this->topic->category_id, 'image');
+					$this->userranktitle = $this->profile->getRank($this->topic->category_id, 'title');
+					$this->userposts     = $this->profile->posts;
 					$activityIntegration = KunenaFactory::getActivityIntegration();
-					$userthankyou        = $this->profile->thankyou;
-					$userpoints          = $activityIntegration->getUserPoints($this->profile->userid);
-					$usermedals          = $activityIntegration->getUserMedals($this->profile->userid);
+					$this->userthankyou  = $this->profile->thankyou;
+					$this->userpoints    = $activityIntegration->getUserPoints($this->profile->userid);
+					$this->usermedals    = $activityIntegration->getUserMedals($this->profile->userid);
 				}
 				else
 				{
-					$userrankimage = null;
-					$userranktitle = null;
-					$userposts     = null;
-					$userthankyou  = null;
-					$userpoints    = null;
-					$usermedals    = null;
+					$this->userrankimage = null;
+					$this->userranktitle = null;
+					$this->userposts     = null;
+					$this->userthankyou  = null;
+					$this->userpoints    = null;
+					$this->usermedals    = null;
 				}
 
-				$personalText = KunenaParser::parseText($this->profile->personalText);
+				$this->personalText = KunenaParser::parseText($this->profile->personalText);
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
 
@@ -858,7 +858,7 @@ class HtmlView extends KunenaView
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new CMSObject;
-		$message_closed       = null;
+		$this->message_closed = null;
 
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
@@ -870,7 +870,7 @@ class HtmlView extends KunenaView
 		elseif (!$this->me->isModerator($this->topic->getCategory()))
 		{
 			// User is not allowed to write a post
-			$message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : Text::_('COM_KUNENA_VIEW_DISABLED'));
+			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : Text::_('COM_KUNENA_VIEW_DISABLED'));
 		}
 
 		// Thank you
@@ -999,9 +999,9 @@ class HtmlView extends KunenaView
 		}
 
 		// Thank you info and buttons
-		$thankyou       = [];
-		$total_thankyou = 0;
-		$more_thankyou  = 0;
+		$thankyou             = [];
+		$this->total_thankyou = 0;
+		$this->more_thankyou  = 0;
 
 		if (isset($message->thankyou))
 		{
@@ -1011,11 +1011,11 @@ class HtmlView extends KunenaView
 
 				if (count($message->thankyou) > $this->config->thankYouMax)
 				{
-					$more_thankyou = count($message->thankyou) - $this->config->thankYouMax;
+					$this->more_thankyou = count($message->thankyou) - $this->config->thankYouMax;
 				}
 
-				$total_thankyou = count($message->thankyou);
-				$thankyous      = array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
+				$this->total_thankyou = count($message->thankyou);
+				$thankyous            = array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
 
 				if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
@@ -1035,7 +1035,7 @@ class HtmlView extends KunenaView
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
-				$thankyou_delete = '';
+				$this->thankyou_delete = '';
 
 				foreach ($loaded_users as $userid => $user)
 				{
@@ -1047,28 +1047,28 @@ class HtmlView extends KunenaView
 		}
 
 		// TODO: add context (options, template) to caching
-		$cache      = Factory::getCache(
+		$this->cache      = Factory::getCache(
 			'com_kunena', 'output'
 		);
-		$cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
-		$cachegroup = 'com_kunena.messages';
+		$this->cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
+		$this->cachegroup = 'com_kunena.messages';
 
 		if ($this->config->reportMsg && $this->me->exists())
 		{
 			if (!$this->config->userReport && $this->me->userid == $this->message->userid && !$this->me->isModerator())
 			{
-				$reportMessageLink = null;
+				$this->reportMessageLink = null;
 			}
 			else
 			{
-				$reportMessageLink = HTMLHelper::_('link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), Text::_('COM_KUNENA_REPORT'), Text::_('COM_KUNENA_REPORT'));
+				$this->reportMessageLink = HTMLHelper::_('link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), Text::_('COM_KUNENA_REPORT'), Text::_('COM_KUNENA_REPORT'));
 			}
 		}
 
 		// Get number of attachments to display error messages
-		$attachs = $this->message->getNbAttachments();
+		$this->attachs = $this->message->getNbAttachments();
 
-		$contents = false; // $cache->get($cachekey, $cachegroup);
+		$contents = false; // $this->cache->get($cachekey, $cachegroup);
 
 		if (!$contents)
 		{
@@ -1079,21 +1079,21 @@ class HtmlView extends KunenaView
 				{
 					if (!empty($this->message->ip))
 					{
-						$ipLink = '<a href="https://www.geoiptool.de/en/?ip=' . $this->message->ip . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+						$this->ipLink = '<a href="https://www.geoiptool.de/en/?ip=' . $this->message->ip . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 					}
 					else
 					{
-						$ipLink = '&nbsp;';
+						$this->ipLink = '&nbsp;';
 					}
 				}
 				else
 				{
-					$ipLink = null;
+					$this->ipLink = null;
 				}
 			}
 
-			$signatureHtml     = KunenaParser::parseBBCode($this->profile->signature, null, $this->config->maxSig);
-			$this->attachments = $this->message->getAttachments();
+			$this->signatureHtml = KunenaParser::parseBBCode($this->profile->signature, null, $this->config->maxSig);
+			$this->attachments   = $this->message->getAttachments();
 
 			// Link to individual message
 			if ($this->config->orderingSystem == 'replyid')
@@ -1107,26 +1107,26 @@ class HtmlView extends KunenaView
 
 			if ($this->message->hold == 0)
 			{
-				$class = 'kmsg';
+				$this->class = 'kmsg';
 			}
 			elseif ($this->message->hold == 1)
 			{
-				$class = 'kmsg kunapproved';
+				$this->class = 'kmsg kunapproved';
 			}
 			else
 			{
 				if ($this->message->hold == 2 || $this->message->hold == 3)
 				{
-					$class = 'kmsg kdeleted';
+					$this->class = 'kmsg kdeleted';
 				}
 			}
 
 			// New post suffix for class
-			$msgsuffix = '';
+			$this->msgsuffix = '';
 
 			if ($this->message->isNew())
 			{
-				$msgsuffix = '-new';
+				$this->msgsuffix = '-new';
 			}
 
 			$contents = (string) $this->loadTemplateFile($template);
@@ -1183,9 +1183,9 @@ class HtmlView extends KunenaView
 			return;
 		}
 
-		$history      = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, $ordering = 'DESC');
-		$historycount = count($history);
-		$replycount   = $this->topic->getReplies();
+		$history            = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, $ordering = 'DESC');
+		$this->historycount = count($history);
+		$this->replycount   = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($history);
 		$userlist = [];
 
@@ -1417,7 +1417,7 @@ class HtmlView extends KunenaView
 			$selected = $saved['catid'];
 		}
 
-		$selectcatlist = HTMLHelper::_('select.list', 'catid', $this->catid, $options, $catParams, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = HTMLHelper::_('select.list', 'catid', $this->catid, $options, $catParams, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 
@@ -1579,7 +1579,7 @@ class HtmlView extends KunenaView
 
 		$this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
-		$modified_reason            = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
+		$this->modified_reason      = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);

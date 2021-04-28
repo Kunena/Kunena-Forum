@@ -61,13 +61,12 @@ abstract class ListDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
-
+	public $topic;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/List';
-	private $topic;
 
 	/**
 	 * Prepare topics by pre-loading needed information.
@@ -86,6 +85,11 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		// Collect user Ids for avatar prefetch when integrated.
 		$lastIds = [];
 
+		if (!$this->topics)
+		{
+			return;
+		}
+
 		foreach ($this->topics as $topic)
 		{
 			$userIds[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
@@ -99,10 +103,10 @@ abstract class ListDisplay extends KunenaControllerDisplay
 			KunenaUserHelper::loadUsers($userIds);
 		}
 
-		$topicIds = array_keys($this->topics);
+		$topicIds = array_keys((array) $this->topics);
 		KunenaTopicHelper::getUserTopics($topicIds);
 
-		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics);
+		$mesIds += KunenaTopicHelper::fetchNewStatus((array) $this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...
@@ -117,8 +121,8 @@ abstract class ListDisplay extends KunenaControllerDisplay
 			KunenaMessageHelper::loadLocation($mesIds);
 		}
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = Factory::getCache('com_kunena', 'output');
+		$this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$this->cache   = Factory::getCache('com_kunena', 'output');
 
 		/*
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -129,8 +133,8 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		$options    = [];
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		// Todo: fix params
-		$catParams    = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$this->catParams    = ['sections' => 1, 'catid' => 0];
+		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Run events.
 		$params = new Registry;

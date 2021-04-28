@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Tables;
 
 use Exception;
 use InvalidArgumentException;
+use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
@@ -46,26 +47,26 @@ abstract class KunenaTable extends Table
 	 *
 	 * @throws  Exception
 	 */
-	public function load($keys = null, $reset = true): bool
+	public function load($keys = null, $reset = true)
 	{
-		// Implement JObservableInterface: Pre-processing by observers
-		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers))
-		{
-			$this->_observers->update('onBeforeLoad', [$keys, $reset]);
-		}
-
-		// Workaround Joomla 3.2 change.
-		// TODO: remove check when we're only supporting J!3.5+.
-		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+		// Pre-processing by observers
+		$event = AbstractEvent::create(
+			'onTableBeforeLoad',
+			[
+				'subject'	=> $this,
+				'keys'		=> $keys,
+				'reset'		=> $reset,
+			]
+		);
+		$this->getDispatcher()->dispatch('onTableBeforeLoad', $event);
 
 		if (empty($keys))
 		{
 			$empty = true;
-			$keys  = [];
+			$keys  = array();
 
 			// If empty, use the value of the current key
-			foreach ($tbl_keys as $key)
+			foreach ($this->_tbl_keys as $key)
 			{
 				$empty      = $empty && empty($this->$key);
 				$keys[$key] = $this->$key;
@@ -74,25 +75,27 @@ abstract class KunenaTable extends Table
 			// If empty primary key there's is no need to load anything
 			if ($empty)
 			{
-				return false;
+				return true;
 			}
 		}
-		elseif (!is_array($keys))
+		elseif (!\is_array($keys))
 		{
 			// Load by primary key.
-			$keyCount = count($tbl_keys);
+			$keyCount = \count($this->_tbl_keys);
 
-			if (!$keyCount)
+			if ($keyCount)
 			{
-				throw new RuntimeException('No table keys defined.');
-			}
+				if ($keyCount > 1)
+				{
+					throw new \InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
+				}
 
-			if ($keyCount > 1)
+				$keys = array($this->getKeyName() => $keys);
+			}
+			else
 			{
-				throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
+				throw new \RuntimeException('No table keys defined.');
 			}
-
-			$keys = [$this->getKeyName() => $keys];
 		}
 
 		if ($reset)
@@ -100,63 +103,50 @@ abstract class KunenaTable extends Table
 			$this->reset();
 		}
 
-		try
+		// Initialise the query.
+		$query = $this->_db->getQuery(true)
+			->select('*')
+			->from($this->_tbl);
+		$fields = array_keys($this->getProperties());
+
+		foreach ($keys as $field => $value)
 		{
-			$this->_db->transactionStart();
-
-			// Initialise the query.
-			$query  = $this->_db->getQuery(true)
-				->select('*')
-				->from($this->_db->quoteName($this->_tbl));
-			$fields = array_keys($this->getProperties());
-
-			foreach ($keys as $field => $value)
+			// Check that $field is in the table.
+			if (!\in_array($field, $fields))
 			{
-				// Check that $field is in the table.
-				if (!in_array($field, $fields))
-				{
-					throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
-				}
-
-				// Add the search tuple to the query.
-				$query->Where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
+				throw new \UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
 			}
 
-			$this->_db->setQuery($query);
-
-			$row = $this->_db->loadAssoc();
-
-			$this->_db->transactionCommit();
-		}
-		catch (Exception $e)
-		{
-			// Catch any database errors.
-			$this->_db->transactionRollback();
-
-			KunenaError::displayDatabaseError($e);
-
-			return false;
+			// Add the search tuple to the query.
+			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
+		$this->_db->setQuery($query);
+
+		$row = $this->_db->loadAssoc();
+
+		// Check that we have a result.
 		if (empty($row))
 		{
-			// Check that we have a result.
 			$result = false;
 		}
 		else
 		{
 			// Bind the object with the row and return.
-			$result = $this->_exists = $this->bind($row);
+			$result = $this->bind($row);
 		}
 
-		// Implement JObservableInterface: Post-processing by observers
-		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers))
-		{
-			$this->_observers->update('onAfterLoad', [&$result, $row]);
-		}
+		// Post-processing by observers
+		$event = AbstractEvent::create(
+			'onTableAfterLoad',
+			[
+				'subject'		=> $this,
+				'result'		=> &$result,
+				'row'			=> $row,
+			]
+		);
+		$this->getDispatcher()->dispatch('onTableAfterLoad', $event);
 
-		// Bind the object with the row and return.
 		return $result;
 	}
 

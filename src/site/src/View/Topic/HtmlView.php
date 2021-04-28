@@ -253,6 +253,8 @@ class HtmlView extends KunenaView
 
 			$message = KunenaMessageHelper::get($mesid);
 
+			$this->message = $message;
+
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
 			{
@@ -302,15 +304,15 @@ class HtmlView extends KunenaView
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
-		$moderators      = $this->get('Moderators');
-		$this->usertopic = $this->topic->getUserTopic();
+		$this->moderators = $this->get('Moderators');
+		$this->usertopic  = $this->topic->getUserTopic();
 
-		$pagination = $this->getPagination(5);
+		$this->pagination = $this->getPagination(5);
 
 		// Mark topic read
 		$this->topic->hit();
 
-		$keywords = $this->topic->getKeywords(false, ', ');
+		$this->keywords = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');
 

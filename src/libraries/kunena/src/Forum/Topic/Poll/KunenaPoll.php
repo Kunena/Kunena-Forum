@@ -41,60 +41,52 @@ use function defined;
  */
 class KunenaPoll extends CMSObject
 {
+	public $id;
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
-
 	/**
 	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_total = null;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $options = false;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $newOptions = false;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $usercount = false;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $users = false;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $myvotes = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $mytime = [];
-
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0

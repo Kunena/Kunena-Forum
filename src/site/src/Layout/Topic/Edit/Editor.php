@@ -15,11 +15,7 @@ namespace Kunena\Forum\Site\Layout\Topic\Edit;
 defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -43,47 +39,6 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 * @since   Kunena 6.0
 	 */
 	public $ktemplate;
-
-	/**
-	 * Get geshi code types.
-	 *
-	 * @return  array|null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getCodeTypes()
-	{
-		if (!$this->config->highlightCode)
-		{
-			return false;
-		}
-
-		$paths = [
-			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi',
-		];
-
-		foreach ($paths as $path)
-		{
-			if (!is_dir($path))
-			{
-				continue;
-			}
-
-			$files     = Folder::files($path, ".php");
-			$options   = [];
-			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_EDITOR_CODE_TYPE'));
-
-			foreach ($files as $file)
-			{
-				$options[] = HTMLHelper::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
-			}
-
-			return HTMLHelper::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
-		}
-
-		return false;
-	}
 
 	/**
 	 * Define javascript variables to show or disable some bbcode buttons

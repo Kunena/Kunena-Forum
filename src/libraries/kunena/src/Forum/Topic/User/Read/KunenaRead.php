@@ -27,7 +27,7 @@ use function defined;
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
  *
  * @property int $topic_id
- * @property int $categoryId
+ * @property int $category_id
  * @property int $message_id
  * @property int $time
  * @property int $user_id

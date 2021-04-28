@@ -168,34 +168,6 @@ $settings         = $templatesettings->get('wysibb');
         </div>
     </div>
 </div>
-<?php $codeTypes = $this->getCodeTypes();
-
-if (!empty($codeTypes))
-	:
-	?>
-    <div id="modal-code" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
-                </div>
-                <div class="modal-body">
-                    <p>
-						<?php echo $codeTypes; ?>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button id="code-modal-submit"
-                            class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
-                    <button class="btn btn-outline-primary border" data-dismiss="modal"
-                            aria-hidden="true"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
 <div id="modal-picture" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-dialog" role="document">

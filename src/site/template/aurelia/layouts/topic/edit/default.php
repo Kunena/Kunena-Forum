@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -22,6 +23,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -95,7 +97,6 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 $this->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 
-HTMLHelper::_('jquery.ui');
 $this->addScript('load-image.min.js');
 $this->addScript('canvas-to-blob.min.js');
 $this->addScript('jquery.fileupload.js');
@@ -122,11 +123,18 @@ $this->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
 
 $suffix = CMSApplication::getInstance('site')->get('sef_suffix');
 $this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
+$app   = Factory::getApplication();
+$input = $app->input;
 
+$mesid           = $input->getInt('mesid');
+$this->message   = KunenaMessageHelper::get($mesid);
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
-$me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+
+$me          = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$this->me    = $me;
+$this->topic = $this->message->getTopic();
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollEnabled)

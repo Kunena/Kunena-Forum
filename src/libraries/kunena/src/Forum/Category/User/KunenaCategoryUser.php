@@ -33,7 +33,7 @@ use function defined;
  * @property int    $subscribed
  * @property string $params
  * @property int    $user_id
- * @property int    $categoryId
+ * @property int    $category_id
  * @since   Kunena 6.0
  *
  */

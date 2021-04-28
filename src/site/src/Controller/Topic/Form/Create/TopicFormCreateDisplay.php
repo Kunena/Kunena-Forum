@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -43,6 +44,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 */
 	public $captchaHtml = null;
 	public $headerText;
+	public $subscribed;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -167,18 +169,18 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
-		$options  = [];
-		$selected = $this->topic->category_id;
+		$options        = [];
+		$this->selected = $this->topic->category_id;
 
 		if ($this->config->pickupCategory)
 		{
-			$options[] = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected  = '';
+			$options[]      = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
+			$this->selected = '';
 		}
 
 		if ($saved)
 		{
-			$selected = $saved['catid'];
+			$this->selected = $saved['catid'];
 		}
 
 		$catParams = [
@@ -190,9 +192,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			'action'      => 'topic.create',
 		];
 
-		$this->selectcatlist = HTMLHelper::_(
-			'select.genericlist', 'catid', $catid, $options, $catParams,
-			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = KunenaForum::categorylist('catid', $catid, $options, $catParams,
+			'class="form-control inputbox required"', 'value', 'text', $this->selected, 'postcatid');
 
 		$this->action = 'post';
 

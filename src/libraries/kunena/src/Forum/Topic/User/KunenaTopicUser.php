@@ -77,11 +77,6 @@ class KunenaTopicUser extends CMSObject
 		// Create the table object
 		$table = $this->getTable();
 
-		if (!$table->load($topic))
-		{
-			return false;
-		}
-
 		// Lets bind the data
 		$this->setProperties($table->getProperties());
 		$this->_exists     = false;

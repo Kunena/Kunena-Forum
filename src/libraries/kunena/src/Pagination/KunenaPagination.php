@@ -151,7 +151,7 @@ class KunenaPagination
 	 *
 	 * @since   1.5
 	 */
-	public function __construct(int $total, int $limitstart, int $limit, $prefix = '')
+	public function __construct(int $total, $limitstart, int $limit, $prefix = '')
 	{
 		// Value/type checking.
 		$this->total      = (int) $total;

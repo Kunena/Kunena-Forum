@@ -1583,16 +1583,10 @@ HTML;
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src'): StdClass
 	{
+		
 		if (isset($src->icons))
 		{
-			$icon = $src->xpath('/kunena-topicIcons/icons/icon[@id=' . $id . ']');
-
-			if (!$icon)
-			{
-				$icon = $src->xpath('/kunena-topicIcons/icons/icon[@id=0]');
-			}
-
-			$attributes = $icon[0]->attributes();
+			$attributes = $src->icons->icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
 			$icon->name = (string) $attributes->name;

@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Credits;
+namespace Kunena\Forum\Site\Controller\Credits\Display;
 
 defined('_JEXEC') or die();
 
@@ -29,7 +29,7 @@ use function defined;
  *
  * @since  4.0
  */
-class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
+class CreditsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -133,7 +133,7 @@ class ComponentCreditsControllerDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

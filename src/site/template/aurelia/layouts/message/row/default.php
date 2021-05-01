@@ -35,7 +35,7 @@ $config          = KunenaFactory::getConfig();
 $avatar          = $config->avatarOnCategory ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 $cols            = empty($this->checkbox) ? 5 : 6;
 $txt             = $topic->getActions();
-$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3);
+$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3); 
 
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">

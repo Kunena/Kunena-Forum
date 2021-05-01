@@ -46,13 +46,18 @@ use function defined;
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCode.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLibrary.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLexer.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/Debugger.php';
+
 /**
- * @see     Nbbc\BBCode;
+ * @see     \Nbbc\BBCode;
  * Class KunenaBbcode
  *
  * @since   6.0
  */
-class KunenaBBCode extends BBCode
+class KunenaBBCode extends \Nbbc\BBCode
 {
 	/**
 	 * @var     integer
@@ -176,7 +181,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function SetSmileyURL(string $param): void
+	public function SetSmileyURL($path)
 	{
 	}
 
@@ -189,7 +194,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function SetDetectURLs(bool $true): void
+	public function SetDetectURLs($enable = true)
 	{
 	}
 
@@ -215,7 +220,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function SetURLTarget(string $string): void
+	public function SetURLTarget($enable)
 	{
 	}
 
@@ -233,6 +238,7 @@ class KunenaBBCode extends BBCode
 	public static function getInstance($relative = true): KunenaBBCode
 	{
 		static $instance = false;
+
 
 		if (!isset($instance[intval($relative)]))
 		{
@@ -466,7 +472,7 @@ class KunenaBBCode extends BBCode
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function IsValidEmail(string $email): string
+	public function IsValidEmail($email)
 	{
 	}
 
@@ -632,7 +638,7 @@ class KunenaBBCode extends BBCode
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function IsValidURL(string $string, $email_too = true, $local_too = false)
+	public function IsValidURL($string, $email_too = true, $local_too = false)
 	{
 		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
 
@@ -669,7 +675,7 @@ class KunenaBBCode extends BBCode
 	 * @return  string|void
 	 * @since   Kunena 6.0
 	 */
-	public function FillTemplate(array $url_pattern, ?bool $params): string
+	public function FillTemplate($template, $insert_array, $default_array = [])
 	{
 	}
 }

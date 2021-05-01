@@ -428,7 +428,7 @@ class KunenaLayout extends KunenaBase
 	 * @throws Exception
 	 * @throws null
 	 */
-	public function getLastPostLink(KunenaCategory $category, string $content, string $title, string $class, int $length = 30, bool $follow = true, bool $canonical = false): string
+	public function getLastPostLink(KunenaCategory $category, $content, $title, $class, $length = 30, $follow = true, $canonical = false)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels  = $category->getChannels();

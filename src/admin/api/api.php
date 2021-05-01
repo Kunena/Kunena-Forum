@@ -54,6 +54,10 @@ define('KPATH_ADMIN', JPATH_ADMINISTRATOR . '/' . KPATH_COMPONENT_RELATIVE);
  *
  */
 define('KPATH_MEDIA', JPATH_ROOT . '/media/' . KUNENA_NAME);
+/**
+ *
+ */
+define('KPATH_FRAMEWORK', JPATH_ROOT . '/libraries/kunena');
 
 // URLs
 /**

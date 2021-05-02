@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use function defined;
@@ -45,6 +44,24 @@ class AnnouncementController extends KunenaController
 	{
 		// FIXME: This is workaround for task=none on edit.
 		$this->edit();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 */
+	public function edit()
+	{
+		$cid = $this->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid, []);
+
+		$announcement = KunenaAnnouncementHelper::get(array_pop($cid));
+
+		$this->setRedirect($announcement->getUrl('edit', false));
 	}
 
 	/**
@@ -191,24 +208,6 @@ class AnnouncementController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function edit()
-	{
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
-
-		$announcement = KunenaAnnouncementHelper::get(array_pop($cid));
-
-		$this->setRedirect($announcement->getUrl('edit', false));
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
 	public function delete()
 	{
 		if (!Session::checkToken('request'))
@@ -251,7 +250,9 @@ class AnnouncementController extends KunenaController
 			{
 				if ($this->config->logModeration)
 				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, ['id' => $announcement->id]);
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE,
+						['id' => $announcement->id]
+					);
 				}
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
@@ -336,7 +337,9 @@ class AnnouncementController extends KunenaController
 
 		if ($this->config->logModeration)
 		{
-			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]);
+			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
+				KunenaLog::LOG_ANNOUNCEMENT_CREATE, ['id' => $announcement->id]
+			);
 		}
 
 		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

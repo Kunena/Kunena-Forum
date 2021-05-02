@@ -15,7 +15,6 @@ namespace Kunena\Forum\Site\Layout\Announcement;
 defined('_JEXEC') or die;
 
 use Exception;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;

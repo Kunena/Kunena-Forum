@@ -49,6 +49,8 @@ use RuntimeException;
 use stdClass;
 use function defined;
 
+require_once JPATH_PLUGINS . '/kunena/kunena/profile.php';
+
 /**
  * Kunena User Controller
  *
@@ -86,7 +88,7 @@ class UserController extends KunenaController
 			$profileIntegration = KunenaFactory::getProfile();
 			$layout             = $this->app->input->getCmd('layout', 'default');
 
-			if ($profileIntegration instanceof Profile)
+			if ($profileIntegration instanceof KunenaProfileKunena)
 			{
 				// Continue
 			}
@@ -1313,7 +1315,8 @@ class UserController extends KunenaController
 		$success = [];
 		$kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin()
+			|| KunenaUserHelper::getMyself()->isModerator())
 		{
 			$this->deleteOldAvatars();
 

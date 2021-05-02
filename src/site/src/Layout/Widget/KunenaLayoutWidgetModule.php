@@ -14,10 +14,9 @@ namespace Kunena\Forum\Site\Layout\Widget;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Exception;
+use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
  * KunenaLayoutWidgetModule

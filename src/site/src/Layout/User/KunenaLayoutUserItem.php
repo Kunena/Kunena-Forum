@@ -21,7 +21,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -172,14 +171,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
-
-				'userid'           => $this->profile->userid,
-				'mode'             => 'favorites',
-				'sel'              => -1,
-				'limit'            => 10,
-				'filter_order'     => 'time',
-				'limitstart'       => 0,
-				'filter_order_Dir' => 'desc',
+				'userid'              => $this->profile->userid,
+				'mode'                => 'favorites',
+				'sel'                 => -1,
+				'limit'               => 10,
+				'filter_order'        => 'time',
+				'limitstart'          => 0,
+				'filter_order_Dir'    => 'desc',
 			];
 
 			$tab               = new stdClass;
@@ -214,14 +212,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
-
-				'userid'           => $this->profile->userid,
-				'mode'             => 'thankyou',
-				'sel'              => -1,
-				'limit'            => 10,
-				'filter_order'     => 'time',
-				'limitstart'       => 0,
-				'filter_order_Dir' => 'desc',
+				'userid'              => $this->profile->userid,
+				'mode'                => 'thankyou',
+				'sel'                 => -1,
+				'limit'               => 10,
+				'filter_order'        => 'time',
+				'limitstart'          => 0,
+				'filter_order_Dir'    => 'desc',
 			];
 			$tab->content .= $this->subRequest('Message/Listing/Recent', new Input($params), $params);
 
@@ -235,14 +232,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'embedded'            => 1,
 				'topics_categories'   => 0,
 				'topics_catselection' => 1,
-
-				'userid'           => $this->profile->userid,
-				'mode'             => 'unapproved',
-				'sel'              => -1,
-				'limit'            => 10,
-				'filter_order'     => 'time',
-				'limitstart'       => 0,
-				'filter_order_Dir' => 'desc',
+				'userid'              => $this->profile->userid,
+				'mode'                => 'unapproved',
+				'sel'                 => -1,
+				'limit'               => 10,
+				'filter_order'        => 'time',
+				'limitstart'          => 0,
+				'filter_order_Dir'    => 'desc',
 			];
 			$tab                = new stdClass;
 			$tab->title         = Text::_('COM_KUNENA_MESSAGE_ADMINISTRATION');

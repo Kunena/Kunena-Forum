@@ -35,7 +35,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Site\Controller\Application\Attachment\ComponentKunenaControllerApplicationAttachmentDefaultDisplay;
+use Kunena\Forum\Site\Controller\Application\Attachment\ApplicationAttachmentDefaultDisplay;
 
 // Set base directory. This should usually work even with symbolic linked Kunena.
 /**
@@ -269,7 +269,7 @@ class KunenaApplication extends WebApplication
 
 		$this->input->set('format', 'raw');
 
-		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay;
+		$controller = new ApplicationAttachmentDefaultDisplay;
 		echo $controller->execute();
 	}
 }

@@ -37,7 +37,7 @@ class HomeController extends KunenaController
 	 */
 	public $home = 1;
 
-	protected $default_view = 'kunena\forum\site\controller\display';
+	protected $default_view = 'Kunena\Forum\Site\Controller\Display';
 
 	protected $prefix = 'site';
 

@@ -185,7 +185,8 @@ class TopicController extends KunenaController
 
 		$response = [];
 
-		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin()
+			|| KunenaUserHelper::getMyself()->isModerator())
 		{
 			if ($attach_id > 0)
 			{
@@ -274,7 +275,8 @@ class TopicController extends KunenaController
 		$success   = [];
 		$instance  = KunenaAttachmentHelper::get($attach_id);
 
-		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator())
+		if (KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin()
+			|| KunenaUserHelper::getMyself()->isModerator())
 		{
 			$editor_text = $this->app->input->get->get('editor_text', '', 'raw');
 

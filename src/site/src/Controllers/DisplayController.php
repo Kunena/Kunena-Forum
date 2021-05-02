@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 
@@ -24,7 +23,7 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
  */
 class DisplayController extends KunenaController
 {
-	protected $default_view = 'kunena\forum\site\controller\display';
+	protected $default_view = 'Kunena\Forum\Site\Controller\Display';
 
 	protected $prefix = 'site';
 

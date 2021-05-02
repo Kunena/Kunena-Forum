@@ -406,7 +406,7 @@ class KunenaBan extends parentAlias
 		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName('b.*'))
+		$query->select(array('b.*'))
 			->from($db->quoteName('#__kunena_users_banned', 'b'))
 			->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('b.userid'))
 			->where($db->quoteName('b.expiration') . ' = ' . $nullDate)

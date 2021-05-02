@@ -113,8 +113,7 @@ class HtmlView extends KunenaView
 		$this->topicActions     = $this->get('TopicActions');
 		$this->actionMove       = $this->get('ActionMove');
 		$this->message_ordering = $this->me->getMessageOrdering();
-
-		$this->URL = KunenaRoute::_();
+		$this->URL              = KunenaRoute::_();
 
 		if ($this->embedded)
 		{

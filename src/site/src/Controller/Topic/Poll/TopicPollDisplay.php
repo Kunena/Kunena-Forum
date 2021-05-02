@@ -19,9 +19,9 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
-use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
+class TopicPollDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -160,7 +160,7 @@ class ComponentTopicControllerPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

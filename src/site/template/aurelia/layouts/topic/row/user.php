@@ -90,7 +90,7 @@ if (!empty($this->spacing)) : ?>
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink($topic, 'unread', $this->escape($topic->subject) . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
-					' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, Template::getInstance()->tooltips() . ' topictitle', $category, true, true);
+					' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, true);
 			}
 			else
 			{
@@ -121,7 +121,7 @@ if (!empty($this->spacing)) : ?>
         </div>
 
         <div class="started">
-            <span class="ktopic-category"> <?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory(), null, $this->topic->getCategory()->description, Template::getInstance()->tooltips())) ?></span>
+            <span class="ktopic-category"> <?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory(), null, $this->topic->getCategory()->description, KunenaTemplate::getInstance()->tooltips())) ?></span>
             <br/>
 			<?php if ($config->postDateFormat != 'none') : ?>
 				<?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') ?>

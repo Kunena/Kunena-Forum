@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
+class TopicItemActionsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaTopic
@@ -366,7 +366,7 @@ class ComponentTopicControllerItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(['url'   => KunenaRoute::_($url), 'name' => $name,
-							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
+			                 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

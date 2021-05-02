@@ -83,10 +83,10 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 30);
 
-		$this->template      = KunenaFactory::getTemplate();
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->profile = KunenaUserHelper::get($userid);
-		$this->moreUri       = null;
+		$this->template = KunenaFactory::getTemplate();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->profile  = KunenaUserHelper::get($userid);
+		$this->moreUri  = null;
 
 		$embedded = $this->getOptions()->get('embedded', false);
 
@@ -150,7 +150,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

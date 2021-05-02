@@ -33,9 +33,9 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -51,7 +51,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ItemDisplay extends KunenaControllerDisplay
+class TopicItemDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     KunenaUser
@@ -134,8 +134,8 @@ class ItemDisplay extends KunenaControllerDisplay
 
 		$this->me = KunenaUserHelper::getMyself();
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-		$cache   = Factory::getCache('com_kunena', 'output');
+		$this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$this->cache   = Factory::getCache('com_kunena', 'output');
 
 		/*
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
@@ -147,8 +147,8 @@ class ItemDisplay extends KunenaControllerDisplay
 		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
 		// Todo: fix params
-		$catParams   = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		$this->catParams    = ['sections' => 1, 'catid' => 0];
+		$this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
 		// Load topic and message.
 		if ($mesid)
@@ -276,8 +276,8 @@ class ItemDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		// Get user data, captcha & quick reply.
-		$this->userTopic = $this->topic->getUserTopic();
-		$quickReply      = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickReply;
+		$this->userTopic  = $this->topic->getUserTopic();
+		$this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickReply;
 
 		$this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
@@ -573,7 +573,7 @@ class ItemDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$image = '';
 		$doc   = Factory::getApplication()->getDocument();

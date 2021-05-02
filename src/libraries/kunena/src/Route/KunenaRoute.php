@@ -1117,7 +1117,7 @@ abstract class KunenaRoute
 	 * @throws Exception
 	 * @throws null
 	 */
-	public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true): bool
+	public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true)
 	{
 		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
@@ -1208,7 +1208,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 */
-	public static function getTopicUrl(KunenaTopicAlias $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null): bool
+	public static function getTopicUrl(KunenaTopicAlias $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
 	{
 		if (!$category)
 		{

@@ -34,13 +34,12 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Widget/WhoIsOnline';
-
+	public $usersUrl;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $usersUrl;
+	protected $name = 'Widget/WhoIsOnline';
 
 	/**
 	 * Prepare Who is online display.
@@ -92,7 +91,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
 		}
 
-		$who           .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
 		$this->membersOnline = $who;
 
 		$onlineList = [];
@@ -131,7 +130,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$this->setTitle(Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
 	}

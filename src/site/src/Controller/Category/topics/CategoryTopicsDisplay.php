@@ -39,49 +39,43 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
+class CategoryTopicsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Category/Item';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
 	public $headerText;
-
 	/**
 	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
-
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
-
 	/**
 	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
-
 	/**
 	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
-
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Category/Item';
 
 	/**
 	 * Prepare category display.
@@ -237,7 +231,7 @@ class ComponentCategoryControllerTopicsDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;

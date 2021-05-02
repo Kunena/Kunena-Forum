@@ -1,0 +1,28 @@
+<?php
+/**
+ * Kunena Component
+ *
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
+ *
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+namespace Kunena\Forum\Site\Layout\Topic;
+
+defined('_JEXEC') or die;
+
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use function defined;
+
+/**
+ * KunenaLayoutTopicList
+ *
+ * @since   Kunena 4.0
+ */
+class KunenaLayoutTopicRow extends KunenaLayout
+{
+
+}

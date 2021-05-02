@@ -1295,7 +1295,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function getPermaUrl($category = null, $xhtml = true, $action = null): bool
+	public function getPermaUrl($category = null, $xhtml = true, $action = null)
 	{
 		return $this->getUrl($category, $xhtml, $action);
 	}
@@ -1312,7 +1312,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function getUrl($category = null, $xhtml = true, $action = null): bool
+	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
 		return KunenaRoute::getTopicUrl(
 			$this, $xhtml, $action,

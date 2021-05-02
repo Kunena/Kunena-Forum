@@ -66,9 +66,9 @@ class MessageListingRecentDisplay extends ListDisplay
 
 		$this->model = new TopicsModel([]);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
-		$this->me          = KunenaUserHelper::getMyself();
-		$this->moreUri     = null;
+		$this->state   = $this->model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
@@ -301,7 +301,7 @@ class MessageListingRecentDisplay extends ListDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$page  = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;

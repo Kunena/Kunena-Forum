@@ -16,7 +16,8 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
-$topic = $this->topic;
+$topic          = $this->topic;
+$this->messages = $this->get('Messages');
 
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
@@ -58,13 +59,13 @@ if ($topic->locked)
 ?>
 <div class="kunena-topic-item <?php echo $txt; ?>">
 	<?php if ($this->category->headerdesc) : ?>
-		<div class="alert alert-info shadow-lg rounded">
-			<a class="close" data-dismiss="alert" href="#">&times;</a>
+        <div class="alert alert-info shadow-lg rounded">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
 			<?php echo $this->category->displayField('headerdesc'); ?>
-		</div>
+        </div>
 	<?php endif; ?>
 
-	<h1>
+    <h1>
 		<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
@@ -74,30 +75,30 @@ if ($topic->locked)
 		?>
 		<?php echo $topic->displayField('subject'); ?>
 		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $topic)->set('config', $this->config); ?>
-	</h1>
+    </h1>
 
-	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
-	<div class="float-left">
+    <div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination)
-	->set('display', true); ?>
-	</div>
-	<h2 class="float-right">
+			->set('pagination', $this->pagination)
+			->set('display', true); ?>
+    </div>
+    <h2 class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
-	->set('id', $topic->id)
-	->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
-	->setLayout('topic'); ?>
-	</h2>
+			->set('id', $topic->id)
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
+			->setLayout('topic'); ?>
+    </h2>
 
-	<div class="clearfix"></div>
+    <div class="clearfix"></div>
 
 	<?php if ($social == 1 && $this->me->socialshare != 0 || $social == 1 && !$this->me->exists()) : ?>
-		<div><?php echo $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate); ?></div>
+        <div><?php echo $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate); ?></div>
 	<?php endif; ?>
 
 	<?php if ($social == 2 && $this->me->socialshare != 0 || $social == 2 && !$this->me->exists()) : ?>
-		<div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
+        <div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 	<?php endif; ?>
 
 	<?php
@@ -139,22 +140,22 @@ if ($topic->locked)
 	}
 	?>
 
-	<div class="float-left">
+    <div class="float-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-	->set('pagination', $this->pagination)
-	->set('display', true); ?>
-	</div>
-	<div class="float-right">
+			->set('pagination', $this->pagination)
+			->set('display', true); ?>
+    </div>
+    <div class="float-right">
 		<?php echo $this->subLayout('Widget/Search')
-	->set('id', $topic->id)
-	->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
-	->setLayout('topic'); ?>
-	</div>
+			->set('id', $topic->id)
+			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
+			->setLayout('topic'); ?>
+    </div>
 
-	<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
 	<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
-		<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
+        <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
 	<?php endif; ?>
 
 	<?php
@@ -162,6 +163,6 @@ if ($topic->locked)
 	{
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>
-	<div class="clearfix"></div>
-	<div class="float-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+    <div class="clearfix"></div>
+    <div class="float-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
 </div>

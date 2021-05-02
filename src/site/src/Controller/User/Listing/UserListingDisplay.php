@@ -152,7 +152,7 @@ class UserListingDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): void
+	protected function prepareDocument()
 	{
 		$page      = $this->pagination->pagesCurrent;
 		$pages     = $this->pagination->pagesTotal;

@@ -533,7 +533,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 */
-	public function getUrl($category = null, $xhtml = true): string
+	public function getUrl($category = null, $xhtml = true)
 	{
 		$category = $category ? KunenaCategoryHelper::get($category) : $this;
 
@@ -550,7 +550,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getNewTopicUrl($xhtml = true): ?bool
+	public function getNewTopicUrl($xhtml = true)
 	{
 		if (!$this->getNewTopicCategory()->exists())
 		{

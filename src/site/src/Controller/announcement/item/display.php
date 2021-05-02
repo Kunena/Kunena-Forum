@@ -33,13 +33,12 @@ class ComponentAnnouncementControllerItemDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Announcement/Item';
-
+	public $announcement;
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $announcement;
+	protected $name = 'Announcement/Item';
 
 	/**
 	 * Prepare announcement display.
@@ -79,7 +78,7 @@ class ComponentAnnouncementControllerItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 */
-	protected function prepareDocument(): bool
+	protected function prepareDocument()
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 

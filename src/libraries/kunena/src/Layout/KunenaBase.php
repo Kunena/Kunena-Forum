@@ -764,10 +764,16 @@ class KunenaBase extends KunenaLayoutBase
 
 			// Attempt to load layout class if it doesn't exist.
 			$ex    = explode('/', $path);
+			$subpart = '';
+			if (count($ex) == 3)
+			{
+				$subpart = $ex[1] . '\\';
+			}
+
 			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
 			$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
 
-			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0] . '\\' . $class;
+			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0] . '\\' . $subpart . $class;
 
 			if (class_exists($classnamespaced))
 			{

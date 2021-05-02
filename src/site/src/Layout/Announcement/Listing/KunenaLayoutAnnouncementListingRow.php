@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Announcement\Kunenalist;
+namespace Kunena\Forum\Site\Layout\Announcement\Listing;
 
 defined('_JEXEC') or die;
 
@@ -24,7 +24,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementListRow extends KunenaLayout
+class KunenaLayoutAnnouncementListingRow extends KunenaLayout
 {
 	/**
 	 * @var     KunenaAnnouncement

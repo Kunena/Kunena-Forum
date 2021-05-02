@@ -27,7 +27,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutAnnouncementList extends KunenaLayout
+class KunenaLayoutAnnouncementListing extends KunenaLayout
 {
 	/**
 	 * Method to get moderation action in announcements list

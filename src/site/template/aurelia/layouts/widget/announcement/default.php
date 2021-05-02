@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 		</div>
 		<h5>
 			<a class="btn-link"
-			   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=list'); ?>"
+			   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=listing'); ?>"
 			   title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
 				<?php echo $this->announcement->displayField('title'); ?>
 			</a>

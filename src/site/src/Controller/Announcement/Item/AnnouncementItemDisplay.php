@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Announement\Item;
+namespace Kunena\Forum\Site\Controller\Announcement\Item;
 
 defined('_JEXEC') or die();
 

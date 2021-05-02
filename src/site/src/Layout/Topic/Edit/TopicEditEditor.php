@@ -26,7 +26,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicEditEditor extends KunenaLayout
+class TopicEditEditor extends KunenaLayout
 {
 	/**
 	 * @var     KunenaConfig

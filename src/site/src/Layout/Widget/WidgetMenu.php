@@ -21,6 +21,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetMenu extends KunenaLayout
+class WidgetMenu extends KunenaLayout
 {
 }

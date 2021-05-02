@@ -24,7 +24,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutSearchForm extends KunenaLayout
+class SearchForm extends KunenaLayout
 {
 	/**
 	 * @var     object

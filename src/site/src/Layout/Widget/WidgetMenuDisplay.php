@@ -17,10 +17,10 @@ defined('_JEXEC') or die;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
- * KunenaLayoutWidgetMenuBar
+ * KunenaLayoutWidgetMenuDisplay
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetMenuBar extends KunenaLayout
+class WidgetMenuDisplay extends KunenaLayout
 {
 }

@@ -33,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutUserItem extends KunenaLayout
+class UserItem extends KunenaLayout
 {
 	/**
 	 * @var     KunenaUser

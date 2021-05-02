@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutSearchResults extends KunenaLayout
+class SearchResults extends KunenaLayout
 {
 	/**
 	 * @var     KunenaMessage

@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetModule extends KunenaLayout
+class WidgetModule extends KunenaLayout
 {
 	/**
 	 * @var     null

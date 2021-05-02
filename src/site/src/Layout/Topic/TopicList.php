@@ -24,7 +24,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicList extends KunenaLayout
+class TopicList extends KunenaLayout
 {
 	/**
 	 * Method to return HTML select list for time filter

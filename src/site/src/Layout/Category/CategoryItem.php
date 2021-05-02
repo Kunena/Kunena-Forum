@@ -33,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutCategoryItem extends KunenaLayout
+class CategoryItem extends KunenaLayout
 {
 	/**
 	 * @var     integer
@@ -291,7 +291,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to get the last post link
 	 *
-	 * @see     \Kunena\Forum\Libraries\Layout\Layout::getLastPostLink()
+	 * @see     KunenaLayout::getLastPostLink()
 	 *
 	 * @param   KunenaCategory  $category   The KunenaCategory object
 	 * @param   string          $content    The content of last topic subject

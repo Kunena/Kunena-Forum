@@ -93,6 +93,11 @@ class KunenaViewTopic extends KunenaView
 
 		$channels = $this->category->getChannels();
 
+		$options            = array();
+		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+
 		if ($this->category->id && !$this->category->isAuthorised('read'))
 		{
 			// User is not allowed to see the category
@@ -186,7 +191,7 @@ class KunenaViewTopic extends KunenaView
 
 		$this->_prepareDocument('default');
 
-		$this->render('Topic/Item', $tpl);
+		$this->render('Topic/Item', $tpl, array('topic' => $this->topic, 'category' => $this->category, 'config' => $this->config, 'pagination' => $this->pagination, 'me' => $this->me, 'messages' => $this->messages,'categorylist' => $this->categorylist));
 		$this->topic->markRead();
 	}
 

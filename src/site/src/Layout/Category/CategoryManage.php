@@ -23,7 +23,7 @@ use function defined;
  *
  * @since  K5.1
  */
-class KunenaLayoutCategoryManage extends KunenaLayout
+class CategoryManage extends KunenaLayout
 {
 	/**
 	 * @var     integer

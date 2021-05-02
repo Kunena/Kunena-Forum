@@ -24,7 +24,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutMessageList extends KunenaLayout
+class MessageList extends KunenaLayout
 {
 	/**
 	 * @var     object

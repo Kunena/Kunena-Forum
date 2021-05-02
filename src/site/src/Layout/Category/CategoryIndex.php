@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutCategoryIndex extends KunenaLayout
+class CategoryIndex extends KunenaLayout
 {
 	/**
 	 * @var     object

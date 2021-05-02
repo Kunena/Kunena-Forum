@@ -23,7 +23,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicEditHistory extends KunenaLayout
+class TopicEditHistory extends KunenaLayout
 {
 	/**
 	 * @var     KunenaConfig

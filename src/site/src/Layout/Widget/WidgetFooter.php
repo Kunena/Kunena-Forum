@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetFooter extends KunenaLayout
+class WidgetFooter extends KunenaLayout
 {
 	/**
 	 * Method to get the RSS URL link with image

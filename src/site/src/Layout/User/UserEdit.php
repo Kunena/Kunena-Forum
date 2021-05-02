@@ -30,7 +30,7 @@ use function defined;
  *
  * @since   Kunena 5.1
  */
-class KunenaLayoutUserEdit extends KunenaLayout
+class UserEdit extends KunenaLayout
 {
 	/**
 	 * @var     KunenaUser

@@ -31,7 +31,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutTopicModerate extends KunenaLayout
+class TopicModerate extends KunenaLayout
 {
 	/**
 	 * @var     KunenaMessage

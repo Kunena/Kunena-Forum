@@ -10,17 +10,17 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Widget;
+namespace Kunena\Forum\Site\Layout\Misc;
 
 defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
- * KunenaLayoutWidgetMenuDisplay
+ * KunenaLayoutMiscDisplay
  *
  * @since   Kunena 4.0
  */
-class KunenaLayoutWidgetMenuDisplay extends KunenaLayout
+class MiscDisplay extends KunenaLayout
 {
 }

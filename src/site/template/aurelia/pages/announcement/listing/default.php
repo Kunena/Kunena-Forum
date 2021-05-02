@@ -20,10 +20,10 @@ use function defined;
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-	KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list")
+	KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=listing")
 );
 
-echo $this->subRequest('Announcement/List');
+echo $this->subRequest('Announcement/Listing');
 ?>
 
 <div class="clearfix"></div>

@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Announement\Kunenalist;
+namespace Kunena\Forum\Site\Controller\Announcement\Listing;
 
 defined('_JEXEC') or die();
 
@@ -29,7 +29,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class AnnouncementListDisplay extends KunenaControllerDisplay
+class AnnouncementListingDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var     string
@@ -45,7 +45,7 @@ class AnnouncementListDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Announcement/List';
+	protected $name = 'Announcement/Listing';
 
 	/**
 	 * Prepare announcement list display.

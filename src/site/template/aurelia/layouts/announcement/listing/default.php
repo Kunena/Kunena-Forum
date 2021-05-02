@@ -111,7 +111,7 @@ HTMLHelper::_('behavior.core');
 		<tbody>
 		<?php foreach ($this->announcements as $row => $announcement)
 		{
-			echo $this->subLayout('Announcement/List/Row')
+			echo $this->subLayout('Announcement/Listing/Row')
 				->set('announcement', $announcement)
 				->set('row', $row)
 				->set('checkbox', !empty($options));

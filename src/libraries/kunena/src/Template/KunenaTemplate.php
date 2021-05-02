@@ -1416,37 +1416,37 @@ HTML;
 			if ($topic->ordering)
 			{
 				$topic->icon_id = 504;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topic->locked)
 			{
 				$topic->icon_id = 505;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topic->ordering && $topic->locked)
 			{
 				$topic->icon_id = 503;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topic->hold == 2)
 			{
 				$topic->icon_id = 501;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topic->hold == 3)
 			{
 				$topic->icon_id = 501;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topic->moved_id > 0)
 			{
 				$topic->icon_id = 500;
-				$icon           = $this->get_xml_systemicon($xml, $topic->icon_id, $topicicontype);
+				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
 			if ($topicicontype == 'B2')
@@ -1528,7 +1528,7 @@ HTML;
 			}
 
 			$xml  = simplexml_load_file($xmlfile);
-			$icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
+			$icon = $this->get_xml_icon($xml, $iconid, $topicicontype);
 
 			if ($topicicontype == 'B2')
 			{
@@ -1573,6 +1573,8 @@ HTML;
 	}
 
 	/**
+	 * Return the icon attributes from the XML file given
+	 * 
 	 * @param   mixed   $src    src
 	 * @param   int     $id     id
 	 * @param   string  $style  style
@@ -1583,7 +1585,6 @@ HTML;
 	 */
 	public function get_xml_icon($src, $id = 0, $style = 'src'): StdClass
 	{
-		
 		if (isset($src->icons))
 		{
 			$attributes = $src->icons->icon[0]->attributes();
@@ -1608,7 +1609,8 @@ HTML;
 	 *
 	 * @return  stdClass|void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0.0-Beta4
+	 * @deprecated Kunena 6.0
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src'): StdClass
 	{

@@ -14,12 +14,14 @@ namespace Kunena\Forum\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
+use Kunena\Forum\Site\Service\Html\Kunenagrid;
 
 /**
  * Component class for com_kunena
@@ -46,5 +48,6 @@ class ForumComponent extends MVCComponent implements BootableExtensionInterface,
 	 */
 	public function boot(ContainerInterface $container)
 	{
+		$this->getRegistry()->register('kunenagrid', new Kunenagrid($container->get(SiteApplication::class)));
 	}
 }

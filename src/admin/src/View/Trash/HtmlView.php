@@ -70,7 +70,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	public $filterAuthor;
 
-
 	/**
 	 * Filter active
 	 *

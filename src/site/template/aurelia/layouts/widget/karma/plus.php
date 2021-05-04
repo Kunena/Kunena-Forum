@@ -41,4 +41,4 @@ else
 $karma .= ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaPlusIcon);
 
 echo $karma;
-?>
+

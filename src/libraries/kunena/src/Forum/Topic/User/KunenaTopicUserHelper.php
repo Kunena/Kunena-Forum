@@ -80,7 +80,7 @@ abstract class KunenaTopicUserHelper
 			$topics                                   = self::getTopics($topic, $user);
 			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop($topics);
 		}
-		
+
 		return self::$_instances [$user->userid][$topic];
 	}
 

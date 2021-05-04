@@ -36,11 +36,13 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $announcements;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

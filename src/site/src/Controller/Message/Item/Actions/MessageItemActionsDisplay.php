@@ -44,16 +44,19 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $topic;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $message;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $messageButtons;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -694,7 +697,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
+							 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

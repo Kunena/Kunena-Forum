@@ -116,20 +116,20 @@ class TopicListingUserDisplay extends ListDisplay
 		{
 			case 'posted' :
 				$finder
-				->filterByUser($this->user, 'posted')
+					->filterByUser($this->user, 'posted')
 					->order('last_post_id', -1, 'ut');
 				break;
 
 			case 'started' :
-			    $finder->filterByUser($this->user, 'owner');
+				$finder->filterByUser($this->user, 'owner');
 				break;
 
 			case 'favorites' :
-			    $finder->filterByUser($this->user, 'favorited');
+				$finder->filterByUser($this->user, 'favorited');
 				break;
 
 			case 'subscriptions' :
-			    $finder->filterByUser($this->user, 'subscribed');
+				$finder->filterByUser($this->user, 'subscribed');
 				break;
 
 			case 'plugin':
@@ -140,7 +140,7 @@ class TopicListingUserDisplay extends ListDisplay
 
 			default :
 				$finder
-				->filterByUser($this->user, 'involved')
+					->filterByUser($this->user, 'involved')
 					->order('favorite', -1, 'ut');
 				break;
 		}
@@ -369,6 +369,7 @@ class TopicListingUserDisplay extends ListDisplay
 			$params_robots      = $params->get('robots');
 
 			$title = '';
+
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');

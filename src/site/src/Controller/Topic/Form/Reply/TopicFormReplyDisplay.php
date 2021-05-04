@@ -48,8 +48,11 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
+
 	private $topic;
+
 	private $me;
+
 	/**
 	 * @var mixed
 	 * @since version

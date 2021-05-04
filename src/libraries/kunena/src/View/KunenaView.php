@@ -90,46 +90,55 @@ class KunenaView extends HtmlView
 	 * @since version
 	 */
 	public $common;
+
 	/**
 	 * @var KunenaTemplate
 	 * @since version
 	 */
 	public $ktemplate;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $logo;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $intro;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $memberList;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $thanks;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $inLayout = 0;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_row = 0;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	protected $state;
+
 	/**
 	 * @var KunenaProfiler
 	 * @since version
@@ -494,7 +503,7 @@ class KunenaView extends HtmlView
 	 */
 	public function parse(string $text, int $len, $parent)
 	{
-	    if ($this instanceof ComponentKunenaControllerSearchFormDisplay)
+		if ($this instanceof ComponentKunenaControllerSearchFormDisplay)
 		{
 			$parentinternalObject = $parent;
 		}

@@ -35,16 +35,19 @@ class WidgetStatisticsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $config;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $latestMemberLink;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $statisticsUrl;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

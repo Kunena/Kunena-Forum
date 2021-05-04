@@ -396,6 +396,7 @@ class TopicListingRecentDisplay extends ListDisplay
 			$params_robots      = $params->get('robots');
 
 			$title = '';
+
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');

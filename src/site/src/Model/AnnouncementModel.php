@@ -34,6 +34,7 @@ class AnnouncementModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $total = false;
+
 	private $me;
 
 	/**
@@ -59,7 +60,7 @@ class AnnouncementModel extends ListModel
 	}
 
 	/**
-	 * @return  bool|void
+	 * @return  boolean|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -131,7 +132,7 @@ class AnnouncementModel extends ListModel
 	 * Method to auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.
-	 
+
 	 * @param   null  $ordering
 	 * @param   null  $direction
 	 *

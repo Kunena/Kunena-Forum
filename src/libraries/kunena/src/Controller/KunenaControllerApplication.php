@@ -48,13 +48,13 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 
 		// Define HMVC controller and execute it.
 		$controllerClassNamespaced = 'Kunena\Forum\Site\Controller\Application\\' . ucfirst($view) . '\\' . $subviewfixed . '\\' . ucfirst($task);
-		$controllerDefaultNamespaced = 'Kunena\Forum\Libraries\Controller\Application\\'. ucfirst($task);
+		$controllerDefaultNamespaced = 'Kunena\Forum\Libraries\Controller\Application\\' . ucfirst($task);
 
 		$controller = class_exists($controllerClassNamespaced)
 		? new $controllerClassNamespaced($input, $app, $app->getParams('com_kunena'))
 		: (class_exists($controllerDefaultNamespaced)
-		    ? new $controllerDefaultNamespaced($input, $app, $app->getParams('com_kunena'))
-		    : null);
+			? new $controllerDefaultNamespaced($input, $app, $app->getParams('com_kunena'))
+			: null);
 
 		// Execute HMVC if the controller is present.
 		if ($controller && $controller->exists())
@@ -65,5 +65,5 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 		return;
 	}
 
-	
+
 }

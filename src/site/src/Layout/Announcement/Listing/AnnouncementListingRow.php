@@ -74,7 +74,7 @@ class AnnouncementListingRow extends KunenaLayout
 	 * @param   string  $name  The name of the field
 	 * @param   string  $mode  Define the way to display the date on the field
 	 *
-	 * @return  int|string
+	 * @return  integer|string
 	 *
 	 * @since   Kunena 6.0
 	 *

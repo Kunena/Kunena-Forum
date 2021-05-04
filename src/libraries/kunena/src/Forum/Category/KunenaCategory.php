@@ -285,76 +285,91 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since version
 	 */
 	public $rssURL;
+
 	/**
 	 * @var array
 	 * @since version
 	 */
 	public $moderators;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $authorised = [];
+
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_aliases = null;
+
 	/**
 	 * @var     mixed|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_alias = null;
+
 	/**
 	 * @var     KunenaCategory[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_channels = false;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_topics = false;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_posts = false;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_lastcat = false;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = [];
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_new = null;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaCategories';
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $sectionheaderdesc;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $hold;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0

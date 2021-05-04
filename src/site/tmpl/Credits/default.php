@@ -38,8 +38,8 @@ if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 	Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 	Factory::getApplication()->sendHeaders();
 	?>
-    <h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
-    <div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+	<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+	<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
 	<?php
 	return;
 }

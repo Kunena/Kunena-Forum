@@ -65,7 +65,7 @@ class RanksModel extends ListModel
 	}
 
 	/**
-	  * Method to auto-populate the model state.
+	 * Method to auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.s
 	 *

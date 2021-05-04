@@ -40,16 +40,19 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $total;
+
 	/**
 	 * @var     Pagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

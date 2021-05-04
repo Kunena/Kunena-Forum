@@ -171,7 +171,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  bool|Table  The table object.
+	 * @return  boolean|Table  The table object.
 	 *
 	 * @since   Kunena 6.0
 	 */

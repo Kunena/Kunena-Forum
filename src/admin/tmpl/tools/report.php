@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $document = Factory::getApplication()->getDocument();
 $document->addScriptDeclaration(
-		"
+	"
 jQuery(document).ready(function ($) {
 	$('#link_sel_all').click(function(e) {
 		$('#report_final').select();

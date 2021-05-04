@@ -200,7 +200,7 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -32,61 +32,85 @@ use Kunena\Forum\Libraries\View\KunenaView;
 class HtmlView extends KunenaView
 {
 	public $me;
+
 	public $state;
+
 	public $embedded;
+
 	public $config;
+
 	public $topic;
+
 	public $position;
+
 	/**
 	 * @var false|float
 	 * @since version
 	 */
 	public $pages;
+
 	/**
-	 * @var int
+	 * @var integer
 	 * @since version
 	 */
 	public $message_position;
+
 	public $module;
+
 	public $firstUserName;
+
 	public $firstPostTime;
+
 	public $firstPostAuthor;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $categoryLink;
+
 	/**
-	 * @var bool
+	 * @var boolean
 	 * @since version
 	 */
 	public $cache;
+
 	public $category;
+
 	public $topics;
+
 	public $messages;
+
 	public $layout;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $moreUri;
+
 	/**
-	 * @var bool|string
+	 * @var boolean|string
 	 * @since version
 	 */
 	public $URL;
+
 	public $message_ordering;
+
 	/**
 	 * @var false
 	 * @since version
 	 */
 	public $actionMove;
+
 	/**
 	 * @var mixed
 	 * @since version
 	 */
 	public $total;
+
 	public $params;
+
 	/**
 	 * @var mixed
 	 * @since version

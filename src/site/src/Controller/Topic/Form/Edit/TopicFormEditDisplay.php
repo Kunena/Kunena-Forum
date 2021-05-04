@@ -42,7 +42,9 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
+
 	private $me;
+
 	private $message;
 
 	/**

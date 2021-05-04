@@ -48,26 +48,31 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $sections = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categories = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $pending = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $more = [];
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

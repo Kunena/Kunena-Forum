@@ -39,11 +39,13 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $category;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $categoryButtons;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

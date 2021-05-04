@@ -239,7 +239,6 @@ class KunenaController extends BaseController
 				}
 			}
 
-
 			// Execute the task.
 			$content = static::executeTask($task);
 		}

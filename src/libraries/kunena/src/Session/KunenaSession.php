@@ -54,16 +54,19 @@ class KunenaSession extends CMSObject
 	public $readtopics;
 
 	public $userid;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_sessionTimeOut = false;
+
 	/**
 	 * @var     integer|string
 	 * @since   Kunena 6.0

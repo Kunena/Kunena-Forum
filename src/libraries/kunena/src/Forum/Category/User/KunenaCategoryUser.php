@@ -89,7 +89,7 @@ class KunenaCategoryUser extends CMSObject
 	 * @param   string  $type    The categories table name to be used
 	 * @param   string  $prefix  The categories table prefix to be used
 	 *
-	 * @return  bool|Table The categories table object
+	 * @return  boolean|Table The categories table object
 	 *
 	 * @since   Kunena 6.0
 	 */

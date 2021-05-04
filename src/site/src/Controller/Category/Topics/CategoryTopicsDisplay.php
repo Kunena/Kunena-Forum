@@ -46,31 +46,37 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     KunenaCategory
 	 * @since   Kunena 6.0
 	 */
 	public $category;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	public $total;
+
 	/**
 	 * @var     KunenaTopic
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
+
 	/**
 	 * @var     KunenaPagination
 	 * @since   Kunena 6.0
 	 */
 	public $pagination;
+
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
 	public $me;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

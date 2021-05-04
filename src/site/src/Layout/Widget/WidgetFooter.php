@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-//use function defined;
+// Use function defined;
 
 /**
  * KunenaLayoutWidgetFooter

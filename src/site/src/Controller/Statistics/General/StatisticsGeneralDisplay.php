@@ -38,6 +38,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $name = 'Statistics/General';
+
 	public $lastUserId;
 
 	/**

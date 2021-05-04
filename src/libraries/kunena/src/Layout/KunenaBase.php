@@ -192,7 +192,6 @@ class KunenaBase extends KunenaLayoutBase
 
 			// And get the contents.
 			$output = ob_get_clean();
-
 		}
 		catch (Exception $e)
 		{
@@ -765,6 +764,7 @@ class KunenaBase extends KunenaLayoutBase
 			// Attempt to load layout class if it doesn't exist.
 			$ex    = explode('/', $path);
 			$subpart = '';
+
 			if (count($ex) == 3)
 			{
 				$subpart = $ex[1] . '\\';

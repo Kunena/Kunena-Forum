@@ -54,13 +54,21 @@ class HtmlView extends KunenaView
 	 * @since   Kunena 6.0
 	 */
 	public $offline = false;
+
 	public $ktemplate;
+
 	public $app;
+
 	public $me;
+
 	public $state;
+
 	public $config;
+
 	public $memberCount;
+
 	public $lastUserId;
+
 	/**
 	 * @var array
 	 * @since version

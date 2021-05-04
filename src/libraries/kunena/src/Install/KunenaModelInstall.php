@@ -843,7 +843,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   array   $group    group
 	 * @param   string  $element  element
 	 *
-	 * @return  bool|\Joomla\CMS\Table\Table
+	 * @return  boolean|\Joomla\CMS\Table\Table
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -3031,7 +3031,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	{
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 		$menu = ['name' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum'),
-		         'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0],];
+				 'link' => 'index.php?option=com_kunena&view=home', 'access' => 1, 'params' => ['catids' => 0],];
 
 		$this->buildMenu($menu);
 		KunenaMenuHelper::cleanCache();
@@ -3097,16 +3097,16 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$table = Table::getInstance('menu');
 		$table->load(['menutype' => 'kunenamenu', 'link' => $menu ['link']]);
 		$paramdata = ['menu-anchor_title'     => '',
-		              'menu-anchor_css'       => '',
-		              'menu_image'            => '',
-		              'menu_text'             => 1,
-		              'page_title'            => '',
-		              'show_page_heading'     => 0,
-		              'page_heading'          => '',
-		              'pageclass_sfx'         => '',
-		              'menu-meta_description' => '',
-		              'robots'                => '',
-		              'secure'                => 0,];
+					  'menu-anchor_css'       => '',
+					  'menu_image'            => '',
+					  'menu_text'             => 1,
+					  'page_title'            => '',
+					  'show_page_heading'     => 0,
+					  'page_heading'          => '',
+					  'pageclass_sfx'         => '',
+					  'menu-meta_description' => '',
+					  'robots'                => '',
+					  'secure'                => 0,];
 
 		$gparams = new Registry($paramdata);
 
@@ -3150,23 +3150,23 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 			$submenu = [
 				'index'     => ['name' => Text::_('COM_KUNENA_MENU_ITEM_INDEX'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_INDEX_ALIAS'), 'index'),
-				                'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
+								'link' => 'index.php?option=com_kunena&view=category&layout=list', 'access' => 1, 'default' => 'categories', 'params' => [],],
 				'recent'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_RECENT'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_RECENT_ALIAS'), 'recent'),
-				                'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+								'link' => 'index.php?option=com_kunena&view=topics&mode=replies', 'access' => 1, 'default' => 'recent', 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
 				'unread'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_UNREAD'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_UNREAD_ALIAS'), 'unread'),
-				                'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
+								'link' => 'index.php?option=com_kunena&view=topics&layout=unread', 'access' => 2, 'params' => [],],
 				'newtopic'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NEWTOPIC'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NEWTOPIC_ALIAS'), 'newtopic'),
-				                'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
+								'link' => 'index.php?option=com_kunena&view=topic&layout=create', 'access' => 2, 'params' => [],],
 				'noreplies' => ['name' => Text::_('COM_KUNENA_MENU_ITEM_NOREPLIES'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_NOREPLIES_ALIAS'), 'noreplies'),
-				                'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
+								'link' => 'index.php?option=com_kunena&view=topics&mode=noreplies', 'access' => 2, 'params' => ['topics_catselection' => '', 'topics_categories' => '', 'topics_time' => ''],],
 				'mylatest'  => ['name' => Text::_('COM_KUNENA_MENU_ITEM_MYLATEST'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_MYLATEST_ALIAS'), 'mylatest'),
-				                'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
+								'link' => 'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access' => 2, 'default' => 'my', 'params' => ['topics_catselection' => '2', 'topics_categories' => '0', 'topics_time' => ''],],
 				'profile'   => ['name' => Text::_('COM_KUNENA_MENU_ITEM_PROFILE'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_PROFILE_ALIAS'), 'profile'),
-				                'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
+								'link' => 'index.php?option=com_kunena&view=user', 'access' => 2, 'params' => ['integration' => 1],],
 				'help'      => ['name' => Text::_('COM_KUNENA_MENU_ITEM_HELP'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_HELP_ALIAS'), 'help'),
-				                'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
+								'link' => 'index.php?option=com_kunena&view=misc', 'access' => 3, 'params' => ['body' => Text::_('COM_KUNENA_MENU_HELP_BODY'), 'body_format' => 'bbcode'],],
 				'search'    => ['name' => Text::_('COM_KUNENA_MENU_ITEM_SEARCH'), 'alias' => KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_SEARCH_ALIAS'), 'search'),
-				                'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
+								'link' => 'index.php?option=com_kunena&view=search', 'access' => 1, 'params' => [],],
 			];
 
 			foreach ($submenu as $menuitem)

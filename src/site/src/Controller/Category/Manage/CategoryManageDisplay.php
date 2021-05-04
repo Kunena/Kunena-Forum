@@ -43,36 +43,43 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
+
 	/**
 	 * @var     KunenaCategory
 	 * @since   Kunena 5.1
 	 */
 	public $category;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $total;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $topics;
+
 	/**
 	 * @var     KunenaPagination
 	 * @since   Kunena 5.1
 	 */
 	public $pagination;
+
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 5.1
 	 */
 	public $me;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Category/Manage';
+
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0

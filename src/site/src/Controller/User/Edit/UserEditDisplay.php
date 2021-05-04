@@ -43,7 +43,9 @@ class UserEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $profile;
+
 	public $headerText;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

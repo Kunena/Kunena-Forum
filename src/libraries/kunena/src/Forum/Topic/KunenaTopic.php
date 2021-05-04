@@ -161,41 +161,49 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $category_id = 0;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaTopics';
+
 	/**
 	 * @var     DatabaseDriver|void
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authccache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = [];
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_hold = 1;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_posts = 0;
+
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0

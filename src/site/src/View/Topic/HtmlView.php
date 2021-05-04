@@ -91,66 +91,91 @@ class HtmlView extends KunenaView
 	 * @since   Kunena 6.0
 	 */
 	public $cache = true;
+
 	public $ktemplate;
+
 	public $app;
+
 	public $config;
+
 	public $inLayout;
+
 	public $me;
+
 	public $state;
+
 	public $topic;
+
 	public $total;
+
 	/**
-	 * @var bool|mixed
+	 * @var boolean|mixed
 	 * @since version
 	 */
 	public $subscriptionsChecked;
+
 	/**
-	 * @var bool|mixed
+	 * @var boolean|mixed
 	 * @since version
 	 */
 	public $postAnonymous;
+
 	/**
-	 * @var array|bool
+	 * @var array|boolean
 	 * @since version
 	 */
 	public $allowedExtensions;
+
 	/**
 	 * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
 	 * @since version
 	 */
 	public $attachments;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $action;
+
 	public $topicIcons;
+
 	/**
 	 * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
 	 * @since version
 	 */
 	public $category;
+
 	/**
 	 * @var KunenaMessage
 	 * @since version
 	 */
 	public $message;
+
 	public $catid;
+
 	/**
 	 * @var string
 	 * @since version
 	 */
 	public $numLink;
+
 	public $messages;
+
 	public $replynum;
+
 	/**
 	 * @var \Kunena\Forum\Libraries\User\KunenaUser
 	 * @since version
 	 */
 	public $profile;
+
 	public $quickReply;
+
 	public $layout;
+
 	public $usertopic;
+
 	public $headerText;
 
 	/**
@@ -1251,7 +1276,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return  int|string
+	 * @return  integer|string
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
@@ -1276,7 +1301,7 @@ class HtmlView extends KunenaView
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return  int|string
+	 * @return  integer|string
 	 *
 	 * @since   Kunena 6.0
 	 * @throws Exception
@@ -1387,11 +1412,11 @@ class HtmlView extends KunenaView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$catParams = ['ordering'    => 'ordering',
-		              'toplevel'    => 0,
-		              'sections'    => 0,
-		              'direction'   => 1,
-		              'hide_lonely' => 1,
-		              'action'      => 'topic.create',];
+					  'toplevel'    => 0,
+					  'sections'    => 0,
+					  'direction'   => 1,
+					  'hide_lonely' => 1,
+					  'action'      => 'topic.create',];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);

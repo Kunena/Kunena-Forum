@@ -33,8 +33,11 @@ use function defined;
 class feed extends KunenaView
 {
 	private $topics;
+
 	private $messages;
+
 	private $total;
+
 	/**
 	 * @var string
 	 * @since version

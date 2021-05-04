@@ -34,7 +34,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						</tr>
 
 						<?php
-						foreach ($this->catSubscribersUsers as $user) : ?>
+						foreach ($this->catSubscribersUsers as $user)
+						:
+							?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
@@ -50,7 +52,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<th><?php echo Text::_('Active Topic Subscriptions'); ?></th>
 						</tr>
 						<?php
-						foreach ($this->topicSubscribersUsers as $user) : ?>
+						foreach ($this->topicSubscribersUsers as $user)
+						:
+							?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
@@ -66,7 +70,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<th><?php echo Text::_('E-mails sent to'); ?></th>
 						</tr>
 						<?php
-						foreach ($this->catTopicSubscribers as $sub) : ?>
+						foreach ($this->catTopicSubscribers as $sub)
+						:
+							?>
 							<tr>
 								<td class="hidden-phone center">
 									<input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"

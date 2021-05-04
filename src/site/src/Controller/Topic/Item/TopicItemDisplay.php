@@ -88,9 +88,13 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Item';
+
 	private $userTopic;
+
 	private $messages;
+
 	private $threaded;
+
 	/**
 	 * @var mixed
 	 * @since version

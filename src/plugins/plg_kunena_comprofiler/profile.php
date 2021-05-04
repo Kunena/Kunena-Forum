@@ -162,9 +162,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		return implode(
 			' ', $_PLUGINS->trigger(
-			'forumSideProfile', ['kunena', $view, $view->profile->userid,
+				'forumSideProfile', ['kunena', $view, $view->profile->userid,
 				['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params],]
-		)
+			)
 		);
 	}
 

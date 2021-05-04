@@ -38,56 +38,67 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	protected $systemReport = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $systemReportAnonymous = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $listTrashDelete = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $forumList = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $controlOptions = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $keepSticky = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $conflicts = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $invalid = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $catSubscribersUsers = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $topicSubscribersUsers = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -166,7 +177,8 @@ class HtmlView extends BaseHtmlView
 				$topicSubscribers            = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
 				$this->topicSubscribersUsers = KunenaUserHelper::loadUsers($topicSubscribers);
 				$this->catTopicSubscribers   = $acl->getSubscribers($topic->getCategory()->id, $id,
-					KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1);
+					KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1
+				);
 			}
 
 			$this->setToolBarSubscriptions();

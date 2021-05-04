@@ -96,7 +96,7 @@ class KunenaLoginComprofiler
 	}
 
 	/**
-	 * @return  array|bool|float|int|object|string|null
+	 * @return  array|boolean|float|integer|object|string|null
 	 *
 	 * @since   Kunena 6.0
 	 */

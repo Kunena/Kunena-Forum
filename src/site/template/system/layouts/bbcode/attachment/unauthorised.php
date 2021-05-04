@@ -26,7 +26,7 @@ $exception = $attachment->tryAuthorise('read', $user, false);
 
 if (!$exception)
 {
-    $exception = new KunenaExceptionAuthorise('Bad Request.', 400);
+	$exception = new KunenaExceptionAuthorise('Bad Request.', 400);
 }
 ?>
 <div class="kmsgattach">

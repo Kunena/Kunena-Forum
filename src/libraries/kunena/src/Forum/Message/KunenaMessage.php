@@ -108,56 +108,67 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	public $id = null;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_table = 'KunenaMessages';
+
 	/**
 	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
+
 	/**
 	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_attachments_add = [];
+
 	/**
 	 * @var     KunenaAttachment[]
 	 * @since   Kunena 6.0
 	 */
 	protected $_attachments_del = [];
+
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $_topic = null;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_hold = 1;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
 	protected $_thread = 0;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authtcache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_authfcache = [];
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

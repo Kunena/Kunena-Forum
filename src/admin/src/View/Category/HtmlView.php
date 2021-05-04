@@ -34,6 +34,7 @@ class HtmlView extends BaseHtmlView
 	 * @since   Kunena 6.0
 	 */
 	public $category = [];
+
 	public $options;
 
 	/**

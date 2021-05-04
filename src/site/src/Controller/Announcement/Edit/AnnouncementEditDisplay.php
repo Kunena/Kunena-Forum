@@ -34,6 +34,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $announcement;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

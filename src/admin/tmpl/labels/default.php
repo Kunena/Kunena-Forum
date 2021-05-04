@@ -18,7 +18,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect')
-		->useScript('bootstrap.popover');
+	->useScript('bootstrap.popover');
 ?>
 
 <div id="kunena" class="container-fluid">

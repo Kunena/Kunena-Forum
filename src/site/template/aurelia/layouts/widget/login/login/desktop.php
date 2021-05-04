@@ -8,7 +8,7 @@
  * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
-**/
+ **/
 
 defined('_JEXEC') or die();
 
@@ -43,8 +43,8 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 								</label>
 							</span>
 							<input class="form-control" id="kdesktop-username" name="username" tabindex="1"
-							       autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"
-							       type="text">
+								   autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"
+								   type="text">
 						</div>
 					</div>
 				</div>
@@ -59,8 +59,8 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 								</label>
 							</span>
 							<input class="form-control" id="klogin-desktop-passwd" name="password" tabindex="2"
-							       autocomplete="current-password"
-							       placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
+								   autocomplete="current-password"
+								   placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php
 				if ($login->getTwoFactorMethods() > 1)
-					:
+				:
 					?>
 					<div id="form-login-tfa" class="control-group center">
 						<div class="controls">
@@ -80,22 +80,24 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 								</label>
 						  </span>
 								<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small"
-								       tabindex="3"
-								       size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
+									   tabindex="3"
+									   size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
 							</div>
 						</div>
 					</div>
 				<?php endif; ?>
 
-				<?php if ($this->rememberMe) : ?>
+				<?php if ($this->rememberMe)
+				:
+					?>
 					<div class="form-group row center" id="kform-login-remember">
 						<div class="controls">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" name="klogin-desktop-remember"
-								       id="klogin-desktop-remember"
-								       value="1"/>
+									   id="klogin-desktop-remember"
+									   value="1"/>
 								<label class="custom-control-label"
-								       for="klogin-desktop-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
+									   for="klogin-desktop-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
 							</div>
 						</div>
 					</div>
@@ -110,7 +112,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 
 					<p>
 						<?php if ($this->resetPasswordUrl)
-							:
+						:
 							?>
 							<a href="<?php echo $this->resetPasswordUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
@@ -119,7 +121,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 						<?php endif ?>
 
 						<?php if ($this->remindUsernameUrl)
-							:
+						:
 							?>
 							<a href="<?php echo $this->remindUsernameUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
@@ -128,7 +130,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 						<?php endif ?>
 
 						<?php if ($this->registrationUrl)
-							:
+						:
 							?>
 							<a href="<?php echo $this->registrationUrl; ?>">
 								<?php echo Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>

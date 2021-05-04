@@ -48,6 +48,7 @@ class CategoryIndex extends KunenaLayout
 	public $ktemplate;
 
 	public $categorylist;
+
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
@@ -170,7 +171,7 @@ class CategoryIndex extends KunenaLayout
 	 * @param   integer      $catid  The Id of category
 	 * @param   bool|string  $xhtml  Replace & by & for XML compliance.
 	 *
-	 * @return  bool|string
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 *

@@ -44,6 +44,7 @@ class MessageListingRecentDisplay extends ListDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $messages;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

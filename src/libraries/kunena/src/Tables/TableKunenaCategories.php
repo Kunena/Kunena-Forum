@@ -400,7 +400,7 @@ class TableKunenaCategories extends KunenaTable
 	/**
 	 * @param   integer  $id  id
 	 *
-	 * @return  false|int
+	 * @return  false|integer
 	 *
 	 * @since   Kunena 6.0
 	 *

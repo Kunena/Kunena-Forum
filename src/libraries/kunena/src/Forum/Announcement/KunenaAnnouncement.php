@@ -143,7 +143,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function getUrl($layout = 'default', $xhtml = true): bool
+	public function getUrl($layout = 'default', $xhtml = true)
 	{
 		$uri = $this->getUri($layout);
 

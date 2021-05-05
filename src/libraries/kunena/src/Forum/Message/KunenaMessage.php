@@ -340,7 +340,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function getUrl($category = null, $xhtml = true): bool
+	public function getUrl($category = null, $xhtml = true): string
 	{
 		return $this->getTopic()->getUrl($category, $xhtml, $this);
 	}

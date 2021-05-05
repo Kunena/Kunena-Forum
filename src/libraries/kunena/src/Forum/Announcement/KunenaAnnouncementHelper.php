@@ -87,7 +87,7 @@ abstract class KunenaAnnouncementHelper
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public static function getUrl($layout = null, $xhtml = true): bool
+	public static function getUrl($layout = null, $xhtml = true): string
 	{
 		$uri = self::getUri($layout);
 

@@ -243,7 +243,7 @@ class Kunenagrid
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public static function published(int $i, $value, $prefix = '', $bootstrap = false): string
+	public static function published(int $i, $value, $prefix = '', $bootstrap = false)
 	{
 		if (is_object($value))
 		{
@@ -280,7 +280,7 @@ class Kunenagrid
 	 * @since    Kunena 3.0
 	 *
 	 */
-	public static function action(int $i, string $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb'): string
+	public static function action(int $i, string $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{
 		if (is_array($prefix))
 		{
@@ -391,7 +391,7 @@ class Kunenagrid
 			$html[] = '</a>';
 		}
 
-		return (string) $html;
+		return implode($html);
 	}
 
 	/**
@@ -406,7 +406,7 @@ class Kunenagrid
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false): string
+	public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false)
 	{
 		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading=lazy src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
 	}

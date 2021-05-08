@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Misc;
+namespace Kunena\Forum\Site\Controller\Application\Misc\Initial;
 
 defined('_JEXEC') or die();
 
@@ -18,7 +18,7 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -29,7 +29,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ApplicationMiscDefaultDisplay extends KunenaControllerDisplay
+class MiscDisplay extends Display
 {
 	/**
 	 * @var     string
@@ -182,7 +182,7 @@ class ApplicationMiscDefaultDisplay extends KunenaControllerDisplay
 				$cache = Factory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
-				return $cache->get(['KunenaHtmlParser', 'parseBBCode'], [$body]);
+				return $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);
 			};
 		}
 	}

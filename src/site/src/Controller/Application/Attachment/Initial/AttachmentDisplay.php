@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Attachment;
+namespace Kunena\Forum\Site\Controller\Application\Attachment\Initial;
 
 defined('_JEXEC') or die();
 
@@ -34,7 +34,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ApplicationAttachmentDefaultDisplay extends KunenaControllerDisplay
+class AttachmentDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaUser|null

@@ -32,7 +32,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class Display extends KunenaControllerDisplay
+class HomeDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.

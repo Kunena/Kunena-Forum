@@ -388,7 +388,7 @@ class Display extends KunenaControllerDisplay
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function display(): KunenaLayout
+	protected function display()
 	{
 		// Display KunenaLayout with given parameters.
 		$this->page

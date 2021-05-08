@@ -21,7 +21,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -40,12 +39,12 @@ use StdClass;
 use function defined;
 
 /**
- * Kunena Users Table Class
- * Provides access to the #__kunena_users table
+ * Kunena Template Class
+ * Provides access to Kunena templates method handling
  *
  * @since   Kunena 6.0
  */
-class KunenaTemplate extends CMSObject
+class KunenaTemplate
 {
 	/**
 	 * @var     array
@@ -339,8 +338,6 @@ class KunenaTemplate extends CMSObject
 				}
 			}
 		}
-
-		parent::__construct($name);
 	}
 
 	/**

@@ -173,7 +173,7 @@ class WidgetLoginDisplay extends KunenaControllerDisplay
 			// Display announcements.
 			if ($this->me->isModerator())
 			{
-				$this->announcementsUrl = KunenaAnnouncementHelper::getUrl('list');
+				$this->announcementsUrl = KunenaAnnouncementHelper::getUrl('listing');
 			}
 		}
 

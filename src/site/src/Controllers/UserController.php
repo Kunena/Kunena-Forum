@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
 use function defined;
@@ -105,7 +106,7 @@ class UserController extends KunenaController
 			{
 				$this->setRedirect($url);
 
-				return;
+				throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 

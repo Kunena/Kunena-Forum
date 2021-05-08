@@ -451,7 +451,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function sendNotification($url = null): bool
+	public function sendNotification($url = null)
 	{
 		if ($this->hold > 1)
 		{

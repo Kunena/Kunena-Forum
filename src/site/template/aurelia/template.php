@@ -10,17 +10,13 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use function defined;
 
 /**
  * Aurelia template.
@@ -38,7 +34,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 * @var array
 	 * @since   Kunena 6.0
 	 */
-	protected $default = ['aurelia'];
+	protected $default = ['Aurelia'];
 
 	/**
 	 * Relative paths to various file types in this template.

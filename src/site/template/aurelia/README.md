@@ -45,7 +45,7 @@ Main template class, which defines template overrides and custom method calls.
 
 Template configuration options. Can be used both inside the template and less files.
 
-##./kunena_tpml_crypsis.xml
+##./kunena_tpml_aurelia.xml
 
 Needed by Joomla installer. Yes, the new templates will be installed by Joomla Extension Manager.
 

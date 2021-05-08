@@ -445,7 +445,7 @@ class KunenaTemplate extends CMSObject
 
 				if (!is_file($file))
 				{
-					$classname = "KunenaTemplateaurelia";
+					$classname = "KunenaTemplateAurelia";
 					$file      = KPATH_SITE . "/template/aurelia/template.php";
 				}
 

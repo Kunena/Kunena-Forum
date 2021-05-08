@@ -74,97 +74,96 @@ $this->addScript('assets/js/search.js');
                 </th>
 			<?php endif; ?>
 
-            <!--			--><?php //if ($config->username) : $cols++;
+			<?php if ($config->username) : $cols++;
 			?>
-            <!--                <th class="col-md-2">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-2">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //else : $cols++;
+			</th>
+			<?php else : $cols++;
 			?>
-            <!--                <th class="col-md-3">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-3">-->
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistPosts) : $cols++;
+
+			<?php if ($config->userlistPosts) : $cols++;
 			?>
-            <!--                <th class="col-md-1 center hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-1 center hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistKarma) : $cols++;
+
+			<?php if ($config->userlistKarma) : $cols++;
 			?>
-            <!--                <th class="col-md-1 center hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-1 center hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistEmail) : $cols++;
+
+			<?php if ($config->userlistEmail) : $cols++;
 			?>
-            <!--                <th class="col-md-1 hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-1 hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistJoinDate) : $cols++;
+
+			<?php if ($config->userlistJoinDate) : $cols++;
 			?>
-            <!--                <th class="col-md-2 hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-2 hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistLastVisitDate) : $cols++;
+
+			<?php if ($config->userlistLastVisitDate) : $cols++;
 			?>
-            <!--                <th class="col-md-2 hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-2 hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
-            <!---->
-            <!--			--><?php //if ($config->userlistUserHits) : $cols++;
+
+			<?php if ($config->userlistUserHits) : $cols++;
 			?>
-            <!--                <th class="col-md-1 center hidden-xs-down">-->
-            <!--					--><?php //echo HTMLHelper::_(
-			//						'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
-			//						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-			//						'kuserlist-form');
+			<th class="col-md-1 center hidden-xs-down">
+			<?php echo HTMLHelper::_(
+				'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
+				$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+				'kuserlist-form');
 			?>
-            <!--                </th>-->
-            <!--			--><?php //endif;
+			</th>
+			<?php endif;
 			?>
         </tr>
         </thead>

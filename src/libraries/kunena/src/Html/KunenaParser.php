@@ -130,7 +130,7 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 */
-	public static function parseText(string $txt, $len = 0, $target = 'title')
+	public static function parseText($txt, $len = 0, $target = 'title')
 	{
 		if (!$txt)
 		{

@@ -215,7 +215,7 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 */
-	public static function parseBBCode(string $txt, $parent = null, $len = 0, $context = '', $target = 'message')
+	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
 	{
 		if (!$txt)
 		{

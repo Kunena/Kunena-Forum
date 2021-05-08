@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Ajax;
+namespace Kunena\Forum\Site\Controller\Application\Ajax\Initial;
 
 defined('_JEXEC') or die();
 
@@ -33,7 +33,7 @@ use function defined;
  *
  * @since   Kunena 4.0
  */
-class ApplicationAjaxDefaultDisplay extends KunenaControllerDisplay
+class AjaxDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var \Kunena\Forum\Libraries\User\KunenaUser|null
